@@ -45,6 +45,7 @@ module.exports = withBundleAnalyzer({
     API_BASEPATH: process.env.API_BASEPATH,
     S3_BUCKET_URL: process.env.S3_BUCKET_URL,
     RECRUITERS_BOSSJOB_URL: process.env.RECRUITERS_BOSSJOB_URL,
+    RESUME_URL: process.env.RESUME_URL,
     DATA_BOSSJOB_URL: process.env.DATA_BOSSJOB_URL,
     DATA_BOSSHUNT_URL: process.env.DATA_BOSSHUNT_URL,
     AUTH_BOSSJOB_URL: process.env.AUTH_BOSSJOB_URL,

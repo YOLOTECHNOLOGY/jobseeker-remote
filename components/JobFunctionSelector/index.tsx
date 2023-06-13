@@ -22,7 +22,7 @@ const formatMenuText = (value) => {
   return text
 }
 const JobFunctionSelector = (props: any) => {
-  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, lang, ...rest } = props
+  const { value, jobTitle = '', className, title, onChange, isTouched, onBlur, lang, onChangeSkill, ...rest } = props
   const menuRef = useRef(null)
   const [showModal, setShowModal] = useState(false)
   const [selectedSubItem, setSelectedSubItem] = useState<any>({})
@@ -137,6 +137,8 @@ const JobFunctionSelector = (props: any) => {
           job.job_titles.forEach((item) => {
             if (item?.id === value.id) {
               onChange(item)
+              console.log(job,99666)
+              onChangeSkill && onChangeSkill(job.skills)
               setSelectedKey(e.id)
               setSelectedSubItem(job)
             }

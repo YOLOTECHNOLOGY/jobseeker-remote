@@ -119,3 +119,73 @@
   startTime: 1686300487044,
   finishTime: 1686300488294
 }
+[2023-06-13T11:20:05.012] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686626402819,
+  finishTime: 1686626405012
+}
+[2023-06-13T11:20:05.022] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686626402703,
+  finishTime: 1686626405022
+}
+[2023-06-13T11:20:05.865] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686626403653,
+  finishTime: 1686626405865
+}
+[2023-06-13T15:58:41.149] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686643119232,
+  finishTime: 1686643121149
+}
+[2023-06-13T15:58:42.054] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686643119406,
+  finishTime: 1686643122054
+}
+[2023-06-13T17:17:37.384] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686647855322,
+  finishTime: 1686647857384
+}
+[2023-06-13T17:17:38.134] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686647855857,
+  finishTime: 1686647858134
+}
+[2023-06-13T17:17:48.925] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686647867085,
+  finishTime: 1686647868925
+}
+[2023-06-13T17:23:04.175] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686648182200,
+  finishTime: 1686648184175
+}
+[2023-06-13T17:23:04.215] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686648182141,
+  finishTime: 1686648184215
+}
+[2023-06-13T17:23:04.444] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686648182695,
+  finishTime: 1686648184444
+}
+[2023-06-13T17:23:32.569] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686648210654,
+  finishTime: 1686648212568
+}
+[2023-06-13T19:37:20.115] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686656238503,
+  finishTime: 1686656240115
+}
+[2023-06-13T19:37:20.144] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686656238407,
+  finishTime: 1686656240144
+}

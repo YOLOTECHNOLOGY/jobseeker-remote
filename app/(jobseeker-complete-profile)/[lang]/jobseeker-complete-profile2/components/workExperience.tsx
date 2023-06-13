@@ -12,44 +12,53 @@ import MaterialTextField from 'components/MaterialTextField'
 import Switch from '@mui/material/Switch'
 import Chip from '@mui/material/Chip';
 import TextEditor from 'components/TextEditor/TextEditor'
+import FootBtn from './footBtn'
+import { useRouter, usePathname } from 'next/navigation'
+import { uploadUserResumeServiceNew } from 'store/services/users/uploadUserResume'
+import {differenceBy } from 'lodash-es'
 const WorkExperience = (props: any) => {
-  console.log(props)
-  const { lang } = props
+  console.log(props,9999)
+  const { lang ,userDetail} = props
+  const {id} = userDetail
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const redirect = '/jobseeker-complete-profile/1101'
-  const [isDoneUpdating, setIsDoneUpdating] = useState(false)
+
   const [isDisabled, setIsDisabled] = useState(false)
-  const [workPeriodFrom, setWorkPeriodFrom] = useState(null)
-  const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
-  const [companyName, setCompanyName] = useState('')
-  const [isCurrentJob, setIsCurrentJob] = useState(false)
-  const [workPeriodTo, setWorkPeriodTo] = useState(null)
-  const [description, setDescription] = useState('')
-  const [loading, setLoading] = useState(false);
+  const [workPeriodFrom, setWorkPeriodFrom] = useState<any>(null)
+  const [jobFunction, setJobFunction] = useState<any>({ id: undefined, value: '' })
+  const [companyName, setCompanyName] = useState<string>('')
+  const [isCurrentJob, setIsCurrentJob] = useState<boolean>(false)
+  const [workPeriodTo, setWorkPeriodTo] = useState<any>(null)
+  const [description, setDescription] = useState<string>('')
+  const [skills, setSkills] = useState<any>([])
+  const [selectedSkills, setSelectedSkills] = useState<any>([])
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter()
+  const pathname = usePathname()
+
   function handleClick() {
     // setLoading(true);
   }
+
   const {
     companyNameText = 'Company name',
     currentlyWorkHere = 'I currently work here',
-    monthYear = 'From',
+    from = 'From',
     placeholder = 'Text'
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
       if (maxFileSize(resume, 5)) {
         setErrorMessage('')
-        if (localStorage.getItem('isCreateFreeResume'))
-          localStorage.removeItem('isCreateFreeResume')
-        setIsDoneUpdating(true)
-
+        console.log(resume,777)
         const payload = {
-          redirect,
-          resume
-          // accessToken
+          resume,
+          id
         }
-        //  dispatch(uploadUserResumeRequest(payload))
+        uploadUserResumeServiceNew(payload).then(res=>{
+           console.log(res.data)
+        })
+
       } else {
         setErrorMessage(lang?.profile?.fileTooHuge)
       }
@@ -65,14 +74,25 @@ const WorkExperience = (props: any) => {
       </>
     )
   }
-  const handleDelete = () => {
+  const handleDelete = (index) => {
+    selectedSkills.splice(index,1)
+    setSelectedSkills([...selectedSkills])
     console.info('You clicked the delete icon.');
   };
+
+  const backClick = () => {
+    router.push(`${pathname}?step=3`)
+  }
+
+ const addSecected = (item) => {
+  setSelectedSkills([...selectedSkills,item])
+ }
+
   return (
     <div className={styles.work}>
       <Header />
       <div className={styles.workContainer}>
-        <Stepper />
+        <Stepper step={0}/>
         <div className={styles.box}>
           <div className={styles.headerInfo}>Work experience</div>
           <div className={styles.body}>
@@ -123,22 +143,6 @@ const WorkExperience = (props: any) => {
                 }}
               />
             </div>
-            <p className={styles.title}>
-              Most recent job title <span>*</span>
-            </p>
-            <div id='jobFunction' className={styles.stepField}>
-              <JobFunctionSelector
-                className={styles.stepFullwidth}
-                label={lang?.profile?.jobFunction}
-                title={lang?.profile?.jobFunction}
-                lang={lang}
-                name='jobFunction'
-                isTouched
-                fullWidth
-                value={jobFunction}
-                onChange={(value) => setJobFunction(value)}
-              />
-            </div>
 
             <p className={styles.title}>
               Most recent company <span>*</span>
@@ -156,7 +160,7 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-              Working period* <span>*</span>
+              Working period <span>*</span>
             </p>
             <div className={styles.stepFieldBody}>
               <FormControlLabel
@@ -171,7 +175,7 @@ const WorkExperience = (props: any) => {
               />
               <div className={styles.stepFieldToItem}>
                 <MaterialDatePicker
-                  label={monthYear}
+                  label={from}
                   views={['year', 'month']}
                   inputFormat='MMM yyyy'
                   value={workPeriodTo}
@@ -183,16 +187,40 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-              Skills
+            Most recent job title and  Skills <span>*</span>
             </p>
+            <div id='jobFunction' className={styles.stepField}>
+              <JobFunctionSelector
+                className={styles.stepFullwidth}
+                label={lang?.profile?.jobFunction}
+                title={lang?.profile?.jobFunction}
+                lang={lang}
+                name='jobFunction'
+                isTouched
+                fullWidth
+                value={jobFunction}
+                onChange={(value) => setJobFunction(value)}
+                onChangeSkill={(value) =>  setSkills(value)}
+              />
+            </div>
+
             <p className={styles.titleTip}>
             Skills will be suggested based on selected job function. Please select max 5 skills.
             </p>
+            <div className={styles.skillList}>
+              {
+               differenceBy(skills,selectedSkills,'id').map(e=><span key={e.id}  onClick={()=>addSecected(e)}>{e.value}</span>)
+              }
+            </div>
              <div className={styles.chooseSkill}>
               <p >Select skills or type your own skills</p>
-              <Chip sx={{
-                background:"#136FD3"
-              }} color="primary" label="Deletable" onDelete={handleDelete} />
+               {
+                selectedSkills.map((item,index)=> <Chip key={item.id} sx={{
+                  background:"#136FD3",
+                  margin:'8px  8px 0 0'
+                }} color="primary" label={item.value} onDelete={()=>handleDelete(index)} />)
+               }
+              
              </div>
 
              <p className={`${styles.title} ${styles.titlePeriod}`}>
@@ -208,42 +236,16 @@ const WorkExperience = (props: any) => {
 
           </div>
         </div>
-        <div className={styles.next}>
-     
-     <LoadingButton
-       onClick={handleClick}
-       loading={loading}    
-       variant="contained"
-       sx={{
-         width:'202px',
-         height:'44px',
-         textTransform: 'capitalize',
-         background:  "#F0F0F0",
-         color: "#707070",
-         boxShadow:'none',
-         borderRadius: '10px'
-       }}
-     >
-       <span>Next (1/4)</span>
-     </LoadingButton>
-     <LoadingButton
-       onClick={handleClick}
-       loading={loading}    
-       variant="contained"
-       sx={{
-         width:'202px',
-         height:'44px',
-         textTransform: 'capitalize',
-         border: '1px solid #136FD3',
-         background:  "transparent",
-         color: '#136FD3',
-         boxShadow:'none',
-         borderRadius: '10px'
-       }}
-     >
-       <span>back</span>
-     </LoadingButton>
-   </div>
+
+        <FootBtn
+          loading={loading}
+          rightText={'Next (2/4)'}
+          backClick={backClick}
+          // handleClick={handleSubmit(handleUpdateProfile)}
+        />
+
+
+
       </div>
    
     </div>

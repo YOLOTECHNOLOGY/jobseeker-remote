@@ -50,12 +50,15 @@ const getUrl = (baseURL) => {
       break
     case 'recruiters':
       url = process.env.RECRUITERS_BOSSJOB_URL
+      break
+    case 'resumes':
+       url = process.env.RESUME_URL
     default:
       break
   }
   return url
 }
-
+ console.log(process.env.RESUME_URL,99666)
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''

@@ -3,10 +3,11 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import styles from '../index.module.scss'
 
 interface btnProps{
-    handleClick?:()=>void,
+    handleClick?:any,
     backClick?:()=>void,
     loading?:boolean,
-    rightText?:string 
+    rightText?:string,
+    showBack?:boolean 
 }
 const FootBtn = (
     {
@@ -14,15 +15,15 @@ const FootBtn = (
         loading,
         backClick,
         rightText,
+        showBack = true
     }:btnProps)=>{
  
- 
-    
   return <div className={styles.next}>
   <LoadingButton
-    onClick={backClick}
+    onClick={handleClick}
     loading={loading}
     variant='contained'
+    disabled
     sx={{
         width: '202px',
         height: '44px',
@@ -33,10 +34,11 @@ const FootBtn = (
       color: '#707070',
     }}
   >
-    <span>{rightText} Next (1/4)</span>
+    <span>{rightText}</span>
   </LoadingButton>
-  <LoadingButton
-    onClick={handleClick}
+  {
+    showBack &&  <LoadingButton
+    onClick={backClick}
     loading={loading}
     variant='contained'
     sx={{
@@ -52,6 +54,8 @@ const FootBtn = (
   >
     <span>back</span>
   </LoadingButton>
+  }
+ 
 </div>
 }
 

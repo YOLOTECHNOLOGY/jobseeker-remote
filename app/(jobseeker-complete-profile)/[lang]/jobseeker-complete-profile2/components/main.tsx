@@ -6,24 +6,32 @@ import BasicInformation from './basicInformation'
 import WorkExperience from "./workExperience";
 import EducationExperience from "./educationExperience";
 import DesiredJob from "./desiredJob";
+import { useSelector } from 'react-redux'
+
+
 const Main = (props:any)=>{
 
     const searchParams = useSearchParams()
     const search = searchParams.get('step')
     const [step, setStep] = useState(1)
-  
+    const userDetail = useSelector((store: any) => store?.users.fetchUserOwnDetail.response)
+    const newProps = {...props,userDetail}
+
+    console.log({userDetail})
+   
     useEffect(() => {
       const hasStep = [1, 2, 3, 4, 5, 6,7].includes(+search)
       if (search && hasStep) {
         setStep(Number(search))
       }
     }, [search])
+   
    return <div className={styles.main}>
        {
-        step === 1 && <BasicInformation {...props}/>
+        step === 1 && <BasicInformation {...newProps}/>
        }
        {
-        step === 2 && <WorkExperience {...props}/>
+        step === 2 && <WorkExperience {...newProps}/>
        }
        {
         step === 3 && <EducationExperience {...props}/>

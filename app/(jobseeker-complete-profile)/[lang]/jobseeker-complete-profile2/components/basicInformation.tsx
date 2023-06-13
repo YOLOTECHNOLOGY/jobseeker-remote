@@ -1,46 +1,68 @@
 import React, { useState, useMemo } from 'react'
 import styles from '../index.module.scss'
-import { CameraIcon, DefaultAvatar} from 'images'
+import { CameraIcon, DefaultAvatar } from 'images'
 import { Avatar } from '@mui/material'
 import { compressImage } from 'helpers/imageCompression'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { Controller, useForm } from 'react-hook-form'
 import MaterialTextField from 'components/MaterialTextField'
-import LoadingButton from '@mui/lab/LoadingButton'
-import Header from "./Header" 
+import Header from './Header'
 import avatar1 from '../images/1.png'
 import avatar2 from '../images/2.png'
 import avatar3 from '../images/3.png'
 import avatar4 from '../images/4.png'
 import avatar5 from '../images/5.png'
-const avatarList = [ avatar1, avatar2,avatar3,avatar4, avatar5]
-
+import FootBtn from './footBtn'
+import { useDispatch } from 'react-redux'
+import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
+import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { getCookie } from 'helpers/cookies'
+import { useRouter, usePathname } from 'next/navigation'
+const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
-  console.log({props})
-  const {config:{
-    notice_period_lists:noticePeriodLists
-  }} = props
-   
+  console.log({ props })
+  const {
+    config: { notice_period_lists: noticePeriodLists },
+    userDetail
+  } = props
+  const router = useRouter()
   const [selectedAvatar, setSelectedAvatar] = useState(null)
-  const [selectedAvatarDefault,setSelectedAvatarDefault] = useState<number>(0);
+  const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
   const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
- 
+  const [selectedExperienced, setSelectedExperienced] = useState<number>(1)
+  const dispatch = useDispatch()
   const [preview, setPreview] = useState(null)
-  const [loading, setLoading] = useState(false);
-  function handleClick() {
-    // setLoading(true);
-  }
-  console.log({avatarList})
-  const { userDetail } = props
-
-  const defaultValues = useMemo(() => {
-    const result = {
-      firstName: userDetail?.first_name,
-      lastName: userDetail?.last_name
+  const [loading, setLoading] = useState(false)
+  const accessToken = getCookie('accessToken')
+  const pathname = usePathname()
+  const experiencedList = [
+    {
+      label: 'Experienced',
+      value: 1
+    },
+    {
+      label: 'Fresh Graduate',
+      value: 2
     }
-    return result
+  ]
+
+  const { handleSubmit, setValue, control } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: ''
+    }
+  })
+  const defaultValues = useMemo(() => {
+    if (userDetail?.id) {
+      const { avatar, first_name, last_name, notice_period_id } = userDetail
+      setPreview(avatar)
+      setValue('firstName', first_name)
+      setValue('lastName', last_name)
+      setSelectedAvailability(notice_period_id)
+    }
   }, [userDetail])
-  const { handleSubmit, setValue, getValues, control } = useForm({ defaultValues })
+  console.log({ avatarList })
 
   const handleChosenPhoto = async (e) => {
     const file = e.target.files[0]
@@ -60,172 +82,198 @@ const BasicInformation = (props: any) => {
         } else {
           setSelectedAvatar(compressedFile)
         }
-
         setPreview(preview)
         URL.revokeObjectURL(objectUrl)
       }
       img.src = objectUrl
+      setSelectedAvatarDefault(-1)
     }
   }
   const handleChoosePhoto = () => {
     document.getElementById('uploadUserAvatar').click()
   }
+
+  const handleUpdateProfile = async (data) => {
+    console.log(data, 333333)
+    const { firstName, lastName } = data || {}
+    const payload = {
+      first_name: firstName,
+      last_name: lastName,
+      notice_period_id: selectedAvailability
+    }
+    setLoading(true)
+    if (selectedAvatar) {
+      await uploadUserAvatarService(selectedAvatar)
+    }
+
+    updateUserCompleteProfileService(payload).then((res) => {
+      if (res.data) {
+        dispatch(fetchUserOwnDetailRequest({ accessToken }))
+        let url = `${pathname}?step=2`
+        if (selectedExperienced === 2) {
+          url = `${pathname}?step=3`
+        }
+        router.push(url)
+      }
+    }).finally(()=>setLoading(false))
+  }
+
+  const changeAvator = async (item, index) => {
+    setSelectedAvatarDefault(index)
+    const xhr = new XMLHttpRequest()
+    xhr.open('get', item.src, true)
+    xhr.responseType = 'blob'
+    xhr.onload = function () {
+      if (this.status == 200) {
+        console.log(this.response,9999)
+        const file = new File([this.response], item.src, { type: 'image/*' })
+        setSelectedAvatar(file)
+      }
+    }
+    xhr.send()
+  }
+
   return (
     <>
-    <Header/>
-    <div className={styles.basicInfo}>
-      <div className={styles.topModule}>
-      <div className={styles.headerInfo}>
-        <h2>Basic Information</h2>
-        <p>These information will be shown to Boss when you apply for a job.</p>
-      </div>
-      <div className={styles.container}>
-        <h3>Profile photo</h3>
-        <p className={styles.uploadTips}>
-          Upload a photo ( max 5 MB) or choose one from Bossjob default avatars
-        </p>
-        <ul className={styles.avatarList}>
-          <li>
-            <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
-              <Avatar sx={{ width: '65px', height: '65px' }} src={preview || DefaultAvatar} />
-              <input
-                id='uploadUserAvatar'
-                accept='image/*'
-                type='file'
-                style={{ display: 'none' }}
-                onChange={handleChosenPhoto}
-              />
-              <button className={styles.uploadAvatarButton}>
-                <img src={CameraIcon} height='14' width='14' />
-              </button>
-            </div>
-          </li>
-          {
-            avatarList.map((item,index)=> <li key={index} onClick={()=>setSelectedAvatarDefault(index)}  className={`${selectedAvatarDefault === index ? styles.active : '' }`}>  
-            <Avatar sx={{ width: '100%', height: '100%' }} src={item.src || DefaultAvatar} />
-            </li>)
-          }         
-        </ul>
-        <p className={styles.photoTips}>
-          <InfoOutlinedIcon sx={{ fontSize: '16px', color: '#FE574A', marginRight: '4px' }} />
-          Having a real photo as your profile picture help build trust with potential employers{' '}
-        </p>
+      <Header />
+      <div className={styles.basicInfo}>
+        <div className={styles.topModule}>
+          <div className={styles.headerInfo}>
+            <h2>Basic Information</h2>
+            <p>These information will be shown to Boss when you apply for a job.</p>
+          </div>
+          <div className={styles.container}>
+            <h3>Profile photo</h3>
+            <p className={styles.uploadTips}>
+              Upload a photo ( max 5 MB) or choose one from Bossjob default avatars
+            </p>
+            <ul className={styles.avatarList}>
+              <li className={`${selectedAvatarDefault === -1 ? styles.active : ''}`}>
+                <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
+                  <Avatar sx={{ width: '58px', height: '58px' }} src={preview || DefaultAvatar} />
+                  <input
+                    id='uploadUserAvatar'
+                    accept='image/*'
+                    type='file'
+                    style={{ display: 'none' }}
+                    onChange={handleChosenPhoto}
+                  />
+                  <button className={styles.uploadAvatarButton}>
+                    <img src={CameraIcon} height='14' width='14' />
+                  </button>
+                </div>
+              </li>
+              {avatarList.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => changeAvator(item, index)}
+                  className={`${selectedAvatarDefault === index ? styles.active : ''}`}
+                >
+                  <Avatar sx={{ width: '100%', height: '100%' }} src={item.src || DefaultAvatar} />
+                </li>
+              ))}
+            </ul>
+            <p className={styles.photoTips}>
+              <InfoOutlinedIcon sx={{ fontSize: '16px', color: '#FE574A', marginRight: '4px' }} />
+              Having a real photo as your profile picture help build trust with potential employers{' '}
+            </p>
 
-        <div className={styles.nameBox}>
-          <p className={styles.name}>
-            Name <span>*</span>
-          </p>
-          <div>
-            <div className={styles.nameFlex}>
-              <div className={styles.namesFirst}>
-                <Controller
-                  control={control}
-                  name={'firstName'}
-                  rules={{ required: '' }}
-                  render={({ field, fieldState }) => {
-                    return (
-                      <MaterialTextField
-                        className={styles.stepFullwidth}
-                        label={'First name'}
-                        required
-                      
-                        {...fieldState}
-                        {...field}
-                      />
-                    )
-                  }}
-                />
+            <div className={styles.nameBox}>
+              <p className={styles.name}>
+                Name <span>*</span>
+              </p>
+              <div>
+                <div className={styles.nameFlex}>
+                  <div className={styles.namesFirst}>
+                    <Controller
+                      control={control}
+                      name={'firstName'}
+                      rules={{ required: '' }}
+                      render={({ field, fieldState }) => {
+                        return (
+                          <MaterialTextField
+                            className={styles.stepFullwidth}
+                            label={'First name'}
+                            required
+                            {...fieldState}
+                            {...field}
+                          />
+                        )
+                      }}
+                    />
+                  </div>
+                  <div className={styles.namesFirst}>
+                    <Controller
+                      control={control}
+                      name={'lastName'}
+                      rules={{ required: '' }}
+                      render={({ field, fieldState }) => {
+                        return (
+                          <MaterialTextField
+                            className={styles.stepFullwidth}
+                            label={'Last name'}
+                            required
+                            {...fieldState}
+                            {...field}
+                          />
+                        )
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className={styles.namesFirst}>
-                <Controller
-                  control={control}
-                  name={'lastName'}
-                  rules={{ required: '' }}
-                  render={({ field, fieldState }) => {
-                    return (
-                      <MaterialTextField
-                        className={styles.stepFullwidth}
-                        label={'Last name'}
-                        required
-                        {...fieldState}
-                        {...field}
-                      />
-                    )
-                  }}
-                />
+            </div>
+
+            <div className={styles.Im}>
+              <p className={styles.name}>
+                {' '}
+                I am <span>*</span>
+              </p>
+              <div className={styles.btnList}>
+                {experiencedList.map((item) => (
+                  <button
+                    key={item.value}
+                    onClick={() => setSelectedExperienced(item.value)}
+                    className={`${styles.btn}  ${
+                      selectedExperienced === item.value ? styles.active : ''
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.availability}>
+              <p className={styles.name}>
+                {' '}
+                Availability <span>*</span>
+              </p>
+              <div className={styles.btnList}>
+                {noticePeriodLists.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedAvailability(item.id)}
+                    className={`${item.id === selectedAvailability ? styles.active : ''} ${
+                      styles.btn
+                    }`}
+                  >
+                    {item.value}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-    
-       <div className={styles.Im}>
-         <p className={styles.name}>  I am <span>*</span></p>
-         <div className={styles.btnList}>
-           <button className={`${styles.btn} ${styles.active}`}>Experienced</button>
-           <button className={styles.btn}>Experienced</button>
-        </div> 
-       </div>
-
-       <div className={styles.availability}>
-         <p className={styles.name}> Availability <span>*</span></p>
-         <div className={styles.btnList}>  
-           {
-            noticePeriodLists.map(item=><button
-               key={item.id}
-               onClick={()=>setSelectedAvailability(item.id)}
-              className={`${item.id === selectedAvailability ? styles.active: '' } ${styles.btn}`}>
-               {item.value}
-             </button>)
-           }
-         
-        </div> 
-       </div>
+        <FootBtn
+          showBack={false}
+          loading={loading}
+          rightText={'Next (1/4)'}
+          handleClick={handleSubmit(handleUpdateProfile)}
+        />
       </div>
-      </div>
-
-
-      <div className={styles.next}>
-     
-        <LoadingButton
-          onClick={handleClick}
-          loading={loading}    
-          variant="contained"
-          sx={{
-            width:'202px',
-            height:'44px',
-            textTransform: 'capitalize',
-            background:  "#F0F0F0",
-            color: "#707070",
-            boxShadow:'none',
-            borderRadius: '10px'
-          }}
-        >
-          <span>Next (1/4)</span>
-        </LoadingButton>
-        <LoadingButton
-          onClick={handleClick}
-          loading={loading}    
-          variant="contained"
-          sx={{
-            width:'202px',
-            height:'44px',
-            textTransform: 'capitalize',
-            border: '1px solid #136FD3',
-            background:  "transparent",
-            color: '#136FD3',
-            boxShadow:'none',
-            borderRadius: '10px'
-          }}
-        >
-          <span>back</span>
-        </LoadingButton>
-      </div>
-     
-
-    </div>
     </>
-   
   )
 }
 
