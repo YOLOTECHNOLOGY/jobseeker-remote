@@ -13,32 +13,29 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import classNames from "classnames";
 
 
-const carouselList = [
+let carouselList = [
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image.png`,
 		des: 'Bossjob attracts 2.9 million users in PHL, secures $5m funding to boost globalization efforts',
-		date: '28 May 2023',
+		date: '27 May 2023',
 		link: 'https://www.dailyguardian.com.ph/bossjob-attracts-2-9-million-users-in-phl-secures-5m-funding-to-boost-globalization-efforts/',
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image4.png`,
 		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
-		date: '28 May 2023',
+		date: '25 May 2023',
 		link: 'https://e27.co/filipino-job-search-platform-bossjob-secures-us5m-in-venture-funding-20230525/'
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image3.png`,
 		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
-		date: '28 May 2023',
+		date: '23 Apr 2021',
 		link: 'https://blog.bossjob.com/press-room/1524/grab-ventures-ignite-helps-singaporean-startup-bossjob-kickstart-in-vietnam/ '
 	},
-	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image.png`,
-		des: 'Bossjob attracts 2.9 million users in PHL, secures $5m funding to boost globalization efforts',
-		date: '28 May 2023',
-		link: 'https://www.dailyguardian.com.ph/bossjob-attracts-2-9-million-users-in-phl-secures-5m-funding-to-boost-globalization-efforts/',
-	}
 ]
+carouselList = carouselList.concat(carouselList)
+
+const seeAllLink = 'https://blog.bossjob.com/';
 const Section7 = () => {
 	const [enable, setEnable] = useState(true);
 	const {width} = useWindowSize();
@@ -48,12 +45,12 @@ const Section7 = () => {
 		<div className={style.section7_title}>
 			<Link style={{opacity: 0}}
 			      target="_blank"
-			      href={'https://blog.bossjob.com/'}
+			      href={seeAllLink}
 			      className={style.link + ' ' + style.desktop}>
 				See all
 			</Link>
 			<span>Bossjob is in the news</span>
-			<Link target="_blank" href={'https://blog.bossjob.com/'} className={style.link + ' ' + style.desktop}>See all</Link>
+			<Link target="_blank" href={seeAllLink} className={style.link + ' ' + style.desktop}>See all</Link>
 		</div>
 		{!isMobile ? <div className={style.section7_carousel}
 		                  onMouseLeave={(event) => {
@@ -67,20 +64,21 @@ const Section7 = () => {
 			                  setEnable(true);
 		                  }}>
 			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
+				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
+				scrollbar={{draggable: true}}
 				spaceBetween={50}
 				ref={swiperRef}
 				slidesPerView={3.3}
 				autoplay={{
-					delay: 1000,
+					delay: 2000,
 					disableOnInteraction: true
 				}}
+				grabCursor={true}
 				navigation={enable}
 				loop={true}
-				scrollbar={{draggable: true}}
 			>
 				{
-					carouselList.concat(carouselList).map((item, index) => {
+					carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.slideItem} onClick={()=>{
 								window.open(item.link)
@@ -124,7 +122,7 @@ const Section7 = () => {
 				</InView>
 			})}
 			<Link target="_blank"
-			      href={'https://blog.bossjob.com/'}
+			      href={seeAllLink}
 			      style={{marginLeft: '.2rem', textAlign: 'left'}}
 			      className={style.link + ' ' + style.mobile}>
 				See all

@@ -23,7 +23,7 @@ const Header = (props: any) => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [userDetail])
 
-  if(pathname.endsWith('/landing')){
+  if(pathname.endsWith('/talents')){
     return <LandingHeader lang={data.header}/>
   }
   

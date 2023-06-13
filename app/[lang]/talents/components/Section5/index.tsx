@@ -14,7 +14,7 @@ let carouselList = [
 		img: require('./phone1.png').default.src,
 		mobile_img: require('./section5-mobile-1.png').default.src,
 		des: 'Build your resume easily, choose from a variety of templates ',
-		json: json1,
+		// json: json1,
 		mobile_style: {
 			position: 'absolute',
 			top: '-80px',
@@ -26,7 +26,7 @@ let carouselList = [
 		img: require('./phone2.png').default.src,
 		mobile_img: require('./section5-mobile-2.png').default.src,
 		des: 'Protect your privacy and easily block companies',
-		json: json2,
+		// json: json2,
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties,
@@ -47,7 +47,7 @@ let carouselList = [
 		} as CSSProperties ,
 		mobile_img: require('./section5-mobile-4.png').default.src,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone',
-		json: json4,
+		// json: json4,
 		style: {width: '284px', position: 'absolute', left: '27px', top: '-80px'} as CSSProperties
 	}
 ];
@@ -97,7 +97,7 @@ const Section5 = () => {
 									{item.des}
 								</div>
 								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
-								{item.json && <Player autoplay loop src={item.json} style={item.mobile_style}></Player>}
+								{/* {item?.json && <Player autoplay loop src={item?.json} style={item.mobile_style}></Player>} */}
 							</div>
 							{/* <div className={style.section5_des}> */}
 							{/* 	{item.des} */}
@@ -128,12 +128,10 @@ const Section5 = () => {
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {
-			     console.log('onMouseLeave');
 			     swiperRef.current.swiper.autoplay.start();
 			     setEnable(true)
 		     }}
 		     onMouseEnter={(event) => {
-			     console.log('onMouseEnter');
 			     swiperRef.current.swiper.autoplay.pause();
 			     setEnable(false);
 		     }}>
@@ -162,17 +160,17 @@ const Section5 = () => {
 					return <SwiperSlide key={index}>
 						<div className={style.section5_carousel_item}>
 							<img src={item.img} alt="img" className={style.section5_carousel_pic}/>
-							{
-								item.json &&
-				  <Player
-					  autoplay
-					  loop
-					  src={item.json}
-					  style={item.style}
-				  >
+					{/* 		{ */}
+					{/* 			item.json && */}
+				  {/* <Player */}
+					{/*   autoplay */}
+					{/*   loop */}
+					{/*   src={item.json} */}
+					{/*   style={item.style} */}
+				  {/* > */}
 
-				  </Player>
-							}
+				  {/* </Player> */}
+					{/* 		} */}
 						</div>
 						<div className={style.section5_des}>
 							{item.des}

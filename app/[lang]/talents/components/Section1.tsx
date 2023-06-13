@@ -56,8 +56,7 @@ const Section1 = () => {
 				{!isMobile && <Title/>}
 				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
 					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone"
-					     className={style.phone_img}
-					/>
+					     className={style.phone_img}/>
 				</div>
 				<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
 				<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/>

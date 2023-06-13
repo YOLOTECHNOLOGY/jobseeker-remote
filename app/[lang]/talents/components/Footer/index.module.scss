@@ -3,7 +3,7 @@
   padding-top: 140px;
   position: relative;
   margin-top: 48px;
-
+  overflow: hidden;
   :global {
     div {
       position: relative;
@@ -199,7 +199,7 @@
 }
 
 .mobile_list_title {
-  color: #ffffff;
+  color: #ffffff !important;
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 700;
@@ -226,4 +226,14 @@
 
 .mobile_follow_us {
   margin-top: 32px;
+}
+
+.mobile_bg_wrapper{
+  overflow: hidden;
+  border-radius: 0px 50px 0px 0px;
+  @extend .bg;
+  .mobile_bg {
+    border-radius: 0px 50px 0px 0px;
+    height: 100%;
+  }
 }
