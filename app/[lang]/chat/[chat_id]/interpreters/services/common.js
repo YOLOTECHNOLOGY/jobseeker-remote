@@ -1,4 +1,4 @@
-import configuredAxios from '../../configuredAxios'
+import configuredAxios from 'helpers/configuredAxios'
 
 export const update = applicationId => {
     const axios = configuredAxios('jobApplication', 'protected')

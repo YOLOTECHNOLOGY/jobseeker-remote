@@ -1,4 +1,4 @@
-import configuredAxios from '../../configuredAxios'
+import configuredAxios from 'helpers/configuredAxios'
 
 export const autoSendResumeDetail = (applicationId) => {
     const axios = configuredAxios('jobApplication', 'protected')

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { assign } from 'lodash-es'
 import CommonPhrasesModal from './commonPhrasesModal'
-import { list as getList } from 'helpers/interpreters/services/commonPhrases'
+import { list as getList } from 'app/[lang]/chat/[chat_id]/interpreters/services/commonPhrases'
 import CommonPhrasesEditModal from './commonPhrasesEditModal'
 import CommonPhrasesEditListModal from './commonPhrasesEditListModal'
 import CommonPhrasesCreateModal from './commonPhrasesCreateModal'

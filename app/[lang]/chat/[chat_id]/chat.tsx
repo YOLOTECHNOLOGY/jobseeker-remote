@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
-import { IMContext } from 'components/Chat/IMProvider.client'
+import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import dynamic from 'next/dynamic'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+// import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch, useSelector } from 'react-redux'
-import CustomCard from 'components/Chat/customCard'
-const JobseekerChat = dynamic<any>(() => import('components/Chat'), {
+import CustomCard from 'app/[lang]/chat/[chat_id]/components/customCard'
+const JobseekerChat = dynamic<any>(() => import('app/[lang]/chat/[chat_id]/components'), {
     ssr: false
 })
 // import JobseekerChat from 'components/Chat'

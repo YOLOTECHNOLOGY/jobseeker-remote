@@ -1,4 +1,4 @@
-import { IMContext } from 'components/Chat/IMProvider.client'
+import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import { useContext, useState } from 'react'
 import { scripts } from 'imforbossjob'
 const {

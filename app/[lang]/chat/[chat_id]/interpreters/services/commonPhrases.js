@@ -1,4 +1,4 @@
-import configuredAxios from '../../configuredAxios'
+import configuredAxios from 'helpers/configuredAxios'
 
 // eslint-disable-next-line no-undef
 export const list = () => {

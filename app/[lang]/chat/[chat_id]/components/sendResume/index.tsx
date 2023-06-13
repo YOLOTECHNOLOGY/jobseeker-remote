@@ -7,7 +7,7 @@ import { assign } from 'lodash-es'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import classNames from 'classnames'
 
-import { getList, deleteOne } from 'helpers/interpreters/services/resume'
+import { getList, deleteOne } from 'app/[lang]/chat/[chat_id]/interpreters/services/resume'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import Text from 'components/Text'
