@@ -61,6 +61,18 @@ const Section5 = () => {
 	const swiperRef = useRef(null);
 	const swiperRef1 = useRef(null);
 	const swiperRef2 = useRef(null);
+
+	const section5DesElements = document.querySelectorAll("[data-class='section5-des']");
+	let maxHeight = 0;
+
+	section5DesElements.forEach(element => {
+		const elementHeight = (element as HTMLElement).offsetHeight;
+		if (elementHeight > maxHeight) {
+			maxHeight = elementHeight;
+		}
+	});
+
+	console.log("Maximum height:", maxHeight);
 	if (isMobile) {
 		return <section className={style.section5}>
 				<Swiper
@@ -88,7 +100,7 @@ const Section5 = () => {
 					{carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.section5_carousel_item}>
-								<div className={style.mobile_section5_des}>
+								<div className={style.mobile_section5_des} data-class="section5-des">
 									{item.des}
 								</div>
 								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>

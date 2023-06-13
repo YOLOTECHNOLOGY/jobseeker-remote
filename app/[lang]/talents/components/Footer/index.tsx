@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import style from './index.module.scss';
-import { getLang } from 'helpers/country'
+import {getCountryKey, getLang} from 'helpers/country'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import React, {useContext} from "react";
 import {getCookie} from "../../../../../helpers/cookies";
@@ -93,13 +93,12 @@ const follow_use  =  [
 	{img: `${process.env.S3_BUCKET_URL}/landing/tiktok.svg`, link: 'https://tiktok.com/@bossjobph'},
 ]
 
-
-
 const Footer = () =>{
 	const langKey = getLang();
 	const contextLang =  useContext(languageContext);
 
 	const isLogin = getCookie('accessToken') ? true : false
+
 	const {
 		about,
 		aboutBossjob,
@@ -124,9 +123,44 @@ const Footer = () =>{
 		downloadBossjobApp,
 		followUs,
 		technology,
-		corporation
+		corporation,
+		JobsIn1,
+		JobsIn2,
+		JobsIn3,
 		// @ts-ignore
 	} = contextLang?.foot ||{}
+	const countryKey = getCountryKey();
+	const COUNTRY_MAP = {
+		'ph': [
+			{
+				key: `/jobs-hiring/manila-jobs`,
+				child: JobsIn1,
+			},
+			{
+				key: `/jobs-hiring/makati-jobs`,
+				child: JobsIn2
+			},
+			{
+				key: `/jobs-hiring/cebu-city-jobs`,
+				child: JobsIn3
+			}
+		],
+		'sg': [
+			{
+				key: `/jobs-hiring/downtown-core-jobs`,
+				child: JobsIn1,
+			},
+			{
+				key: `/jobs-hiring/kallang-jobs`,
+				child: JobsIn2
+			},
+			{
+				key: `/jobs-hiring/jurong-east-jobs`,
+				child: JobsIn3
+			}
+		]
+	}
+	const currentCounties = COUNTRY_MAP[countryKey]
 	const colData =  [
 			{
 				title: about,
@@ -186,6 +220,7 @@ const Footer = () =>{
 			{
 				title: popularJobs,
 				links: [
+					...currentCounties,
 					{
 						key: `/jobs-hiring/information-technology-jobs?page=1`,
 						child: ItJobs

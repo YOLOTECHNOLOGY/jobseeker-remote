@@ -23,9 +23,7 @@ export const Title = () => {
 	}, []);
 	return <div className={style.titleWrapper} ref={ref}>
 		<p className={style.title + ' ' + style['title-color']} style={{height: 108}}>
-			<Typical
-				steps={['AI Hiring APP']}
-			/>
+			{show && <Typical steps={['AI Hiring APP']}/>}
 		</p>
 		<InView threshold={0.2}>
 			{({inView, ref}) => {

@@ -178,7 +178,14 @@
   margin-right: auto;
   margin-left: auto;
 }
-
+.site_map_link{
+  &:hover{
+    color: #FFC635;
+  }
+  &:active{
+    color: #FFC635;
+  }
+}
 .mobile_footer_download {
   display: flex;
   align-items: center;
@@ -204,11 +211,13 @@
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
+  text-transform :capitalize;
   line-height: 18px;
 }
 
 .mobile_list {
   color: #ffffff;
+
 }
 
 .mobile_list_container {
@@ -217,6 +226,14 @@
 }
 
 .mobile_footer_link {
+  &:active{
+    color: #ffc635;
+    :global{
+      span{
+        color: #ffc635 !important;
+      }
+    }
+  }
   :global {
     span {
       color: #ffffff !important;

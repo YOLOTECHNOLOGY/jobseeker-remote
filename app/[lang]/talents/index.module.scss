@@ -1414,6 +1414,7 @@
 }
 
 .slideItem {
+
   @media screen and (max-width: 540px) {
     opacity: 0;
     width: 3.2rem;
@@ -1423,7 +1424,9 @@
 .section7_mobile_carousel{
 
 }
-
+.cursor_pointer{
+  cursor: pointer;
+}
 
 .section7_new_inner_pic {
   width: 100%;

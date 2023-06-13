@@ -73,14 +73,13 @@ const Section7 = () => {
 					delay: 2000,
 					disableOnInteraction: true
 				}}
-				grabCursor={true}
 				navigation={enable}
 				loop={true}
 			>
 				{
 					carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
-							<div className={style.slideItem} onClick={()=>{
+							<div className={style.slideItem + " " + style.cursor_pointer} onClick={()=>{
 								window.open(item.link)
 							}}>
 								<div className={style.section7_new_pic}>
