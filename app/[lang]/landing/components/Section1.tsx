@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 import classNames from 'classnames';
 import Title from "./Title";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 const dialog = [
 	{
@@ -44,12 +45,15 @@ const Section1 = () => {
 		/* Optional options */
 		threshold: 1,
 	});
+	const {width} = useWindowSize();
+	const isMobile = width < 540;
 	return <div className={style.section1Wrapper}>
 		<div className={style.section_bg + ' ' + style.mobile}></div>
 		<div className={style.sectionContainer}>
 			<div className={style.section_bg + ' ' + style.desktop}></div>
+			{isMobile && <Title/>}
 			<section className={style.section1}>
-				<Title/>
+				{!isMobile && <Title/>}
 				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
 					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone"
 					     className={style.phone_img}

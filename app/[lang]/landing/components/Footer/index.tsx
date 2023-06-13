@@ -251,8 +251,7 @@ const Footer = () =>{
 												<Link
 													className={style.mobile_footer_link}
 													href={link.key}
-													title={link.child}
-												>
+													title={link.child}>
 													<Text textStyle='sm'>{link.child}</Text>
 												</Link>
 											</li>
@@ -280,7 +279,7 @@ const Footer = () =>{
 					</div>
 				</div>
 			</div>
-			<img src={`${process.env.S3_BUCKET_URL}/landing/bg.svg`} alt={'bg'} className={style.mobile_bg}/>
+			<img src={require('./mobile-footer-bg.svg').default.src} alt={'bg'} className={style.mobile_bg}/>
 		</div>
 	}
 	return <div className={style.footer_container}>

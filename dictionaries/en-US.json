@@ -264,6 +264,7 @@
     }
   },
   "home": {
+    "more": "More",
     "title": "Find Job. Talk to Boss.",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
@@ -318,6 +319,7 @@
     "topCompany": "Top Companies",
     "companyHiring": "Top Companies Hiring",
     "jobsHiring": "jobs hiring",
+    "jobs": "Jobs",
     "companyCard": {
       "chatNow": "Chat now",
       "employee": "Employee",

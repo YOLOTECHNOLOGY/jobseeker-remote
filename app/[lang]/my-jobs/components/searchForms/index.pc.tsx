@@ -72,7 +72,7 @@ const SearchArea = (props: any) => {
     searchParams.get('qualification')?.split?.(',') ?? []
   )
   const qualificationList =
-    config.educations.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
+    config.degrees.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
   const [workExperience, setWorkExperience] = useState(
     searchParams.get('workExperience')?.split?.(',') ?? []
   )
