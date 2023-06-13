@@ -11,6 +11,7 @@ import { setItem } from 'helpers/localStorage'
 import { useDispatch } from 'react-redux'
 
 import { fetchUserWorkExperienceQuickUploadResume } from 'store/actions/users/fetchUserWorkExperience'
+import { useRouter } from 'next/router'
 
 const UploadResume = (props: any) => {
   const dispatch = useDispatch()
@@ -23,9 +24,40 @@ const UploadResume = (props: any) => {
     isUploading,
     setResume,
     resume,
-    lang
+    lang,
+    isLogged,
   } = props
   const { quickUploadResume } = lang
+  const router = useRouter()
+
+  const handleRedirect = () => {
+    if (isLogged) {
+      router.push('/manage-profile')
+    }
+  }
+  
+  const handleUploadResume = (event:any) => {
+    const file = event.target?.files[0]
+    if(!file) return
+    if(!isLogged) {
+      setResume(file)
+      setItem('quickUpladResume', 'upFile')
+    }else {
+      handleRedirect()
+    }
+    // reset file value
+    event.target.value = ''
+  }
+
+  const createOnlineResume = () => {
+    if(!isLogged) {
+      dispatch(fetchUserWorkExperienceQuickUploadResume({ hasNoWorkExperience: true }))
+      setItem('quickUpladResume', 'onLine')
+      setIsCreatingResume(true)
+    }else {
+      handleRedirect()
+    }
+  }
 
   return (
     <div>
@@ -55,21 +87,26 @@ const UploadResume = (props: any) => {
             variant='contained'
             component='label'
           >
-            <Text textColor='white' bold>
-              {/* Upload your Resume */}
-              {quickUploadResume.uploadBtn}
-            </Text>
-            <input
-              type='file'
-              hidden
-              accept='.pdf, .doc, .docx'
-              onChange={(e) => {
-                if (e.target?.files[0]) {
-                  setResume(e.target.files[0])
-                }
-                setItem('quickUpladResume', 'upFile')
-              }}
-            />
+            {
+              isLogged ? (
+                <Text textColor='white' bold onClick={handleRedirect}>
+                  {quickUploadResume.uploadBtn}
+                </Text>
+              ) : (
+                <>
+                  <Text textColor='white' bold>
+                    {/* Upload your Resume */}
+                    {quickUploadResume.uploadBtn}
+                  </Text>
+                  <input
+                    type='file'
+                    hidden
+                    accept='.pdf, .doc, .docx'
+                    onChange={handleUploadResume}
+                  />
+                </>
+              )
+            }
           </MaterialButton>
           <Text textColor='darkgrey' textStyle='xsm' className={styles.step2UploadAllowed}>
             {/* PDF, DOC, DOCX. file, max 5MB */}
@@ -98,12 +135,7 @@ const UploadResume = (props: any) => {
             size='large'
             capitalize
             isLoading={isCreatingResume}
-            onClick={() => {
-              setItem('quickUpladResume', 'onLine')
-              dispatch(fetchUserWorkExperienceQuickUploadResume({ hasNoWorkExperience: true }))
-              setIsCreatingResume(true)
-              // router.push(redirect)
-            }}
+            onClick={createOnlineResume}
           >
             <Text textColor='primary' bold>
               {quickUploadResume.createFreeResume}
