@@ -1,0 +1,31 @@
+.scroll-container {
+    overflow: hidden;
+    width: 100%;
+    whiteSpace: 'nowrap';
+}
+
+.scroll-content {
+    display: inline-flex;
+    animation: scroll 10s linear infinite;
+}
+
+.scroll-item {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    background: #3c5a99;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.scroll-container.paused .scroll-content {
+    animation-play-state: paused;
+}

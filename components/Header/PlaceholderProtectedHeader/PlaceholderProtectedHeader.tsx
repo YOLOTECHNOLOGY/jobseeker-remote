@@ -16,7 +16,7 @@ import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
 /* Style */
 import styles from '../Header.module.scss'
 import MaterialAlert from 'components/MaterialAlert/ index'
-import { IMContext } from 'components/Chat/IMProvider.client'
+import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import { useSelector } from 'react-redux'
 
 type PlaceholderProtectedHeaderProps = {

@@ -17,7 +17,7 @@ import Head from 'next/head'
 const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
-import IMProvider from 'components/Chat/IMProvider.client'
+import IMProvider from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import 'styles/globals.scss'
 import { persistor } from 'store'
 import { initFireBase } from 'helpers/fireBaseManager'
