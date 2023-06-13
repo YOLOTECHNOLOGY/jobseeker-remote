@@ -326,8 +326,12 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, workExp.id)}
+                      className={styles.iconWrapper + ' '+ (workExperiences?.length>1 ? '' : styles.disabledOpacity)}
+                      onClick={() => {
+                        if(workExperiences?.length>1){
+                          handleDeleteData(sectionName, workExp.id)
+                        }
+                      }}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
@@ -427,8 +431,12 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, education.id)}
+                      className={styles.iconWrapper + ' '+ (educations?.length>1 ? '' : styles.disabledOpacity)}
+                      onClick={() => {
+                        if(educations?.length>1){
+                          handleDeleteData(sectionName, education.id)
+                        }
+                      }}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
@@ -1027,10 +1035,21 @@ const ManageProfilePage = ({ lang }: any) => {
     changeJobPreference(userDetail.job_preferences || [], config)
     return userDetail
   }, [userDetail, config])
+  const [unCompleted, setUnCompleted] = useState({"profile": false, "job-preferences": false,"resume": false})
   // const dispatch = useDispatch()
   // // useEffect(() => {
   // //   dispatch(fetchConfigRequest())
   // // }, [])
+
+  useEffect(() => {
+    if(userDetail?.job_preferences) {
+      setUnCompleted((prev) => ({...prev, "job-preferences": userDetail?.job_preferences?.length == 0}))
+    }
+    if(userDetail?.resumes) {
+      setUnCompleted((prev) => ({...prev, "resume": userDetail?.resume?.length == 0}))
+    }
+  }, [userDetail])
+
   const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   const jobCategoryList = getJobCategoryList(config).map((category) => {
     return {
@@ -1042,8 +1061,6 @@ const ManageProfilePage = ({ lang }: any) => {
     return [userDetail?.job_preferences || [], Date.now()]
   }, [userDetail?.job_preferences])
   const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
-
-  console.log('config', userDetail, config)
 
   const [modalState, setModalState] = useState({
     profile: {
@@ -1177,6 +1194,7 @@ const ManageProfilePage = ({ lang }: any) => {
         setTabValue={setTabValue}
         modalName='profile'
         handleModal={handleModal}
+        unCompleted={unCompleted}
       >
         {tabValue === 'profile' && (
           <RenderProfileView

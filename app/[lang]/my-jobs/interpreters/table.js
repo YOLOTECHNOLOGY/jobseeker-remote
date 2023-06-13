@@ -2,7 +2,7 @@
 
 import { registInterpreter, Result } from 'app/[lang]/abstractModels/util'
 import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
-// import { check } from 'helpers/interpreters/services/chat'
+// import { check } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 import { cookies } from 'next/headers'
 import { flatMap } from 'lodash-es'
 import { fetchJobsForYouLogin } from 'store/services/jobs/fetchJobsForYouLogin'

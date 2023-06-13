@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 /* components */
@@ -16,16 +16,26 @@ import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
 /* Style */
 import styles from '../Header.module.scss'
 import MaterialAlert from 'components/MaterialAlert/ index'
-import { IMContext } from 'components/Chat/IMProvider.client'
+import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
+import { useSelector } from 'react-redux'
 
 type PlaceholderProtectedHeaderProps = {
-  isShowEmailAlert: boolean,
-  lang:any
+  isShowEmailAlert: boolean
+  lang: any
 }
 
-const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderProtectedHeaderProps) => {
+const PlaceholderProtectedHeader = ({
+  isShowEmailAlert,
+  lang = {}
+}: PlaceholderProtectedHeaderProps) => {
   const currentUser = getCookie('user')
   const { totalUnread } = useContext(IMContext)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
+
+  useEffect(() => {
+    userInfo && setShowUnCompletedDot(!userInfo?.is_profile_completed)
+  }, [userInfo])
 
   return (
     <>
@@ -52,7 +62,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
               <React.Fragment>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                   {lang.findJobs}
+                    {lang.findJobs}
                   </Text>
                 </li>
                 {/* <li className={styles.headerLink}>
@@ -64,20 +74,20 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                 </li> */}
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  {lang.companies}
+                    {lang.companies}
                   </Text>
                 </li>
 
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                  {lang.courses}
+                    {lang.courses}
                   </Text>
                 </li>
 
                 <li className={styles.headerLink} style={{ position: 'relative' }}>
                   <Link title='Career Guide' to='https://blog.bossjob.ph' external>
                     <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    {lang.careerGuide}
+                      {lang.careerGuide}
                     </Text>
                   </Link>
                 </li>
@@ -111,7 +121,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                 style={{ flexDirection: 'row', alignItems: 'center' }}
               >
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                {lang.Chat}
+                  {lang.Chat}
                 </Text>
                 {totalUnread ? (
                   <span className={styles.unread}>
@@ -140,8 +150,13 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                       }
                     }}
                   >
-                    <Text textStyle='base' textColor='white' bold>
-                    {lang.manageResume}
+                    <Text
+                      textStyle='base'
+                      textColor='white'
+                      bold
+                      className={showUnCompletedDot ? styles.unCompleted : ''}
+                    >
+                      {lang.manageResume}
                     </Text>
                   </MaterialButton>
                 </a>
@@ -166,7 +181,7 @@ const PlaceholderProtectedHeader = ({ isShowEmailAlert,lang={} }: PlaceholderPro
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
-                left: 20
+                left: 30
               }}
             >
               <>

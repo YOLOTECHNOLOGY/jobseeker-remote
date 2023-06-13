@@ -59,3 +59,15 @@
     }
   }
 }
+
+.unCompleted::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #F44336;
+  margin-left: 4px;
+  display: inline-block;
+  margin-bottom: 1px;
+}

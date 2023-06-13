@@ -10,3 +10,31 @@
     data: { data: 'refreshtoken expiration of identity' }
   }
 }
+[2023-06-13T12:01:21.660] [ERROR] clientError - {
+  error: {
+    code: 50001,
+    data: null,
+    message: "1048,Column 'source' cannot be null"
+  }
+}
+[2023-06-13T12:01:22.039] [ERROR] clientError - {
+  error: {
+    code: 50001,
+    data: null,
+    message: "1048,Column 'source' cannot be null"
+  }
+}
+[2023-06-13T12:04:21.738] [ERROR] clientError - {
+  error: {
+    code: 50001,
+    data: null,
+    message: "1048,Column 'device' cannot be null"
+  }
+}
+[2023-06-13T12:05:15.509] [ERROR] clientError - {
+  error: {
+    code: 50001,
+    data: null,
+    message: "1048,Column 'device' cannot be null"
+  }
+}

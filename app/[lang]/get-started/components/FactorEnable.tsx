@@ -2,8 +2,6 @@ import React, { useEffect,useRef } from 'react'
 import styles from '../index.module.scss'
 import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
-import Image from 'next/image'
-import { LoginSafe } from 'images'
 import lottie from "lottie-web";
 function FactorEnable(props: any) {
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
@@ -16,7 +14,7 @@ function FactorEnable(props: any) {
       const { data } = userInfo
       setTimeout(() => {
         defaultLoginCallBack(data)
-      }, 3000)
+      }, 2000)
     }
   }, [userInfo])
 
