@@ -43,9 +43,9 @@ const loginForEmail = (props: IProps) => {
         submitRef.current = false
         const { user_id, avatar } = res?.data?.data ?? {}
         if (user_id) {
-          router.push(`/${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
+          router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
         } else {
-          router.push(`/${pathname}?step=2&&email=${email}`)
+          router.push(`${pathname}?step=2&&email=${email}`)
         }
       })
       .catch((error) => {

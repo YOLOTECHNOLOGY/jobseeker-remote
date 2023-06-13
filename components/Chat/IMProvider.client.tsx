@@ -85,9 +85,6 @@ const msgToNote = (message, state) => {
             link: `/chat/${message?.aChatId}`
         }
     }
-
-
-
 }
 
 const IMProvider = ({ children, lang }: any) => {
@@ -211,7 +208,7 @@ const IMProvider = ({ children, lang }: any) => {
         }
     }, [lang])
     useEffect(() => {
-        if (userId) {
+        if (userId && accessToken ) {
             IMManager.accessUser(
                 '' + userId + '_j',
                 auid => getAuth(auid).then(result => {

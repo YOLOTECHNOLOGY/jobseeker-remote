@@ -10,7 +10,6 @@ import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetai
 import { useDispatch, useSelector } from 'react-redux'
 import CustomCard from 'components/Chat/customCard'
 import { getDictionary } from 'get-dictionary'
-// import { updateDefaultChatList } from 'store/actions/chat/defaultChatList'
 const JobseekerChat = dynamic<any>(import('components/Chat'), {
     ssr: false
 })
@@ -42,7 +41,6 @@ const Chat = (props: any) => {
         dispatch(fetchUserOwnDetailRequest({}))
         dispatch(fetchConfigRequest())
     }, [])
-    // const defaultChatList = useSelector((store: any) => store?.chat?.defaultChatList ?? [])
     const [chat_id, setChatId] = useState(router?.query?.chat_id)
     const [first, setFirst] = useState(true)
     const statusOptions = useSelector((store: any) => store.config.config.response?.jobseeker_chat_type_filters?.map?.(item => {
@@ -106,7 +104,7 @@ const Chat = (props: any) => {
     </Layout>
 }
 export const getServerSideProps = async (props) => {
-    const { query,params:{lang:langKey} } = props
+    const { query, params: { lang: langKey } } = props
     const lang = await getDictionary(query.lang as 'en-US')
     return {
         props: {
@@ -114,12 +112,5 @@ export const getServerSideProps = async (props) => {
         }
     }
 }
-const Ready = (props) => {
-    const { ready } = useContext(IMContext)
-    if (ready) {
-        return <Chat {...props} />
-    } else {
-        return <div />
-    }
-}
-export default Ready
+
+export default Chat
