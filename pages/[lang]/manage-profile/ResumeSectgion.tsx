@@ -77,7 +77,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   })
 
   useEffect(() => {
-    setResume(userDetail.resumes)
+    setResume(userDetail.resumes||[])
   }, [userDetail.resumes])
 
   useEffect(() => {

@@ -582,3 +582,9 @@
     background-color: #1976d2 !important;
   }
 }
+
+.disabledOpacity {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

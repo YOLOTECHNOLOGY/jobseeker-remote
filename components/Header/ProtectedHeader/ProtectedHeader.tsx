@@ -10,7 +10,7 @@ import Link from 'components/Link'
 import Text from 'components/Text'
 import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
-import { IMContext } from 'components/Chat/IMProvider.client'
+import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 import { getLanguage, getCountryId } from 'helpers/country'
 import { getValueById } from 'helpers/config/getValueById'
@@ -48,7 +48,9 @@ const ProtectedHeader = ({ lang }: any) => {
   const ref = useRef(null)
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false)
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
   const { totalUnread } = useContext(IMContext)
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
@@ -63,6 +65,10 @@ const ProtectedHeader = ({ lang }: any) => {
       setIsShowHeaderMenu(false)
     }
   }
+
+  useEffect(() => {
+    userInfo && setShowUnCompletedDot(!userInfo?.is_profile_completed)
+  }, [userInfo])
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true)
@@ -195,8 +201,11 @@ const ProtectedHeader = ({ lang }: any) => {
                 </span>
               ) : null}
             </li>
-            <li className={classNames([styles.headerLink, styles.headerLinkLogin])} style={{width:'150px'}}>
-              {pathname !== '/manage-profile' ? (
+            <li
+              className={classNames([styles.headerLink, styles.headerLinkLogin])}
+              style={{ width: '150px' }}
+            >
+              {!pathname.includes('/manage-profile') ? (
                 <a
                   title='Manage Resume'
                   onClick={() => {
@@ -205,6 +214,7 @@ const ProtectedHeader = ({ lang }: any) => {
                       : router.push('/' + langKey + '/jobseeker-complete-profile/1')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
+                  style={{ color: '#353535' }}
                 >
                   <MaterialButton
                     variant='contained'
@@ -223,7 +233,11 @@ const ProtectedHeader = ({ lang }: any) => {
                       }
                     }}
                   >
-                    <Text textColor='white' textStyle='base'>
+                    <Text
+                      textColor='white'
+                      textStyle='base'
+                      className={showUnCompletedDot ? styles.unCompleted : ''}
+                    >
                       {manageResume}
                     </Text>
                   </MaterialButton>
@@ -233,7 +247,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   variant='contained'
                   capitalize
                   sx={{
-                    width: '123px',
+                    width: '150px',
                     height: '35px !important',
                     border: '1.5px solid #FFFFFF',
                     borderRadius: '10px',
@@ -246,13 +260,17 @@ const ProtectedHeader = ({ lang }: any) => {
                     }
                   }}
                 >
-                  <Text textColor='white' textStyle='base'>
+                  <Text
+                    textColor='white'
+                    textStyle='base'
+                    className={showUnCompletedDot ? styles.unCompleted : ''}
+                  >
                     {manageResume}
                   </Text>
                 </MaterialButton>
               )}
             </li>
-            <li className={styles.headerLink} style={{width:'90px'}}>
+            <li className={styles.headerLink} style={{ width: '90px' }}>
               <div
                 className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
@@ -262,7 +280,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   className={styles.profilePlaceHolder}
                   alt='avatar'
                   onError={(e) => {
-                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                    ;(e.target as HTMLInputElement).src = DefaultAvatar
                   }}
                 />
                 <div className={styles.profileCaret} />
@@ -279,7 +297,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'relative',
-                left: 20
+                left: 30
                 // top: 5
               }}
             >
@@ -314,7 +332,13 @@ const ProtectedHeader = ({ lang }: any) => {
                   <Text textStyle='base'>{accountSettings}</Text>
                 </Link>
               </li>
-             
+
+              <li className={styles.headerMenuItem}>
+                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                  <Text textStyle='base'>{hiring}</Text>
+                </Link>
+              </li>
+
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
                 <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>
@@ -334,6 +358,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   </Text>
                 </div>
               </li>
+
               <li className={styles.headerMenuItem}>
                 <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
                   <Text textStyle='base'>{logOut}</Text>

@@ -1,6 +1,6 @@
 'use client'
 import { getCookie } from 'helpers/cookies'
-import { check } from 'helpers/interpreters/services/chat'
+import { check } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 import React, { createContext, useState, useEffect } from 'react'
 
 export const ChatInfoContext = createContext({chatInfos:[]})

@@ -1,10 +1,10 @@
 // import CONFIG from 'shared/config'
 import configuredAxios from 'helpers/configuredAxios'
 // import { getCookie } from 'shared/helpers/cookies'
-
-const fetchJobDetailService = (payload) => {
+import { cache } from 'react'
+const fetchJobDetailService = (cache ?? (a=>a))((payload) => {
   const axios = configuredAxios('job', payload.status, false, payload.serverAccessToken)
   return axios.get(`/${payload.jobId}`)
-}
-
+ }
+)
 export { fetchJobDetailService }

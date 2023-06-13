@@ -7,7 +7,7 @@ import { wrapper } from 'store'
 import { END } from '@redux-saga/core'
 
 import Layout from 'components/Layout'
-import { createChat } from 'helpers/interpreters/services/chat'
+import { createChat } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import * as fbq from 'lib/fpixel'
 

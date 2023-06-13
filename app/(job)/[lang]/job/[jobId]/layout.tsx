@@ -17,7 +17,6 @@ const handleShareInfo = async (params: any): Promise<any> => {
 async function generateSEO({ params, searchParams }) {
   const { data: jobDetail } = await handleFetchJobDetail(params)
   const { lang } = params
-  console.log({})
   const dictionary = await getDictionary(lang)
   const { seo: { job } } = dictionary
   let shareInfo = null

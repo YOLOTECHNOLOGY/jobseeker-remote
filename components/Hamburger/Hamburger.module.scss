@@ -33,7 +33,7 @@
 
 #hamburgerMenu span {
   display: block;
-  width: 20px;
+  width: 12px;
   height: 2px;
   margin-bottom: 3px;
   position: relative;
@@ -60,15 +60,59 @@
 .active {
   & span {
     opacity: 1;
-    transform: rotate(-45deg) translate(-2px, -1px);
+    transform: rotate(-45deg) translate(2px, -1px);
   }
 
   & span:nth-last-child(3) {
-    transform: rotate(45deg) translate(0, -1px);
+    transform: rotate(45deg) translate(4px, -1px);
   }
 
   & span:nth-last-child(2) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
+  }
+}
+
+.profile {
+  &Avatar {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+  }
+}
+
+.hamburgerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_getStarted {
+    height: 35px;
+    width: 116px;
+    border: 1.5px solid #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 35px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #ffffff;
+  }
+
+  .mobile {
+    &_menu {
+      &_off {
+        //width: 27px;
+        height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: width 0.3ms ease;
+        margin-left: 16px;
+      }
+
+      &_open {
+        //width: 18px;
+      }
+    }
   }
 }
