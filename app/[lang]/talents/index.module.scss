@@ -708,6 +708,7 @@
 
   @media screen and (max-width: 540px) {
     height: auto;
+    margin-bottom: 50px;
   }
 }
 
@@ -784,11 +785,13 @@
   font-weight: 700;
   font-size: .32rem;
   line-height: .40rem;
-  text-align: center;
+  text-align: left;
   letter-spacing: 0.02em;
   color: #353535;
+  margin: 0 auto;
   margin-bottom: .24rem;
   margin-top: .7rem;
+  width: 3.2rem;
 }
 
 .section4_mobile_item_des {
@@ -1497,4 +1500,7 @@
   top: 0;
   left: 0;
   z-index: 10;
+}
+.section8_mobile_carousel{
+  margin-bottom: 50px;
 }
