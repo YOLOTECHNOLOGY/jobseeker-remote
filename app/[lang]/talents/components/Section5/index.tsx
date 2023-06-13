@@ -61,13 +61,8 @@ const Section5 = () => {
 	const swiperRef = useRef(null);
 	const swiperRef1 = useRef(null);
 	const swiperRef2 = useRef(null);
-
-
-
 	if (isMobile) {
 		return <section className={style.section5}>
-
-
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
