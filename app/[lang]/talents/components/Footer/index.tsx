@@ -141,7 +141,7 @@ const Footer = () =>{
 				child: JobsIn2
 			},
 			{
-				key: `/jobs-hiring/cebu-city-jobs`,
+				key: `/jobs-hiring/cebu-jobs`,
 				child: JobsIn3
 			}
 		],

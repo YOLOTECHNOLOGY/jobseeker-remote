@@ -49,7 +49,7 @@ const CountryList = (data) => {
         title: JobsIn2
       },
       {
-        to: `${langKey}/jobs-hiring/cebu-city-jobs`,
+        to: `${langKey}/jobs-hiring/cebu-jobs`,
         title: JobsIn3
       }
     ],
