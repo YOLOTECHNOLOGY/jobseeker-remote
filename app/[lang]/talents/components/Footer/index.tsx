@@ -321,7 +321,7 @@ const Footer = () =>{
 		</div>
 	}
 	return <div className={style.footer_container}>
-		<img src={require('../AssetsLocal/footer_bg.png').default.src} alt={'bg'} className={style.bg}/>
+		<img src={require('../AssetsLocal/footer-bg.jpg').default.src} alt={'bg'} className={style.bg}/>
 		<div className={style.footer_title}>
 			{downloadBossjobApp}
 		</div>

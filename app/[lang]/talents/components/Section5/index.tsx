@@ -125,13 +125,14 @@ const Section5 = () => {
 			</div>
 
 			<AnimationNumber/>
-			<img className={style.mobile_section5_bg} src={`${process.env.S3_BUCKET_URL}/landing/section5-bg.svg`}
+			<img className={style.mobile_section5_bg}
+			     src={require('../AssetsLocal/section5-mobile-bg.jpg').default.src}
 			     alt="_"/>
 		</section>
 	}
 	return <section className={style.section5}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
-	                   src={`${process.env.S3_BUCKET_URL}/landing/section5-bg.svg`}/>}
+	                   src={require('../AssetsLocal/section5-pc-bg.jpg').default.src}/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {

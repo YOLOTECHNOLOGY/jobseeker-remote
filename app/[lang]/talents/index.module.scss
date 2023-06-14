@@ -850,8 +850,7 @@
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     height: 1600px;
-    margin-bottom: 600px;
-    background-color: #000000;
+    //margin-bottom: 600px;
     :global{
       .swiper{
         overflow: visible !important;
@@ -913,6 +912,9 @@
   width: 100vw;
   transform: translate3d(0, 50%, 0);
   z-index: 100;
+  @media screen and (max-width: 540px) {
+    bottom: 300px;
+  }
 }
 
 .section5_bottom_border_wrapper {
