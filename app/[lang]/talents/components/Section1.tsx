@@ -63,10 +63,10 @@ const Section1 = () => {
 			{/* </section> */}
 
 
-			<section className={style.section1_new}>
+			<section className={style.section1_new + ' ' + style.desktop}>
 				{!isMobile && <div className={style.absolute_center}><Title/></div>}
 				<div className={style.section1_phone_wrapper}>
-					<img src={require('./AssetsLocal/phone1-final-2.png').default.src} alt="" className={style.section1_phone}/>
+					<img src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-2.png`} alt="" className={style.section1_phone}/>
 					<img className={style.rocket + ' ' + style.desktop} alt="rocket"
 					     src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
 					<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`}

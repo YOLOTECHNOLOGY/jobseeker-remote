@@ -60,9 +60,9 @@ const Section6 = () => {
 
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={require('../AssetsLocal/section6-pc-bg.jpg').default.src}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/section6-pc-bg.jpg`}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
-		     src={require('../AssetsLocal/section6-mobile-bg.jpg').default.src}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/section6-mobile-bg.jpg`}/>
 		<div className={style.content_container}>
 			<div className={style.section6_title}>
 				Best hiring APP in Southeast-Asia
@@ -147,7 +147,7 @@ const Section5Carousel = () => {
 									</div> : null}
 									<img className={style.country_name_mask}
 									     alt={'mask'}
-									     src={require('./city_header_mask.svg').default.src}/>
+									     src={`${process.env.S3_BUCKET_URL}/landing/city_header_mask.svg`}/>
 									<div className={style.country_name}>
 										{country.country}
 									</div>

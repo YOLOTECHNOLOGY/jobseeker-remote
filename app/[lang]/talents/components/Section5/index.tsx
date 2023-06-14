@@ -11,8 +11,8 @@ import json4 from './lottie_4';
 
 let carouselList = [
 	{
-		img: require('./phone1.png').default.src,
-		mobile_img: require('./section5-mobile-1.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone1.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-1.png`,
 		des: 'Build your resume easily, choose from a variety of templates ',
 		// json: json1,
 		mobile_style: {
@@ -23,8 +23,8 @@ let carouselList = [
 		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
 	},
 	{
-		img: require('./phone2.png').default.src,
-		mobile_img: require('./section5-mobile-2.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone2.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-2.png`,
 		des: 'Protect your privacy and easily block companies',
 		// json: json2,
 		mobile_style: {
@@ -34,18 +34,18 @@ let carouselList = [
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section5-3.png`,
-		mobile_img: require('./section5-mobile-3.png').default.src,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-3.png`,
 		des: 'Customise your chat messages and make a great impression.',
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties
 	},
 	{
-		img: require('./phone4.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone4.png`,
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties ,
-		mobile_img: require('./section5-mobile-4.png').default.src,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-4.png`,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone',
 		// json: json4,
 		style: {width: '284px', position: 'absolute', left: '27px', top: '-80px'} as CSSProperties
@@ -126,13 +126,13 @@ const Section5 = () => {
 
 			<AnimationNumber/>
 			<img className={style.mobile_section5_bg}
-			     src={require('../AssetsLocal/section5-mobile-bg.jpg').default.src}
+			     src={`${process.env.S3_BUCKET_URL}/landing/section5-mobile-bg.jpg`}
 			     alt="_"/>
 		</section>
 	}
 	return <section className={style.section5}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
-	                   src={require('../AssetsLocal/section5-pc-bg.jpg').default.src}/>}
+	                   src={`${process.env.S3_BUCKET_URL}/landing/section5-pc-bg.jpg`}/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {

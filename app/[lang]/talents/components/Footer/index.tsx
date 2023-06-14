@@ -316,12 +316,12 @@ const Footer = () =>{
 			</div>
 			<div className={style.mobile_bg_wrapper}>
 				{/* <MySvgComponent></MySvgComponent> */}
-				<img src={require('../AssetsLocal/footer-mobile-bg.jpg').default.src} alt={'bg'} className={style.mobile_bg}/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/footer-mobile-bg.jpg`} alt={'bg'} className={style.mobile_bg}/>
 			</div>
 		</div>
 	}
 	return <div className={style.footer_container}>
-		<img src={require('../AssetsLocal/footer-bg.jpg').default.src} alt={'bg'} className={style.bg}/>
+		<img src={`${process.env.S3_BUCKET_URL}/landing/footer-bg.jpg`} alt={'bg'} className={style.bg}/>
 		<div className={style.footer_title}>
 			{downloadBossjobApp}
 		</div>
