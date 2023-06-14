@@ -45,7 +45,8 @@ export function middleware(request: NextRequest) {
       '/errors/report',
       '/clientError.log',
       '/serverError.log',
-      '/getLog'
+      '/getLog',
+      '/maintenance'
       // Your other files in `public`
     ].includes(pathname)
   ) { return }
