@@ -316,7 +316,7 @@ const Footer = () =>{
 			</div>
 			<div className={style.mobile_bg_wrapper}>
 				{/* <MySvgComponent></MySvgComponent> */}
-				<img src={require('./mobile-footer-bg.svg').default.src} alt={'bg'} className={style.mobile_bg}/>
+				<img src={require('../AssetsLocal/footer-mobile-bg.jpg').default.src} alt={'bg'} className={style.mobile_bg}/>
 			</div>
 		</div>
 	}

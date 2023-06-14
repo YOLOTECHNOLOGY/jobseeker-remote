@@ -52,14 +52,26 @@ const Section1 = () => {
 		<div className={style.sectionContainer}>
 			<div className={style.section_bg + ' ' + style.desktop}></div>
 			{isMobile && <Title/>}
-			<section className={style.section1}>
-				{!isMobile && <Title/>}
-				<div className={style.phone + ' ' + style.desktop} id={'phone'} >
-					<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone"
-					     className={style.phone_img}/>
+			{/* <section className={style.section1}> */}
+			{/* 	{!isMobile && <Title/>} */}
+			{/* 	<div className={style.phone + ' ' + style.desktop} id={'phone'} > */}
+			{/* 		<img src={`${process.env.S3_BUCKET_URL}/landing/phone.png`} alt="phone" */}
+			{/* 		     className={style.phone_img}/> */}
+			{/* 	</div> */}
+			{/* 	<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/> */}
+			{/* 	<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/> */}
+			{/* </section> */}
+
+
+			<section className={style.section1_new}>
+				{!isMobile && <div className={style.absolute_center}><Title/></div>}
+				<div className={style.section1_phone_wrapper}>
+					<img src={require('./AssetsLocal/phone1-final-2.png').default.src} alt="" className={style.section1_phone}/>
+					<img className={style.rocket + ' ' + style.desktop} alt="rocket"
+					     src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
+					<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`}
+					     alt="eyes img"/>
 				</div>
-				<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
-				<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/>
 			</section>
 			<PopStream/>
 		</div>
@@ -73,11 +85,12 @@ export default Section1
 
 const PopStream = () => {
 
-	return 	<div className={style.streamWrapper}>
-		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png`} alt={'png'} className={style.mobile + " " + style.stream_top}/>
+	return <div className={style.streamWrapper}>
+		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png`} alt={'png'}
+		     className={style.mobile + " " + style.stream_top}/>
 		{
 			dialog.map((item, index) => {
-				return <Pop key={index}  type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
+				return <Pop key={index} type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
 			})
 		}
 	</div>
