@@ -88,7 +88,7 @@
   top: calc(100vh - 1450px);
 
   .section1_phone {
-    width: 100%;
+    width: 1884px;
     margin: 0 auto;
   }
 }
@@ -302,7 +302,7 @@
   position: absolute;
   bottom: 60px;
   animation: float 2s ease-in-out infinite;
-  right: calc(50vw - 502px / 2 - 213px);
+  right: calc(50% - 502px / 2 - 213px);
 }
 
 .popWrapper {
@@ -444,7 +444,7 @@
   height: 199.94px;
   transform: matrix(-0.87, 0.5, 0.5, 0.87, 0, 0);
   bottom: 520px;
-  left: calc(50vw - 502px / 2 - 208px);
+  left: calc(50% - 502px / 2 - 208px);
   z-index: 2;
 }
 
@@ -465,9 +465,9 @@
 .streamWrapper {
   position: relative;
   z-index: 10;
-  transform: translate3d(0, -670px, 0);
+  transform: translate3d(0, -570px, 0);
+  padding-top: 300px;
   background-color: #FFFFFF;
-  right: 4px;
   @media screen and (max-width: 540px) {
     background-color: transparent;
     transform: inherit;
