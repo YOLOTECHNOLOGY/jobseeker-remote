@@ -2,8 +2,8 @@
 
 // import './flexible';
 import Footer from './components/Footer'
-import {useEffect} from 'react'
 import useResponsiveFont from "./components/responseHook";
+import './index.module.scss'
 export default function ShopLayout(props:{
     children: React.ReactNode;
     params: {

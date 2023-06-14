@@ -40,26 +40,13 @@
     display: flex;
     width: 100%;
     padding: 28px 24px 31px;
-
-  }
-
-  :global{
-    .MuiAutocomplete-popper{
-      font-size: 14px !important;
-    }
-    .MuiAutocomplete-option{
-      font-size: 14px !important;
-    }
-    svg{
-      font-size: 14px !important;
-    }
-    .MuiAutocomplete-input{
-      font-size: 14px !important;
-    }
-    .MuiInputBase-input{
-      font-size: 14px !important;
+    height: 100px;
+    @include sm {
+      height: 150px;
     }
   }
+
+
   &_footer {
     padding: 16px 24px;
     display: flex;
@@ -128,6 +115,12 @@
       position: absolute;
       bottom: 0;
       border-top: 1px solid #f0f0f0;
+    }
+
+  }
+  :global{
+    *{
+      font-size: 14px !important;
     }
   }
 }

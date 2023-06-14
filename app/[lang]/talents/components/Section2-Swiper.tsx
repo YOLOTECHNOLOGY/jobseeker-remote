@@ -5,22 +5,22 @@ import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swi
 import AutoScroll from './AutoScrollList'
 
 let imgs = [
-	require('./AssetsLocal/1.svg').default.src,
-	require('./AssetsLocal/2.svg').default.src,
-	require('./AssetsLocal/3.svg').default.src,
-	require('./AssetsLocal/4.svg').default.src,
-	require('./AssetsLocal/5.svg').default.src,
-	require('./AssetsLocal/6.svg').default.src,
-	require('./AssetsLocal/7.svg').default.src,
-	require('./AssetsLocal/8.svg').default.src,
-	require('./AssetsLocal/9.svg').default.src,
-	require('./AssetsLocal/10.svg').default.src,
-	require('./AssetsLocal/11.svg').default.src,
-	require('./AssetsLocal/12.svg').default.src,
-	require('./AssetsLocal/13.svg').default.src,
-	require('./AssetsLocal/14.svg').default.src,
-	require('./AssetsLocal/15.svg').default.src,
-	require('./AssetsLocal/16.svg').default.src,
+	`${process.env.S3_BUCKET_URL}/landing/1.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/2.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/3.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/4.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/5.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/6.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/7.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/8.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/9.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/10.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/11.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/12.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/13.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/14.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/15.svg`,
+	`${process.env.S3_BUCKET_URL}/landing/16.svg`,
 
 ]
 imgs = imgs.concat(imgs);
