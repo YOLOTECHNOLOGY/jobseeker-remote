@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Text from 'components/Text'
 import { BossjobLogo, increaseUserConversionModelBg, increaseUserConversionBrush } from 'images'
 import QuickLayout from 'components/IncreaseUserConversion/quickLayout/quickLayout'
@@ -13,12 +13,17 @@ import useFakeUploadResume from 'hooks/useFakeUploadResume'
 import styles from './styles.module.scss'
 import { getCountry } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
+import { getCookie } from 'helpers/cookies'
+// import { useSelector } from 'react-redux'
 
 const QuickUploadResume = (props: { lang: any }) => {
   const { lang } = props
   const UseHooksRegister = useRegister()
   const useHooksFakeUploadResume = useFakeUploadResume()
   const { isLoading, isShowRegisterInfo, userWorkExperiences } = UseHooksRegister
+  const user = getCookie('user')
+  const accessToken = getCookie('accessToken')
+  const isLogged = useMemo(() => !!accessToken && !!user, [user])
 
   return (
     <QuickLayout lang={lang}>
@@ -93,10 +98,10 @@ const QuickUploadResume = (props: { lang: any }) => {
                 </div>
               ) : null}
 
-              {isShowRegisterInfo() ? (
+              {(isShowRegisterInfo() && !isLogged) ? (
                 <RegisterInfo {...UseHooksRegister} lang={lang} hideSocialMediaAuth />
               ) : (
-                <UploadResume {...useHooksFakeUploadResume} lang={lang} />
+                <UploadResume {...useHooksFakeUploadResume} isLogged={isLogged} lang={lang} />
               )}
             </div>
           </div>
