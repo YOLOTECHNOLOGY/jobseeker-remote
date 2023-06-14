@@ -280,6 +280,7 @@ $contentWidth: 894px;
             border-radius: 20px;
             min-height: 500px;
             box-sizing: border-box;
+            background: #fff;
             .headerInfo{
                 height: 69px; 
                 line-height: 69px;
@@ -323,7 +324,6 @@ $contentWidth: 894px;
             }
             .stepFieldDateItem{
                 width: 330px;
-                padding-top: 6px;
             }
             .stepFieldToItem{
                 max-width: 330px;
@@ -350,6 +350,7 @@ $contentWidth: 894px;
             .stepFieldDate{
                 display: flex;
                 justify-content: space-between;
+                margin-top: 4px;
             }
           .fillLater{
             font-weight: 700;
@@ -362,8 +363,8 @@ $contentWidth: 894px;
           .currency{
             width: 330px;
           }
-          .stepField{
-            margin: 16px 0;
+          .stepJobFunction{
+            margin: 14px 0 16px;
           }
         }
         .next {

@@ -14,36 +14,84 @@ import Chip from '@mui/material/Chip';
 import TextEditor from 'components/TextEditor/TextEditor'
 import FootBtn from './footBtn'
 import { useRouter, usePathname } from 'next/navigation'
-import { uploadUserResumeServiceNew } from 'store/services/users/uploadUserResume'
+import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 import {differenceBy } from 'lodash-es'
+import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { addUserWorkExperienceService} from 'store/services/users/addUserWorkExperience'
+import {updateUserWorkExperienceService} from 'store/services/users/updateUserWorkExperience'
+import { useDispatch } from 'react-redux'
+import moment from 'moment'
 const WorkExperience = (props: any) => {
   console.log(props,9999)
-  const { lang ,userDetail} = props
-  const {id} = userDetail
+  const { lang ,userDetail,getUserInfo} = props
+  const {work_experiences} = userDetail
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-
-  const [isDisabled, setIsDisabled] = useState(false)
-  const [workPeriodFrom, setWorkPeriodFrom] = useState<any>(null)
+  const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [jobFunction, setJobFunction] = useState<any>({ id: undefined, value: '' })
   const [companyName, setCompanyName] = useState<string>('')
-  const [isCurrentJob, setIsCurrentJob] = useState<boolean>(false)
+  const [isCurrentJob, setIsCurrentJob] = useState<boolean>(true)
+  const [workingSince, setWorkingSince] = useState<any>(null)
+  const [workPeriodFrom, setWorkPeriodFrom] = useState<any>(null)
   const [workPeriodTo, setWorkPeriodTo] = useState<any>(null)
   const [description, setDescription] = useState<string>('')
   const [skills, setSkills] = useState<any>([])
   const [selectedSkills, setSelectedSkills] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false);
+  const dataSkills = userDetail?.skills;
+  const dispatch = useDispatch()
+
   const router = useRouter()
   const pathname = usePathname()
 
-  function handleClick() {
-    // setLoading(true);
-  }
+  useEffect(()=>{
+    if(dataSkills?.length && skills?.length){
+      console.log(skills,dataSkills,777)
+      setSelectedSkills(skills.filter(e=>dataSkills.includes(String(e.id))))
+    }
+  },[dataSkills,skills])
+
+
+  useEffect(()=>{
+    if(userDetail.working_since ){
+      const {working_since} =  userDetail
+      setWorkingSince(working_since)
+    }
+    if(userDetail.work_experiences?.length ){
+      const { 
+        company,
+        description,
+        function_job_title,
+        function_job_title_id,
+        working_period_from,
+        working_period_to,
+        is_currently_work_here,   
+      } =  userDetail.work_experiences[0]
+      setCompanyName(company)
+      setJobFunction({id:function_job_title_id,value:function_job_title})
+      setIsCurrentJob(is_currently_work_here)
+      setWorkPeriodFrom(working_period_from)
+      setWorkPeriodTo(working_period_to)
+      setDescription(description)
+    }
+  },[JSON.stringify(userDetail)])
+
+
+  useEffect(()=>{
+    if(companyName && workPeriodFrom && (!isCurrentJob && workPeriodTo) && description && jobFunction?.id){
+      setIsDisabled(false)
+    } else{
+      setIsDisabled(true)
+    }
+  },[jobFunction,companyName,isCurrentJob,workPeriodFrom,workPeriodTo,description])
+
 
   const {
     companyNameText = 'Company name',
     currentlyWorkHere = 'I currently work here',
     from = 'From',
+    to = 'To',
     placeholder = 'Text'
   } = lang?.profile || {}
   useEffect(() => {
@@ -51,19 +99,22 @@ const WorkExperience = (props: any) => {
       if (maxFileSize(resume, 5)) {
         setErrorMessage('')
         console.log(resume,777)
-        const payload = {
-          resume,
-          id
-        }
-        uploadUserResumeServiceNew(payload).then(res=>{
+        uploadUserResumeService(resume).then(res=>{
            console.log(res.data)
+           if(res.data){
+            dispatch(
+              displayNotification({
+                open: true,
+                message: 'uplod seccess',
+                severity: 'success'
+              })
+            )
+           }
         })
 
       } else {
         setErrorMessage(lang?.profile?.fileTooHuge)
       }
-
-      setIsDisabled(false)
     }
   }, [resume])
   const requiredLabel = (text: string) => {
@@ -83,6 +134,50 @@ const WorkExperience = (props: any) => {
   const backClick = () => {
     router.push(`${pathname}?step=3`)
   }
+  
+  const handleSubmit =  ()=>{
+
+    const paramsProfile = {
+      working_since: moment(new Date(workingSince)).format('yyyy-MM-DD'),
+      skills: selectedSkills.map(e=>e.id)?.join(',')
+    } 
+  
+    const p1 = updateUserCompleteProfileService(paramsProfile)
+    setLoading(true)
+    let p2 = null
+    const paramsWork = {
+      job_title: jobFunction?.value,
+      function_job_title_id:jobFunction?.id,
+      company:companyName,
+      working_period_from:moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
+      working_period_to : isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      is_currently_work_here:isCurrentJob,
+      description
+    }
+    console.log({isCurrentJob})
+    if(isCurrentJob){
+      delete paramsWork.working_period_to
+    }
+    if(work_experiences?.length){
+      const data = work_experiences[0]
+      const paramsUpdate = {
+        workExperienceId:data.id,
+        workExperienceData:paramsWork
+      }
+      p2 = updateUserWorkExperienceService(paramsUpdate)
+    }else{       
+      p2 = addUserWorkExperienceService({
+        workExperience:paramsWork
+      })
+    }
+   
+    Promise.all([p1,p2]).then(res=>{
+      console.log(res,777777)
+      getUserInfo?.()
+      router.push(`${pathname}?step=3`)
+    }).finally(()=> setLoading(false))
+  };
+
 
  const addSecected = (item) => {
   setSelectedSkills([...selectedSkills,item])
@@ -129,25 +224,25 @@ const WorkExperience = (props: any) => {
               Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
             </p>
             <p className={styles.title}>
-              Autofill my info <span>*</span>
+            Started working since <span>*</span>
             </p>
             <div className={styles.stepFieldDateItem}>
               <MaterialDatePicker
                 label={'Month year'}
                 views={['year', 'month']}
                 inputFormat='MMM yyyy'
-                value={workPeriodFrom}
+                value={workingSince}
                 fullWidth
                 onDateChange={(value) => {
-                  setWorkPeriodFrom(value)
+                  setWorkingSince(value)
                 }}
               />
             </div>
 
             <p className={styles.title}>
-              Most recent company <span>*</span>
+            Most recent company <span>*</span>
             </p>
-            <div className={styles.stepField}>
+            <div className={styles.stepCompany}>
               <MaterialTextField
                 className={styles.stepFullwidth}
                 label={requiredLabel(companyNameText)}
@@ -178,18 +273,33 @@ const WorkExperience = (props: any) => {
                   label={from}
                   views={['year', 'month']}
                   inputFormat='MMM yyyy'
+                  value={workPeriodFrom}
+                  onDateChange={(value) => {
+                    setWorkPeriodFrom(value)
+                  }}
+                />
+              </div>
+              {
+                !isCurrentJob &&   <div className={styles.stepFieldToItem}>
+                <MaterialDatePicker
+                  label={to}
+                  views={['year', 'month']}
+                  inputFormat='MMM yyyy'
                   value={workPeriodTo}
                   onDateChange={(value) => {
                     setWorkPeriodTo(value)
                   }}
                 />
               </div>
+              }
+            
+
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
             Most recent job title and  Skills <span>*</span>
             </p>
-            <div id='jobFunction' className={styles.stepField}>
+            <div id='jobFunction' className={styles.stepJobFunction}>
               <JobFunctionSelector
                 className={styles.stepFullwidth}
                 label={lang?.profile?.jobFunction}
@@ -230,10 +340,6 @@ const WorkExperience = (props: any) => {
             <div className={styles.step3Editor}>
               <TextEditor value={description} setValue={setDescription} placeholder={placeholder} />
             </div>
-
-
-
-
           </div>
         </div>
 
@@ -241,7 +347,8 @@ const WorkExperience = (props: any) => {
           loading={loading}
           rightText={'Next (2/4)'}
           backClick={backClick}
-          // handleClick={handleSubmit(handleUpdateProfile)}
+          disabled={isDisabled}
+           handleClick={handleSubmit}
         />
 
 

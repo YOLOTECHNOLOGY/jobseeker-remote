@@ -7,7 +7,9 @@ import WorkExperience from "./workExperience";
 import EducationExperience from "./educationExperience";
 import DesiredJob from "./desiredJob";
 import { useSelector } from 'react-redux'
-
+import { getCookie } from 'helpers/cookies'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { useDispatch } from 'react-redux'
 
 const Main = (props:any)=>{
 
@@ -15,8 +17,9 @@ const Main = (props:any)=>{
     const search = searchParams.get('step')
     const [step, setStep] = useState(1)
     const userDetail = useSelector((store: any) => store?.users.fetchUserOwnDetail.response)
-    const newProps = {...props,userDetail}
 
+    const dispatch = useDispatch()
+    const accessToken = getCookie('accessToken')
     console.log({userDetail})
    
     useEffect(() => {
@@ -26,6 +29,12 @@ const Main = (props:any)=>{
       }
     }, [search])
    
+    const getUserInfo = ()=>{
+      dispatch(fetchUserOwnDetailRequest({ accessToken }))
+    }
+
+    const newProps = {...props,userDetail,getUserInfo}
+
    return <div className={styles.main}>
        {
         step === 1 && <BasicInformation {...newProps}/>
@@ -34,10 +43,10 @@ const Main = (props:any)=>{
         step === 2 && <WorkExperience {...newProps}/>
        }
        {
-        step === 3 && <EducationExperience {...props}/>
+        step === 3 && <EducationExperience {...newProps}/>
        }
        {
-        step === 4 && <DesiredJob {...props}/>
+        step === 4 && <DesiredJob {...newProps}/>
        }
 
    </div> 

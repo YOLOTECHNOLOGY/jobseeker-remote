@@ -16,8 +16,6 @@ const configs = getConfigs(
     ['xp_lvls'],
     ['job_types'],
     ['company_sizes'],
-    ['industry_lists'],
-    ['company_financing_stage_lists'],
     ['educations'],
     ['salary_range_filters'],
     ['job_benefit_lists'],
@@ -25,7 +23,8 @@ const configs = getConfigs(
     ['degrees'],
     ['salary_ranges'],
     ['country_lists'],
-    ['notice_period_lists']
+    ['notice_period_lists'],
+    ['currency_lists']
   ]
   )
 

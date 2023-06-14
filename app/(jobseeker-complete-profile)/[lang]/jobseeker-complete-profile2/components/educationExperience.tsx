@@ -2,38 +2,108 @@ import React, { useState, useEffect } from 'react'
 import styles from '../index.module.scss'
 import Header from './Header'
 import Stepper from './stepper'
-import LoadingButton from '@mui/lab/LoadingButton'
 import MaterialTextField from 'components/MaterialTextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import Text from 'components/Text'
 import MaterialDatePicker from 'components/MaterialDatePicker'
+import { addUserEducationService } from 'store/services/users/addUserEducation'
+import { updateUserEducationService } from 'store/services/users/updateUserEducation'
+import { useRouter, usePathname } from 'next/navigation'
+import FootBtn from './footBtn'
+import moment from 'moment'
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 const EducationExperience = (props: any) => {
   console.log(props)
   const {
     config: { degrees },
-    lang
+    lang,
+    userDetail,
+    getUserInfo
   } = props
-
+  const {educations} = userDetail
+  const router = useRouter()
   const [selectedDegrees, setSelectedDegrees] = useState<number>(7)
   const [school, setSchool] = useState('')
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
-
+  const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
-
   const [loading, setLoading] = useState(false)
-  function handleClick() {
-    // setLoading(true);
-  }
+
+  useEffect(()=>{
+    if(userDetail.educations?.length ){
+      const { 
+        degree_id,
+        is_currently_studying,
+        school,
+        field_of_study,
+        study_period_from,
+        study_period_to,     
+      } =  userDetail.educations[0]
+      setSelectedDegrees(degree_id)
+      setIsCurrentStudying(is_currently_studying)
+      setSchool(school)
+      setFieldStudy(field_of_study)
+      setStudyPeriodFrom(study_period_from)
+      setStudyPeriodTo(study_period_to)
+    }
+  },[JSON.stringify(userDetail)])
+
+  const pathname = usePathname()
   const {
-    schoolName = "schoolName",
-    fieldOfStudy = "field Of Study",
-    currentlyWorkHere="Currently attending ",
+    schoolName = 'schoolName',
+    fieldOfStudy = 'field Of Study',
+    currentlyAttending = 'Currently attending ',
     from = 'From',
-    to="To"
+    to = 'To'
   } = lang?.profile || {}
+
+ useEffect(()=>{
+   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  && studyPeriodTo ) ){
+    setIsDisabled(false)
+   }else{
+    setIsDisabled(true)
+   }
+ },[selectedDegrees,school,fieldStudy,studyPeriodFrom,studyPeriodTo,isCurrentStudying])
+
+
+
+  const handleSubmit = () => {
+    const educationData = {
+      school: school,
+      is_currently_studying: isCurrentStudying,
+      study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
+      study_period_to: isCurrentStudying  ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
+      field_of_study: fieldStudy,
+      degree_id: selectedDegrees
+    }
+    setLoading(true)
+   if(educations?.length){
+    const id = educations[0].id
+    const educationPayload= {
+      educationId:id,
+      educationData:removeEmptyOrNullValues(educationData)
+     }
+     updateUserEducationService(educationPayload).then(res=>{
+      if(res.data){
+        getUserInfo?.()
+        router.push(`${pathname}?step=4`)
+      }
+     }).finally(()=>setLoading(false))
+   }else{
+    const educationPayload= {
+      educationData:removeEmptyOrNullValues(educationData)
+     }
+     addUserEducationService(educationPayload).then(res=>{
+      if(res.data){
+        getUserInfo?.()
+        router.push(`${pathname}?step=4`)
+      }
+     }).finally(()=>setLoading(false))
+   }
+  }
 
   const requiredLabel = (text: string) => {
     return (
@@ -44,11 +114,15 @@ const EducationExperience = (props: any) => {
     )
   }
 
+  const backClick = () => {
+    router.push(`${pathname}?step=3`)
+  }
+
   return (
     <div className={styles.work}>
       <Header />
       <div className={styles.workContainer}>
-        <Stepper step={2} />
+        <Stepper step={1} />
         <div className={styles.box}>
           <div className={styles.headerInfo}>Education Experience</div>
           <div className={styles.body}>
@@ -67,33 +141,32 @@ const EducationExperience = (props: any) => {
                 ))}
             </div>
 
-
             <p className={styles.title}>School name</p>
             <div className={styles.stepField}>
-            <MaterialTextField
-              className={styles.stepFullwidth}
-              label={requiredLabel(schoolName)}
-              size='small'
-              value={school}
-              defaultValue={school}
-              onChange={(e) => setSchool(e.target.value)}
-            />
-          </div>
+              <MaterialTextField
+                className={styles.stepFullwidth}
+                label={requiredLabel(schoolName)}
+                size='small'
+                value={school}
+                defaultValue={school}
+                onChange={(e) => setSchool(e.target.value)}
+              />
+            </div>
 
-          <p className={styles.title}>Field of study</p>
+            <p className={styles.title}>Field of study</p>
             <div className={styles.stepField}>
-            <MaterialTextField
-              className={styles.stepFullwidth}
-              label={fieldOfStudy}
-              size='small'
-              value={fieldStudy}
-              defaultValue={fieldStudy}
-              onChange={(e) => setFieldStudy(e.target.value)}
-            />
-          </div>
+              <MaterialTextField
+                className={styles.stepFullwidth}
+                label={fieldOfStudy}
+                size='small'
+                value={fieldStudy}
+                defaultValue={fieldStudy}
+                onChange={(e) => setFieldStudy(e.target.value)}
+              />
+            </div>
 
-          <p className={`${styles.title} ${styles.titlePeriod}`}>Study period</p>
-          <div className={styles.stepFieldBody}>
+            <p className={`${styles.title} ${styles.titlePeriod}`}>Study period</p>
+            <div className={styles.stepFieldBody}>
               <FormControlLabel
                 control={
                   <Switch
@@ -102,73 +175,47 @@ const EducationExperience = (props: any) => {
                     name='currentStudent'
                   />
                 }
-                label={<Text textStyle='base'>{currentlyWorkHere}</Text>}
+                label={<Text textStyle='base'>{currentlyAttending}</Text>}
               />
-             <div className={styles.stepFieldDate}>
-              <div className={styles.stepFieldDateItem}>
-                <MaterialDatePicker
-                  label={from}
-                  views={['year', 'month']}
-                  inputFormat='MMM yyyy'
-                  value={studyPeriodFrom}
-                  onDateChange={(value) => {
-                    setStudyPeriodFrom(value)
-                  }}
-                />
-              </div>
-              <div className={styles.stepFieldDateItem}>
+              <div className={styles.stepFieldDate}>
+                <div className={styles.stepFieldDateItem}>
                   <MaterialDatePicker
-                    label={to}
+                    label={from}
                     views={['year', 'month']}
                     inputFormat='MMM yyyy'
-                    value={studyPeriodTo}
+                    value={studyPeriodFrom}
                     onDateChange={(value) => {
-                      setStudyPeriodTo(value)
+                      setStudyPeriodFrom(value)
                     }}
                   />
+                </div>
+                {!isCurrentStudying && (
+                  <div className={styles.stepFieldDateItem}>
+                    <MaterialDatePicker
+                      label={to}
+                      views={['year', 'month']}
+                      inputFormat='MMM yyyy'
+                      value={studyPeriodTo}
+                      onDateChange={(value) => {
+                        setStudyPeriodTo(value)
+                      }}
+                    />
+                  </div>
+                )}
               </div>
-
-            </div>
             </div>
 
-            <p className={`${styles.fillLater}`}>Fill this later</p> 
+            <p className={`${styles.fillLater}`}>Fill this later</p>
           </div>
         </div>
-        <div className={styles.next}>
-          <LoadingButton
-            onClick={handleClick}
-            loading={loading}
-            variant='contained'
-            sx={{
-              width: '202px',
-              height: '44px',
-              textTransform: 'capitalize',
-              background: '#F0F0F0',
-              color: '#707070',
-              boxShadow: 'none',
-              borderRadius: '10px'
-            }}
-          >
-            <span>Next (1/4)</span>
-          </LoadingButton>
-          <LoadingButton
-            onClick={handleClick}
-            loading={loading}
-            variant='contained'
-            sx={{
-              width: '202px',
-              height: '44px',
-              textTransform: 'capitalize',
-              border: '1px solid #136FD3',
-              background: 'transparent',
-              color: '#136FD3',
-              boxShadow: 'none',
-              borderRadius: '10px'
-            }}
-          >
-            <span>back</span>
-          </LoadingButton>
-        </div>
+
+        <FootBtn
+          loading={loading}
+          rightText={'Next (3/4)'}
+          backClick={backClick}
+          disabled={isDisabled}
+          handleClick={handleSubmit}
+        />
       </div>
     </div>
   )

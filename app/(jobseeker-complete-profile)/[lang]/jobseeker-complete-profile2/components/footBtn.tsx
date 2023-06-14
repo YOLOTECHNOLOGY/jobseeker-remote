@@ -7,7 +7,8 @@ interface btnProps{
     backClick?:()=>void,
     loading?:boolean,
     rightText?:string,
-    showBack?:boolean 
+    showBack?:boolean,
+    disabled?:boolean 
 }
 const FootBtn = (
     {
@@ -15,7 +16,8 @@ const FootBtn = (
         loading,
         backClick,
         rightText,
-        showBack = true
+        showBack = true,
+        disabled = false
     }:btnProps)=>{
  
   return <div className={styles.next}>
@@ -23,15 +25,15 @@ const FootBtn = (
     onClick={handleClick}
     loading={loading}
     variant='contained'
-    disabled
+    disabled={disabled}
     sx={{
         width: '202px',
         height: '44px',
         textTransform: 'capitalize',
         boxShadow: 'none',
         borderRadius: '10px',
-      background: '#F0F0F0',
-      color: '#707070',
+      // background: '#F0F0F0',
+      // color: '#707070',
     }}
   >
     <span>{rightText}</span>
@@ -39,7 +41,7 @@ const FootBtn = (
   {
     showBack &&  <LoadingButton
     onClick={backClick}
-    loading={loading}
+    loading={false}
     variant='contained'
     sx={{
         width: '202px',

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import styles from '../index.module.scss'
 import { CameraIcon, DefaultAvatar } from 'images'
 import { Avatar } from '@mui/material'
@@ -13,28 +13,29 @@ import avatar3 from '../images/3.png'
 import avatar4 from '../images/4.png'
 import avatar5 from '../images/5.png'
 import FootBtn from './footBtn'
-import { useDispatch } from 'react-redux'
+
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { getCookie } from 'helpers/cookies'
+
+
 import { useRouter, usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
   console.log({ props })
   const {
     config: { notice_period_lists: noticePeriodLists },
-    userDetail
+    userDetail,
+    getUserInfo,
   } = props
   const router = useRouter()
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
   const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
   const [selectedExperienced, setSelectedExperienced] = useState<number>(1)
-  const dispatch = useDispatch()
+
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
-  const accessToken = getCookie('accessToken')
+
   const pathname = usePathname()
   const experiencedList = [
     {
@@ -53,7 +54,7 @@ const BasicInformation = (props: any) => {
       lastName: ''
     }
   })
-  const defaultValues = useMemo(() => {
+   useEffect(() => {
     if (userDetail?.id) {
       const { avatar, first_name, last_name, notice_period_id } = userDetail
       setPreview(avatar)
@@ -94,7 +95,7 @@ const BasicInformation = (props: any) => {
   }
 
   const handleUpdateProfile = async (data) => {
-    console.log(data, 333333)
+
     const { firstName, lastName } = data || {}
     const payload = {
       first_name: firstName,
@@ -108,7 +109,6 @@ const BasicInformation = (props: any) => {
 
     updateUserCompleteProfileService(payload).then((res) => {
       if (res.data) {
-        dispatch(fetchUserOwnDetailRequest({ accessToken }))
         let url = `${pathname}?step=2`
         if (selectedExperienced === 2) {
           url = `${pathname}?step=3`
