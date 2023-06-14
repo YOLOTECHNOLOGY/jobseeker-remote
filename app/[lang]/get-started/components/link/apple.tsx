@@ -22,7 +22,6 @@ const AppleLogin = (props: IApple) => {
     lang: { newGetStarted }
   } = props
   const dispatch = useDispatch()
-  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
   const [init, setInit] = useState(false)
 
@@ -31,21 +30,9 @@ const AppleLogin = (props: IApple) => {
     query[entry[0]] = entry[1]
   }
 
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
-
   useEffect(() => {
     setInit(typeof window?.AppleID != 'undefined')
   }, [window?.AppleID])
-
-  useEffect(() => {
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [jobseekersSocialResponse])
 
   const appleConfig = {
     clientId: 'com.bossjob.web',
@@ -112,7 +99,10 @@ const AppleLogin = (props: IApple) => {
 
   return (
     // <div className={styles.login_item}>
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])} onClick={handleAuth}>
+    <div
+      className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
+      onClick={handleAuth}
+    >
       <img src={AppleIcon}></img>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
       <span data-type='sign in' aria-label='Sign in with apple ID'>
