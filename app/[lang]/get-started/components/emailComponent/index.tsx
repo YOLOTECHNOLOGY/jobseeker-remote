@@ -28,6 +28,7 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
     } else {
       errorText = null
     }
+  
     setEmailError(errorText)
   }, [email])
 
@@ -36,10 +37,9 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
  },[validateErr])
 
   useEffect(() => {
-    if (firstRender) {
-      return
+    if(email){
+      setDisable(!!emailError)
     }
-    setDisable(!!emailError)
   }, [emailError])
 
   return (
@@ -48,7 +48,7 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
         className={styles.fullwidth}
         label={newGetStarted.emailLabel}
         size='small'
-        type='email'
+        type='text'
         name="email"
         onChange={(e) => setEmail(e.target.value)}
         error={emailError ? true : false}

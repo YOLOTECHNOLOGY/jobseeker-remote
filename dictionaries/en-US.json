@@ -4,7 +4,7 @@
     "companies": "Companies",
     "courses": "Courses",
     "careerGuide": "Career Guide",
-    "hiring": "I'm an Employer",
+    "hiring": "I’m hiring",
     "getStarted": "Get Started",
     "manageResume": "Manage Resume",
     "myJobs": "My Jobs",
@@ -264,6 +264,7 @@
     }
   },
   "home": {
+    "more": "More",
     "title": "Find Job. Talk to Boss.",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
@@ -318,6 +319,7 @@
     "topCompany": "Top Companies",
     "companyHiring": "Top Companies Hiring",
     "jobsHiring": "jobs hiring",
+    "jobs": "Jobs",
     "companyCard": {
       "chatNow": "Chat now",
       "employee": "Employee",
@@ -1116,12 +1118,12 @@
     "resendEmailCode": "Resend email'OTP success",
     "invalidOtp": "Invalid OTP",
     "resendPhoneCode": "Resend phone'OTP success",
-    "verifyEmail":"Verify email",
-    "thisPhoneNumberAssociated":"Choose account",
-    "accounts":"accounts.",
-    "thisPhoneNumber":"This phone number is associated with ",
-    "youNeedToChooseVerified":"You need to choose a verified email address to associate",
-    "validateErr":"The email has been registered. Please change the binding to another email"
+    "verifyEmail": "Verify email",
+    "thisPhoneNumberAssociated": "Choose account",
+    "accounts": "accounts.",
+    "thisPhoneNumber": "This phone number is associated with ",
+    "youNeedToChooseVerified": "You need to choose a verified email address to associate",
+    "validateErr": "The email has been registered. Please change the binding to another email"
   },
   "seo": {
     "ph": "Philippines",
@@ -1144,10 +1146,10 @@
       "listDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
       "detailTitle": "Working at {{companyName}} | Bossjob",
       "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
-      "jobsTitle":"{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "jobsDescription":"View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
-      "lifeTitle":"Culture & Life at {{companyName}} | Bossjob",
-      "lifeDescription":"Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+      "jobsTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
+      "jobsDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
+      "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
+      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
     }
   }
 }

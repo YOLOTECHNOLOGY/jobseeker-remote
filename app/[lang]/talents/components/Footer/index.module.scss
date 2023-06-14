@@ -1,0 +1,256 @@
+.footer_container {
+  background-color: rgba(0, 0, 0, 0);
+  padding-top: 140px;
+  position: relative;
+  margin-top: 48px;
+  overflow: hidden;
+  :global {
+    div {
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+}
+
+.footer_title {
+  height: 94px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 94px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin-bottom: 42px;
+}
+
+.footer_download {
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :global {
+    img {
+      width: 205px;
+      margin-right: 24px;
+    }
+  }
+
+  .qrcode {
+    width: 85px;
+  }
+}
+
+.site_map_title {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+  margin-bottom: 18px;
+  @media screen and (max-width: 540px) {
+    margin-left: .2rem;
+    font-family: 'Product Sans';
+    font-weight: 700;
+    font-size: .14rem;
+    line-height: .2rem;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+  }
+}
+
+.footer_site_map {
+  width: 1118px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 160px;
+
+}
+
+.site_map_col {
+  :global {
+    a {
+      display: block;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 26px;
+      color: #ffffff;
+    }
+
+  }
+}
+
+.site_copy_right {
+  font-family: 'Product Sans';
+  padding-top: 45px;
+  padding-bottom: 90px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.0075em;
+  color: #FFFFFF;
+  width: 390px;
+  margin: 0 auto;
+  @media screen and (max-width: 540px) {
+    width: 3.2rem;
+    padding-top: .45rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* or 125% */
+
+    letter-spacing: 0.0075em;
+
+    /* Neutral/White */
+
+    color: #FFFFFF;
+  }
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+  border-radius: 0px 200px 0px 0px;
+}
+
+.site_map_follow {
+  display: flex;
+  justify-content: center;
+  width: 125px;
+  flex-wrap: wrap;
+  @media screen and (max-width: 540px) {
+    width: 3.2rem;
+    justify-content: space-evenly;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  :global {
+    a {
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    img {
+      width: 32px;
+      height: 32px;
+      @media screen and (max-width: 540px) {
+        width: .45rem;
+      }
+    }
+  }
+}
+
+
+.mobile_footer {
+  position: relative;
+  height: 1100px;
+}
+
+.mobile_bg {
+  @extend .bg;
+  border-radius: 0px 50px 0px 0px;
+  height: 100%;
+}
+
+.mobile_footer_title {
+  width: 2.80rem;
+
+  font-weight: 700;
+  font-size: .32rem;
+  line-height: .40rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin-bottom: .35rem;
+  padding-top: .83rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+.site_map_link{
+  &:hover{
+    color: #FFC635;
+  }
+  &:active{
+    color: #FFC635;
+  }
+}
+.mobile_footer_download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.7rem;
+
+  :global {
+    img {
+      width: 1.30rem;
+      margin-right: .16rem;
+    }
+  }
+}
+
+.mobile_footer_container {
+  position: relative;
+  z-index: 2;
+}
+
+.mobile_list_title {
+  color: #ffffff !important;
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform :capitalize;
+  line-height: 18px;
+}
+
+.mobile_list {
+  color: #ffffff;
+
+}
+
+.mobile_list_container {
+  width: 3.2rem;
+  margin: 0 auto;
+}
+
+.mobile_footer_link {
+  &:active{
+    color: #ffc635;
+    :global{
+      span{
+        color: #ffc635 !important;
+      }
+    }
+  }
+  :global {
+    span {
+      color: #ffffff !important;
+    }
+  }
+}
+
+.mobile_follow_us {
+  margin-top: 32px;
+}
+
+.mobile_bg_wrapper{
+  overflow: hidden;
+  border-radius: 0px 50px 0px 0px;
+  @extend .bg;
+  .mobile_bg {
+    border-radius: 0px 50px 0px 0px;
+    height: 100%;
+  }
+}

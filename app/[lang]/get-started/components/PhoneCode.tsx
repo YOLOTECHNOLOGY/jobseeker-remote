@@ -13,7 +13,7 @@ import { verificationPhoneOtp, phoneOtpenerate } from 'store/services/auth/newLo
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
-import { DefaultAvatar } from 'images'
+
 function PhoneCode(props: any) {
   const searchParams = useSearchParams()
   const [errorText, setErrorText] = useState<string>('')
@@ -45,7 +45,7 @@ function PhoneCode(props: any) {
         // This is the visitor identifier:
         uuid = result.visitorId
         localStorage.setItem('uuid', uuid)
-        console.log({ uuid })
+        console.log({newUUid: uuid })
       })()
     }
   }, [])
@@ -64,7 +64,7 @@ function PhoneCode(props: any) {
       console.log(otp, uuid, browserId)
      
       if(isMultiplePhonesNum === 'true'){
-        router.push(`${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
+        router.push(`/${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
          return
       }
 
@@ -130,7 +130,7 @@ function PhoneCode(props: any) {
         removeItem('quickUpladResume')
         defaultLoginCallBack(data)
       } else {
-        router.push(`${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
+        router.push(`/${langKey}/get-started/phone?step=3&phone=${phoneNum}`)
       }
       // removeItem('quickUpladResume')
       // defaultLoginCallBack(data,true)

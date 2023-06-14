@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux'
 import { getValueById } from 'helpers/config/getValueById'
 import { getLang } from 'helpers/country'
 import { QRCodeSVG } from 'qrcode.react'
+import { transState } from 'helpers/utilities'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -122,6 +123,7 @@ const JobCard = (props: any) => {
     recruiter_full_name,
     recruiter_job_title,
     recruiter_is_online,
+    recruiter_last_active_at,
     job_skills,
     company_logo,
     company_name,
@@ -218,7 +220,8 @@ const JobCard = (props: any) => {
             <div
               className={styles.left}
               onClick={() =>
-                router.push(`${langKey}` + job_url, { forceOptimisticNavigation: true })
+                // @ts-ignore
+                router.push(`/${langKey}` + job_url, {kind: "auto"})
               }
             >
               <div
@@ -330,7 +333,7 @@ const JobCard = (props: any) => {
                       </Text>
                     </MaterialButton>
                   </div>
-                  {!!recruiter_is_online && (
+                  {transState(recruiter_last_active_at, search?.jobCard)?.state == 1 && (
                     <div className={styles.online}>{search.jobCard.online}</div>
                   )}
                 </div>

@@ -40,8 +40,20 @@
     display: flex;
     width: 100%;
     padding: 28px 24px 31px;
+
   }
 
+  :global{
+    .MuiAutocomplete-popper{
+      font-size: 14px !important;
+    }
+    .MuiAutocomplete-option{
+      font-size: 14px !important;
+    }
+    svg{
+      font-size: 14px !important;
+    }
+  }
   &_footer {
     padding: 16px 24px;
     display: flex;

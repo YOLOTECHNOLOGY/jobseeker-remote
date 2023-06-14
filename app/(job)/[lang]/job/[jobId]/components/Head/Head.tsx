@@ -86,10 +86,7 @@ const Head = ({
               <div>
                 <Link
                   color='#000000'
-                  href={
-                    isLogin ? '/quick-upload-resume' : '/get-started?redirect=quick-upload-resume'
-                  }
-                >
+                  href={ isLogin ? '/manage-profile' : '/quick-upload-resume' }>
                   <div className={styles.head_main_change_resume_btnWrapper}>
                     <Avatar
                       src={UploadResumeIcon}

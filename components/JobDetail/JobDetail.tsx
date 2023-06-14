@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
-import { createChat } from 'helpers/interpreters/services/chat'
+import { createChat } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 /* Vendors */
 import classNames from 'classnames/bind'
 import classNamesCombined from 'classnames'

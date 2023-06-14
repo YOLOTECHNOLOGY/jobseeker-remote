@@ -118,8 +118,7 @@ const UploadResume = ({
         {resumes.length &&
           resumes.map((item, index) => {
             return (
-              <>
-                <div key={index} className={styles.uploadedResume}>
+                <div key={index+'~'+ item?.id} className={styles.uploadedResume}>
                   <div className={styles.leftResume}>
                     <div className={styles.documentDiv}>
                       <img src={DocumentIcon} alt='document' width='21' height='21' />
@@ -148,7 +147,6 @@ const UploadResume = ({
                     displayClear={displayClear}
                   />
                 </div>
-              </>
             )
           })}
         {!resumes.length && (
