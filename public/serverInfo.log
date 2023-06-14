@@ -1546,3 +1546,13 @@
   startTime: 1686657833021,
   finishTime: 1686657834979
 }
+[2023-06-14T10:47:12.279] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=en',
+  startTime: 1686710829552,
+  finishTime: 1686710832277
+}
+[2023-06-14T10:47:19.569] [INFO] serverInfo - {
+  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids=63&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
+  startTime: 1686710832619,
+  finishTime: 1686710839569
+}
