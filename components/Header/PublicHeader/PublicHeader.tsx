@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import classNames from 'classnames/bind'
-
+import Image from 'next/image'
 /* Style */
 import styles from '../Header.module.scss'
 
@@ -112,7 +112,7 @@ const PublicHeader = ({ lang }: any) => {
                 </Text>
               </Link>
             </li>
-            <li className={styles.headerLink} style={{width:'162px'}}>
+            <li className={styles.headerLink} style={{ width: '162px' }}>
               {!pathname?.includes?.('/get-started') ? (
                 <Link to={'/' + langKey + '/get-started'} title='Get Started'>
                   <MaterialButton
@@ -163,7 +163,7 @@ const PublicHeader = ({ lang }: any) => {
                 </MaterialButton>
               )}
             </li>
-            <li className={classNames(styles.headerLink)} style={{width:'60px'}}>
+            <li className={classNames(styles.headerLink)} style={{ width: '60px' }}>
               <div
                 className={styles.countryItem}
                 onClick={() => {
@@ -171,11 +171,12 @@ const PublicHeader = ({ lang }: any) => {
                 }}
               >
                 <span className={styles.label}>{getCountryKey().toUpperCase()}</span>
-                <object
+                <Image
                   className={styles.object}
-                  data={ChevronDownIcon}
-                  type='image/svg+xml'
-                ></object>
+                  src={ChevronDownIcon} alt={''}
+                  width={11}
+                  height={7}
+                  ></Image>
               </div>
             </li>
           </React.Fragment>
