@@ -195,8 +195,6 @@ const Section5 = () => {
 
 
 const AnimationNumber = () =>{
-	const {width} = useWindowSize();
-	const isMobile = width < 540;
 	const fontSize = {fontSize: 56}
 	return (
 		<div className={style.section5_bottom_wrapper}>
