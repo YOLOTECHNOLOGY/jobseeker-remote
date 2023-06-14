@@ -7,13 +7,14 @@ import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 interface IProps {
   lang: any
 }
 
 const VerifyFactorEmail = (props: IProps) => {
   const { newGetStarted } = props.lang
-  const [error, setError] = useState<string>('')
+  const [errorText, setErrorText] = useState<string>('')
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
@@ -28,6 +29,13 @@ const VerifyFactorEmail = (props: IProps) => {
     }
   }, [email])
 
+  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+
+  useEffect(() => {
+    const text = error?.data?.message ?? ''
+    setErrorText(text)
+  }, [JSON.stringify(error)])
+
   useEffect(() => {
     setUserId(userId)
   }, [userId])
@@ -41,12 +49,14 @@ const VerifyFactorEmail = (props: IProps) => {
   }, [userInfo])
 
   const onChange = (code) => {
+    dispatch(jobbseekersLoginFailed({}))
     if (code?.length === 6) {
       handleAuthenticationJobseekersLogin(code)
     }
   }
 
   const sendOpt = () => {
+    dispatch(jobbseekersLoginFailed({}))
     authenticationSendEmaillOtp({ email }).then(() => {
       setNumber(new Date().getTime())
       dispatch(
@@ -75,7 +85,7 @@ const VerifyFactorEmail = (props: IProps) => {
             autoFocus={true}
             sendOpt={sendOpt}
             onChange={onChange}
-            error={error}
+            error={errorText}
             number={number}
           />
           <p>{newGetStarted.verifyExtra}</p>
