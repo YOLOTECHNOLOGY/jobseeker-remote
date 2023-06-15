@@ -10,6 +10,7 @@ import React from 'react'
 import 'app/[lang]/globals.scss'
 import 'app/[lang]/index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
+import LinkProvider from './providers/linkProvider'
 const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/[lang]/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
@@ -91,7 +92,9 @@ export default async function PublicLayout(props: any) {
           </noscript>
           <Header lang={dictionary} />
           <HamburgerMenu lang={dictionary} />
-          {children}
+          <LinkProvider>
+            {children}
+          </LinkProvider>
           <AutoShowModalAppRedirect />
         </Providers>
         <Initial />

@@ -1,16 +1,17 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import React, { createContext, useTransition, useCallback } from 'react'
+import Loading from 'app/[lang]/loading'
+export const LinkContext = createContext({ loading: false, push: a => a, refresh: () => undefined })
+const Provider = LinkContext.Provider
 
-export const LoadingContext = createContext({ loading: false, push: a => a, refresh: () => undefined })
-const Provider = LoadingContext.Provider
-
-const LoadingProvider = ({ children }: any) => {
+const LinkProvider = ({ children }: any) => {
     const router = useRouter()
     const [loading, startTransition] = useTransition()
+    console.log({ linkLoading: loading })
     const push = useCallback((url) => {
         startTransition(() => {
-            router.push( url, { forceOptimisticNavigation: false })
+            router.push(url, { forceOptimisticNavigation: false })
         })
     }, [router, startTransition])
     const refresh = useCallback(() => {
@@ -18,7 +19,7 @@ const LoadingProvider = ({ children }: any) => {
             router.refresh()
         })
     }, [router, startTransition])
-    return <Provider value={{ loading, push, refresh }} >{children}</Provider>
+    return <Provider value={{ loading, push, refresh }} >{loading ? <Loading /> : children}</Provider>
 }
 
-export default LoadingProvider
+export default LinkProvider
