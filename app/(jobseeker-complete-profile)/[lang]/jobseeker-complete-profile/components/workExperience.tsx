@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../index.module.scss'
-import Header from './Header'
 import Stepper from './stepper'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Text from 'components/Text'
@@ -22,6 +21,8 @@ import { addUserWorkExperienceService} from 'store/services/users/addUserWorkExp
 import {updateUserWorkExperienceService} from 'store/services/users/updateUserWorkExperience'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
+import {fetchResumes} from 'store/services/jobs/fetchJobsCommunicated'
+import Link from 'components/Link'
 const WorkExperience = (props: any) => {
   console.log(props,9999)
   const { lang ,userDetail,getUserInfo} = props
@@ -39,6 +40,7 @@ const WorkExperience = (props: any) => {
   const [skills, setSkills] = useState<any>([])
   const [selectedSkills, setSelectedSkills] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false);
+  const [existingResume, setExistingResume] = useState<any>(false);
   const dataSkills = userDetail?.skills;
   const dispatch = useDispatch()
 
@@ -46,12 +48,22 @@ const WorkExperience = (props: any) => {
   const pathname = usePathname()
 
   useEffect(()=>{
+    getResumes();
+  },[])
+
+  const getResumes = ()=>{
+    fetchResumes().then(res=>{
+      setExistingResume(res?.data?.data || [])
+    })
+  }
+
+  useEffect(()=>{
     if(dataSkills?.length && skills?.length){
       console.log(skills,dataSkills,777)
       setSelectedSkills(skills.filter(e=>dataSkills.includes(String(e.id))))
     }
   },[dataSkills,skills])
-
+  
 
   useEffect(()=>{
     if(userDetail.working_since ){
@@ -79,7 +91,7 @@ const WorkExperience = (props: any) => {
 
 
   useEffect(()=>{
-    if(companyName && workPeriodFrom && (!isCurrentJob && workPeriodTo) && description && jobFunction?.id){
+    if(companyName && workPeriodFrom && (!isCurrentJob ?  workPeriodTo : true) && description && jobFunction?.id){
       setIsDisabled(false)
     } else{
       setIsDisabled(true)
@@ -88,19 +100,31 @@ const WorkExperience = (props: any) => {
 
 
   const {
-    companyNameText = 'Company name',
-    currentlyWorkHere = 'I currently work here',
-    from = 'From',
-    to = 'To',
-    placeholder = 'Text'
+    workExperience,
+    autofillMyInfo,
+    saveTimeByImporting,
+    uploadResume,
+    supportedFileType,
+    startedWorkingSince,
+    mostRecentCompany,
+    WorkingPeriod,
+    mostRecentJobTitle,
+    skillsWillBeSuggested,
+    selectSkillsOr,
+    Next2,
+    back,
+    companyNameText,
+    currentlyWorkHere,
+    from,
+    to ,
+    placeholder,
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
       if (maxFileSize(resume, 5)) {
         setErrorMessage('')
-        console.log(resume,777)
-        uploadUserResumeService(resume).then(res=>{
-           console.log(res.data)
+        uploadUserResumeService(resume).then(res=>{     
+           getResumes();
            if(res.data){
             dispatch(
               displayNotification({
@@ -128,11 +152,10 @@ const WorkExperience = (props: any) => {
   const handleDelete = (index) => {
     selectedSkills.splice(index,1)
     setSelectedSkills([...selectedSkills])
-    console.info('You clicked the delete icon.');
   };
 
   const backClick = () => {
-    router.push(`${pathname}?step=3`)
+    router.push(`${pathname}?step=1`)
   }
   
   const handleSubmit =  ()=>{
@@ -185,14 +208,13 @@ const WorkExperience = (props: any) => {
 
   return (
     <div className={styles.work}>
-      <Header />
       <div className={styles.workContainer}>
-        <Stepper step={0}/>
+        <Stepper step={0} lang={lang}/>
         <div className={styles.box}>
-          <div className={styles.headerInfo}>Work experience</div>
+          <div className={styles.headerInfo}>{workExperience}</div>
           <div className={styles.body}>
-            <p className={styles.title}>Autofill my info</p>
-            <p className={styles.titleTip}>Save time by importing your resume</p>
+            <p className={styles.title}>{autofillMyInfo}</p>
+            <p className={styles.titleTip}>{saveTimeByImporting}</p>
             <div className={styles.upload}>
               <LoadingButton
                 loading={false}
@@ -210,7 +232,7 @@ const WorkExperience = (props: any) => {
                 }}
               >
                 <Text textColor='#136FD3' bold>
-                  Upload resume
+                  {uploadResume}
                 </Text>
                 <input
                   type='file'
@@ -220,11 +242,28 @@ const WorkExperience = (props: any) => {
                 />
               </LoadingButton>
             </div>
+
+            {existingResume?.length ? (    
+                existingResume.map(e=>(
+                <div key={e.id} className={styles.resumeList}>
+                        <Link
+                          to={e.url}
+                          target='_blank'
+                          rel='noreferrer'
+                          style={{ textDecoration: 'underline' }}
+                        >
+                          {e.filename || e.name}
+                        </Link>
+               </div>
+                ))
+          
+            
+          ):null}
             <p className={styles.titleTip}>
-              Supported file type: PDF, DOC, DOCX. Max. file size: 5MB
+             {supportedFileType}
             </p>
             <p className={styles.title}>
-            Started working since <span>*</span>
+             {startedWorkingSince} <span>*</span>
             </p>
             <div className={styles.stepFieldDateItem}>
               <MaterialDatePicker
@@ -240,7 +279,7 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={styles.title}>
-            Most recent company <span>*</span>
+           {mostRecentCompany}<span>*</span>
             </p>
             <div className={styles.stepCompany}>
               <MaterialTextField
@@ -255,7 +294,7 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-              Working period <span>*</span>
+              {WorkingPeriod} <span>*</span>
             </p>
             <div className={styles.stepFieldBody}>
               <FormControlLabel
@@ -297,7 +336,7 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-            Most recent job title and  Skills <span>*</span>
+             {mostRecentJobTitle} <span>*</span>
             </p>
             <div id='jobFunction' className={styles.stepJobFunction}>
               <JobFunctionSelector
@@ -315,7 +354,7 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={styles.titleTip}>
-            Skills will be suggested based on selected job function. Please select max 5 skills.
+              {skillsWillBeSuggested}
             </p>
             <div className={styles.skillList}>
               {
@@ -323,7 +362,7 @@ const WorkExperience = (props: any) => {
               }
             </div>
              <div className={styles.chooseSkill}>
-              <p >Select skills or type your own skills</p>
+              <p >{selectSkillsOr}</p>
                {
                 selectedSkills.map((item,index)=> <Chip key={item.id} sx={{
                   background:"#136FD3",
@@ -334,7 +373,7 @@ const WorkExperience = (props: any) => {
              </div>
 
              <p className={`${styles.title} ${styles.titlePeriod}`}>
-             Description
+             {lang?.profile?.description}
             </p>
 
             <div className={styles.step3Editor}>
@@ -345,13 +384,12 @@ const WorkExperience = (props: any) => {
 
         <FootBtn
           loading={loading}
-          rightText={'Next (2/4)'}
+          rightText={Next2}
           backClick={backClick}
+          backText={back}
           disabled={isDisabled}
            handleClick={handleSubmit}
         />
-
-
 
       </div>
    

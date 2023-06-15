@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import styles from '../index.module.scss'
-import Header from './Header'
 import Stepper from './stepper'
 import FootBtn from './footBtn'
 import JobFunctionSelector from 'components/JobFunctionSelector'
@@ -8,7 +7,6 @@ import { Controller, useForm } from 'react-hook-form'
 import MaterialLocationField from 'components/MaterialLocationField'
 import { getCountryKey } from 'helpers/country'
 import { getCountryId } from 'helpers/country'
-import { useDispatch, useSelector } from 'react-redux'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { useRouter, usePathname } from 'next/navigation'
 import { createUserPreferencesService,updateUserPreferencesService } from 'store/services/users/addUserPreferences'
@@ -19,6 +17,7 @@ import {
 } from 'helpers/jobPayloadFormatter'
 import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
+import { getLang } from 'helpers/country'
 const countryForCurrency = {
   ph: 'php',
   sg: 'sgd'
@@ -31,7 +30,7 @@ const EducationExperience = (props: any) => {
   const router = useRouter()
 
   const preference = userDetail?.job_preferences?.[0]
-  const [currencyLists,countryList] = useMemo(() => {
+  const [currencyLists] = useMemo(() => {
     return [ getCurrencyList(config), getCountryList(config), ]
   }, [config])
 
@@ -51,9 +50,10 @@ const EducationExperience = (props: any) => {
   const [maxSalary, setMaxSalary] = useState(null)
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
-  const [locationData, setLocationData] = useState(userDetail?.location === 'Overseas')
+  const [locationData, setLocationData] = useState(null)
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
+  const langKey = getLang()
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
@@ -70,27 +70,32 @@ const EducationExperience = (props: any) => {
 
   useEffect(()=>{
    if(preference?.id){
-
-    const salaryFrom =Number(preference?.salary_range_from)
-    getMaxSalaryOptions(salaryFrom)
-     setValue('minSalary', String(salaryFrom))
-     setValue('maxSalary',String(Number(preference?.salary_range_to)))
+    const  {salary_range_from,salary_range_to,location_id} = preference
+    const salaryFrom =Number(salary_range_from)
+    const maxSalaryOptions = getSalaryOptions(config, salaryFrom, true)
+    setMaxSalaryOptions(maxSalaryOptions)
+    setValue('minSalary', String(salaryFrom))
+    setValue('maxSalary',String(Number(salary_range_to)))
     setValue('location',location)
     setJobFunction({
       id: preference?.function_job_title_id,
       value: getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
     })
-
+    setMaxSalary(salary_range_to)
+    setLocationData({
+      id:location_id
+    })
    }
   },[preference])
-
   
   useEffect(() => {
-    getMaxSalaryOptions(minSalary)
+     if(minSalary){
+      getMaxSalaryOptions(minSalary)
+     }
   }, [minSalary])
- console.log({minSalary})
+ console.log({maxSalaryOptions})
   useEffect(()=>{  
-    if(jobFunction && maxSalary && locationData){
+    if(jobFunction?.id && maxSalary && locationData){
       setIsDisabled(false)
     }else{
       setIsDisabled(true)
@@ -119,15 +124,14 @@ const EducationExperience = (props: any) => {
        }).then(res=>{
         if(res.data){
           getUserInfo?.()
-          router.push(`${pathname}?step=4`)
+          router.push(`/${langKey}/my-jobs?`)
         }
        }).finally(()=>setLoading(false))
-     }else{
-     
+     }else{ 
        createUserPreferencesService({params}).then(res=>{
         if(res.data){
           getUserInfo?.()
-          router.push(`${pathname}?step=4`)
+          router.push(`/${langKey}/my-jobs?`)
         }
        }).finally(()=>setLoading(false))
      }
@@ -137,9 +141,15 @@ const EducationExperience = (props: any) => {
 
 
   const {
-    currentLocation = 'Manila',
-    thisFieldIsRequired = 'thisFieldIsRequired',
-    desiredSalaryCurrency = 'Currency type',
+    desiredJob,
+    desiredJobTitle,
+    currentLocation,
+    desiredLocation,
+    thisFieldIsRequired,
+    submit,
+    back,
+    desiredSalary,
+    desiredSalaryCurrency,
   } = lang?.profile || {}
 
   const backClick = () => {
@@ -148,14 +158,13 @@ const EducationExperience = (props: any) => {
  
   return (
     <div className={styles.work}>
-      <Header />
       <div className={styles.workContainer}>
-        <Stepper step={2} />
+        <Stepper step={2} lang={lang}/>
         <div className={styles.box}>
-          <div className={styles.headerInfo}>Desired job</div>
+          <div className={styles.headerInfo}>{desiredJob}</div>
           <div className={styles.body}>
             <p className={styles.title}>
-              Desired job title <span>*</span>
+              {desiredJobTitle} <span>*</span>
             </p>
             <div id='jobFunctionDesign' className={styles.stepFieldDateItem}>
               <JobFunctionSelector
@@ -171,7 +180,7 @@ const EducationExperience = (props: any) => {
             </div>
 
             <p className={styles.title}>
-              Desired location<span>*</span>
+             {desiredLocation}<span>*</span>
             </p>
             <div className={styles.stepFieldDateItem}>
               <Controller
@@ -221,7 +230,7 @@ const EducationExperience = (props: any) => {
             )} */}
 
             <p className={styles.title}>
-              Desired salary<span>*</span>
+              {desiredSalary}<span>*</span>
             </p>
             <div className={styles.step1Salary}>
               <div className={styles.step1SalaryRanges}>
@@ -259,7 +268,7 @@ const EducationExperience = (props: any) => {
                           required
                           {...fieldState}
                           {...field}
-                          value={value || ''}
+                          value={value}
                           onChange={(e) => {
                             setMinSalary(e.target.value)
                             onChange(e)
@@ -289,7 +298,7 @@ const EducationExperience = (props: any) => {
                             setMaxSalary(e.target.value)
                             onChange(e)
                           }}
-                          value={value || ''}
+                          value={value}
                           ref={undefined}
                         />
                       )
@@ -304,7 +313,8 @@ const EducationExperience = (props: any) => {
      
        <FootBtn
        loading={loading}
-       rightText={'Submit'}
+       rightText={submit}
+       backText={back}
        backClick={backClick}
        disabled={isDisabled}
        handleClick={handleSubmit(handleUpdateProfile)}

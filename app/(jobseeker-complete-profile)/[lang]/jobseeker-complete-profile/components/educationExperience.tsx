@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../index.module.scss'
-import Header from './Header'
 import Stepper from './stepper'
 import MaterialTextField from 'components/MaterialTextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -53,11 +52,17 @@ const EducationExperience = (props: any) => {
 
   const pathname = usePathname()
   const {
-    schoolName = 'schoolName',
-    fieldOfStudy = 'field Of Study',
-    currentlyAttending = 'Currently attending ',
-    from = 'From',
-    to = 'To'
+    schoolName,
+    fieldOfStudy,
+    currentlyAttending,
+    from,
+    to,
+    educationExperience,
+    educationLevel,
+    fillThisLater,
+    Next3,
+    back,
+    studyPeriod
   } = lang?.profile || {}
 
  useEffect(()=>{
@@ -105,28 +110,19 @@ const EducationExperience = (props: any) => {
    }
   }
 
-  const requiredLabel = (text: string) => {
-    return (
-      <>
-        <span>{text}</span>
-        <span className={styles.stepFieldRequired}>*</span>
-      </>
-    )
-  }
-
   const backClick = () => {
-    router.push(`${pathname}?step=3`)
+    const  isExperienced =  sessionStorage.getItem('isExperienced')
+    router.push(`${pathname}?step=${isExperienced ? 1 : 2}`)
   }
 
   return (
     <div className={styles.work}>
-      <Header />
       <div className={styles.workContainer}>
-        <Stepper step={1} />
+        <Stepper step={1} lang={lang}/>
         <div className={styles.box}>
-          <div className={styles.headerInfo}>Education Experience</div>
+          <div className={styles.headerInfo}>{educationExperience}</div>
           <div className={styles.body}>
-            <p className={styles.title}>Education level</p>
+            <p className={styles.title}>{educationLevel}</p>
             <div className={styles.btnList}>
               {degrees
                 .filter((e) => e.id !== 5)
@@ -141,11 +137,11 @@ const EducationExperience = (props: any) => {
                 ))}
             </div>
 
-            <p className={styles.title}>School name</p>
+            <p className={styles.title}>{schoolName}</p>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={requiredLabel(schoolName)}
+                label={schoolName}
                 size='small'
                 value={school}
                 defaultValue={school}
@@ -153,7 +149,7 @@ const EducationExperience = (props: any) => {
               />
             </div>
 
-            <p className={styles.title}>Field of study</p>
+            <p className={styles.title}>{fieldOfStudy}</p>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
@@ -165,7 +161,7 @@ const EducationExperience = (props: any) => {
               />
             </div>
 
-            <p className={`${styles.title} ${styles.titlePeriod}`}>Study period</p>
+            <p className={`${styles.title} ${styles.titlePeriod}`}>{studyPeriod}</p>
             <div className={styles.stepFieldBody}>
               <FormControlLabel
                 control={
@@ -205,13 +201,14 @@ const EducationExperience = (props: any) => {
               </div>
             </div>
 
-            <p className={`${styles.fillLater}`}>Fill this later</p>
+            <p className={`${styles.fillLater}`}>{fillThisLater}</p>
           </div>
         </div>
 
         <FootBtn
           loading={loading}
-          rightText={'Next (3/4)'}
+          rightText={Next3}
+          backText={back}
           backClick={backClick}
           disabled={isDisabled}
           handleClick={handleSubmit}

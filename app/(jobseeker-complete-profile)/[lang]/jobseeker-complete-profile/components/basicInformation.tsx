@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../index.module.scss'
 import { CameraIcon, DefaultAvatar } from 'images'
 import { Avatar } from '@mui/material'
@@ -6,7 +6,6 @@ import { compressImage } from 'helpers/imageCompression'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { Controller, useForm } from 'react-hook-form'
 import MaterialTextField from 'components/MaterialTextField'
-import Header from './Header'
 import avatar1 from '../images/1.png'
 import avatar2 from '../images/2.png'
 import avatar3 from '../images/3.png'
@@ -24,27 +23,46 @@ const BasicInformation = (props: any) => {
   console.log({ props })
   const {
     config: { notice_period_lists: noticePeriodLists },
+    lang:{profile},
     userDetail,
     getUserInfo,
   } = props
   const router = useRouter()
+  const  isExperienced =  sessionStorage.getItem('isExperienced') || '1'
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
   const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
-  const [selectedExperienced, setSelectedExperienced] = useState<number>(1)
+  const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
 
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  const {
+    basicInformation,
+    theseInformationWillBeShown,
+    profilePhoto,
+    uploadAphoto,
+    havingArealPhoto,
+    name,
+    IAm,
+    Next1,
+    back,
+    availability,
+    firstName,
+    lastName,
+    experienced,
+    freshGraduate
+  }  = profile || {} 
+
   const pathname = usePathname()
   const experiencedList = [
     {
-      label: 'Experienced',
-      value: 1
+      label: experienced,
+      value: '1'
     },
     {
-      label: 'Fresh Graduate',
-      value: 2
+      label: freshGraduate,
+      value: '2'
     }
   ]
 
@@ -109,8 +127,11 @@ const BasicInformation = (props: any) => {
 
     updateUserCompleteProfileService(payload).then((res) => {
       if (res.data) {
+        getUserInfo?.()
         let url = `${pathname}?step=2`
-        if (selectedExperienced === 2) {
+        sessionStorage.removeItem('isExperienced')
+        if (selectedExperienced === '2') {
+          sessionStorage.setItem('isExperienced','2')
           url = `${pathname}?step=3`
         }
         router.push(url)
@@ -135,17 +156,16 @@ const BasicInformation = (props: any) => {
 
   return (
     <>
-      <Header />
       <div className={styles.basicInfo}>
         <div className={styles.topModule}>
           <div className={styles.headerInfo}>
-            <h2>Basic Information</h2>
-            <p>These information will be shown to Boss when you apply for a job.</p>
+            <h2>{basicInformation}</h2>
+            <p>{theseInformationWillBeShown}</p>
           </div>
           <div className={styles.container}>
-            <h3>Profile photo</h3>
+            <h3>{profilePhoto}</h3>
             <p className={styles.uploadTips}>
-              Upload a photo ( max 5 MB) or choose one from Bossjob default avatars
+              {uploadAphoto}
             </p>
             <ul className={styles.avatarList}>
               <li className={`${selectedAvatarDefault === -1 ? styles.active : ''}`}>
@@ -175,12 +195,12 @@ const BasicInformation = (props: any) => {
             </ul>
             <p className={styles.photoTips}>
               <InfoOutlinedIcon sx={{ fontSize: '16px', color: '#FE574A', marginRight: '4px' }} />
-              Having a real photo as your profile picture help build trust with potential employers{' '}
+              {havingArealPhoto}
             </p>
 
             <div className={styles.nameBox}>
               <p className={styles.name}>
-                Name <span>*</span>
+                {name} <span>*</span>
               </p>
               <div>
                 <div className={styles.nameFlex}>
@@ -193,7 +213,7 @@ const BasicInformation = (props: any) => {
                         return (
                           <MaterialTextField
                             className={styles.stepFullwidth}
-                            label={'First name'}
+                            label={firstName}
                             required
                             {...fieldState}
                             {...field}
@@ -211,7 +231,7 @@ const BasicInformation = (props: any) => {
                         return (
                           <MaterialTextField
                             className={styles.stepFullwidth}
-                            label={'Last name'}
+                            label={lastName}
                             required
                             {...fieldState}
                             {...field}
@@ -226,8 +246,7 @@ const BasicInformation = (props: any) => {
 
             <div className={styles.Im}>
               <p className={styles.name}>
-                {' '}
-                I am <span>*</span>
+                {IAm} <span>*</span>
               </p>
               <div className={styles.btnList}>
                 {experiencedList.map((item) => (
@@ -247,7 +266,7 @@ const BasicInformation = (props: any) => {
             <div className={styles.availability}>
               <p className={styles.name}>
                 {' '}
-                Availability <span>*</span>
+                {availability} <span>*</span>
               </p>
               <div className={styles.btnList}>
                 {noticePeriodLists.map((item) => (
@@ -269,7 +288,8 @@ const BasicInformation = (props: any) => {
         <FootBtn
           showBack={false}
           loading={loading}
-          rightText={'Next (1/4)'}
+          backText = {back}
+          rightText={Next1}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
       </div>

@@ -169,3 +169,23 @@
   startTime: 1686742337913,
   finishTime: 1686742341972
 }
+[2023-06-15T11:10:29.212] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686798626698,
+  finishTime: 1686798629212
+}
+[2023-06-15T11:10:29.664] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686798627575,
+  finishTime: 1686798629664
+}
+[2023-06-15T11:56:52.563] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686801410390,
+  finishTime: 1686801412563
+}
+[2023-06-15T11:56:53.271] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686801410551,
+  finishTime: 1686801413271
+}

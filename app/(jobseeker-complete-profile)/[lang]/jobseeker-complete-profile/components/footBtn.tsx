@@ -8,7 +8,8 @@ interface btnProps{
     loading?:boolean,
     rightText?:string,
     showBack?:boolean,
-    disabled?:boolean 
+    disabled?:boolean,
+    backText?:string 
 }
 const FootBtn = (
     {
@@ -17,7 +18,8 @@ const FootBtn = (
         backClick,
         rightText,
         showBack = true,
-        disabled = false
+        disabled = false,
+        backText = 'back'
     }:btnProps)=>{
  
   return <div className={styles.next}>
@@ -54,7 +56,7 @@ const FootBtn = (
        color: '#136FD3',
     }}
   >
-    <span>back</span>
+    <span>{backText}</span>
   </LoadingButton>
   }
  

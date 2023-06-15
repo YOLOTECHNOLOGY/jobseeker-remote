@@ -5,14 +5,22 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 
 interface PropsType{
-  step?:number
+  step?:number,
+  lang:any
 }
 
-export default function HorizontalLabelPositionBelowStepper({step}: PropsType) {
-    const steps = [
-        'Work experience',
-        'Education',
-        'Desired job',
+export default function HorizontalLabelPositionBelowStepper({step,lang}: PropsType) {
+  
+  const {profile:{
+    workExperience,
+    educationExperience,
+    desiredJob
+  } } =lang
+  
+  const steps = [
+    workExperience,
+    educationExperience,
+    desiredJob,
       ];
   return (
     <Box sx={{ width: '100%' }}>

@@ -2,10 +2,12 @@ import React from 'react'
 import styles from '../index.module.scss'
 import { BossjobLogoWhite } from 'images'
 import Link from 'next/link'
-const Header = () => {
+const Header = (props:any) => {
+  const {lang,step} = props
+  console.log({step})
   return (
     <div className={styles.header}>
-      <div className={styles.main}>
+      <div className={styles.headerMain}>
       <img
         className={styles.headerLogoImage}
         src={BossjobLogoWhite}
@@ -15,7 +17,9 @@ const Header = () => {
           marginTop: '3px'
         }}
       />
-      <Link  href={process.env.BOSSHUNT_URL}>I’m hiring</Link>
+      {
+        step === 1 &&  <Link  href={process.env.BOSSHUNT_URL}>{lang?.profile?.ImHiring}</Link>
+      }
       </div>
       
     </div>

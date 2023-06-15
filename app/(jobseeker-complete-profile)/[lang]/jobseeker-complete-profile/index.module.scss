@@ -4,28 +4,28 @@ $paddingLeftWidth: 600px;
 $maxContentWidth: 1170px;
 $contentWidth: 894px;
 
-.header {
-    width: 100%;
-    height: 55px;
-    background: #136FD3;
-    line-height: 55px;
-    margin-bottom: 40px;
-
-    .main {
-        display: flex;
-        width: $maxContentWidth;
-        margin: 0 auto;
-        justify-content: space-between;
-        align-items: center;
-        color: white;
-        a {
-            color: white;
-        }
-    }
-}
 
 .main {
-
+    .header {
+        width: 100%;
+        height: 55px;
+        background: #136FD3;
+        line-height: 55px;
+        margin-bottom: 40px;     
+        .headerMain {
+            display: flex;
+            width: $maxContentWidth;
+            margin: 0 auto;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            height: 100%;
+            a {
+                color: white;
+            }
+        }
+    }
+    
     p, ul,h3{
         margin: 0;
     }
@@ -33,11 +33,11 @@ $contentWidth: 894px;
     .basicInfo {
         width: 770px;
         margin: 0 auto;
-
+        padding-bottom: 30px;
         .topModule {
             min-height: 500px;
             background: #FFFFFF;
-            box-shadow: 0px 4px 6px rgba(150, 149, 149, 0.25);
+            box-shadow: 0px 0px 6px rgba(150, 149, 149, 0.25);
             border-radius: 20px;
             padding-bottom: 36px;
         }
@@ -268,6 +268,9 @@ $contentWidth: 894px;
         .header{
             margin-bottom: 26px;
         }
+        .resumeList{
+            margin-bottom: 6px;
+        }
         .workContainer{
             width: 900px;
             margin: 0 auto;
@@ -431,3 +434,4 @@ $contentWidth: 894px;
         }
     }
 }
+@import './indexMobile.module.scss';

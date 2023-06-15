@@ -58,7 +58,7 @@ const getUrl = (baseURL) => {
   }
   return url
 }
- console.log(process.env.RESUME_URL,99666)
+
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
   // let remoteAddress = ''
   // let isMobile = ''

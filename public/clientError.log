@@ -5305,3 +5305,20 @@
 [2023-06-14T20:01:33.745] [ERROR] clientError - { error: {} }
 [2023-06-14T20:01:38.162] [ERROR] clientError - { error: {} }
 [2023-06-14T20:04:29.954] [ERROR] clientError - { error: {} }
+[2023-06-15T10:14:40.450] [ERROR] clientError - { error: {} }
+[2023-06-15T10:25:59.703] [ERROR] clientError - { error: {} }
+[2023-06-15T10:30:15.958] [ERROR] clientError - {
+  error: {
+    code: 40001,
+    data: { first_name: [Array] },
+    message: 'This field may not be blank.',
+    errors: { first_name: [Array] }
+  }
+}
+[2023-06-15T10:34:20.176] [ERROR] clientError - { error: {} }
+[2023-06-15T11:10:27.384] [ERROR] clientError - { error: {} }
+[2023-06-15T11:56:50.440] [ERROR] clientError - { error: {} }
+[2023-06-15T13:35:22.472] [ERROR] clientError - { error: {} }
+[2023-06-15T13:54:04.298] [ERROR] clientError - { error: {} }
+[2023-06-15T13:54:04.307] [ERROR] clientError - { error: {} }
+[2023-06-15T13:54:04.312] [ERROR] clientError - { error: {} }

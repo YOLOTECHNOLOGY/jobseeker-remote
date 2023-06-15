@@ -10,32 +10,42 @@ import { useSelector } from 'react-redux'
 import { getCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
-
+import Header from './Header'
 const Main = (props:any)=>{
 
     const searchParams = useSearchParams()
     const search = searchParams.get('step')
+    const getUserInfo = ()=>{
+      dispatch(fetchUserOwnDetailRequest({ accessToken }))
+    }
+    const [newProps,setNewProps] = useState<any>({...props,getUserInfo})
     const [step, setStep] = useState(1)
     const userDetail = useSelector((store: any) => store?.users.fetchUserOwnDetail.response)
-
+ 
     const dispatch = useDispatch()
     const accessToken = getCookie('accessToken')
-    console.log({userDetail})
-   
+
     useEffect(() => {
       const hasStep = [1, 2, 3, 4, 5, 6,7].includes(+search)
       if (search && hasStep) {
         setStep(Number(search))
       }
     }, [search])
-   
-    const getUserInfo = ()=>{
-      dispatch(fetchUserOwnDetailRequest({ accessToken }))
-    }
+    
+    useEffect(()=>{
+      setNewProps({
+        ...props,
+        userDetail,
+        getUserInfo
+      })
+    },[JSON.stringify(userDetail)])
 
-    const newProps = {...props,userDetail,getUserInfo}
+  
 
-   return <div className={styles.main}>
+    // const newProps = {...props,userDetail,getUserInfo}
+
+   return <div className={styles.profile}>
+     <Header lang={props.lang} step={step}/>
        {
         step === 1 && <BasicInformation {...newProps}/>
        }

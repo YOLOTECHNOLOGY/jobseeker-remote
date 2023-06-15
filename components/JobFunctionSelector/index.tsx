@@ -136,8 +136,7 @@ const JobFunctionSelector = (props: any) => {
         e.sub_function_list.map(job => {
           job.job_titles.forEach((item) => {
             if (item?.id === value.id) {
-              onChange(item)
-              console.log(job,99666)
+              onChange(item)   
               onChangeSkill && onChangeSkill(job.skills)
               setSelectedKey(e.id)
               setSelectedSubItem(job)
