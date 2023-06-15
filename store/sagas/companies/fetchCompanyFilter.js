@@ -7,9 +7,8 @@ import {
 import { fetchCompanyFilterService } from 'store/services/companies/fetchCompanyFilter'
 
 function* fetchCompanyFilterReq(actions) {
-  const { query, size, page, source } = actions.payload
   try {
-    const { data } = yield call(fetchCompanyFilterService, { query, size, page, source })
+    const { data } = yield call(fetchCompanyFilterService, actions.payload)
     yield put(fetchCompanyFilterSuccess(data.data))
   } catch (error) {
     yield put(fetchCompanyFilterFailed(error))

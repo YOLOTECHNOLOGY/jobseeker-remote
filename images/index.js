@@ -147,6 +147,7 @@ export const Strategy = `${S3BucketJobseeker}/Strategy.svg`
 export const Insurance = `${S3BucketJobseeker}/Insurance.svg`
 export const PerksAndBenefits = `${S3BucketJobseeker}/PerksAndBenefits.svg`
 export const Leaves = `${S3BucketJobseeker}/Leaves.svg`
+export const CompanyVerifiedIcon = `${S3BucketJobseeker}/company_verified_icon.svg`
 
 /* 404 page */
 export const NotFound404 = `${S3BucketJobseeker}/404.png`
@@ -175,3 +176,4 @@ export const UploadResumeIcon = `${S3BucketJobseeker}/UploadResumeIcon.svg`
 export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
 
 export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
+export const RightArrowIcon = `${S3BucketJobseeker}/right_arrow_icon.svg`

@@ -1,0 +1,86 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+
+.companyList {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include msd {
+    flex-direction: column;
+  }
+}
+
+.companyItem {
+  width: calc((100% / 3) - 10px);
+  margin-right: 10px;
+  margin-bottom: 16px;
+
+  @include msd {
+    width: 100%;
+  }
+}
+
+.companyCard {
+  display: flex;
+  padding: 24px 16px;
+  border-radius: 15px;
+  background-color: #fff;
+
+  @include msd {
+    flex-direction: column;
+  }
+
+  &Image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+
+  &Left {
+    margin-right: 21px;
+  }
+
+  &Right {
+    p {
+      margin: 0;
+    }
+
+    @include msd {
+      margin-top: 10px;
+    }
+  }
+
+  &Name {
+    height: 48px;
+    display: flex;
+    overflow: hidden;
+
+    p {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &Category {
+    margin: 8px 0 !important;
+  }
+
+  &Openings {
+    position: relative;
+
+    span {
+      color: #2378e5;
+      font-size: 16px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .arrowIcon {
+    margin-left: 10px;
+  }
+}
