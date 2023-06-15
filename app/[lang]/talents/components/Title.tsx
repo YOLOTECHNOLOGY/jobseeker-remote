@@ -1,10 +1,11 @@
 'use client'
 import style from '../index.module.scss';
 import Typical from 'react-typical'
-import {useEffect, useLayoutEffect, useState, useMemo} from "react";
+import {useEffect, useLayoutEffect, useState, useMemo, useContext} from "react";
 import {useInView, InView} from "react-intersection-observer";
 import Link from 'next/link';
 import classNames from 'classnames';
+import {languageContext} from "../../components/providers/languageProvider";
 
 const androidUrl = 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp '
 const iOSUrl = 'https://apps.apple.com/sg/app/bossjob/id1592073585'
@@ -27,10 +28,11 @@ export const Title = () => {
 			setShow(true);
 		});
 	})
-	console.log('title1');
+
+	const contextLang =  useContext(languageContext);
+
 	const TypC = useMemo(()=> {
-		console.log('title2');
-		return <Typical steps={['AI Hiring APP']}/>
+		return <Typical steps={[contextLang.landing.section1_title]}/>
 	},[]);
 	return <div className={style.titleWrapper} ref={ref}>
 		<p className={style.title + ' ' + style['title-color']} style={{height: 108}}>
@@ -42,7 +44,7 @@ export const Title = () => {
 					[style.op0]: true,
 					[style.title + ' ' + style.height]: true,
 					[style.animate__bounceIn]: inView,
-				})}>connect you with decision makers in real-time</p>
+				})}>{contextLang.landing.section1_subtitle}</p>
 			}}
 		</InView>
 
@@ -55,7 +57,7 @@ export const Title = () => {
 					<div className={style.download_btn} onClick={()=>{
 						window.open('http://bossjob.ph/app');
 					}}>
-							Get the app 👈
+						{contextLang.landing.section1_getApp} 👈
 					</div>
 				</div>
 			}}

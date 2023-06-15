@@ -1,5 +1,5 @@
 'use client';
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState, useRef, useContext} from "react";
 import style from '../../index.module.scss';
 import Link from 'next/link'
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
@@ -8,44 +8,29 @@ import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swi
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import {languageContext} from "../../../components/providers/languageProvider";
 
 
-const carouselList = [
-	{
-		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
-	},
-	{
-		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com'
-	},
-	{
-		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
-	},
-	{
-		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com'
-	},
-	{
-		des: `Looking for <span style="color: #FED766">talents</span>? 👀`,
-		link: 'https://employer.bossjob.com/'
-	},
-	{
-		des: `Looking for <span style="color: #FED766">jobs</span>?  💼`,
-		link: 'https://bossjob.com'
-	},
-]
+
 const Section7 = () => {
 	const swiperRef = useRef(null)
+	const contextLang = useContext(languageContext);
+	const carouselList = [
+		{
+			des: `${contextLang.landing["Looking for"]} <span style="color: #FED766">${contextLang.landing.talents}</span>? 👀`,
+			link: 'https://employer.bossjob.com/'
+		},
+		{
+			des: `${contextLang.landing["Looking for"]} <span style="color: #FED766">${contextLang.landing.jobs}</span>?  💼`,
+			link: 'https://bossjob.com'
+		},
+	]
 	return <div className={style.section8}>
 		<div className={style.section8_carousel + ' ' + style.desktop}
-		     onMouseLeave={(event) => {
-			     console.log('onMouseLeave');
+		     onMouseLeave={() => {
 			     swiperRef.current.swiper.autoplay.start();
 		     }}
-		     onMouseEnter={(event) => {
-			     console.log('onMouseEnter');
+		     onMouseEnter={() => {
 			     swiperRef.current.swiper.autoplay.pause();
 		     }}>
 			<Swiper
@@ -64,7 +49,7 @@ const Section7 = () => {
 
 			>
 				{
-					carouselList.map((item,index)=>{
+					carouselList.concat(carouselList).concat(carouselList).map((item,index)=>{
 						return <SwiperSlide key={index}>
 							<div className={style.section8_slideItem} onClick={()=>{window.open(item.link)}}>
 								<div className={style.section8_des} dangerouslySetInnerHTML={{__html: item.des}}/>

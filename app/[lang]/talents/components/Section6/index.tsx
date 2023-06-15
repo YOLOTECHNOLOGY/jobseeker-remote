@@ -1,5 +1,5 @@
 import style from '../../index.module.scss';
-import React, {useCallback, useRef, useState, useEffect} from 'react';
+import React, {useCallback, useRef, useState, useEffect, createContext, useContext} from 'react';
 import classNames from "classnames";
 import EmblaCarousel from 'embla-carousel';
 import useEmblaCarousel from "embla-carousel-react";
@@ -7,6 +7,7 @@ import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swiper';
 import {useInView, InView } from "react-intersection-observer";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import {languageContext} from "../../../components/providers/languageProvider";
 
 let countries = [
 	{
@@ -58,6 +59,7 @@ if (countries.length % 2 !== 0) {
 }
 const Section6 = () => {
 
+	const contextLang = useContext(languageContext);
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
 		     src={`${process.env.S3_BUCKET_URL}/landing/section6-pc-bg.jpg`}/>
@@ -65,9 +67,11 @@ const Section6 = () => {
 		     src={`${process.env.S3_BUCKET_URL}/landing/section6-mobile-bg.jpg`}/>
 		<div className={style.content_container}>
 			<div className={style.section6_title}>
-				Best hiring APP in Southeast-Asia
+				{contextLang.landing.section6_title || 'Best hiring APP in Southeast-Asia'}
 			</div>
-			<div className={style.section6_des}>Find jobs anywhere, everywhere</div>
+			<div className={style.section6_des}>
+				{contextLang.landing.section6_subtitle || 'Find jobs anywhere, everywhere'}
+			</div>
 			<Section5Carousel/>
 		</div>
 	</section>
@@ -75,7 +79,7 @@ const Section6 = () => {
 
 
 const Section5Carousel = () => {
-
+	const contextLang = useContext(languageContext);
 	const swiperRef = useRef(null)
 	const [enable, setEnable] = useState(true);
 	const {width} = useWindowSize();
@@ -83,7 +87,6 @@ const Section5Carousel = () => {
 	const isMobile = width <= 540;
 	const [modules, setModules] = useState([]);
 	useEffect(() => {
-		console.log('inView',inView);
 		if(inView && !isMobile){
 			swiperRef.current.swiper?.autoplay?.start();
 		}else{
@@ -140,16 +143,13 @@ const Section5Carousel = () => {
 									     className={'embla__slide_bg'}
 									/>
 									{country.coming ? <div className={style.country_mask}>
-										<div>
-											Coming
-										</div>
-										<div>soon...</div>
+										<div className={style.mask_text}>{contextLang.landing.section6_coming_soon}</div>
 									</div> : null}
 									<img className={style.country_name_mask}
 									     alt={'mask'}
 									     src={`${process.env.S3_BUCKET_URL}/landing/city_header_mask.svg`}/>
 									<div className={style.country_name}>
-										{country.country}
+										{contextLang.landing[country.country] || country.country}
 									</div>
 								</div>
 								<div className={'flag_wrapper'}>

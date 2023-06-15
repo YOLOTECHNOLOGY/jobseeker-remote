@@ -1,51 +1,54 @@
 import style from '../index.module.scss';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 import classNames from 'classnames';
 import Title from "./Title";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import Image from 'next/image';
+import {languageContext} from "../../components/providers/languageProvider";
 
-const dialog = [
-	{
-		"name": "John",
-		"message": "Hi Sarah, I'm interested in the position. Could you provide more information about the role?"
-	},
-	{
-		"name": "Sarah",
-		"message": "Hi John, your profile is an excellent match for the role. I'd be happy to provide more details. What specifically would you like to know?"
-	},
-	{
-		"name": "John",
-		"message": "Can you tell me more about the company culture and team I'd be working with?"
-	},
-	{
-		"name": "Sarah",
-		"message": "Sure. Our company culture is collaborative and team-oriented, and we pride ourselves on creating a supportive work environment. You'd be working with a talented and diverse team of professionals who are passionate about what they do."
-	},
-	{
-		"name": "John",
-		"message": "That sounds great. I'd love to learn more about the next steps in the application process."
-	},
-	{
-		"name": "Sarah",
-		"message": "Excellent. Our next step would be to schedule a phone interview. How does next Tuesday at 2:00pm work for you?"
-	},
-	{
-		"name": "John",
-		"message": "That works perfectly. Thank you, Sarah."
-	},
-	{
-		"name": "Sarah",
-		"message": "Thank you, John. I look forward to speaking with you next week."
-	}
-]
+// const dialog = [
+// 	{
+// 		"name": "John",
+// 		"message": "Hi Sarah, I'm interested in the position. Could you provide more information about the role?"
+// 	},
+// 	{
+// 		"name": "Sarah",
+// 		"message": "Hi John, your profile is an excellent match for the role. I'd be happy to provide more details. What specifically would you like to know?"
+// 	},
+// 	{
+// 		"name": "John",
+// 		"message": "Can you tell me more about the company culture and team I'd be working with?"
+// 	},
+// 	{
+// 		"name": "Sarah",
+// 		"message": "Sure. Our company culture is collaborative and team-oriented, and we pride ourselves on creating a supportive work environment. You'd be working with a talented and diverse team of professionals who are passionate about what they do."
+// 	},
+// 	{
+// 		"name": "John",
+// 		"message": "That sounds great. I'd love to learn more about the next steps in the application process."
+// 	},
+// 	{
+// 		"name": "Sarah",
+// 		"message": "Excellent. Our next step would be to schedule a phone interview. How does next Tuesday at 2:00pm work for you?"
+// 	},
+// 	{
+// 		"name": "John",
+// 		"message": "That works perfectly. Thank you, Sarah."
+// 	},
+// 	{
+// 		"name": "Sarah",
+// 		"message": "Thank you, John. I look forward to speaking with you next week."
+// 	}
+// ]
 
 const Section1 = () => {
 	const {ref, inView, entry} = useInView({
 		/* Optional options */
 		threshold: 1,
 	});
+
+
 	const {width} = useWindowSize();
 	const isMobile = width < 540;
 	return <div className={style.section1Wrapper}>
@@ -62,8 +65,6 @@ const Section1 = () => {
 			{/* 	<img className={style.rocket + ' ' + style.desktop} alt="rocket" src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/> */}
 			{/* 	<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/> */}
 			{/* </section> */}
-
-
 			<section className={style.section1_new + ' ' + style.desktop}>
 				{!isMobile && <div className={style.absolute_center}><Title/></div>}
 				<div className={style.section1_phone_wrapper}>
@@ -88,6 +89,23 @@ export default Section1
 
 
 const PopStream = () => {
+	const contextLang =  useContext(languageContext);
+
+	const dialog = [];
+	const name1 = contextLang.landing["section1_name1"];
+	const name2 = contextLang.landing["section1_name2"];
+
+	if (name1 && name2) {
+		for (let i = 1; i <= 8; i++) {
+			const messageKey = `section1_message${i}`;
+			const message = contextLang.landing[messageKey];
+
+			if (message) {
+				const name = i % 2 === 1 ? name1 : name2;
+				dialog.push({ name, message });
+			}
+		}
+	}
 
 	return <div className={style.streamWrapper}>
 		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png`} alt={'png'}
