@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext, useMemo } from 'react'
 import styles from './index.module.scss'
-import { HomePageChat, AppDownQRCode, CloseIcon } from 'images'
+import { HomePageChat } from 'images'
 import useChatNow from 'app/[lang]/hooks/useChatNow'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -13,7 +13,7 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/[lang]/components/MUIs'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import useNotSuitable from './hooks'
 import NotSuitableModal from './notSuitable'
 import { ChatInfoContext } from 'app/[lang]/components/chatInfoProvider'
@@ -74,13 +74,13 @@ const useSaveJob = (jobId, defaultSaved, accessToken, jobTitleId) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
-
+  const { lang: langKey } = useParams()
   const save = useCallback(() => {
     if (isSaving) {
       return
     }
     if (!accessToken) {
-      router.push('/get-started', { forceOptimisticNavigation: true })
+      router.push(`/${langKey}` + '/get-started', { forceOptimisticNavigation: true })
       return
     }
     if (!isSaved) {
@@ -116,6 +116,7 @@ const useJobDetail = (jobId) => {
 const JobCard = (props: any) => {
   const { sort } = useContext(SortContext)
   const { job, jobTitleId, preference } = props
+  const { lang: langKey } = useParams()
   const config = useSelector((store: any) => store.config.config.response)
   const memoedJob = useMemo(() => {
     changeJobValue(config, job)
@@ -234,7 +235,10 @@ const JobCard = (props: any) => {
             {/* <Image src={CloseIcon} alt='logo' width={13} height={13} /> */}
           </div>
           <div className={styles.topContainer}>
-            <div className={styles.left} onClick={() => handleRouterToPath(job_url)}>
+            <div
+              className={styles.left}
+              onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+            >
               <div
                 key={job_title + id}
                 onMouseEnter={() => setTitleHover(true)}
@@ -327,7 +331,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        ;(chatNow as any)()
+                          ; (chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -354,7 +358,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(company_url, { forceOptimisticNavigation: true })
+                router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
@@ -411,7 +415,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg
