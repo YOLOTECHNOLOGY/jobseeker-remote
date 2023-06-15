@@ -29,12 +29,12 @@ const FeaturedCompany = (props: IProps) => {
           {/* company logo */}
           <div className={styles.featuredCompanyLogo}>
             <Link to={'/' + langKey + featuredCompany?.company_url || '/'}>
-              <Image
+              {featuredCompany?.logo && <Image
                 width={64}
                 height={64}
                 src={featuredCompany?.logo}
                 alt={`${featuredCompany?.name} logo`}
-              />
+              />}
             </Link>
           </div>
 
