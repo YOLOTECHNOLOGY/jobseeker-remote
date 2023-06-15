@@ -10,7 +10,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/[lang]/components/MUIs'
 import { useRouter } from 'next/navigation'
@@ -23,10 +23,12 @@ import { changeJobValue } from 'helpers/config/changeJobValue'
 import { getValueById } from 'helpers/config/getValueById'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { QRCodeSVG } from 'qrcode.react'
+import { SortContext } from '../searchForms/SortProvider'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
   const popHoverRef = useRef(popHover)
+
   useEffect(() => {
     titleHoverRef.current = titleHover
     popHoverRef.current = popHover
@@ -72,6 +74,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, jobTitleId) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
+
   const save = useCallback(() => {
     if (isSaving) {
       return
@@ -111,6 +114,7 @@ const useJobDetail = (jobId) => {
 }
 
 const JobCard = (props: any) => {
+  const { sort } = useContext(SortContext)
   const { job, jobTitleId, preference } = props
   const config = useSelector((store: any) => store.config.config.response)
   const memoedJob = useMemo(() => {
@@ -150,7 +154,8 @@ const JobCard = (props: any) => {
     degree_id,
     company_industry_id,
     company_size_id,
-    company_financing_stage_id
+    company_financing_stage_id,
+    reco_from
   } = memoedJob
   const { chatInfos } = useContext(ChatInfoContext)
   const chat = useMemo(() => {
@@ -177,6 +182,7 @@ const JobCard = (props: any) => {
   const accessToken = getCookie('accessToken')
   const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken, jobTitleId)
   const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
+
   useEffect(() => {
     if (showPopup && !jobDetail && !detailLoading) {
       startLoading()
@@ -186,6 +192,13 @@ const JobCard = (props: any) => {
   const modalProps = useNotSuitable(preference.id, id)
   const { showSelection, refreshing } = modalProps
   const [isChatHover, setIsChatHover] = useState(false)
+
+  const handleRouterToPath = (job_url: string) => {
+    sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
+    setCookie('reco_from', reco_from)
+    router.push(job_url, { forceOptimisticNavigation: true })
+  }
+
   return (
     <div
       className={classNames({
@@ -221,10 +234,7 @@ const JobCard = (props: any) => {
             {/* <Image src={CloseIcon} alt='logo' width={13} height={13} /> */}
           </div>
           <div className={styles.topContainer}>
-            <div
-              className={styles.left}
-              onClick={() => router.push(job_url, { forceOptimisticNavigation: true })}
-            >
+            <div className={styles.left} onClick={() => handleRouterToPath(job_url)}>
               <div
                 key={job_title + id}
                 onMouseEnter={() => setTitleHover(true)}
