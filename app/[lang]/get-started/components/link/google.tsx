@@ -27,24 +27,11 @@ const GoogleLogin = (props: IGoogle) => {
   const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
   const dispatch = useDispatch()
-  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
   const query = {}
   for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
-
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
-
-  useEffect(() => {
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [jobseekersSocialResponse])
 
   useEffect(() => {
     setInit(typeof window?.gapi != 'undefined')
@@ -141,7 +128,10 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   return (
-    <div className={classNames([styles.login_item, !init ? styles.login_disabled : ''])} onClick={handleAuthClick}>
+    <div
+      className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
+      onClick={handleAuthClick}
+    >
       <img src={GoogleLogo} />
       <span>{newGetStarted.links.google}</span>
     </div>

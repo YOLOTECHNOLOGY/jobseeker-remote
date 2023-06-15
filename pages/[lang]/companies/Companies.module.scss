@@ -1,22 +1,29 @@
 @import 'styles/mixins.scss';
 @import 'styles/variable.scss';
 
+.container {
+  background-color: #f7f8fa;
+}
+
 .companies {
   @extend .GlobalContainer;
-  margin-bottom: 150px;
+  padding-bottom: 150px;
 
   &Pagination {
     margin-top: 50px;
     display: flex;
   }
+}
 
-  
+.searchContainer {
+  background-color: #fff;
 }
 
 .searchCompany {
+  @extend .GlobalContainer;
   margin-top: 32px;
   margin-bottom: 48px;
-  
+
   > p {
     margin-top: 32px;
   }
@@ -26,171 +33,317 @@
   }
 }
 
-.banner {
-  background-color: rgba($white-1, 0.9);
-  margin-bottom: 48px;
+.companiesPagination {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &Image {
-    width: 100%;
-    object-fit: cover;
+  :global {
+    .MuiPaginationItem-page {
+      background-color: #fff;
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-top: 20px;
+  flex-wrap: wrap;
+
+  .filterItems {
+    height: 30px;
+    width: 207px;
+    margin: 0 9px 13px 0;
+    :global {
+      .MuiPaper-root {
+        width: 300px;
+
+        .MuiAutocomplete-paper {
+          width: 300px;
+        }
+      }
+    }
+  }
+
+  .clearButton {
+    text-transform: capitalize !important;
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    align-items: center;
+    letter-spacing: 0.0075em;
+    color: #707070;
+    font-size: 14px;
+    margin-left: 4px;
+    height: 30px;
   }
 }
 
 .featuredEmployer {
-  padding: 21px;
   display: flex;
-  border-radius: 4px;
-  border: 1px solid $white-2;
-  margin-bottom: 48px;
   justify-content: space-between;
 
   @include msd {
     flex-direction: column;
   }
+}
 
-  &SectionTitle {
-    margin-bottom: 24px;
+.featuredCompany {
+  width: 560px;
+  display: flex;
+  padding: 28px 0 0 28px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: #fff;
 
-    @include msd {
-      margin: 20px;
-    }
+  @include msd {
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
   }
+}
 
-  &Info {
-    display: flex;
+.featuredCompanyLogo {
+  width: 64px;
+  height: 64px;
+  user-select: none;
+  margin-right: 16px;
+}
+
+.featuredCompanyDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.featuredCompanyAbout {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.featuredCompanyAboutItem {
+  margin-right: 8px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.featuredCompanyAboutItemSeparator {
+  width: 1px;
+  height: 9px;
+  background-color: #c9cdd4;
+  display: inline-block;
+}
+
+.featuredCompanyName {
+  margin-right: 8px;
+  color: #1d2129;
+}
+
+.featuredCompanyDescription {
+  color: #4e5969;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  height: 48px;
+  overflow: hidden;
+  margin: 0;
+}
+
+.featuredCompanyPhotos {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.featuredCompanyPhoto {
+  position: relative;
+  width: 136px;
+  height: 94px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.featuredSectionTitle {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 27px;
+  color: #353535;
+}
+
+.popularCompanyTitle {
+  margin-top: 54px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 27px;
+  color: #353535;
+}
+
+.searchField {
+  display: flex;
+
+  &InputContainer {
+    width: 570px;
+    position: relative;
     margin-right: 16px;
-
-    @include msd {
-      flex-direction: column;
-    }
   }
 
-  &About {
-    display: flex;
-    margin-top: 8px;
-
-    @include msd {
-      flex-direction: column;
-    }
+  &Input {
+    width: 100%;
   }
 
-  &AboutItem {
-    margin-right: 35px;
+  &Suggestions {
+    position: absolute;
+    width: 100%;
+    border: 1px solid $lightgrey;
+    z-index: 2;
+  }
 
-    span {
-      display: block;
-      margin-bottom: 5px;
+  &SuggestionItem {
+    background-color: $white-3;
+    padding: 10px 20px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $white-2;
     }
 
-    @include msd {
-      margin-bottom: 16px;
+    &:hover {
+      cursor: pointer;
 
       span {
-        margin-bottom: 0;
+        color: $primaryBlue;
       }
     }
   }
 
-  &Name {
-    p {
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  &SuggestionEmpty {
+    background-color: $white-3;
+    padding: 10px 20px;
   }
 
-  &Image {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    border-radius: 4px;
-    margin-right: 24px;
-    margin-bottom: 24px;
+  &Button {
+    padding: 6px 25px !important;
+    width: 12%;
   }
 
-  &Photo {
-    width: 136px;
-    height: 136px !important;
-    object-fit: cover;
-  }
+  @include msd {
+    flex-direction: column;
 
-  &Images {
-    ul {
+    &InputContainer {
       width: 100%;
-      height: 100%;
-    }
-    @include msd {
-      display: none;
-    }
-  }
-
-  &ImagesMobile {
-    display: none;
-
-    @include sm {
-      display: block;
-    }
-  }
-
-  &SinglePhoto {
-    width: 100%;
-    height: 265px;
-    object-fit: cover;
-  }
-
-  &Description {
-    width: 447px;
-    margin-top: 8px;
-
-    @include msd {
-      width: 100%
-    }
-  }
-
-  &Openings {
-    position: relative;
-
-    &::after {
-      content: '➝';
-      position: absolute;
-      top: 50%;
-      right: -24px;
-      transform: translateY(-50%);
-      font-size: 20px;
-      font-weight: 700;
-      color: $pink-1;
+      margin-bottom: 24px;
     }
 
-    span {
-      color: $pink-1;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    @include msd {
-      margin-bottom: 48px;
-      display: block;
-
-      &::after {
-        right: auto;
-        margin-left: 5px;
-      }
-    }
-  }
-
-  &Tooltip {
-    vertical-align: baseline;
-    margin-left: 5px;
-    cursor: pointer;
-
-    @include msd {
-      margin-left: 8px;
+    &Button {
+      width: 100%;
     }
   }
 }
 
-.companiesPagination {
-  margin-top: 24px;
+.companyList {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include msd {
+    flex-direction: column;
+  }
+}
+
+.companyItem {
+  width: 372px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+
+  @include msd {
+    width: 100%;
+  }
+}
+
+.companyCard {
+  display: flex;
+  padding: 24px 16px;
+  border-radius: 15px;
+  background-color: #fff;
+  overflow: hidden;
+
+  @include msd {
+    flex-direction: column;
+  }
+
+  &Image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 5px;
+    border: 1px solid #f2f5fa;
+  }
+
+  &Left {
+    margin-right: 21px;
+  }
+
+  &Right {
+    width: 280px;
+
+    p {
+      margin: 0;
+    }
+
+    @include msd {
+      margin-top: 10px;
+    }
+  }
+
+  &Name {
+    display: flex;
+    margin-bottom: 8px;
+
+    a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 23px;
+    }
+  }
+
+  &Category {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &Openings {
+    position: relative;
+    margin-top: 14px;
+    display: inline-block;
+
+    span {
+      color: #2378e5;
+      font-size: 16px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .arrowIcon {
+    margin-left: 10px;
+  }
 }
