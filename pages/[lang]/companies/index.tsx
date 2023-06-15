@@ -181,6 +181,7 @@ const Companies = (props: IProps) => {
                 defaultPage={Number(searchQuery.page) || 1}
                 totalPages={totalPage || 1}
                 page={searchQuery.page}
+                boundaryCount={1}
               />
             </div>
           )}
