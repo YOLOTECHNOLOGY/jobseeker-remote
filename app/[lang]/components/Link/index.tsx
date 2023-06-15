@@ -5,6 +5,7 @@ const Link = (props: any) => {
     const { push } = useContext(LinkContext)
     return <div
         {...rest}
+        style={{ cursor: 'pointer' }}
         onClick={() => push(href)}
     >{children}</div>
 }
