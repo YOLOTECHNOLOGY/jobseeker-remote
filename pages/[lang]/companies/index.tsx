@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
-import { isMobile } from 'react-device-detect'
 
 /* Action Creators */
 import { wrapper } from 'store'
@@ -12,226 +10,170 @@ import { END } from 'redux-saga'
 // Components
 import Layout from 'components/Layout'
 import Text from 'components/Text'
-import Link from 'components/Link'
-// import SEO from 'components/SEO'
-import CompanyCardList from 'components/Company/CompanyCardList'
-import SearchCompanyField from 'components/SearchCompanyField'
+import CompanyCardList from './components/CompanyCardList'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
-import MaterialDesktopTooltip from 'components/MaterialDesktopTooltip'
-import MaterialMobileTooltip from 'components/MaterialMobileTooltip'
-import { ImageList, ImageListItem } from '@mui/material'
 import { getDictionary } from 'get-dictionary'
 // Redux Actions
-import { fetchFeaturedCompaniesListRequest } from 'store/actions/companies/fetchFeaturedCompaniesList'
+import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
 import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
 
 // Styles
 import styles from './Companies.module.scss'
-import BannerCarousel from 'components/BannerCarousel'
 
 // Assets
-import { BlueTickIcon } from 'images'
-import { getCountry, getCountryKey } from 'helpers/country'
+import { getCountryKey } from 'helpers/country'
 import { formatTemplateString } from 'helpers/formatter'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
-import { flatMap } from 'lodash-es'
+import SortFilter from './components/SortFilter'
+import SearchCompany from './components/SearchCompany'
+import FeaturedCompanied from './components/FeaturedCompanied'
+import { useFirstRender } from 'helpers/useFirstRender'
+
+const initSearchQueries = {
+  query: '',
+  size: 15,
+  page: 1,
+  company_size_ids: '',
+  financing_stage_ids: '',
+  industry_ids: '',
+  location_ids: ''
+}
 
 const Companies = (props: any) => {
   const {
     lang: { companies },
     langKey
   } = props
+
   const dispatch = useDispatch()
-  const router = useRouter()
-  const { page } = router.query
   const [featuredCompanies, setFeaturedCompanies] = useState(null)
   const [featuredCompany, setFeaturedCompany] = useState(null)
   const [totalPage, setTotalPage] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [reset, setReset] = useState(true)
+  const firstRender = useFirstRender()
+  const [searchQuery, setSearchQuery] = useState({ ...initSearchQueries })
+  const clearSearchRef = useRef(null)
+
   const config = useSelector((store: any) => store.config.config.response)
 
-  // useEffect(() => {
-  //   dispatch(fetchConfigRequest())
-  // }, [])
-
-  const featuredCompaniesResponse = useSelector(
-    (store: any) => store.companies.fetchFeaturedCompaniesList.response
+  const fetchCompanyFilterResponse = useSelector(
+    (store: any) => store.companies.fetchCompanyFilter.response
   )
   const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
   const isFeaturedCompaniesFetching = useSelector(
-    (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
+    (store: any) => store.companies.fetchCompanyFilter.fetching
   )
 
   useEffect(() => {
-    setCurrentPage(Number(page) || 1)
-    dispatch(fetchFeaturedCompaniesListRequest({ page: Number(router.query.page) }))
-  }, [router.query])
-
-  useEffect(() => {
-    if (featuredCompaniesResponse?.featured_companies) {
-      setTotalPage(featuredCompaniesResponse.total_pages)
-      const companies = featuredCompaniesResponse.featured_companies.map((item) => {
-        changeCompanyValueWithConfigure(item.company, config)
+    if (fetchCompanyFilterResponse?.companies) {
+      setTotalPage(fetchCompanyFilterResponse.total_pages)
+      const companies = fetchCompanyFilterResponse.companies.map((item) => {
+        changeCompanyValueWithConfigure(item, config)
         return item
       })
       if (!companies || (companies && !companies.length)) return
-      setFeaturedCompany(companies[0]?.company)
-      companies.shift()
-
-      setFeaturedCompanies(companies)
+      if (reset) {
+        setFeaturedCompany(companies[0])
+        setFeaturedCompanies(companies.slice(1))
+      } else {
+        setFeaturedCompany([])
+        setFeaturedCompanies(companies)
+      }
     }
-  }, [featuredCompaniesResponse])
-  console.log(langKey, 9999)
+  }, [fetchCompanyFilterResponse, reset])
+
   const handleKeywordSearch = (keyword) => {
     const words = keyword.trim()
-    router.push(`/${langKey}/companies/search?query=${words}&size=15&page=1`)
+    let newQueries = { ...searchQuery, query: words, page: 1 }
+    const isEmpty = Object.values(newQueries).filter(Boolean).length === 2
+    const pageSize = ((newQueries.page == 1) && isEmpty) ? 16 : 15
+    newQueries = { ...newQueries, page: 1, size: pageSize }
+    setReset(isEmpty)
+    setSearchQuery(newQueries)
+    dispatch(fetchCompanyFilterRequest(newQueries))
   }
 
   const handlePaginationClick = (event, val) => {
-    router.query.page = val
-    router.push(router, undefined, { shallow: true })
+    const num = Number(val) || 1
+    const isEmpty = Object.values(searchQuery).filter(Boolean).length === 2
+    const pageSize = ((num == 1) && isEmpty) ? 16 : 15
+    const newQueries = { ...searchQuery, page: num, size: pageSize }
+    setSearchQuery(newQueries)
+    dispatch(fetchCompanyFilterRequest(newQueries))
+    setReset(isEmpty && num === 1)
+  }
+
+  const handleSortFilter = (query) => {
+    if (firstRender) return
+    let newQueries = { ...searchQuery, ...query}
+    const isEmpty = Object.values(newQueries).filter(Boolean).length === 2
+    const pageSize = ((newQueries.page == 1) && isEmpty) ? 16 : 15
+    newQueries = { ...newQueries, page: 1, size: pageSize }
+    setReset(isEmpty)
+    setSearchQuery(newQueries)
+    dispatch(fetchCompanyFilterRequest(newQueries))
+  }
+
+  const handleResetFilter = () => {
+    setSearchQuery(initSearchQueries)
+    clearSearchRef && clearSearchRef.current()
   }
 
   return (
     <Layout {...props}>
-      <div className={styles.companies}>
-        <div className={styles.searchCompany}>
-          <Text
-            textStyle='xxxl'
-            tagName='h1'
-            bold
-            className={styles.searchCompanyTitle}
-            textColor='primaryBlue'
-          >
-            {formatTemplateString(companies.title, getCountry())}
-          </Text>
-          <SearchCompanyField
-            transitions={companies.search}
-            onKeywordSearch={handleKeywordSearch}
-          />
-        </div>
-
-        <BannerCarousel slides={featureBanners} />
-
-        <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
-          {companies.employer.title}
-        </Text>
-        <div className={styles.featuredEmployer}>
-          {featuredCompany && (
-            <div className={styles.featuredEmployerLeft}>
-              <div className={styles.featuredEmployerInfo}>
-                <Link to={'/' + langKey + featuredCompany?.company_url || '/'}>
-                  <img
-                    src={featuredCompany?.logo_url}
-                    alt={`${featuredCompany?.name} logo`}
-                    className={styles.featuredEmployerImage}
-                  />
-                </Link>
-                <div className={styles.featuredEmployerDetails}>
-                  <Text textStyle='xl' bold>
-                    <Link
-                      to={'/' + langKey + featuredCompany?.company_url || '/'}
-                      className={styles.featuredEmployerName}
-                    >
-                      {featuredCompany?.name}
-                    </Link>
-                    {featuredCompany?.is_verify &&
-                      (isMobile ? (
-                        <MaterialMobileTooltip
-                          icon={BlueTickIcon}
-                          className={styles.featuredEmployerTooltip}
-                          title='Verified'
-                        />
-                      ) : (
-                        <MaterialDesktopTooltip
-                          icon={BlueTickIcon}
-                          className={styles.featuredEmployerTooltip}
-                          title='Verified'
-                        />
-                      ))}
-                  </Text>
-                  <div className={styles.featuredEmployerAbout}>
-                    <div className={styles.featuredEmployerAboutItem}>
-                      <Text textStyle='lg' bold>
-                        {companies.employer.size}
-                      </Text>
-                      <Text textStyle='lg'>
-                        {featuredCompany?.company_size} {companies.employer.employees}
-                      </Text>
-                    </div>
-                    <div className={styles.featuredEmployerAboutItem}>
-                      <Text textStyle='lg' bold>
-                        {companies.employer.industry}
-                      </Text>
-                      <Text textStyle='lg'>{featuredCompany?.industry}</Text>
-                    </div>
-                  </div>
-                  <Text textStyle='lg' tagName='p' className={styles.featuredEmployerDescription}>
-                    {featuredCompany?.short_description}
-                  </Text>
-                  <Link
-                    to={`${featuredCompany?.company_url ? '/' + langKey + featuredCompany.company_url + '/jobs' : '/jobs'
-                      }`}
-                    className={styles.featuredEmployerOpenings}
-                  >
-                    <Text textStyle='lg' bold>
-                      {formatTemplateString(
-                        companies.employer.allJobs,
-                        featuredCompany?.num_of_active_jobs
-                      )}
-                    </Text>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className={styles.featuredEmployerRight}>
-            <div className={styles.featuredEmployerImages}>
-              <ImageList sx={{ width: 500, height: 335 }} gap={10} cols={3}>
-                {featuredCompany?.pictures?.length > 0 &&
-                  featuredCompany.pictures.map((item) => (
-                    <ImageListItem key={item.id}>
-                      <img
-                        src={item.url}
-                        srcSet={item.url}
-                        alt={`${featuredCompany?.name} photo`}
-                        loading='lazy'
-                        className={styles.featuredEmployerPhoto}
-                      />
-                    </ImageListItem>
-                  ))}
-              </ImageList>
-            </div>
-            <div className={styles.featuredEmployerImagesMobile}>
-              {featuredCompany?.pictures?.length > 0 && (
-                <img
-                  src={featuredCompany.pictures[0].url}
-                  alt={featuredCompany?.name}
-                  className={styles.featuredEmployerSinglePhoto}
-                />
-              )}
-            </div>
+      <div className={styles.container}>
+        <div className={styles.searchContainer}>
+          <div className={styles.searchCompany}>
+            <SearchCompany
+              transitions={companies.search}
+              clearSearchRef={clearSearchRef}
+              onKeywordSearch={handleKeywordSearch}
+            />
+            <SortFilter
+              config={config}
+              sortFilterFn={handleSortFilter}
+              resetFilterFn={handleResetFilter}
+            />
           </div>
         </div>
+        <div className={styles.companies}>
+          {/* featured company */}
+          {reset ? (
+            <FeaturedCompanied
+              featuredCompany={featuredCompany}
+              langKey={langKey}
+              featureBanners={featureBanners}
+              lang={props.lang}
+            />
+          ) : null}
 
-        <Text textStyle='xxl' tagName='h2' bold className={styles.featuredEmployerSectionTitle}>
-          {companies.popularCompany.title}
-        </Text>
-        <CompanyCardList
-          companiesList={featuredCompanies}
-          isLoading={isFeaturedCompaniesFetching}
-          transitions={companies.popularCompany}
-          langKey={langKey}
-        />
-        <div className={styles.companiesPagination}>
-          <MaterialRoundedPagination
-            onChange={handlePaginationClick}
-            defaultPage={Number(currentPage) || 1}
-            totalPages={totalPage || 1}
-            page={currentPage}
+          {/* company card title */}
+          {reset ? (
+            <Text textStyle='xxl' tagName='h2' bold className={styles.popularCompanyTitle}>
+              {companies.popularCompany.title}
+            </Text>
+          ) : null}
+
+          {/* company card list */}
+          <CompanyCardList
+            companiesList={featuredCompanies}
+            isLoading={isFeaturedCompaniesFetching}
+            transitions={companies.popularCompany}
+            langKey={langKey}
           />
+
+          {/* Pagination */}
+          {totalPage > 1 && (
+            <div className={styles.companiesPagination}>
+              <MaterialRoundedPagination
+                onChange={handlePaginationClick}
+                defaultPage={Number(searchQuery.page) || 1}
+                totalPages={totalPage || 1}
+                page={searchQuery.page}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Layout>
@@ -239,19 +181,23 @@ const Companies = (props: any) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (props) => {
-  const { page, lang }: any = props.query
+  const { lang }: any = props.query
   const dictionary = await getDictionary(lang)
-  const { seo: { company } } = dictionary
+  const {
+    seo: { company }
+  } = dictionary
   store.dispatch(fetchConfigRequest(lang))
-  store.dispatch(fetchFeaturedCompaniesListRequest({ page: Number(page) || 1 }))
+
+  const searchFilterPayload = {
+    size: 16,
+    page: 1
+  }
+
+  store.dispatch(fetchCompanyFilterRequest(searchFilterPayload))
+
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
   const country = dictionary.seo[getCountryKey()]
-  // const storeState = store.getState()
-  // console.log({ store })
-  // const location_lists = storeState?.config?.config?.response?.location_lists ?? []
-  // const flatLocations =  flatMap(location_lists,item => item.locations)
-  // const location = 
   return {
     props: {
       seoMetaTitle: formatTemplateString(company.listTitle, country),
