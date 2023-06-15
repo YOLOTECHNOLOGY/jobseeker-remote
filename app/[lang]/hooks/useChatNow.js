@@ -74,7 +74,7 @@ export const useChatNow = (jobDetail) => {
     }, [showModal, setShowModal, modalLoading, jobDetail, requestSwitch])
     const chatNow = useCallback(() => {
         setLoading(true)
-        interpreter(chatNowScript())
+        return interpreter(chatNowScript())
             .run(context)
             .finally(() => setLoading(false))
     }, [interpreter, context])

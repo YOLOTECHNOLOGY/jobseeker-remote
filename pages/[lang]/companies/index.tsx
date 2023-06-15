@@ -35,8 +35,7 @@ const initSearchQueries = {
   page: 1,
   company_size_ids: '',
   financing_stage_ids: '',
-  industry_ids: '',
-  location_ids: ''
+  industry_ids: ''
 }
 
 interface IProps {
