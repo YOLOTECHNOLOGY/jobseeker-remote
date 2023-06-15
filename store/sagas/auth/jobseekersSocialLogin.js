@@ -51,8 +51,7 @@ function* SocialLoginReq(actions) {
         // Facebook Pixel
         if (window.fbq) {
           yield fbq.event('sign_up', { 
-            user_id: loginData?.id,
-            email: loginData?.email 
+            user_id: loginData?.id
           })
         }
         

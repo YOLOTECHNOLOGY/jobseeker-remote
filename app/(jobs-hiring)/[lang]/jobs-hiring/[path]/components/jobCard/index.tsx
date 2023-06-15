@@ -360,7 +360,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(company_url, { forceOptimisticNavigation: true })
+                router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
