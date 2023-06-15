@@ -112,7 +112,7 @@ const useGetStarted = () => {
 
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (data.is_profile_update_required || !data.is_profile_completed) {
-      routes.push('/jobseeker-complete-profile/1')
+      routes.push('/jobseeker-complete-profile')
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
       routes.push(isChatRedirect)
@@ -160,23 +160,23 @@ const useGetStarted = () => {
       localStorage.removeItem('isChatRedirect')
     } else if (router.pathname === '/quick-upload-resume') {
       params = {
-        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile',
         redirect_fail: router.asPath
       }
     } else if (router.pathname === '/resumetemplate') {
       params = {
-        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile/1',
+        redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile',
         redirect_fail: router.asPath
       }
     } else if (router.pathname === '/job/[keyword]') {
       params = {
-        redirect: userId ? router.asPath : '/jobseeker-complete-profile/1',
+        redirect: userId ? router.asPath : '/jobseeker-complete-profile',
         redirect_fail: '/get-started'
       }
     } else {
       params = {
         email,
-        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile/1',
+        redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile',
         redirect_fail: '/get-started'
       }
     }

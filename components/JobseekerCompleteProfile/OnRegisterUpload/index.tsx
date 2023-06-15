@@ -8,7 +8,7 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
 // Styles
-import styles from 'pages/[lang]/jobseeker-complete-profile/Onboard.module.scss'
+import styles from 'pages/[lang]/jobseeker-complete-profile2/Onboard.module.scss'
 import Link from 'components/Link'
 import { useRouter } from 'next/router'
 
@@ -52,7 +52,7 @@ const Step2 = (props: any) => {
       totalStep={4}
       isMobile={isMobile}
       nextFnBtn={() => router.push(redirect)}
-      backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
+      backFnBtn={() => router.push('/jobseeker-complete-profile')}
       isNextDisabled={isDisabled}
       lang={lang?.profile}
     >
@@ -140,7 +140,7 @@ const Step2 = (props: any) => {
               className={styles.stepFormActionsleftBtn}
               variant='outlined'
               capitalize
-              onClick={() => router.push('/jobseeker-complete-profile/1')}
+              onClick={() => router.push('/jobseeker-complete-profile')}
             >
               <Text textColor='primaryBlue'>{back}</Text>
             </MaterialButton>

@@ -174,7 +174,11 @@
       "size": "公司规模",
       "industry": "行业",
       "allJobs": "查看{{totalActiveJobs}}个热招工作",
-      "employees": "人"
+      "employees": "人",
+      "location": "地址",
+      "industryType": "行业类型",
+      "financingStages": "融资阶段",
+      "resetFilters": "清空筛选条件"
     },
     "popularCompany": {
       "title": "热门公司",
@@ -187,7 +191,8 @@
       "subTitle": "关键词为 {{searchKey}}",
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
-    }
+    },
+    "companiesEmpty": "没有找到公司"
   },
   "companyDetail": {
     "tab": {
@@ -811,7 +816,37 @@
     "month": "月",
     "months": "s",
     "readMore": "显示更多",
-    "readLess": "显示更少"
+    "readLess": "显示更少",
+    "basicInformation": "基本信息",
+    "theseInformationWillBeShown": "这些信息会在你求职的时候给老板看。",
+    "profilePhoto": "头像照片",
+    "uploadAphoto": " 上传一张照片（最大 5 MB）或从 Bossjob 默认头像中选择一张照片",
+    "havingArealPhoto": "使用真实照片作为个人资料图片有助于与潜在雇主建立信任",
+    "name": "姓名",
+    "IAm": "我是",
+    "Next1": "下一步(1/4)",
+    "workExperience": "工作经验",
+    "autofillMyInfo": "自动填充我的信息",
+    "saveTimeByImporting": "通过导入简历节省时间",
+    "uploadResume": " 上传简历",
+    "supportedFileType": "支持的文件类型：PDF、DOC、DOCX。",
+    "startedWorkingSince": "开始工作以来",
+    "mostRecentCompany": "最近公司",
+    "WorkingPeriod": "工作年限",
+    "mostRecentJobTitle": "最近的职位和技能",
+    "skillsWillBeSuggested": "将根据选定的工作职能建议技能。",
+    "selectSkillsOr": "选择技能或输入您自己的技能",
+    "Next2": "下一步(2/4)",
+    "educationExperience": "教育经历",
+    "fillThisLater": "稍后填写",
+    "Next3": "下一步(3/4)",
+    "desiredJob": "期望工作",
+    "desiredSalary": "期望薪水",
+    "submit": "提交",
+    "experienced": "有经验的",
+    "freshGraduate": "应届毕业生",
+    "companyName":"公司名称",
+    "ImHiring":"我要招聘"
   },
   "chat": {
     "chatTitle": "聊天",

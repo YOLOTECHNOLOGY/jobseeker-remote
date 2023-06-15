@@ -53,7 +53,7 @@ const BannerCarousel = ({
   );
   
   return (
-    <>
+    <div className={styles.bannerCarousel}>
       <div className={styles.banner}>
         <div className={styles.bannerViewport} ref={viewportRef}>
           <div className={styles.bannerContainer}>
@@ -95,7 +95,7 @@ const BannerCarousel = ({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

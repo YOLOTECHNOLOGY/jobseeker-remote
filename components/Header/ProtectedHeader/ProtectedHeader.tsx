@@ -67,7 +67,7 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if(userInfo?.id) {
+    if (userInfo?.id) {
       setShowUnCompletedDot(!userInfo?.is_profile_completed)
     }
   }, [userInfo])
@@ -213,7 +213,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   onClick={() => {
                     currentUser?.is_profile_completed
                       ? router.push('/' + langKey + '/manage-profile')
-                      : router.push('/' + langKey + '/jobseeker-complete-profile/1')
+                      : router.push('/' + langKey + '/jobseeker-complete-profile')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
                   style={{ color: '#353535' }}
@@ -332,12 +332,6 @@ const ProtectedHeader = ({ lang }: any) => {
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
                 <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
                   <Text textStyle='base'>{accountSettings}</Text>
-                </Link>
-              </li>
-
-              <li className={styles.headerMenuItem}>
-                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>
 

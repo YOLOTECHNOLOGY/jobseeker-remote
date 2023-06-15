@@ -7,7 +7,7 @@ import {
   fetchJobsPreferences
 } from 'store/services/jobs/fetchJobsForYouLogin'
 import { useRouter } from 'next/navigation'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setCookie } from 'helpers/cookies'
 import Image from 'next/image'
 import ClearIcon from '@mui/icons-material/Clear'
 import { getValueById } from 'helpers/config/getValueById'
@@ -169,8 +169,9 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
       device: isMobile ? 'mobile_web' : 'web',
       reco_from: reco_from ? reco_from : null
     }
-
-    await addJobViewService(params)
+    setCookie('source', 'home')
+    setCookie('reco_from', reco_from)
+    // await addJobViewService(params)
     await goToJobDetail(url)
   }
 

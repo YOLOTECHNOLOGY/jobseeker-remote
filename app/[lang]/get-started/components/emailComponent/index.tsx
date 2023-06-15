@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,memo} from 'react'
+import React, { useState, useEffect ,memo, useRef} from 'react'
 import MaterialTextField from 'components/MaterialTextField'
 import { useFirstRender } from 'helpers/useFirstRender'
 import styles from '../../index.module.scss'
@@ -16,6 +16,7 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
   const [emailError, setEmailError] = useState<string>('')
   const { newGetStarted } = lang
   const firstRender = useFirstRender()
+  const inputRef = useRef()
 
   useEffect(() => {
     if (firstRender) {
@@ -31,6 +32,8 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
   
     setEmailError(errorText)
   }, [email])
+
+  console.log('inputRef', inputRef)
 
  useEffect(()=>{
   setEmailError(validateErr)
@@ -53,6 +56,8 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
         onChange={(e) => setEmail(e.target.value)}
         error={emailError ? true : false}
         autoComplete="true"
+        autoFocus={true}
+        ref={inputRef}
       />
       {emailError && errorText(emailError)}
     </>

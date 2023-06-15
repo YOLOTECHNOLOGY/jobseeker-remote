@@ -10,6 +10,1690 @@
     data: { data: 'refreshtoken expiration of identity' }
   }
 }
+[2023-06-09T11:07:04.305] [ERROR] clientError - { error: {} }
+[2023-06-09T11:28:30.925] [ERROR] clientError - { error: { digest: '2457078096' } }
+[2023-06-09T11:28:51.351] [ERROR] clientError - { error: { digest: '1299087143' } }
+[2023-06-09T14:18:22.963] [ERROR] clientError - { error: {} }
+[2023-06-09T14:56:54.491] [ERROR] clientError - { error: {} }
+[2023-06-09T14:56:54.499] [ERROR] clientError - { error: {} }
+[2023-06-09T16:06:36.037] [ERROR] clientError - { error: {} }
+[2023-06-09T16:06:40.004] [ERROR] clientError - { error: {} }
+[2023-06-09T16:13:24.923] [ERROR] clientError - { error: {} }
+[2023-06-09T16:33:13.821] [ERROR] clientError - { error: {} }
+[2023-06-09T16:47:59.570] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T16:48:42.214] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T16:48:46.745] [ERROR] clientError - { error: { digest: '3928214211' } }
+[2023-06-09T17:56:37.231] [ERROR] clientError - { error: {} }
+[2023-06-09T17:57:56.631] [ERROR] clientError - { error: {} }
+[2023-06-13T10:42:16.063] [ERROR] clientError - { error: {} }
+[2023-06-13T10:42:24.814] [ERROR] clientError - { error: {} }
+[2023-06-13T11:20:02.775] [ERROR] clientError - { error: {} }
+[2023-06-13T14:48:45.087] [ERROR] clientError - { error: {} }
+[2023-06-13T14:48:45.128] [ERROR] clientError - { error: {} }
+[2023-06-13T15:57:35.521] [ERROR] clientError - { error: {} }
+[2023-06-13T15:57:41.365] [ERROR] clientError - { error: {} }
+[2023-06-13T15:58:39.292] [ERROR] clientError - { error: {} }
+[2023-06-13T17:03:07.170] [ERROR] clientError - { error: {} }
+[2023-06-13T17:05:57.737] [ERROR] clientError - { error: { code: 50001, data: null, message: 'PUT' } }
+[2023-06-13T17:08:00.361] [ERROR] clientError - { error: {} }
+[2023-06-13T17:08:00.370] [ERROR] clientError - {
+  error: '<!DOCTYPE html>\n' +
+    '<html lang="en">\n' +
+    '<head>\n' +
+    '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n' +
+    '  <title>Page not found at /jobseekers/resumes/undefined/update</title>\n' +
+    '  <meta name="robots" content="NONE,NOARCHIVE">\n' +
+    '  <style type="text/css">\n' +
+    '    html * { padding:0; margin:0; }\n' +
+    '    body * { padding:10px 20px; }\n' +
+    '    body * * { padding:0; }\n' +
+    '    body { font:small sans-serif; background:#eee; color:#000; }\n' +
+    '    body>div { border-bottom:1px solid #ddd; }\n' +
+    '    h1 { font-weight:normal; margin-bottom:.4em; }\n' +
+    '    h1 span { font-size:60%; color:#666; font-weight:normal; }\n' +
+    '    table { border:none; border-collapse: collapse; width:100%; }\n' +
+    '    td, th { vertical-align:top; padding:2px 3px; }\n' +
+    '    th { width:12em; text-align:right; color:#666; padding-right:.5em; }\n' +
+    '    #info { background:#f6f6f6; }\n' +
+    '    #info ol { margin: 0.5em 4em; }\n' +
+    '    #info ol li { font-family: monospace; }\n' +
+    '    #summary { background: #ffc; }\n' +
+    '    #explanation { background:#eee; border-bottom: 0px none; }\n' +
+    '    pre.exception_value { font-family: sans-serif; color: #575757; font-size: 1.5em; margin: 10px 0 10px 0; }\n' +
+    '  </style>\n' +
+    '</head>\n' +
+    '<body>\n' +
+    '  <div id="summary">\n' +
+    '    <h1>Page not found <span>(404)</span></h1>\n' +
+    '    \n' +
+    '    <table class="meta">\n' +
+    '      <tr>\n' +
+    '        <th>Request Method:</th>\n' +
+    '        <td>PUT</td>\n' +
+    '      </tr>\n' +
+    '      <tr>\n' +
+    '        <th>Request URL:</th>\n' +
+    '        <td>https://dev.api.bossjob.com/jobseekers/resumes/undefined/update</td>\n' +
+    '      </tr>\n' +
+    '      \n' +
+    '    </table>\n' +
+    '  </div>\n' +
+    '  <div id="info">\n' +
+    '    \n' +
+    '      <p>\n' +
+    '      Using the URLconf defined in <code>config.urls</code>,\n' +
+    '      Django tried these URL patterns, in this order:\n' +
+    '      </p>\n' +
+    '      <ol>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                me\n' +
+    "                [name='my_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                account-setting\n' +
+    "                [name='my_account_setting_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                user-settings\n' +
+    "                [name='user_settings']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                personal-info\n' +
+    "                [name='my_personal_info']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                users\n' +
+    "                [name='jobseeker_users_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences\n' +
+    "                [name='my-job-preferences-lists']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                email-notification-setting/update\n' +
+    "                [name='update_email_notification_setting']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                change-phone-number\n' +
+    "                [name='change_phone_number']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:job_seeker_pref_id&gt;/update\n' +
+    "                [name='update_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/create\n' +
+    "                [name='create_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-resume\n' +
+    "                [name='upload_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                generate-resume\n' +
+    "                [name='generate_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-avatar\n' +
+    "                [name='upload_avatar']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/update\n' +
+    "                [name='update_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/rename\n' +
+    "                [name='rename_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/delete\n' +
+    "                [name='delete_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                complete-profile\n' +
+    "                [name='complete_profile']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:jobseeker_id&gt;\n' +
+    "                [name='private_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                deactivate\n' +
+    "                [name='deactivate_account']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-parser\n' +
+    "                [name='resume_parser']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/activate\n' +
+    "                [name='activate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/deactivate\n' +
+    "                [name='deactivate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;\n' +
+    "                [name='job_preferences_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;/delete\n' +
+    "                [name='delete_job-preferences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:recruiter_id&gt;/report\n' +
+    "                [name='report_recruiter']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes\n' +
+    "                [name='resume_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;resume_id&gt;\n' +
+    "                [name='get_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                feedback/create\n' +
+    "                [name='create_feedback']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                share-job\n' +
+    "                [name='share_job']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                private-jobseekers\n' +
+    "                [name='private_jobseeker_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications\n' +
+    "                [name='get_status_push_notifications']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-on\n' +
+    "                [name='jobseeker_turn_on_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-off\n' +
+    "                [name='jobseeker_turn_off_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/chat-message/switch\n' +
+    "                [name='jobseeker_switch_status_chat_message']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                clear-cache\n' +
+    "                [name='clear_redis_cache_for_jobseekers']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-summary\n' +
+    "                [name='generate_resume_summary']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                send-resume-email\n' +
+    "                [name='send_resume_email']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences\n' +
+    "                [name='my_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/create\n' +
+    "                [name='create_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/&lt;int:work_experience_id&gt;\n' +
+    "                [name='view_work_experience']\n" +
+    '          '... 7962 more characters
+}
+[2023-06-13T17:08:25.942] [ERROR] clientError - { error: {} }
+[2023-06-13T17:08:25.978] [ERROR] clientError - { error: {} }
+[2023-06-13T17:08:26.335] [ERROR] clientError - { error: {} }
+[2023-06-13T17:08:27.136] [ERROR] clientError - { error: {} }
+[2023-06-13T17:08:37.122] [ERROR] clientError - {
+  error: '<!DOCTYPE html>\n' +
+    '<html lang="en">\n' +
+    '<head>\n' +
+    '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n' +
+    '  <title>Page not found at /jobseekers/resumes/undefined/update</title>\n' +
+    '  <meta name="robots" content="NONE,NOARCHIVE">\n' +
+    '  <style type="text/css">\n' +
+    '    html * { padding:0; margin:0; }\n' +
+    '    body * { padding:10px 20px; }\n' +
+    '    body * * { padding:0; }\n' +
+    '    body { font:small sans-serif; background:#eee; color:#000; }\n' +
+    '    body>div { border-bottom:1px solid #ddd; }\n' +
+    '    h1 { font-weight:normal; margin-bottom:.4em; }\n' +
+    '    h1 span { font-size:60%; color:#666; font-weight:normal; }\n' +
+    '    table { border:none; border-collapse: collapse; width:100%; }\n' +
+    '    td, th { vertical-align:top; padding:2px 3px; }\n' +
+    '    th { width:12em; text-align:right; color:#666; padding-right:.5em; }\n' +
+    '    #info { background:#f6f6f6; }\n' +
+    '    #info ol { margin: 0.5em 4em; }\n' +
+    '    #info ol li { font-family: monospace; }\n' +
+    '    #summary { background: #ffc; }\n' +
+    '    #explanation { background:#eee; border-bottom: 0px none; }\n' +
+    '    pre.exception_value { font-family: sans-serif; color: #575757; font-size: 1.5em; margin: 10px 0 10px 0; }\n' +
+    '  </style>\n' +
+    '</head>\n' +
+    '<body>\n' +
+    '  <div id="summary">\n' +
+    '    <h1>Page not found <span>(404)</span></h1>\n' +
+    '    \n' +
+    '    <table class="meta">\n' +
+    '      <tr>\n' +
+    '        <th>Request Method:</th>\n' +
+    '        <td>PUT</td>\n' +
+    '      </tr>\n' +
+    '      <tr>\n' +
+    '        <th>Request URL:</th>\n' +
+    '        <td>https://dev.api.bossjob.com/jobseekers/resumes/undefined/update</td>\n' +
+    '      </tr>\n' +
+    '      \n' +
+    '    </table>\n' +
+    '  </div>\n' +
+    '  <div id="info">\n' +
+    '    \n' +
+    '      <p>\n' +
+    '      Using the URLconf defined in <code>config.urls</code>,\n' +
+    '      Django tried these URL patterns, in this order:\n' +
+    '      </p>\n' +
+    '      <ol>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                me\n' +
+    "                [name='my_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                account-setting\n' +
+    "                [name='my_account_setting_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                user-settings\n' +
+    "                [name='user_settings']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                personal-info\n' +
+    "                [name='my_personal_info']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                users\n' +
+    "                [name='jobseeker_users_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences\n' +
+    "                [name='my-job-preferences-lists']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                email-notification-setting/update\n' +
+    "                [name='update_email_notification_setting']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                change-phone-number\n' +
+    "                [name='change_phone_number']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:job_seeker_pref_id&gt;/update\n' +
+    "                [name='update_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/create\n' +
+    "                [name='create_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-resume\n' +
+    "                [name='upload_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                generate-resume\n' +
+    "                [name='generate_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-avatar\n' +
+    "                [name='upload_avatar']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/update\n' +
+    "                [name='update_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/rename\n' +
+    "                [name='rename_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/delete\n' +
+    "                [name='delete_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                complete-profile\n' +
+    "                [name='complete_profile']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:jobseeker_id&gt;\n' +
+    "                [name='private_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                deactivate\n' +
+    "                [name='deactivate_account']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-parser\n' +
+    "                [name='resume_parser']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/activate\n' +
+    "                [name='activate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/deactivate\n' +
+    "                [name='deactivate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;\n' +
+    "                [name='job_preferences_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;/delete\n' +
+    "                [name='delete_job-preferences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:recruiter_id&gt;/report\n' +
+    "                [name='report_recruiter']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes\n' +
+    "                [name='resume_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;resume_id&gt;\n' +
+    "                [name='get_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                feedback/create\n' +
+    "                [name='create_feedback']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                share-job\n' +
+    "                [name='share_job']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                private-jobseekers\n' +
+    "                [name='private_jobseeker_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications\n' +
+    "                [name='get_status_push_notifications']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-on\n' +
+    "                [name='jobseeker_turn_on_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-off\n' +
+    "                [name='jobseeker_turn_off_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/chat-message/switch\n' +
+    "                [name='jobseeker_switch_status_chat_message']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                clear-cache\n' +
+    "                [name='clear_redis_cache_for_jobseekers']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-summary\n' +
+    "                [name='generate_resume_summary']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                send-resume-email\n' +
+    "                [name='send_resume_email']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences\n' +
+    "                [name='my_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/create\n' +
+    "                [name='create_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/&lt;int:work_experience_id&gt;\n' +
+    "                [name='view_work_experience']\n" +
+    '          '... 7962 more characters
+}
+[2023-06-13T17:09:42.203] [ERROR] clientError - {
+  error: '<!DOCTYPE html>\n' +
+    '<html lang="en">\n' +
+    '<head>\n' +
+    '  <meta http-equiv="content-type" content="text/html; charset=utf-8">\n' +
+    '  <title>Page not found at /jobseekers/resumes/undefined/update</title>\n' +
+    '  <meta name="robots" content="NONE,NOARCHIVE">\n' +
+    '  <style type="text/css">\n' +
+    '    html * { padding:0; margin:0; }\n' +
+    '    body * { padding:10px 20px; }\n' +
+    '    body * * { padding:0; }\n' +
+    '    body { font:small sans-serif; background:#eee; color:#000; }\n' +
+    '    body>div { border-bottom:1px solid #ddd; }\n' +
+    '    h1 { font-weight:normal; margin-bottom:.4em; }\n' +
+    '    h1 span { font-size:60%; color:#666; font-weight:normal; }\n' +
+    '    table { border:none; border-collapse: collapse; width:100%; }\n' +
+    '    td, th { vertical-align:top; padding:2px 3px; }\n' +
+    '    th { width:12em; text-align:right; color:#666; padding-right:.5em; }\n' +
+    '    #info { background:#f6f6f6; }\n' +
+    '    #info ol { margin: 0.5em 4em; }\n' +
+    '    #info ol li { font-family: monospace; }\n' +
+    '    #summary { background: #ffc; }\n' +
+    '    #explanation { background:#eee; border-bottom: 0px none; }\n' +
+    '    pre.exception_value { font-family: sans-serif; color: #575757; font-size: 1.5em; margin: 10px 0 10px 0; }\n' +
+    '  </style>\n' +
+    '</head>\n' +
+    '<body>\n' +
+    '  <div id="summary">\n' +
+    '    <h1>Page not found <span>(404)</span></h1>\n' +
+    '    \n' +
+    '    <table class="meta">\n' +
+    '      <tr>\n' +
+    '        <th>Request Method:</th>\n' +
+    '        <td>PUT</td>\n' +
+    '      </tr>\n' +
+    '      <tr>\n' +
+    '        <th>Request URL:</th>\n' +
+    '        <td>https://dev.api.bossjob.com/jobseekers/resumes/undefined/update</td>\n' +
+    '      </tr>\n' +
+    '      \n' +
+    '    </table>\n' +
+    '  </div>\n' +
+    '  <div id="info">\n' +
+    '    \n' +
+    '      <p>\n' +
+    '      Using the URLconf defined in <code>config.urls</code>,\n' +
+    '      Django tried these URL patterns, in this order:\n' +
+    '      </p>\n' +
+    '      <ol>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                me\n' +
+    "                [name='my_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                account-setting\n' +
+    "                [name='my_account_setting_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                user-settings\n' +
+    "                [name='user_settings']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                personal-info\n' +
+    "                [name='my_personal_info']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                users\n' +
+    "                [name='jobseeker_users_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences\n' +
+    "                [name='my-job-preferences-lists']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                email-notification-setting/update\n' +
+    "                [name='update_email_notification_setting']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                change-phone-number\n' +
+    "                [name='change_phone_number']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:job_seeker_pref_id&gt;/update\n' +
+    "                [name='update_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/create\n' +
+    "                [name='create_job_preference']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-resume\n' +
+    "                [name='upload_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                generate-resume\n' +
+    "                [name='generate_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                upload-avatar\n' +
+    "                [name='upload_avatar']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/update\n' +
+    "                [name='update_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/rename\n' +
+    "                [name='rename_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;int:resume_id&gt;/delete\n' +
+    "                [name='delete_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                complete-profile\n' +
+    "                [name='complete_profile']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:jobseeker_id&gt;\n' +
+    "                [name='private_profile_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                deactivate\n' +
+    "                [name='deactivate_account']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-parser\n' +
+    "                [name='resume_parser']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/activate\n' +
+    "                [name='activate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                facebook/messenger/deactivate\n' +
+    "                [name='deactivate_facebook_messenger']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;\n' +
+    "                [name='job_preferences_details']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                job-preferences/&lt;int:preference_id&gt;/delete\n' +
+    "                [name='delete_job-preferences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                &lt;int:recruiter_id&gt;/report\n' +
+    "                [name='report_recruiter']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes\n' +
+    "                [name='resume_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resumes/&lt;resume_id&gt;\n' +
+    "                [name='get_resume']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                feedback/create\n' +
+    "                [name='create_feedback']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                share-job\n' +
+    "                [name='share_job']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                private-jobseekers\n' +
+    "                [name='private_jobseeker_list']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications\n' +
+    "                [name='get_status_push_notifications']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-on\n' +
+    "                [name='jobseeker_turn_on_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/no-disturb/turn-off\n' +
+    "                [name='jobseeker_turn_off_no_disturb']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                push-notifications/chat-message/switch\n' +
+    "                [name='jobseeker_switch_status_chat_message']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                clear-cache\n' +
+    "                [name='clear_redis_cache_for_jobseekers']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                resume-summary\n' +
+    "                [name='generate_resume_summary']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                send-resume-email\n' +
+    "                [name='send_resume_email']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences\n' +
+    "                [name='my_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/create\n' +
+    "                [name='create_work_experiences']\n" +
+    '            \n' +
+    '          </li>\n' +
+    '        \n' +
+    '          <li>\n' +
+    '            \n' +
+    '                jobseekers/\n' +
+    '                \n' +
+    '            \n' +
+    '                work-experiences/&lt;int:work_experience_id&gt;\n' +
+    "                [name='view_work_experience']\n" +
+    '          '... 7962 more characters
+}
+[2023-06-13T17:10:12.964] [ERROR] clientError - {
+  error: {
+    code: 40004,
+    data: { detail: 'Not found.' },
+    message: 'Not found.',
+    errors: { detail: 'Not found.' }
+  }
+}
+[2023-06-13T17:10:33.798] [ERROR] clientError - {
+  error: {
+    code: 40004,
+    data: { detail: 'Not found.' },
+    message: 'Not found.',
+    errors: { detail: 'Not found.' }
+  }
+}
+[2023-06-13T17:10:50.761] [ERROR] clientError - { error: {} }
+[2023-06-13T17:10:51.647] [ERROR] clientError - {
+  error: '<!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><title>Bossjob - Career Platform for Professionals in Philippines</title><meta name="description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="copyright" content="\n' +
+    '          Copyright © 2023 Singapore: Yolo Technology Pte Ltd. All Rights Reserved.\n' +
+    '          Philippines: Etos Adtech Corporation\n' +
+    '        "/><meta name="author" content="Academy"/><meta property="og:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:secure_url" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:width" content="450"/><meta property="og:image:height" content="298"/><meta property="og:type" content="website"/><meta property="og:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:locale" content="en_PH"/><meta property="og:site_name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="image" content="https://assets.bossjob.com/website/OGTagImage.png"/><link rel="canonical" href="http://localhost:3004"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:site" content="BossjobPH"/><meta name="twitter:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta name="twitter:image:alt" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:creator" content="BossjobPH"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/><script>\n' +
+    "        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+    "        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+    "        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "        })(window,document,'script','dataLayer', 'GTM-PR4Z29C')\n" +
+    '        </script><meta name="next-head-count" content="26"/><script defer="" async="">\n' +
+    '            window.googletag = window.googletag || {cmd: []}\n' +
+    '          </script><link data-next-font="" rel="preconnect" href="/" crossorigin="anonymous"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1686647450814"></script><script src="/_next/static/chunks/webpack.js?ts=1686647450814" defer=""></script><script src="/_next/static/chunks/main.js?ts=1686647450814" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1686647450814" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1686647450814" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1686647450814" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1686647450814" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"><noscript>\n' +
+    '          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR4Z29C"\n' +
+    '          height="0" width="0" style="display:non e;visibility:hidden"></iframe>\n' +
+    '        </noscript><link rel="apple-touch-icon" sizes="180x180" href="https://dev-assets.bossjob.com/jobseeker/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="144x144" href="https://dev-assets.bossjob.com/jobseeker/favicon_144x144.png"/><link rel="icon" type="image/png" sizes="96x96" href="https://dev-assets.bossjob.com/jobseeker/favicon_96x96.png"/><link rel="icon" type="image/png" sizes="48x48" href="https://dev-assets.bossjob.com/jobseeker/favicon_48x48.png"/><link rel="shortcut icon" type="image/x-icon" href="https://dev-assets.bossjob.com/jobseeker/favicon.ico"/></div><script src="/_next/static/chunks/react-refresh.js?ts=1686647450814"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>'
+}
+[2023-06-13T17:10:59.152] [ERROR] clientError - {
+  error: '<!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><title>Bossjob - Career Platform for Professionals in Philippines</title><meta name="description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="copyright" content="\n' +
+    '          Copyright © 2023 Singapore: Yolo Technology Pte Ltd. All Rights Reserved.\n' +
+    '          Philippines: Etos Adtech Corporation\n' +
+    '        "/><meta name="author" content="Academy"/><meta property="og:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:secure_url" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:width" content="450"/><meta property="og:image:height" content="298"/><meta property="og:type" content="website"/><meta property="og:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:locale" content="en_PH"/><meta property="og:site_name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="image" content="https://assets.bossjob.com/website/OGTagImage.png"/><link rel="canonical" href="http://localhost:3004"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:site" content="BossjobPH"/><meta name="twitter:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta name="twitter:image:alt" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:creator" content="BossjobPH"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/><script>\n' +
+    "        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+    "        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+    "        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "        })(window,document,'script','dataLayer', 'GTM-PR4Z29C')\n" +
+    '        </script><meta name="next-head-count" content="26"/><script defer="" async="">\n' +
+    '            window.googletag = window.googletag || {cmd: []}\n' +
+    '          </script><link data-next-font="" rel="preconnect" href="/" crossorigin="anonymous"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1686647459054"></script><script src="/_next/static/chunks/webpack.js?ts=1686647459054" defer=""></script><script src="/_next/static/chunks/main.js?ts=1686647459054" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1686647459054" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1686647459054" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1686647459054" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1686647459054" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"><noscript>\n' +
+    '          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR4Z29C"\n' +
+    '          height="0" width="0" style="display:non e;visibility:hidden"></iframe>\n' +
+    '        </noscript><link rel="apple-touch-icon" sizes="180x180" href="https://dev-assets.bossjob.com/jobseeker/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="144x144" href="https://dev-assets.bossjob.com/jobseeker/favicon_144x144.png"/><link rel="icon" type="image/png" sizes="96x96" href="https://dev-assets.bossjob.com/jobseeker/favicon_96x96.png"/><link rel="icon" type="image/png" sizes="48x48" href="https://dev-assets.bossjob.com/jobseeker/favicon_48x48.png"/><link rel="shortcut icon" type="image/x-icon" href="https://dev-assets.bossjob.com/jobseeker/favicon.ico"/></div><script src="/_next/static/chunks/react-refresh.js?ts=1686647459054"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>'
+}
+[2023-06-13T17:12:35.693] [ERROR] clientError - { error: {} }
+[2023-06-13T17:16:25.161] [ERROR] clientError - {
+  error: '<!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><title>Bossjob - Career Platform for Professionals in Philippines</title><meta name="description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="copyright" content="\n' +
+    '          Copyright © 2023 Singapore: Yolo Technology Pte Ltd. All Rights Reserved.\n' +
+    '          Philippines: Etos Adtech Corporation\n' +
+    '        "/><meta name="author" content="Academy"/><meta property="og:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:secure_url" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:width" content="450"/><meta property="og:image:height" content="298"/><meta property="og:type" content="website"/><meta property="og:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:locale" content="en_PH"/><meta property="og:site_name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="image" content="https://assets.bossjob.com/website/OGTagImage.png"/><link rel="canonical" href="http://localhost:3004"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:site" content="BossjobPH"/><meta name="twitter:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta name="twitter:image:alt" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:creator" content="BossjobPH"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/><script>\n' +
+    "        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+    "        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+    "        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "        })(window,document,'script','dataLayer', 'GTM-PR4Z29C')\n" +
+    '        </script><meta name="next-head-count" content="26"/><script defer="" async="">\n' +
+    '            window.googletag = window.googletag || {cmd: []}\n' +
+    '          </script><link data-next-font="" rel="preconnect" href="/" crossorigin="anonymous"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1686647783412"></script><script src="/_next/static/chunks/webpack.js?ts=1686647783412" defer=""></script><script src="/_next/static/chunks/main.js?ts=1686647783412" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1686647783412" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1686647783412" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1686647783412" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1686647783412" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"><noscript>\n' +
+    '          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR4Z29C"\n' +
+    '          height="0" width="0" style="display:non e;visibility:hidden"></iframe>\n' +
+    '        </noscript><link rel="apple-touch-icon" sizes="180x180" href="https://dev-assets.bossjob.com/jobseeker/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="144x144" href="https://dev-assets.bossjob.com/jobseeker/favicon_144x144.png"/><link rel="icon" type="image/png" sizes="96x96" href="https://dev-assets.bossjob.com/jobseeker/favicon_96x96.png"/><link rel="icon" type="image/png" sizes="48x48" href="https://dev-assets.bossjob.com/jobseeker/favicon_48x48.png"/><link rel="shortcut icon" type="image/x-icon" href="https://dev-assets.bossjob.com/jobseeker/favicon.ico"/></div><script src="/_next/static/chunks/react-refresh.js?ts=1686647783412"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>'
+}
+[2023-06-13T17:17:35.836] [ERROR] clientError - { error: {} }
+[2023-06-13T17:17:47.132] [ERROR] clientError - {
+  error: '<!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><title>Bossjob - Career Platform for Professionals in Philippines</title><meta name="description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="copyright" content="\n' +
+    '          Copyright © 2023 Singapore: Yolo Technology Pte Ltd. All Rights Reserved.\n' +
+    '          Philippines: Etos Adtech Corporation\n' +
+    '        "/><meta name="author" content="Academy"/><meta property="og:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:secure_url" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:width" content="450"/><meta property="og:image:height" content="298"/><meta property="og:type" content="website"/><meta property="og:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:locale" content="en_PH"/><meta property="og:site_name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="image" content="https://assets.bossjob.com/website/OGTagImage.png"/><link rel="canonical" href="http://localhost:3004"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:site" content="BossjobPH"/><meta name="twitter:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta name="twitter:image:alt" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:creator" content="BossjobPH"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/><script>\n' +
+    "        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+    "        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+    "        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "        })(window,document,'script','dataLayer', 'GTM-PR4Z29C')\n" +
+    '        </script><meta name="next-head-count" content="26"/><script defer="" async="">\n' +
+    '            window.googletag = window.googletag || {cmd: []}\n' +
+    '          </script><link data-next-font="" rel="preconnect" href="/" crossorigin="anonymous"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1686647866698"></script><script src="/_next/static/chunks/webpack.js?ts=1686647866698" defer=""></script><script src="/_next/static/chunks/main.js?ts=1686647866698" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1686647866698" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1686647866698" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1686647866698" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1686647866698" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"><noscript>\n' +
+    '          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR4Z29C"\n' +
+    '          height="0" width="0" style="display:non e;visibility:hidden"></iframe>\n' +
+    '        </noscript><link rel="apple-touch-icon" sizes="180x180" href="https://dev-assets.bossjob.com/jobseeker/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="144x144" href="https://dev-assets.bossjob.com/jobseeker/favicon_144x144.png"/><link rel="icon" type="image/png" sizes="96x96" href="https://dev-assets.bossjob.com/jobseeker/favicon_96x96.png"/><link rel="icon" type="image/png" sizes="48x48" href="https://dev-assets.bossjob.com/jobseeker/favicon_48x48.png"/><link rel="shortcut icon" type="image/x-icon" href="https://dev-assets.bossjob.com/jobseeker/favicon.ico"/></div><script src="/_next/static/chunks/react-refresh.js?ts=1686647866698"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>'
+}
+[2023-06-13T17:20:43.732] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:23:02.174] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:23:02.177] [ERROR] clientError - { error: {} }
+[2023-06-13T17:23:11.562] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:23:30.713] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:23:45.822] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:24:37.688] [ERROR] clientError - { error: {} }
+[2023-06-13T17:24:37.696] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:24:46.503] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resume',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T17:27:23.395] [ERROR] clientError - {
+  error: '<!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><title>Bossjob - Career Platform for Professionals in Philippines</title><meta name="description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="copyright" content="\n' +
+    '          Copyright © 2023 Singapore: Yolo Technology Pte Ltd. All Rights Reserved.\n' +
+    '          Philippines: Etos Adtech Corporation\n' +
+    '        "/><meta name="author" content="Academy"/><meta property="og:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:secure_url" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta property="og:image:width" content="450"/><meta property="og:image:height" content="298"/><meta property="og:type" content="website"/><meta property="og:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta property="og:locale" content="en_PH"/><meta property="og:site_name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="name" content="Bossjob - Career Platform for Professionals in Philippines"/><meta itemProp="image" content="https://assets.bossjob.com/website/OGTagImage.png"/><link rel="canonical" href="http://localhost:3004"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:site" content="BossjobPH"/><meta name="twitter:title" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:description" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:image" content="https://assets.bossjob.com/website/OGTagImage.png"/><meta name="twitter:image:alt" content="Bossjob - Career Platform for Professionals in Philippines"/><meta name="twitter:creator" content="BossjobPH"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no"/><script>\n' +
+    "        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+    "        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+    "        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+    "        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+    "        })(window,document,'script','dataLayer', 'GTM-PR4Z29C')\n" +
+    '        </script><meta name="next-head-count" content="26"/><script defer="" async="">\n' +
+    '            window.googletag = window.googletag || {cmd: []}\n' +
+    '          </script><link data-next-font="" rel="preconnect" href="/" crossorigin="anonymous"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1686648442656"></script><script src="/_next/static/chunks/webpack.js?ts=1686648442656" defer=""></script><script src="/_next/static/chunks/main.js?ts=1686648442656" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1686648442656" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1686648442656" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1686648442656" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1686648442656" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"><noscript>\n' +
+    '          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR4Z29C"\n' +
+    '          height="0" width="0" style="display:non e;visibility:hidden"></iframe>\n' +
+    '        </noscript><link rel="apple-touch-icon" sizes="180x180" href="https://dev-assets.bossjob.com/jobseeker/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="144x144" href="https://dev-assets.bossjob.com/jobseeker/favicon_144x144.png"/><link rel="icon" type="image/png" sizes="96x96" href="https://dev-assets.bossjob.com/jobseeker/favicon_96x96.png"/><link rel="icon" type="image/png" sizes="48x48" href="https://dev-assets.bossjob.com/jobseeker/favicon_48x48.png"/><link rel="shortcut icon" type="image/x-icon" href="https://dev-assets.bossjob.com/jobseeker/favicon.ico"/></div><script src="/_next/static/chunks/react-refresh.js?ts=1686648442656"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>'
+}
+[2023-06-13T17:28:58.065] [ERROR] clientError - {
+  error: {
+    message: 'Network Error',
+    name: 'Error',
+    stack: 'Error: Network Error\n' +
+      '    at createError (webpack-internal:///(app-client)/./node_modules/axios/lib/core/createError.js:16:15)\n' +
+      '    at XMLHttpRequest.handleError (webpack-internal:///(app-client)/./node_modules/axios/lib/adapters/xhr.js:117:14)',
+    config: {
+      transitional: [Object],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      headers: [Object],
+      baseURL: 'https://dev.api.bossjob.com/resumes',
+      method: 'put',
+      url: '/2847941/update',
+      data: {}
+    },
+    status: null
+  }
+}
+[2023-06-13T19:37:18.540] [ERROR] clientError - { error: {} }
 [2023-06-13T12:01:21.660] [ERROR] clientError - {
   error: {
     code: 50001,

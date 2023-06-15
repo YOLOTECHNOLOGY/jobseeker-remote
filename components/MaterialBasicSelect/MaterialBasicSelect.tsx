@@ -19,6 +19,7 @@ const MaterialBasicSelect = ({
   disabled,
   required,
   error,
+  useID = false,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '1')
@@ -112,7 +113,7 @@ const MaterialBasicSelect = ({
         >
           {options &&
             options.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={useID ? option.id : option.value}>
                 {option.label}
               </MenuItem>
             ))}

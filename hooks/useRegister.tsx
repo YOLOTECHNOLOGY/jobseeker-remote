@@ -101,7 +101,7 @@ const useRegister = () => {
       if (userId) {
         router.push('/jobs-hiring/job-search')
       } else {
-        router.push('/jobseeker-complete-profile/1')
+        router.push('/jobseeker-complete-profile')
       }
     }
   }, [fileResponse])
@@ -172,7 +172,7 @@ const useRegister = () => {
               router.push('/jobs-hiring/job-search')
             }
           } else {
-            router.push('/jobseeker-complete-profile/1')
+            router.push('/jobseeker-complete-profile')
           }
         }
       } else if (accessToken) {
@@ -187,7 +187,7 @@ const useRegister = () => {
           }
         } else {
           setItem('isRegisterModuleRedirect', router.asPath)
-          router.push('/jobseeker-complete-profile/1')
+          router.push('/jobseeker-complete-profile')
         }
       }
     }

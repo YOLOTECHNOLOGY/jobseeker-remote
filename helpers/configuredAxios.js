@@ -50,6 +50,9 @@ const getUrl = (baseURL) => {
       break
     case 'recruiters':
       url = process.env.RECRUITERS_BOSSJOB_URL
+      break
+    case 'resumes':
+       url = process.env.RESUME_URL
     default:
       break
   }
