@@ -49,8 +49,22 @@
             }
         }
         .next{
-            margin: 0 auto 20px;
+            margin: 20px auto 0;
             padding: 0 20px;
+            :global{
+                .MuiLoadingButton-root{
+                    flex: 1;
+                }
+            }
+           
+        }
+        .work{
+            .workContainer{
+                width: 100%;
+            }
+            .box{
+                width: 100%;
+            }
         }
     }
 }

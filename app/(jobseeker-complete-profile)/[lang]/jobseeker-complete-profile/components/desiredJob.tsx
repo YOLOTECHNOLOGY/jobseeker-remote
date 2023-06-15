@@ -56,7 +56,9 @@ const EducationExperience = (props: any) => {
   const langKey = getLang()
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
+    const maxSalaryOrg = maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null
+    setValue('maxSalary',maxSalaryOrg )
+    setMaxSalary(maxSalaryOrg)
     setMaxSalaryOptions(maxSalaryOptions)
   }
   const locationList = config.location_lists

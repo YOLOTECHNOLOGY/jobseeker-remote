@@ -67,7 +67,7 @@ const EducationExperience = (props: any) => {
   } = lang?.profile || {}
 console.log({userDetail})
  useEffect(()=>{
-   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  && studyPeriodTo ) ){
+   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
     setIsDisabled(false)
    }else{
     setIsDisabled(true)
