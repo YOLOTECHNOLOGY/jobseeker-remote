@@ -77,7 +77,10 @@ const Companies = (props: IProps) => {
         changeCompanyValueWithConfigure(item, config)
         return item
       })
-      if (!companies || (companies && !companies.length)) return
+      if (!companies || (companies && !companies.length)) {
+        setFeaturedCompanies([])
+        return
+      }
       if (reset) {
         setFeaturedCompany(companies[0])
         setFeaturedCompanies(companies.slice(1))
@@ -166,6 +169,7 @@ const Companies = (props: IProps) => {
             isLoading={isFeaturedCompaniesFetching}
             transitions={companies.popularCompany}
             langKey={langKey}
+            lang={props.lang}
           />
 
           {/* Pagination */}

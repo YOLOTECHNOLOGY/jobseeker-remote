@@ -1,0 +1,437 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+$paddingLeftWidth: 600px;
+$maxContentWidth: 1170px;
+$contentWidth: 894px;
+
+
+.main {
+    .header {
+        width: 100%;
+        height: 55px;
+        background: #136FD3;
+        line-height: 55px;
+        margin-bottom: 40px;     
+        .headerMain {
+            display: flex;
+            width: $maxContentWidth;
+            margin: 0 auto;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            height: 100%;
+            a {
+                color: white;
+            }
+        }
+    }
+    
+    p, ul,h3{
+        margin: 0;
+    }
+
+    .basicInfo {
+        width: 770px;
+        margin: 0 auto;
+        padding-bottom: 30px;
+        .topModule {
+            min-height: 500px;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 6px rgba(150, 149, 149, 0.25);
+            border-radius: 20px;
+            padding-bottom: 36px;
+        }
+
+        .headerInfo {
+            height: 95px;
+            padding: 0 50px;
+            h2 {
+                font-style: normal;
+                font-weight: 700;
+                font-size: 32px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 17px 0 3px 0;
+                margin: 0;
+            }
+
+            p {
+                margin: 0;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 18px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+            }
+        }
+
+        .container {
+            padding: 0 46px;
+
+            h3 {
+                font-weight: 700;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 26px 0 16px;
+            }
+
+            .uploadTips {
+                font-weight: 400;
+                font-size: 14px;
+                letter-spacing: 1px;
+                color: #707070;
+            }
+
+            .avatarList {
+                padding-top: 24px;
+                display: flex;
+
+                li {
+                    list-style: none;
+                    position: relative;
+                    margin-right: 14px;
+                     border: 3px solid #fff;
+                    border-radius: 50%;
+                    padding: 3px;
+                    box-sizing: border-box;
+                    width: 70px;
+                    height: 70px;
+                    cursor: pointer;
+                    &.active {
+                        border: 3px solid #0EBD5C;
+                    }
+
+                    .uploadAvatar {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        width: 100%;
+                        height: 100%;
+                        position: relative;
+
+                        @include md {
+                            flex-direction: row;
+                            align-items: flex-end;
+                        }
+
+                        &Display {
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+
+                        &Button {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 20px;
+                            height: 20px;
+                            left: 6px;
+                            top: 43px;
+                            position: absolute;
+                            border: 1px solid $lightgrey;
+                            border-radius: 50%;
+
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+
+                        &Text {
+                            word-wrap: break-word;
+                        }
+                    }
+                }
+            }
+
+            .photoTips {
+                font-size: 14px;
+                line-height: 19px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #FE574A;
+                padding-top: 20px;
+            }
+
+            .name {
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+
+                span {
+                    color: red;
+                }
+            }
+
+            .nameBox {
+                padding: 20px 0 14px;
+
+                .nameFlex {
+                    display: flex;
+                    padding-top: 10px;
+                }
+
+                .namesFirst {
+                    margin-right: 16px;
+                    flex: 1;
+                    .stepFullwidth {
+                        width: 100%;
+                       :global{
+                        .MuiOutlinedInput-root{
+                            border-radius: 10px;
+                        }
+                       }
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            .Im {
+                padding-top: 16px;
+
+            }
+
+           
+            .availability {
+                padding-top: 12px;
+            }
+        }
+
+    }
+    .btnList {
+        display: flex;
+        padding-top: 8px;
+        flex-wrap: wrap;
+        button {
+            width: 330px;
+            margin-right: 16px;
+            background: #E7F1FB;
+            border: 1.5px solid #E7F1FB;
+            border-radius: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+            color: #353535;
+            justify-content: center;
+            height: 44px;
+            transition: .2s;
+            margin-bottom: 16px;
+            cursor: pointer;
+
+            &:hover {
+                background: #1854A3;
+                color: #FFFFFF;
+                transition: .2s;
+            }
+
+            &:nth-of-type(even) {
+                margin-right: 0;
+            }
+
+            &.active {
+                color: #FFFFFF;
+                background: #136FD3;
+            }
+        }
+    }
+
+    .next {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        :global {
+            .MuiLoadingButton-root:hover {
+                color: #fff;
+            }
+        }
+    }
+    .work{
+        .header{
+            margin-bottom: 26px;
+        }
+        .resumeList{
+            margin-bottom: 6px;
+        }
+        .workContainer{
+            width: 900px;
+            margin: 0 auto;
+            padding-bottom: 24px;
+        }
+        .box{
+            width: 770px;
+            margin: 32px auto 0;
+            box-shadow: 0px 0px 6px rgba(150, 149, 149, 0.25);
+            border-radius: 20px;
+            min-height: 500px;
+            box-sizing: border-box;
+            background: #fff;
+            .headerInfo{
+                height: 69px; 
+                line-height: 69px;
+                font-size: 30px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                letter-spacing: 1px;
+                color: #353535;
+                padding-left: 48px;
+                margin-bottom: 5px;
+                padding-top: 40px;
+            }
+            .body{
+                padding: 0 47px 40px 47px;
+                margin-bottom: 24px; 
+            }
+            .title{
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 23px;
+                letter-spacing: 1px;
+                color: #353535;
+                padding: 24px 0 14px;
+                span{
+                    color: red;
+                }
+            }
+            .titlePeriod{
+                padding-bottom: 4px;
+            }
+            .titleTip{
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 1px;
+                color: #707070;
+               
+            }
+            .upload{
+               margin: 14px 0;
+            }
+            .stepFieldDateItem{
+                width: 330px;
+            }
+            .stepFieldToItem{
+                max-width: 330px;
+                margin-top: 10px;
+            }
+            .chooseSkill{
+                border: 1px solid #BCBCBC;
+                padding: 10px;
+                min-height: 170px;
+                border-radius: 10px;
+                margin-top: 16px;
+                p{
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 1px;
+                color: #707070;
+                line-height: 18px;         
+
+                }
+            }
+            .step3Editor{
+                margin-top: 16px;
+            }
+            .stepFieldDate{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 4px;
+            }
+          .fillLater{
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 1px;
+            color: #136FD3;
+            padding-top: 34px;
+          }
+          .currency{
+            width: 330px;
+          }
+          .stepJobFunction{
+            margin: 14px 0 16px;
+          }
+        }
+        .next {
+            width: 770px;
+            margin: 24px auto;
+        }
+        .salaryBox{
+            display: flex;
+            justify-content: space-between;
+        }
+        .minSalary{
+            margin-right: 16px;
+            margin-top: 18px;
+            flex: 1;
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+        .skillList{
+            margin: 15px 0;
+            span{
+                cursor: pointer;
+                height: 32px;
+                background: #E7F1FB;
+                border-radius: 16px;
+                line-height: 32px;
+                padding: 0 10px;
+                font-size: 14px;
+                letter-spacing: 1px;
+                display: inline-block;
+                color: rgba(0, 0, 0, 0.87);
+                margin: 0 8px 8px 0;
+            }
+        }
+    }
+    :global{
+        .MuiOutlinedInput-root{
+           border-radius: 10px;              
+        }
+        .MuiFormControl-root{
+            width: 100%;
+        }
+        .MuiStepConnector-horizontal{
+            top: 16px;
+        }
+        .MuiChip-deleteIconOutlinedColorPrimary {
+            path{
+                color: #fff;
+            }
+        }
+        .MuiStepLabel-root .MuiSvgIcon-root{
+            width: 32px;
+            height: 32px;
+        }
+        .MuiLoadingButton-root:hover{
+         color: #fff;
+        }
+        .MuiStepLabel-label.Mui-completed, .MuiStepLabel-label.Mui-active, .MuiStepLabel-label{
+            color: #4E5969;
+            font-weight: 400;
+        }
+        .MuiStepIcon-root.Mui-completed{
+            color: #2378E5;
+        }
+    }
+}
+@import './indexMobile.module.scss';

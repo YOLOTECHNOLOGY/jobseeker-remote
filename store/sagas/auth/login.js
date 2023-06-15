@@ -53,7 +53,7 @@ function* loginReq(actions) {
       let url =
         loginData.active_key === 1 &&
         (loginData.is_profile_update_required || !loginData.is_profile_completed)
-          ? '/jobseeker-complete-profile/1'
+          ? '/jobseeker-complete-profile'
           : `/jobs-hiring/job-search`
 
       if (redirect) {

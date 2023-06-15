@@ -17,9 +17,7 @@ interface TextEditorInterface {
 // Refer to link below for React-quill implementation on Nextjs:
 // https://www.simplenextjs.com/posts/react-quill
 // eslint-disable-next-line no-unused-vars
-const QuillNoSSRWrapper =
-  typeof window !== 'undefined' &&
-  dynamic(import('react-quill'), {
+const QuillNoSSRWrapper = dynamic(()=>import('react-quill'), {
     ssr: false,
     loading: () => <p>Loading ...</p>
   })

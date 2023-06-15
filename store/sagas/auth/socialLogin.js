@@ -97,7 +97,7 @@ function* login(payload, redirect, fromRegister = false) {
       const url =
         loginData.active_key === 1 &&
         (loginData.is_profile_update_required || !loginData.is_profile_completed)
-          ? '/jobseeker-complete-profile/1'
+          ? '/jobseeker-complete-profile'
           : `/jobs-hiring/job-search`
 
       yield put(push(url))
