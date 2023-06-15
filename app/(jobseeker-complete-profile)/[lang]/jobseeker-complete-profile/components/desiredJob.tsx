@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo ,useContext} from 'react'
 import styles from '../index.module.scss'
 import Stepper from './stepper'
 import FootBtn from './footBtn'
@@ -8,7 +8,7 @@ import MaterialLocationField from 'components/MaterialLocationField'
 import { getCountryKey } from 'helpers/country'
 import { getCountryId } from 'helpers/country'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { createUserPreferencesService,updateUserPreferencesService } from 'store/services/users/addUserPreferences'
 import {
   getSalaryOptions,
@@ -18,6 +18,7 @@ import {
 import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
+import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 const countryForCurrency = {
   ph: 'php',
   sg: 'sgd'
@@ -27,8 +28,7 @@ const EducationExperience = (props: any) => {
   const { lang, userDetail, config,getUserInfo } = props
   const {job_preferences} = userDetail
   const pathname = usePathname()
-  const router = useRouter()
-
+  const { push } = useContext(LinkContext)
   const preference = userDetail?.job_preferences?.[0]
   const [currencyLists] = useMemo(() => {
     return [ getCurrencyList(config), getCountryList(config), ]
@@ -124,14 +124,14 @@ const EducationExperience = (props: any) => {
        }).then(res=>{
         if(res.data){
           getUserInfo?.()
-          router.push(`/${langKey}/my-jobs?`)
+          push(`/${langKey}/my-jobs?`)
         }
        }).finally(()=>setLoading(false))
      }else{ 
        createUserPreferencesService({params}).then(res=>{
         if(res.data){
           getUserInfo?.()
-          router.push(`/${langKey}/my-jobs?`)
+          push(`/${langKey}/my-jobs?`)
         }
        }).finally(()=>setLoading(false))
      }
@@ -153,7 +153,7 @@ const EducationExperience = (props: any) => {
   } = lang?.profile || {}
 
   const backClick = () => {
-    router.push(`${pathname}?step=3`)
+    push(`${pathname}?step=3`)
   }
  
   return (

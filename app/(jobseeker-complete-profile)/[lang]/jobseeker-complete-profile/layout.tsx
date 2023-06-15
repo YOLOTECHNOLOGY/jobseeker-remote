@@ -5,6 +5,7 @@ import { getCountryKey } from 'helpers/country'
 import 'styles/globals.scss'
 import dynamic from 'next/dynamic'
 const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
+import LinkProvider from 'app/[lang]/components/providers/linkProvider'
 export default async function RootLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo }: any = props
@@ -82,7 +83,9 @@ export default async function RootLayout(props: any) {
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `}}>
           </noscript>
-          {children}     
+          <LinkProvider>
+            {children}     
+          </LinkProvider>
         </Providers>
       </body>
     </html>

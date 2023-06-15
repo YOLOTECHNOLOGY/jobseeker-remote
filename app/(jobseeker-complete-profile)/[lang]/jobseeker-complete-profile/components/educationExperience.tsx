@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext} from 'react'
 import styles from '../index.module.scss'
 import Stepper from './stepper'
 import MaterialTextField from 'components/MaterialTextField'
@@ -8,10 +8,11 @@ import Text from 'components/Text'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import { addUserEducationService } from 'store/services/users/addUserEducation'
 import { updateUserEducationService } from 'store/services/users/updateUserEducation'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import FootBtn from './footBtn'
 import moment from 'moment'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
+import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 const EducationExperience = (props: any) => {
   console.log(props)
   const {
@@ -21,7 +22,7 @@ const EducationExperience = (props: any) => {
     getUserInfo
   } = props
   const {educations} = userDetail
-  const router = useRouter()
+  const { push } = useContext(LinkContext)
   const [selectedDegrees, setSelectedDegrees] = useState<number>(7)
   const [school, setSchool] = useState('')
   const [fieldStudy, setFieldStudy] = useState('')
@@ -94,7 +95,7 @@ const EducationExperience = (props: any) => {
      updateUserEducationService(educationPayload).then(res=>{
       if(res.data){
         getUserInfo?.()
-        router.push(`${pathname}?step=4`)
+        push(`${pathname}?step=4`)
       }
      }).finally(()=>setLoading(false))
    }else{
@@ -104,7 +105,7 @@ const EducationExperience = (props: any) => {
      addUserEducationService(educationPayload).then(res=>{
       if(res.data){
         getUserInfo?.()
-        router.push(`${pathname}?step=4`)
+        push(`${pathname}?step=4`)
       }
      }).finally(()=>setLoading(false))
    }
@@ -112,7 +113,7 @@ const EducationExperience = (props: any) => {
 
   const backClick = () => {
     const  isExperienced =  sessionStorage.getItem('isExperienced')
-    router.push(`${pathname}?step=${isExperienced ? 1 : 2}`)
+    push(`${pathname}?step=${isExperienced ? 1 : 2}`)
   }
 
   return (
