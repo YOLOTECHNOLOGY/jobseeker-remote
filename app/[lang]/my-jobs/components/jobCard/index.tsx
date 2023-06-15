@@ -358,7 +358,8 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
+                window.location.href = `/${langKey}` + company_url
+                // router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
