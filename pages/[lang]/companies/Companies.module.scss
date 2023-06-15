@@ -195,6 +195,12 @@
     width: 570px;
     position: relative;
     margin-right: 16px;
+
+    :global {
+      .MuiOutlinedInput-root {
+        border-radius: 8px;
+      }
+    }
   }
 
   &Input {
