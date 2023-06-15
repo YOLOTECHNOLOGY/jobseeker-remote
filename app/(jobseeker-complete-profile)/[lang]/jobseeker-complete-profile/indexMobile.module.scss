@@ -46,6 +46,7 @@
         .btnList{
             button {
                 margin-right: 0 !important;
+                width: 100%;
             }
         }
         .next{
@@ -84,6 +85,15 @@
                 .stepFieldDateItem, .stepFieldToItem{
                     width: 100%;
                     max-width: 100%;
+                }
+                .stepFieldDate{
+                 display: block;
+                 .stepFieldDateItem{
+                    margin-bottom: 16px;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                 }
                 }
             }
            

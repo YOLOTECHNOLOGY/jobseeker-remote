@@ -9,7 +9,8 @@ interface btnProps{
     rightText?:string,
     showBack?:boolean,
     disabled?:boolean,
-    backText?:string 
+    backText?:string,
+    isMobile?:boolean, 
 }
 const FootBtn = (
     {
