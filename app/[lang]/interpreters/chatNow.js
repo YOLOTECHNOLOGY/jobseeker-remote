@@ -84,7 +84,7 @@ const interpreter = registInterpreter((command) =>
         const { id } = jobDetail
         const source = getSourceCookie()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
-        router.push('/jobseeker-complete-profile/1')
+        router.push('/jobseeker-complete-profile')
       }),
     createNewChat: () =>
       M.do((context) => {

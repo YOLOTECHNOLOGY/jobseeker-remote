@@ -33,7 +33,7 @@ const configs = getConfigs([
   ['job_benefit_lists'],
   ['notice_period_lists'],
   ['main_job_function_lists'],
-  ['degrees'],
+  ['degrees']
 ])
 
 // or dynamic metadata
@@ -62,24 +62,25 @@ const Main = async (props: any) => {
               />
             </div>
             <SortFilter lang={dictionary?.myJobs} />
-          </SortProvider>
-          <div className={styles.content}>
-            <div className={styles.table}>
-              <Suspense fallback={<Loading />}>
-                <Table
-                  searchParams={searchParams ?? {}}
-                  preferenceId={preferenceId}
-                  preferences={preferences}
-                  config={props.config}
-                  lang={dictionary?.myJobs}
-                />
-              </Suspense>
+
+            <div className={styles.content}>
+              <div className={styles.table}>
+                <Suspense fallback={<Loading />}>
+                  <Table
+                    searchParams={searchParams ?? {}}
+                    preferenceId={preferenceId}
+                    preferences={preferences}
+                    config={props.config}
+                    lang={dictionary?.myJobs}
+                  />
+                </Suspense>
+              </div>
             </div>
-          </div>
+          </SortProvider>
         </div>
         <div className={styles.right}>
           {/* @ts-expect-error Async Server Component */}
-          <MainRight lang={dictionary?.myJobs}   config={props.config}/>
+          <MainRight lang={dictionary?.myJobs} config={props.config} />
         </div>
       </div>
       <Footer />

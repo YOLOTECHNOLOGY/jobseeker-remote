@@ -345,7 +345,7 @@ const getApplyJobLink = (job, user) => {
 
   if (user) {
     if (!user?.is_profile_completed) {
-      return `/jobseeker-complete-profile/1?redirect=${applyJobUrl}`
+      return `/jobseeker-complete-profile?redirect=${applyJobUrl}`
     }
 
     if (job?.external_apply_url) {

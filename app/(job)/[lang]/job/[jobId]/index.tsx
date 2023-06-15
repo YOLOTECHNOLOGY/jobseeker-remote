@@ -1,22 +1,24 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 import { isMobile } from 'react-device-detect'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
+import { serveIsMobile } from 'helpers/utilities'
 
 import Head from './components/Head/Head'
 import MainFC from './components/Main'
 import AsideFC from './components/Aside'
-import { getSourceCookie } from 'helpers/cookies'
 
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 
 import styles from './page.module.scss'
 import { getValueById } from 'helpers/config/getValueById'
-import React from 'react'
 
 const Index = ({ data, jobId, languages, config, lang }: any) => {
   const cookieStore = cookies()
+  const headeStore = headers()
 
   const accessToken = cookieStore.getAll('accessToken')
+  const source = cookieStore.get('source')?.value
+  const recoFrom = cookieStore.get('reco_from')?.value
 
   const querys = {
     jobId,
@@ -29,10 +31,14 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     querys.serverAccessToken = accessToken[0].value ?? null
   }
 
+  const userAgent = headeStore.get('user-agent')
+
   const tokenData = {
-    source: getSourceCookie(),
-    device: isMobile ? 'mobile_web' : 'web'
+    source: source ? source : 'job_search',
+    device: serveIsMobile(userAgent) ? 'mobile_web' : 'web',
+    reco_from: recoFrom ? recoFrom : null
   }
+
   const params = Object.assign(querys, tokenData)
 
   fetchAddJobViewService(params)
@@ -55,8 +61,6 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
       })
     }
   }
-
-  
 
   const headProps = {
     title: data.job_title,
@@ -94,7 +98,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     name: data.company?.name,
     chatResponseRate: data.recruiter?.response_rate,
     lastActiveAt: data.recruiter?.last_active_at,
-    benefitsProps: data?.benefits?.map(e => getValueById(config, e.id, 'job_benefit_id', 'name')),
+    benefitsProps: data?.benefits?.map((e) => getValueById(config, e.id, 'job_benefit_id', 'name')),
     shareParams: {
       id: data.id,
       job_url: data.job_url,

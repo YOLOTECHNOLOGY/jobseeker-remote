@@ -81,7 +81,7 @@ const ResumeTemplate = ({ lang, query }: any) => {
       router.push(`/${query}/manage-profile?tab=resume`)
     } else {
       setItem('isRegisterModuleRedirect', '/manage-profile?tab=resume')
-      router.push(`/${query}/jobseeker-complete-profile/1`)
+      router.push(`/${query}/jobseeker-complete-profile`)
     }
   }, [userInfo])
 
@@ -197,7 +197,7 @@ const ResumeTemplate = ({ lang, query }: any) => {
                       if (userCookie) {
                         userCookie.is_profile_completed
                           ? router.push('/manage-profile?tab=resume')
-                          : router.push('/jobseeker-complete-profile/1')
+                          : router.push('/jobseeker-complete-profile')
                       } else {
                         handleSendEmailTOP()
                         removeItem('quickUpladResume')

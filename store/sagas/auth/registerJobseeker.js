@@ -86,7 +86,7 @@ function* registerJobSeekerReq(actions) {
       yield call(setCookie, 'user', userCookie)
       yield call(setCookie, 'accessToken', registeredData.authentication.access_token)
 
-      let url = '/jobseeker-complete-profile/1'
+      let url = '/jobseeker-complete-profile'
 
       if (redirect) {
         if (
