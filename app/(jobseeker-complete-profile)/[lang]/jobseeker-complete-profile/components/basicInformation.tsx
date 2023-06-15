@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import styles from '../index.module.scss'
+
 import { CameraIcon, DefaultAvatar } from 'images'
 import { Avatar } from '@mui/material'
 import { compressImage } from 'helpers/imageCompression'
@@ -15,9 +16,9 @@ import FootBtn from './footBtn'
 
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
+import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 
-
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
   console.log({ props })
@@ -27,7 +28,8 @@ const BasicInformation = (props: any) => {
     userDetail,
     getUserInfo,
   } = props
-  const router = useRouter()
+
+  const { push } = useContext(LinkContext)
   const  isExperienced =  sessionStorage.getItem('isExperienced') || '1'
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
@@ -134,7 +136,8 @@ const BasicInformation = (props: any) => {
           sessionStorage.setItem('isExperienced','2')
           url = `${pathname}?step=3`
         }
-        router.push(url)
+        push(url)
+        // router.push(url)
       }
     }).finally(()=>setLoading(false))
   }

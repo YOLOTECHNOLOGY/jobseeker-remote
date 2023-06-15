@@ -8,7 +8,7 @@ import OnBoardLayout from 'components/OnBoardLayout'
 import MaterialButton from 'components/MaterialButton'
 import Divider from '@mui/material/Divider'
 // Styles
-import styles from 'pages/[lang]/jobseeker-complete-profile/Onboard.module.scss'
+import styles from 'pages/[lang]/jobseeker-complete-profile2/Onboard.module.scss'
 import Link from 'components/Link'
 import { useRouter } from 'next/router'
 

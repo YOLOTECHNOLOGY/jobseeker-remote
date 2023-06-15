@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import styles from '../index.module.scss'
 import Stepper from './stepper'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -12,7 +12,7 @@ import Switch from '@mui/material/Switch'
 import Chip from '@mui/material/Chip';
 import TextEditor from 'components/TextEditor/TextEditor'
 import FootBtn from './footBtn'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
 import {differenceBy } from 'lodash-es'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import {fetchResumes} from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
+import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 const WorkExperience = (props: any) => {
   console.log(props,9999)
   const { lang ,userDetail,getUserInfo} = props
@@ -43,8 +44,8 @@ const WorkExperience = (props: any) => {
   const [existingResume, setExistingResume] = useState<any>(false);
   const dataSkills = userDetail?.skills;
   const dispatch = useDispatch()
+  const { push } = useContext(LinkContext)
 
-  const router = useRouter()
   const pathname = usePathname()
 
   useEffect(()=>{
@@ -155,7 +156,7 @@ const WorkExperience = (props: any) => {
   };
 
   const backClick = () => {
-    router.push(`${pathname}?step=1`)
+    push(`${pathname}?step=1`)
   }
   
   const handleSubmit =  ()=>{
@@ -197,7 +198,7 @@ const WorkExperience = (props: any) => {
     Promise.all([p1,p2]).then(res=>{
       console.log(res,777777)
       getUserInfo?.()
-      router.push(`${pathname}?step=3`)
+      push(`${pathname}?step=3`)
     }).finally(()=> setLoading(false))
   };
 
