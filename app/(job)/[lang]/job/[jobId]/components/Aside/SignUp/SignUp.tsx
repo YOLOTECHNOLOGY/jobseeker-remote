@@ -106,7 +106,13 @@ const SignUp = ({ jobId, job_url }: propsType) => {
               label={signUp.label}
               size='small'
               onChange={(e) => setEmail(e.target?.value)}
-              onKeyUp={(e) => e.code == 'Enter' && handleSendEmailTOP()}
+              onKeyUp={(e) => {
+                if (e.code == 'Enter') {
+                  if (/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)) {
+                    handleSendEmailTOP()
+                  }
+                }
+              }}
             />
           </ThemeProvider>
 
