@@ -62,7 +62,7 @@ const Companies = (props: any) => {
   const featureBanners = useSelector((store: any) => store.config.config.response.feature_banners)
 
   const isFeaturedCompaniesFetching = useSelector(
-    (store: any) => store.companies.fetchFeaturedCompaniesList.fetching
+    (store: any) => store.companies.fetchCompanyFilter.fetching
   )
 
   useEffect(() => {
