@@ -16,6 +16,7 @@
 		remStyle.innerHTML = 'html{font-size:' + rem + 'px !important;}';
 	}
 
+	console.log('00refreshRem');
 	if (docEl.firstElementChild) {
 		docEl.firstElementChild.appendChild(remStyle);
 	} else {

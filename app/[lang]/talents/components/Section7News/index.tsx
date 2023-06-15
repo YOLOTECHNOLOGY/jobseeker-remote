@@ -22,7 +22,7 @@ let carouselList = [
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image4.png`,
-		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
+		des: 'Filipino job search platform Bossjob secures US$5M in venture funding',
 		date: '25 May 2023',
 		link: 'https://e27.co/filipino-job-search-platform-bossjob-secures-us5m-in-venture-funding-20230525/'
 	},
@@ -73,14 +73,13 @@ const Section7 = () => {
 					delay: 2000,
 					disableOnInteraction: true
 				}}
-				grabCursor={true}
 				navigation={enable}
 				loop={true}
 			>
 				{
 					carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
-							<div className={style.slideItem} onClick={()=>{
+							<div className={style.slideItem + " " + style.cursor_pointer} onClick={()=>{
 								window.open(item.link)
 							}}>
 								<div className={style.section7_new_pic}>

@@ -38,3 +38,105 @@
     message: "1048,Column 'device' cannot be null"
   }
 }
+[2023-06-14T10:14:14.421] [ERROR] clientError - { error: { digest: '4165537878' } }
+[2023-06-14T10:54:59.287] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T10:56:20.640] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T10:57:08.417] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T10:57:08.823] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T10:57:18.390] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T10:57:24.017] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:03.688] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:08.758] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:26.910] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:30.527] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:36.382] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-14T11:16:41.528] [ERROR] clientError - {
+  error: {
+    code: 41040,
+    data: { error: [Array] },
+    message: 'Invalid otp',
+    errors: { error: [Array] }
+  }
+}
+[2023-06-15T10:30:37.415] [ERROR] clientError - { error: {} }
+[2023-06-15T10:30:52.164] [ERROR] clientError - { error: {} }
+[2023-06-15T10:31:13.575] [ERROR] clientError - { error: {} }
+[2023-06-15T10:31:14.241] [ERROR] clientError - { error: {} }
+[2023-06-15T10:38:55.758] [ERROR] clientError - { error: {} }

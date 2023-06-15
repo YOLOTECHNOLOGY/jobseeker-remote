@@ -1,13 +1,18 @@
 'use client'
 import style from '../index.module.scss';
 import Typical from 'react-typical'
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState, useMemo} from "react";
 import {useInView, InView} from "react-intersection-observer";
 import Link from 'next/link';
 import classNames from 'classnames';
 
 const androidUrl = 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp '
 const iOSUrl = 'https://apps.apple.com/sg/app/bossjob/id1592073585'
+
+
+
+
+
 export const Title = () => {
 
 	const [show, setShow] = useState(false);
@@ -16,16 +21,20 @@ export const Title = () => {
 		threshold: 1,
 		delay: 2000
 	});
-	useEffect(() => {
-		setTimeout(() => {
+
+	useLayoutEffect(()=>{
+		setTimeout(()=>{
 			setShow(true);
-		}, 2000);
-	}, []);
+		});
+	})
+	console.log('title1');
+	const TypC = useMemo(()=> {
+		console.log('title2');
+		return <Typical steps={['AI Hiring APP']}/>
+	},[]);
 	return <div className={style.titleWrapper} ref={ref}>
 		<p className={style.title + ' ' + style['title-color']} style={{height: 108}}>
-			<Typical
-				steps={['AI Hiring APP']}
-			/>
+			{show && TypC}
 		</p>
 		<InView threshold={0.2}>
 			{({inView, ref}) => {

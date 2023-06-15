@@ -14,6 +14,7 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
+import { removeItem } from 'helpers/localStorage'
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
-  const langKey = getLang(); 
+  const langKey = getLang()
   // console.log(useSearchParams,'router')
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
@@ -79,7 +80,7 @@ const useGetStarted = () => {
       otp: code,
       source: 'web',
       userId,
-      browser_serial_number:uuid
+      browser_serial_number: uuid
     }
     dispatch(jobbseekersLoginRequest(data))
   }
@@ -96,17 +97,16 @@ const useGetStarted = () => {
     }
   }
 
-  const defaultLoginCallBack = async (data: any,isPhone = false) => {
+  const defaultLoginCallBack = async (data: any, isPhone = false) => {
     await removeServiceCache()
-
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (data.is_profile_update_required || !data.is_profile_completed) {
-      if(isPhone){
-       sessionStorage.setItem('fromPhoneLogin','1'); 
-      }else{
+      if (isPhone) {
+        sessionStorage.setItem('fromPhoneLogin', '1')
+      } else {
         sessionStorage.removeItem('fromPhoneLogin')
       }
-      
+
       routes.push(`/${langKey}/jobseeker-complete-profile/1`)
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')

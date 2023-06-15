@@ -1,7 +1,9 @@
 'use client'
 
-import './flexible';
+// import './flexible';
 import Footer from './components/Footer'
+import useResponsiveFont from "./components/responseHook";
+import './index.module.scss'
 export default function ShopLayout(props:{
     children: React.ReactNode;
     params: {
@@ -11,8 +13,7 @@ export default function ShopLayout(props:{
   } ) {
     // URL -> /shop/shoes/nike-air-max-97
     // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-    console.log('ShopLayout',props);
-    
+    useResponsiveFont(360, 540);
     return (
         <section style={{
           width: '100%',

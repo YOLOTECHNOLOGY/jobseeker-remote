@@ -11,8 +11,8 @@ import json4 from './lottie_4';
 
 let carouselList = [
 	{
-		img: require('./phone1.png').default.src,
-		mobile_img: require('./section5-mobile-1.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone1.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-1.png`,
 		des: 'Build your resume easily, choose from a variety of templates ',
 		// json: json1,
 		mobile_style: {
@@ -23,8 +23,8 @@ let carouselList = [
 		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
 	},
 	{
-		img: require('./phone2.png').default.src,
-		mobile_img: require('./section5-mobile-2.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone2.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-2.png`,
 		des: 'Protect your privacy and easily block companies',
 		// json: json2,
 		mobile_style: {
@@ -34,18 +34,18 @@ let carouselList = [
 	},
 	{
 		img: `${process.env.S3_BUCKET_URL}/landing/section5-3.png`,
-		mobile_img: require('./section5-mobile-3.png').default.src,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-3.png`,
 		des: 'Customise your chat messages and make a great impression.',
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties
 	},
 	{
-		img: require('./phone4.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/phone4.png`,
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties ,
-		mobile_img: require('./section5-mobile-4.png').default.src,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-4.png`,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone',
 		// json: json4,
 		style: {width: '284px', position: 'absolute', left: '27px', top: '-80px'} as CSSProperties
@@ -62,12 +62,19 @@ const Section5 = () => {
 	const swiperRef1 = useRef(null);
 	const swiperRef2 = useRef(null);
 
+	const section5DesElements = document.querySelectorAll("[data-class='section5-des']");
+	let maxHeight = 0;
 
+	section5DesElements.forEach(element => {
+		const elementHeight = (element as HTMLElement).offsetHeight;
+		if (elementHeight > maxHeight) {
+			maxHeight = elementHeight;
+		}
+	});
 
+	console.log("Maximum height:", maxHeight);
 	if (isMobile) {
 		return <section className={style.section5}>
-
-
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
@@ -93,7 +100,7 @@ const Section5 = () => {
 					{carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.section5_carousel_item}>
-								<div className={style.mobile_section5_des}>
+								<div className={style.mobile_section5_des} data-class="section5-des">
 									{item.des}
 								</div>
 								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
@@ -118,13 +125,14 @@ const Section5 = () => {
 			</div>
 
 			<AnimationNumber/>
-			<img className={style.mobile_section5_bg} src={`${process.env.S3_BUCKET_URL}/landing/section5-bg.svg`}
+			<img className={style.mobile_section5_bg}
+			     src={`${process.env.S3_BUCKET_URL}/landing/section5-mobile-bg.jpg`}
 			     alt="_"/>
 		</section>
 	}
 	return <section className={style.section5}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
-	                   src={`${process.env.S3_BUCKET_URL}/landing/section5-bg.svg`}/>}
+	                   src={`${process.env.S3_BUCKET_URL}/landing/section5-pc-bg.jpg`}/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {
@@ -187,8 +195,6 @@ const Section5 = () => {
 
 
 const AnimationNumber = () =>{
-	const {width} = useWindowSize();
-	const isMobile = width < 540;
 	const fontSize = {fontSize: 56}
 	return (
 		<div className={style.section5_bottom_wrapper}>

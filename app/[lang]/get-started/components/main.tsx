@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from '../index.module.scss'
 import Divider from '@mui/material/Divider'
 import PhoneLink from './link/phone'
@@ -7,6 +7,9 @@ import EmailLink from './link/email'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
+import { useSelector } from 'react-redux'
+import { removeItem } from 'helpers/localStorage'
+import useGetStarted from '../hooks/useGetStarted'
 
 interface IProps {
   dictionary: any
@@ -15,6 +18,19 @@ interface IProps {
 const Main = (props: IProps) => {
   const { dictionary } = props
   const { newGetStarted } = dictionary
+  const { defaultLoginCallBack } = useGetStarted()
+
+  const jobseekersSocialResponse = useSelector(
+    (store: any) => store.auth.jobseekersSocialLogin?.response
+  )
+
+  useEffect(() => {
+    const { data } = jobseekersSocialResponse
+    if (data?.token) {
+      removeItem('quickUpladResume')
+      defaultLoginCallBack(data)
+    }
+  }, [jobseekersSocialResponse?.data])
 
   return (
     <>

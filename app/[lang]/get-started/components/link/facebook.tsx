@@ -25,24 +25,11 @@ const FacebookLogin = (props: IFacebook) => {
     lang: { newGetStarted }
   } = props
   const dispatch = useDispatch()
-  const { defaultLoginCallBack } = useGetStartedClient()
   const searchParams = useSearchParams()
   const query = {}
   for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
-
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
-
-  useEffect(() => {
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [jobseekersSocialResponse])
 
   const callBackMethod = (payload) => {
     const data = {

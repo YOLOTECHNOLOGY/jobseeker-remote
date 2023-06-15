@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const folderPath = 'app/[lang]/landing'; // 替换为要遍历的文件夹路径
+const folderPath = 'app/[lang]/talents'; // 替换为要遍历的文件夹路径
 
 // 判断是否为图片文件
 function isImageFile(filePath) {
@@ -9,7 +9,10 @@ function isImageFile(filePath) {
 	const ext = path.extname(filePath).toLowerCase();
 	return imageExtensions.includes(ext);
 }
-
+const removeQuotes = (str) => {
+	const regex = /['"]/g;
+	return str.replace(regex, '');
+};
 // 递归遍历文件夹
 function traverseFolder(folderPath) {
 	fs.readdirSync(folderPath).forEach((file) => {
@@ -29,10 +32,8 @@ function traverseFolder(folderPath) {
 
 				// 判断字符串是否以单引号或双引号包裹
 				const isWrappedWithQuotes = /^['"]/.test(requireStatement) && /['"]$/.test(requireStatement);
-
 				// 提取文件名
-				const fileName = path.basename(requireStatement);
-
+				const fileName = isWrappedWithQuotes ? removeQuotes(path.basename(requireStatement)): path.basename(requireStatement);
 				// 构建替换后的字符串
 				const replacedStatement = `\`\${process.env.S3_BUCKET_URL}/landing/${fileName}\``;
 
