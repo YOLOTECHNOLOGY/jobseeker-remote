@@ -120,6 +120,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
               textTransform: 'capitalize !important'
             }}
             isLoading={loading}
+            disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
             onClick={handleSendEmailTOP}
           >
             {signUp.btn}
