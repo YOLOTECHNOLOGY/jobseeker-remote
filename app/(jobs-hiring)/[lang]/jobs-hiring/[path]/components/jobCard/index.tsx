@@ -21,6 +21,8 @@ import { getValueById } from 'helpers/config/getValueById'
 import { getLang } from 'helpers/country'
 import { QRCodeSVG } from 'qrcode.react'
 import { transState } from 'helpers/utilities'
+import { useDispatch } from 'react-redux'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -158,6 +160,7 @@ const JobCard = (props: any) => {
   ].filter((a) => a)
   const langKey = getLang()
   const router = useRouter()
+  const dispatch = useDispatch()
   const [loading, chatNow, modalChange] = useChatNow(props)
   const [titleHover, setTitleHover] = useState(false)
   const [popHover, setPopHover] = useState(false)
@@ -188,6 +191,19 @@ const JobCard = (props: any) => {
   useEffect(() => {
     setSourceCookie('job_search')
   }, [])
+
+  const handleChatNow = () => {
+    (chatNow as any)().catch(err => {
+      const message = err?.response?.data?.message
+      dispatch(
+        displayNotification({
+            open: true,
+            message: message,
+            severity: 'error'
+        })
+      )
+    })
+  }
 
   return (
     <div className={styles.jobCard}>
@@ -316,7 +332,8 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        ;(chatNow as any)()
+                        // ;(chatNow as any)()
+                        handleChatNow()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
