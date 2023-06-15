@@ -90,6 +90,7 @@
   .section1_phone {
     width: 1884px;
     margin: 0 auto;
+    height: 1127px;
   }
 }
 
@@ -302,7 +303,7 @@
   position: absolute;
   bottom: 60px;
   animation: float 2s ease-in-out infinite;
-  right: calc(50% - 502px / 2 - 213px);
+  right: 525px;
 }
 
 .popWrapper {
@@ -444,7 +445,7 @@
   height: 199.94px;
   transform: matrix(-0.87, 0.5, 0.5, 0.87, 0, 0);
   bottom: 520px;
-  left: calc(50% - 502px / 2 - 208px);
+  left: 525px;
   z-index: 2;
 }
 

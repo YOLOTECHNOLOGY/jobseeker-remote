@@ -4,6 +4,7 @@ import {useInView} from 'react-intersection-observer';
 import classNames from 'classnames';
 import Title from "./Title";
 import useWindowSize from "../../../../hooks/useWindowSize";
+import Image from 'next/image';
 
 const dialog = [
 	{
@@ -66,7 +67,10 @@ const Section1 = () => {
 			<section className={style.section1_new + ' ' + style.desktop}>
 				{!isMobile && <div className={style.absolute_center}><Title/></div>}
 				<div className={style.section1_phone_wrapper}>
-					<img src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-2.png`} alt="" className={style.section1_phone}/>
+					<Image src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-2.png`} alt="" className={style.section1_phone}
+					       width={1884}
+					       height={1127}
+					/>
 					<img className={style.rocket + ' ' + style.desktop} alt="rocket"
 					     src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
 					<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`}

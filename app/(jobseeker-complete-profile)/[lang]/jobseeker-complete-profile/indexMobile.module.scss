@@ -1,0 +1,19 @@
+
+@include msd {
+    .main{
+        background: #fff;
+        .header{
+          width: 100%;
+          padding: 0 20px;
+          margin-bottom: 16px;
+        }
+        .basicInfo{
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: none;
+            .headerInfo{
+                padding: 0 16px;
+            }
+        }
+    }
+}
