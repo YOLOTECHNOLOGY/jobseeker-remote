@@ -207,7 +207,7 @@
     "41225": "您没有权限设置自动回复",
     "41226": "请提供查询参数消息类型",
     "41227": "用户未注册",
-    "41228": "问候，不适合的消息和自动回复消息不能包含电子邮件和电话号码",
+    "41228": "Greetings, not suitable message and auto reply message could not contains email and phone number",
     "48905": "该邮箱已经被注册",
     "50001": "服务器内部错误",
     "50002": "上传简历失败",

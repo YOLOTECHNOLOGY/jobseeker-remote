@@ -1,15 +1,53 @@
 'use client';
 import style from '../index.module.scss';
-import React from 'react';
+import React, {useContext} from 'react';
 import Typical from 'react-typical'
 import {useInView , InView} from "react-intersection-observer";
 import classNames from 'classnames'
 import Image from 'next/image'
+import {languageContext} from "../../components/providers/languageProvider";
+const Des_Schema = [
+	{
+		title: 'AI-powered job matching',
+		des: 'Match jobs for you using Big data & AI models!',
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon1.svg`
+	},
+	{
+		title: 'Talk to Boss directly',
+		des: 'Talk to hiring managers, bosses and decision makers during your job hunt.',
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon2.svg`
+	},
+	{
+		title: 'Mobile-first',
+		des: 'Bossjob APP provides as seamless job hunting experience on the go.',
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon3.svg`
+	},
+	{
+		title: 'Real-time communication',
+		des: 'Our built-in chat features enable instant engagement, from job application to interview, all done within minutes.',
+		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon4.svg`
+	}
+]
 const Section3 = () => {
 	const {ref, inView, entry} = useInView({
 		/* Optional options */
 		threshold: 0.3,
 	});
+	const _Des_Schema = [];
+	const contextLang =  useContext(languageContext);
+
+	if(contextLang.landing.section3_list_title1){
+		for (let i = 1; i <= 3; i++) {
+			const messageKey = `section3_list_des${i}`;
+			const titleKey = `section3_list_title${i}`;
+			const des = contextLang.landing[messageKey];
+			const title = contextLang.landing[titleKey];
+
+			if (title) {
+				_Des_Schema.push({ title, des , icon: Des_Schema[i].icon});
+			}
+		}
+	}
 	return <section className={style.section3} ref={ref}>
 		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp`} />
 		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3-bg.png`} />
@@ -23,13 +61,13 @@ const Section3 = () => {
 						<p>
 							Bossjob
 						</p>
-						<p>a better & faster way to find jobs</p>
+						<p>{contextLang.landing.section3_subtitle}</p>
 					</div>
 				}}
 			</InView>
 			<div className={style.section3_content}>
 				<div className={style.section3_left}>
-					{Des_Schema.map(item=>{
+					{_Des_Schema.map(item=>{
 						return <Section3LeftItem {...item} key={item.title}/>
 					})}
 				</div>
@@ -76,28 +114,7 @@ const Section3 = () => {
 
 export default Section3
 
-const Des_Schema = [
-	{
-		title: 'AI-powered job matching',
-		des: 'Match jobs for you using Big data & AI models!',
-		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon1.svg`
-	},
-	{
-		title: 'Talk to Boss directly',
-		des: 'Talk to hiring managers, bosses and decision makers during your job hunt.',
-		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon2.svg`
-	},
-	{
-		title: 'Mobile-first',
-		des: 'Bossjob APP provides a seamless job hunting experience on the go.',
-		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon3.svg`
-	},
-	{
-		title: 'Real-time communication',
-		des: 'Our built-in chat features enable instant engagement, from job application to interview, all done within minutes.',
-		icon: `${process.env.S3_BUCKET_URL}/landing/section3-icon4.svg`
-	}
-]
+
 
 
 const Section3LeftItem = (props: {

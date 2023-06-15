@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Multiple from 'app/[lang]/components/commons/select/multiple'
-import LocationField1 from 'app/[lang]/components/mobile/location1'
+// import LocationField1 from 'app/[lang]/components/mobile/location1'
 import styles from '../Companies.module.scss'
 import theme from 'app/[lang]/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
@@ -18,7 +18,7 @@ const SortFilter = (props: IProps) => {
 
   const [companySizes, setCompanySizes] = useState([])
   const [industry, setIndustry] = useState([])
-  const [filterLocation, setFilterLocation] = useState<any>('')
+  // const [filterLocation, setFilterLocation] = useState<any>('')
   const [financingStages, setFinancingStages] = useState([])
 
   const companySizeList =
@@ -46,7 +46,7 @@ const SortFilter = (props: IProps) => {
     resetFilterFn && resetFilterFn()
     setCompanySizes([])
     setIndustry([])
-    setFilterLocation('')
+    // setFilterLocation('')
     setFinancingStages([])
   }
 
@@ -54,19 +54,18 @@ const SortFilter = (props: IProps) => {
     const company_size_ids = getIdByValue(companySizes, companySizeList, 'seo-value')
     const financingStages_ids = getIdByValue(financingStages, financingStageList, 'key')
     const industry_ids = getIdByValue(industry, industryList, 'seo-value')
-    const location_ids = filterLocation?.id ? filterLocation?.id + '' : ''
+    // const location_ids = filterLocation?.id ? filterLocation?.id + '' : ''
     return {
       company_size_ids: company_size_ids,
       financing_stage_ids: financingStages_ids,
-      industry_ids: industry_ids,
-      location_ids: location_ids
+      industry_ids: industry_ids
     }
   }
 
   useEffect(() => {
     const queries = handleQueries()
     sortFilterFn && sortFilterFn(queries)
-  }, [companySizes, financingStages, industry, filterLocation])
+  }, [companySizes, financingStages, industry])
 
   const getIdByValue = (val, list, key) => {
     if (!val) return ''
@@ -110,7 +109,7 @@ const SortFilter = (props: IProps) => {
           onSelect={setIndustry}
         />
         {/* Location */}
-        <LocationField1
+        {/* <LocationField1
           className={styles.filterItems}
           height={'30px'}
           locationList={config.location_lists}
@@ -128,7 +127,7 @@ const SortFilter = (props: IProps) => {
               }
             }
           }}
-        />
+        /> */}
         {/* Rest Filter */}
         <Button className={styles.clearButton} variant='text' onClick={handleReset}>
           {lang?.companies?.employer?.resetFilters}
