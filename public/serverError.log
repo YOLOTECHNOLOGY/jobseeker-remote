@@ -4,163 +4,188 @@
   message: 'Incorrect authentication credentials.',
   errors: { detail: 'Incorrect authentication credentials.' }
 }
-[2023-06-13T12:01:24.115] [INFO] serverInfo - {
+[2023-06-14T14:04:20.051] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686628881554,
-  finishTime: 1686628884115
+  startTime: 1686722658180,
+  finishTime: 1686722660051
 }
-[2023-06-13T12:01:25.438] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686628884209,
-  finishTime: 1686628885438
-}
-[2023-06-13T12:01:26.511] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686628885439,
-  finishTime: 1686628886511
-}
-[2023-06-13T12:05:17.098] [INFO] serverInfo - {
+[2023-06-14T14:04:39.400] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629115331,
-  finishTime: 1686629117098
+  startTime: 1686722677233,
+  finishTime: 1686722679399
 }
-[2023-06-13T12:05:17.313] [INFO] serverInfo - {
+[2023-06-14T14:04:39.468] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629115650,
-  finishTime: 1686629117313
+  startTime: 1686722677135,
+  finishTime: 1686722679468
 }
-[2023-06-13T12:05:17.805] [INFO] serverInfo - {
+[2023-06-14T14:13:41.589] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629116006,
-  finishTime: 1686629117805
+  startTime: 1686723219384,
+  finishTime: 1686723221589
 }
-[2023-06-13T12:05:17.975] [INFO] serverInfo - {
+[2023-06-14T14:13:41.866] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629116084,
-  finishTime: 1686629117975
+  startTime: 1686723219460,
+  finishTime: 1686723221866
 }
-[2023-06-13T12:05:17.989] [INFO] serverInfo - {
+[2023-06-14T14:13:41.944] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629115854,
-  finishTime: 1686629117988
+  startTime: 1686723219505,
+  finishTime: 1686723221944
 }
-[2023-06-13T12:05:18.653] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629117368,
-  finishTime: 1686629118653
-}
-[2023-06-13T12:05:18.696] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629117164,
-  finishTime: 1686629118696
-}
-[2023-06-13T12:05:18.931] [INFO] serverInfo - {
+[2023-06-14T14:45:35.483] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629116318,
-  finishTime: 1686629118931
+  startTime: 1686725131691,
+  finishTime: 1686725135483
 }
-[2023-06-13T12:05:19.606] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629117878,
-  finishTime: 1686629119606
-}
-[2023-06-13T12:05:19.788] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629118654,
-  finishTime: 1686629119788
-}
-[2023-06-13T12:05:19.814] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629118697,
-  finishTime: 1686629119814
-}
-[2023-06-13T12:05:20.032] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629118571,
-  finishTime: 1686629120032
-}
-[2023-06-13T12:05:20.087] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629118384,
-  finishTime: 1686629120087
-}
-[2023-06-13T12:05:20.218] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629118983,
-  finishTime: 1686629120218
-}
-[2023-06-13T12:05:20.830] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629119606,
-  finishTime: 1686629120830
-}
-[2023-06-13T12:05:21.107] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629120032,
-  finishTime: 1686629121107
-}
-[2023-06-13T12:05:21.251] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629120087,
-  finishTime: 1686629121251
-}
-[2023-06-13T12:05:21.374] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629120218,
-  finishTime: 1686629121374
-}
-[2023-06-13T12:05:39.096] [INFO] serverInfo - {
+[2023-06-14T15:08:51.651] [INFO] serverInfo - {
   '0': 'ph/list?language_code=zh-CN',
-  startTime: 1686629137024,
-  finishTime: 1686629139095
+  startTime: 1686726529561,
+  finishTime: 1686726531650
 }
-[2023-06-13T12:05:40.593] [INFO] serverInfo - {
-  '0': 'search?company_financing_stage_ids&company_industries&company_size_ids&degree_ids&function_job_title_ids&is_company_verified&job_functions_ids&job_location_ids&job_type_ids&main_job_function_ids&page=1&query_fields=job_title%2Ccompany_name&salary_from=&salary_to=&size=15&sort=2&source=web&xp_lvl_ids',
-  startTime: 1686629139168,
-  finishTime: 1686629140593
+[2023-06-14T15:08:54.181] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686726529334,
+  finishTime: 1686726534181
 }
-[2023-06-13T12:05:41.729] [INFO] serverInfo - {
-  '0': '/chats/check-exists/jobseekers',
-  '1': {
-    params: {
-      recruiter_ids: '2846082,2847734,2847916,644113,2847848,2847358,2847116,2845908,2847859,2846037,2846766,2847259,2846190,2846122,2846063'
-    }
-  },
-  startTime: 1686629140594,
-  finishTime: 1686629141728
+[2023-06-14T15:09:04.309] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686726541018,
+  finishTime: 1686726544309
+}
+[2023-06-14T15:14:43.778] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686726880552,
+  finishTime: 1686726883778
+}
+[2023-06-14T16:25:32.106] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731130289,
+  finishTime: 1686731132106
+}
+[2023-06-14T16:25:32.802] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731130706,
+  finishTime: 1686731132802
+}
+[2023-06-14T16:25:32.906] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731130956,
+  finishTime: 1686731132906
+}
+[2023-06-14T16:25:33.558] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731131103,
+  finishTime: 1686731133558
+}
+[2023-06-14T16:25:34.268] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731130763,
+  finishTime: 1686731134268
+}
+[2023-06-14T16:38:43.289] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731921366,
+  finishTime: 1686731923289
+}
+[2023-06-14T16:38:44.638] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686731921555,
+  finishTime: 1686731924638
+}
+[2023-06-14T16:48:04.993] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686732481113,
+  finishTime: 1686732484992
+}
+[2023-06-14T16:48:06.170] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686732481354,
+  finishTime: 1686732486170
+}
+[2023-06-14T16:49:32.592] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686732567800,
+  finishTime: 1686732572591
+}
+[2023-06-14T16:51:59.562] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686732717381,
+  finishTime: 1686732719562
+}
+[2023-06-14T17:15:00.899] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734098912,
+  finishTime: 1686734100899
+}
+[2023-06-14T17:15:01.110] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734099340,
+  finishTime: 1686734101110
+}
+[2023-06-14T17:15:01.337] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734099518,
+  finishTime: 1686734101337
+}
+[2023-06-14T17:15:02.226] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734099235,
+  finishTime: 1686734102226
+}
+[2023-06-14T17:15:02.963] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734099413,
+  finishTime: 1686734102963
+}
+[2023-06-14T17:15:03.139] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686734099632,
+  finishTime: 1686734103139
+}
+[2023-06-14T17:46:05.040] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686735963284,
+  finishTime: 1686735965040
+}
+[2023-06-14T17:46:06.265] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686735963001,
+  finishTime: 1686735966265
+}
+[2023-06-14T19:05:12.101] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686740708025,
+  finishTime: 1686740712101
+}
+[2023-06-14T19:31:54.910] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686742312720,
+  finishTime: 1686742314910
+}
+[2023-06-14T19:32:21.972] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686742337913,
+  finishTime: 1686742341972
+}
+[2023-06-15T11:10:29.212] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686798626698,
+  finishTime: 1686798629212
+}
+[2023-06-15T11:10:29.664] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686798627575,
+  finishTime: 1686798629664
+}
+[2023-06-15T11:56:52.563] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686801410390,
+  finishTime: 1686801412563
+}
+[2023-06-15T11:56:53.271] [INFO] serverInfo - {
+  '0': 'ph/list?language_code=zh-CN',
+  startTime: 1686801410551,
+  finishTime: 1686801413271
 }
