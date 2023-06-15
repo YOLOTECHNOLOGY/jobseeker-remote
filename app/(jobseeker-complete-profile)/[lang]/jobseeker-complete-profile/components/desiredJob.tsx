@@ -64,7 +64,7 @@ const EducationExperience = (props: any) => {
 
   const location = useMemo(() => {
     if(preference?.location_id){
-      return formattedLocationList.find((l) => l.id === preference.location_id)
+      return formattedLocationList.find((l) => l.id === preference?.location_id)
     }
   }, [formattedLocationList, preference?.id])
 
