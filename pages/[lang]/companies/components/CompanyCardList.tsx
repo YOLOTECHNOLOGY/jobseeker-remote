@@ -40,7 +40,7 @@ const CompanyCardList = ({
           </div>
         ))}
 
-      {!isLoading && !companiesList?.length && <Empty lang={lang} description="Companies Not Found" />}
+      {!isLoading && !companiesList?.length && <Empty lang={lang} description={lang?.companies?.companiesEmpty} />}
     </div>
   )
 }

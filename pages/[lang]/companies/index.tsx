@@ -139,6 +139,7 @@ const Companies = (props: IProps) => {
               onKeywordSearch={handleKeywordSearch}
             />
             <SortFilter
+              lang={props.lang}
               config={config}
               sortFilterFn={handleSortFilter}
               resetFilterFn={handleResetFilter}
