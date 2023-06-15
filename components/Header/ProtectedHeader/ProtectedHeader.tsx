@@ -67,7 +67,7 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if(userInfo?.id) {
+    if (userInfo?.id) {
       setShowUnCompletedDot(!userInfo?.is_profile_completed)
     }
   }, [userInfo])
@@ -332,12 +332,6 @@ const ProtectedHeader = ({ lang }: any) => {
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
                 <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
                   <Text textStyle='base'>{accountSettings}</Text>
-                </Link>
-              </li>
-
-              <li className={styles.headerMenuItem}>
-                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
-                  <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>
 
