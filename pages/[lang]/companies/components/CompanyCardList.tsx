@@ -3,7 +3,7 @@ import CompanyCard from './CompanyCard'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
 
 // Styles
-import styles from '../CompanyCardList.module.scss'
+import styles from '../Companies.module.scss'
 
 interface ICompanyCardList {
   companiesList: any
