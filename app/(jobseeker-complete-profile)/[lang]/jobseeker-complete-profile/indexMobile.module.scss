@@ -54,17 +54,39 @@
             :global{
                 .MuiLoadingButton-root{
                     flex: 1;
+                    margin-left: 8px;
+                    &:last-child{
+                        margin-left: 0;
+                    }
                 }
             }
            
         }
-        .work{
+        .work{       
             .workContainer{
+                width: 100%;
+            }
+            .next{
                 width: 100%;
             }
             .box{
                 width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                border-bottom: 1px solid #BCBCBC;
+                margin-top: 0;
+                .headerInfo{
+                    padding-left: 20px;
+                }
+                .body{
+                    padding: 0 20px;
+                }
+                .stepFieldDateItem, .stepFieldToItem{
+                    width: 100%;
+                    max-width: 100%;
+                }
             }
+           
         }
     }
 }
