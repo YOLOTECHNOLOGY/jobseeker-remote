@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import { getCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
-import Header from './Header'
+import Header from './header'
 const Main = (props:any)=>{
 
     const searchParams = useSearchParams()
