@@ -174,7 +174,11 @@
       "size": "Company Size",
       "industry": "Industry",
       "allJobs": "View {{totalActiveJobs}} job openings",
-      "employees": "Employees"
+      "employees": "Employees",
+      "location": "Location",
+      "industryType": "Industry Type",
+      "financingStages": "Financing stage",
+      "resetFilters": "Reset Filters"
     },
     "popularCompany": {
       "title": "Popular Companies",
@@ -187,7 +191,8 @@
       "subTitle": "Companies for {{searchKey}}",
       "noResult": "No Results Found.",
       "seoText": "Find great companies in {{country}}"
-    }
+    },
+    "companiesEmpty": "Companies Not Found"
   },
   "companyDetail": {
     "tab": {

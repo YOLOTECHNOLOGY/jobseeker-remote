@@ -9,12 +9,14 @@ interface MaterialRoundedPaginationProps {
   spacing?: number | undefined
   totalPages: number
   page?: number
+  boundaryCount? : number
 }
 
 const MaterialRoundedPagination = ({
   spacing = 2,
   totalPages,
   onChange,
+  boundaryCount = 0,
   defaultPage = 1,
   page
 }: MaterialRoundedPaginationProps) => {
@@ -50,7 +52,7 @@ const MaterialRoundedPagination = ({
           onChange={onChange}
           count={totalPages}
           defaultPage={defaultPage}
-          boundaryCount={0}
+          boundaryCount={boundaryCount}
           shape='rounded'
           size='large'
           page={page}

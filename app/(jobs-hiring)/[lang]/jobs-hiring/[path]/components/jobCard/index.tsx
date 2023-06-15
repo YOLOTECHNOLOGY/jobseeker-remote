@@ -76,7 +76,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, langKey) => {
       return
     }
     if (!accessToken) {
-      router.push(`${langKey}/get-started`, { forceOptimisticNavigation: true })
+      router.push(`/${langKey}/get-started`, { forceOptimisticNavigation: true })
       return
     }
     if (!isSaved) {

@@ -10,10 +10,11 @@ interface IProps {
   config: any;
   resetFilterFn: Function;
   sortFilterFn: Function;
+  lang: any;
 }
 
 const SortFilter = (props: IProps) => {
-  const { config, resetFilterFn, sortFilterFn } = props
+  const { config, resetFilterFn, sortFilterFn, lang } = props
 
   const [companySizes, setCompanySizes] = useState([])
   const [industry, setIndustry] = useState([])
@@ -84,7 +85,7 @@ const SortFilter = (props: IProps) => {
       <div className={styles.filters}>
         {/* company size */}
         <Multiple
-          label='Company Size'
+          label={lang?.companies?.employer?.size}
           value={companySizes}
           className={styles.filterItems}
           options={companySizeList}
@@ -93,7 +94,7 @@ const SortFilter = (props: IProps) => {
         />
         {/* Financing stage */}
         <Multiple
-          label='Financing stage'
+          label={lang?.companies?.employer?.financingStages}
           value={financingStages}
           className={styles.filterItems}
           options={financingStageList}
@@ -102,7 +103,7 @@ const SortFilter = (props: IProps) => {
         />
         {/* Industry Type */}
         <Multiple
-          label={'Industry Type'}
+          label={lang?.companies?.employer?.industryType}
           value={industry}
           options={industryList}
           className={styles.filterItems}
@@ -115,7 +116,7 @@ const SortFilter = (props: IProps) => {
           locationList={config.location_lists}
           value={filterLocation}
           width='100%'
-          label={'Location'}
+          label={lang?.companies?.employer?.location}
           onChange={(e, value) => {
             setFilterLocation(value)
           }}
@@ -130,7 +131,7 @@ const SortFilter = (props: IProps) => {
         />
         {/* Rest Filter */}
         <Button className={styles.clearButton} variant='text' onClick={handleReset}>
-          Reset Filter
+          {lang?.companies?.employer?.resetFilters}
         </Button>
       </div>
     </ThemeProvider>

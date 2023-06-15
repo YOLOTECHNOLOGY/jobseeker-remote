@@ -139,6 +139,7 @@ const Companies = (props: IProps) => {
               onKeywordSearch={handleKeywordSearch}
             />
             <SortFilter
+              lang={props.lang}
               config={config}
               sortFilterFn={handleSortFilter}
               resetFilterFn={handleResetFilter}
@@ -180,6 +181,7 @@ const Companies = (props: IProps) => {
                 defaultPage={Number(searchQuery.page) || 1}
                 totalPages={totalPage || 1}
                 page={searchQuery.page}
+                boundaryCount={1}
               />
             </div>
           )}

@@ -52,7 +52,7 @@ const Step2 = (props: any) => {
       totalStep={4}
       isMobile={isMobile}
       nextFnBtn={() => router.push(redirect)}
-      backFnBtn={() => router.push('/jobseeker-complete-profile/1')}
+      backFnBtn={() => router.push('/jobseeker-complete-profile')}
       isNextDisabled={isDisabled}
       lang={lang?.profile}
     >
@@ -140,7 +140,7 @@ const Step2 = (props: any) => {
               className={styles.stepFormActionsleftBtn}
               variant='outlined'
               capitalize
-              onClick={() => router.push('/jobseeker-complete-profile/1')}
+              onClick={() => router.push('/jobseeker-complete-profile')}
             >
               <Text textColor='primaryBlue'>{back}</Text>
             </MaterialButton>

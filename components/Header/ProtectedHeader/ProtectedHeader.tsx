@@ -213,7 +213,7 @@ const ProtectedHeader = ({ lang }: any) => {
                   onClick={() => {
                     currentUser?.is_profile_completed
                       ? router.push('/' + langKey + '/manage-profile')
-                      : router.push('/' + langKey + '/jobseeker-complete-profile/1')
+                      : router.push('/' + langKey + '/jobseeker-complete-profile')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
                   style={{ color: '#353535' }}
