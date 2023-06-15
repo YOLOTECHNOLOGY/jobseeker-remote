@@ -39,7 +39,12 @@ const initSearchQueries = {
   location_ids: ''
 }
 
-const Companies = (props: any) => {
+interface IProps {
+  lang: any
+  langKey: string
+}
+
+const Companies = (props: IProps) => {
   const {
     lang: { companies },
     langKey

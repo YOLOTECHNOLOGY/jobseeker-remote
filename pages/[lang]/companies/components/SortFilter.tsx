@@ -6,7 +6,13 @@ import theme from 'app/[lang]/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import { Button } from 'app/[lang]/components/MUIs'
 
-const SortFilter = (props: any) => {
+interface IProps {
+  config: any;
+  resetFilterFn: Function;
+  sortFilterFn: Function;
+}
+
+const SortFilter = (props: IProps) => {
   const { config, resetFilterFn, sortFilterFn } = props
 
   const [companySizes, setCompanySizes] = useState([])

@@ -4,7 +4,14 @@ import FeaturedCompany from './FeaturedCompany'
 import BannerCarousel from 'components/BannerCarousel'
 import styles from '../Companies.module.scss'
 
-const FeaturedCompanied = (props: any) => {
+interface IProps {
+  featuredCompany: object;
+  langKey: string;
+  featureBanners: any[];
+  lang: any;
+}
+
+const FeaturedCompanied = (props: IProps) => {
   const { langKey, featuredCompany, featureBanners, lang } = props
   return (
     <>
@@ -12,7 +19,7 @@ const FeaturedCompanied = (props: any) => {
         {lang.companies.employer.title}
       </Text>
       <div className={styles.featuredEmployer}>
-        <FeaturedCompany featuredCompany={featuredCompany} lang={lang} langKey={langKey} />
+        <FeaturedCompany featuredCompany={featuredCompany} langKey={langKey} />
         <BannerCarousel slides={featureBanners} />
       </div>
     </>

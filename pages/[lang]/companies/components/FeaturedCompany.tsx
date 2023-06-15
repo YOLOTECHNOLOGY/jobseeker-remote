@@ -5,7 +5,12 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import {CompanyVerifiedIcon} from 'images'
 
-const FeaturedCompany = (props: any) => {
+interface IProps {
+  featuredCompany: any;
+  langKey: string;
+}
+
+const FeaturedCompany = (props: IProps) => {
   const {
     featuredCompany,
     langKey,
