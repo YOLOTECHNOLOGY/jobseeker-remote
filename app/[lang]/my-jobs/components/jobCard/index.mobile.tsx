@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React, { } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -10,100 +10,117 @@ import NotSuitableModal from './notSuitable'
 import classNames from 'classnames'
 import { getValueById } from 'helpers/config/getValueById'
 import { useSelector } from 'react-redux'
+import { SortContext } from '../searchForms/SortProvider'
+import { setCookie } from 'helpers/cookies'
 const JobCard = (props: any) => {
-    const {
-        job_title,
-        salary_range_value,
-        // job_type,
-       // job_location,
-        // xp_lvl,
-        // degree,
-        recruiter_full_name,
-        recruiter_job_title,
-        // company_logo,
-        company_name,
-        id,
-        job_url,
-        preference,
-        recruiter_avatar,
-        recruiter_last_active_at,
-        job_type_id,
-        job_location_id,
-        xp_lvl_id,
-        degree_id,
-    } = props
-    const config = useSelector((store: any) => store.config.config.response)
-    const labels = [
-        getValueById(config,job_type_id,'job_type_id'), 
-        // getValueById(config,job_location_id,'location_id'),
-        getValueById(config,xp_lvl_id,'xp_lvl_id'),
-        getValueById(config,degree_id,'degree_id'),
-    ].filter(a => a)
-    const router = useRouter()
-    const modalProps = useNotSuitable(preference.id, id)
-    const { showSelection, refreshing } = modalProps
+  const {
+    job_title,
+    salary_range_value,
+    // job_type,
+    // job_location,
+    // xp_lvl,
+    // degree,
+    recruiter_full_name,
+    recruiter_job_title,
+    // company_logo,
+    company_name,
+    id,
+    job_url,
+    preference,
+    recruiter_avatar,
+    recruiter_last_active_at,
+    job_type_id,
+    job_location_id,
+    xp_lvl_id,
+    degree_id,
+    reco_from
+  } = props
+  const { sort } = useContext(SortContext)
 
-    const transTime = (time: string) => {
-        return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
-      }
-    
-    return <div className={
-        classNames({
-            [styles.main]: true,
-            [styles.aboutDisappear]: refreshing
-        })
-    }>
-        <div
-            id={'job_card_container_' + id}
-            className={styles.container}
-            onClick={() => {
-                // e.stopPropagation()
-                router.push(job_url, { forceOptimisticNavigation: true })
-            }}
-        >
+  const config = useSelector((store: any) => store.config.config.response)
+  const labels = [
+    getValueById(config, job_type_id, 'job_type_id'),
+    // getValueById(config,job_location_id,'location_id'),
+    getValueById(config, xp_lvl_id, 'xp_lvl_id'),
+    getValueById(config, degree_id, 'degree_id')
+  ].filter((a) => a)
+  const router = useRouter()
+  const modalProps = useNotSuitable(preference.id, id)
+  const { showSelection, refreshing } = modalProps
 
-            <div
-                key={job_title + id}
-                className={styles.titleContainer}
-                title={`${job_title}`}
-            >
-                <div className={styles.title}>{`${job_title}`}</div>
-                <div className={styles.salary}>{salary_range_value}</div>
-            </div>
-            <div
-                className={styles.companyName}
+  const transTime = (time: string) => {
+    return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
+  }
 
-            >{company_name}</div>
-            <div className={styles.labelContainer}>
-                {labels.map(label => <div key={label} className={styles.label}>{label}</div>)}
-            </div>
-            <div className={styles.recruiterContainer}>
-                <div className={styles.info}>
-                    <div className={`${styles.avator}  ${transTime(recruiter_last_active_at) ? styles.avator2 : ''
-                  }`}>
-                     <Image className={styles.image} src={recruiter_avatar} height={17} width={17} alt={''} />
-                    </div>
-                   
-                    <div
-                        className={styles.hrTitle}
-                        title={`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                    >
-                        {`${[recruiter_full_name, recruiter_job_title].filter(a => a).join(' · ')}`}
-                    </div>
-                </div>
-                <div className={styles.fullName}>
-                    { getValueById(config,job_location_id,'location_id')}
-                </div>
-            </div>
-            <div className={styles.closeButton} onClick={e => {
-                e.stopPropagation()
-                showSelection()
-            }}>
-                <Image src={CloseIcon} alt='logo' width={13} height={13} />
-            </div>
+  return (
+    <div
+      className={classNames({
+        [styles.main]: true,
+        [styles.aboutDisappear]: refreshing
+      })}
+    >
+      <div
+        id={'job_card_container_' + id}
+        className={styles.container}
+        onClick={() => {
+          // e.stopPropagation()
+          sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
+          setCookie('reco_from', reco_from)
+          router.push(job_url, { forceOptimisticNavigation: true })
+        }}
+      >
+        <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
+          <div className={styles.title}>{`${job_title}`}</div>
+          <div className={styles.salary}>{salary_range_value}</div>
         </div>
-        <NotSuitableModal {...modalProps} lang={props.lang} />
+        <div className={styles.companyName}>{company_name}</div>
+        <div className={styles.labelContainer}>
+          {labels.map((label) => (
+            <div key={label} className={styles.label}>
+              {label}
+            </div>
+          ))}
+        </div>
+        <div className={styles.recruiterContainer}>
+          <div className={styles.info}>
+            <div
+              className={`${styles.avator}  ${
+                transTime(recruiter_last_active_at) ? styles.avator2 : ''
+              }`}
+            >
+              <Image
+                className={styles.image}
+                src={recruiter_avatar}
+                height={17}
+                width={17}
+                alt={''}
+              />
+            </div>
+
+            <div
+              className={styles.hrTitle}
+              title={`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
+            >
+              {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
+            </div>
+          </div>
+          <div className={styles.fullName}>
+            {getValueById(config, job_location_id, 'location_id')}
+          </div>
+        </div>
+        <div
+          className={styles.closeButton}
+          onClick={(e) => {
+            e.stopPropagation()
+            showSelection()
+          }}
+        >
+          <Image src={CloseIcon} alt='logo' width={13} height={13} />
+        </div>
+      </div>
+      <NotSuitableModal {...modalProps} lang={props.lang} />
     </div>
+  )
 }
 
 export default JobCard
