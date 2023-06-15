@@ -94,7 +94,7 @@ $contentWidth: 894px;
             .avatarList {
                 padding-top: 24px;
                 display: flex;
-
+                flex-wrap: wrap;
                 li {
                     list-style: none;
                     position: relative;

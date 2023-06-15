@@ -3,17 +3,54 @@
     .main{
         background: #fff;
         .header{
-          width: 100%;
-          padding: 0 20px;
-          margin-bottom: 16px;
+            margin-bottom: 16px;
         }
+        .header{
+            .headerMain{
+                width: 100%;
+                padding: 0 20px;
+               
+              }
+        }
+       
         .basicInfo{
             width: 100%;
             box-sizing: border-box;
             box-shadow: none;
+          
             .headerInfo{
-                padding: 0 16px;
+                padding: 0 20px;
             }
+            .topModule{
+                box-shadow: none;
+                border-radius: 0 ;
+                border-bottom: 1px solid #BCBCBC;;
+            }
+            .container{
+                padding: 0 20px;
+                .nameBox{
+                    .nameFlex{
+                        display: block;
+                        .namesFirst{
+                            margin: 0 0 16px 0;
+                          &:last-child{
+                            margin-bottom: 0;
+                          }
+                        }
+                    }
+                }
+            }
+          
+           
+        }
+        .btnList{
+            button {
+                margin-right: 0 !important;
+            }
+        }
+        .next{
+            margin: 0 auto 20px;
+            padding: 0 20px;
         }
     }
 }

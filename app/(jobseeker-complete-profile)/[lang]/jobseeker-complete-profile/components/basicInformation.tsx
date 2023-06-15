@@ -35,7 +35,6 @@ const BasicInformation = (props: any) => {
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
   const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
   const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
-
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -53,7 +52,8 @@ const BasicInformation = (props: any) => {
     firstName,
     lastName,
     experienced,
-    freshGraduate
+    freshGraduate,
+    thisFieldIsRequired
   }  = profile || {} 
 
   const pathname = usePathname()
@@ -76,12 +76,11 @@ const BasicInformation = (props: any) => {
   })
    useEffect(() => {
     if (userDetail?.id) {
-      const { avatar, first_name, last_name, notice_period_id } = userDetail
+      const { avatar, first_name, last_name, notice_period_id} = userDetail
       setPreview(avatar)
       setValue('firstName', first_name)
       setValue('lastName', last_name)
-      console.log({ notice_period_id })
-      setSelectedAvailability(notice_period_id)
+      setSelectedAvailability(notice_period_id || 1)
     }
   }, [userDetail])
 
@@ -212,7 +211,7 @@ const BasicInformation = (props: any) => {
                     <Controller
                       control={control}
                       name={'firstName'}
-                      rules={{ required: '' }}
+                      rules={{ required: thisFieldIsRequired }}
                       render={({ field, fieldState }) => {
                         return (
                           <MaterialTextField
@@ -230,7 +229,7 @@ const BasicInformation = (props: any) => {
                     <Controller
                       control={control}
                       name={'lastName'}
-                      rules={{ required: '' }}
+                      rules={{ required: thisFieldIsRequired }}
                       render={({ field, fieldState }) => {
                         return (
                           <MaterialTextField
@@ -252,7 +251,7 @@ const BasicInformation = (props: any) => {
               <p className={styles.name}>
                 {IAm} <span>*</span>
               </p>
-              <div className={styles.btnList}>
+              <div className={styles.btnList} style={{flexWrap:'nowrap'}}>
                 {experiencedList.map((item) => (
                   <button
                     key={item.value}

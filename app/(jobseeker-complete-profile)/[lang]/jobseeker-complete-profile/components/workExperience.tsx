@@ -119,6 +119,7 @@ const WorkExperience = (props: any) => {
     from,
     to ,
     placeholder,
+    thisFieldIsRequired,
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {

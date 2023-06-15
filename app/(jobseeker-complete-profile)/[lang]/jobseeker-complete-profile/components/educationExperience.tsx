@@ -23,7 +23,7 @@ const EducationExperience = (props: any) => {
   } = props
   const {educations} = userDetail
   const { push } = useContext(LinkContext)
-  const [selectedDegrees, setSelectedDegrees] = useState<number>(7)
+  const [selectedDegrees, setSelectedDegrees] = useState<number>(null)
   const [school, setSchool] = useState('')
   const [fieldStudy, setFieldStudy] = useState('')
   const [isCurrentStudying, setIsCurrentStudying] = useState(false)
@@ -42,7 +42,7 @@ const EducationExperience = (props: any) => {
         study_period_from,
         study_period_to,     
       } =  userDetail.educations[0]
-      setSelectedDegrees(degree_id)
+      setSelectedDegrees(degree_id || 7)
       setIsCurrentStudying(is_currently_studying)
       setSchool(school)
       setFieldStudy(field_of_study)
@@ -65,7 +65,7 @@ const EducationExperience = (props: any) => {
     back,
     studyPeriod
   } = lang?.profile || {}
-
+console.log({userDetail})
  useEffect(()=>{
    if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  && studyPeriodTo ) ){
     setIsDisabled(false)
@@ -202,7 +202,7 @@ const EducationExperience = (props: any) => {
               </div>
             </div>
 
-            <p className={`${styles.fillLater}`}>{fillThisLater}</p>
+            <p className={`${styles.fillLater}`} onClick={()=>push(`${pathname}?step=4`)}>{fillThisLater}</p>
           </div>
         </div>
 
