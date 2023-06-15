@@ -80,10 +80,11 @@ const BasicInformation = (props: any) => {
       setPreview(avatar)
       setValue('firstName', first_name)
       setValue('lastName', last_name)
+      console.log({ notice_period_id })
       setSelectedAvailability(notice_period_id)
     }
   }, [userDetail])
-  console.log({ avatarList })
+
 
   const handleChosenPhoto = async (e) => {
     const file = e.target.files[0]

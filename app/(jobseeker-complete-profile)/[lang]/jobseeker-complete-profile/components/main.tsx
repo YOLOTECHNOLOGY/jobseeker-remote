@@ -1,5 +1,5 @@
 "use client"
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useContext} from "react";
 import styles from '../index.module.scss'
 import { useSearchParams } from 'next/navigation'
 import BasicInformation from './basicInformation'
@@ -11,8 +11,15 @@ import { getCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
 import Header from './header'
+import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { getLang } from 'helpers/country'
 const Main = (props:any)=>{
-
+   const accessToken = getCookie('accessToken')
+   const { push } = useContext(LinkContext)
+   const langKey = getLang()
+   if(!accessToken){
+     push(`/${langKey}/get-started?`)
+   }
     const searchParams = useSearchParams()
     const search = searchParams.get('step')
     const getUserInfo = ()=>{
@@ -23,8 +30,7 @@ const Main = (props:any)=>{
     const userDetail = useSelector((store: any) => store?.users.fetchUserOwnDetail.response)
  
     const dispatch = useDispatch()
-    const accessToken = getCookie('accessToken')
-
+  
     useEffect(() => {
       const hasStep = [1, 2, 3, 4, 5, 6,7].includes(+search)
       if (search && hasStep) {
