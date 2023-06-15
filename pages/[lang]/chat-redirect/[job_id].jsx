@@ -37,7 +37,6 @@ const Chat = () => {
             if (window.fbq) {
               fbq.event('new_chat', {
                 user_id: userId,
-                email: userEmail,
                 job_id: job_id
               })
             }

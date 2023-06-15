@@ -118,7 +118,6 @@ const interpreter = registInterpreter((command) =>
               if (window.fbq) {
                 fbq.event('new_chat', {
                   user_id: userInfo.id,
-                  email: userInfo.email,
                   job_id: jobDetail.id
                 })
               }
