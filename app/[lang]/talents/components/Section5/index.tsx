@@ -1,5 +1,5 @@
 import style from '../../index.module.scss';
-import React, {useRef, useState, CSSProperties} from 'react';
+import React, {useRef, useState, CSSProperties, useContext} from 'react';
 import AnimatedNumbers from "react-animated-numbers";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Player, Controls} from '@lottiefiles/react-lottie-player';
@@ -8,6 +8,7 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import json1 from './lottie_1';
 import json2 from './lottie_2';
 import json4 from './lottie_4';
+import {languageContext} from "../../../components/providers/languageProvider";
 
 let carouselList = [
 	{
@@ -71,8 +72,15 @@ const Section5 = () => {
 			maxHeight = elementHeight;
 		}
 	});
+	const contextLang =  useContext(languageContext);
 
-	console.log("Maximum height:", maxHeight);
+	if(contextLang.landing.section5_list_des1){
+		carouselList[0].des = contextLang.landing.section5_list_des1;
+		carouselList[1].des = contextLang.landing.section5_list_des2;
+		carouselList[2].des = contextLang.landing.section5_list_des3;
+		carouselList[3].des = contextLang.landing.section5_list_des4;
+	}
+
 	if (isMobile) {
 		return <section className={style.section5}>
 				<Swiper
@@ -196,6 +204,9 @@ const Section5 = () => {
 
 const AnimationNumber = () =>{
 	const fontSize = {fontSize: 56}
+
+	const contextLang = useContext(languageContext);
+
 	return (
 		<div className={style.section5_bottom_wrapper}>
 			<div className={style.section5_bottom_border_wrapper}>
@@ -214,7 +225,7 @@ const AnimationNumber = () =>{
 							<span>%</span>
 						</div>
 						<div className={style.section5_bottom_des}>
-							<span>Employers responding within 72hr</span>
+							<span>{ contextLang.landing?.section5_bottom_des1 || 'Employers responding within 72hr'} </span>
 						</div>
 					</div>
 					<div className={style.section5_bottom_item}>
@@ -238,7 +249,7 @@ const AnimationNumber = () =>{
 							></AnimatedNumbers>
 						</div>
 						<div className={style.section5_bottom_des}>
-							<span>Get 1 interview invite every 5 chats</span>
+							<span>{contextLang.landing?.section5_bottom_des2 || 'Get 1 interview invite every 5 chats'}</span>
 						</div>
 					</div>
 					<div className={style.section5_bottom_item}>
@@ -254,7 +265,7 @@ const AnimationNumber = () =>{
 							<span>K+</span>
 						</div>
 						<div className={style.section5_bottom_des}>
-							<span>Companies hiring actively on Bossjob</span>
+							<span>{contextLang.landing.section5_bottom_des3 || 'Companies hiring actively on Bossjob'}</span>
 						</div>
 					</div>
 				</div>

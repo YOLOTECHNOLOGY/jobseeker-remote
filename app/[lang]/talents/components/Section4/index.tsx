@@ -1,34 +1,30 @@
 import style from '../../index.module.scss';
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useEffect, useCallback, useState, useContext} from 'react';
 import {useInView, InView } from "react-intersection-observer";
 import classNames from "classnames";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import {languageContext} from "../../../components/providers/languageProvider";
 
 
 const INFO = [
 	{
-		title: 'Chat and\n' +
-			'get hired',
+		title: 'Chat and get hired',
 		des: 'Quickly connect with hiring managers on the go. You can secure interviews and offers at lightning speed, saving time and simplifying your job search!'
 	},
 	{
-		title: 'Discover your\n' +
-			'perfect career \n' +
-			'match',
+		title: 'Discover your perfect career match',
 		des: 'Our next-gen AI delivers personalised job recommendations that continuously learn and evolve over time, ensuring you always have the most relevant job opportunities.',
 	},
 	{
-		title: 'Elevate your\n' +
-			'personal brand\n' +
-			'with Chat-GPT',
+		title: 'Elevate your personal brand with Chat-GPT',
 		des: 'Leverage the most advanced technology - ChatGPT - to help you build personalised a resume & statement that highlight your unique skills, setting you apart from others! '
 	},
 	{
-		title: 'Find your ideal\n' +
-			'workplace',
+		title: 'Find your ideal workplace',
 		des: 'We provide a window into a company\'s culture and values, so you can determine if they align with your own, empowering you to find ideal workplace to thrive!'
 	}
 ]
+
 
 const section4_phone_img = [
 	`${process.env.S3_BUCKET_URL}/landing/section4_iphone_1.png`,
@@ -42,7 +38,17 @@ const Section4 = () => {
 		setVisibleNumber(index);
 	}, []);
 	const {width} = useWindowSize();
-	console.log('width',width);
+	const contextLang =  useContext(languageContext);
+	if(contextLang.landing.section4_list_title1){
+		INFO[0].title = contextLang.landing.section4_list_title1;
+		INFO[0].des = contextLang.landing.section4_list_des1;
+		INFO[1].title = contextLang.landing.section4_list_title2;
+		INFO[1].des = contextLang.landing.section4_list_des2;
+		INFO[2].title = contextLang.landing.section4_list_title3;
+		INFO[2].des = contextLang.landing.section4_list_des3;
+		INFO[3].title = contextLang.landing.section4_list_title4;
+		INFO[3].des = contextLang.landing.section4_list_des4;
+	}
 	if(width <= 540){
 		return <section className={style.section4 + ' ' + style.mobile}>
 			{INFO.map((item,index)=>{
