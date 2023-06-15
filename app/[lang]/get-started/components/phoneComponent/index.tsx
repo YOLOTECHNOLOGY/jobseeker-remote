@@ -33,6 +33,7 @@ const PhoneComponent = ({ setPhoneNumber, phone, setDisable, phoneError, lang }:
         error={!!phoneError}
         value={phone}
         autoComplete="true"
+        autoFocus={true}
         onChange={(e) => setPhoneNumber(e.target.value)}
       />
       {phoneError && errorText(phoneError)}
