@@ -68,7 +68,7 @@ const Section1 = () => {
 			<section className={style.section1_new + ' ' + style.desktop}>
 				{!isMobile && <div className={style.absolute_center}><Title/></div>}
 				<div className={style.section1_phone_wrapper}>
-					<Image src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-2.png`} alt="" className={style.section1_phone}
+					<Image src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-3.png`} alt="" className={style.section1_phone}
 					       width={1884}
 					       height={1127}
 					/>
@@ -112,7 +112,7 @@ const PopStream = () => {
 		     className={style.mobile + " " + style.stream_top}/>
 		{
 			dialog.map((item, index) => {
-				return <Pop key={index} type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
+				return <Pop key={index} type={index % 2 == 0  ? 'left' : 'right'} text={item.message}/>
 			})
 		}
 	</div>
