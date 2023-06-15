@@ -37,7 +37,7 @@ const Section3 = () => {
 	const contextLang =  useContext(languageContext);
 
 	if(contextLang.landing.section3_list_title1){
-		for (let i = 1; i <= 4; i++) {
+		for (let i = 1; i <= 3; i++) {
 			const messageKey = `section3_list_des${i}`;
 			const titleKey = `section3_list_title${i}`;
 			const des = contextLang.landing[messageKey];

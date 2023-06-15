@@ -1,11 +1,11 @@
 import style from '../index.module.scss';
-import React, {useContext, useEffect} from 'react';
-import {useInView} from 'react-intersection-observer';
+import React, { useContext, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import classNames from 'classnames';
 import Title from "./Title";
 import useWindowSize from "../../../../hooks/useWindowSize";
-import {languageContext} from "../../components/providers/languageProvider";
-
+import { languageContext } from "../../components/providers/languageProvider";
+import Image from 'next/image'
 // const dialog = [
 // 	{
 // 		"name": "John",
@@ -42,19 +42,19 @@ import {languageContext} from "../../components/providers/languageProvider";
 // ]
 
 const Section1 = () => {
-	const {ref, inView, entry} = useInView({
+	const { ref, inView, entry } = useInView({
 		/* Optional options */
 		threshold: 1,
 	});
 
 
-	const {width} = useWindowSize();
+	const { width } = useWindowSize();
 	const isMobile = width < 540;
 	return <div className={style.section1Wrapper}>
 		<div className={style.section_bg + ' ' + style.mobile}></div>
 		<div className={style.sectionContainer}>
 			<div className={style.section_bg + ' ' + style.desktop}></div>
-			{isMobile && <Title/>}
+			{isMobile && <Title />}
 			{/* <section className={style.section1}> */}
 			{/* 	{!isMobile && <Title/>} */}
 			{/* 	<div className={style.phone + ' ' + style.desktop} id={'phone'} > */}
@@ -65,16 +65,19 @@ const Section1 = () => {
 			{/* 	<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`} alt="eyes img"/> */}
 			{/* </section> */}
 			<section className={style.section1_new + ' ' + style.desktop}>
-				{!isMobile && <div className={style.absolute_center}><Title/></div>}
+				{!isMobile && <div className={style.absolute_center}><Title /></div>}
 				<div className={style.section1_phone_wrapper}>
-					<img src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-2.png`} alt="" className={style.section1_phone}/>
+					<Image src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-3.png`} alt="" className={style.section1_phone}
+						width={1884}
+						height={1127}
+					/>
 					<img className={style.rocket + ' ' + style.desktop} alt="rocket"
-					     src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`}/>
+						src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`} />
 					<img className={style.phone_eyes + ' ' + style.desktop} src={`${process.env.S3_BUCKET_URL}/landing/eyes.png`}
-					     alt="eyes img"/>
+						alt="eyes img" />
 				</div>
 			</section>
-			<PopStream/>
+			<PopStream />
 		</div>
 
 	</div>
@@ -85,7 +88,7 @@ export default Section1
 
 
 const PopStream = () => {
-	const contextLang =  useContext(languageContext);
+	const contextLang = useContext(languageContext);
 
 	const dialog = [];
 	const name1 = contextLang.landing["section1_name1"];
@@ -105,18 +108,18 @@ const PopStream = () => {
 
 	return <div className={style.streamWrapper}>
 		<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section1-stream-pop.png`} alt={'png'}
-		     className={style.mobile + " " + style.stream_top}/>
+			className={style.mobile + " " + style.stream_top} />
 		{
 			dialog.map((item, index) => {
-				return <Pop key={index} type={item.name === 'Sarah' ? 'left' : 'right'} text={item.message}/>
+				return <Pop key={index} type={index % 2 == 0 ? 'left' : 'right'} text={item.message} />
 			})
 		}
 	</div>
 }
 
 const Pop = (props: { type: 'left' | 'right', text: string }) => {
-	const {type, text} = props
-	const {ref, inView, entry} = useInView({
+	const { type, text } = props
+	const { ref, inView, entry } = useInView({
 		/* Optional options */
 		threshold: 0,
 		rootMargin: '0px 0px 50px 0px',
@@ -134,7 +137,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 		})} ref={ref}>
 			<div className={style.popWrapper}>
 				<div className={style.avatar}>
-					<img src={`${process.env.S3_BUCKET_URL}/landing/avatar1.png`} alt="avatar img"/>
+					<img src={`${process.env.S3_BUCKET_URL}/landing/avatar1.png`} alt="avatar img" />
 				</div>
 				<div className={style.pop_left}>
 					{text}
@@ -151,7 +154,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 				{text}
 			</div>
 			<div className={style.avatar}>
-				<img src={`${process.env.S3_BUCKET_URL}/landing/avatar2.png`} alt="avatar img"/>
+				<img src={`${process.env.S3_BUCKET_URL}/landing/avatar2.png`} alt="avatar img" />
 			</div>
 		</div>
 	</div>
