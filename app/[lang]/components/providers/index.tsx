@@ -13,7 +13,7 @@ import LoadingProvider from './loadingProvider'
 import LanguageProvider from './languageProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
-    const { LG ,lang}: any = props
+    const { LG, lang }: any = props
     const { store } = wrapper.useWrappedStore({})
     return <Provider store={store}>
         <CountryProvider>
@@ -27,9 +27,9 @@ const ClientProviders = (props: any) => {
                                 )
                                     : (
                                         <NotificationProvider>
-                                            <LoadingProvider lang={lang}>
-                                                {children}
-                                            </LoadingProvider>
+                                                <LoadingProvider lang={lang}>
+                                                    {children}
+                                                </LoadingProvider>
                                         </NotificationProvider>
                                     )}
                             </IMProvider>
