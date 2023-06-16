@@ -78,10 +78,10 @@ const Step3 = (props: any) => {
     : `/jobseeker-complete-profile/${isFromCreateResume ? '1' : '10'}`
 
   if (quickUpladResumeType && quickUpladResumeType === 'upFile') {
-    backBtnUrl = '/jobseeker-complete-profile/1'
+    backBtnUrl = '/jobseeker-complete-profile'
   } else {
     if (accessToken) {
-      backBtnUrl = '/jobseeker-complete-profile/1'
+      backBtnUrl = '/jobseeker-complete-profile'
     } else {
       backBtnUrl = '/quick-upload-resume'
     }
@@ -890,7 +890,7 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   if (!accessToken) {
     return {
       redirect: {
-        destination: '/get-started?redirect=/jobseeker-complete-profile/1',
+        destination: '/get-started?redirect=/jobseeker-complete-profile',
         permanent: false,
         lang
       }

@@ -818,7 +818,7 @@
     "basicInformation": "Basic Information",
     "theseInformationWillBeShown": "These information will be shown to Boss when you apply for a job.",
     "profilePhoto": "Profile photo",
-    "uploadAphoto": " Upload a photo ( max 5 MB) or choose one from Bossjob default avatars",
+    "uploadAphoto": " Upload a photo ( max 2 MB) or choose one from Bossjob default avatars",
     "havingArealPhoto": "Having a real photo as your profile picture help build trust with potential employers",
     "name": "Name",
     "IAm": "I am",
@@ -844,7 +844,8 @@
     "experienced": "Experienced",
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
-    "ImHiring": "I’m hiring"
+    "ImHiring": "I’m employees",
+    "education":"Education"
   },
   "chat": {
     "chatTitle": "Chat",

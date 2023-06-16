@@ -7,6 +7,7 @@ import styles from './index.module.scss'
 import Main from './components/main'
 import Link from 'next/link'
 import { getDictionary } from 'get-dictionary'
+
 const configs = getConfigs([['location_lists']])
 
 const Page = async (props: any) => {

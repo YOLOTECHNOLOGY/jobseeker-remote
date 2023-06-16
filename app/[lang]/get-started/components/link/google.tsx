@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
-import { removeItem } from 'helpers/localStorage'
-import useGetStartedClient from '../../hooks/useGetStarted'
 import { useSearchParams } from 'next/navigation'
 import classNames from 'classnames'
 
