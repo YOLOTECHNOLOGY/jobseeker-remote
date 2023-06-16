@@ -170,27 +170,14 @@ const EditWorkExperienceModal = ({
   useEffect(() => {
     const periodFrom = moment(new Date(workPeriodFrom))
     const periodTo = moment(new Date(workPeriodTo))
-
     setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
   }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && workPeriodFrom
-    const emptyRequiredFields = !jobTitle && !companyName && !workPeriodFrom
-    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
-
-    if (isCurrentJob) {
-      if (emptyRequiredFields)
-        setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
-      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
-    } else {
-      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
-      setDisabledButton(requireFields && isValidDate ? true : false)
-    }
-
-    const hasValue = [currency, salary, jobFunction.id, industry].every(Boolean)
+    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom)
+    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate ].every(Boolean)
     setDisabledButton(!!hasValue)
-
     if (requireFields) setShowErrorToComplete(false)
   }, [
     jobTitle,

@@ -379,10 +379,10 @@ const JobCard = (props: any) => {
           </div>
           <div className={styles.bottomContainer}>
             <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
-              {(job_skills ?? '').split(',').join(' | ')}
+              {(job_skills ?? '').split(',').filter(Boolean).join(' | ')}
             </div>
             <div className={styles.benefits} title={job_benefits}>
-              {job_benefits?.map((item) => item.name).join(' | ')}
+              {job_benefits?.map((item) => item.name).filter(Boolean).join(' | ')}
             </div>
           </div>
         </div>
