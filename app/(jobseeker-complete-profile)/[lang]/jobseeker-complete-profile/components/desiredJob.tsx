@@ -19,6 +19,8 @@ import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
 import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import {generateUserResumeService} from 'store/services/users/generateUserResume'
+import { getCookie} from 'helpers/cookies'
 const countryForCurrency = {
   ph: 'php',
   sg: 'sgd'
@@ -26,7 +28,7 @@ const countryForCurrency = {
 const EducationExperience = (props: any) => {
   console.log(props)
   const { lang, userDetail, config,getUserInfo } = props
-  const {job_preferences} = userDetail
+  const {job_preferences,resumes} = userDetail
   const pathname = usePathname()
   const { push } = useContext(LinkContext)
   const preference = userDetail?.job_preferences?.[0]
@@ -44,7 +46,7 @@ const EducationExperience = (props: any) => {
     location:'',
     currency: countryForCurrency[country]
   } })
- 
+  const accessToken = getCookie('accessToken')
   // const [isShowCountry, setIsShowCountry] = useState(userDetail?.location === 'Overseas')
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const [maxSalary, setMaxSalary] = useState(null)
@@ -126,21 +128,41 @@ const EducationExperience = (props: any) => {
         params
        }).then(res=>{
         if(res.data){
-          getUserInfo?.()
-          push(`/${langKey}/my-jobs?`)
+          generateUserResume()
         }
        }).finally(()=>setLoading(false))
      }else{ 
        createUserPreferencesService({params}).then(res=>{
         if(res.data){
-          getUserInfo?.()
-          push(`/${langKey}/my-jobs?`)
+          generateUserResume()
         }
        }).finally(()=>setLoading(false))
      }
   }
 
+ const generateUserResume = ()=>{
+  getUserInfo?.()
+  if(resumes?.length === 0){
+    generateUserResumeService({
+      accessToken
+    }).then(()=>{
+      jumPage();
+    })
+  }else{
+    jumPage();
+  }
 
+ };
+
+ const jumPage = () => {
+  const isChatRedirect = localStorage.getItem('isChatRedirect')
+      if(isChatRedirect){
+        localStorage.removeItem('isChatRedirect')
+        push(`/${langKey}/${isChatRedirect}`)
+      }else{
+        push(`/${langKey}/my-jobs`)
+      }
+ }
 
 
   const {

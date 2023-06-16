@@ -207,8 +207,9 @@ console.log({userDetail})
                 )}
               </div>
             </div>
-
-            <p className={`${styles.fillLater}`} onClick={()=>push(`${pathname}?step=4`)}>{fillThisLater}</p>
+            {
+              isMobile ? null : <p className={`${styles.fillLater}`} onClick={()=>push(`${pathname}?step=4`)}>{fillThisLater}</p>
+            }       
           </div>
         </div>
 

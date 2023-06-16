@@ -115,7 +115,7 @@ const UploadResume = ({
   return (
     <>
       <div className={styles.uploadResumeField}>
-        {resumes.length &&
+        {resumes.length ?
           resumes.map((item, index) => {
             return (
                 <div key={index+'~'+ item?.id} className={styles.uploadedResume}>
@@ -148,7 +148,7 @@ const UploadResume = ({
                   />
                 </div>
             )
-          })}
+          }) : null }
         {!resumes.length && (
           <div>
             <MaterialButton

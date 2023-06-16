@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
-import { HomePageChat, SmallAppLogo } from 'images'
+import { HomePageChat } from 'images'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -22,6 +22,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { transState } from 'helpers/utilities'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -71,13 +72,13 @@ const useShowPop = (titleHover, popHover) => {
 const useSaveJob = (jobId, defaultSaved, accessToken, langKey) => {
   const [isSaved, setIsSaved] = useState(defaultSaved)
   const [isSaving, setIsSaving] = useState(false)
-  const router = useRouter()
+  const { setShowLogin } = useContext(LoginModalContext)
   const save = useCallback(() => {
     if (isSaving) {
       return
     }
     if (!accessToken) {
-      router.push(`/${langKey}/get-started`, { forceOptimisticNavigation: true })
+      setShowLogin(true)
       return
     }
     if (!isSaved) {
