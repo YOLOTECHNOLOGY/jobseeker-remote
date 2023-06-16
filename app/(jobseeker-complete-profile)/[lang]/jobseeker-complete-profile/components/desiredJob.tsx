@@ -142,7 +142,7 @@ const EducationExperience = (props: any) => {
 
  const generateUserResume = ()=>{
   getUserInfo?.()
-  if(resumes){
+  if(!resumes){
     generateUserResumeService({
       accessToken
     }).then(()=>{
