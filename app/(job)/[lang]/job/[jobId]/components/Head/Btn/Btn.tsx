@@ -162,7 +162,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
               if (!accessToken) {
                 setShowLogin?.(true)
                 return
-              } else if (is_saved) {
+              } else if (!isSave) {
                 handleSaveJob?.()
               } else {
                 handleUnSaveJob?.()
