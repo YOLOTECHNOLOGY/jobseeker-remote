@@ -67,7 +67,7 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if(currentUser?.is_profile_completed){
+    if(currentUser?.id){
       setShowUnCompletedDot(!currentUser?.is_profile_completed)
     }
   }, [currentUser])
