@@ -22,17 +22,18 @@ const EducationExperience = (props: any) => {
     getUserInfo
   } = props
   const {educations} = userDetail
+  const  isExperienced =  sessionStorage.getItem('isExperienced')
   const { push } = useContext(LinkContext)
-  const [selectedDegrees, setSelectedDegrees] = useState<number>(7)
+  const [selectedDegrees, setSelectedDegrees] = useState<number>(null)
   const [school, setSchool] = useState('')
   const [fieldStudy, setFieldStudy] = useState('')
-  const [isCurrentStudying, setIsCurrentStudying] = useState(false)
+  const [isCurrentStudying, setIsCurrentStudying] = useState(!!isExperienced)
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
   const [loading, setLoading] = useState(false)
-
-  useEffect(()=>{
+  const isMobile = !!(document?.body.clientWidth < 750)
+    useEffect(()=>{
     if(userDetail.educations?.length ){
       const { 
         degree_id,
@@ -42,7 +43,7 @@ const EducationExperience = (props: any) => {
         study_period_from,
         study_period_to,     
       } =  userDetail.educations[0]
-      setSelectedDegrees(degree_id)
+      setSelectedDegrees(degree_id )
       setIsCurrentStudying(is_currently_studying)
       setSchool(school)
       setFieldStudy(field_of_study)
@@ -65,9 +66,9 @@ const EducationExperience = (props: any) => {
     back,
     studyPeriod
   } = lang?.profile || {}
-
+console.log({userDetail})
  useEffect(()=>{
-   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  && studyPeriodTo ) ){
+   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
     setIsDisabled(false)
    }else{
     setIsDisabled(true)
@@ -112,8 +113,13 @@ const EducationExperience = (props: any) => {
   }
 
   const backClick = () => {
-    const  isExperienced =  sessionStorage.getItem('isExperienced')
-    push(`${pathname}?step=${isExperienced ? 1 : 2}`)
+    if(isMobile){
+      push(`${pathname}?step=4`)
+    }else{
+      const  isExperienced =  sessionStorage.getItem('isExperienced')
+      push(`${pathname}?step=${isExperienced ? 1 : 2}`)
+    }
+    
   }
 
   return (
@@ -202,14 +208,14 @@ const EducationExperience = (props: any) => {
               </div>
             </div>
 
-            <p className={`${styles.fillLater}`}>{fillThisLater}</p>
+            <p className={`${styles.fillLater}`} onClick={()=>push(`${pathname}?step=4`)}>{fillThisLater}</p>
           </div>
         </div>
 
         <FootBtn
           loading={loading}
           rightText={Next3}
-          backText={back}
+          backText={isMobile ? fillThisLater : back}
           backClick={backClick}
           disabled={isDisabled}
           handleClick={handleSubmit}

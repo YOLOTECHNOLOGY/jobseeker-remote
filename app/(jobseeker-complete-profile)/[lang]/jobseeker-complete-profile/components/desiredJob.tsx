@@ -54,9 +54,12 @@ const EducationExperience = (props: any) => {
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
   const langKey = getLang()
+  const isMobile = !!(document?.body.clientWidth < 750)
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    setValue('maxSalary', maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null)
+    const maxSalaryOrg = maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null
+    setValue('maxSalary',maxSalaryOrg )
+    setMaxSalary(maxSalaryOrg)
     setMaxSalaryOptions(maxSalaryOptions)
   }
   const locationList = config.location_lists
@@ -315,6 +318,7 @@ const EducationExperience = (props: any) => {
        loading={loading}
        rightText={submit}
        backText={back}
+       showBack={!isMobile}
        backClick={backClick}
        disabled={isDisabled}
        handleClick={handleSubmit(handleUpdateProfile)}

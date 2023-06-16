@@ -13,13 +13,13 @@ export default function HorizontalLabelPositionBelowStepper({step,lang}: PropsTy
   
   const {profile:{
     workExperience,
-    educationExperience,
+    education,
     desiredJob
   } } =lang
   
   const steps = [
     workExperience,
-    educationExperience,
+    education,
     desiredJob,
       ];
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { isMobile } from 'react-device-detect'
 /* Action Creators */
 import { wrapper } from 'store'
 
@@ -180,7 +180,7 @@ const Companies = (props: IProps) => {
                 defaultPage={Number(searchQuery.page) || 1}
                 totalPages={totalPage || 1}
                 page={searchQuery.page}
-                boundaryCount={1}
+                boundaryCount={isMobile ? 0: 1}
               />
             </div>
           )}

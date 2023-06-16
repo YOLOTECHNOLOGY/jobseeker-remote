@@ -844,7 +844,8 @@
     "experienced": "Experienced",
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
-    "ImHiring": "I’m hiring"
+    "ImHiring": "I’m employees",
+    "education":"Education"
   },
   "chat": {
     "chatTitle": "Chat",
