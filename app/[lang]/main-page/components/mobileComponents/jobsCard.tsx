@@ -221,7 +221,7 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
           job_title: jobTitle,
           local_salary_range_value: salaryRangeValue,
           // job_location: jobLocation,
-          job_location_ids: job_location_id,
+          job_location_id: job_location_id,
           job_url: jobUrl,
           //  job_type: jobType,
           job_type_id,
