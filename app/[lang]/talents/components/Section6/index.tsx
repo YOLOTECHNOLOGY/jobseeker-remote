@@ -1,8 +1,6 @@
 import style from '../../index.module.scss';
 import React, {useCallback, useRef, useState, useEffect, createContext, useContext} from 'react';
 import classNames from "classnames";
-import EmblaCarousel from 'embla-carousel';
-import useEmblaCarousel from "embla-carousel-react";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swiper';
 import {useInView, InView } from "react-intersection-observer";
@@ -58,7 +56,6 @@ if (countries.length % 2 !== 0) {
 	countries = countries.concat(countries)
 }
 const Section6 = () => {
-
 	const contextLang = useContext(languageContext);
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
@@ -66,12 +63,27 @@ const Section6 = () => {
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
 		     src={`${process.env.S3_BUCKET_URL}/landing/Mobile3-min.jpg`}/>
 		<div className={style.content_container}>
-			<div className={style.section6_title}>
-				{contextLang.landing.section6_title || 'Best hiring APP in Southeast-Asia'}
-			</div>
-			<div className={style.section6_des}>
-				{contextLang.landing.section6_subtitle || 'Find jobs anywhere, everywhere'}
-			</div>
+			<InView threshold={0.8} triggerOnce={true}>
+				{({ref, inView})=>{
+					return 	<div className={classNames({
+						[style.section6_title]: true,
+						[style.animate__bounceIn]: inView
+					}) } ref={ref}>
+						{contextLang.landing.section6_title || 'Best hiring APP in Southeast-Asia'}
+					</div>
+				}}
+			</InView>
+			<InView threshold={0.8} triggerOnce={true}>
+				{({ref, inView})=>{
+					return <div className={classNames({
+						[style.section6_des]: true,
+						[style.animate__bounceIn]: inView
+					})} ref={ref}>
+						{contextLang.landing.section6_subtitle || 'Find jobs anywhere, everywhere'}
+					</div>
+				}}
+			</InView>
+
 			<Section5Carousel/>
 		</div>
 	</section>

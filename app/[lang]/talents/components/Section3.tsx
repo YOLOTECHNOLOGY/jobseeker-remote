@@ -121,6 +121,7 @@ const Section3LeftItem = (props: {
 	const {ref, inView, entry} = useInView({
 		/* Optional options */
 		threshold: 0.3,
+		triggerOnce: true
 	});
 	return <div className={classNames({
 		[style.section3_left_item]: true,

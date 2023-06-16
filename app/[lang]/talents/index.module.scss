@@ -1100,6 +1100,7 @@
   text-align: center;
   letter-spacing: 0.02em;
   color: #F5F6FA;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     text-align: left;
@@ -1126,6 +1127,7 @@
   color: #F5F6FA;
   text-align: center;
   padding-bottom: 75px;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     font-weight: 400;
     font-size: .18rem;
@@ -1232,6 +1234,7 @@
   letter-spacing: 0.02em;
   color: #FFFFFF;
   margin-bottom: 1rem;
+  opacity: 0;
 
 }
 
@@ -1380,6 +1383,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     font-size: .32rem;
     line-height: .4rem;
