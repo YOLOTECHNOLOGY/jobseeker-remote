@@ -67,13 +67,10 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if (userInfo?.id) {
-      setShowUnCompletedDot(!userInfo?.is_profile_completed)
-    }
     if(currentUser?.is_profile_completed){
-      setShowUnCompletedDot(currentUser?.is_profile_completed)
+      setShowUnCompletedDot(!currentUser?.is_profile_completed)
     }
-  }, [userInfo,currentUser])
+  }, [currentUser])
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true)
