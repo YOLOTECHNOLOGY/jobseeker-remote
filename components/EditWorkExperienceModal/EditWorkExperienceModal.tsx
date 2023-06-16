@@ -244,8 +244,7 @@ const EditWorkExperienceModal = ({
       workExperienceData: workExperienceData
     }
 
-    console.log('submit', workExperiencesPayload)
-    // dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
+    dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
 
   const handleResetForm = () => {
