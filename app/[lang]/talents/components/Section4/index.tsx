@@ -1,6 +1,6 @@
 import style from '../../index.module.scss';
 import React, {useEffect, useCallback, useState, useContext} from 'react';
-import {useInView, InView } from "react-intersection-observer";
+import {useInView, InView} from "react-intersection-observer";
 import classNames from "classnames";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import {languageContext} from "../../../components/providers/languageProvider";
@@ -38,8 +38,13 @@ const Section4 = () => {
 		setVisibleNumber(index);
 	}, []);
 	const {width} = useWindowSize();
-	const contextLang =  useContext(languageContext);
-	if(contextLang.landing.section4_list_title1){
+	const contextLang = useContext(languageContext);
+	const {ref, inView} = useInView({
+		threshold: 0.5,
+		// triggerOnce: true
+		// delay: 1000
+	})
+	if (contextLang.landing.section4_list_title1) {
 		INFO[0].title = contextLang.landing.section4_list_title1;
 		INFO[0].des = contextLang.landing.section4_list_des1;
 		INFO[1].title = contextLang.landing.section4_list_title2;
@@ -49,20 +54,21 @@ const Section4 = () => {
 		INFO[3].title = contextLang.landing.section4_list_title4;
 		INFO[3].des = contextLang.landing.section4_list_des4;
 	}
-	if(width <= 540){
+	console.log('inView',inView);
+	if (width <= 540) {
 		return <section className={style.section4 + ' ' + style.mobile}>
-			{INFO.map((item,index)=>{
+			{INFO.map((item, index) => {
 				return <div className={style.section4_mobile_item} key={index}>
 					<InView delay={200} threshold={0.3}>
-						{({inView, ref })=>(
+						{({inView, ref}) => (
 							<div ref={ref} className={classNames({
-									[style.section4_mobile_item_title]: true,
-									[style.animate__bounceIn]: inView
-								})}>{item.title}</div>
+								[style.section4_mobile_item_title]: true,
+								[style.animate__bounceIn]: inView
+							})}>{item.title}</div>
 						)}
 					</InView>
 					<InView delay={400} threshold={0.4}>
-						{({inView, ref })=>(
+						{({inView, ref}) => (
 							<div className={classNames({
 								[style.section4_mobile_item_des]: true,
 								[style.animate__bounceIn]: inView
@@ -70,11 +76,11 @@ const Section4 = () => {
 						)}
 					</InView>
 					<InView delay={200} threshold={0.2}>
-						{({inView, ref })=>(
+						{({inView, ref}) => (
 							<img className={classNames({
 								[style.section4_mobile_img]: true,
 								[style.animate__bounceIn]: inView
-							})} alt={'img'} src={section4_phone_img[index]} ref={ref} />
+							})} alt={'img'} src={section4_phone_img[index]} ref={ref}/>
 						)}
 					</InView>
 				</div>
@@ -82,34 +88,35 @@ const Section4 = () => {
 		</section>
 	}
 	return <section className={style.section4 + ' ' + style.desktop}>
-			<div className={style.section4_sticky}>
-				<div className={style.section4_sticky_bg}></div>
-				<div className={style.section4_phone_bg}>
-					<img alt={'phone'} src={`${process.env.S3_BUCKET_URL}/landing/section4_iphone_wapper.png`}
-					     className={style.section4_sticky_phone_wrapper}/>
+		<div className={style.section4_sticky}>
+			<div className={style.section4_sticky_bg}></div>
+			<div className={style.section4_phone_bg} ref={ref}>
+				<img alt={'phone'} src={`${process.env.S3_BUCKET_URL}/landing/section4_iphone_wapper.png`}
+				     className={style.section4_sticky_phone_wrapper}/>
 					{section4_phone_img.map((img, index) => {
 						return <img alt={'phone'} key={index} src={img}
 						            className={classNames({
 							            [style.section4_sticky_phone_content_1]: true,
 							            [style.animate__fadeOut]: visibleNumber !== index,
-							            [style.animate__fadeIn]: visibleNumber === index,
+							            [style.animate__fadeIn]: index === 0 ?  inView : visibleNumber === index ,
+							            [style.op0i]: !inView,
 						            })}
 						/>
 					})}
-				</div>
 			</div>
-			<div className={style.section4_right_content}>
-				{INFO.map((item, index) => {
-					return <InfoComponent {...item} index={index} key={index} visibleHandle={visibleHandle}/>
-				})}
-			</div>
-		</section>
+		</div>
+		<div className={style.section4_right_content}>
+			{INFO.map((item, index) => {
+				return <InfoComponent {...item} index={index} key={index} visibleHandle={visibleHandle}/>
+			})}
+		</div>
+	</section>
 }
 
 const InfoComponent = (props: { index: number, title: string, des: string, visibleHandle: (args: number) => void }) => {
 	const {ref, inView} = useInView({
 		threshold: 0.8,
-		rootMargin: '0px 0px 500px 0px'
+		rootMargin: '0px 0px 500px 0px',
 	});
 	useEffect(() => {
 		if (inView) {
