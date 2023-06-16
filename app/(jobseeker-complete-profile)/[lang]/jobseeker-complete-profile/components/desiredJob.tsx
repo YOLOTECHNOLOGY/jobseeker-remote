@@ -10,6 +10,7 @@ import { getCountryId } from 'helpers/country'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { usePathname } from 'next/navigation'
 import { createUserPreferencesService,updateUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import {
   getSalaryOptions,
   getCountryList,
@@ -20,14 +21,14 @@ import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
 import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 import {generateUserResumeService} from 'store/services/users/generateUserResume'
-import { getCookie} from 'helpers/cookies'
+import { getCookie,setCookie } from 'helpers/cookies'
 const countryForCurrency = {
   ph: 'php',
   sg: 'sgd'
 }
 const EducationExperience = (props: any) => {
   console.log(props)
-  const { lang, userDetail, config,getUserInfo } = props
+  const { lang, userDetail, config } = props
   const {job_preferences,resumes} = userDetail
   const pathname = usePathname()
   const { push } = useContext(LinkContext)
@@ -158,14 +159,34 @@ const EducationExperience = (props: any) => {
 //  };
 
  const jumPage = () => {
-  getUserInfo?.()
-  const isChatRedirect = localStorage.getItem('isChatRedirect')
-      if(isChatRedirect){
-        localStorage.removeItem('isChatRedirect')
-        push(`/${langKey}/${isChatRedirect}`)
-      }else{
-        push(`/${langKey}/my-jobs`)
-      }
+  // getUserInfo?.()
+  fetchUserOwnDetailService({accessToken}).then(res=>{
+    const userDetail = res?.data?.data
+    console.log({userDetail})
+    const userCookie = {
+      active_key: userDetail.active_key,
+      id: userDetail.id,
+      first_name: userDetail.first_name,
+      last_name: userDetail.last_name,
+      email: userDetail.email,
+      phone_num: userDetail.phone_num,
+      is_mobile_verified: userDetail.is_mobile_verified,
+      avatar: userDetail.avatar,
+      additional_info: userDetail.additional_info,
+      is_email_verify: userDetail.is_email_verify,
+      notice_period_id: userDetail.notice_period_id,
+      is_profile_completed: userDetail.is_profile_completed
+    }
+    setCookie('user',userCookie)
+    const isChatRedirect = localStorage.getItem('isChatRedirect')
+    if(isChatRedirect){
+      localStorage.removeItem('isChatRedirect')
+      push(`/${langKey}/${isChatRedirect}`)
+    }else{
+      push(`/${langKey}/my-jobs`)
+    }
+  })
+ 
  }
 
 
