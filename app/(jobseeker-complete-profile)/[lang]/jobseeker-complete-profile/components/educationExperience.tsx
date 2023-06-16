@@ -31,8 +31,8 @@ const EducationExperience = (props: any) => {
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
   const [loading, setLoading] = useState(false)
-
-  useEffect(()=>{
+  const isMobile = !!(document?.body.clientWidth < 750)
+    useEffect(()=>{
     if(userDetail.educations?.length ){
       const { 
         degree_id,
@@ -67,7 +67,7 @@ const EducationExperience = (props: any) => {
   } = lang?.profile || {}
 console.log({userDetail})
  useEffect(()=>{
-   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  && studyPeriodTo ) ){
+   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
     setIsDisabled(false)
    }else{
     setIsDisabled(true)
@@ -112,8 +112,13 @@ console.log({userDetail})
   }
 
   const backClick = () => {
-    const  isExperienced =  sessionStorage.getItem('isExperienced')
-    push(`${pathname}?step=${isExperienced ? 1 : 2}`)
+    if(isMobile){
+      push(`${pathname}?step=4`)
+    }else{
+      const  isExperienced =  sessionStorage.getItem('isExperienced')
+      push(`${pathname}?step=${isExperienced ? 1 : 2}`)
+    }
+    
   }
 
   return (
@@ -209,7 +214,7 @@ console.log({userDetail})
         <FootBtn
           loading={loading}
           rightText={Next3}
-          backText={back}
+          backText={isMobile ? fillThisLater : back}
           backClick={backClick}
           disabled={isDisabled}
           handleClick={handleSubmit}

@@ -4,7 +4,7 @@ import { HomePageChat, SmallAppLogo } from 'images'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import useChatNow from 'app/[lang]/hooks/useChatNow'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
@@ -158,7 +158,7 @@ const JobCard = (props: any) => {
     getValueById(config, company_size_id, 'company_size_id'),
     getValueById(config, company_financing_stage_id, 'company_financing_stage_id')
   ].filter((a) => a)
-  const langKey = getLang()
+  const { lang: langKey } = useParams()
   const router = useRouter()
   const dispatch = useDispatch()
   const [loading, chatNow, modalChange] = useChatNow(props)
@@ -197,9 +197,9 @@ const JobCard = (props: any) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
-            open: true,
-            message: message,
-            severity: 'error'
+          open: true,
+          message: message,
+          severity: 'error'
         })
       )
     })
@@ -235,10 +235,10 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() =>
+              onClick={() => {
                 // @ts-ignore
-                router.push(`/${langKey}` + job_url, {kind: "auto"})
-              }
+                router.push(`/${langKey}` + job_url)
+              }}
             >
               <div
                 key={job_title + id}
@@ -360,7 +360,9 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                router.push(company_url, { forceOptimisticNavigation: true })
+                console.log('pushCompany')
+                window.location.href = `/${langKey}` + company_url
+                // router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
               }}
             >
               <div className={styles.company}>
@@ -418,7 +420,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg
