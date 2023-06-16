@@ -29,10 +29,6 @@ const Des_Schema = [
 	}
 ]
 const Section3 = () => {
-	const {ref, inView, entry} = useInView({
-		/* Optional options */
-		threshold: 0.3,
-	});
 	const _Des_Schema = [];
 	const contextLang =  useContext(languageContext);
 
@@ -48,11 +44,11 @@ const Section3 = () => {
 			}
 		}
 	}
-	return <section className={style.section3} ref={ref}>
+	return <section className={style.section3}>
 		<img className={style.section3_pc_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Web1-min.jpg`} />
 		<img className={style.section3_mobile_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Mobile1-min.jpg`} />
 		<div className={style.content_container}>
-			<InView threshold={0.3} delay={500}>
+			<InView threshold={0.3} delay={500} triggerOnce={true}>
 				{({ref, inView})=>{
 					return <div ref={ref} className={classNames({
 						[style.section3_title]: true,
@@ -78,7 +74,7 @@ const Section3 = () => {
 					<img src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3.png`} alt={'bg'}
 					     className={style.section3_right_mobile_bg + ' ' + style.mobile}
 					/>
-					<InView delay={200} threshold={0.3}>
+					<InView delay={200} threshold={0.3} triggerOnce={true}>
 						{({inView, ref })=>(
 							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-1.png`} alt="section3_right"
 							     className={classNames({
@@ -87,7 +83,7 @@ const Section3 = () => {
 							     })} />
 						)}
 					</InView>
-					<InView delay={400} threshold={0.3}>
+					<InView triggerOnce={true} delay={400} threshold={0.3}>
 						{({ref,inView})=>(
 							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-2.png`} alt="section3_right"
 							     className={classNames({
@@ -96,7 +92,7 @@ const Section3 = () => {
 							     })}/>
 						)}
 					</InView>
-					<InView delay={600} threshold={0.3}>
+					<InView delay={600} threshold={0.3} triggerOnce={true}>
 						{({ref,inView})=>(
 							<img ref={ref} src={`${process.env.S3_BUCKET_URL}/landing/section3-right-3.png`} alt="section3_right"
 							     className={classNames({

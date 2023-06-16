@@ -1,5 +1,9 @@
 @keyframes fadeIn {
-  from {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
     opacity: 0;
   }
 
@@ -12,7 +16,7 @@
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
   opacity: 1 !important;
-  animation-duration: 0.55s;
+  animation-duration: 2.0s;
 }
 
 @keyframes fadeOut {
@@ -29,7 +33,7 @@
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
   opacity: 0 !important;
-  animation-duration: 0.55s;
+  animation-duration: 0.5s;
 }
 
 @keyframes bounceIn_button {
@@ -142,7 +146,7 @@
 
 
 .title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
   font-size: 90px;
@@ -166,6 +170,16 @@
     line-height: .4rem;
   }
 }
+.section1_subtitle{
+  @extend .title;
+  font-size: 80px;
+  @media screen and (max-width: 540px) {
+    font-size: .32rem;
+    width: 3.2rem;
+    height: auto !important;
+    line-height: .4rem;
+  }
+}
 
 .height {
   height: 216px;
@@ -181,7 +195,10 @@
 }
 
 .op0 {
-  opacity: 0;
+  opacity: 0 ;
+}
+.op0i{
+  opacity: 0 !important;
 }
 
 .title-color {
@@ -388,7 +405,7 @@
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: translate3d(0, 20px, 0) scale3d(0.8, 0.8, 0.8);
+    transform: translate3d(0, 50px, 0) scale3d(1, 1, 1);
   }
 
   to {
@@ -777,7 +794,7 @@
 
 .section4_right_title {
   width: 450px;
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: 60px;
   line-height: 70px;
@@ -814,8 +831,7 @@
 
 .section4_mobile_item_title {
   opacity: 0;
-  font-family: 'Poppins';
-  font-style: normal;
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: .32rem;
   line-height: .40rem;
@@ -1076,7 +1092,7 @@
 
 .section6_title {
   padding-top: 150px;
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
   font-size: 60px;
@@ -1087,7 +1103,7 @@
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     text-align: left;
-    font-family: 'Poppins';
+    font-family: 'Poppins' !important;
     font-style: normal;
     font-weight: 700;
     font-size: .32rem;
@@ -1354,7 +1370,7 @@
 }
 
 .section7_title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: 60px;
   line-height: 94px;
