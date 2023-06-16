@@ -49,8 +49,8 @@ const Section3 = () => {
 		}
 	}
 	return <section className={style.section3} ref={ref}>
-		<img className={style.section3_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/section3-bg.webp`} />
-		<img className={style.section3_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/mobile-section3-bg.png`} />
+		<img className={style.section3_pc_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Web1-min.jpg`} />
+		<img className={style.section3_mobile_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Mobile1-min.jpg`} />
 		<div className={style.content_container}>
 			<InView threshold={0.3} delay={500}>
 				{({ref, inView})=>{

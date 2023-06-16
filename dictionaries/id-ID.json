@@ -844,8 +844,7 @@
     "experienced": "Experienced",
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
-    "ImHiring": "I’m employees",
-    "education":"Education"
+    "ImHiring": "I’m hiring"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1187,7 +1186,6 @@
     }
   },
   "landing": {
-    "landing": {
       "section1_name1": "John",
       "section1_name2": "Sarah",
       "section1_message1": "Hi Sarah, I'm interested in the position. Could you provide more information about the role?",
@@ -1246,6 +1244,5 @@
       "jobs": "jobs",
       "talents": "talents",
       "Looking for": "Looking for"
-    }
   }
 }
