@@ -1186,7 +1186,6 @@
     }
   },
   "landing": {
-    "landing": {
       "section1_name1": "John",
       "section1_name2": "Sarah",
       "section1_message1": "Hi Sarah, I'm interested in the position. Could you provide more information about the role?",
@@ -1242,9 +1241,10 @@
       "section7_list_date2": "25 May 2023",
       "section7_list_des3": "Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam",
       "section7_list_date3": "23 Apr 2021",
+      "section7_list_des4": "Bossjob revolutionizes recruitment with AI Technology, expands on product features to win new markets",
+      "section7_list_date4": "13 Jun 2023",
       "jobs": "jobs",
       "talents": "talents",
       "Looking for": "Looking for"
-    }
   }
 }

@@ -62,9 +62,9 @@ const Section6 = () => {
 	const contextLang = useContext(languageContext);
 	return <section className={style.section6}>
 		<img className={style.section6_bg + ' ' + style.desktop} alt={'-'}
-		     src={`${process.env.S3_BUCKET_URL}/landing/section6-pc-bg.jpg`}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/Web3-min.jpg`}/>
 		<img className={style.section6_bg_mobile + ' ' + style.mobile} alt={'img-bg'}
-		     src={`${process.env.S3_BUCKET_URL}/landing/section6-mobile-bg.jpg`}/>
+		     src={`${process.env.S3_BUCKET_URL}/landing/Mobile3-min.jpg`}/>
 		<div className={style.content_container}>
 			<div className={style.section6_title}>
 				{contextLang.landing.section6_title || 'Best hiring APP in Southeast-Asia'}
