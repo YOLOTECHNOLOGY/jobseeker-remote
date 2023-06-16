@@ -175,10 +175,10 @@
       "industry": "行业",
       "allJobs": "查看{{totalActiveJobs}}个热招工作",
       "employees": "人",
-      "location": "Location",
-      "industryType": "Industry Type",
-      "financingStages": "Financing stage",
-      "resetFilters": "Reset Filters"
+      "location": "地址",
+      "industryType": "行业类型",
+      "financingStages": "融资阶段",
+      "resetFilters": "重置过滤器"
     },
     "popularCompany": {
       "title": "热门公司",
@@ -192,7 +192,7 @@
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
     },
-    "companiesEmpty": "Companies Not Found"
+    "companiesEmpty": "未找到公司"
   },
   "companyDetail": {
     "tab": {
