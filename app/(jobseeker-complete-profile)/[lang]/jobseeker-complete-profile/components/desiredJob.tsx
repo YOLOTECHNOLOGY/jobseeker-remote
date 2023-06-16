@@ -107,7 +107,7 @@ const EducationExperience = (props: any) => {
     }
   },[jobFunction,maxSalary,locationData])
   console.log({jobFunction})
-  const handleUpdateProfile = (data) => {
+  const handleUpdateProfile = async (data) => {
     console.log({data},jobFunction)
     const { currency, location ,maxSalary,minSalary} = data || {}
     const params = {
@@ -120,41 +120,45 @@ const EducationExperience = (props: any) => {
       country_id: getCountryId(),
       location_id: location?.id || '',
     }
-    
+     
     setLoading(true)
+    if(!resumes){
+      await generateUserResumeService({accessToken })
+    }
+    
     if(job_preferences?.length){
        updateUserPreferencesService({
         preferenceId:preference.id,
         params
        }).then(res=>{
         if(res.data){
-          generateUserResume()
+          jumPage();
         }
        }).finally(()=>setLoading(false))
      }else{ 
        createUserPreferencesService({params}).then(res=>{
         if(res.data){
-          generateUserResume()
+          jumPage()
         }
        }).finally(()=>setLoading(false))
      }
   }
 
- const generateUserResume = ()=>{
-  getUserInfo?.()
-  if(!resumes){
-    generateUserResumeService({
-      accessToken
-    }).then(()=>{
-      jumPage();
-    })
-  }else{
-    jumPage();
-  }
-
- };
+//  const generateUserResume = ()=>{
+//   if(!resumes){
+//     generateUserResumeService({
+//       accessToken
+//     }).then(()=>{
+//       getUserInfo?.()
+//       jumPage();
+//     })
+//   }else{
+//     jumPage();
+//   }
+//  };
 
  const jumPage = () => {
+  getUserInfo?.()
   const isChatRedirect = localStorage.getItem('isChatRedirect')
       if(isChatRedirect){
         localStorage.removeItem('isChatRedirect')
