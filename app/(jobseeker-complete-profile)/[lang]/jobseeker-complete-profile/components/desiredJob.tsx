@@ -19,6 +19,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
 import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import {generateUserResumeService} from 'store/services/users/generateUserResume'
 const countryForCurrency = {
   ph: 'php',
   sg: 'sgd'
@@ -126,21 +127,31 @@ const EducationExperience = (props: any) => {
         params
        }).then(res=>{
         if(res.data){
-          getUserInfo?.()
-          push(`/${langKey}/my-jobs?`)
+          jumpPage()
         }
        }).finally(()=>setLoading(false))
      }else{ 
        createUserPreferencesService({params}).then(res=>{
         if(res.data){
-          getUserInfo?.()
-          push(`/${langKey}/my-jobs?`)
+          jumpPage()
         }
        }).finally(()=>setLoading(false))
      }
   }
 
-
+ const jumpPage = ()=>{
+  getUserInfo?.()
+  generateUserResumeService().then(()=>{
+    const isChatRedirect = localStorage.getItem('isChatRedirect')
+    if(isChatRedirect){
+      localStorage.removeItem('isChatRedirect')
+      push(`/${langKey}/${isChatRedirect}`)
+    }else{
+      push(`/${langKey}/my-jobs`)
+    }
+  })
+  
+ };
 
 
   const {
