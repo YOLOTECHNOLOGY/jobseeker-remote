@@ -9,6 +9,8 @@ import json1 from './lottie_1';
 import json2 from './lottie_2';
 import json4 from './lottie_4';
 import {languageContext} from "../../../components/providers/languageProvider";
+import {useInView} from "react-intersection-observer";
+import classNames from "classnames";
 
 let carouselList = [
 	{
@@ -81,8 +83,13 @@ const Section5 = () => {
 		carouselList[3].des = contextLang.landing.section5_list_des4;
 	}
 
+	const {ref, inView} = useInView({
+		triggerOnce: true,
+		threshold: 0.2
+	});
+
 	if (isMobile) {
-		return <section className={style.section5}>
+		return <section className={style.section5} ref={ref}>
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
@@ -90,24 +97,17 @@ const Section5 = () => {
 					grabCursor={true}
 					loop={true}
 					slidesPerView={1}
-					// centeredSlides={true}
-					// autoplay={{
-					// 	delay: 2000,
-					// 	disableOnInteraction: true
-					// }}
-					// navigation={{
-					// 	enabled: true,
-					// 	prevEl: '.swiper-button-prev',
-					// 	nextEl: '.swiper-button-next',
-					// 	hideOnClick: true,
-					// 	hiddenClass: 'hideClass'
-					// }}
 					scrollbar={{draggable: true}}
 				>
 					{carouselList.map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.section5_carousel_item}>
-								<div className={style.mobile_section5_des} data-class="section5-des">
+								<div
+									className={classNames({
+									[style.mobile_section5_des]: true,
+									[style.animate__bounceIn]: inView,
+								})}
+								     data-class="section5-des">
 									{item.des}
 								</div>
 								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
@@ -140,8 +140,10 @@ const Section5 = () => {
 	return <section className={style.section5}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
 	                   src={`${process.env.S3_BUCKET_URL}/landing/Web2-min.jpg`}/>}
-		{/* <div className={style.content_container}> */}
-		<div className={style.section5_carousel + ' ' + style.desktop}
+		<div className={classNames({
+			[style.section5_carousel]: true,
+		})}
+		     // ref={ref}
 		     onMouseLeave={(event) => {
 			     swiperRef.current.swiper.autoplay.start();
 			     setEnable(true)

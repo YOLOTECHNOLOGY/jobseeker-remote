@@ -52,9 +52,16 @@ const Section7 = () => {
 	const {width} = useWindowSize();
 	const swiperRef = useRef(null);
 	const contextLang = useContext(languageContext);
+	const {ref, inView} = useInView({
+		triggerOnce: true,
+		threshold: 0.7
+	});
 	const isMobile = width < 540;
 	return <div className={style.section7}>
-		<div className={style.section7_title}>
+		<div className={classNames({
+			[style.section7_title]: true,
+			[style.animate__bounceIn]: inView,
+		})} ref={ref}>
 			<Link style={{opacity: 0}}
 			      target="_blank"
 			      href={seeAllLink}
@@ -105,7 +112,7 @@ const Section7 = () => {
 		</div> : null}
 		{isMobile ? <div className={style.section7_mobile_carousel}>
 			{carouselList.slice(0,4).map((item,index)=>{
-				return 	<InView delay={200} threshold={0.3} key={index}>
+				return 	<InView delay={200} threshold={0.3} key={index} triggerOnce={true}>
 					{({inView, ref })=>(
 						<div className={classNames({
 							[style.slideItem]: true,

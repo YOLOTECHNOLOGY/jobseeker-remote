@@ -1,5 +1,10 @@
 
 @include msd {
+    .profile{
+        .bg{
+            display: none;
+        }
+        }
     .main{
         background: #fff;
         .header{

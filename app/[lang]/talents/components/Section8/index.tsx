@@ -17,11 +17,11 @@ const Section7 = () => {
 	const contextLang = useContext(languageContext);
 	const carouselList = [
 		{
-			des: `${contextLang.landing["Looking for"]} <span style="color: #FED766">${contextLang.landing.talents}</span>? 👀`,
+			des: `${contextLang.landing["Looking for"]} <i style="color: #FED766">${contextLang.landing.talents}</i>? 👀`,
 			link: 'https://employer.bossjob.com/'
 		},
 		{
-			des: `${contextLang.landing["Looking for"]} <span style="color: #FED766">${contextLang.landing.jobs}</span>?  💼`,
+			des: `${contextLang.landing["Looking for"]} <i style="color: #FED766">${contextLang.landing.jobs}</i>?  💼`,
 			link: 'https://bossjob.com'
 		},
 	]
