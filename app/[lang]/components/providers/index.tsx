@@ -11,6 +11,7 @@ import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
 import LoadingProvider from './loadingProvider'
 import LanguageProvider from './languageProvider'
+import LoginModalProvider from './loginModalProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
     const { LG, lang }: any = props
@@ -27,9 +28,11 @@ const ClientProviders = (props: any) => {
                                 )
                                     : (
                                         <NotificationProvider>
-                                                <LoadingProvider lang={lang}>
+                                            <LoadingProvider lang={lang}>
+                                                <LoginModalProvider>
                                                     {children}
-                                                </LoadingProvider>
+                                                </LoginModalProvider>
+                                            </LoadingProvider>
                                         </NotificationProvider>
                                     )}
                             </IMProvider>

@@ -8,6 +8,7 @@ import interpreter from 'app/[lang]/interpreters/chatNow'
 import { formatTemplateString } from 'helpers/formatter';
 import { languageContext } from '../components/providers/languageProvider';
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail';
+import { LoginModalContext } from '../components/providers/loginModalProvider';
 
 const ModalSwitch = (props) => {
     const { showModal, setShowModal, requestSwitch, loading, existedJob, selectedJob, chatData } = props
@@ -31,6 +32,7 @@ const ModalSwitch = (props) => {
     </Modal >
 }
 export const useChatNow = (jobDetail) => {
+    const { setShowLogin } = useContext(LoginModalContext)
     const [loading, setLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [chatData, setChatData] = useState()
@@ -43,7 +45,8 @@ export const useChatNow = (jobDetail) => {
             jobDetail, router, dispatch, showModal: chatData => {
                 setChatData(chatData)
                 setShowModal(true)
-            }
+            },
+            showLogin: () => setShowLogin?.(true),
         }
     }, [jobDetail, router, dispatch])
     const requestSwitch = useCallback(() => {
