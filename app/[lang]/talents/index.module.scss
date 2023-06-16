@@ -522,6 +522,13 @@
   width: 100%;
 }
 
+.section3_pc_bg{
+  @extend .section3_bg;
+  border-radius: 0px 200px 0px 0px;
+}
+.section3_mobile_bg{
+  @extend .section3_bg;
+}
 .content_container {
   width: 1366px;
   margin: 0 auto;
@@ -874,6 +881,11 @@
   height: 1224px;
   position: relative;
   padding-top: 200px;
+  :global{
+    .swiper-wrapper{
+      width: 5000px;
+    }
+  }
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     height: 1600px;
@@ -882,8 +894,10 @@
       .swiper {
         overflow: visible !important;
       }
+
     }
   }
+
 }
 
 .section5_bg {
@@ -895,6 +909,7 @@
   width: 100vw;
   height: 1224px;
   border-radius: 0px 200px 0px 0px;
+
 }
 
 .mobile_section5_bg {
@@ -939,10 +954,11 @@
   bottom: 0;
   overflow: hidden;
   width: 100vw;
-  transform: translate3d(0, 50%, 0);
   z-index: 100;
+  transform: translateY(50%);
   @media screen and (max-width: 540px) {
-    bottom: 300px;
+    bottom: -2rem;
+    transform: translateY(0);
   }
 }
 

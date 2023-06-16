@@ -102,7 +102,6 @@ const Section5 = () => {
 					// 	hideOnClick: true,
 					// 	hiddenClass: 'hideClass'
 					// }}
-					// loop={true}
 					scrollbar={{draggable: true}}
 				>
 					{carouselList.map((item, index) => {
@@ -134,13 +133,13 @@ const Section5 = () => {
 
 			<AnimationNumber/>
 			<img className={style.mobile_section5_bg}
-			     src={`${process.env.S3_BUCKET_URL}/landing/section5-mobile-bg.jpg`}
+			     src={`${process.env.S3_BUCKET_URL}/landing/Mobile2-min.jpg`}
 			     alt="_"/>
 		</section>
 	}
 	return <section className={style.section5}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
-	                   src={`${process.env.S3_BUCKET_URL}/landing/section5-pc-bg.jpg`}/>}
+	                   src={`${process.env.S3_BUCKET_URL}/landing/Web2-min.jpg`}/>}
 		{/* <div className={style.content_container}> */}
 		<div className={style.section5_carousel + ' ' + style.desktop}
 		     onMouseLeave={(event) => {
@@ -152,16 +151,16 @@ const Section5 = () => {
 			     setEnable(false);
 		     }}>
 			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
+				modules={[Navigation, Pagination, Scrollbar, Autoplay, A11y, Controller]}
 				spaceBetween={50}
 				ref={swiperRef}
 				grabCursor={true}
 				slidesPerView={3.5}
 				// centeredSlides={true}
-				// autoplay={{
-				// 	delay: 2000,
-				// 	disableOnInteraction: true
-				// }}
+				autoplay={{
+					delay: 10 * 1000,
+					disableOnInteraction: true
+				}}
 				// navigation={{
 				// 	enabled: true,
 				// 	prevEl: '.swiper-button-prev',
@@ -169,7 +168,7 @@ const Section5 = () => {
 				// 	hideOnClick: true,
 				// 	hiddenClass: 'hideClass'
 				// }}
-				// loop={true}
+				loop={true}
 				scrollbar={{draggable: true}}
 			>
 				{carouselList.map((item, index) => {
