@@ -16,6 +16,7 @@ import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
 
 type propsType = {
   is_saved: boolean
@@ -30,12 +31,12 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
   const userInfo = getCookie('user')
   const { jobDetail: translation } = useContext(languageContext) as any
   const { header } = translation
-
+  const accessToken = getCookie('accessToken')
   const [loading, chatNow, changeJobModal] = useChatNow(jobDetail)
   const { status_key } = jobDetail
   const [saveLoading, setSaveLoading] = useState<boolean>(false)
   const [isSave, setIsSave] = useState<boolean>(is_saved)
-
+  const { setShowLogin } = useContext(LoginModalContext)
   useEffect(() => {
     document.addEventListener('scroll', handleAddHeadBoxShadow)
 
@@ -50,9 +51,9 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
     const headNode = document.querySelector('#jobDetaiPagelHead')
     if (scrollTopHeight > 55) {
-      ;(headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
+      ; (headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
     } else {
-      ;(headNode as HTMLElement).style.boxShadow = 'unset'
+      ; (headNode as HTMLElement).style.boxShadow = 'unset'
     }
   }
 
@@ -111,7 +112,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       const link = getApplyJobLink(jobDetail, userCookie)
       window.open(link)
     } else {
-      ;(chatNow as any)(jobDetail)
+      ; (chatNow as any)(jobDetail)
     }
   }
 
@@ -161,7 +162,16 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
               justifyContent: 'space-between',
               textTransform: 'capitalize'
             }}
-            onClick={!isSave ? handleSaveJob : handleUnSaveJob}
+            onClick={() => {
+              if (!accessToken) {
+                setShowLogin?.(true)
+                return
+              } else if (isSave) {
+                handleSaveJob?.()
+              } else {
+                handleUnSaveJob?.()
+              }
+            }}
             isLoading={saveLoading}
           >
             {isSave ? (

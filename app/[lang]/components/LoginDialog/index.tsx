@@ -65,7 +65,9 @@ export default function LoginDialog({open = true,handleClose}:dialogProps) {
         open={open}
         fullWidth
         sx={{
-          borderRadius:'10px'
+          '.MuiPaper-root':{
+            borderRadius:'10px',
+          }
         }}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
