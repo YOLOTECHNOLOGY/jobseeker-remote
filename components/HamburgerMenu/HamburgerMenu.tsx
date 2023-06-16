@@ -132,7 +132,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                   to={
                     userCookie?.is_profile_completed
                       ? '/manage-profile'
-                      : '/jobseeker-complete-profile/1'
+                      : '/jobseeker-complete-profile'
                   }
                   // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   // aTag
