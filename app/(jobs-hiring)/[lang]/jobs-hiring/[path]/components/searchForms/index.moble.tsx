@@ -43,6 +43,8 @@ const SearchArea = (props: any) => {
 
   const page = searchValues.page ?? '1'
 
+  console.log('config', config)
+
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
     locations.filter((location) => searchValues?.location?.includes(location.seo_value))
@@ -60,7 +62,7 @@ const SearchArea = (props: any) => {
     const workExperience =
       config.xp_lvls.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
     const qualification =
-      config.educations.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
+      config.degrees.map?.((item) => ({ value: item?.['seo-value'], label: item.value })) ?? []
     const salary =
       config?.salary_range_filters?.map?.((item) => ({
         value: item?.['seo-value'],
