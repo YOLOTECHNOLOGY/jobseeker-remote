@@ -42,6 +42,18 @@ const LoginForPhone = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
 
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [isDisable])
+ 
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+      sendOpt()
+    }
+  }
+
   useEffect(() => {
     if (countryCode) {
       setCountry(countryCode)

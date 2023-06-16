@@ -22,11 +22,12 @@ const EducationExperience = (props: any) => {
     getUserInfo
   } = props
   const {educations} = userDetail
+  const  isExperienced =  sessionStorage.getItem('isExperienced')
   const { push } = useContext(LinkContext)
   const [selectedDegrees, setSelectedDegrees] = useState<number>(null)
   const [school, setSchool] = useState('')
   const [fieldStudy, setFieldStudy] = useState('')
-  const [isCurrentStudying, setIsCurrentStudying] = useState(false)
+  const [isCurrentStudying, setIsCurrentStudying] = useState(!!isExperienced)
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [studyPeriodFrom, setStudyPeriodFrom] = useState(null)
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
@@ -42,7 +43,7 @@ const EducationExperience = (props: any) => {
         study_period_from,
         study_period_to,     
       } =  userDetail.educations[0]
-      setSelectedDegrees(degree_id || 7)
+      setSelectedDegrees(degree_id )
       setIsCurrentStudying(is_currently_studying)
       setSchool(school)
       setFieldStudy(field_of_study)

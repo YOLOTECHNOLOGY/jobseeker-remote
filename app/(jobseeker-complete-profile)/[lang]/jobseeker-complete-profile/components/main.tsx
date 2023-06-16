@@ -52,6 +52,7 @@ const Main = (props:any)=>{
 
    return <div className={styles.profile}>
      <Header lang={props.lang} step={step}/>
+      <div className={styles.bg}></div>
        {
         step === 1 && <BasicInformation {...newProps}/>
        }

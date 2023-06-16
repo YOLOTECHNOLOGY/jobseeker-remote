@@ -54,6 +54,7 @@ const EducationExperience = (props: any) => {
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const [jobFunction, setJobFunction] = useState({ id: undefined, value: '' })
   const langKey = getLang()
+  const isMobile = !!(document?.body.clientWidth < 750)
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     const maxSalaryOrg = maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null
@@ -317,6 +318,7 @@ const EducationExperience = (props: any) => {
        loading={loading}
        rightText={submit}
        backText={back}
+       showBack={!isMobile}
        backClick={backClick}
        disabled={isDisabled}
        handleClick={handleSubmit(handleUpdateProfile)}

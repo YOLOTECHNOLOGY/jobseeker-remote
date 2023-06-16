@@ -1,4 +1,4 @@
-import React, { useState, useRef ,memo} from 'react'
+import React, { useState, useRef ,memo, useEffect} from 'react'
 import styles from '../index.module.scss'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
@@ -22,7 +22,6 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const submitRef = useRef(null)
   const {
     lang: { newGetStarted }
   } = props
@@ -32,15 +31,22 @@ const loginForEmail = (props: IProps) => {
   const [loading,setLoading] = useState<boolean>(false)
   const pathname = usePathname()
 
-  const sendOpt = () => {
-    if (submitRef.current) {
-      return
+  useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [isDisable])
+ 
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+      sendOpt()
     }
+  }
+
+  const sendOpt = () => {
     setLoading(true)
-    submitRef.current = true
+    console.log({email})
     authenticationSendEmaillOtp({ email })
       .then((res) => {
-        submitRef.current = false
         const { user_id, avatar } = res?.data?.data ?? {}
         if (user_id) {
           router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
