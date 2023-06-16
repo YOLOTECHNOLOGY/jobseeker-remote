@@ -95,6 +95,15 @@
                     }
                  }
                 }
+                .currency{
+                  width: 100%;
+                }
+                .salaryBox{
+                    display: block;
+                    .minSalary{
+                       margin-right: 0;
+                    }
+                }
             }
            
         }

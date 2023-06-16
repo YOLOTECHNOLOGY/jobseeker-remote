@@ -25,6 +25,17 @@ function EmailFactor(props: any) {
   const { newGetStarted } = props.lang
 
   useEffect(() => {
+    window.addEventListener('keydown', handleOnKeyDownEnter)
+    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
+  }, [isDisable])
+ 
+  const handleOnKeyDownEnter = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+      checkIsEmailUseFun()
+    }
+  }
+
+  useEffect(() => {
     if (validateErr) {
       setValidateErr('')
     }

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from '@mui/material/Link'
-import TextField from '@mui/material/TextField'
-
 import Text from 'components/Text'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'

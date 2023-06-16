@@ -41,7 +41,9 @@ const WorkExperience = (props: any) => {
   const [skills, setSkills] = useState<any>([])
   const [selectedSkills, setSelectedSkills] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false);
-  const [existingResume, setExistingResume] = useState<any>(false);
+  const [existingResume, setExistingResume] = useState<any>([]);
+  const [resumeDisable, setResumeDisable] = useState<boolean>(false);
+  const [resumeLoading, setResumeLoading] = useState<boolean>(false);
   const dataSkills = userDetail?.skills;
   const dispatch = useDispatch()
   const { push } = useContext(LinkContext)
@@ -57,10 +59,18 @@ const WorkExperience = (props: any) => {
       setExistingResume(res?.data?.data || [])
     })
   }
+   
+  useEffect(()=>{
+   if(existingResume?.length >= 3) {
+    setResumeDisable(true)
+   }else{
+    setResumeDisable(false)
+   }
+
+  },[existingResume])
 
   useEffect(()=>{
     if(dataSkills?.length && skills?.length){
-      console.log(skills,dataSkills,777)
       setSelectedSkills(skills.filter(e=>dataSkills.includes(String(e.id))))
     }
   },[dataSkills,skills])
@@ -92,12 +102,12 @@ const WorkExperience = (props: any) => {
 
 
   useEffect(()=>{
-    if(companyName && workPeriodFrom && (!isCurrentJob ?  workPeriodTo : true) && description && jobFunction?.id){
+    if(companyName && workPeriodFrom && (!isCurrentJob ?  workPeriodTo : true)  && jobFunction?.id){
       setIsDisabled(false)
     } else{
       setIsDisabled(true)
     }
-  },[jobFunction,companyName,isCurrentJob,workPeriodFrom,workPeriodTo,description])
+  },[jobFunction,companyName,isCurrentJob,workPeriodFrom,workPeriodTo])
 
 
   const {
@@ -118,16 +128,17 @@ const WorkExperience = (props: any) => {
     currentlyWorkHere,
     from,
     to ,
-    placeholder,
-    thisFieldIsRequired,
+    placeholder
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
       if (maxFileSize(resume, 5)) {
         setErrorMessage('')
+        setResumeLoading(true)
         uploadUserResumeService(resume).then(res=>{     
            getResumes();
            if(res.data){
+            setResumeLoading(false)
             dispatch(
               displayNotification({
                 open: true,
@@ -205,6 +216,7 @@ const WorkExperience = (props: any) => {
 
 
  const addSecected = (item) => {
+  if(selectedSkills?.length >= 5 ) return
   setSelectedSkills([...selectedSkills,item])
  }
 
@@ -217,11 +229,12 @@ const WorkExperience = (props: any) => {
           <div className={styles.body}>
             <p className={styles.title}>{autofillMyInfo}</p>
             <p className={styles.titleTip}>{saveTimeByImporting}</p>
-            <div className={styles.upload}>
+            <div className={styles.upload}>             
               <LoadingButton
-                loading={false}
+                loading={resumeLoading}
                 variant='contained'
                 component='label'
+                disabled={resumeDisable}
                 sx={{
                   textTransform: 'capitalize',
                   width: '330px',
@@ -279,7 +292,6 @@ const WorkExperience = (props: any) => {
                 }}
               />
             </div>
-
             <p className={styles.title}>
            {mostRecentCompany}<span>*</span>
             </p>
@@ -333,8 +345,6 @@ const WorkExperience = (props: any) => {
                 />
               </div>
               }
-            
-
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
