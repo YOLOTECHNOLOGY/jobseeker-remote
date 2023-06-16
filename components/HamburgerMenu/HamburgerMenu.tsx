@@ -54,10 +54,12 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
   const userCookie = getCookie('user')
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
-  const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
 
   useEffect(() => {
-    setShowUnCompletedDot(!userDetail?.is_profile_completed)
+    if(userDetail?.id){
+      setShowUnCompletedDot(!userDetail?.is_profile_completed)
+    }
   }, [userDetail])
 
   useEffect(() => {
@@ -144,6 +146,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                       // className={
                       //   styles.activeLink + ' ' + (showUnCompletedDot ? styles.unCompleted : '')
                       // }
+                      className={showUnCompletedDot ? styles.unCompleted : ''}
                     >
                       {manageResume}
                     </Text>
