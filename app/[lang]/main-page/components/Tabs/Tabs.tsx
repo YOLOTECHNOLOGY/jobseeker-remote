@@ -24,7 +24,7 @@ import {
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
-// import LoginDialog from '../../../components/LoginDialog'
+//  import LoginDialog from '../../../components/LoginDialog'
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -244,7 +244,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
 
   return (
     <div>
-    
+     {/* <LoginDialog open={true}></LoginDialog> */}
       <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
       <div className={styles.webTab}>
         <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>

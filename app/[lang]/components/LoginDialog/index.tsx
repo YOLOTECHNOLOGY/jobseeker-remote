@@ -55,6 +55,7 @@ interface dialogProps{
 
 export default function LoginDialog({open = true,handleClose}:dialogProps) {
   const data= React.useContext(languageContext) as any
+  const { newGetStarted } = data
   console.log({data})
   return (
     <div>
@@ -63,10 +64,12 @@ export default function LoginDialog({open = true,handleClose}:dialogProps) {
         aria-labelledby="customized-dialog-title"
         open={open}
         fullWidth
-      
+        sx={{
+          borderRadius:'10px'
+        }}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Log in or sign up to Bossjob
+         {newGetStarted.title}
         </BootstrapDialogTitle>
         <DialogContent dividers>
         <div className={styles.main} style={{margin:0,minHeight:'340px',padding:0}}>
