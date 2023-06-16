@@ -43,10 +43,6 @@ import {languageContext} from "../../components/providers/languageProvider";
 // ]
 
 const Section1 = () => {
-	const { ref, inView, entry } = useInView({
-		/* Optional options */
-		threshold: 1,
-	});
 
 
 	const {width} = useWindowSize();
@@ -124,6 +120,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 		/* Optional options */
 		threshold: 0,
 		rootMargin: '0px 0px 50px 0px',
+		triggerOnce: true
 	});
 	// useEffect(()=>{
 	// 	entry?.target?.addEventListener('scroll', function() {
