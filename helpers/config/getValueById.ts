@@ -57,7 +57,7 @@ export const getValueById = (store: Record<string, any>, id: any, idKey: string,
     return getLastedValue(array, id)
   }
   if (id === null || id === undefined) {
-    return null
+    return ''
   }
 
   return forEachObject(store, id, Array.isArray(path) ? path : path.split('.'))

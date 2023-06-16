@@ -30,6 +30,13 @@ let carouselList = [
 		link: 'https://e27.co/filipino-job-search-platform-bossjob-secures-us5m-in-venture-funding-20230525/'
 	},
 	{
+		index:4,
+		img: `${process.env.S3_BUCKET_URL}/landing/section7-image-4.jpg`,
+		des: 'Bossjob revolutionizes recruitment with AI Technology, expands on product features to win new markets',
+		date: '13 Jun 2023',
+		link: 'https://blog.bossjob.com/press-room/2791/bossjob-revolutionizes-recruitment-with-ai-technology-expands-on-product-features-to-win-new-markets/'
+	},
+	{
 		index:3,
 		img: `${process.env.S3_BUCKET_URL}/landing/section7-news-image3.png`,
 		des: 'Grab Ventures Ignite helps Singaporean startup Bossjob kickstart in Vietnam',
@@ -45,9 +52,16 @@ const Section7 = () => {
 	const {width} = useWindowSize();
 	const swiperRef = useRef(null);
 	const contextLang = useContext(languageContext);
+	const {ref, inView} = useInView({
+		triggerOnce: true,
+		threshold: 0.7
+	});
 	const isMobile = width < 540;
 	return <div className={style.section7}>
-		<div className={style.section7_title}>
+		<div className={classNames({
+			[style.section7_title]: true,
+			[style.animate__bounceIn]: inView,
+		})} ref={ref}>
 			<Link style={{opacity: 0}}
 			      target="_blank"
 			      href={seeAllLink}
@@ -97,8 +111,8 @@ const Section7 = () => {
 			</Swiper>
 		</div> : null}
 		{isMobile ? <div className={style.section7_mobile_carousel}>
-			{carouselList.slice(0,3).map((item,index)=>{
-				return 	<InView delay={200} threshold={0.3} key={index}>
+			{carouselList.slice(0,4).map((item,index)=>{
+				return 	<InView delay={200} threshold={0.3} key={index} triggerOnce={true}>
 					{({inView, ref })=>(
 						<div className={classNames({
 							[style.slideItem]: true,

@@ -9,7 +9,7 @@ import { languageContext } from 'app/[lang]/components/providers/languageProvide
 import { getValueById } from 'helpers/config/getValueById'
 import { addJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 
 const JobDetail = ({ detail, config, langKey }: any) => {
@@ -36,8 +36,9 @@ const JobDetail = ({ detail, config, langKey }: any) => {
         device: isMobile ? 'mobile_web' : 'web',
         reco_from: detail?.reco_from
       }
-
-      addJobViewService(params)
+      setCookie('source', 'home')
+      setCookie('reco_from', detail?.reco_from)
+      // addJobViewService(params)
     }
   }
 

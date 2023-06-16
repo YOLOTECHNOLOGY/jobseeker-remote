@@ -38,17 +38,17 @@ export const Title = () => {
 		<p className={style.title + ' ' + style['title-color']} style={{height: 108}}>
 			{show && TypC}
 		</p>
-		<InView threshold={0.2}>
+		<InView threshold={0.2} triggerOnce={true}>
 			{({inView, ref}) => {
 				return <p ref={ref} className={classNames({
 					[style.op0]: true,
-					[style.title + ' ' + style.height]: true,
+					[style.section1_subtitle + ' ' + style.height]: true,
 					[style.animate__bounceIn]: inView,
 				})}>{contextLang.landing.section1_subtitle}</p>
 			}}
 		</InView>
 
-		<InView threshold={0.2}>
+		<InView threshold={0.2} triggerOnce={true}>
 			{({inView, ref}) => {
 				return <div ref={ref} className={classNames({
 					[style.getApp + ' ' + style.mobile]: true,

@@ -382,6 +382,7 @@
     margin: 10px auto 0;
     width: 82px;
     height: 36px;
+    white-space: nowrap;
   }
 
   .jobs {
@@ -697,7 +698,7 @@
             white-space: nowrap;
             width: min-content;
             // max-width: 110px;
-            margin-left: 10px;
+            margin-left: 25px;
             // max-width: 170px;
             // flex-grow: 1;
             cursor: pointer;
@@ -1487,4 +1488,3 @@
     display: none;
   }
 }
-

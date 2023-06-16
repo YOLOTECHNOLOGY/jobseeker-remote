@@ -97,7 +97,7 @@ const Verify = ({ query }: any) => {
   const logSuccess = (data: any) => {
     const defaultToPath =
       data.is_profile_update_required || !data.is_profile_completed
-        ? '/jobseeker-complete-profile/1'
+        ? '/jobseeker-complete-profile'
         : `/jobs-hiring/job-search`
     let redirect
     if (Array.isArray(routerQuery.redirect)) {

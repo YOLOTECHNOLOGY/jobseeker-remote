@@ -1,5 +1,9 @@
 @keyframes fadeIn {
-  from {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
     opacity: 0;
   }
 
@@ -12,7 +16,7 @@
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
   opacity: 1 !important;
-  animation-duration: 0.55s;
+  animation-duration: 2.0s;
 }
 
 @keyframes fadeOut {
@@ -29,7 +33,7 @@
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
   opacity: 0 !important;
-  animation-duration: 0.55s;
+  animation-duration: 0.5s;
 }
 
 @keyframes bounceIn_button {
@@ -90,6 +94,7 @@
   .section1_phone {
     width: 1884px;
     margin: 0 auto;
+    height: 1127px;
   }
 }
 
@@ -141,7 +146,7 @@
 
 
 .title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
   font-size: 90px;
@@ -165,6 +170,16 @@
     line-height: .4rem;
   }
 }
+.section1_subtitle{
+  @extend .title;
+  font-size: 80px;
+  @media screen and (max-width: 540px) {
+    font-size: .32rem;
+    width: 3.2rem;
+    height: auto !important;
+    line-height: .4rem;
+  }
+}
 
 .height {
   height: 216px;
@@ -180,7 +195,10 @@
 }
 
 .op0 {
-  opacity: 0;
+  opacity: 0 ;
+}
+.op0i{
+  opacity: 0 !important;
 }
 
 .title-color {
@@ -387,7 +405,7 @@
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: translate3d(0, 20px, 0) scale3d(0.8, 0.8, 0.8);
+    transform: translate3d(0, 50px, 0) scale3d(1, 1, 1);
   }
 
   to {
@@ -521,6 +539,13 @@
   width: 100%;
 }
 
+.section3_pc_bg{
+  @extend .section3_bg;
+  border-radius: 0px 200px 0px 0px;
+}
+.section3_mobile_bg{
+  @extend .section3_bg;
+}
 .content_container {
   width: 1366px;
   margin: 0 auto;
@@ -769,7 +794,7 @@
 
 .section4_right_title {
   width: 450px;
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: 60px;
   line-height: 70px;
@@ -806,8 +831,7 @@
 
 .section4_mobile_item_title {
   opacity: 0;
-  font-family: 'Poppins';
-  font-style: normal;
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: .32rem;
   line-height: .40rem;
@@ -873,6 +897,11 @@
   height: 1224px;
   position: relative;
   padding-top: 200px;
+  :global{
+    .swiper-wrapper{
+      width: 5000px;
+    }
+  }
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     height: 1600px;
@@ -881,8 +910,10 @@
       .swiper {
         overflow: visible !important;
       }
+
     }
   }
+
 }
 
 .section5_bg {
@@ -894,6 +925,7 @@
   width: 100vw;
   height: 1224px;
   border-radius: 0px 200px 0px 0px;
+
 }
 
 .mobile_section5_bg {
@@ -938,10 +970,11 @@
   bottom: 0;
   overflow: hidden;
   width: 100vw;
-  transform: translate3d(0, 50%, 0);
   z-index: 100;
+  transform: translateY(50%);
   @media screen and (max-width: 540px) {
-    bottom: 300px;
+    bottom: -2rem;
+    transform: translateY(0);
   }
 }
 
@@ -1059,7 +1092,7 @@
 
 .section6_title {
   padding-top: 150px;
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
   font-size: 60px;
@@ -1067,10 +1100,11 @@
   text-align: center;
   letter-spacing: 0.02em;
   color: #F5F6FA;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     padding-top: .7rem;
     text-align: left;
-    font-family: 'Poppins';
+    font-family: 'Poppins' !important;
     font-style: normal;
     font-weight: 700;
     font-size: .32rem;
@@ -1093,6 +1127,7 @@
   color: #F5F6FA;
   text-align: center;
   padding-bottom: 75px;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     font-weight: 400;
     font-size: .18rem;
@@ -1199,6 +1234,7 @@
   letter-spacing: 0.02em;
   color: #FFFFFF;
   margin-bottom: 1rem;
+  opacity: 0;
 
 }
 
@@ -1337,7 +1373,7 @@
 }
 
 .section7_title {
-  font-family: 'Poppins';
+  font-family: 'Poppins' !important;
   font-weight: 700;
   font-size: 60px;
   line-height: 94px;
@@ -1347,6 +1383,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  opacity: 0;
   @media screen and (max-width: 540px) {
     font-size: .32rem;
     line-height: .4rem;

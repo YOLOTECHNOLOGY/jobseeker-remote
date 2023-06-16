@@ -1,0 +1,116 @@
+
+@include msd {
+    .profile{
+        .bg{
+            display: none;
+        }
+        }
+    .main{
+        background: #fff;
+        .header{
+            margin-bottom: 16px;
+        }
+        .header{
+            .headerMain{
+                width: 100%;
+                padding: 0 20px;
+               
+              }
+        }
+       
+        .basicInfo{
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: none;
+          
+            .headerInfo{
+                padding: 0 20px;
+            }
+            .topModule{
+                box-shadow: none;
+                border-radius: 0 ;
+                border-bottom: 1px solid #BCBCBC;;
+            }
+            .container{
+                padding: 0 20px;
+                .nameBox{
+                    .nameFlex{
+                        display: block;
+                        .namesFirst{
+                            margin: 0 0 16px 0;
+                          &:last-child{
+                            margin-bottom: 0;
+                          }
+                        }
+                    }
+                }
+            }
+          
+           
+        }
+        .btnList{
+            button {
+                margin-right: 0 !important;
+                width: 100%;
+            }
+        }
+        .next{
+            margin: 20px auto 0;
+            padding: 0 20px;
+            :global{
+                .MuiLoadingButton-root{
+                    flex: 1;
+                    margin-left: 8px;
+                    &:last-child{
+                        margin-left: 0;
+                    }
+                }
+            }
+           
+        }
+        .work{       
+            .workContainer{
+                width: 100%;
+            }
+            .next{
+                width: 100%;
+            }
+            .box{
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                border-bottom: 1px solid #BCBCBC;
+                margin-top: 0;
+                .headerInfo{
+                    padding-left: 20px;
+                }
+                .body{
+                    padding: 0 20px;
+                }
+                .stepFieldDateItem, .stepFieldToItem{
+                    width: 100%;
+                    max-width: 100%;
+                }
+                .stepFieldDate{
+                 display: block;
+                 .stepFieldDateItem{
+                    margin-bottom: 16px;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                 }
+                }
+                .currency{
+                  width: 100%;
+                }
+                .salaryBox{
+                    display: block;
+                    .minSalary{
+                       margin-right: 0;
+                    }
+                }
+            }
+           
+        }
+    }
+}

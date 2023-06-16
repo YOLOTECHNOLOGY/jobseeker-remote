@@ -18,6 +18,12 @@
   src: url(../../styles/font/product-sans/ProductSansItalic.ttf);
   font-style: italic;
 }
+@font-face {
+  font-family: "Poppins";
+  src: url(../../styles/font/Poppins-Bold.ttf);
+  font-weight: 700;
+}
+
 html,
 #next-app {
   width: 100%;

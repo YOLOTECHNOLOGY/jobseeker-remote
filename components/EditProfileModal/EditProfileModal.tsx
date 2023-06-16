@@ -25,7 +25,7 @@ import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 import styles from './EditProfileModal.module.scss'
 import { getCountryId } from 'helpers/country'
 import React from 'react'
-
+import { removeEmptyOrNullValues } from 'helpers/formatter'
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
@@ -199,7 +199,9 @@ const EditProfileModal = ({
       xp_lvl_id,
       description: summary?.length > 0 ? summary : ''
     }
-    dispatch(updateUserProfileRequest(payload))
+
+
+    dispatch(updateUserProfileRequest(removeEmptyOrNullValues(payload)))
   }
 
   const handleCloseModal = () => {

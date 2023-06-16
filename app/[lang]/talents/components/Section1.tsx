@@ -1,11 +1,12 @@
 import style from '../index.module.scss';
-import React, { useContext, useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React, {useContext, useEffect} from 'react';
+import {useInView} from 'react-intersection-observer';
 import classNames from 'classnames';
 import Title from "./Title";
 import useWindowSize from "../../../../hooks/useWindowSize";
-import { languageContext } from "../../components/providers/languageProvider";
-import Image from 'next/image'
+import Image from 'next/image';
+import {languageContext} from "../../components/providers/languageProvider";
+
 // const dialog = [
 // 	{
 // 		"name": "John",
@@ -42,13 +43,9 @@ import Image from 'next/image'
 // ]
 
 const Section1 = () => {
-	const { ref, inView, entry } = useInView({
-		/* Optional options */
-		threshold: 1,
-	});
 
 
-	const { width } = useWindowSize();
+	const {width} = useWindowSize();
 	const isMobile = width < 540;
 	return <div className={style.section1Wrapper}>
 		<div className={style.section_bg + ' ' + style.mobile}></div>
@@ -68,8 +65,8 @@ const Section1 = () => {
 				{!isMobile && <div className={style.absolute_center}><Title /></div>}
 				<div className={style.section1_phone_wrapper}>
 					<Image src={`${process.env.S3_BUCKET_URL}/landing/phone1-final-3.png`} alt="" className={style.section1_phone}
-						width={1884}
-						height={1127}
+					       width={1884}
+					       height={1127}
 					/>
 					<img className={style.rocket + ' ' + style.desktop} alt="rocket"
 						src={`${process.env.S3_BUCKET_URL}/landing/rocket.png`} />
@@ -88,7 +85,7 @@ export default Section1
 
 
 const PopStream = () => {
-	const contextLang = useContext(languageContext);
+	const contextLang =  useContext(languageContext);
 
 	const dialog = [];
 	const name1 = contextLang.landing["section1_name1"];
@@ -111,7 +108,7 @@ const PopStream = () => {
 			className={style.mobile + " " + style.stream_top} />
 		{
 			dialog.map((item, index) => {
-				return <Pop key={index} type={index % 2 == 0 ? 'left' : 'right'} text={item.message} />
+				return <Pop key={index} type={index % 2 == 0  ? 'left' : 'right'} text={item.message}/>
 			})
 		}
 	</div>
@@ -123,6 +120,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 		/* Optional options */
 		threshold: 0,
 		rootMargin: '0px 0px 50px 0px',
+		triggerOnce: true
 	});
 	// useEffect(()=>{
 	// 	entry?.target?.addEventListener('scroll', function() {

@@ -9,9 +9,11 @@ type UploadUserAvatarProps = {
   selectedAvatar?: any
   setSelectedAvatar?: any
   tip: string
+  width?:string,
+  height?:string
 }
 
-const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar, tip }: UploadUserAvatarProps) => {
+const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar, tip,width,height }: UploadUserAvatarProps) => {
   const [preview, setPreview] = useState(null)
 
   const handleChoosePhoto = () => {
@@ -54,7 +56,7 @@ const UploadUserAvatar = ({ currentAvatarUrl, setSelectedAvatar, tip }: UploadUs
       <div className={styles.uploadAvatar}>
         <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
           <Avatar
-            sx={{ width: '80px', height: '80px' }}
+            sx={{ width: width || '80px', height: height|| '80px' }}
             src={preview || currentAvatarUrl || DefaultAvatar}
           />
           <input

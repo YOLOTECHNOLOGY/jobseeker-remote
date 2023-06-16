@@ -99,9 +99,9 @@ const useRegister = () => {
     const accessToken = OTPLoginUserInfo?.data?.token
     if (fileResponse?.id && accessToken) {
       if (userId) {
-        router.push('/jobs-hiring/job-search')
+        router.push('/manage-profile?tab=resume')
       } else {
-        router.push('/jobseeker-complete-profile/1')
+        router.push('/jobseeker-complete-profile')
       }
     }
   }, [fileResponse])
@@ -169,10 +169,11 @@ const useRegister = () => {
               router.push(isChatRedirect)
               localStorage.removeItem('isChatRedirect')
             } else {
-              router.push('/jobs-hiring/job-search')
+              // /jobs-hiring/job-search
+              router.push('/manage-profile')
             }
           } else {
-            router.push('/jobseeker-complete-profile/1')
+            router.push('/jobseeker-complete-profile')
           }
         }
       } else if (accessToken) {
@@ -187,7 +188,7 @@ const useRegister = () => {
           }
         } else {
           setItem('isRegisterModuleRedirect', router.asPath)
-          router.push('/jobseeker-complete-profile/1')
+          router.push('/jobseeker-complete-profile')
         }
       }
     }

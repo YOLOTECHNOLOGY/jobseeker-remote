@@ -30,9 +30,10 @@ const UploadResume = (props: any) => {
   const { quickUploadResume } = lang
   const router = useRouter()
 
-  const handleRedirect = () => {
+  const handleRedirect = (type) => {
     if (isLogged) {
-      router.push('/manage-profile')
+      const url = type == 'online' ? '/manage-profile' : '/manage-profile?tab=resume'
+      router.push(url)
     }
   }
   
@@ -43,7 +44,7 @@ const UploadResume = (props: any) => {
       setResume(file)
       setItem('quickUpladResume', 'upFile')
     }else {
-      handleRedirect()
+      handleRedirect('upload')
     }
     // reset file value
     event.target.value = ''
@@ -55,7 +56,7 @@ const UploadResume = (props: any) => {
       setItem('quickUpladResume', 'onLine')
       setIsCreatingResume(true)
     }else {
-      handleRedirect()
+      handleRedirect('online')
     }
   }
 
@@ -89,7 +90,7 @@ const UploadResume = (props: any) => {
           >
             {
               isLogged ? (
-                <Text textColor='white' bold onClick={handleRedirect}>
+                <Text textColor='white' bold onClick={() => handleRedirect('upload')}>
                   {quickUploadResume.uploadBtn}
                 </Text>
               ) : (

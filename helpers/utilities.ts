@@ -31,19 +31,23 @@ export const transState = (time: string | number, translations: Record<string, a
 
 export const isSameDay = (startTime?: string, endTime?: string) => {
   if (!endTime) return false
-  const startTimeMs = new Date(startTime.replace(/-/g, '/')).setHours(0, 0, 0, 0);
-  const endTimeMs = new Date(endTime.replace(/-/g, '/')).setHours(0, 0, 0, 0);
+  const startTimeMs = new Date(startTime.replace(/-/g, '/')).setHours(0, 0, 0, 0)
+  const endTimeMs = new Date(endTime.replace(/-/g, '/')).setHours(0, 0, 0, 0)
   return startTimeMs === endTimeMs
 }
 
 export const transDate = (date, allTime = null) => {
   if (!date) return ''
-  const newDate = new Date(date.replace(/-/g, '/'));
-  const chinaDate = newDate.toDateString();
-  const chinaDateArray = chinaDate.split(' ');
+  const newDate = new Date(date.replace(/-/g, '/'))
+  const chinaDate = newDate.toDateString()
+  const chinaDateArray = chinaDate.split(' ')
   const englishTime = `${chinaDateArray[2]} ${chinaDateArray[1]}  ${chinaDateArray[3]}`
   if (allTime) {
     return `${englishTime}, ${chinaDateArray[0]}, ${date.substr(11, 5)}`
   }
   return englishTime
+}
+
+export const serveIsMobile = (userAgent: string) => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
 }

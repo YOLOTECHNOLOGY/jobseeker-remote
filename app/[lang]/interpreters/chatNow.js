@@ -47,11 +47,12 @@ const interpreter = registInterpreter((command) =>
       }),
     redirectToLogin: () =>
       M.do((context) => {
-        const { jobDetail, router } = context
+        const { jobDetail, showLogin } = context
         const { id } = jobDetail
         const source = jobSource()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
-        router.push('/get-started', { forceOptimisticNavigation: true })
+        showLogin()
+        // router.push('/get-started', { forceOptimisticNavigation: true })
       }),
     redirectToExternal: (link) =>
       M.do((context) => {
@@ -84,14 +85,14 @@ const interpreter = registInterpreter((command) =>
         const { id } = jobDetail
         const source = getSourceCookie()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
-        router.push('/jobseeker-complete-profile/1')
+        router.push('/jobseeker-complete-profile')
       }),
     createNewChat: () =>
       M.do((context) => {
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = getSourceCookie()
-        return createChat(id, { source,  device: isMobile ? 'mobile_web' : 'web' })
+        return createChat(id, { source, device: isMobile ? 'mobile_web' : 'web' })
           .then((result) => {
             const chatId = result.data.data.id
             const newData = {

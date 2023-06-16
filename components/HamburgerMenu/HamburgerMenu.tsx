@@ -54,10 +54,12 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
   const userCookie = getCookie('user')
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
-  const [showUnCompletedDot, setShowUnCompletedDot] = useState(true)
+  const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
 
   useEffect(() => {
-    setShowUnCompletedDot(!userDetail?.is_profile_completed)
+    if(userDetail?.id){
+      setShowUnCompletedDot(!userDetail?.is_profile_completed)
+    }
   }, [userDetail])
 
   useEffect(() => {
@@ -132,7 +134,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                   to={
                     userCookie?.is_profile_completed
                       ? '/manage-profile'
-                      : '/jobseeker-complete-profile/1'
+                      : '/jobseeker-complete-profile'
                   }
                   // to={userCookie?.is_profile_completed ? authPathToOldProject(null, '/dashboard/profile/jobseeker') : '/jobseeker-complete-profile/1'}
                   // aTag
@@ -144,6 +146,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                       // className={
                       //   styles.activeLink + ' ' + (showUnCompletedDot ? styles.unCompleted : '')
                       // }
+                      className={showUnCompletedDot ? styles.unCompleted : ''}
                     >
                       {manageResume}
                     </Text>

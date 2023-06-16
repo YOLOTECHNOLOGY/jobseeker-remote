@@ -170,27 +170,14 @@ const EditWorkExperienceModal = ({
   useEffect(() => {
     const periodFrom = moment(new Date(workPeriodFrom))
     const periodTo = moment(new Date(workPeriodTo))
-
     setHasErrorOnToPeriod(moment(periodFrom).isAfter(periodTo) ? true : false)
   }, [workPeriodFrom, workPeriodTo])
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && workPeriodFrom
-    const emptyRequiredFields = !jobTitle && !companyName && !workPeriodFrom
-    const isValidDate = !hasErrorOnFromPeriod && !hasErrorOnToPeriod
-
-    if (isCurrentJob) {
-      if (emptyRequiredFields)
-        setDisabledButton(emptyRequiredFields && !hasErrorOnFromPeriod ? true : false)
-      setDisabledButton(requireFields && !hasErrorOnFromPeriod ? true : false)
-    } else {
-      if (emptyRequiredFields) setDisabledButton(emptyRequiredFields && isValidDate ? true : false)
-      setDisabledButton(requireFields && isValidDate ? true : false)
-    }
-
-    const hasValue = [currency,salary, jobFunction.id,industry].every(Boolean)
+    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom)
+    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate ].every(Boolean)
     setDisabledButton(!!hasValue)
-
     if (requireFields) setShowErrorToComplete(false)
   }, [
     jobTitle,
@@ -225,6 +212,16 @@ const EditWorkExperienceModal = ({
     const matchedIndustry = industryList.find((option) => {
       return option.value === industry
     })
+
+    const working_period_from = workPeriodFrom
+      ? moment(new Date(workPeriodFrom)).format('yyyy-MM-DD')
+      : ''
+    const working_period_to = isCurrentJob
+      ? moment(new Date()).format('yyyy-MM-DD')
+      : workPeriodTo
+      ? moment(new Date(workPeriodTo)).format('yyyy-MM-DD')
+      : ''
+
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
@@ -236,8 +233,8 @@ const EditWorkExperienceModal = ({
       function_job_title_id: jobFunction.id,
       currency_id: currency,
       salary: currency && salary ? Number(salary) : null,
-      working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
-      working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      working_period_from,
+      working_period_to,
       description: description ? description : ''
       // location_key: location?.key || '',
     }
@@ -246,6 +243,7 @@ const EditWorkExperienceModal = ({
       workExperienceId: data ? data.id : null,
       workExperienceData: workExperienceData
     }
+
     dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
 

@@ -82,15 +82,15 @@ const SignUp = ({ jobId, job_url }: propsType) => {
           router.push('/get-started?setp=2&&email=' + email + '&&redirect=' + job_url)
         }
       })
-      .catch((error) => {
-        dispatch(
-          displayNotification({
-            open: true,
-            message: error.message ?? 'Send EmailOTP fail',
-            severity: 'error'
-          })
-        )
-      })
+      // .catch((error) => {
+      //   dispatch(
+      //     displayNotification({
+      //       open: true,
+      //       message: error.message ?? 'Send EmailOTP fail',
+      //       severity: 'error'
+      //     })
+      //   )
+      // })
       .finally(() => {
         setLoading(false)
       })
@@ -126,6 +126,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
               textTransform: 'capitalize !important'
             }}
             isLoading={loading}
+            disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
             onClick={handleSendEmailTOP}
           >
             {signUp.btn}
