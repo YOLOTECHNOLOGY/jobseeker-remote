@@ -96,12 +96,12 @@ const LandingHeader = (props: any) => {
                   </li>
                   <li className={styles.headerLink}>
                     <Link
-                      title='Courses'
-                      to='https://academy.bossjob.ph/courses/search-courses'
+                      title='APP'
+                      to={'/' + langKey + '/talents'}
                       aTag
                     >
                       <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                        {courses}
+                        APP
                       </Text>
                     </Link>
                   </li>
@@ -119,7 +119,7 @@ const LandingHeader = (props: any) => {
             <ul className={styles.headerLinksList}>
               <React.Fragment>
                 <li className={styles.headerLink}>
-                  <Link title='Employer' to={process.env.BOSSHUNT_URL} aTag>
+                  <Link title='Employer' to={process.env.BOSSHUNT_URL+'/boss'} aTag>
                     <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
                       {hiring}
                     </Text>

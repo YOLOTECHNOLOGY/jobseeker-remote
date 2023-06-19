@@ -163,14 +163,14 @@ const ProtectedHeader = ({ lang }: any) => {
                 )}
               </li>
 
-              <li className={styles.headerLink} style={{ position: 'relative' }}>
+              <li className={styles.headerLink}>
                 <Link
-                  title='Courses'
-                  to='https://academy.bossjob.ph/courses/search-courses'
-                  external
+                  title='APP'
+                  to={'/' + langKey + '/talents'}
+                  aTag
                 >
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    {courses}
+                    APP
                   </Text>
                 </Link>
               </li>
@@ -345,7 +345,7 @@ const ProtectedHeader = ({ lang }: any) => {
               </li>
 
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
-                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                <Link to={process.env.BOSSHUNT_URL+'/boss'} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>
