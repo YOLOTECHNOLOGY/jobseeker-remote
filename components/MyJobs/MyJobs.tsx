@@ -27,8 +27,8 @@ import Layout from 'components/Layout'
 import Text from 'components/Text'
 // import AdSlot from 'components/AdSlot'
 import Link from 'components/Link'
-import JobCard from 'components/JobCard'
-import JobDetail from 'components/JobDetail'
+// import JobCard from 'components/JobCard'
+// import JobDetail from 'components/JobDetail'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 const ModalShare = dynamic(() => import('components/ModalShare'))
@@ -395,7 +395,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 <div className={styles.myJobsDetailInfoEmptyMobile}>{emptyResult()}</div>
               )}
 
-              {!isLoadingJobList &&
+              {/* {!isLoadingJobList &&
                 jobsList?.map((jobs, i) => (
                   <JobCard
                     key={i}
@@ -415,7 +415,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                     }
                     isCompanyVerified={jobs?.company?.is_verify}
                   />
-                ))}
+                ))} */}
             </div>
             {selectedJob && (
               <div className={styles.paginationWrapper}>
@@ -430,7 +430,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
           </div>
           <div className={styles.myJobsDetailInfoSection}>
             {isLoadingJobDetails && <JobDetailLoader />}
-            {!isLoadingJobDetails && selectedJob && (
+            {/* {!isLoadingJobDetails && selectedJob && (
               <JobDetail
                 selectedJob={selectedJob}
                 jobDetailUrl={selectedJob?.['job_url']}
@@ -447,7 +447,7 @@ const MyJobs = ({ category, accessToken, config }: IMyJobs) => {
                 config={config}
                 isCompanyVerified={selectedJob.company.is_verify}
               />
-            )}
+            )} */}
             {jobsList?.length === 0 && !isLoadingJobList && (
               <div className={styles.myJobsDetailInfoEmpty}>{emptyResult()}</div>
             )}

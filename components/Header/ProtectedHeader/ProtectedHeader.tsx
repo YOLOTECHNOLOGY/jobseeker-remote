@@ -96,6 +96,8 @@ const ProtectedHeader = ({ lang }: any) => {
   //   const authPath = authPathToOldProject(null, path)
   //   router.push(authPath)
   // }
+
+
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -116,11 +118,24 @@ const ProtectedHeader = ({ lang }: any) => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link title='Home' to={'/' + langKey}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                {pathname != ('/' + langKey) ? (
+                  <Link title='Home' to={'/' + langKey}>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      {home}
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     {home}
                   </Text>
-                </Link>
+                )}
               </li>
               <li className={styles.headerLink}>
                 {!pathname?.includes('/jobs-hiring/') ? (
@@ -163,14 +178,14 @@ const ProtectedHeader = ({ lang }: any) => {
                 )}
               </li>
 
-              <li className={styles.headerLink} style={{ position: 'relative' }}>
+              <li className={styles.headerLink}>
                 <Link
-                  title='Courses'
-                  to='https://academy.bossjob.ph/courses/search-courses'
-                  external
+                  title='APP'
+                  to={'/' + langKey + '/talents'}
+                  aTag
                 >
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                    {courses}
+                    APP
                   </Text>
                 </Link>
               </li>
@@ -345,7 +360,7 @@ const ProtectedHeader = ({ lang }: any) => {
               </li>
 
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
-                <Link to={process.env.BOSSHUNT_URL} aTag external className={styles.headerMenuLink}>
+                <Link to={process.env.BOSSHUNT_URL+'/boss'} aTag external className={styles.headerMenuLink}>
                   <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>

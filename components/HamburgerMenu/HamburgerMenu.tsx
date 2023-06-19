@@ -106,7 +106,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
           <React.Fragment>
             <Link
               className={styles.defaultLink}
-              to='https://bossjob.ph/app'
+              to='/talents'
               target='_blank'
               title='Bossjob App'
             >
@@ -181,7 +181,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
               </>
             )}
             <Divider />
-            <Link
+            {/* <Link
               className={`${styles.defaultLink}`}
               to='https://academy.bossjob.ph/courses/search-courses'
               aTag
@@ -190,7 +190,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle={textStyle}>{courses}</Text>
               </li>
-            </Link>
+            </Link> */}
             {!isAuthenticated && (
               <>
                 <Link
@@ -206,7 +206,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                 <Divider />
                 <Link
                   className={`${styles.defaultLink}`}
-                  to={`${process.env.BOSSHUNT_URL}`}
+                  to={`${process.env.BOSSHUNT_URL}/boss`}
                   aTag
                   title='Employers'
                 >
@@ -289,7 +289,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
 
                 <Divider />
 
-                <Link to={process.env.BOSSHUNT_URL} aTag className={styles.defaultLink}>
+                <Link to={process.env.BOSSHUNT_URL+'/boss'} aTag className={styles.defaultLink}>
                   <li className={styles.menuList}>
                     <Text textStyle='base'>{hiring}</Text>
                   </li>

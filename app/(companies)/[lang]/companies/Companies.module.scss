@@ -21,7 +21,7 @@
 
 .searchCompany {
   @extend .GlobalContainer;
-  margin-top: 32px;
+  padding-top: 32px;
   margin-bottom: 48px;
 
   > p {
@@ -120,6 +120,8 @@
   margin-right: 16px;
   border-radius: 5px;
   overflow: hidden;
+  border: 1px solid #f2f5fa;
+  
   a {
     display: inline-block;
   }
