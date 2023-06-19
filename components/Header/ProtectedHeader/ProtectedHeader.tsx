@@ -29,6 +29,7 @@ import styles from '../Header.module.scss'
 // this header will be used when user is logged in
 const ProtectedHeader = ({ lang }: any) => {
   const {
+    home,
     careerGuide,
     companies,
     courses,
@@ -114,6 +115,13 @@ const ProtectedHeader = ({ lang }: any) => {
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
+              <li className={styles.headerLink}>
+                <Link title='Home' to={'/' + langKey}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    {home}
+                  </Text>
+                </Link>
+              </li>
               <li className={styles.headerLink}>
                 {!pathname?.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>

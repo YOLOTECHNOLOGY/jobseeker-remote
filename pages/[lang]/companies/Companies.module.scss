@@ -118,6 +118,12 @@
   height: 64px;
   user-select: none;
   margin-right: 16px;
+  border-radius: 5px;
+  overflow: hidden;
+
+  a {
+    display: inline-block;
+  }
 }
 
 .featuredCompanyDetails {

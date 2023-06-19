@@ -64,6 +64,11 @@ const PlaceholderProtectedHeader = ({
               <React.Fragment>
                 <li className={styles.headerLink}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    {lang.home}
+                  </Text>
+                </li>
+                <li className={styles.headerLink}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     {lang.findJobs}
                   </Text>
                 </li>

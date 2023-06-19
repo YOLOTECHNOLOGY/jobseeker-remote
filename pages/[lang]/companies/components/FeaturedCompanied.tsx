@@ -1,7 +1,7 @@
 import React from 'react'
 import Text from 'components/Text'
 import FeaturedCompany from './FeaturedCompany'
-import BannerCarousel from 'components/BannerCarousel'
+import BannerCarousel from './BannerCarousel'
 import styles from '../Companies.module.scss'
 
 interface IProps {
