@@ -4,7 +4,7 @@ import {
   fetchSimilarCompanySuccess,
   fetchSimilarCompanyFailed,
 } from 'store/actions/companies/fetchSimilarCompany'
-import { fetchSimilarCompanyService } from 'store/services/companies/fetchSimilarCompany'
+import { fetchSimilarCompanyService } from 'store/services/companies2/fetchSimilarCompany'
 
 function* fetchSimilarCompanyReq(actions) {
   const { companyId } = actions.payload
