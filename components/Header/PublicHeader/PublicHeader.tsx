@@ -43,11 +43,24 @@ const PublicHeader = ({ lang }: any) => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                <Link title='Home' to={'/' + langKey}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                {pathname != ('/' + langKey) ? (
+                  <Link title='Home' to={'/' + langKey}>
+                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                      {home}
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    textColor='darkGrey'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     {home}
                   </Text>
-                </Link>
+                )}
               </li>
               <li className={styles.headerLink}>
 

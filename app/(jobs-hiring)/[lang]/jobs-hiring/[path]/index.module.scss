@@ -26,7 +26,7 @@ $contentWidth: 894px;
   .qrCode {
     width: 254px;
     height: 108px;
-    margin-top: 20px;
+    margin-bottom: 16px;
     background: #136fd3;
     border-radius: 10px;
     padding: 10px 16px;
@@ -59,7 +59,7 @@ $contentWidth: 894px;
   }
 
   .rightContent {
-    margin-top: 40px;
+    margin-top: 20px;
     height: 100%;
     width: 254px;
     margin-left: 0;
@@ -1265,4 +1265,8 @@ $contentWidth: 894px;
 
 .qrcode:hover {
   transform: scale(1.5);
+}
+
+.arrowIconPostion {
+  margin-bottom: 16px;
 }
