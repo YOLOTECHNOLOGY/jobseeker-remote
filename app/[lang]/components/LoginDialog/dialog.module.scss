@@ -1,0 +1,30 @@
+.dialog{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 999;
+    .bg{
+        width: 100%;
+        height: 100%;
+        position: absolute;      
+        background: rgba(196, 196, 196, 0.5); 
+    }
+    .container{
+        width: 561px;
+        border-radius:15px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background: #fff;
+        .header{
+            line-height: 59px;
+            height: 59px;
+            background: #F9F9F9;
+            padding: 0 26px 0 18px;
+            border-radius:15px 15px 0 0;
+        }
+    }
+}

@@ -4,6 +4,8 @@ import { LOGOUT_REQUEST } from 'store/types/auth/logout'
 // import { logoutService } from 'store/services/auth/logout'
 import { removeCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailClear } from 'store/actions/users/fetchUserOwnDetail'
+import jobseekersLogin from 'store/reducers/auth/jobseekersLogin'
+import { JOBBSEEKERS_LOGIN_CLEAR } from 'store/types/auth/jobseekersLogin'
 
 function* logoutReq() {
   // const payload = {
@@ -20,7 +22,11 @@ function* logoutReq() {
   // yield put(logoutSuccess(response.data))
   removeCookie('user')
   removeCookie('accessToken')
+  removeCookie('refreshToken')
   yield put(fetchUserOwnDetailClear())
+  yield put(jobseekersLogin({
+    type: JOBBSEEKERS_LOGIN_CLEAR,
+  }))
   try {
     import('imforbossjob')
       .then(im => im?.IMManager?.logout?.())

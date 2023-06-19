@@ -1,7 +1,8 @@
 import {
   JOBBSEEKERS_LOGIN_REQUEST,
   JOBBSEEKERS_LOGIN_SUCCESS,
-  JOBBSEEKERS_LOGIN_FAILED
+  JOBBSEEKERS_LOGIN_FAILED,
+  JOBBSEEKERS_LOGIN_CLEAR
 } from 'store/types/auth/jobseekersLogin'
 
 const initialState = {
@@ -17,6 +18,12 @@ export default function jobseekersLogin(state = initialState, action) {
         ...state,
         fetching: true
       }
+    case JOBBSEEKERS_LOGIN_CLEAR:
+      return {
+        ...state,
+        fetching: false,
+        response: {},
+      }
     case JOBBSEEKERS_LOGIN_SUCCESS:
       return {
         ...state,
@@ -31,6 +38,7 @@ export default function jobseekersLogin(state = initialState, action) {
         error: action.error,
         response: {}
       }
+
     default:
       return { ...state }
   }
