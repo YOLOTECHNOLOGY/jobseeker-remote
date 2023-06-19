@@ -3,28 +3,6 @@
 import { BossjobLogo } from 'images'
 import { LinearProgress } from '@mui/material'
 export default function Loading() {
-  // Or a custom loading skeleton component
-  // .loading {
-  //   &Wrapper {
-  //     display: flex;
-  //     flex-direction: column;
-  //     align-items: center;
-  //     max-width: 200px;
-  //     position: absolute;
-  //     top: 50%;
-  //     left: 50%;
-  //     transform: translate(-50%, -50%);
-  //     color: $primaryBlue;
-  //   }
-
-  //   &Logo {
-  //     margin-bottom: 16px;
-  //   }
-
-  //   &Indicator {
-  //     width: 200px;
-  //   }
-  // }
   return (
     <div style={{
       display: 'flex',
