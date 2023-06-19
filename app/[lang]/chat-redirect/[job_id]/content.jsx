@@ -1,22 +1,20 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
+'use client'
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { isMobile } from 'react-device-detect'
-import { useSelector } from 'react-redux'
-import { wrapper } from 'store'
-import { END } from '@redux-saga/core'
-
-import Layout from 'components/Layout'
+import Loading from './loading'
 import { createChat } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import * as fbq from 'lib/fpixel'
 
-const Chat = () => {
+const Chat = props => {
   const router = useRouter()
   const {
-    query: { job_id, source }
-  } = router
-  const userDetail = useSelector((store) => store.users.fetchUserOwnDetail?.response ?? {})
+    params: { job_id },
+    searchParams: { source },
+    userDetail
+  } = props
   const userId = userDetail.id
   const userEmail = userDetail.email
   useEffect(() => {
@@ -58,15 +56,7 @@ const Chat = () => {
       router.push(`/`)
     }
   }, [userId])
-  return <Layout loading={true} />
+  return <Loading />
 }
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req }) => {
-  const accessToken = req.cookies?.accessToken ?? null
-  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-  store.dispatch(END)
-  await store.sagaTask.toPromise()
-  return {
-    props: {}
-  }
-})
+
 export default Chat
