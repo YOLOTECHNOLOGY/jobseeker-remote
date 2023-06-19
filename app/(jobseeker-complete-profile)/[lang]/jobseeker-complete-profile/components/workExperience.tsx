@@ -14,7 +14,7 @@ import TextEditor from 'components/TextEditor/TextEditor'
 import FootBtn from './footBtn'
 import { usePathname } from 'next/navigation'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
-import { differenceBy, cloneDeep} from 'lodash-es'
+import { differenceBy} from 'lodash-es'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
@@ -24,7 +24,7 @@ import moment from 'moment'
 import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
-import { ka } from 'date-fns/locale'
+
 
 const WorkExperience = (props: any) => {
   console.log(props, 9999)
@@ -200,7 +200,6 @@ const WorkExperience = (props: any) => {
       is_currently_work_here: isCurrentJob,
       description
     }
-    console.log({ isCurrentJob })
     if (isCurrentJob) {
       delete paramsWork.working_period_to
     }
@@ -218,8 +217,7 @@ const WorkExperience = (props: any) => {
     }
 
     Promise.all([p1, p2])
-      .then((res) => {
-        console.log(res, 777777)
+      .then(() => {
         getUserInfo?.()
         push(`${pathname}?step=3`)
       })
@@ -240,7 +238,6 @@ const WorkExperience = (props: any) => {
       (e.key === 'Enter' || e.keyCode == 13) &&
       !tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
     ) {
-      //   onChange([...tags, val])
       setSelectedSkills([...selectedSkills, { id: val, value: val }])
       inputNode.current.value = null
     } else if (
@@ -248,8 +245,6 @@ const WorkExperience = (props: any) => {
       (e.key === ',' || e.keyCode == 188) &&
       !tags.find((tag) => tag.toLowerCase() === formattedVal.toLowerCase())
     ) {
-      // onChange([...tags, formattedVal])
-      console.log({ formattedVal })
       setSelectedSkills([...selectedSkills, { id: formattedVal, value: formattedVal }])
       inputNode.current.value = null
     }

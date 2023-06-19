@@ -21,7 +21,6 @@ import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 import { usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
-  console.log({ props })
   const {
     config: { notice_period_lists: noticePeriodLists },
     lang:{profile},
@@ -149,7 +148,6 @@ const BasicInformation = (props: any) => {
     xhr.responseType = 'blob'
     xhr.onload = function () {
       if (this.status == 200) {
-        console.log(this.response,9999)
         const file = new File([this.response], item.src, { type: 'image/*' })
         setSelectedAvatar(file)
       }
