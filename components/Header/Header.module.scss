@@ -147,12 +147,26 @@
 
     &:hover {
       color: #ffc635;
+      transition: all 0.3s ease-in-out;
     }
   }
 
   &TextCurrentPage {
-    color: #ffc635;
-    cursor: default;
+    // color: #ffc635;
+    // cursor: default;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      background-color: #ffffff;
+      width: 50%;
+      height: 2px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -6px;
+    }
   }
 
   &Login {
