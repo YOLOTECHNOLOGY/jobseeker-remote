@@ -1,31 +1,36 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Components
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 
 /* Material Components */
-import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
+import SuggestionList from './SuggestionList'
 
 // Styles
-import styles from './SearchCompanyField.module.scss'
+import styles from '../Companies.module.scss'
 import { fetchCompanySuggestionsService } from 'store/services/companies2/fetchCompanySuggestions'
 
 interface ISearchCompanyField {
   defaultQuery?: string
   onKeywordSearch: Function
+  clearSearchRef?: any
   transitions: Record<string, any>
 }
 
 const SearchCompanyField = ({
   defaultQuery = '',
   onKeywordSearch,
-  transitions
+  transitions,
+  clearSearchRef
 }: ISearchCompanyField) => {
-  const ref = useRef(null)
 
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
+
+  clearSearchRef.current = () => {
+    setSearchValue('')
+  }
 
   useEffect(() => {
     if (searchValue) setSearchValue(searchValue)
@@ -33,17 +38,15 @@ const SearchCompanyField = ({
 
   const handleSuggestionSearch = (val) => {
     fetchCompanySuggestionsService({ size: 5, query: val })
-      // fetch(`${process.env.COMPANY_URL}/search-suggestion?size=5&query=${val}`)
-      // .then((resp) => resp.json())
       .then((data) =>
         setSuggestionList(data.data.data.items)
       )
   }
 
   return (
-    <div className={styles.searchField} ref={ref}>
+    <div className={styles.searchField}>
       <div className={styles.searchFieldInputContainer}>
-        <MaterialTextFieldWithSuggestionList
+        <SuggestionList
           id='search'
           label={transitions?.companyName}
           variant='outlined'
@@ -52,6 +55,7 @@ const SearchCompanyField = ({
           searchFn={handleSuggestionSearch}
           updateSearchValue={setSearchValue}
           defaultValue={defaultQuery}
+          value={searchValue}
           onSelect={(val: any) => {
             setSearchValue(val)
             onKeywordSearch(val)

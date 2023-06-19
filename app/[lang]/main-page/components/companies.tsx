@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from 'app/[lang]/index.module.scss'
 import CompanyCardList from './companyList'
-import { fetchCompanyTopService } from '../../../../store/services/companies/fetchCompanyTop'
+import { fetchCompanyTopService } from '../../../../store/services/companies2/fetchCompanyTop'
 import Link from 'next/link'
 async function getCompanyData(location) {
   const res = await fetchCompanyTopService(location)

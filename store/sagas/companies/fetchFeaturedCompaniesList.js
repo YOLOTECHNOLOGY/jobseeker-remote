@@ -4,7 +4,7 @@ import {
   fetchFeaturedCompaniesListSuccess,
   fetchFeaturedCompaniesListFailed,
 } from 'store/actions/companies/fetchFeaturedCompaniesList'
-import { fetchFeaturedCompaniesListService } from 'store/services/companies/fetchFeaturedCompaniesList'
+import { fetchFeaturedCompaniesListService } from 'store/services/companies2/fetchFeaturedCompaniesList'
 
 function* fetchFeaturedCompaniesListReq(actions) {
   const { size, page } = actions.payload
