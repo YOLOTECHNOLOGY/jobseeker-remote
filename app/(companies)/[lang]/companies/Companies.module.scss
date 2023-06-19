@@ -152,6 +152,7 @@
 .featuredCompanyName {
   margin-right: 8px;
   color: #1d2129;
+  font-weight: normal;
 }
 
 .featuredCompanyDescription {
@@ -328,9 +329,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-weight: 700;
       font-size: 18px;
       line-height: 23px;
+      color: #353535;
     }
   }
 

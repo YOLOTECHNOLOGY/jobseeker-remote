@@ -1309,12 +1309,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
-  // const storeState = store.getState()
-  // const config = storeState.config.config.response
-
   return {
     props: {
-      // config,
       accessToken,
       lang
     }
