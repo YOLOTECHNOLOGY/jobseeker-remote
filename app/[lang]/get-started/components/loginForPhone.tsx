@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef} from 'react'
 import styles from '../index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { useSelector } from 'react-redux'
@@ -41,6 +41,13 @@ const LoginForPhone = (props: any) => {
   const langKey = getLang()
   const router = useRouter()
   const dispatch = useDispatch()
+  const phoneNumberRef = useRef(null)
+ 
+  useEffect(()=>{
+   if(phoneNumber){
+    phoneNumberRef.current = phoneNumber
+   }
+  },[phoneNumber])
 
 
   useEffect(() => {
@@ -69,7 +76,7 @@ const LoginForPhone = (props: any) => {
   }, [phoneNumber])
 
   const sendOpt = () => {
-    const phoneNum = countryValue + phoneNumber
+    const phoneNum = countryValue +  phoneNumberRef.current
     setLoading(true)
     phoneOtpenerate({ phone_num: phoneNum })
       .then((res) => {

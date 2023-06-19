@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
+import Dialog from './dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
@@ -9,14 +9,8 @@ import Main from 'app/[lang]/get-started/components/main'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import styles  from 'app/[lang]/get-started/index.module.scss'
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
+
+
 
 export interface DialogTitleProps {
   id: string;
@@ -59,31 +53,18 @@ export default function LoginDialog({open = true,handleClose}:dialogProps) {
   console.log({data})
   return (
     <div>
-      <BootstrapDialog
+      <Dialog
         onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
         open={open}
-        fullWidth
-        sx={{
-          '.MuiPaper-root':{
-            borderRadius:'10px',
-          }
-        }}
+        title={newGetStarted?.title}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-         {newGetStarted.title}
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
         <div className={styles.main} style={{margin:0,minHeight:'340px',padding:0}}>
-        <div className={styles.container} style={{boxShadow:'none',paddingTop:'10px'}}>
-          <Main dictionary={data}/>
+        <div className={styles.container} style={{boxShadow:'none',width:"561px",padding:'15px 33px 33px 33px'}}>
+          <Main dictionary={data} />
         </div>
-     
       </div>
-           
-        </DialogContent>
       
-      </BootstrapDialog>
+      </Dialog>
     </div>
   );
 }

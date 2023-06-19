@@ -30,6 +30,13 @@ const loginForEmail = (props: IProps) => {
   const [isDisable, setDisable] = useState<boolean>(true)
   const [loading,setLoading] = useState<boolean>(false)
   const pathname = usePathname()
+  const emailRef = useRef(null)
+ 
+  useEffect(()=>{
+   if(email){
+    emailRef.current = email
+   }
+  },[email])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -37,6 +44,7 @@ const loginForEmail = (props: IProps) => {
   }, [isDisable])
  
   const handleOnKeyDownEnter = (e) => {
+    console.log(email,22222)
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
       sendOpt()
     }
@@ -44,14 +52,13 @@ const loginForEmail = (props: IProps) => {
 
   const sendOpt = () => {
     setLoading(true)
-    console.log({email})
-    authenticationSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({email: emailRef.current })
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if (user_id) {
-          router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
+          router.push(`${pathname}?step=2&&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`)
         } else {
-          router.push(`${pathname}?step=2&&email=${email}`)
+          router.push(`${pathname}?step=2&&email=${emailRef.current}`)
         }
       })
       .catch((error) => {
