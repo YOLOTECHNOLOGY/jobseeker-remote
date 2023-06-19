@@ -19,7 +19,7 @@ import { getCountryKey, getLang } from 'helpers/country'
 import { BossjobLogoWhite as BossjobLogo, ChevronDownIcon } from 'images'
 
 const PublicHeader = ({ lang }: any) => {
-  const { findJobs, companies, courses, careerGuide, getStarted, hiring } = lang || {}
+  const { findJobs, companies, courses, careerGuide, getStarted, hiring, home } = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const langKey = getLang()
@@ -42,6 +42,13 @@ const PublicHeader = ({ lang }: any) => {
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
+              <li className={styles.headerLink}>
+                <Link title='Home' to={'/' + langKey}>
+                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    {home}
+                  </Text>
+                </Link>
+              </li>
               <li className={styles.headerLink}>
 
                 {!pathname.includes('/jobs-hiring/') ? (

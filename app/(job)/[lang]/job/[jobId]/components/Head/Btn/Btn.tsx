@@ -64,10 +64,8 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       // job_title_id: null,
       job_id: jobId
     })
-      .then(({ status }) => {
-        if (status === 201) {
-          setIsSave(true)
-        }
+      .then(() => {
+        setIsSave(true)
       })
       .catch(({ response: { data } }) => {
         dispatch(
@@ -87,10 +85,8 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     setSaveLoading(true)
 
     deleteSaveJobService(jobId)
-      .then(({ status }) => {
-        if (status === 200) {
-          setIsSave(false)
-        }
+      .then(() => {
+        setIsSave(false)
       })
       .catch((error) => {
         dispatch(
@@ -166,7 +162,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
               if (!accessToken) {
                 setShowLogin?.(true)
                 return
-              } else if (isSave) {
+              } else if (!isSave) {
                 handleSaveJob?.()
               } else {
                 handleUnSaveJob?.()

@@ -44,7 +44,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
     myJobs,
     accountSettings,
     logOut,
-    change
+    change,
+    home
   } = header || {}
   const pathname = usePathname()
   const router = useRouter()
@@ -116,6 +117,11 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
               </li>
             </Link>
             <Divider />
+            <Link className={styles.defaultLink} to='/' title='Home'>
+              <li className={styles.menuList} onClick={handleClick}>
+                <Text textStyle={textStyle}>{home}</Text>
+              </li>
+            </Link>
             <Link className={styles.defaultLink} to='/jobs-hiring/job-search' title='Jobs'>
               <li className={styles.menuList} onClick={handleClick}>
                 <Text textStyle={textStyle}>{findJobs}</Text>

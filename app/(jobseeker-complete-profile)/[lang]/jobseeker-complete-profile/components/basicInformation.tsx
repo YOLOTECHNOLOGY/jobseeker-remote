@@ -21,7 +21,6 @@ import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 import { usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
-  console.log({ props })
   const {
     config: { notice_period_lists: noticePeriodLists },
     lang:{profile},
@@ -33,7 +32,7 @@ const BasicInformation = (props: any) => {
   const  isExperienced =  sessionStorage.getItem('isExperienced') || '1'
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
-  const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
+  const [selectedAvailability, setSelectedAvailability] = useState<number>(5)
   const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -80,7 +79,7 @@ const BasicInformation = (props: any) => {
       setPreview(avatar)
       setValue('firstName', first_name)
       setValue('lastName', last_name)
-      setSelectedAvailability(notice_period_id || 1)
+      setSelectedAvailability(notice_period_id || 5)
     }
   }, [userDetail])
 
@@ -149,7 +148,6 @@ const BasicInformation = (props: any) => {
     xhr.responseType = 'blob'
     xhr.onload = function () {
       if (this.status == 200) {
-        console.log(this.response,9999)
         const file = new File([this.response], item.src, { type: 'image/*' })
         setSelectedAvatar(file)
       }

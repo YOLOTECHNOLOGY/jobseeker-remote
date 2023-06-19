@@ -4,7 +4,7 @@ import {
   fetchCompanyFilterSuccess,
   fetchCompanyFilterFailed,
 } from 'store/actions/companies/fetchCompanyFilter'
-import { fetchCompanyFilterService } from 'store/services/companies/fetchCompanyFilter'
+import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
 
 function* fetchCompanyFilterReq(actions) {
   try {

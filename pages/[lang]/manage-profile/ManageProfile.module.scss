@@ -115,17 +115,17 @@
       margin-right: 16px;
       position: relative;
 
-      &:not(:last-child) {
-        &::after {
-          position: absolute;
-          content: "";
-          height: 18px;
-          width: 1px;
-          background-color: $lightgrey;
-          top: 0;
-          right: -8px;
-        }
-      }
+      // &:not(:last-child) {
+      //   &::after {
+      //     position: absolute;
+      //     content: "";
+      //     height: 18px;
+      //     width: 1px;
+      //     background-color: $lightgrey;
+      //     top: 0;
+      //     right: -8px;
+      //   }
+      // }
     }
   }
 

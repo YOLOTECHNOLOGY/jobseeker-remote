@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -10,18 +10,18 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import {BossjobLogoWhite as BossjobLogo, BossjobLogoWhite, ChevronDownIcon} from 'images'
-import Link from "../../Link";
-import classNames from "classnames/bind";
-import {getCountryKey, getLang} from "../../../helpers/country";
-import SwitchNation from "../../SwitchNation/SwitchNation";
-import {usePathname} from "next/navigation";
-import logo from './logo.svg';
+import { BossjobLogoWhite as BossjobLogo, BossjobLogoWhite, ChevronDownIcon } from 'images'
+import Link from '../../Link'
+import classNames from 'classnames/bind'
+import { getCountryKey, getLang } from '../../../helpers/country'
+import SwitchNation from '../../SwitchNation/SwitchNation'
+import { usePathname } from 'next/navigation'
+import logo from './logo.svg'
 
 // this Header will be used when user is not logged in
 const LandingHeader = (props: any) => {
   const { lang = {} } = props
-  const { findJobs, companies, courses, careerGuide, getStarted, hiring } = lang || {}
+  const { findJobs, companies, courses, careerGuide, getStarted, hiring, home } = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const langKey = getLang()
@@ -32,16 +32,27 @@ const LandingHeader = (props: any) => {
           <nav className={styles.headerContainer}>
             <div className={styles.headerLogo}>
               <Link className={styles.logo} title='Home' to={'/' + langKey}>
-                <img  src={logo.src} />
+                <img src={logo.src} />
               </Link>
             </div>
             <div className={styles.headerLinksWrapper}>
               <ul className={styles.headerLinksList}>
                 <React.Fragment>
                   <li className={styles.headerLink}>
+                    <Link title='Home' to={'/' + langKey}>
+                      <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                        {home}
+                      </Text>
+                    </Link>
+                  </li>
+                  <li className={styles.headerLink}>
                     {!pathname.includes('/jobs-hiring/') ? (
                       <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
-                        <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                        <Text
+                          textStyle='base'
+                          textColor='darkGrey'
+                          className={styles.headerLinkText}
+                        >
                           {findJobs}
                         </Text>
                       </Link>
@@ -60,10 +71,13 @@ const LandingHeader = (props: any) => {
                   </li>
 
                   <li className={styles.headerLink}>
-
                     {!pathname.includes('/companies') ? (
                       <Link title='Companies' to={'/' + langKey + '/companies'}>
-                        <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                        <Text
+                          textStyle='base'
+                          textColor='darkGrey'
+                          className={styles.headerLinkText}
+                        >
                           {companies}
                         </Text>
                       </Link>
@@ -81,7 +95,11 @@ const LandingHeader = (props: any) => {
                     )}
                   </li>
                   <li className={styles.headerLink}>
-                    <Link title='Courses' to='https://academy.bossjob.ph/courses/search-courses' aTag>
+                    <Link
+                      title='Courses'
+                      to='https://academy.bossjob.ph/courses/search-courses'
+                      aTag
+                    >
                       <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                         {courses}
                       </Text>
@@ -107,7 +125,7 @@ const LandingHeader = (props: any) => {
                     </Text>
                   </Link>
                 </li>
-                <li className={styles.headerLink} style={{width:'162px'}}>
+                <li className={styles.headerLink} style={{ width: '162px' }}>
                   {!pathname?.includes?.('/get-started') ? (
                     <Link to={'/' + langKey + '/get-started'} title='Get Started'>
                       <MaterialButton
@@ -128,7 +146,12 @@ const LandingHeader = (props: any) => {
                           }
                         }}
                       >
-                        <Text textStyle='base' style={{ fontWeight: '400' }} textColor='#136FD3' bold>
+                        <Text
+                          textStyle='base'
+                          style={{ fontWeight: '400' }}
+                          textColor='#136FD3'
+                          bold
+                        >
                           {getStarted}
                         </Text>
                       </MaterialButton>
@@ -158,7 +181,7 @@ const LandingHeader = (props: any) => {
                     </MaterialButton>
                   )}
                 </li>
-                <li className={classNames(styles.headerLink)} style={{width:'60px'}}>
+                <li className={classNames(styles.headerLink)} style={{ width: '60px' }}>
                   <div
                     className={styles.countryItem}
                     onClick={() => {
@@ -191,7 +214,6 @@ const LandingHeader = (props: any) => {
         </div>
       </div>
     </div>
-
   )
 }
 
