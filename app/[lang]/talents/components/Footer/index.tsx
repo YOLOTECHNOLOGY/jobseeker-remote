@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import style from './index.module.scss';
 import {getCountryKey, getLang} from 'helpers/country'
