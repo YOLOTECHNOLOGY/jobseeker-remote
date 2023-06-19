@@ -32,7 +32,7 @@ const BasicInformation = (props: any) => {
   const  isExperienced =  sessionStorage.getItem('isExperienced') || '1'
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
-  const [selectedAvailability, setSelectedAvailability] = useState<number>(1)
+  const [selectedAvailability, setSelectedAvailability] = useState<number>(5)
   const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -79,7 +79,7 @@ const BasicInformation = (props: any) => {
       setPreview(avatar)
       setValue('firstName', first_name)
       setValue('lastName', last_name)
-      setSelectedAvailability(notice_period_id || 1)
+      setSelectedAvailability(notice_period_id || 5)
     }
   }, [userDetail])
 
