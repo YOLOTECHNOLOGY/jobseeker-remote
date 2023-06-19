@@ -29,6 +29,15 @@ const MaterialRoundedPagination = ({
           },
         },
       },
+      MuiPaginationItem: {
+        styleOverrides: {
+          page: {
+            '&.MuiPaginationItem-page': {
+              backgroundColor: '#ffffff'
+            },
+          },
+        },
+      },
       MuiButtonBase: {
         styleOverrides: {
           root: {

@@ -18,7 +18,7 @@ const Header = (props:any) => {
         }}
       />
       {
-        step === 1 &&  <Link  href={process.env.BOSSHUNT_URL}>{lang?.profile?.ImHiring}</Link>
+        step === 1 &&  <Link  href={process.env.BOSSHUNT_URL+'/boss'}>{lang?.profile?.ImHiring}</Link>
       }
       </div>
       

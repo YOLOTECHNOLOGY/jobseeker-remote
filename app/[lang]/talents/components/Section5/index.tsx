@@ -26,7 +26,8 @@ let carouselList = [
 		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/phone2.png`,
+		// img: `${process.env.S3_BUCKET_URL}/landing/phone2.png`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-2.png`,
 		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-2.png`,
 		des: 'Protect your privacy and easily block companies',
 		// json: json2,
@@ -44,7 +45,8 @@ let carouselList = [
 		} as CSSProperties
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/phone4.png`,
+		// img: `${process.env.S3_BUCKET_URL}/landing/phone4.png`,
+		img: `${process.env.S3_BUCKET_URL}/landing/section5-4.png`,
 		mobile_style: {
 			display: 'none',
 		} as CSSProperties ,

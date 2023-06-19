@@ -570,6 +570,11 @@
     padding: 0;
     margin: 0;
   }
+  :global{
+    p{
+      font-family: 'Poppins' !important;
+    }
+  }
 
   @media screen and (max-width: 540px) {
     font-size: .36rem;
@@ -1384,6 +1389,12 @@
   align-items: center;
   justify-content: space-around;
   opacity: 0;
+  :global{
+    span{
+      font-family: 'Poppins' !important;
+    }
+  }
+
   @media screen and (max-width: 540px) {
     font-size: .32rem;
     line-height: .4rem;
