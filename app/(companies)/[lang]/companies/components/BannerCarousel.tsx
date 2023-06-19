@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import classNames from 'classnames/bind'
 import Link from 'components/Link'
 import Image from "next/image";
-
 /* Assets */
 import styles from '../BannerCarousel.module.scss'
-import breakpointStyles from 'styles/breakpoint.module.scss'
 
 interface BannerCarouselProps {
   slides: any

@@ -9,7 +9,7 @@ import SuggestionList from './SuggestionList'
 
 // Styles
 import styles from '../Companies.module.scss'
-import { fetchCompanySuggestionsService } from 'store/services/companies/fetchCompanySuggestions'
+import { fetchCompanySuggestionsService } from 'store/services/companies2/fetchCompanySuggestions'
 
 interface ISearchCompanyField {
   defaultQuery?: string
