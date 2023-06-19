@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import styles from '../index.module.scss'
 import Stepper from './stepper'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -9,25 +9,27 @@ import JobFunctionSelector from 'components/JobFunctionSelector'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import MaterialTextField from 'components/MaterialTextField'
 import Switch from '@mui/material/Switch'
-import Chip from '@mui/material/Chip';
+import Chip from '@mui/material/Chip'
 import TextEditor from 'components/TextEditor/TextEditor'
 import FootBtn from './footBtn'
 import { usePathname } from 'next/navigation'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
-import {differenceBy } from 'lodash-es'
+import { differenceBy, cloneDeep} from 'lodash-es'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { addUserWorkExperienceService} from 'store/services/users/addUserWorkExperience'
-import {updateUserWorkExperienceService} from 'store/services/users/updateUserWorkExperience'
+import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
+import { updateUserWorkExperienceService } from 'store/services/users/updateUserWorkExperience'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
-import {fetchResumes} from 'store/services/jobs/fetchJobsCommunicated'
+import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { ka } from 'date-fns/locale'
+
 const WorkExperience = (props: any) => {
-  console.log(props,9999)
-  const { lang ,userDetail,getUserInfo} = props
-  const {work_experiences} = userDetail
+  console.log(props, 9999)
+  const { lang, userDetail, getUserInfo } = props
+  const { work_experiences } = userDetail
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
@@ -40,75 +42,84 @@ const WorkExperience = (props: any) => {
   const [description, setDescription] = useState<string>('')
   const [skills, setSkills] = useState<any>([])
   const [selectedSkills, setSelectedSkills] = useState<any>([])
-  const [loading, setLoading] = useState<boolean>(false);
-  const [existingResume, setExistingResume] = useState<any>([]);
-  const [resumeDisable, setResumeDisable] = useState<boolean>(false);
-  const [resumeLoading, setResumeLoading] = useState<boolean>(false);
-  const dataSkills = userDetail?.skills;
+  const [loading, setLoading] = useState<boolean>(false)
+  const [existingResume, setExistingResume] = useState<any>([])
+  const [resumeDisable, setResumeDisable] = useState<boolean>(false)
+  const [resumeLoading, setResumeLoading] = useState<boolean>(false)
+  const dataSkills = userDetail?.skills
   const dispatch = useDispatch()
   const { push } = useContext(LinkContext)
-
+  const inputNode = useRef(null)
+  const tags = []
   const pathname = usePathname()
 
-  useEffect(()=>{
-    getResumes();
-  },[])
+  useEffect(() => {
+    getResumes()
+  }, [])
 
-  const getResumes = ()=>{
-    fetchResumes().then(res=>{
+  const getResumes = () => {
+    fetchResumes().then((res) => {
       setExistingResume(res?.data?.data || [])
     })
   }
-   
-  useEffect(()=>{
-   if(existingResume?.length >= 3) {
-    setResumeDisable(true)
-   }else{
-    setResumeDisable(false)
-   }
 
-  },[existingResume])
-
-  useEffect(()=>{
-    if(dataSkills?.length && skills?.length){
-      setSelectedSkills(skills.filter(e=>dataSkills.includes(String(e.id))))
+  useEffect(() => {
+    if (existingResume?.length >= 3) {
+      setResumeDisable(true)
+    } else {
+      setResumeDisable(false)
     }
-  },[dataSkills,skills])
-  
+  }, [existingResume])
 
-  useEffect(()=>{
-    if(userDetail.working_since ){
-      const {working_since} =  userDetail
+  useEffect(() => {
+    if (dataSkills?.length && skills?.length) {
+      const arr = []
+      dataSkills.map(e=>{
+        const findItem = skills.find(k=>String(k.id) === e)  
+         if(findItem){
+          arr.push(findItem)
+         }else{
+          arr.push({
+            id:e,
+            value:e
+          })
+         }
+      })
+      setSelectedSkills(arr)
+    }
+  }, [dataSkills, skills])
+
+  useEffect(() => {
+    if (userDetail.working_since) {
+      const { working_since } = userDetail
       setWorkingSince(working_since)
     }
-    if(userDetail.work_experiences?.length ){
-      const { 
+    if (userDetail.work_experiences?.length) {
+      const {
         company,
         description,
         function_job_title,
         function_job_title_id,
         working_period_from,
         working_period_to,
-        is_currently_work_here,   
-      } =  userDetail.work_experiences[0]
+        is_currently_work_here
+      } = userDetail.work_experiences[0]
       setCompanyName(company)
-      setJobFunction({id:function_job_title_id,value:function_job_title})
+      setJobFunction({ id: function_job_title_id, value: function_job_title })
       setIsCurrentJob(is_currently_work_here)
       setWorkPeriodFrom(working_period_from)
       setWorkPeriodTo(working_period_to)
       setDescription(description)
     }
-  },[JSON.stringify(userDetail)])
+  }, [JSON.stringify(userDetail)])
 
-
-  useEffect(()=>{
-    if(companyName && workPeriodFrom && (!isCurrentJob ?  workPeriodTo : true)  && jobFunction?.id){
+  useEffect(() => {
+    if (companyName && workPeriodFrom && (!isCurrentJob ? workPeriodTo : true) && jobFunction?.id) {
       setIsDisabled(false)
-    } else{
+    } else {
       setIsDisabled(true)
     }
-  },[jobFunction,companyName,isCurrentJob,workPeriodFrom,workPeriodTo])
-
+  }, [jobFunction, companyName, isCurrentJob, workPeriodFrom, workPeriodTo])
 
   const {
     workExperience,
@@ -127,7 +138,7 @@ const WorkExperience = (props: any) => {
     companyNameText,
     currentlyWorkHere,
     from,
-    to ,
+    to,
     placeholder
   } = lang?.profile || {}
   useEffect(() => {
@@ -135,9 +146,9 @@ const WorkExperience = (props: any) => {
       if (maxFileSize(resume, 5)) {
         setErrorMessage('')
         setResumeLoading(true)
-        uploadUserResumeService(resume).then(res=>{     
-           getResumes();
-           if(res.data){
+        uploadUserResumeService(resume).then((res) => {
+          getResumes()
+          if (res.data) {
             setResumeLoading(false)
             dispatch(
               displayNotification({
@@ -146,9 +157,8 @@ const WorkExperience = (props: any) => {
                 severity: 'success'
               })
             )
-           }
+          }
         })
-
       } else {
         setErrorMessage(lang?.profile?.fileTooHuge)
       }
@@ -162,74 +172,113 @@ const WorkExperience = (props: any) => {
       </>
     )
   }
-  const handleDelete = (index) => {
-    selectedSkills.splice(index,1)
+  const handleDelete = (e,index) => {
+    e.preventDefault()
+    selectedSkills.splice(index, 1)
     setSelectedSkills([...selectedSkills])
-  };
+  }
 
   const backClick = () => {
     push(`${pathname}?step=1`)
   }
-  
-  const handleSubmit =  ()=>{
-
+   console.log({selectedSkills})
+  const handleSubmit = () => {
     const paramsProfile = {
       working_since: moment(new Date(workingSince)).format('yyyy-MM-DD'),
-      skills: selectedSkills.map(e=>e.id)?.join(',')
-    } 
-  
+      skills: selectedSkills.map((e) => e.id)?.join(',')
+    }
+
     const p1 = updateUserCompleteProfileService(paramsProfile)
     setLoading(true)
     let p2 = null
     const paramsWork = {
       job_title: jobFunction?.value,
-      function_job_title_id:jobFunction?.id,
-      company:companyName,
-      working_period_from:moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
-      working_period_to : isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
-      is_currently_work_here:isCurrentJob,
+      function_job_title_id: jobFunction?.id,
+      company: companyName,
+      working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
+      working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      is_currently_work_here: isCurrentJob,
       description
     }
-    console.log({isCurrentJob})
-    if(isCurrentJob){
+    console.log({ isCurrentJob })
+    if (isCurrentJob) {
       delete paramsWork.working_period_to
     }
-    if(work_experiences?.length){
+    if (work_experiences?.length) {
       const data = work_experiences[0]
       const paramsUpdate = {
-        workExperienceId:data.id,
-        workExperienceData:paramsWork
+        workExperienceId: data.id,
+        workExperienceData: paramsWork
       }
       p2 = updateUserWorkExperienceService(paramsUpdate)
-    }else{       
+    } else {
       p2 = addUserWorkExperienceService({
-        workExperience:paramsWork
+        workExperience: paramsWork
       })
     }
-   
-    Promise.all([p1,p2]).then(res=>{
-      console.log(res,777777)
-      getUserInfo?.()
-      push(`${pathname}?step=3`)
-    }).finally(()=> setLoading(false))
-  };
 
+    Promise.all([p1, p2])
+      .then((res) => {
+        console.log(res, 777777)
+        getUserInfo?.()
+        push(`${pathname}?step=3`)
+      })
+      .finally(() => setLoading(false))
+  }
 
- const addSecected = (item) => {
-  if(selectedSkills?.length >= 5 ) return
-  setSelectedSkills([...selectedSkills,item])
- }
+  const addSecected = (item) => {
+    if (selectedSkills?.length >= 5) return
+    setSelectedSkills([...selectedSkills, item])
+  }
+
+  const handleKeyUp = (e) => {
+    const val = e.target.value
+    const formattedVal = val.substring(0, val.length - 1).trim()
+
+    if (
+      val &&
+      (e.key === 'Enter' || e.keyCode == 13) &&
+      !tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
+    ) {
+      //   onChange([...tags, val])
+      setSelectedSkills([...selectedSkills, { id: val, value: val }])
+      inputNode.current.value = null
+    } else if (
+      formattedVal &&
+      (e.key === ',' || e.keyCode == 188) &&
+      !tags.find((tag) => tag.toLowerCase() === formattedVal.toLowerCase())
+    ) {
+      // onChange([...tags, formattedVal])
+      console.log({ formattedVal })
+      setSelectedSkills([...selectedSkills, { id: formattedVal, value: formattedVal }])
+      inputNode.current.value = null
+    }
+  }
+
+  const handleKeyDown = (e) => {
+    const val = e.target.value
+    if (e.key === 'Backspace' && !val) {
+      removeTag(tags.length - 1)
+    }
+  }
+
+  const removeTag = (index) => {
+    const newTags = [...selectedSkills]
+    newTags.splice(index, 1)
+    setSelectedSkills(newTags)
+    // input.onChange(newTags)
+  }
 
   return (
     <div className={styles.work}>
       <div className={styles.workContainer}>
-        <Stepper step={0} lang={lang}/>
+        <Stepper step={0} lang={lang} />
         <div className={styles.box}>
           <div className={styles.headerInfo}>{workExperience}</div>
           <div className={styles.body}>
             <p className={styles.title}>{autofillMyInfo}</p>
             <p className={styles.titleTip}>{saveTimeByImporting}</p>
-            <div className={styles.upload}>             
+            <div className={styles.upload}>
               <LoadingButton
                 loading={resumeLoading}
                 variant='contained'
@@ -258,27 +307,23 @@ const WorkExperience = (props: any) => {
               </LoadingButton>
             </div>
 
-            {existingResume?.length ? (    
-                existingResume.map(e=>(
-                <div key={e.id} className={styles.resumeList}>
-                        <Link
-                          to={e.url}
-                          target='_blank'
-                          rel='noreferrer'
-                          style={{ textDecoration: 'underline' }}
-                        >
-                          {e.filename || e.name}
-                        </Link>
-               </div>
+            {existingResume?.length
+              ? existingResume.map((e) => (
+                  <div key={e.id} className={styles.resumeList}>
+                    <Link
+                      to={e.url}
+                      target='_blank'
+                      rel='noreferrer'
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      {e.filename || e.name}
+                    </Link>
+                  </div>
                 ))
-          
-            
-          ):null}
-            <p className={styles.titleTip}>
-             {supportedFileType}
-            </p>
+              : null}
+            <p className={styles.titleTip}>{supportedFileType}</p>
             <p className={styles.title}>
-             {startedWorkingSince} <span>*</span>
+              {startedWorkingSince} <span>*</span>
             </p>
             <div className={styles.stepFieldDateItem}>
               <MaterialDatePicker
@@ -293,7 +338,8 @@ const WorkExperience = (props: any) => {
               />
             </div>
             <p className={styles.title}>
-           {mostRecentCompany}<span>*</span>
+              {mostRecentCompany}
+              <span>*</span>
             </p>
             <div className={styles.stepCompany}>
               <MaterialTextField
@@ -332,23 +378,23 @@ const WorkExperience = (props: any) => {
                   }}
                 />
               </div>
-              {
-                !isCurrentJob &&   <div className={styles.stepFieldToItem}>
-                <MaterialDatePicker
-                  label={to}
-                  views={['year', 'month']}
-                  inputFormat='MMM yyyy'
-                  value={workPeriodTo}
-                  onDateChange={(value) => {
-                    setWorkPeriodTo(value)
-                  }}
-                />
-              </div>
-              }
+              {!isCurrentJob && (
+                <div className={styles.stepFieldToItem}>
+                  <MaterialDatePicker
+                    label={to}
+                    views={['year', 'month']}
+                    inputFormat='MMM yyyy'
+                    value={workPeriodTo}
+                    onDateChange={(value) => {
+                      setWorkPeriodTo(value)
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-             {mostRecentJobTitle} <span>*</span>
+              {mostRecentJobTitle} <span>*</span>
             </p>
             <div id='jobFunction' className={styles.stepJobFunction}>
               <JobFunctionSelector
@@ -361,32 +407,51 @@ const WorkExperience = (props: any) => {
                 fullWidth
                 value={jobFunction}
                 onChange={(value) => setJobFunction(value)}
-                onChangeSkill={(value) =>  setSkills(value)}
+                onChangeSkill={(value) => setSkills(value)}
               />
             </div>
 
-            <p className={styles.titleTip}>
-              {skillsWillBeSuggested}
-            </p>
+            <p className={styles.titleTip}>{skillsWillBeSuggested}</p>
             <div className={styles.skillList}>
-              {
-               differenceBy(skills,selectedSkills,'id').map(e=><span key={e.id}  onClick={()=>addSecected(e)}>{e.value}</span>)
-              }
+              {differenceBy(skills, selectedSkills, 'id').map((e) => (
+                <span key={e.id} onClick={() => addSecected(e)}>
+                  {e.value}
+                </span>
+              ))}
             </div>
-             <div className={styles.chooseSkill}>
-              <p >{selectSkillsOr}</p>
-               {
-                selectedSkills.map((item,index)=> <Chip key={item.id} sx={{
-                  background:"#136FD3",
-                  margin:'8px  8px 0 0'
-                }} color="primary" label={item.value} onDelete={()=>handleDelete(index)} />)
-               }
-              
-             </div>
+            <div className={styles.chooseSkill}>
+              <label htmlFor={'job_skills'} className={styles.labelBox}>
+                <p>{selectSkillsOr}</p>
+                <div className={styles.inputTag}>
+                  <div className={styles.inputSkills}>
+                    {selectedSkills.map((item, index) => (
+                      <Chip
+                        key={item.id}
+                        sx={{
+                          background: '#136FD3',
+                          margin: '8px  8px 0 0'
+                        }}
+                        color='primary'
+                        label={item.value}
+                        onDelete={(e) => handleDelete(e,index)}
+                      />
+                    ))}
+                  </div>
+                  <input
+                    id={'job_skills'}
+                    name={'job_skills'}
+                    ref={inputNode}
+                    type='text'
+                    disabled={selectedSkills?.length >=5 }
+                    onKeyUp={handleKeyUp}
+                    onKeyDown={handleKeyDown}
+                    autoComplete='off'
+                  />
+                </div>
+              </label>
+            </div>
 
-             <p className={`${styles.title} ${styles.titlePeriod}`}>
-             {lang?.profile?.description}
-            </p>
+            <p className={`${styles.title} ${styles.titlePeriod}`}>{lang?.profile?.description}</p>
 
             <div className={styles.step3Editor}>
               <TextEditor value={description} setValue={setDescription} placeholder={placeholder} />
@@ -400,11 +465,9 @@ const WorkExperience = (props: any) => {
           backClick={backClick}
           backText={back}
           disabled={isDisabled}
-           handleClick={handleSubmit}
+          handleClick={handleSubmit}
         />
-
       </div>
-   
     </div>
   )
 }

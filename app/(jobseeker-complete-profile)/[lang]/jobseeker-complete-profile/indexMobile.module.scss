@@ -49,11 +49,17 @@
            
         }
         .btnList{
-            button {
-                margin-right: 0 !important;
+            button {       
                 width: 100%;
             }
         }
+        .availability{
+            .btnList{
+                button {
+                    margin-right: 0 !important;               
+                }
+        }
+       }
         .next{
             margin: 20px auto 0;
             padding: 0 20px;

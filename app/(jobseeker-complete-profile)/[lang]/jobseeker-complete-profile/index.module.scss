@@ -356,7 +356,7 @@ $contentWidth: 894px;
             }
             .chooseSkill{
                 border: 1px solid #BCBCBC;
-                padding: 10px;
+               
                 min-height: 170px;
                 border-radius: 10px;
                 margin-top: 16px;
@@ -368,7 +368,32 @@ $contentWidth: 894px;
                 line-height: 18px;         
 
                 }
+                .labelBox{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    padding: 10px;
+                }
             }
+            .inputTag{
+
+                .inputSkills{
+                    display: block;
+                }
+                input{
+                    height: 30px;
+                    width: 250px;
+                    max-width: 100%;
+                    margin-top: 14px;
+                    padding: 4px 0;
+                    border: none;
+                    outline: none;
+                    transition: .1s all linear;
+                    background: transparent;
+            }
+        }
+          
+
             .step3Editor{
                 margin-top: 16px;
             }
