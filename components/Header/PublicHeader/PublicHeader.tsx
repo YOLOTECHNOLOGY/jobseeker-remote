@@ -106,7 +106,7 @@ const PublicHeader = ({ lang }: any) => {
                 )}
               </li>
               <li className={styles.headerLink}>
-                <Link title='APP' to={'/' + langKey + '/companies'}>
+                <Link title='APP' to={'/' + langKey + '/talents'}>
                   <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                     APP
                   </Text>

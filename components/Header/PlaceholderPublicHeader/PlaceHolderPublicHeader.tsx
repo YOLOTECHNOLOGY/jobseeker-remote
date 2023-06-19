@@ -49,9 +49,14 @@ const PlaceHolderPublicHeader = (props:any) => {
                 {lang.companies}
                 </Text>
               </li>
-              <li className={styles.headerLink}>
+              {/* <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                 {lang.courses}
+                </Text>
+              </li> */}
+              <li className={styles.headerLink}>
+                <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                  APP
                 </Text>
               </li>
               <li className={styles.headerLink}>
