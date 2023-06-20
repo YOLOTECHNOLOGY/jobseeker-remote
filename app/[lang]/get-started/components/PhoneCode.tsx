@@ -96,7 +96,6 @@ function PhoneCode(props: any) {
         handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
       }
 
-    //  handleAuthenticationJobseekersLoginPhone(otp, phoneNum, uuid)
     }
   }
 
