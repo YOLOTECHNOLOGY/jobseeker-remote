@@ -1,22 +1,30 @@
 import React from 'react'
-import Link from 'next/link'
 import { getLang } from 'helpers/country'
 import { PhoneIcon } from 'images'
+import { useRouter } from 'next/navigation'
 interface IProps {
-  lang: any
+  lang: any,
+  isModal:boolean,
+  handleClick?:()=>void
 }
 
 const PhoneLink = (props: IProps) => {
   const langKey = getLang()
   const {
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    handleClick,
+    isModal
   } = props
+  const router = useRouter()
+  const loginPhone = ()=>{
+    isModal ? handleClick() : router.push(`/${langKey}/get-started/phone`)
+  }
   return (
     <li>
-      <Link href={`/${langKey}/get-started/phone`}>
+      <div onClick={()=>loginPhone()}>
         <img src={PhoneIcon}></img>
         {newGetStarted.phone}
-      </Link>
+      </div>
     </li>
   )
 }

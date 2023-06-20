@@ -1,24 +1,32 @@
 import React from 'react'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
 import { EmailIcon } from 'images'
 
 interface IProps {
-  lang: any
+  lang: any,
+  isModal:boolean,
+  handleClick?:()=>void
 }
 
 const EmailLink = (props: IProps) => {
   const {
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    handleClick,
+    isModal
   } = props
   const langKey = getLang()
+  const router = useRouter()
 
+  const loginEmail = ()=>{
+    isModal ? handleClick() : router.push(`/${langKey}/get-started/email`)
+  }
   return (
     <li>
-      <Link href={`/${langKey}/get-started/email`}>
+      <div onClick={()=>loginEmail()}> 
         <img src={EmailIcon}></img>
         {newGetStarted.email}
-      </Link>
+       </div>
     </li>
   )
 }

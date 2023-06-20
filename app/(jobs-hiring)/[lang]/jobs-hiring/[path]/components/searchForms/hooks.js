@@ -2,8 +2,8 @@
 import { useState, useTransition, useCallback } from 'react'
 import useSearchHistory from 'helpers/useSearchHistory'
 import { getCountryId } from 'helpers/country';
-const transQs =(params) =>{
-    return params.map((e,index)=>`query_histories[${index}]=${e}`).join('&');
+const transQs = (params) => {
+    return params.map((e, index) => `query_histories[${index}]=${e}`).join('&');
 }
 export const useSuggest = () => {
     const [loading, transitionStart] = useTransition()
@@ -18,10 +18,10 @@ export const useSuggest = () => {
             } else if (valueLength === 1) {
                 setSuggestionList([])
             } else if ((val?.length ?? 0) > 1) {
-                fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(searchHistories)}`,{
-                    headers:{
-                        'Country-Id': getCountryId()
-                      } 
+                fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(searchHistories)}`, {
+                    headers: {
+                        'Country-Id': '' + getCountryId()
+                    }
                 })
                     .then((resp) => resp.json())
                     .then((data) => setSuggestionList(data.data.items))

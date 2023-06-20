@@ -8,7 +8,7 @@ export default registInterpreter(command =>
         fetchData: () => M(context => {
             return fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=10&query=${context.value}`,{
                 headers:{
-                    'Country-Id': getCountryId()
+                    'Country-Id': '' + getCountryId()
                   } 
             })
                 .then((resp) => resp.json())

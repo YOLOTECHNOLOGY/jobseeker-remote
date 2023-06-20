@@ -12,11 +12,14 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
 
 interface IProps {
-  dictionary: any
+  dictionary: any,
+  isModal?:boolean,
+  handleEmailClick?:()=>void,
+  handlePhoneClick?:()=>void,
 }
 
 const Main = (props: IProps) => {
-  const { dictionary } = props
+  const { dictionary,isModal = false,handleEmailClick,handlePhoneClick } = props
   const { newGetStarted } = dictionary
   const { defaultLoginCallBack } = useGetStarted()
 
@@ -43,8 +46,8 @@ const Main = (props: IProps) => {
         <Divider>{newGetStarted.continueWith}</Divider>
       </div>
       <ul className={`${styles.list} ${styles.listEmail}`}>
-        <EmailLink lang={dictionary} />
-        <PhoneLink lang={dictionary} />
+        <EmailLink lang={dictionary} isModal={isModal} handleClick={handleEmailClick}/>
+        <PhoneLink lang={dictionary} isModal={isModal} handleClick={handlePhoneClick}/>
       </ul>
     </>
   )

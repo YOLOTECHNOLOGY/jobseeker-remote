@@ -13,11 +13,27 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 const verifyEmail = function (props) {
-  const { newGetStarted } = props.lang
+  const {isModal,lang,loginData} = props
+  const { newGetStarted} =lang
   const searchParams = useSearchParams()
-  const userId = searchParams.get('userId')
-  const email = searchParams.get('email')
-  const avatar = searchParams.get('avatar')
+
+  // const userId = searchParams.get('userId')
+  // const email = searchParams.get('email')
+  // const avatar = searchParams.get('avatar')
+     let userId = null;
+     let email = null;
+     let avatar = null;
+     if(isModal){
+       userId = loginData?.userId;
+       email = loginData?.email;
+       avatar = loginData?.avatar
+     }else{
+      userId = searchParams.get('userId')
+      email = searchParams.get('email')
+      avatar = searchParams.get('avatar')
+     }
+   
+ console.log({loginData})
   const langKey = getLang()
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -93,29 +109,35 @@ const verifyEmail = function (props) {
         )
       })
   }
+  console.log({isModal})
 
   return (
     <>
       <div className={styles.phoneNumber}>
-        <div className={styles.optBox}>
-          {userId ? (
-            <>
-              <h2>{newGetStarted.welcomeBack}!🎉</h2>
-              <p className={styles.enterTips}>
-                {newGetStarted.sendCodeDigit} <span className={styles.phone_text}>{email}</span>
-              </p>
-              <div className={styles.avatar}>
-                <img className={styles.avatar_img} src={avatar} alt='avatar' />
-              </div>
+        <div className={styles.optBox} style={{paddingTop : isModal ? '44px' : '0'} }>
+          {
+            !isModal &&   <>
+            {userId ? (
+              <>
+                <h2>{newGetStarted.welcomeBack}!🎉</h2>
+                <p className={styles.enterTips}>
+                  {newGetStarted.sendCodeDigit} <span className={styles.phone_text}>{email}</span>
+                </p>
+                <div className={styles.avatar}>
+                  <img className={styles.avatar_img} src={avatar} alt='avatar' />
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
+                <p className={styles.enterTips}>
+                  {newGetStarted.sendCodeDigit} <span className={styles.phone_text}>{email}</span>
+                </p>
+              </>
+            )}
             </>
-          ) : (
-            <>
-              <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
-              <p className={styles.enterTips}>
-                {newGetStarted.sendCodeDigit} <span className={styles.phone_text}>{email}</span>
-              </p>
-            </>
-          )}
+          } 
+        
           <Captcha
             lang={props.lang}
             autoFocus={true}

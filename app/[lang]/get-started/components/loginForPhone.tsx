@@ -31,7 +31,10 @@ const LoginForPhone = (props: any) => {
   const [phoneError, setPhoneError] = useState<string>('')
   const [loading,setLoading] = useState<boolean>(false)
   const {
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    isModal = false,
+    handleEmailClick,
+    setLoginData
   } = props
 
   const config = useSelector((store: any) => store.config.config.response ?? [])
@@ -80,13 +83,16 @@ const LoginForPhone = (props: any) => {
     setLoading(true)
     phoneOtpenerate({ phone_num: phoneNum })
       .then((res) => {
-        console.log(res?.data?.data, 'res')
         const { user_id, avatar, first_name, browser_serial_number, email ,is_multiple_phones_num} = res?.data?.data ?? {}
-        let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}`
-        if (user_id) {
-          url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
-        }
-        router.push(url)
+        if(isModal){
+          setLoginData({...res?.data?.data,phoneNum} ?? {})
+        }else{
+          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}`
+          if (user_id) {
+            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
+          }
+          router.push(url)
+        }     
       })
       .catch((error) => {
         dispatch(
@@ -116,7 +122,7 @@ const LoginForPhone = (props: any) => {
 
   return (
     <>
-      <h2>{newGetStarted.title}</h2>
+      {!isModal && <h2>{newGetStarted.title}</h2>} 
       <div className={styles.phoneNumber}>
         <div className={styles.item}>
           <MaterialBasicSelect
@@ -143,7 +149,7 @@ const LoginForPhone = (props: any) => {
         </button>
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
-        <p className={styles.tips}>
+        {!isModal &&  <p className={styles.tips}>
           {newGetStarted.tips}{' '}
           <Link
             href={
@@ -155,7 +161,7 @@ const LoginForPhone = (props: any) => {
           >
             {newGetStarted.employer}
           </Link>
-        </p>
+        </p>}      
       </div>
       <div>
         <div className={classNames([styles.divider, styles.divider_none])}>
@@ -166,7 +172,7 @@ const LoginForPhone = (props: any) => {
         <GoogleLogin lang={props.lang} />
         <FacebookLogin lang={props.lang} />
         <AppleLogin lang={props.lang} />
-        <EmailLogin lang={props.lang} />
+        <EmailLogin lang={props.lang}  isModal={isModal} handleClick={handleEmailClick}/>
       </div>
     </>
   )
