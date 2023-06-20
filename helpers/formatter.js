@@ -246,9 +246,9 @@ export const formatTemplateString = (string, ...rest) => {
     }
     const value = rest[index]
     if (isNil(value)) {
-      throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
+     // throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
     }
-    string = string.replace(new RegExp(regStr), rest[index])
+    string = string.replace(new RegExp(regStr), (rest[index]|| ''))
   });
 
   return string

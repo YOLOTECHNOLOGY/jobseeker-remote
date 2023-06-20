@@ -37,7 +37,10 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
   },[step,loginData])
   return (
     <div>
-      <Dialog onClose={handleClose} open={open} title={title}>
+      <Dialog onClose={()=>{
+        localStorage.removeItem('isChatRedirect')
+        handleClose();
+      }} open={open} title={title}>
         <div className={styles.main} style={{ margin: 0, minHeight: '300px', padding: 0 }}>
           <div  className={`${styles.container} ${styles.dialogContainer}`}>
             {step == 1 && (
