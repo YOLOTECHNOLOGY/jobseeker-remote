@@ -333,8 +333,7 @@
     "seo": {
       "title": "Bossjob - Career Platform for Professionals in {{country}}",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
-    },
-    "jobs": "jobs hiring"
+    }
   },
   "jobDetail": {
     "header": {
