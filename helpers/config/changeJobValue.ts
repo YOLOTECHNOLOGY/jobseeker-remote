@@ -1,6 +1,7 @@
 import { getValueById } from "helpers/config/getValueById"
 
 export const changeJobValue = (config, job) => {
+  
   [
     {
       property: 'job_location',
