@@ -31,17 +31,18 @@
   }
 
   .moreBtn {
-    color: #fff;
+    color: #136fd3;
     width: 118px;
     height: 44px;
     border-radius: 10px;
     line-height: 44px;
     text-align: center;
-    background: #136fd3;
+    background: #ffffff;
     margin: 0 auto 10px;
     display: block;
     font-weight: 700;
     cursor: pointer;
+    border: 1px solid #136fd3;
   }
 }
 
@@ -176,12 +177,14 @@
   }
 
   &_companyInfo {
-    background: linear-gradient(
-      269.8deg,
-      rgba(255, 235, 184, 0.2) 0.12%,
-      rgba(242, 177, 202, 0.2) 43.36%,
-      rgba(84, 142, 237, 0.2) 99.89%
-    );
+    // background: linear-gradient(
+    //   269.8deg,
+    //   rgba(255, 235, 184, 0.2) 0.12%,
+    //   rgba(242, 177, 202, 0.2) 43.36%,
+    //   rgba(84, 142, 237, 0.2) 99.89%
+    // );
+    background: linear-gradient(180deg, #F2F9FF 0%, #FFFFFF 100%);
+    
     border-radius: 0px 0px 15px 15px;
     display: flex;
     align-items: center;
@@ -1322,12 +1325,13 @@
       height: 80px;
       cursor: pointer;
       display: block;
-      background: linear-gradient(
-        269.8deg,
-        rgba(255, 235, 184, 0.2) 0.12%,
-        rgba(242, 177, 202, 0.2) 43.36%,
-        rgba(84, 142, 237, 0.2) 99.89%
-      );
+      // background: linear-gradient(
+      //   269.8deg,
+      //   rgba(255, 235, 184, 0.2) 0.12%,
+      //   rgba(242, 177, 202, 0.2) 43.36%,
+      //   rgba(84, 142, 237, 0.2) 99.89%
+      // );
+      background: linear-gradient(180deg, #dcefff 0%, #FFFFFF 100%);
 
       .img {
         width: 44px;
@@ -1469,16 +1473,17 @@
   }
 
   .moreBtn {
-    color: #fff;
+    color: #136fd3;
     width: 118px;
     height: 44px;
     border-radius: 10px;
     line-height: 44px;
     text-align: center;
-    background: #136fd3;
+    background: #ffffff;
     margin: 22px auto 20px;
     display: block;
     font-weight: 700;
+    border: 1px solid #136fd3;
     cursor: pointer;
   }
 }
