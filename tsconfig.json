@@ -34,7 +34,7 @@
       "helpers": [
         "src/helpers"
       ]
-    }
+    },
   },
   "include": [
     "next.config.js",
@@ -43,6 +43,7 @@
     "app/**/*.js",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.jsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [

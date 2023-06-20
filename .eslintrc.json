@@ -9,8 +9,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "google",
-    "prettier",
-    "next"
+    "next",
+    "prettier"
   ],
   "root": true,
   "parser": "@typescript-eslint/parser",
@@ -19,8 +19,7 @@
       "jsx": true
     },
     "ecmaVersion": 11,
-    "project": "./tsconfig.json"
-
+    "project": ["./tsconfig.json"]
     // "createDefaultProgram": true
     // "sourceType": "module"
   },
