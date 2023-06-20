@@ -2,9 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": false,
@@ -15,7 +19,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["gapi", "gapi.auth2"],
+    "types": [
+      "gapi",
+      "gapi.auth2"
+    ],
     "incremental": true,
     "plugins": [
       {
@@ -24,31 +31,19 @@
     ],
     "strictNullChecks": false,
     "paths": {
-      "helpers": ["src/helpers"]
+      "helpers": [
+        "src/helpers"
+      ]
     }
   },
   "include": [
     "next.config.js",
     "lint-staged.config.js",
     "next-env.d.ts",
-    "app/*.tsx",
-    "app/*.jsx",
-    "app/*/*.jsx",
     "**/*.ts",
     "**/*.tsx",
-    "store/index.js",
-    "store/**/*.js",
-    "store/**/**/*.js",
-    "pages/*.tsx",
-    "pages/**/*.tsx",
-    "pages/*.jsx",
-    "app/**/*.jsx",
-    "app/**/*.js",
-    "pages/**/*.jsx",
-    "app/[lang]/chat/[chat_id]/components/interview/detail/index.tsx",
-    ".next/types/**/*.ts",
-    "/Users/mao/codes/bossjob-jobseeker-client/.next/types/**/*.ts",
-    "app/[lang]/components/SEO"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
