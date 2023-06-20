@@ -27,7 +27,6 @@ import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
 
 
 const WorkExperience = (props: any) => {
-  console.log(props, 9999)
   const { lang, userDetail, getUserInfo } = props
   const { work_experiences } = userDetail
   const [resume, setResume] = useState(null)

@@ -12,10 +12,13 @@ const LoginModalProvider = ({ children }: any) => {
     const [showLogin, setShowLogin] = useState(false)
     return <Provider value={{ showLogin, setShowLogin }}>
         {children}
-        <LoginDialog
+        {
+            showLogin && <LoginDialog
             open={showLogin}
             handleClose={() => setShowLogin(false)}
-        /></Provider>
+        />
+        }        
+        </Provider>
 }
 
 export default LoginModalProvider
