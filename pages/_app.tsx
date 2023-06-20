@@ -89,7 +89,6 @@ const App = (props: AppProps) => {
     }
   }, []) // [router.route]
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-  console.log('_app_page')
   return (
     <>
       <SEO

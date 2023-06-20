@@ -14,7 +14,6 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
-
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -28,8 +27,6 @@ const useGetStarted = () => {
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
   const langKey = getLang()
-  // console.log(useSearchParams,'router')
-  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
   const redirect = searchParams.get('redirect')
@@ -116,32 +113,10 @@ const useGetStarted = () => {
     } else {
       routes.push('/')
     }
-    // let url =
-    //   data.is_profile_update_required || !data.is_profile_completed
-    //     ? '/jobseeker-complete-profile/1'
-    //     : defaultRedirectPage
-    //     ? defaultRedirectPage
-    //     : '/'
-
-    // const isChatRedirect = localStorage.getItem('isChatRedirect')
-    // if (isChatRedirect) {
-    //   url = isChatRedirect
-    //   localStorage.removeItem('isChatRedirect')
-    // }
-    // routes.push(url)
     setEmailOTPInputDisabled(false)
   }
 
   const loginFailed = () => {
-    // if (errorMessage) {
-    //   dispatch(
-    //     displayNotification({
-    //       open: true,
-    //       message: errorMessage,
-    //       severity: 'warning'
-    //     })
-    //   )
-    // }
     setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
   }
@@ -156,12 +131,10 @@ const useGetStarted = () => {
     } else if (pathname === '/quick-upload-resume') {
       params = {
         redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile'
-        // redirect_fail: router.asPath
       }
     } else if (pathname === '/resumetemplate') {
       params = {
         redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile'
-        // redirect_fail: router.asPath
       }
     } else if (pathname === '/job/[keyword]') {
       params = {

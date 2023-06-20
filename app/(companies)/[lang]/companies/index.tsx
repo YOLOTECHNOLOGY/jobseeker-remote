@@ -34,8 +34,7 @@ const Companies = (props: IProps) => {
   const {
     lang: { companies },
     langKey,
-    configs,
-    companyData
+    configs
   } = props
 
   const dispatch = useDispatch()
@@ -48,10 +47,14 @@ const Companies = (props: IProps) => {
   const clearSearchRef = useRef(null)
 
   const { config } = configs
-  console.log({ props })
-  const fetchCompanyFilterResponse = companyData
+  useEffect(() => {
+    dispatch(fetchCompanyFilterRequest({
+      size: 16,
+      page: 1
+  }))
+  },[])
+  const fetchCompanyFilterResponse =   useSelector((store : any) => store.companies.fetchCompanyFilter.response)
   const featureBanners = config.feature_banners
-
   const isFeaturedCompaniesFetching = useSelector(
     (store: any) => store.companies.fetchCompanyFilter.fetching
   )

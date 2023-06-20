@@ -18,7 +18,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 
 import { getItem } from 'helpers/localStorage'
 
-import styles from 'pages/[lang]/quick-upload-resume/styles.module.scss'
+import styles from 'app/(quick-upload)/[lang]/quick-upload-resume/styles.module.scss'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />

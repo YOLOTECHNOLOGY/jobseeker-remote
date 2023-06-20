@@ -26,7 +26,7 @@ $contentWidth: 894px;
   .qrCode {
     width: 254px;
     height: 108px;
-    margin-top: 20px;
+    margin-bottom: 16px;
     background: #136fd3;
     border-radius: 10px;
     padding: 10px 16px;
@@ -59,7 +59,7 @@ $contentWidth: 894px;
   }
 
   .rightContent {
-    margin-top: 40px;
+    margin-top: 20px;
     height: 100%;
     width: 254px;
     margin-left: 0;
@@ -750,7 +750,8 @@ $contentWidth: 894px;
         height: 100%;
         opacity: 1;
         z-index: 1;
-        background: linear-gradient(90.08deg, #f5faff 1.5%, #fffafa 95.77%);
+        // background: linear-gradient(90.08deg, #f5faff 1.5%, #fffafa 95.77%);
+        background: linear-gradient(180deg, #F2F9FF 0%, #FFFFFF 100%);
       }
 
       padding-left: 24px;
@@ -1265,4 +1266,8 @@ $contentWidth: 894px;
 
 .qrcode:hover {
   transform: scale(1.5);
+}
+
+.arrowIconPostion {
+  margin-bottom: 16px;
 }

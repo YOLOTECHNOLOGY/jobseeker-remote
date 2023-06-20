@@ -83,31 +83,33 @@ const JobAlert = (props: any) => {
   }
   return (
     <div className={styles.jobListOptionAlerts}>
-      <div
-        className={styles.jobListOptionAlertsItem}
-        onClick={() => {
-          if (isUserAuthenticated) handleCreateJobAlert()
-          else {
-            const lastSearch = sessionStorage.getItem('search-job-last-keyword')
-            if (lastSearch) {
-              sessionStorage.setItem('should-show-alert', '1')
-            }
-            router.push('/get-started?redirect=/jobs-hiring/job-search')
-          }
-        }}
-      >
-        <Text textStyle='base'>{search.alert}</Text>
-      </div>
-      {isUserAuthenticated && (
+      <div className={styles.jobListOptionAlertsMain}>
         <div
           className={styles.jobListOptionAlertsItem}
           onClick={() => {
-            dispatch(openManageJobAlertsModal() as any)
+            if (isUserAuthenticated) handleCreateJobAlert()
+            else {
+              const lastSearch = sessionStorage.getItem('search-job-last-keyword')
+              if (lastSearch) {
+                sessionStorage.setItem('should-show-alert', '1')
+              }
+              router.push('/get-started?redirect=/jobs-hiring/job-search')
+            }
           }}
         >
-          <img src={BellIcon} width='20' height='20' />
+          <Text textStyle='base'>{search.alert}</Text>
         </div>
-      )}
+        {isUserAuthenticated && (
+          <div
+            className={styles.jobListOptionAlertsItem}
+            onClick={() => {
+              dispatch(openManageJobAlertsModal() as any)
+            }}
+          >
+            <img src={BellIcon} width='20' height='20' />
+          </div>
+        )}
+      </div>
       <ModalJobAlerts
         query={query}
         location={location}

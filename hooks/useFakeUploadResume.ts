@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 /* Redux Actions */
 import { saveUserDevUpdateResumeFileInfo } from 'store/actions/users/uploadUserResume'
 import { maxFileSize } from '../helpers/handleInput'
 
 const Step2 = () => {
   const currentStep = 2
-  const router = useRouter()
   const dispatch = useDispatch()
-  const redirect = router.query?.redirect
-    ? `/jobseeker-complete-profile/1101?redirect=${router.query.redirect}`
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect')
+    ? `/jobseeker-complete-profile/1101?redirect=${searchParams.get('redirect')}`
     : '/jobseeker-complete-profile/1101'
 
   const [resume, setResume] = useState(null)

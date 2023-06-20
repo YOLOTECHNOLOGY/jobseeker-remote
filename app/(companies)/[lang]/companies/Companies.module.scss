@@ -21,7 +21,7 @@
 
 .searchCompany {
   @extend .GlobalContainer;
-  margin-top: 32px;
+  padding-top: 32px;
   margin-bottom: 48px;
 
   > p {
@@ -91,9 +91,11 @@
 .featuredEmployer {
   display: flex;
   justify-content: space-between;
+  height: 287px;
 
   @include msd {
     flex-direction: column;
+    height: auto;
   }
 }
 
@@ -120,6 +122,8 @@
   margin-right: 16px;
   border-radius: 5px;
   overflow: hidden;
+  border: 1px solid #f2f5fa;
+  
   a {
     display: inline-block;
   }
@@ -179,6 +183,10 @@
   margin-bottom: 8px;
   user-select: none;
   -webkit-user-drag: none;
+
+  @include msd {
+    width: 45%;
+  }
 }
 
 .featuredSectionTitle {

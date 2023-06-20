@@ -54,7 +54,6 @@ const Section4 = () => {
 		INFO[3].title = contextLang.landing.section4_list_title4;
 		INFO[3].des = contextLang.landing.section4_list_des4;
 	}
-	console.log('inView',inView);
 	if (width <= 540) {
 		return <section className={style.section4 + ' ' + style.mobile}>
 			{INFO.map((item, index) => {

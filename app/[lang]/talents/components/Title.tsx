@@ -32,19 +32,19 @@ export const Title = () => {
 	const contextLang =  useContext(languageContext);
 
 	const TypC = useMemo(()=> {
-		return <Typical steps={[contextLang.landing.section1_title]}/>
+		return <Typical steps={[contextLang.landing.section1_title]} wrapper={'h1'}/>
 	},[]);
 	return <div className={style.titleWrapper} ref={ref}>
-		<p className={style.title + ' ' + style['title-color']} style={{height: 108}}>
+		<div className={style.title + ' ' + style['title-color']} style={{height: 108}}>
 			{show && TypC}
-		</p>
+		</div>
 		<InView threshold={0.2} triggerOnce={true}>
 			{({inView, ref}) => {
-				return <p ref={ref} className={classNames({
+				return <h1 ref={ref} className={classNames({
 					[style.op0]: true,
 					[style.section1_subtitle + ' ' + style.height]: true,
 					[style.animate__bounceIn]: inView,
-				})}>{contextLang.landing.section1_subtitle}</p>
+				})}>{contextLang.landing.section1_subtitle}</h1>
 			}}
 		</InView>
 
