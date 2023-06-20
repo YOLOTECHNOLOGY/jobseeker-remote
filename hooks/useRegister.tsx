@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
@@ -187,18 +187,22 @@ const useRegister = () => {
             window.location.reload()
           }
         } else {
-          setItem('isRegisterModuleRedirect', router.asPath)
+          setItem('isRegisterModuleRedirect', location.pathname)
           router.push('/jobseeker-complete-profile')
         }
       }
     }
   }, [OTPLoginUserInfo, jobseekersSocialResponse])
-
+  const searchParams = useSearchParams()
+  const query: any = {}
+  searchParams.forEach((value, key) => {
+    query[key] = value
+  })
   const socialAUTHLoginCallBack = (payload) => {
     // dispatch(socialLoginRequest(payload))
     const data = {
       ...payload,
-      ...router.query,
+      ...searchParams,
       // avatar: payload.pictureUrl ? payload.pictureUrl : '',
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
