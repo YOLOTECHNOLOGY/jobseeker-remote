@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { applyMiddleware, createStore } from 'redux'
 import { createWrapper } from 'next-redux-wrapper'
 import { persistStore, persistReducer } from 'redux-persist'
