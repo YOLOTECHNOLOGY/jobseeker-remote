@@ -208,7 +208,7 @@ const IMProvider = ({ children, lang }: any) => {
         }
     }, [lang])
     useEffect(() => {
-        if (userId && accessToken ) {
+        if (userId && accessToken) {
             IMManager.accessUser(
                 '' + userId + '_j',
                 auid => getAuth(auid).then(result => {
@@ -336,7 +336,9 @@ const IMProvider = ({ children, lang }: any) => {
                 const newData = {
                     ...data?.data?.job_application,
                     initiated_role: data?.data?.initiated_role,
-                    chatStatus: data?.data?.status
+                    delete_status: data?.data?.delete_status,
+                    chatStatus: data?.data?.status,
+                    self_role:'jobseeker'
                 }
                 contextRef.current.imState = newData
                 const chatId = chatIdRef.current
@@ -350,7 +352,9 @@ const IMProvider = ({ children, lang }: any) => {
             const newData = {
                 ...data?.data?.job_application,
                 initiated_role: data?.data?.initiated_role,
-                chatStatus: data?.data?.status
+                delete_status: data?.data?.delete_status,
+                chatStatus: data?.data?.status,
+                self_role:'jobseeker'
             }
             dispatch(updateImState({ chatId, imState: newData }))
         },

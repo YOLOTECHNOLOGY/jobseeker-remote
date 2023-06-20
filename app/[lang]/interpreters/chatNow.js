@@ -98,7 +98,9 @@ const interpreter = registInterpreter((command) =>
             const newData = {
               ...result.data?.data?.job_application,
               initiated_role: result.data?.data?.initiated_role,
-              chatStatus: result.data?.data?.status
+              delete_status: result.data?.data?.delete_status,
+              chatStatus: result.data?.data?.status,
+              self_role:'jobseeker'
             }
             dispatch(updateImState({ chatId, imState: newData }))
             const userInfo = getCookie('user')
