@@ -201,7 +201,7 @@ const JobCard = (props: any) => {
   const handleRouterToPath = (job_url: string) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
-    router.push(job_url, { forceOptimisticNavigation: true })
+    router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })
   }
 
   return (
@@ -241,7 +241,8 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+              // onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+              onClick={() => handleRouterToPath(job_url)}
             >
               <div
                 key={job_title + id}
@@ -335,7 +336,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                          ; (chatNow as any)()
+                        ;(chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -386,7 +387,10 @@ const JobCard = (props: any) => {
               {(job_skills ?? '').split(',').filter(Boolean).join(' | ')}
             </div>
             <div className={styles.benefits} title={job_benefits}>
-              {job_benefits?.map((item) => item.name).filter(Boolean).join(' | ')}
+              {job_benefits
+                ?.map((item) => item.name)
+                .filter(Boolean)
+                .join(' | ')}
             </div>
           </div>
         </div>
@@ -420,7 +424,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
