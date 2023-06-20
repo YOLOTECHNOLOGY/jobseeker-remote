@@ -118,15 +118,11 @@ const JobCard = (props: any) => {
   const { job, jobTitleId, preference } = props
   const { lang: langKey } = useParams()
   const config = useSelector((store: any) => store.config.config.response)
-  console.log('-------------- debug job benefits ---------------', job.job_title)
-  console.log('debug job benefits1: ',  JSON.stringify(job))
 
   const memoedJob = useMemo(() => {
     changeJobValue(config, job)
     return job
   }, [job])
-
-  console.log('debug job benefits2: ',  JSON.stringify(memoedJob))
 
   const {
     job_title,
