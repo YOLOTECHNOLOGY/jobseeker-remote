@@ -452,7 +452,7 @@
 
 .section1Wrapper {
   position: relative;
-  margin-top: 55px;
+  //padding-top: 55px;
 }
 
 .phone_img {
@@ -521,6 +521,9 @@
   }
   @media screen and (max-width: 540px) {
     position: relative;
+    width: 100vw;
+    overflow: hidden;
+
   }
 }
 
@@ -586,6 +589,7 @@
   :global{
     p{
       font-family: 'Poppins' !important;
+      margin: 0;
     }
   }
 
@@ -596,6 +600,11 @@
     margin: 0 auto;
     text-align: left;
     width: 2.88rem;
+    :global{
+      p{
+        line-height: .4rem;
+      }
+    }
   }
 }
 
@@ -1600,6 +1609,11 @@
 
 .section8 {
   margin-top: 220px;
+  :global{
+    .swiper-wrapper{
+      transition-timing-function: linear !important;
+    }
+  }
   @media screen and (max-width: 540px) {
     margin-top: 1.3rem;
   }
