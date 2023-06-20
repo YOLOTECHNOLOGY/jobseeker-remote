@@ -91,9 +91,11 @@
 .featuredEmployer {
   display: flex;
   justify-content: space-between;
+  height: 287px;
 
   @include msd {
     flex-direction: column;
+    height: auto;
   }
 }
 
@@ -181,6 +183,10 @@
   margin-bottom: 8px;
   user-select: none;
   -webkit-user-drag: none;
+
+  @include msd {
+    width: 45%;
+  }
 }
 
 .featuredSectionTitle {
