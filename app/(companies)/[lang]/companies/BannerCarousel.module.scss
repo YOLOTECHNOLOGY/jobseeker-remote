@@ -47,7 +47,7 @@
   overflow: hidden;
   display: inline-block;
   border-radius: 15px;
-  height: 287px;
+  height: 255px;
   width: 560px;
   
   @include sm {
@@ -57,7 +57,7 @@
   }
 
   @include lg {
-    height: 287px;
+    height: 255px;
     width: 560px;
   }
 }
