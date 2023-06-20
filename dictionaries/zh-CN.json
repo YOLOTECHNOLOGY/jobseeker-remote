@@ -431,7 +431,8 @@
     "seo": {
       "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
       "desc": "申请{{name}}的{{jobTitle}} {{jobId}}。现在开始找位于{{location}}, {{fullAddress}}的更多{{categoryMetaText}}工作！"
-    }
+    },
+    "jobs": "热招职位"
   },
   "search": {
     "location": "城市",
