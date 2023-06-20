@@ -846,7 +846,7 @@
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
     "ImHiring": "I’m employees",
-    "education":"Education"
+    "education": "Education"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1185,6 +1185,10 @@
       "jobsDescription": "View all available job opportunities at {{companyName}} in {{country}} on Bossjob - Talk directly with talents on Bossjob!",
       "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
       "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob. Talk directly with hiring managers on Bossjob!"
+    },
+    "landing": {
+      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
+      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
     }
   },
   "landing": {
