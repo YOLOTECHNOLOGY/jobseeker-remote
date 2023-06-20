@@ -17,16 +17,16 @@ const Header = (props: any) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const contextLang = useContext(languageContext)
   const data: any = props.lang ?? contextLang
-  const pathname = usePathname();
+
   
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [userDetail])
-
-  if(pathname.endsWith('/talents')){
-    return <LandingHeader lang={data.header}/>
-  }
-  
+  const pathname = usePathname();
+  // if(pathname.endsWith('/talents')){
+  //   return <LandingHeader lang={data.header}/>
+  // }
+  //
   return (
     <div>
       {isAuthenticated && <ProtectedHeader lang={data.header} />}

@@ -3,6 +3,7 @@ import React, {useRef, useState} from 'react';
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
 import AutoScroll from './AutoScrollList'
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 let imgs = [
 	`${process.env.S3_BUCKET_URL}/landing/1.svg`,
@@ -28,13 +29,14 @@ const Section2 = () => {
 	const [enable, setEnable] = useState(true);
 
 	const swiperRef = useRef(null)
+	const isMobile = useWindowSize().width < 540;
 	return <section className={style.section2}>
 		<Swiper
 			modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 			spaceBetween={80}
 			ref={swiperRef}
 			grabCursor={true}
-			slidesPerView={9}
+			slidesPerView={isMobile ? 3.5 : 9}
 			// centeredSlides={true}
 			autoplay={{
 				delay: 0,
