@@ -1,7 +1,6 @@
 
 // import './flexible';
 import Footer from './components/Footer'
-import './index.module.scss'
 import Head from "next/head";
 import {Metadata} from "next"
 

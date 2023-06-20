@@ -1,7 +1,6 @@
 'use client';
-import {useEffect, useState, useRef, useContext} from "react";
+import {useRef, useContext} from "react";
 import style from '../../index.module.scss';
-import Link from 'next/link'
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swiper';
 
@@ -12,7 +11,7 @@ import {languageContext} from "../../../components/providers/languageProvider";
 
 
 
-const Section7 = () => {
+const Section8 = () => {
 	const swiperRef = useRef(null)
 	const contextLang = useContext(languageContext);
 	const carouselList = [
@@ -26,21 +25,15 @@ const Section7 = () => {
 		},
 	]
 	return <div className={style.section8}>
-		<div className={style.section8_carousel + ' ' + style.desktop}
-		     onMouseLeave={() => {
-			     swiperRef.current.swiper.autoplay.start();
-		     }}
-		     onMouseEnter={() => {
-			     swiperRef.current.swiper.autoplay.pause();
-		     }}>
+		<div className={style.section8_carousel + ' ' + style.desktop}>
 			<Swiper
 				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 				spaceBetween={50}
 				ref={swiperRef}
-				slidesPerView={2.3}
-				grabCursor={true}
+				slidesPerView={3.3}
+				speed={4000}
 				autoplay={{
-					delay: 1000,
+					delay: 0,
 					disableOnInteraction: true
 				}}
 				loop={true}
@@ -71,4 +64,4 @@ const Section7 = () => {
 	</div>
 }
 
-export default Section7
+export default Section8
