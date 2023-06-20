@@ -37,7 +37,7 @@ const Section2 = () => {
 			slidesPerView={9}
 			// centeredSlides={true}
 			autoplay={{
-				delay: 1,
+				delay: 0,
 				disableOnInteraction: true,
 			}}
 			speed={4000}

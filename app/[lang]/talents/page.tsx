@@ -7,6 +7,7 @@ import Section5 from './components/Section5'
 import Section6 from './components/Section6'
 import Section7News from './components/Section7News'
 import Section8 from './components/Section8'
+import useResponsiveFont from "./components/responseHook";
 
 
 export default function Page({
@@ -16,6 +17,7 @@ export default function Page({
 	params: { slug: string };
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
+	useResponsiveFont(360,540);
 	return <>
 		<Section1></Section1>
 		<Section2></Section2>
