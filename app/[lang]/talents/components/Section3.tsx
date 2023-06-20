@@ -48,7 +48,7 @@ const Section3 = () => {
 		<img className={style.section3_pc_bg + ' ' + style.desktop} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Web1-min.jpg`} />
 		<img className={style.section3_mobile_bg + ' ' + style.mobile} alt={'bg'} src={`${process.env.S3_BUCKET_URL}/landing/Mobile1-min.jpg`} />
 		<div className={style.content_container}>
-			<InView threshold={0.3} delay={500} triggerOnce={false}>
+			<InView threshold={0.3} delay={500} triggerOnce={true}>
 				{({ref, inView})=>{
 					return <div ref={ref} className={classNames({
 						[style.section3_title]: true,

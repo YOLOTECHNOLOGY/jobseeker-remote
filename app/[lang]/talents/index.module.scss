@@ -15,8 +15,8 @@
 .animate__fadeIn {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
-  opacity: 1 !important;
   animation-duration: 2.0s;
+  opacity: 1;
 }
 
 @keyframes fadeOut {
@@ -32,7 +32,7 @@
 .animate__fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
-  opacity: 0 !important;
+  opacity: 0;
   animation-duration: 0.5s;
 }
 
