@@ -6,14 +6,14 @@ import { useSelector } from 'react-redux'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
-import Link from 'next/link'
 import { getLang } from 'helpers/country'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
+import { useRouter } from 'next/navigation'
 const verifyEmail = function (props) {
-  const {isModal,lang,loginData} = props
+  const {isModal,lang,loginData,setStep} = props
   const { newGetStarted} =lang
   const searchParams = useSearchParams()
 
@@ -49,7 +49,7 @@ const verifyEmail = function (props) {
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   console.log({ error })
   const dispatch = useDispatch()
-
+  const router = useRouter()
   useEffect(() => {
     dispatch(jobbseekersLoginFailed({}))
     setErrorText('')
@@ -150,9 +150,9 @@ const verifyEmail = function (props) {
             <div>{newGetStarted.checkSpamEmail}</div>
             <div>
               {newGetStarted.havingTrouble}{' '}
-              <Link className={styles.link} href={`/${langKey}/get-started`}>
+              <span className={styles.link} onClick={()=>isModal ? setStep(1) :  router.push(`/${langKey}/get-started`)} > 
                 {newGetStarted.otherOptions}
-              </Link>
+              </span>
             </div>
             <div>
               {newGetStarted.alternatively}

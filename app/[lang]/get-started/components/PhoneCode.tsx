@@ -3,7 +3,6 @@ import styles from '../index.module.scss'
 import Captcha from './captcha/index'
 import { useSearchParams } from 'next/navigation'
 import { getLang } from 'helpers/country'
-import Link from 'next/link'
 import useGetStarted from '../hooks/useGetStarted'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
@@ -15,7 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 
 function PhoneCode(props: any) {
-  const { lang:{newGetStarted}, isModal = false ,loginData} = props
+  const { lang:{newGetStarted}, isModal = false ,loginData,setStep} = props
   const searchParams = useSearchParams()
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -163,7 +162,7 @@ function PhoneCode(props: any) {
   return (
     <>
       <div className={styles.phoneNumber}>
-        <div className={styles.optBox} style={{paddingTop : isModal ? '40px' : '0'} }>
+        <div className={styles.optBox} style={{paddingTop : isModal ? '34px' : '0'} }>
 
          {
           !isModal && <>
@@ -195,9 +194,9 @@ function PhoneCode(props: any) {
           />
           <p className={styles.trouble}>
             {newGetStarted.havingTrouble}{' '}
-            <Link className={styles.link} href={`/${langKey}/get-started`}>
+            <span className={styles.link} onClick={()=>isModal ? setStep(1) :  router.push(`/${langKey}/get-started`)} >
               {newGetStarted.otherOptions}.
-            </Link>
+            </span>
           </p>
         </div>
       </div>

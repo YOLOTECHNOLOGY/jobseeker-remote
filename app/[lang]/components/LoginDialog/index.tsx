@@ -30,12 +30,11 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
   
   useEffect(()=>{
     if(step === 4 || step === 5){
-      setTitle(loginData?.userId  ? `${newGetStarted.welcomeBack}! 🎉` : `${newGetStarted.signUpAnAccount} 🎉`)
+      setTitle(loginData?.user_id  ? `${newGetStarted.welcomeBack} ${loginData?.first_name || ''} 🎉` : `${newGetStarted.signUpAnAccount} 🎉`)
     }else{
       setTitle(newGetStarted?.title)
     }
   },[step,loginData])
-  console.log({ step })
   return (
     <div>
       <Dialog onClose={handleClose} open={open} title={title}>
@@ -71,8 +70,8 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
                 }}
               />
             )}
-            {step == 4 && <VerifyEmail lang={data} isModal={true} loginData={loginData} />}
-            {step == 5 && <PhoneCode lang={data} isModal={true} loginData={loginData} />}
+            {step == 4 && <VerifyEmail lang={data} isModal={true} loginData={loginData} setStep={setStep}/>}
+            {step == 5 && <PhoneCode lang={data} isModal={true} loginData={loginData} setStep={setStep}/>}
           </div>
         </div>
       </Dialog>

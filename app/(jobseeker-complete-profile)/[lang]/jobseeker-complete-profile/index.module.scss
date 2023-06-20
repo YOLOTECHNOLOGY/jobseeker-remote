@@ -452,6 +452,32 @@ $contentWidth: 894px;
             }
         }
     }
+    .stepMobile{
+        display: flex;
+        padding: 0 20px;
+        li{
+            margin-right: 10px;
+            list-style: none;
+            flex: 1;
+            text-align: center;
+            color: #C4DDFE;;
+            &:last-child{                  
+                margin-right: 0;
+            }
+            &.active{
+                color: #136FD3;
+                span{
+                    background: #136FD3;
+                }
+            }
+            span{
+                display: block;
+                height: 6px;  
+                background: #C4DDFE;
+                margin-bottom: 8px;                    
+            }
+        }
+    }
     :global{
         .MuiOutlinedInput-root{
            border-radius: 10px;              
