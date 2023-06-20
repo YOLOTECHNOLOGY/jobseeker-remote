@@ -61,7 +61,7 @@ const loginForEmail = (props: IProps) => {
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if(isModal){
-          setLoginData(res?.data?.data)
+          setLoginData({...res?.data?.data,email:emailRef.current})
         }else{
           if (user_id) {
             router.push(`${pathname}?step=2&&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`)

@@ -24,7 +24,7 @@ const verifyEmail = function (props) {
      let email = null;
      let avatar = null;
      if(isModal){
-       userId = loginData?.userId;
+       userId = loginData?.user_id;
        email = loginData?.email;
        avatar = loginData?.avatar
      }else{

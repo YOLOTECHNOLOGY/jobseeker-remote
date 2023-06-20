@@ -100,8 +100,6 @@ function PhoneCode(props: any) {
     }
   }
 
-  console.log({ error })
-
   useEffect(() => {
     const text = error?.data?.message || ''
     setErrorText(text)
@@ -113,7 +111,6 @@ function PhoneCode(props: any) {
       otp,
       phone_num: phoneNum
     }).then((res) => {
-      console.log(res?.data)
       const { data } = res?.data ?? {}
       if (data) {
         sendOpt(email)
