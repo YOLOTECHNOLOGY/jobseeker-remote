@@ -333,8 +333,7 @@
     "seo": {
       "title": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
       "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
-    },
-    "jobs": "热招职位"
+    }
   },
   "jobDetail": {
     "header": {
