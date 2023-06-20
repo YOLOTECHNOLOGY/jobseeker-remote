@@ -24,6 +24,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import { QRCodeSVG } from 'qrcode.react'
 import { SortContext } from '../searchForms/SortProvider'
+import { cloneDeep } from 'lodash-es'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -115,14 +116,15 @@ const useJobDetail = (jobId) => {
 
 const JobCard = (props: any) => {
   const { sort } = useContext(SortContext)
-  const { job, jobTitleId, preference } = props
+  const { job: originJob, jobTitleId, preference } = props
   const { lang: langKey } = useParams()
   const config = useSelector((store: any) => store.config.config.response)
 
   const memoedJob = useMemo(() => {
+    const job = cloneDeep(originJob)
     changeJobValue(config, job)
     return job
-  }, [job])
+  }, [originJob])
 
   const {
     job_title,
@@ -160,6 +162,7 @@ const JobCard = (props: any) => {
     reco_from
   } = memoedJob
   const { chatInfos } = useContext(ChatInfoContext)
+  console.log({ job_benefits, originJob, memoedJob })
   const chat = useMemo(() => {
     return chatInfos.find((chatInfo) => chatInfo.recruiter_id === recruiter_id)
   }, [chatInfos])
@@ -176,7 +179,7 @@ const JobCard = (props: any) => {
     getValueById(config, company_financing_stage_id, 'company_financing_stage_id')
   ].filter((a) => a)
   const router = useRouter()
-  const [loading, chatNow, modalChange] = useChatNow({ ...job, chat })
+  const [loading, chatNow, modalChange] = useChatNow({ ...originJob, chat })
   const [titleHover, setTitleHover] = useState(false)
   const [popHover, setPopHover] = useState(false)
 
@@ -198,7 +201,7 @@ const JobCard = (props: any) => {
   const handleRouterToPath = (job_url: string) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
-    router.push(job_url, { forceOptimisticNavigation: true })
+    router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })
   }
 
   return (
@@ -238,7 +241,8 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+              // onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+              onClick={() => handleRouterToPath(job_url)}
             >
               <div
                 key={job_title + id}
@@ -332,7 +336,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                          ; (chatNow as any)()
+                        ;(chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -383,7 +387,10 @@ const JobCard = (props: any) => {
               {(job_skills ?? '').split(',').filter(Boolean).join(' | ')}
             </div>
             <div className={styles.benefits} title={job_benefits}>
-              {job_benefits?.map((item) => item.name).filter(Boolean).join(' | ')}
+              {job_benefits
+                ?.map((item) => item.name)
+                .filter(Boolean)
+                .join(' | ')}
             </div>
           </div>
         </div>
@@ -417,7 +424,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
