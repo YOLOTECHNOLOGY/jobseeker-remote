@@ -47,7 +47,6 @@ const Companies = (props: IProps) => {
   const clearSearchRef = useRef(null)
 
   const { config } = configs
-  console.log({ props })
   useEffect(() => {
     dispatch(fetchCompanyFilterRequest({
       size: 16,
