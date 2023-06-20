@@ -17,7 +17,7 @@ export const useSuggest = () => {
             } else if ((val?.length ?? 0) > 1) {
                 fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}`,{
                     headers:{
-                        'Country-Id': getCountryId()
+                        'Country-Id':'' + getCountryId()
                       } 
                 })
                     .then((resp) => resp.json())
