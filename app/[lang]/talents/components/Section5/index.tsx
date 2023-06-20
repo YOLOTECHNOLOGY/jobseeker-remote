@@ -1,5 +1,5 @@
 import style from '../../index.module.scss';
-import React, {useRef, useState, CSSProperties, useContext} from 'react';
+import React, {useRef, useState, CSSProperties, useContext, memo} from 'react';
 import AnimatedNumbers from "react-animated-numbers";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Player, Controls} from '@lottiefiles/react-lottie-player';
@@ -205,7 +205,7 @@ const Section5 = () => {
 }
 
 
-const AnimationNumber = () =>{
+const AnimationNumber = React.memo(() =>{
 	const fontSize = {fontSize: 56}
 
 	const contextLang = useContext(languageContext);
@@ -275,6 +275,6 @@ const AnimationNumber = () =>{
 			</div>
 		</div>
 	)
-}
-
+});
+AnimationNumber.displayName = "AnimationNumber";
 export default Section5

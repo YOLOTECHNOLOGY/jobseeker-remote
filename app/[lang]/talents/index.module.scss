@@ -15,8 +15,8 @@
 .animate__fadeIn {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
-  opacity: 1 !important;
   animation-duration: 2.0s;
+  opacity: 1;
 }
 
 @keyframes fadeOut {
@@ -32,7 +32,7 @@
 .animate__fadeOut {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
-  opacity: 0 !important;
+  opacity: 0;
   animation-duration: 0.5s;
 }
 
@@ -149,7 +149,7 @@
   font-family: 'Poppins' !important;
   font-style: normal;
   font-weight: 700;
-  font-size: 90px;
+  font-size: 90px !important;
   line-height: 1.2;
   text-align: center;
   letter-spacing: 0.02em;
@@ -162,9 +162,15 @@
     padding: 0;
     margin: 0;
   }
-
+  :global{
+    h1{
+      font-size: 90px !important;
+      font-weight: 700;
+      font-family: 'Poppins' !important;
+    }
+  }
   @media screen and (max-width: 540px) {
-    font-size: .32rem;
+    font-size: .32rem !important;
     width: 3.2rem;
     height: auto !important;
     line-height: .4rem;
@@ -172,9 +178,9 @@
 }
 .section1_subtitle{
   @extend .title;
-  font-size: 80px;
+  font-size: 80px !important;
   @media screen and (max-width: 540px) {
-    font-size: .32rem;
+    font-size: .32rem !important;
     width: 3.2rem;
     height: auto !important;
     line-height: .4rem;
@@ -565,11 +571,7 @@
   color: #353535;
   position: relative;
   z-index: 10;
-
-  p {
-    padding: 0;
-    margin: 0;
-  }
+  opacity: 0;
   :global{
     p{
       font-family: 'Poppins' !important;
@@ -832,6 +834,7 @@
   width: 400px;
   position: absolute;
   left: 10px;
+  transition: opactiy 2s;
 }
 
 .section4_mobile_item_title {
@@ -872,7 +875,8 @@
 }
 
 .section4_sticky_phone_content_1 {
-  @extend .section4_content
+  @extend .section4_content;
+  transition: opactiy 2s;
 }
 
 .section4_sticky_phone_wrapper {

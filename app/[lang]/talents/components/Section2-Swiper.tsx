@@ -37,9 +37,10 @@ const Section2 = () => {
 			slidesPerView={9}
 			// centeredSlides={true}
 			autoplay={{
-				delay: 2000,
-				disableOnInteraction: true
+				delay: 1,
+				disableOnInteraction: true,
 			}}
+			speed={4000}
 			// navigation={{
 			// 	enabled: true,
 			// 	prevEl: '.swiper-button-prev',
@@ -47,7 +48,7 @@ const Section2 = () => {
 			// 	hideOnClick: true,
 			// 	hiddenClass: 'hideClass'
 			// }}
-			// loop={true}
+			loop={true}
 			scrollbar={{draggable: true}}
 		>
 			{imgs.map((item, index) => {

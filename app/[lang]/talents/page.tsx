@@ -8,7 +8,6 @@ import Section6 from './components/Section6'
 import Section7News from './components/Section7News'
 import Section8 from './components/Section8'
 
-import Title from "./components/Title";
 
 export default function Page({
 	                             params,
