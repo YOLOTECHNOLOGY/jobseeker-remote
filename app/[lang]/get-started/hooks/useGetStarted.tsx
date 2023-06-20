@@ -14,7 +14,7 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
-import { removeItem } from 'helpers/localStorage'
+
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
