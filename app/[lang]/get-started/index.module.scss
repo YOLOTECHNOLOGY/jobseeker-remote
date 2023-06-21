@@ -27,7 +27,7 @@
     background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
     opacity: 0.6;
     filter: blur(154.5px);
-    transform: translate3d();
+    transform: translateZ(0);
     z-index: -1;
   }
   
@@ -157,7 +157,7 @@
 
       &.divider_none {
         margin: 0;
-        padding: 0;
+        padding: 0 0 16px 0;
       }
     }
 
@@ -387,11 +387,7 @@
     }
 
   }
-  .dialogContainer{
-    box-shadow: none;
-     width: 561px; 
-     padding: 15px 33px 33px 33px;
-  }
+ 
   .emailFactor {
     p {
       margin: 0;
@@ -472,6 +468,18 @@
   .login_disabled {
     cursor: not-allowed;
     opacity: 0.6;
+  }
+  .dialogContainer{
+    box-shadow: none;
+     width: 561px; 
+     padding: 28px 20px 38px 20px;
+     .login_item{
+      margin-top: 0;
+      margin-bottom: 16px;
+      &:last-child{
+        margin-bottom: 0
+      }
+     }
   }
 }
 

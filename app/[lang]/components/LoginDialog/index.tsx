@@ -22,7 +22,6 @@ interface dialogProps {
 export default function LoginDialog({ open = true, handleClose }: dialogProps) {
   const data = React.useContext(languageContext) as any
   const { newGetStarted } = data
-  console.log({ data })
   //  2:email, 3:phone,  4:email OPT
   const [step, setStep] = useState<number>(1)
   const [loginData, setLoginData] = useState<any>({})
@@ -40,8 +39,8 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
       <Dialog onClose={()=>{
         localStorage.removeItem('isChatRedirect')
         handleClose();
-      }} open={open} title={title}>
-        <div className={styles.main} style={{ margin: 0, minHeight: '300px', padding: 0 }}>
+      }} open={open} title={title} avatar={loginData?.avatar}>
+        <div className={styles.main} style={{ margin: 0, minHeight: '200px', padding: 0 }}>
           <div  className={`${styles.container} ${styles.dialogContainer}`}>
             {step == 1 && (
               <Main
@@ -73,8 +72,14 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
                 }}
               />
             )}
-            {step == 4 && <VerifyEmail lang={data} isModal={true} loginData={loginData} setStep={setStep}/>}
-            {step == 5 && <PhoneCode lang={data} isModal={true} loginData={loginData} setStep={setStep}/>}
+            {step == 4 && <VerifyEmail lang={data} isModal={true} loginData={loginData} setStep={(e)=>{
+            setLoginData({})
+            setStep(e)
+            }}/>}
+            {step == 5 && <PhoneCode lang={data} isModal={true} loginData={loginData} setStep={(e)=>{
+            setLoginData({})
+            setStep(e)
+            }}/>}
           </div>
         </div>
       </Dialog>
