@@ -14,8 +14,8 @@ import classNames from "classnames";
 
 const carouselList = [
 	{
-		img: require('./pc_section5_phone1.png').default.src,
-		mobile_img: require('./phone1-background.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone1.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone1-background.png`,
 		des: 'Build your resume easily, choose from a variety of templates ',
 		pc_lottie: require('./lottie_1').default,
 		mobile_style: {
@@ -27,8 +27,8 @@ const carouselList = [
 		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
 	},
 	{
-		img: require('./pc_section5_phone2.png').default.src,
-		mobile_img: require('./phone2-background.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone2.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone2-background.png`,
 		des: 'Protect your privacy and easily block companies',
 		pc_lottie: require('./lottie_2').default,
 		// json: json2,
@@ -41,8 +41,8 @@ const carouselList = [
 		style: {width: '280px', position: 'absolute', left: 35, top: 0} as CSSProperties
 	},
 	{
-		img: require('./pc_section5_phone3.png').default.src,
-		mobile_img: require('./phone3-background.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone3.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone3-background.png`,
 		des: 'Customise your chat messages and make a great impression.',
 		mobile_lottie: require('./mobile_lottie_3').default,
 		pc_lottie: require('./lottie_3').default,
@@ -54,7 +54,7 @@ const carouselList = [
 		} as CSSProperties
 	},
 	{
-		img: require('./pc_section5_phone4.png').default.src,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone4.png`,
 		mobile_lottie: require('./mobile_lottie_4').default,
 		mobile_style: {
 			position: 'absolute',
