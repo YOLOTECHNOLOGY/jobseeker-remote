@@ -1,5 +1,5 @@
 import style from '../../index.module.scss';
-import React, {useRef, useState, CSSProperties, useContext} from 'react';
+import React, {useRef, useState, CSSProperties, useContext, memo} from 'react';
 import AnimatedNumbers from "react-animated-numbers";
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Player, Controls} from '@lottiefiles/react-lottie-player';
@@ -12,50 +12,62 @@ import {languageContext} from "../../../components/providers/languageProvider";
 import {useInView} from "react-intersection-observer";
 import classNames from "classnames";
 
-let carouselList = [
+const carouselList = [
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/phone1.png`,
-		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-1.png`,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone1.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone1-background.png`,
 		des: 'Build your resume easily, choose from a variety of templates ',
-		// json: json1,
+		pc_lottie: require('./lottie_1').default,
+		mobile_style: {
+			position: 'absolute',
+			top: '-60px',
+			width: '100%'
+		} as CSSProperties,
+		mobile_lottie: require('./mobile_lottie_1').default,
+		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
+	},
+	{
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone2.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone2-background.png`,
+		des: 'Protect your privacy and easily block companies',
+		pc_lottie: require('./lottie_2').default,
+		// json: json2,
 		mobile_style: {
 			position: 'absolute',
 			top: '-80px',
 			width: '100%'
 		} as CSSProperties,
-		style: {width: '100%', position: 'absolute', left: 0, top: '-132px'} as CSSProperties
+		mobile_lottie: require('./mobile_lottie_2').default,
+		style: {width: '280px', position: 'absolute', left: 35, top: 0} as CSSProperties
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/phone2.png`,
-		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-2.png`,
-		des: 'Protect your privacy and easily block companies',
-		// json: json2,
-		mobile_style: {
-			display: 'none',
-		} as CSSProperties,
-		style: {width: '312px', position: 'absolute', left: 14, top: '-18px'} as CSSProperties
-	},
-	{
-		img: `${process.env.S3_BUCKET_URL}/landing/section5-3.png`,
-		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-3.png`,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone3.png`,
+		mobile_img: `${process.env.S3_BUCKET_URL}/landing/phone3-background.png`,
 		des: 'Customise your chat messages and make a great impression.',
+		mobile_lottie: require('./mobile_lottie_3').default,
+		pc_lottie: require('./lottie_3').default,
+		style: {width: '280px', position: 'absolute', left: 38, top: 0} as CSSProperties,
 		mobile_style: {
-			display: 'none',
+			position: 'absolute',
+			top: '-80px',
+			width: '100%'
 		} as CSSProperties
 	},
 	{
-		img: `${process.env.S3_BUCKET_URL}/landing/phone4.png`,
+		img: `${process.env.S3_BUCKET_URL}/landing/pc_section5_phone4.png`,
+		mobile_lottie: require('./mobile_lottie_4').default,
 		mobile_style: {
-			display: 'none',
+			position: 'absolute',
+			top: '-75px',
+			width: '100%'
 		} as CSSProperties ,
-		mobile_img: `${process.env.S3_BUCKET_URL}/landing/section5-mobile-4.png`,
+		pc_lottie: require('./lottie_4').default,
 		des: 'Never miss an interview again. Sync your interview schedule directly to your phone',
-		// json: json4,
-		style: {width: '284px', position: 'absolute', left: '27px', top: '-80px'} as CSSProperties
+		style: {width: '284px', position: 'absolute', left: '36px', top: '0px'} as CSSProperties
 	}
 ];
 // if (carouselList.length % 2 !== 0) {
-carouselList = carouselList.concat(carouselList)
+// carouselList = carouselList.concat(carouselList)
 // }
 const Section5 = () => {
 	const [enable, setEnable] = useState(true);
@@ -87,9 +99,8 @@ const Section5 = () => {
 		triggerOnce: true,
 		threshold: 0.2
 	});
-
 	if (isMobile) {
-		return <section className={style.section5} ref={ref}>
+		return <section className={style.section5}>
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
@@ -99,19 +110,21 @@ const Section5 = () => {
 					slidesPerView={1}
 					scrollbar={{draggable: true}}
 				>
-					{carouselList.map((item, index) => {
+					{carouselList.concat(carouselList).map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.section5_carousel_item}>
 								<div
 									className={classNames({
 									[style.mobile_section5_des]: true,
-									[style.animate__bounceIn]: inView,
+									[style.animate__bounceIn]: true,
 								})}
 								     data-class="section5-des">
 									{item.des}
 								</div>
-								<img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
-								{/* {item?.json && <Player autoplay loop src={item?.json} style={item.mobile_style}></Player>} */}
+								{
+									item.mobile_img && <img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
+								}
+								{item?.mobile_lottie && <Player autoplay loop src={item?.mobile_lottie} style={item.mobile_style}></Player>}
 							</div>
 							{/* <div className={style.section5_des}> */}
 							{/* 	{item.des} */}
@@ -153,7 +166,7 @@ const Section5 = () => {
 			     setEnable(false);
 		     }}>
 			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, Autoplay, A11y, Controller]}
+				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 				spaceBetween={50}
 				ref={swiperRef}
 				grabCursor={true}
@@ -163,31 +176,14 @@ const Section5 = () => {
 					delay: 10 * 1000,
 					disableOnInteraction: true
 				}}
-				// navigation={{
-				// 	enabled: true,
-				// 	prevEl: '.swiper-button-prev',
-				// 	nextEl: '.swiper-button-next',
-				// 	hideOnClick: true,
-				// 	hiddenClass: 'hideClass'
-				// }}
 				loop={true}
 				scrollbar={{draggable: true}}
 			>
-				{carouselList.map((item, index) => {
+				{carouselList.concat(carouselList).map((item, index) => {
 					return <SwiperSlide key={index}>
 						<div className={style.section5_carousel_item}>
 							<img src={item.img} alt="img" className={style.section5_carousel_pic}/>
-					{/* 		{ */}
-					{/* 			item.json && */}
-				  {/* <Player */}
-					{/*   autoplay */}
-					{/*   loop */}
-					{/*   src={item.json} */}
-					{/*   style={item.style} */}
-				  {/* > */}
-
-				  {/* </Player> */}
-					{/* 		} */}
+							{item.pc_lottie && <Player autoplay loop src={item.pc_lottie} style={item.style}></Player>}
 						</div>
 						<div className={style.section5_des}>
 							{item.des}
@@ -203,7 +199,7 @@ const Section5 = () => {
 }
 
 
-const AnimationNumber = () =>{
+const AnimationNumber = React.memo(() =>{
 	const fontSize = {fontSize: 56}
 
 	const contextLang = useContext(languageContext);
@@ -273,6 +269,6 @@ const AnimationNumber = () =>{
 			</div>
 		</div>
 	)
-}
-
+});
+AnimationNumber.displayName = "AnimationNumber";
 export default Section5

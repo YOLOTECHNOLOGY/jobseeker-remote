@@ -9,6 +9,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "google",
+    "next",
     "prettier"
   ],
   "root": true,
@@ -18,8 +19,7 @@
       "jsx": true
     },
     "ecmaVersion": 11,
-    "project": "./tsconfig.json"
-
+    "project": ["./tsconfig.json"]
     // "createDefaultProgram": true
     // "sourceType": "module"
   },
@@ -71,7 +71,8 @@
     "react/no-unescaped-entities": "off",
     "import/extensions": "off",
     "camelcase": "off",
-    "@typescript-eslist/camelcase": 0
+    "@typescript-eslist/camelcase": 0,
+    "@next/next/inline-script-id": "off"
   },
   "ignorePatterns": ["next-env.d.ts", "lib/redirection.js", "components/GoogleMap/GoogleMap.tsx"],
   "settings": {

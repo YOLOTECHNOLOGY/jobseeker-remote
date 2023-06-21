@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import styles from '../index.module.scss'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
@@ -23,7 +23,7 @@ function EmailFactor(props: any) {
   const router = useRouter()
   const langKey = getLang()
   const { newGetStarted } = props.lang
-
+  const emailRef = useRef(null)
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
@@ -34,16 +34,19 @@ function EmailFactor(props: any) {
       checkIsEmailUseFun()
     }
   }
-
+  
   useEffect(() => {
     if (validateErr) {
       setValidateErr('')
     }
+    if(email){
+      emailRef.current = email
+     }
   }, [email])
 
   const checkIsEmailUseFun = () => {
     setLoading(true)
-    checkIsEmailUse({ email }).then((res) => {
+    checkIsEmailUse({ email:emailRef.current }).then((res) => {
       if (res?.data?.data) {
         setLoading(false)
         setValidateErr(newGetStarted.validateErr)
@@ -54,10 +57,10 @@ function EmailFactor(props: any) {
   }
 
   const sendOTPFun = () => {
-    authenticationSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({ email:emailRef.current })
       .then((res) => {
         console.log(res?.data?.data, 'res')
-        router.push(`/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${email}`)
+        router.push(`/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`)
       })
       .catch((error) => {
         dispatch(

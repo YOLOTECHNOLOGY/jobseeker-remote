@@ -38,7 +38,7 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   functionsTitleList,
   'seo_value',
 )
-console.log(main_job_function_ids,jobFunctionList,searchValues?.jobFunctions,{job_function_ids},function_job_title_ids,777799999)
+
   const main_function_values = getValue(
     searchValues?.functionTitles,
     functionsTitleList,

@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import style from './index.module.scss';
 import {getCountryKey, getLang} from 'helpers/country'
@@ -89,7 +90,7 @@ const follow_use  =  [
 	{img: `${process.env.S3_BUCKET_URL}/landing/inlink.svg`, link: 'https://www.linkedin.com/company/bossjob-yolo-technology/'},
 	{img: `${process.env.S3_BUCKET_URL}/landing/ins.svg`, link: 'https://www.instagram.com/Bossjobph'},
 	{img: `${process.env.S3_BUCKET_URL}/landing/youtube.svg`, link: 'https://www.youtube.com/channel/UCszmY1TPgEyikxF9w2a2vdw'},
-	{img: `${process.env.S3_BUCKET_URL}/landing/twitter.svg`, link: 'https://twitter.com/Bossjobph'},
+	{img: `${process.env.S3_BUCKET_URL}/landing/twitter.svg`, link: 'https://twitter.com/BossjobOfficial'},
 	{img: `${process.env.S3_BUCKET_URL}/landing/tiktok.svg`, link: 'https://tiktok.com/@bossjobph'},
 ]
 

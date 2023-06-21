@@ -10,19 +10,29 @@ import GoogleLogin from './link/google'
 import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
-
+import { useDispatch } from 'react-redux'
+import { jobbseekersLoginSuccess } from 'store/actions/auth/jobseekersLogin'
+import {jobbseekersSocialLoginSuccess} from 'store/actions/auth/jobseekersSocialLogin'
 interface IProps {
-  dictionary: any
+  dictionary: any,
+  isModal?:boolean,
+  handleEmailClick?:()=>void,
+  handlePhoneClick?:()=>void,
 }
 
 const Main = (props: IProps) => {
-  const { dictionary } = props
+  const { dictionary,isModal = false,handleEmailClick,handlePhoneClick } = props
   const { newGetStarted } = dictionary
   const { defaultLoginCallBack } = useGetStarted()
-
+  const dispatch = useDispatch()
   const jobseekersSocialResponse = useSelector(
     (store: any) => store.auth.jobseekersSocialLogin?.response
   )
+
+  useEffect(()=>{
+    dispatch(jobbseekersLoginSuccess({}))
+    dispatch(jobbseekersSocialLoginSuccess({}))
+  },[])
 
   useEffect(() => {
     const { data } = jobseekersSocialResponse
@@ -31,7 +41,7 @@ const Main = (props: IProps) => {
       defaultLoginCallBack(data)
     }
   }, [jobseekersSocialResponse?.data])
-
+ console.log({jobseekersSocialResponse})
   return (
     <>
       <div className={styles.list}>
@@ -43,8 +53,8 @@ const Main = (props: IProps) => {
         <Divider>{newGetStarted.continueWith}</Divider>
       </div>
       <ul className={`${styles.list} ${styles.listEmail}`}>
-        <EmailLink lang={dictionary} />
-        <PhoneLink lang={dictionary} />
+        <EmailLink lang={dictionary} isModal={isModal} handleClick={handleEmailClick}/>
+        <PhoneLink lang={dictionary} isModal={isModal} handleClick={handlePhoneClick}/>
       </ul>
     </>
   )

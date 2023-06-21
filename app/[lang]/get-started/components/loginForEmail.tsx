@@ -16,20 +16,33 @@ import { formatTemplateString } from 'helpers/formatter'
 import Link from 'next/link'
 import { CircularProgress } from 'app/[lang]/components/MUIs'
 interface IProps {
-  lang: any
+  lang: any,
+  isModal?:boolean,
+  handlePhoneClick?:()=>void,
+  setLoginData?:any
 }
 
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const {
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    isModal=false,
+    handlePhoneClick,
+    setLoginData,
   } = props
 
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
   const [loading,setLoading] = useState<boolean>(false)
   const pathname = usePathname()
+  const emailRef = useRef(null)
+ 
+  useEffect(()=>{
+   if(email){
+    emailRef.current = email
+   }
+  },[email])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -44,15 +57,19 @@ const loginForEmail = (props: IProps) => {
 
   const sendOpt = () => {
     setLoading(true)
-    console.log({email})
-    authenticationSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({email: emailRef.current })
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
-        if (user_id) {
-          router.push(`${pathname}?step=2&&email=${email}&userId=${user_id}&avatar=${avatar}`)
-        } else {
-          router.push(`${pathname}?step=2&&email=${email}`)
+        if(isModal){
+          setLoginData({...res?.data?.data,email:emailRef.current})
+        }else{
+          if (user_id) {
+            router.push(`${pathname}?step=2&&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`)
+          } else {
+            router.push(`${pathname}?step=2&&email=${emailRef.current}`)
+          }
         }
+       
       })
       .catch((error) => {
         dispatch(
@@ -82,7 +99,10 @@ const loginForEmail = (props: IProps) => {
 
   return (
     <>
-      <h2>{newGetStarted.title}</h2>
+      {
+        !isModal &&  <h2>{newGetStarted.title}</h2>
+      }
+  
       <div className={styles.phoneNumber}>
       {/* <form  autoComplete='on' onSubmit={e => e.preventDefault()}>
         <div style={{ opacity: 0, height: '1px', overflow: 'hidden', pointerEvents: 'none' }}>
@@ -114,20 +134,24 @@ const loginForEmail = (props: IProps) => {
           }
         </button>
         {/* </form> */}
+      
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
-        <p className={styles.tips}>
-          {newGetStarted.tips}{' '}
-          <Link
-            href={
-              process.env.ENV === 'development'
-                ? 'https://dev.employer.bossjob.com'
-                : 'https://employer.bossjob.com'
-            }
-            className={styles.AuthCTALink}
-          >
-            {newGetStarted.employer}
-          </Link>
-        </p>
+        {
+           !isModal && <p className={styles.tips}>
+           {newGetStarted.tips}{' '}
+           <Link
+             href={
+               process.env.ENV === 'development'
+                 ? 'https://dev.employer.bossjob.com'
+                 : 'https://employer.bossjob.com'
+             }
+             className={styles.AuthCTALink}
+           >
+             {newGetStarted.employer}
+           </Link>
+         </p>
+        }
+        
       </div>
       <div>
         <div className={classNames([styles.divider, styles.divider_none])}>
@@ -138,7 +162,7 @@ const loginForEmail = (props: IProps) => {
         <GoogleLogin lang={props.lang} />
         <FacebookLogin lang={props.lang} />
         <AppleLogin lang={props.lang} />
-        <PhoneLink lang={props.lang} />
+        <PhoneLink lang={props.lang} isModal={isModal} handleClick={handlePhoneClick}/>
       </div>
     </>
   )

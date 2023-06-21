@@ -33,8 +33,7 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
     setEmailError(errorText)
   }, [email])
 
-  console.log('inputRef', inputRef)
-
+  
  useEffect(()=>{
   setEmailError(validateErr)
  },[validateErr])

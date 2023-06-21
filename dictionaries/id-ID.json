@@ -1,5 +1,6 @@
 {
   "header": {
+    "home": "Home",
     "findJobs": "Find Jobs",
     "companies": "Companies",
     "courses": "Courses",
@@ -319,7 +320,7 @@
       "loading": "Loading",
       "basedOnYou": "Based on your"
     },
-    "seeMoreBtn": "See More",
+    "seeMoreBtn": "More",
     "topCompany": "Top Companies",
     "companyHiring": "Top Companies Hiring",
     "jobsHiring": "jobs hiring",
@@ -332,7 +333,8 @@
     "seo": {
       "title": "Bossjob - Career Platform for Professionals in {{country}}",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
-    }
+    },
+    "jobs": "jobs"
   },
   "jobDetail": {
     "header": {
@@ -845,7 +847,8 @@
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
     "ImHiring": "I’m employees",
-    "education":"Education"
+    "education": "Education",
+    "skip": "Skip & explore"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1184,6 +1187,10 @@
       "jobsDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
       "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
       "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+    },
+    "landing": {
+      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
+      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
     }
   },
   "landing": {

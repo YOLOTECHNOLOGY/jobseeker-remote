@@ -54,6 +54,8 @@ async function generateSEO(props: any) {
   const location = flatLocations.find(item => item.seo_value === searchValues.location?.[0])?.value
   const url = new URLSearchParams(toPairs(searchParams)).toString()
   const seoCanonical = '/jobs-hiring/' + params.path + '?' + url
+  console.log('searchQuery', searchQuery);
+  console.log('flatLocations',flatLocations);
   if (searchQuery && !location) {
     seoMetaTitle = formatTemplateString(jobSearch.queryTitle, {
       searchQuery,

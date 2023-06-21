@@ -6,6 +6,7 @@
         min-height: calc(100vh - 54px);
         .bg{
             background: #fff;
+            filter: unset;
          }
        .container{
          width: 100%;
@@ -32,6 +33,10 @@
             }
         }
        }
+       .dialogContainer{
+         padding: 20px;
+      }
+
        .tips{
         bottom: 16px;
         width: 100%;

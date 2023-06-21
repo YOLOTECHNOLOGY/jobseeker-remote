@@ -81,7 +81,6 @@ const Main = async (props: any) => {
         <div className={styles.content}>
           <div className={styles.table}>
             {/* <Loading/> */}
-            <JobAlert searchValues={props.searchValues} config={props.config} />
             <Suspense fallback={<Loading />}>
               <Table searchValues={props.searchValues ?? null} lang={search} config={props.config} />
             </Suspense>
@@ -93,6 +92,7 @@ const Main = async (props: any) => {
               isShowArrowIcon={false}
               className={styles.arrowIconPostion}
             />
+            <JobAlert searchValues={props.searchValues} config={props.config} />
             <div className={styles.qrCode}>
               <Image src={AppDownQRCode} alt='app down' width='85' height='88' />
               <div className={styles.rightContainer}>

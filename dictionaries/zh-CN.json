@@ -1,10 +1,11 @@
 {
   "header": {
+    "home": "首页",
     "findJobs": "职位",
     "companies": "公司",
     "courses": "课程",
     "careerGuide": "职业指南",
-    "hiring": "I'm hiring",
+    "hiring": "我要招聘",
     "getStarted": "登录/注册",
     "manageResume": "简历管理",
     "myJobs": "我的工作",
@@ -192,7 +193,7 @@
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
     },
-    "companiesEmpty": "未找到公司"
+    "companiesEmpty": "暂无公司信息"
   },
   "companyDetail": {
     "tab": {
@@ -319,7 +320,7 @@
       "loading": "加载中...",
       "basedOnYou": "基于你的"
     },
-    "seeMoreBtn": "查看更多",
+    "seeMoreBtn": "查看",
     "topCompany": "热门企业",
     "companyHiring": "热门企业招聘",
     "jobsHiring": "招聘工作",
@@ -332,7 +333,8 @@
     "seo": {
       "title": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
       "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
-    }
+    },
+    "jobs": "职位"
   },
   "jobDetail": {
     "header": {
@@ -430,7 +432,8 @@
     "seo": {
       "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
       "desc": "申请{{name}}的{{jobTitle}} {{jobId}}。现在开始找位于{{location}}, {{fullAddress}}的更多{{categoryMetaText}}工作！"
-    }
+    },
+    "jobs": "职位"
   },
   "search": {
     "location": "城市",
@@ -845,7 +848,8 @@
     "freshGraduate": "应届毕业生",
     "companyName": "公司名称",
     "ImHiring": "我要招聘",
-    "education": "教育"
+    "education": "教育",
+    "skip": "skip"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -1184,6 +1188,10 @@
       "jobsDescription": "上Bossjob, 搜索{{companyName}} 最新发布的{{country}} 工作机会！在线和老板沟通求职意向，AI匹配工作，快速入职！",
       "lifeTitle": "{{companyName}}的文化与生活 | Bossjob",
       "lifeDescription": "来Bossjob上了解位于{{country}}的{{companyName}}的企业文化和职场生活！全面了解企业的工商信息和最新招聘信息，投递前做好企业调研，入职更安心！"
+    },
+    "landing": {
+      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
+      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
     }
   },
   "landing": {

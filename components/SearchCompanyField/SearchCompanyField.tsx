@@ -9,7 +9,7 @@ import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWit
 
 // Styles
 import styles from './SearchCompanyField.module.scss'
-import { fetchCompanySuggestionsService } from 'store/services/companies/fetchCompanySuggestions'
+import { fetchCompanySuggestionsService } from 'store/services/companies2/fetchCompanySuggestions'
 
 interface ISearchCompanyField {
   defaultQuery?: string

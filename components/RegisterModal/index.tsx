@@ -7,7 +7,7 @@ import Text from "components/Text"
 import { getCookie } from "helpers/cookies"
 import { getItem, removeItem, setItem } from "helpers/localStorage"
 import moment from "moment"
-import quickStyles from 'pages/quick-upload-resume/styles.module.scss'
+import quickStyles from 'app/(quick-upload)/[lang]/quick-upload-resume/styles.module.scss'
 import React, { useState, useEffect, useRef } from 'react'
 import styles from './index.module.scss'
 import {

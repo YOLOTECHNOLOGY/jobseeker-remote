@@ -66,7 +66,7 @@ const Section7 = () => {
 			      target="_blank"
 			      href={seeAllLink}
 			      className={style.link + ' ' + style.desktop}>
-				See all
+				{contextLang.landing.section7_see_all}
 			</Link>
 			<span>{contextLang.landing.section7_title}</span>
 			<Link target="_blank" href={seeAllLink} className={style.link + ' ' + style.desktop}>

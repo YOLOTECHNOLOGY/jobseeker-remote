@@ -6,13 +6,13 @@ import styles from '../../../index.module.scss'
 
 const Ad = ({children}:any) => {
   return (
-    <div className={styles.adContainer}>
+    <div className={styles.recommendContainer}>
       <div className={styles.mainFunction}>{children}</div>
-      <div className={styles.ad}>
-        <div className={styles.ad_container}>
+      <div className={styles.recommend}>
+        <div className={styles.recommend_container}>
           <AdSlot adSlot={'homepage/rectangle-banner-1'} />
         </div>
-        <div className={styles.ad_container}>
+        <div className={styles.recommend_container}>
           <AdSlot adSlot={'homepage/rectangle-banner-2'} />
         </div>
       </div>

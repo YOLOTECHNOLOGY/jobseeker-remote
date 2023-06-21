@@ -4,7 +4,7 @@ import {
   fetchCompanyDetailSuccess,
   fetchCompanyDetailFailed,
 } from 'store/actions/companies/fetchCompanyDetail'
-import { fetchCompanyDetailService } from 'store/services/companies/fetchCompanyDetail'
+import { fetchCompanyDetailService } from 'store/services/companies2/fetchCompanyDetail'
 
 function* fetchCompanyDetailReq(actions) {
   try {

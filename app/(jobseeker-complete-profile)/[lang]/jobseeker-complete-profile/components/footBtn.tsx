@@ -11,6 +11,7 @@ interface btnProps{
     disabled?:boolean,
     backText?:string,
     isMobile?:boolean, 
+    skip?:string
 }
 const FootBtn = (
     {

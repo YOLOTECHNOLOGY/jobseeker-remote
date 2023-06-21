@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest, take } from 'redux-saga/effects'
 import { accessToken, refreshToken, setCookie, userKey } from 'helpers/cookies'
 
 import { JOBBSEEKERS_LOGIN_REQUEST } from 'store/types/auth/jobseekersLogin'
@@ -12,6 +12,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import * as fbq from 'lib/fpixel'
 
 function* loginReq(actions) {
+  console.log(actions)
   try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
@@ -43,16 +44,16 @@ function* loginReq(actions) {
 
       // Send register event (First time login user)
       if (
-        process.env.ENV === 'production' && 
-        loginData.is_new_account && typeof window !== 'undefined' 
+        process.env.ENV === 'production' &&
+        loginData.is_new_account && typeof window !== 'undefined'
       ) {
         // Facebook Pixel
         if (window.fbq) {
-          yield fbq.event('sign_up', { 
+          yield fbq.event('sign_up', {
             user_id: loginData?.id
           })
         }
-        
+
         // Google analytic Event
         if (window.gtag) {
           yield window.gtag('event', 'sign_up', {
@@ -101,5 +102,11 @@ function* loginReq(actions) {
 }
 
 export default function* jobseekersLoginSaga() {
-  yield takeLatest(JOBBSEEKERS_LOGIN_REQUEST, loginReq)
+  while (true) {
+    console.log('jobseekersLoginSaga1')
+    const action = yield take(JOBBSEEKERS_LOGIN_REQUEST)
+    console.log({ action })
+    yield loginReq(action)
+    console.log('jobseekersLoginSaga2')
+  }
 }

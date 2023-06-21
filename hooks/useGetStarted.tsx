@@ -11,8 +11,8 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 
 import { getCountryId, getLanguageId } from 'helpers/country'
-
-import router, { useRouter } from 'next/router'
+import { useRouter, useSearchParams } from 'next/navigation'
+// import router, { useRouter } from 'next/router'
 import { getCookie } from 'helpers/cookies'
 
 const useGetStarted = () => {
@@ -27,12 +27,11 @@ const useGetStarted = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
-
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
-
+  const searchParams = useSearchParams()
   useEffect(() => {
-    const redirect = routes.query.redirect
+    const redirect = searchParams.get('redirect')
     if (Array.isArray(redirect)) {
       setDefaultRedirectPage(redirect[0])
     } else {
@@ -84,12 +83,16 @@ const useGetStarted = () => {
   }
 
   const handleAuthenticationJobseekersLogin = () => {
+    const query: any = {}
+    searchParams.forEach((value, key) => {
+      query[key] = value
+    })
     setEmailOTPInputDisabled(true)
     const data = {
       email,
       otp: emailTOP,
       source: 'web',
-      ...router.query,
+      ...query,
       userId
     }
     dispatch(jobbseekersLoginRequest(data))
@@ -153,24 +156,25 @@ const useGetStarted = () => {
 
   const handleAuthenticationSendEmailMagicLink = () => {
     let params: any = {}
+    const pathname = location.pathname
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     if (isChatRedirect && userId) {
       params.redirect = isChatRedirect
-      params.redirect_fail = router.asPath
+      params.redirect_fail = pathname
       localStorage.removeItem('isChatRedirect')
-    } else if (router.pathname === '/quick-upload-resume') {
+    } else if (pathname?.includes('/quick-upload-resume')) {
       params = {
         redirect: userId ? '/jobs-hiring/job-search' : '/jobseeker-complete-profile',
-        redirect_fail: router.asPath
+        redirect_fail: pathname
       }
-    } else if (router.pathname === '/resumetemplate') {
+    } else if (pathname?.includes('/resumetemplate')) {
       params = {
         redirect: userId ? '/manage-profile?tab=resume' : '/jobseeker-complete-profile',
-        redirect_fail: router.asPath
+        redirect_fail: pathname
       }
-    } else if (router.pathname === '/job/[keyword]') {
+    } else if (pathname?.includes('/job/[keyword]')) {
       params = {
-        redirect: userId ? router.asPath : '/jobseeker-complete-profile',
+        redirect: userId ? pathname : '/jobseeker-complete-profile',
         redirect_fail: '/get-started'
       }
     } else {

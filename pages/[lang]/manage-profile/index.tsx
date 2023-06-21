@@ -338,7 +338,15 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   </div>
                 </div>
                 <div className={styles.companyInfoWrapper}>
-                  <Text textStyle='lg'>{workExp.company}</Text>
+                  <Text textStyle='lg'>{workExp.company}   {
+                    getValueById(
+                      config,
+                      workExp.country_id,
+                      'country_id'
+                    ) ?  <span style={{color:'#bcbcbc'}}>|</span> : null
+                  }</Text>
+                 
+
                   <Text textStyle='lg'>{`${workExp.location || ''}${getValueById(
                     config,
                     workExp.country_id,
@@ -1301,12 +1309,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
   store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
   store.dispatch(END)
   await (store as any).sagaTask.toPromise()
-  // const storeState = store.getState()
-  // const config = storeState.config.config.response
-
   return {
     props: {
-      // config,
       accessToken,
       lang
     }

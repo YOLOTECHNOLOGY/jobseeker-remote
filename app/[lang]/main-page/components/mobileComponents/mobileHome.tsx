@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from 'app/[lang]/index.module.scss'
 import JobCard from './jobsCard'
-import { fetchCompanyTopService } from 'store/services/companies/fetchCompanyTop'
+import { fetchCompanyTopService } from 'store/services/companies2/fetchCompanyTop'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowForwardIosIcon } from 'app/[lang]/components/MuiIcons'

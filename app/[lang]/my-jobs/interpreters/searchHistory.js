@@ -5,10 +5,10 @@ import { getCountryId } from 'helpers/country';
 export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
-            return fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=10&query=${context.value}`,{
-                headers:{
-                    'Country-Id': getCountryId()
-                  } 
+            return fetch(`${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=10&query=${context.value}`, {
+                headers: {
+                    'Country-Id': '' + getCountryId()
+                }
             })
                 .then((resp) => resp.json())
                 .then((data) => data.data.items)

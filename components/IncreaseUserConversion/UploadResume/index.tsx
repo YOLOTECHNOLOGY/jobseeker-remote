@@ -11,7 +11,7 @@ import { setItem } from 'helpers/localStorage'
 import { useDispatch } from 'react-redux'
 
 import { fetchUserWorkExperienceQuickUploadResume } from 'store/actions/users/fetchUserWorkExperience'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 const UploadResume = (props: any) => {
   const dispatch = useDispatch()

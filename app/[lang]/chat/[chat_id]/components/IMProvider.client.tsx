@@ -170,7 +170,7 @@ const IMProvider = ({ children, lang }: any) => {
 
     const searchParams = useMemo(() => {
         return {
-            type: status,
+            type: status === 'unread' ? null : status,
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
@@ -208,7 +208,7 @@ const IMProvider = ({ children, lang }: any) => {
         }
     }, [lang])
     useEffect(() => {
-        if (userId && accessToken ) {
+        if (userId && accessToken) {
             IMManager.accessUser(
                 '' + userId + '_j',
                 auid => getAuth(auid).then(result => {
@@ -336,7 +336,9 @@ const IMProvider = ({ children, lang }: any) => {
                 const newData = {
                     ...data?.data?.job_application,
                     initiated_role: data?.data?.initiated_role,
-                    chatStatus: data?.data?.status
+                    delete_status: data?.data?.delete_status,
+                    chatStatus: data?.data?.status,
+                    self_role: 'jobseeker'
                 }
                 contextRef.current.imState = newData
                 const chatId = chatIdRef.current
@@ -350,7 +352,9 @@ const IMProvider = ({ children, lang }: any) => {
             const newData = {
                 ...data?.data?.job_application,
                 initiated_role: data?.data?.initiated_role,
-                chatStatus: data?.data?.status
+                delete_status: data?.data?.delete_status,
+                chatStatus: data?.data?.status,
+                self_role: 'jobseeker'
             }
             dispatch(updateImState({ chatId, imState: newData }))
         },
@@ -376,7 +380,12 @@ const IMProvider = ({ children, lang }: any) => {
             updateChatListRef.current?.()
         },
         changeChat(chatId) {
-            setChatId(chatId)
+            if (+chatId) {
+                setChatId(chatId)
+            } else {
+                setChatId(null)
+            }
+            // router.push(`/${lang}/chat/${chatId}`)
         },
         showToast(type, content) {
             dispatch(

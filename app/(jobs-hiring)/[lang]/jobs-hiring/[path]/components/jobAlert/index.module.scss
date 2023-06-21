@@ -10,6 +10,16 @@
         padding-left: 24px;
     }
 
+    &Main {
+        background-color: #ffffff;
+        display: flex;
+        flex: 1;
+        padding: 12px 13px;
+        border-radius: 8px;
+        justify-content: center;
+        border: 1px solid #579BF5;
+    }
+
     &Item {
         font-family: 'Product Sans';
         font-style: normal;

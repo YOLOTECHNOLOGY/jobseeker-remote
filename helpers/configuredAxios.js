@@ -52,7 +52,7 @@ const getUrl = (baseURL) => {
       url = process.env.RECRUITERS_BOSSJOB_URL
       break
     case 'resumes':
-       url = process.env.RESUME_URL
+      url = process.env.RESUME_URL
     default:
       break
   }
@@ -72,7 +72,7 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
   let headers = {
     // remoteAddress: remoteAddress,
     // source: isMobile ? 'mobile-web' : 'web',
-    'Country-Id': getCountryId()
+    'Country-Id': '' + getCountryId()
   }
 
 

@@ -55,6 +55,8 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   // 验证码数组
   const codeArray = useMemo(() => {
     setCurrentIndex(inputValue?.length)
+    console.log({inputValue})
+    onChange?.(inputValue)
     return new Array(length).fill('').map((item, index) => inputValue[index] || '')
   }, [inputValue, length])
   // 是否获取焦点，仅在 focus 时展示 Input 闪烁条
@@ -98,7 +100,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
     const eValue = e.target.value
     const tempValue = eValue.replace(/[^0-9]/g, '').slice(0, length)
     setInputValue(tempValue)
-    onChange?.(tempValue)
+    //  onChange?.(tempValue)
   }
 
   const handleCodeBoxClick = (e: any) => {

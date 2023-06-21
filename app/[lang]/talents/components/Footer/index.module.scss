@@ -23,6 +23,7 @@
   letter-spacing: 0.02em;
   color: #FFFFFF;
   margin-bottom: 42px;
+  font-family: 'Poppins' !important;
 }
 
 .footer_download {
@@ -68,6 +69,7 @@
   justify-content: space-between;
   margin: 0 auto;
   margin-top: 160px;
+  text-transform :capitalize
 
 }
 
@@ -166,7 +168,6 @@
 
 .mobile_footer_title {
   width: 2.80rem;
-
   font-weight: 700;
   font-size: .32rem;
   line-height: .40rem;
@@ -177,6 +178,7 @@
   padding-top: .83rem;
   margin-right: auto;
   margin-left: auto;
+  font-family: "Poppins" !important;
 }
 .site_map_link{
   &:hover{
