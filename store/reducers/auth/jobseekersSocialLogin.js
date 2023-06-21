@@ -1,7 +1,8 @@
 import {
   JOBBSEEKERS_SOCIALLOGIN_REQUEST,
   JOBBSEEKERS_SOCIALLOGIN_SUCCESS,
-  JOBBSEEKERS_SOCIALLOGIN_FAILED
+  JOBBSEEKERS_SOCIALLOGIN_FAILED,
+  JOBBSEEKERS_SOCIALLOGIN_CLEAR
 } from 'store/types/auth/jobseekersSocialLogin'
 
 const initialState = {
@@ -31,6 +32,13 @@ export default function jobseekersSocialLogin(state = initialState, action) {
         error: action.error,
         response: {}
       }
+      case JOBBSEEKERS_SOCIALLOGIN_CLEAR:
+        return {
+          ...state,
+          fetching: false,
+          error: null,
+          response: {}
+        }
     default:
       return { ...state }
   }

@@ -114,7 +114,7 @@ const verifyEmail = function (props) {
   return (
     <>
       <div className={styles.phoneNumber}>
-        <div className={styles.optBox} style={{paddingTop : isModal ? '44px' : '0'} }>
+        <div className={styles.optBox} >
           {
             !isModal &&   <>
             {userId ? (

@@ -12,6 +12,7 @@ import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../hooks/useGetStarted'
 import { useDispatch } from 'react-redux'
 import { jobbseekersLoginSuccess } from 'store/actions/auth/jobseekersLogin'
+import {jobbseekersSocialLoginSuccess} from 'store/actions/auth/jobseekersSocialLogin'
 interface IProps {
   dictionary: any,
   isModal?:boolean,
@@ -30,6 +31,7 @@ const Main = (props: IProps) => {
 
   useEffect(()=>{
     dispatch(jobbseekersLoginSuccess({}))
+    dispatch(jobbseekersSocialLoginSuccess({}))
   },[])
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const Main = (props: IProps) => {
       defaultLoginCallBack(data)
     }
   }, [jobseekersSocialResponse?.data])
-
+ console.log({jobseekersSocialResponse})
   return (
     <>
       <div className={styles.list}>
