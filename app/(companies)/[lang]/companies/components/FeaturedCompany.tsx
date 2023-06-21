@@ -28,7 +28,7 @@ const FeaturedCompany = (props: IProps) => {
         <div className={styles.featuredCompany}>
           {/* company logo */}
           <div className={styles.featuredCompanyLogo}>
-            <Link to={'/' + langKey + featuredCompany?.company_url || '/'} className={styles.featuredCompanyLogoLink}>
+            <Link to={'/' + langKey + featuredCompany?.company_url || '/'} className={styles.featuredCompanyLogoLink} target="_blank">
               {featuredCompany?.logo && <Image
                 fill={true}
                 src={featuredCompany?.logo}
@@ -45,6 +45,7 @@ const FeaturedCompany = (props: IProps) => {
                 to={'/' + langKey + featuredCompany?.company_url || '/'}
                 className={styles.featuredCompanyName}
                 title={featuredCompany?.name}
+                target="_blank"
               >
                 {featuredCompany?.name}
               </Link>
