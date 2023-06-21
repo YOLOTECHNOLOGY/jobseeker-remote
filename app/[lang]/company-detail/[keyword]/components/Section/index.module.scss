@@ -1,0 +1,26 @@
+.section{
+}
+.title_layout{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.title{
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+.tag{}
+.section_content_wrapper{
+  padding-bottom: 42px;
+}
+
+.split{
+  border-bottom: 1px solid #E5E6EB;
+  margin-bottom: 42px;
+}
