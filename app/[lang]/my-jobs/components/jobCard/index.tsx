@@ -124,7 +124,13 @@ const JobCard = (props: any) => {
     changeJobValue(config, job)
     return job
   }, [originJob])
-  console.log('debug my-job card: ', {originJob, memoedJob, config})
+
+  const jobBenefits = useMemo(() => {
+    const benefits =  originJob?.job_benefits || []
+    return benefits.map( (benefit) => {
+      return getValueById(config, benefit.id, 'job_benefit_id', 'name')
+    }).filter(Boolean).join(' | ')
+  }, [originJob?.job_benefits, config])
 
   const {
     job_title,
@@ -162,7 +168,6 @@ const JobCard = (props: any) => {
     reco_from
   } = memoedJob
   const { chatInfos } = useContext(ChatInfoContext)
-  console.log({ job_benefits, originJob, memoedJob })
   const chat = useMemo(() => {
     return chatInfos.find((chatInfo) => chatInfo.recruiter_id === recruiter_id)
   }, [chatInfos])
@@ -386,11 +391,8 @@ const JobCard = (props: any) => {
             <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
               {(job_skills ?? '').split(',').filter(Boolean).join(' | ')}
             </div>
-            <div className={styles.benefits} title={job_benefits}>
-              {job_benefits
-                ?.map((item) => item.name)
-                .filter(Boolean)
-                .join(' | ')}
+            <div className={styles.benefits} title={'benefits'}>
+              {jobBenefits}
             </div>
           </div>
         </div>
