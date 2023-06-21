@@ -138,7 +138,8 @@ const WorkExperience = (props: any) => {
     currentlyWorkHere,
     from,
     to,
-    placeholder
+    placeholder,
+    skip
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
@@ -458,6 +459,7 @@ const WorkExperience = (props: any) => {
           rightText={Next2}
           backClick={backClick}
           backText={back}
+          skip={skip}
           disabled={isDisabled}
           handleClick={handleSubmit}
         />

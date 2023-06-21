@@ -64,7 +64,8 @@ const EducationExperience = (props: any) => {
     fillThisLater,
     Next3,
     back,
-    studyPeriod
+    studyPeriod,
+    skip
   } = lang?.profile || {}
 console.log({userDetail})
  useEffect(()=>{
@@ -219,6 +220,7 @@ console.log({userDetail})
           backText={isMobile ? fillThisLater : back}
           backClick={backClick}
           disabled={isDisabled}
+          skip={skip}
           handleClick={handleSubmit}
         />
       </div>
