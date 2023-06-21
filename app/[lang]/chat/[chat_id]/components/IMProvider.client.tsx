@@ -338,7 +338,7 @@ const IMProvider = ({ children, lang }: any) => {
                     initiated_role: data?.data?.initiated_role,
                     delete_status: data?.data?.delete_status,
                     chatStatus: data?.data?.status,
-                    self_role:'jobseeker'
+                    self_role: 'jobseeker'
                 }
                 contextRef.current.imState = newData
                 const chatId = chatIdRef.current
@@ -354,7 +354,7 @@ const IMProvider = ({ children, lang }: any) => {
                 initiated_role: data?.data?.initiated_role,
                 delete_status: data?.data?.delete_status,
                 chatStatus: data?.data?.status,
-                self_role:'jobseeker'
+                self_role: 'jobseeker'
             }
             dispatch(updateImState({ chatId, imState: newData }))
         },
@@ -380,7 +380,12 @@ const IMProvider = ({ children, lang }: any) => {
             updateChatListRef.current?.()
         },
         changeChat(chatId) {
-            setChatId(chatId)
+            if (+chatId) {
+                setChatId(chatId)
+            } else {
+                setChatId(null)
+            }
+            // router.push(`/${lang}/chat/${chatId}`)
         },
         showToast(type, content) {
             dispatch(

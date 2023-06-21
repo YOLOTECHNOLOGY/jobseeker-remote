@@ -193,7 +193,7 @@
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
     },
-    "companiesEmpty": "Companies Not Found"
+    "companiesEmpty": "暂无公司信息"
   },
   "companyDetail": {
     "tab": {
@@ -849,7 +849,7 @@
     "companyName": "公司名称",
     "ImHiring": "我要招聘",
     "education": "教育",
-    "skip":"跳过"
+    "skip": "skip"
   },
   "chat": {
     "chatTitle": "聊天",
