@@ -66,7 +66,7 @@ const FeaturedCompany = (props: IProps) => {
 
             {/* company description */}
             <Text textStyle='lg' tagName='p' className={styles.featuredCompanyDescription}>
-              {featuredCompany?.short_description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, aliquam animi recusandae nam quam eum odit eos ullam optio quidem!
+              {featuredCompany?.short_description}
             </Text>
 
             {/* company photos */}

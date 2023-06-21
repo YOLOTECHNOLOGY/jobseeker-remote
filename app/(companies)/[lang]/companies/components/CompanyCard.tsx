@@ -30,7 +30,7 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
       </div>
       <div className={styles.companyCardRight}>
         <Text textStyle='lg' className={styles.companyCardName}>
-          <Link to={'/' + langKey + companyUrl}>{truncateWords(company.name, 60)}</Link>
+          <Link to={'/' + langKey + companyUrl} title={company?.name}>{truncateWords(company.name, 60)}</Link>
         </Text>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>
           {company?.industry}
