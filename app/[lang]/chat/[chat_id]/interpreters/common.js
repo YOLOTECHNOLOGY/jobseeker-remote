@@ -3,26 +3,32 @@ import { scripts, M } from 'imforbossjob'
 import { updateChat } from './services/common'
 const { utils } = scripts
 const { RequestResult } = utils
+// eslint-disable-next-line import/no-anonymous-default-export
 export default command => command.cata({
     error: err => M(context => Promise.resolve().then(() => {
         context.handleError?.(err)
+        return Promise.reject(err)
     })),
     end: type => M(context => Promise.resolve().then(() => {
         context.handleFinish(type)
     })),
     just: M.of,
-    requestImState: chatId => M(() =>
-        Promise.resolve().then(() => {
+    requestImState: chatId => M(() => {
+        if (+chatId === NaN) {
+            return Promise.resolve(RequestResult.error('Chat_id is not a number'))
+        }
+        return Promise.resolve().then(() => {
             return updateChat(chatId)
                 .then(result => RequestResult.success(result.data))
                 .catch(error => RequestResult.error(error))
-        })),
+        })
+    }),
     updateImState: (chatId, data) => M(context => new Promise(resolve => {
         context.updateImState(chatId, data)
-        setTimeout(()=>resolve({chatId,imSate:data}), 0)
+        setTimeout(() => resolve({ chatId, imSate: data }), 0)
     })),
-    getLocalImState:chatId =>  M(context => new Promise(resolve => {
-        const state =  context.getLocalImState(chatId)
+    getLocalImState: chatId => M(context => new Promise(resolve => {
+        const state = context.getLocalImState(chatId)
         resolve(state)
     })),
     postPageNotification: (message, state) => M(context => Promise.resolve().then(() => {
@@ -57,7 +63,11 @@ export default command => command.cata({
         context.hideModals?.()
     })),
     changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
-        context.changeChat?.(chatId)
+        if(!chatId){
+            context.changeChat?.('list')
+        } else {
+            context.changeChat?.(chatId)
+        }
     })),
     updateTotalUnreadNumber: totalUnreadNumber => M(context => Promise.resolve().then(() => {
         context.updateTotalUnreadNumber?.(totalUnreadNumber)

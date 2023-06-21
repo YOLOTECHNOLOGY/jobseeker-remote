@@ -25,13 +25,6 @@ const CompanyCardList = ({
 }: ICompanyCardList) => {
   return (
     <div className={styles.companyList}>
-      {isLoading &&
-        [...Array(9)].map((_, i) => (
-          <div className={styles.companyItem} key={i}>
-            <CompanyCardLoader />
-          </div>
-        ))}
-
       {!isLoading &&
         companiesList?.length > 0 &&
         companiesList.map((item) => (

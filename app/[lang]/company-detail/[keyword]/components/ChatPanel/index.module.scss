@@ -1,0 +1,20 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  width: 368px;
+  border: 1px solid #E5E6EB;
+  border-radius: 8px;
+}
+.chatItem{
+  display: flex;
+    flex-direction: row;
+}
+.chatHeader{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: gray;
+  margin-right: 10px;
+}
