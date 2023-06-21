@@ -104,6 +104,7 @@ const Companies = (props: IProps) => {
     setSearchQuery(newQueries)
     dispatch(fetchCompanyFilterRequest(newQueries))
     setReset(isEmpty && num === 1)
+    window.scrollTo(0, 0)
   }
 
   const handleSortFilter = (query) => {
