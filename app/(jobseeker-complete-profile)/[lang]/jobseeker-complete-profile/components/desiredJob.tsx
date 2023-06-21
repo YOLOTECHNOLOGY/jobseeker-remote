@@ -200,6 +200,7 @@ const EducationExperience = (props: any) => {
     back,
     desiredSalary,
     desiredSalaryCurrency,
+    skip
   } = lang?.profile || {}
 
   const backClick = () => {
@@ -368,6 +369,7 @@ const EducationExperience = (props: any) => {
        showBack={!isMobile}
        backClick={backClick}
        disabled={isDisabled}
+       skip={skip}
        handleClick={handleSubmit(handleUpdateProfile)}
        />
 

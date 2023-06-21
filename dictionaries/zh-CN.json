@@ -849,7 +849,7 @@
     "companyName": "公司名称",
     "ImHiring": "我要招聘",
     "education": "教育",
-    "skip":"跳过"
+    "skip": "skip"
   },
   "chat": {
     "chatTitle": "聊天",

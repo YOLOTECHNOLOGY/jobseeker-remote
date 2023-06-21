@@ -52,7 +52,8 @@ const BasicInformation = (props: any) => {
     lastName,
     experienced,
     freshGraduate,
-    thisFieldIsRequired
+    thisFieldIsRequired,
+    skip
   }  = profile || {} 
 
   const pathname = usePathname()
@@ -291,6 +292,7 @@ const BasicInformation = (props: any) => {
           loading={loading}
           backText = {back}
           rightText={Next1}
+          skip={skip}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
       </div>

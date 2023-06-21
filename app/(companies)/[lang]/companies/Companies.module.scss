@@ -142,12 +142,13 @@
 }
 
 .featuredCompanyAbout {
-  margin-top: 8px;
-  margin-bottom: 12px;
+  padding-top: 8px;
+  padding-bottom: 12px;
   max-width: 430px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 20px;
 
   @include msd {
     max-width: 100%;
@@ -158,7 +159,6 @@
   margin-right: 8px;
   font-weight: 400;
   font-size: 13px;
-  line-height: 20px;
 }
 
 .featuredCompanyAboutItemSeparator {
