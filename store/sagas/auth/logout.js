@@ -5,7 +5,7 @@ import { LOGOUT_REQUEST } from 'store/types/auth/logout'
 import { removeCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailClear } from 'store/actions/users/fetchUserOwnDetail'
 import jobseekersLogin from 'store/reducers/auth/jobseekersLogin'
-import { JOBBSEEKERS_LOGIN_CLEAR } from 'store/types/auth/jobseekersLogin'
+import jobseekersSocialLogin from 'store/reducers/auth/jobseekersSocialLogin'
 
 function* logoutReq() {
   // const payload = {
@@ -24,6 +24,9 @@ function* logoutReq() {
   removeCookie('accessToken')
   removeCookie('refreshToken')
   yield put(fetchUserOwnDetailClear())
+  yield put(jobseekersSocialLogin({
+    type: JOBBSEEKERS_SOCIALLOGIN_CLEAR,
+  }))
   yield put(jobseekersLogin({
     type: JOBBSEEKERS_LOGIN_CLEAR,
   }))

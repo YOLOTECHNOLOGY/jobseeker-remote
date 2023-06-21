@@ -434,7 +434,7 @@ const Footer = ({lang}:any) => {
                 </Link>
                 <Link
                   className={styles.socialLink}
-                  to='https://twitter.com/Bossjobph'
+                  to='https://twitter.com/BossjobOfficial'
                   external
                   title='Bossjob Twitter'
                 >
@@ -746,7 +746,7 @@ const Footer = ({lang}:any) => {
                       </Link>
                       <Link
                         className={styles.socialLink}
-                        to='https://twitter.com/Bossjobph'
+                        to='https://twitter.com/BossjobOfficial'
                         external
                         title='Bossjob Twitter'
                       >
