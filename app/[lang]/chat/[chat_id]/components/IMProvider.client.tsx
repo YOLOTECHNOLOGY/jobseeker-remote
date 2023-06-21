@@ -170,7 +170,7 @@ const IMProvider = ({ children, lang }: any) => {
 
     const searchParams = useMemo(() => {
         return {
-            type: status,
+            type: status === 'unread' ? null : status,
             unread: isUnreadOn ? '1' : '0'
         }
     }, [isUnreadOn, status])
