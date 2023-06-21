@@ -848,7 +848,8 @@
     "freshGraduate": "应届毕业生",
     "companyName": "公司名称",
     "ImHiring": "我要招聘",
-    "education": "教育"
+    "education": "教育",
+    "skip":"跳过"
   },
   "chat": {
     "chatTitle": "聊天",

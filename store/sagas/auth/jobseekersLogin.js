@@ -12,7 +12,9 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import * as fbq from 'lib/fpixel'
 
 function* loginReq(actions) {
-  try {
+  console.log(actions)
+  
+   try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
     if (response.status >= 200 && response.status < 300) {
