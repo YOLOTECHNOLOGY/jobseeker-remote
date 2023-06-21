@@ -19,7 +19,7 @@ function EmailFactor(props: any) {
   const firstRender = useFirstRender()
   // const [email, setEmail] = useState<string>('')
   const [emailList, setEmailList] = useState<any>([])
-  const { setEmail, defaultLoginCallBack, handleAuthenticationJobseekersLogin } = useGetStarted()
+  const { setEmail, defaultLoginCallBack, handleAuthenticationJobseekersLogin,userInfo } = useGetStarted()
   const [step, setStep] = useState<number>(1)
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -28,7 +28,7 @@ function EmailFactor(props: any) {
   const dispatch = useDispatch()
   const langKey = getLang()
   const { newGetStarted } = props.lang
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+ // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const emailRef = useRef(null)
   useEffect(() => {
     if (phoneNum) {
