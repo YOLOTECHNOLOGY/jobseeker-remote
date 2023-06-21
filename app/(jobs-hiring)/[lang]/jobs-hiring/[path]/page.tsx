@@ -92,6 +92,7 @@ const Main = async (props: any) => {
               isShowArrowIcon={false}
               className={styles.arrowIconPostion}
             />
+            <JobAlert searchValues={props.searchValues} config={props.config} />
             <div className={styles.qrCode}>
               <Image src={AppDownQRCode} alt='app down' width='85' height='88' />
               <div className={styles.rightContainer}>
@@ -102,7 +103,6 @@ const Main = async (props: any) => {
                 </p>
               </div>
             </div>
-            <JobAlert searchValues={props.searchValues} config={props.config} />
             <SearchHistory
               location={location}
               value={props?.searchValues?.query as any}
