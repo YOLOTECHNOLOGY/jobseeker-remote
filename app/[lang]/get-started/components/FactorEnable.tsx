@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
 import lottie from "lottie-web";
 function FactorEnable(props: any) {
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+ // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const { newGetStarted } = props.lang
-  const { defaultLoginCallBack } = useGetStarted()
+  const { defaultLoginCallBack ,userInfo} = useGetStarted()
   const container= useRef(null);
   console.log({ userInfo })
   useEffect(() => {

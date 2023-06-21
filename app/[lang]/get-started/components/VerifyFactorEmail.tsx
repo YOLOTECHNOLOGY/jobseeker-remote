@@ -18,10 +18,10 @@ const VerifyFactorEmail = (props: IProps) => {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = searchParams.get('email')
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+ // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const [number, setNumber] = useState<number>(0)
   const dispatch = useDispatch()
-  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack } =
+  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack ,userInfo} =
     useGetStarted()
   useEffect(() => {
     if (email) {

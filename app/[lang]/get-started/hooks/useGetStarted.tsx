@@ -14,6 +14,8 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
+import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
+
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -27,8 +29,9 @@ const useGetStarted = () => {
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
   const langKey = getLang()
-  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
-
+ // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  const  [error,setError] = useState<any>(null)
+  const [userInfo, setUserInfo] = useState<any>(null)
   const redirect = searchParams.get('redirect')
   useEffect(() => {
     if (Array.isArray(redirect)) {
@@ -66,9 +69,11 @@ const useGetStarted = () => {
     if (!uuid) {
       delete data.browser_serial_number
     }
-    startTransition(() => {
-      dispatch(jobbseekersLoginRequest(data))
-    })
+  // dispatch(jobbseekersLoginRequest(data))
+    loginRequest(data)
+    // startTransition(() => {
+    //   dispatch(jobbseekersLoginRequest(data))
+    // })
   }
 
   const handleAuthenticationJobseekersLoginPhone = (code, phone_num) => {
@@ -81,10 +86,24 @@ const useGetStarted = () => {
       userId,
       browser_serial_number: uuid
     }
-    startTransition(() => {
-      dispatch(jobbseekersLoginRequest(data))
-    })
+   // dispatch(jobbseekersLoginRequest(data))
+   loginRequest(data)
+    // startTransition(() => {
+    //   dispatch(jobbseekersLoginRequest(data))
+    // })
   }
+
+ const  loginRequest = (data)=> {
+  authenticationJobseekersLogin(data).then(res=>{
+    console.log(res.data,999999)
+     if(res.data){
+      setUserInfo(res.data)
+     }
+  }).catch(err=>{
+    console.log(err.response,'8888')
+    setError(err?.response)
+  })
+ } 
 
   const removeServiceCache = async () => {
     const token = getCookie('accessToken')
@@ -194,7 +213,9 @@ const useGetStarted = () => {
     handleAuthenticationJobseekersLogin,
     handleAuthenticationJobseekersLoginPhone,
     handleAuthenticationSendEmailMagicLink,
-    emailTOPError
+    emailTOPError,
+    userInfo,
+    error
   }
 }
 
