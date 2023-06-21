@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // api
@@ -52,7 +52,7 @@ const useGetStarted = () => {
     }
     loginFailed()
   }, [error])
-
+  const [loading, startTransition] = useTransition()
   const handleAuthenticationJobseekersLogin = (code) => {
     setEmailOTPInputDisabled(true)
     const uuid = localStorage.getItem('uuid')
@@ -66,7 +66,9 @@ const useGetStarted = () => {
     if (!uuid) {
       delete data.browser_serial_number
     }
-    dispatch(jobbseekersLoginRequest(data))
+    startTransition(() => {
+      dispatch(jobbseekersLoginRequest(data))
+    })
   }
 
   const handleAuthenticationJobseekersLoginPhone = (code, phone_num) => {
@@ -79,7 +81,9 @@ const useGetStarted = () => {
       userId,
       browser_serial_number: uuid
     }
-    dispatch(jobbseekersLoginRequest(data))
+    startTransition(() => {
+      dispatch(jobbseekersLoginRequest(data))
+    })
   }
 
   const removeServiceCache = async () => {
@@ -111,12 +115,12 @@ const useGetStarted = () => {
     } else if (defaultRedirectPage) {
       routes.push(defaultRedirectPage)
     } else {
-       if(pathname.indexOf('/get-started')> -1){     
-          routes.push('/')
-       }else{
+      if (pathname.indexOf('/get-started') > -1) {
+        routes.push('/')
+      } else {
         window.location.reload();
-       }
-    
+      }
+
     }
     setEmailOTPInputDisabled(false)
   }
