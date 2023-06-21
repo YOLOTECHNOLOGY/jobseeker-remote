@@ -63,7 +63,11 @@ export default command => command.cata({
         context.hideModals?.()
     })),
     changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
-        context.changeChat?.(chatId)
+        if(!chatId){
+            context.changeChat?.('list')
+        } else {
+            context.changeChat?.(chatId)
+        }
     })),
     updateTotalUnreadNumber: totalUnreadNumber => M(context => Promise.resolve().then(() => {
         context.updateTotalUnreadNumber?.(totalUnreadNumber)

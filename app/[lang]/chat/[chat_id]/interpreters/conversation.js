@@ -6,8 +6,7 @@ const { RequestResult } = utils
 export default command =>
   command.cata({
     requestDeleteChat: chatId =>
-      M(context => deleteChat(chatId)
+      M(() => deleteChat(chatId)
         .then(RequestResult.success)
-        .then(() => context.changeChat?.('list'))
         .catch(RequestResult.error))
   })
