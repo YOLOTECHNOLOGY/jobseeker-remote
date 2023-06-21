@@ -13,7 +13,7 @@ import * as fbq from 'lib/fpixel'
 
 function* loginReq(actions) {
   console.log(actions)
-  
+   debugger
    try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
