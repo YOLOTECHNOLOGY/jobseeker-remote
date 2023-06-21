@@ -91,7 +91,7 @@
 .featuredEmployer {
   display: flex;
   justify-content: space-between;
-  height: 287px;
+  height: 255px;
 
   @include msd {
     flex-direction: column;

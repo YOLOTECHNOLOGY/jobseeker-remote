@@ -1,3 +1,4 @@
+@import 'styles/mixins.scss';
 .dialog{
     position: fixed;
     left: 0;
@@ -25,6 +26,24 @@
             background: #F9F9F9;
             padding: 0 26px 0 18px;
             border-radius:15px 15px 0 0;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: #353535;
         }
+    }
+}
+@include msd {
+    .dialog{
+        .container{
+            left: 0;
+            top: unset;
+            bottom: 0;
+            transform: unset;
+            width: 100%;
+        }
+        #dialogContainer{
+            color: #ccc;
+        } 
     }
 }
