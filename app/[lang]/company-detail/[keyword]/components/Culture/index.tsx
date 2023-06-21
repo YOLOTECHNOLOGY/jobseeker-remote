@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './index.module.scss';
+import classNames from 'classnames';
 
 
 const CulturePanel = () => {
@@ -11,13 +12,23 @@ const CulturePanel = () => {
 		</div>
 
 		<div className={style.subtitle}>Company culture</div>
-		<div className={style.item_wrapper}>
-
+		<div className={style.item_wrapper + ' ' + style.culture}>
+			<div className={style.item}><span>Ecommerce</span></div>
+			<div className={style.item}><span>Ecommerce</span></div>
+			<div className={style.item}></div>
+			<div className={style.item}></div>
+			<div className={style.item}></div>
 		</div>
-		<div style={{height: 36}}/>
-		<div className={style.subtitle}>Company culture</div>
+		<div className={style.subtitle}>Company benefits</div>
 		<div className={style.item_wrapper}>
-
+			<div className={style.item}>
+				<span>Ecommerce</span>
+			</div>
+			<div className={style.item}>
+				<span>Ecommerce</span>
+			</div>
+			<div className={style.item}></div>
+			<div className={style.item}></div>
 		</div>
 	</div>
 }
