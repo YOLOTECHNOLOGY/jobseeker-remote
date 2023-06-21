@@ -110,7 +110,7 @@ const Section5 = () => {
 					slidesPerView={1}
 					scrollbar={{draggable: true}}
 				>
-					{carouselList.map((item, index) => {
+					{carouselList.concat(carouselList).map((item, index) => {
 						return <SwiperSlide key={index}>
 							<div className={style.section5_carousel_item}>
 								<div
@@ -166,7 +166,7 @@ const Section5 = () => {
 			     setEnable(false);
 		     }}>
 			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
+				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 				spaceBetween={50}
 				ref={swiperRef}
 				grabCursor={true}
@@ -179,21 +179,11 @@ const Section5 = () => {
 				loop={true}
 				scrollbar={{draggable: true}}
 			>
-				{carouselList.map((item, index) => {
+				{carouselList.concat(carouselList).map((item, index) => {
 					return <SwiperSlide key={index}>
 						<div className={style.section5_carousel_item}>
 							<img src={item.img} alt="img" className={style.section5_carousel_pic}/>
-							{
-								item.pc_lottie &&
-				  <Player
-					  autoplay
-					  loop
-					  src={item.pc_lottie}
-					  style={item.style}
-				  >
-
-				  </Player>
-							}
+							{item.pc_lottie && <Player autoplay loop src={item.pc_lottie} style={item.style}></Player>}
 						</div>
 						<div className={style.section5_des}>
 							{item.des}
