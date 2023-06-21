@@ -32,7 +32,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
-
+import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search } = useContext(languageContext) as any
@@ -41,6 +41,7 @@ const SearchArea = (props: any) => {
     { label: search?.relevance, value: '2' },
     { label: search?.highestSalary, value: '3' }
   ]
+  const { setShowLogin } = useContext(LoginModalContext)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
@@ -287,8 +288,12 @@ const SearchArea = (props: any) => {
                 <Button
                   className={styles.loginButton}
                   variant='outlined'
+
+
+
                   onClick={() => {
-                    router.push('/get-started', { forceOptimisticNavigation: true })
+                    setShowLogin(true)
+                   // router.push('/get-started', { forceOptimisticNavigation: true })
                   }}
                 >
                   <svg
