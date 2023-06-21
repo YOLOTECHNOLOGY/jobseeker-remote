@@ -60,6 +60,7 @@ const BannerCarousel = ({
                 <Link
                   className={styles.bannerSlideInner}
                   to={banner.cta_url}
+                  target="_blank"
                   external
                 >
                   <Image 
