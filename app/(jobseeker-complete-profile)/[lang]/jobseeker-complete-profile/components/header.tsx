@@ -8,7 +8,8 @@ const Header = (props:any) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerMain}>
-      <img
+       <Link href={'/'}>
+       <img
         className={styles.headerLogoImage}
         src={BossjobLogoWhite}
         title='Bossjob logo'
@@ -16,7 +17,8 @@ const Header = (props:any) => {
         style={{
           marginTop: '3px'
         }}
-      />
+      /></Link> 
+      
       {
         step === 1 &&  <Link  href={process.env.BOSSHUNT_URL+'/boss'}>{lang?.profile?.ImHiring}</Link>
       }

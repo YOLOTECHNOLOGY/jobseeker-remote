@@ -111,7 +111,12 @@ const useGetStarted = () => {
     } else if (defaultRedirectPage) {
       routes.push(defaultRedirectPage)
     } else {
-      routes.push('/')
+       if(pathname.indexOf('/get-started')> -1){     
+          routes.push('/')
+       }else{
+        window.location.reload();
+       }
+    
     }
     setEmailOTPInputDisabled(false)
   }

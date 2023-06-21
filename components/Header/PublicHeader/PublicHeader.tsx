@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { usePathname } from 'next/navigation'
 import classNames from 'classnames/bind'
 import Image from 'next/image'
@@ -14,6 +14,8 @@ import MaterialButton from 'components/MaterialButton'
 // nation
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 import { getCountryKey, getLang } from 'helpers/country'
+import DialogLogin from 'app/[lang]/components/LoginDialog'
+
 
 /* Images */
 import { BossjobLogoWhite as BossjobLogo, ChevronDownIcon } from 'images'
@@ -23,8 +25,13 @@ const PublicHeader = ({ lang }: any) => {
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const langKey = getLang()
+  const [open,setOpen] = useState(false)
   return (
     <div className={styles.header}>
+      {
+        open && <DialogLogin open={open} handleClose={()=>setOpen(false)}/>
+      }
+
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/' + langKey}>
@@ -134,11 +141,12 @@ const PublicHeader = ({ lang }: any) => {
             </li>
             <li className={styles.headerLink} style={{ width: '162px' }}>
               {!pathname?.includes?.('/get-started') ? (
-                <Link to={'/' + langKey + '/get-started'} title='Get Started'>
+                // <Link to={'/' + langKey + '/get-started'} title='Get Started'>
                   <MaterialButton
                     variant='outlined'
                     size='medium'
                     capitalize
+                    onClick={()=>setOpen(true)}
                     sx={{
                       width: '123px',
                       height: '35px !important',
@@ -157,7 +165,7 @@ const PublicHeader = ({ lang }: any) => {
                       {getStarted}
                     </Text>
                   </MaterialButton>
-                </Link>
+                // </Link>
               ) : (
                 <MaterialButton
                   variant='outlined'
