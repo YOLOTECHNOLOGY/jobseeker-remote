@@ -193,7 +193,7 @@
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
     },
-    "companiesEmpty": "Companies Not Found"
+    "companiesEmpty": "暂无公司信息"
   },
   "companyDetail": {
     "tab": {
