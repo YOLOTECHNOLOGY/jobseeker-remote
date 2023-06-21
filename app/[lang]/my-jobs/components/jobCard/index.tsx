@@ -119,12 +119,12 @@ const JobCard = (props: any) => {
   const { job: originJob, jobTitleId, preference } = props
   const { lang: langKey } = useParams()
   const config = useSelector((store: any) => store.config.config.response)
-
   const memoedJob = useMemo(() => {
     const job = cloneDeep(originJob)
     changeJobValue(config, job)
     return job
   }, [originJob])
+  console.log('debug my-job card: ', {originJob, memoedJob, config})
 
   const {
     job_title,
