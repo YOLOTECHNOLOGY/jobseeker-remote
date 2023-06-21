@@ -380,8 +380,12 @@ const IMProvider = ({ children, lang }: any) => {
             updateChatListRef.current?.()
         },
         changeChat(chatId) {
-            // setChatId(chatId)
-            router.push(`/${lang}/chat/${chatId}`)
+            if (+chatId) {
+                setChatId(chatId)
+            } else {
+                setChatId(null)
+            }
+            // router.push(`/${lang}/chat/${chatId}`)
         },
         showToast(type, content) {
             dispatch(
