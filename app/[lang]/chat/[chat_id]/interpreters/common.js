@@ -40,6 +40,9 @@ export default command => command.cata({
     requestUpdate: () => M(context =>
         Promise.resolve().then(() => {
             const chatId = context.getChatId()
+            if (!((+chatId) > 0)) {
+                return Promise.resolve(RequestResult.error('no chat id'))
+            }
             context.setLoading(true)
             return updateChat(chatId)
                 .then(result => RequestResult.success(result.data))
@@ -63,7 +66,7 @@ export default command => command.cata({
         context.hideModals?.()
     })),
     changeChatRoom: chatId => M(context => Promise.resolve().then(() => {
-        if(!chatId){
+        if (!chatId) {
             context.changeChat?.('list')
         } else {
             context.changeChat?.(chatId)
