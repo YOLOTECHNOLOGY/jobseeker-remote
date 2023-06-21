@@ -77,11 +77,12 @@ function PhoneCode(props: any) {
   }, [userId])
   const { setUserId, defaultLoginCallBack, handleAuthenticationJobseekersLoginPhone } =
     useGetStarted()
- console.log(isMultiplePhonesNum === 'true',7777)
+
   const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
     dispatch(jobbseekersLoginFailed({}))
+    console.log({otp},otp?.length)
     if (otp?.length === 6) {
       console.log(otp, uuid, browserId)
      

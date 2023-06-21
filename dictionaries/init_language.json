@@ -847,7 +847,8 @@
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
     "ImHiring": "I’m employees",
-    "education":"Education"
+    "education":"Education",
+    "skip":"skip"
   },
   "chat": {
     "chatTitle": "Chat",
