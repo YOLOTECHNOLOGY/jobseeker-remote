@@ -72,7 +72,8 @@
     "import/extensions": "off",
     "camelcase": "off",
     "@typescript-eslist/camelcase": 0,
-    "@next/next/inline-script-id": "off"
+    "@next/next/inline-script-id": "off",
+    "import/no-anonymous-default-export": [2, {"allowArrowFunction": true}]
   },
   "ignorePatterns": ["next-env.d.ts", "lib/redirection.js", "components/GoogleMap/GoogleMap.tsx"],
   "settings": {
