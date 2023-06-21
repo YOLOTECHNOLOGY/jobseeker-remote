@@ -13,6 +13,7 @@ import SortFilter from './components/SortFilter'
 import SearchCompany from './components/SearchCompany'
 import FeaturedCompanied from './components/FeaturedCompanied'
 import { useFirstRender } from 'helpers/useFirstRender'
+import CompanyCardLoader from 'components/Loader/CompanyCard'
 
 const initSearchQueries = {
   query: '',
@@ -48,12 +49,16 @@ const Companies = (props: IProps) => {
 
   const { config } = configs
   useEffect(() => {
-    dispatch(fetchCompanyFilterRequest({
-      size: 16,
-      page: 1
-  }))
-  },[])
-  const fetchCompanyFilterResponse =   useSelector((store : any) => store.companies.fetchCompanyFilter.response)
+    dispatch(
+      fetchCompanyFilterRequest({
+        size: 16,
+        page: 1
+      })
+    )
+  }, [])
+  const fetchCompanyFilterResponse = useSelector(
+    (store: any) => store.companies.fetchCompanyFilter.response
+  )
   const featureBanners = config.feature_banners
   const isFeaturedCompaniesFetching = useSelector(
     (store: any) => store.companies.fetchCompanyFilter.fetching
@@ -84,7 +89,7 @@ const Companies = (props: IProps) => {
     const words = keyword.trim()
     let newQueries = { ...searchQuery, query: words, page: 1 }
     const isEmpty = Object.values(newQueries).filter(Boolean).length === 2
-    const pageSize = ((newQueries.page == 1) && isEmpty) ? 16 : 15
+    const pageSize = newQueries.page == 1 && isEmpty ? 16 : 15
     newQueries = { ...newQueries, page: 1, size: pageSize }
     setReset(isEmpty)
     setSearchQuery(newQueries)
@@ -94,7 +99,7 @@ const Companies = (props: IProps) => {
   const handlePaginationClick = (event, val) => {
     const num = Number(val) || 1
     const isEmpty = Object.values(searchQuery).filter(Boolean).length === 2
-    const pageSize = ((num == 1) && isEmpty) ? 16 : 15
+    const pageSize = num == 1 && isEmpty ? 16 : 15
     const newQueries = { ...searchQuery, page: num, size: pageSize }
     setSearchQuery(newQueries)
     dispatch(fetchCompanyFilterRequest(newQueries))
@@ -105,7 +110,7 @@ const Companies = (props: IProps) => {
     if (firstRender) return
     let newQueries = { ...searchQuery, ...query }
     const isEmpty = Object.values(newQueries).filter(Boolean).length === 2
-    const pageSize = ((newQueries.page == 1) && isEmpty) ? 16 : 15
+    const pageSize = newQueries.page == 1 && isEmpty ? 16 : 15
     newQueries = { ...newQueries, page: 1, size: pageSize }
     setReset(isEmpty)
     setSearchQuery(newQueries)
@@ -117,9 +122,22 @@ const Companies = (props: IProps) => {
     clearSearchRef && clearSearchRef.current()
   }
 
+  const CompaniesLoader = () => {
+    return (
+      <div className={styles.companyList}>
+        {[...Array(12)].map((_, i) => (
+          <div className={styles.companyItem} key={i}>
+            <CompanyCardLoader />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
     <>
       <div className={styles.container}>
+        {/* search */}
         <div className={styles.searchContainer}>
           <div className={styles.searchCompany}>
             <SearchCompany
@@ -135,32 +153,43 @@ const Companies = (props: IProps) => {
             />
           </div>
         </div>
+
+        {/* companies list */}
         <div className={styles.companies}>
-          {/* featured company */}
-          {reset ? (
-            <FeaturedCompanied
-              featuredCompany={featuredCompany}
-              langKey={langKey}
-              featureBanners={featureBanners}
-              lang={props.lang}
-            />
-          ) : null}
 
-          {/* company card title */}
-          {reset ? (
-            <Text textStyle='xxl' tagName='h2' bold className={styles.popularCompanyTitle}>
-              {companies.popularCompany.title}
-            </Text>
-          ) : null}
+          {/* fetching loading: true */}
+          {isFeaturedCompaniesFetching && <CompaniesLoader />}
 
-          {/* company card list */}
-          <CompanyCardList
-            companiesList={featuredCompanies}
-            isLoading={isFeaturedCompaniesFetching}
-            transitions={companies.popularCompany}
-            langKey={langKey}
-            lang={props.lang}
-          />
+          {/* fetching loading: false */}
+          {!isFeaturedCompaniesFetching && (
+            <>
+              {/* featured company */}
+              {reset ? (
+                <FeaturedCompanied
+                  featuredCompany={featuredCompany}
+                  langKey={langKey}
+                  featureBanners={featureBanners}
+                  lang={props.lang}
+                />
+              ) : null}
+
+              {/* company card title */}
+              {reset ? (
+                <Text textStyle='xxl' tagName='h2' bold className={styles.popularCompanyTitle}>
+                  {companies.popularCompany.title}
+                </Text>
+              ) : null}
+
+              {/* company card list */}
+              <CompanyCardList
+                companiesList={featuredCompanies}
+                isLoading={isFeaturedCompaniesFetching}
+                transitions={companies.popularCompany}
+                langKey={langKey}
+                lang={props.lang}
+              />
+            </>
+          )}
 
           {/* Pagination */}
           {totalPage > 1 && (
