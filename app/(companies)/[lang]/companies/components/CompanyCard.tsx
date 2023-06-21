@@ -20,11 +20,11 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
   return (
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
-        <Link to={'/' + langKey + companyUrl}>
-          <img
+        <Link to={'/' + langKey + companyUrl} className={styles.companyCardImage}>
+          <Image
+            fill={true}
             src={company?.logo_url || company?.logo}
             alt={company?.name}
-            className={styles.companyCardImage}
           />
         </Link>
       </div>
