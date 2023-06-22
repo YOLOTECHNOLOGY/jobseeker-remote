@@ -12,7 +12,7 @@ import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
 import { getCountryId, getLanguageId } from 'helpers/country'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { getCookie } from 'helpers/cookies'
+import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
 
@@ -29,8 +29,8 @@ const useGetStarted = () => {
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
   const langKey = getLang()
- // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
-  const  [error,setError] = useState<any>(null)
+  // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  const [error, setError] = useState<any>(null)
   const [userInfo, setUserInfo] = useState<any>(null)
   const redirect = searchParams.get('redirect')
   useEffect(() => {
@@ -55,7 +55,7 @@ const useGetStarted = () => {
     }
     loginFailed()
   }, [error])
-  const [loading, startTransition] = useTransition()
+  // const [loading, startTransition] = useTransition()
   const handleAuthenticationJobseekersLogin = (code) => {
     setEmailOTPInputDisabled(true)
     const uuid = localStorage.getItem('uuid')
@@ -69,7 +69,7 @@ const useGetStarted = () => {
     if (!uuid) {
       delete data.browser_serial_number
     }
-  // dispatch(jobbseekersLoginRequest(data))
+    // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)
     // startTransition(() => {
     //   dispatch(jobbseekersLoginRequest(data))
@@ -86,24 +86,79 @@ const useGetStarted = () => {
       userId,
       browser_serial_number: uuid
     }
-   // dispatch(jobbseekersLoginRequest(data))
-   loginRequest(data)
+    // dispatch(jobbseekersLoginRequest(data))
+    loginRequest(data)
     // startTransition(() => {
     //   dispatch(jobbseekersLoginRequest(data))
     // })
   }
+  const setCookiesWithLoginData = loginData => {
+    const { refresh_token, token, token_expired_at } = loginData
+    const userCookie = {
+      active_key: loginData.active_key,
+      id: loginData.id,
+      first_name: loginData.first_name,
+      last_name: loginData.last_name,
+      email: loginData.email,
+      phone_num: loginData.phone_num,
+      is_mobile_verified: loginData.is_mobile_verified,
+      avatar: loginData.avatar,
+      additional_info: loginData.additional_info,
+      is_email_verify: loginData.is_email_verify,
+      notice_period_id: loginData.notice_period_id,
+      is_bosshunt_talent: loginData.is_bosshunt_talent,
+      is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
+      bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
+      is_profile_completed: loginData.is_profile_completed
+    }
+    setCookie('refreshToken', refresh_token)
+    setCookie('user', userCookie)
+    setCookie('accessToken', token, token_expired_at)
+  }
+  const sendEventWithLoginData = loginData => {
+    // Send register event (First time login user)
+    if (
+      // process.env.ENV === 'production' &&
+      loginData.is_new_account && typeof window !== 'undefined'
+    ) {
+      // Facebook Pixel
+      const window = globalThis as any
+      if (window.fbq) {
+        window.fbq.event('sign_up', {
+          user_id: loginData?.id
+        })
+      }
 
- const  loginRequest = (data)=> {
-  authenticationJobseekersLogin(data).then(res=>{
-    console.log(res.data,999999)
-     if(res.data){
-      setUserInfo(res.data)
-     }
-  }).catch(err=>{
-    console.log(err.response,'8888')
-    setError(err?.response)
-  })
- } 
+      // Google analytic Event
+      if (window.gtag) {
+        window.gtag('event', 'sign_up', {
+          user_id: loginData?.id,
+          email: loginData?.email
+        })
+      }
+
+      // Tiktok Pixel
+      if (window.ttq) {
+        window.ttq.track('CompleteRegistration', {
+          user_id: loginData?.id,
+          email: loginData?.email
+        });
+      }
+    }
+  }
+  const loginRequest = (data) => {
+    authenticationJobseekersLogin(data).then(res => {
+      console.log(res.data, 999999)
+      if (res.data) {
+        setUserInfo(res.data)
+        setCookiesWithLoginData(res.data.data)
+        sendEventWithLoginData(res.data.data)
+      }
+    }).catch(err => {
+      console.log(err.response, '8888')
+      setError(err?.response)
+    })
+  }
 
   const removeServiceCache = async () => {
     const token = getCookie('accessToken')
