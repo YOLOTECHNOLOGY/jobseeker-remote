@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import * as React from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import CompanyInfo from './components/InfoList';
 import Section from "./components/Section";
 import CulturePanel from "./components/Culture";
-
+import ChatPanel from "./components/ChatPanel";
 
 
 function a11yProps(index: number) {
@@ -75,6 +75,8 @@ const Page = () => {
 						<CompanyInfo/>
 						<div className={style.company_culture}>
 							<CulturePanel/>
+							<div style={{height: 40}}></div>
+							<ChatPanel/>
 						</div>
 					</div>
 				</div>

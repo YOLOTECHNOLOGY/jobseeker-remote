@@ -28,18 +28,15 @@ const Section8 = () => {
 		<div className={style.section8_carousel + ' ' + style.desktop}>
 			<Swiper
 				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
-				spaceBetween={50}
+				spaceBetween={35}
 				ref={swiperRef}
-				slidesPerView={3.3}
+				slidesPerView={2.2}
 				speed={4000}
 				autoplay={{
 					delay: 0,
-					disableOnInteraction: true
 				}}
 				loop={true}
 				scrollbar={{draggable: true}}
-				onSlideChange={() => console.log('slide change')}
-
 			>
 				{
 					carouselList.concat(carouselList).concat(carouselList).map((item,index)=>{

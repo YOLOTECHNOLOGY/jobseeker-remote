@@ -1532,6 +1532,7 @@
   }
 }
 
+
 .slideItem {
 
   @media screen and (max-width: 540px) {
@@ -1575,6 +1576,11 @@
 
   border: 0.883333px solid #136FD3;
   transform: matrix(0, 1, 1, 0, 0, 0);
+}
+.section8_carousel{
+  width: 1366px;
+  overflow: clip;
+  margin: 0 auto;
 }
 
 .section8_slideItem {
