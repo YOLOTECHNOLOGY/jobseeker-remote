@@ -17,7 +17,7 @@ const VerifyFactorEmail = (props: IProps) => {
   const [errorText, setErrorText] = useState<string>('')
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
-  const email = searchParams.get('email')
+  const email = decodeURIComponent(searchParams.get('email'))
  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const [number, setNumber] = useState<number>(0)
   const dispatch = useDispatch()
@@ -39,11 +39,12 @@ const VerifyFactorEmail = (props: IProps) => {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
+  console.log({userInfo})
   useEffect(() => {
-    if (!Object.keys(userInfo).length) {
+    if (userInfo?.data && !Object.keys(userInfo).length) {
       return
     }
-    const { data } = userInfo
+    const { data } = userInfo  || {}
     removeItem('quickUpladResume')
     defaultLoginCallBack(data)
   }, [userInfo])
