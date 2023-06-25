@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'next/navigation'
 import classNames from 'classnames'
 import Image from 'next/image'
 
 import useGetStarted from '../../hooks/useGetStarted'
-import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
-import { removeItem } from 'helpers/localStorage'
 
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
@@ -26,11 +23,9 @@ const GoogleLogin = (props: IGoogle) => {
     redirect,
     lang: { newGetStarted }
   } = props
-  const userInfo = useSelector((store: any) => store.auth.jobseekersSocialLogin.response)
-  const { defaultLoginCallBack } = useGetStarted()
+  const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
-  const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -73,18 +68,8 @@ const GoogleLogin = (props: IGoogle) => {
     }
   }, [])
 
-  // handle has logged redirect url
-  useEffect(() => {
-    const { data } = userInfo
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [userInfo?.data])
-
   // handle login for service
   const callBackMethod = (payload) => {
-    console.log('44444', payload)
     const data = {
       ...payload,
       ...query,
@@ -97,7 +82,14 @@ const GoogleLogin = (props: IGoogle) => {
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl
     }
-    dispatch(jobbseekersSocialLoginRequest(data))
+    // submit
+    handleAuthenticationSocialLogin(data).then(res => {
+      // handle has logged redirect url
+      const { data } = res
+      if (data?.token) {
+        defaultLoginCallBack(data)
+      }
+    })
   }
 
   // login google cb

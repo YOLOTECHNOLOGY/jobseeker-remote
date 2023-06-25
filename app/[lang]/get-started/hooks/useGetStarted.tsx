@@ -15,6 +15,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
+import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/services/auth/jobseekersSocialLogin'
 
 const useGetStarted = () => {
   const routes = useRouter()
@@ -203,6 +204,20 @@ const useGetStarted = () => {
     setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
   }
+  
+  const handleAuthenticationSocialLogin = async (params) => {
+    return jobSeekersSocialLogin(params).then(result => {
+      if (result.status >= 200 && result.status < 300) {
+        setUserInfo(result.data)
+        setCookiesWithLoginData(result.data.data)
+        sendEventWithLoginData(result.data.data)
+        return Promise.resolve(result.data)
+      }
+    }).catch(error => {
+      setError(error?.response)
+      return Promise.reject(error)
+    })
+  }
 
   const handleAuthenticationSendEmailMagicLink = () => {
     let params: any = {}
@@ -268,6 +283,7 @@ const useGetStarted = () => {
     handleAuthenticationJobseekersLogin,
     handleAuthenticationJobseekersLoginPhone,
     handleAuthenticationSendEmailMagicLink,
+    handleAuthenticationSocialLogin,
     emailTOPError,
     userInfo,
     error
