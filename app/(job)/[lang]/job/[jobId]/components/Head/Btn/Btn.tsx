@@ -160,6 +160,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
             }}
             onClick={() => {
               if (!accessToken) {
+                sessionStorage.setItem('redirectPage',window?.location?.pathname)
                 setShowLogin?.(true)
                 return
               } else if (!isSave) {

@@ -77,6 +77,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
   const [email, setEmail] = useState<string>('')
   const { setShowLogin } = useContext(LoginModalContext)
   const handleSendEmailTOP = () => {
+    sessionStorage.setItem('redirectPage',window?.location?.pathname)
     setShowLogin?.(true)
     return 
     setLoading(true)

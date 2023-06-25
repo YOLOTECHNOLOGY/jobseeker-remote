@@ -29,6 +29,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
+  const redirectPage  = sessionStorage.getItem('redirectPage')
   const langKey = getLang()
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const [error, setError] = useState<any>(null)
@@ -189,6 +190,13 @@ const useGetStarted = () => {
       routes.push(isChatRedirect)
     } else if (defaultRedirectPage) {
       routes.push(defaultRedirectPage)
+    } else if (redirectPage) {
+      sessionStorage.removeItem('redirectPage')
+      const url = window?.location?.pathname 
+      if(url === redirectPage ){
+        return  window.location.reload();
+      }
+      routes.push(redirectPage)     
     } else {
       if (pathname.indexOf('/get-started') > -1) {
         routes.push('/')
