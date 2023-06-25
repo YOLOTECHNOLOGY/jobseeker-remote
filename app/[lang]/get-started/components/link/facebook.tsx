@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 
 import useGetStarted from '../../hooks/useGetStarted'
+import { removeItem } from 'helpers/localStorage'
 
 import { FacebookIcon } from 'images'
 import styles from '../../index.module.scss'
@@ -48,6 +49,7 @@ const FacebookLogin = (props: IFacebook) => {
       // handle has logged redirect url
       const { data } = res
       if (data?.token) {
+        removeItem('quickUpladResume')
         defaultLoginCallBack(data)
       }
     })

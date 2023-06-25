@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import Image from 'next/image'
 
 import useGetStarted from '../../hooks/useGetStarted'
+import { removeItem } from 'helpers/localStorage'
 
 import { AppleIcon } from 'images'
 import styles from '../../index.module.scss'
@@ -102,6 +103,7 @@ const AppleLogin = (props: IApple) => {
         // handle has logged redirect url
         const { data } = res
         if (data?.token) {
+          removeItem('quickUpladResume')
           defaultLoginCallBack(data)
         }
       })
