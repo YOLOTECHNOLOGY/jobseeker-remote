@@ -366,10 +366,9 @@ const EducationExperience = (props: any) => {
        loading={loading}
        rightText={submit}
        backText={back}
-       showBack={!isMobile}
        backClick={backClick}
        disabled={isDisabled}
-       skip={skip}
+       skipText={skip}
        handleClick={handleSubmit(handleUpdateProfile)}
        />
 
