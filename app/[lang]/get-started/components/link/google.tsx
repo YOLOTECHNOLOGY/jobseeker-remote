@@ -39,7 +39,6 @@ const GoogleLogin = (props: IGoogle) => {
 
   // load google script libs
   useEffect(() => {
-    setGoogleAuth(null)
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')
       const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
@@ -66,6 +65,9 @@ const GoogleLogin = (props: IGoogle) => {
         setInit(false)
       }
       document.body.appendChild(script)
+    }
+    return () => {
+      setGoogleAuth(null)
     }
   }, [])
 
@@ -96,6 +98,7 @@ const GoogleLogin = (props: IGoogle) => {
 
   // login google cb
   const handleAuthClick = () => {
+    console.log('googleAuth', googleAuth)
     if (!googleAuth) {
       console.error(new Error('Error loading google auth script'))
       return

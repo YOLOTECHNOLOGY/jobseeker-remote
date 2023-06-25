@@ -59,7 +59,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
 
   useEffect(() => {
     if(userDetail?.id){
-      setShowUnCompletedDot(!userDetail?.is_profile_completed)
+      const hasJobPreferences = userDetail?.job_preferences.length > 0
+      setShowUnCompletedDot(!userDetail?.is_profile_completed || !hasJobPreferences)
     }
   }, [userDetail])
 
