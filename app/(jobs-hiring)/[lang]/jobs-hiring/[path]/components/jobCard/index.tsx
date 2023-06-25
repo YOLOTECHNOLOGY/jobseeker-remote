@@ -78,6 +78,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, langKey) => {
       return
     }
     if (!accessToken) {
+      sessionStorage.setItem('redirectPage',window.location.pathname)
       setShowLogin(true)
       return
     }

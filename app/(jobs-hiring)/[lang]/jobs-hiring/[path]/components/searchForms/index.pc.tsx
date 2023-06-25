@@ -292,6 +292,7 @@ const SearchArea = (props: any) => {
 
 
                   onClick={() => {
+                    sessionStorage.setItem('redirectPage',window?.location?.pathname)
                     setShowLogin(true)
                    // router.push('/get-started', { forceOptimisticNavigation: true })
                   }}

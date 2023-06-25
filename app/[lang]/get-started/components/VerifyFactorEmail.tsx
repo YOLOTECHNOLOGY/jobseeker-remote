@@ -21,7 +21,7 @@ const VerifyFactorEmail = (props: IProps) => {
  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const [number, setNumber] = useState<number>(0)
   const dispatch = useDispatch()
-  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack ,userInfo} =
+  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack ,userInfo, error} =
     useGetStarted()
   useEffect(() => {
     if (email) {
@@ -29,7 +29,7 @@ const VerifyFactorEmail = (props: IProps) => {
     }
   }, [email])
 
-  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+ // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
   useEffect(() => {
     const text = error?.data?.message ?? ''

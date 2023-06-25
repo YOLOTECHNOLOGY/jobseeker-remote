@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'next/navigation'
 import * as jose from 'jose'
 import classNames from 'classnames'
 import Image from 'next/image'
 
 import useGetStarted from '../../hooks/useGetStarted'
-import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
 import { removeItem } from 'helpers/localStorage'
 
 import { AppleIcon } from 'images'
@@ -24,11 +22,9 @@ const AppleLogin = (props: IApple) => {
   const {
     lang: { newGetStarted }
   } = props
-  const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const [init, setInit] = useState(false)
-  const userInfo = useSelector((store: any) => store.auth.jobseekersSocialLogin.response)
-  const { defaultLoginCallBack } = useGetStarted()
+  const { defaultLoginCallBack,handleAuthenticationSocialLogin } = useGetStarted()
 
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -58,7 +54,7 @@ const AppleLogin = (props: IApple) => {
         }
         setInit(true)
         window.AppleID.auth.init(appleConfig)
-        document.body.removeChild(script)
+        document?.body?.removeChild(script)
       }
       script.src = APPLE_LOGIN_URL
       script.type = 'text/javascript'
@@ -68,18 +64,13 @@ const AppleLogin = (props: IApple) => {
       script.onerror = () => {
         setInit(false)
       }
-      document.body.appendChild(script)
+      if (!window?.AppleID) {
+        document.body.appendChild(script)
+      }
     }
   }, [])
 
   // handle has logged redirect url
-  useEffect(() => {
-    const { data } = userInfo
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [userInfo?.data])
 
   // handle login for apple service
   const handleAuth = async () => {
@@ -109,7 +100,15 @@ const AppleLogin = (props: IApple) => {
         social_user_id: decodeJwt.sub || '',
         source: 'web'
       }
-      dispatch(jobbseekersSocialLoginRequest(data))
+      // submit
+      handleAuthenticationSocialLogin(data).then(res => {
+        // handle has logged redirect url
+        const { data } = res
+        if (data?.token) {
+          removeItem('quickUpladResume')
+          defaultLoginCallBack(data)
+        }
+      })
     } catch (error) {
       console.log('error', error)
     }

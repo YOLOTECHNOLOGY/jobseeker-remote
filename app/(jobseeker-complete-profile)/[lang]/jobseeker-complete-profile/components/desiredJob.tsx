@@ -179,10 +179,14 @@ const EducationExperience = (props: any) => {
     }
     setCookie('user',userCookie)
     const isChatRedirect = localStorage.getItem('isChatRedirect')
+    const redirectPage  = sessionStorage.getItem('redirectPage')
     if(isChatRedirect){
       localStorage.removeItem('isChatRedirect')
       push(`/${langKey}/${isChatRedirect}`)
-    }else{
+    }else if (redirectPage) {
+      sessionStorage.removeItem('redirectPage')   
+      push(redirectPage)      
+    }  else{
       push(`/${langKey}/my-jobs`)
     }
   })

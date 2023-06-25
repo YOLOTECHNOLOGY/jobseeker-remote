@@ -15,6 +15,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
+import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/services/auth/jobseekersSocialLogin'
 
 const useGetStarted = () => {
   const routes = useRouter()
@@ -28,6 +29,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
+  const redirectPage  = sessionStorage.getItem('redirectPage')
   const langKey = getLang()
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const [error, setError] = useState<any>(null)
@@ -188,6 +190,13 @@ const useGetStarted = () => {
       routes.push(isChatRedirect)
     } else if (defaultRedirectPage) {
       routes.push(defaultRedirectPage)
+    } else if (redirectPage) {
+      sessionStorage.removeItem('redirectPage')
+      const url = window?.location?.pathname 
+      if(url === redirectPage ){
+        return  window.location.reload();
+      }
+      routes.push(redirectPage)     
     } else {
       if (pathname.indexOf('/get-started') > -1) {
         routes.push('/')
@@ -202,6 +211,20 @@ const useGetStarted = () => {
   const loginFailed = () => {
     setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
+  }
+  
+  const handleAuthenticationSocialLogin = async (params) => {
+    return jobSeekersSocialLogin(params).then(result => {
+      if (result.status >= 200 && result.status < 300) {
+        setUserInfo(result.data)
+        setCookiesWithLoginData(result.data.data)
+        sendEventWithLoginData(result.data.data)
+        return Promise.resolve(result.data)
+      }
+    }).catch(error => {
+      setError(error?.response)
+      return Promise.reject(error)
+    })
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {
@@ -268,6 +291,7 @@ const useGetStarted = () => {
     handleAuthenticationJobseekersLogin,
     handleAuthenticationJobseekersLoginPhone,
     handleAuthenticationSendEmailMagicLink,
+    handleAuthenticationSocialLogin,
     emailTOPError,
     userInfo,
     error
