@@ -140,7 +140,7 @@ function PhoneCode(props: any) {
   const sendOpt = (email) => {
     authenticationSendEmaillOtp({ email }).then((res) => {
       console.log(res?.data?.data, 'res')
-      router.push(`/${langKey}/get-started/phone?step=6&email=${email}&userId=${userId}`)
+      router.push(`/${langKey}/get-started/phone?step=6&email=${encodeURIComponent(email)}&userId=${userId}`)
     })
   }
   console.log({ userInfo },error?.data,7777)

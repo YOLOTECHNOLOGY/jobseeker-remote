@@ -13,6 +13,8 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
+import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
+
 import styles from '../../../page.module.scss'
 import { languageContext } from 'app/[lang]/components/providers/languageProvider'
 
@@ -73,8 +75,10 @@ const SignUp = ({ jobId, job_url }: propsType) => {
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
-
+  const { setShowLogin } = useContext(LoginModalContext)
   const handleSendEmailTOP = () => {
+    setShowLogin?.(true)
+    return 
     setLoading(true)
     authenticationSendEmaillOtp({ email })
       .then(({ status }) => {
@@ -101,7 +105,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
       <h3>{signUp.title}</h3>
       <div>
         <Stack spacing={2}>
-          <ThemeProvider theme={theme}>
+          {/* <ThemeProvider theme={theme}>
             <TextField
               label={signUp.label}
               size='small'
@@ -114,7 +118,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
                 }
               }}
             />
-          </ThemeProvider>
+          </ThemeProvider> */}
 
           <MaterialButton
             variant='contained'
@@ -126,7 +130,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
               textTransform: 'capitalize !important'
             }}
             isLoading={loading}
-            disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
+           // disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
             onClick={handleSendEmailTOP}
           >
             {signUp.btn}
