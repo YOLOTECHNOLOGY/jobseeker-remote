@@ -849,7 +849,10 @@
     "companyName": "公司名称",
     "ImHiring": "我要招聘",
     "education": "教育",
-    "skip": "skip"
+    "skip": "跳过职位设置",
+    "skipTips":"跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
+    "skipTipsSure": "您确定要跳过这些步骤吗?",
+    "skipAnyway":"跳过"
   },
   "chat": {
     "chatTitle": "聊天",

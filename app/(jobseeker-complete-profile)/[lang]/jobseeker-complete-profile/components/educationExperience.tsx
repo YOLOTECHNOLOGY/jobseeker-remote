@@ -220,7 +220,7 @@ console.log({userDetail})
           backText={isMobile ? fillThisLater : back}
           backClick={backClick}
           disabled={isDisabled}
-          skip={skip}
+          skipText={skip}
           handleClick={handleSubmit}
         />
       </div>

@@ -461,6 +461,7 @@ const WorkExperience = (props: any) => {
           backText={back}
           skip={skip}
           disabled={isDisabled}
+          skipText = {skip}
           handleClick={handleSubmit}
         />
       </div>

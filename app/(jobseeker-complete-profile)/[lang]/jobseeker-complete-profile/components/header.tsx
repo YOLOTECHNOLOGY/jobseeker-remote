@@ -2,8 +2,6 @@ import React from 'react'
 import styles from '../index.module.scss'
 import { BossjobLogoWhite } from 'images'
 import Link from 'next/link'
-import MaterialButton from 'components/MaterialButton'
-import Text from 'components/Text'
 const Header = (props: any) => {
   const { lang, step } = props
   console.log({ step })
@@ -22,7 +20,7 @@ const Header = (props: any) => {
           />
         </Link>
         <div>
-          <Link href={'/'}>
+          {/* <Link href={'/'}>
             <MaterialButton
               variant='outlined'
               size='medium'
@@ -45,7 +43,7 @@ const Header = (props: any) => {
               {lang?.profile?.skip}
               </Text>
             </MaterialButton>
-          </Link>
+          </Link> */}
           {step === 1 && (
             <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
               {lang?.profile?.ImHiring}

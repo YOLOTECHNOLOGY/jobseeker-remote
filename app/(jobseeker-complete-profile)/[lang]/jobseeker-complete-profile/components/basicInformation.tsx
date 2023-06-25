@@ -36,7 +36,7 @@ const BasicInformation = (props: any) => {
   const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
-
+  const isMobile = document?.body.clientWidth < 750
   const {
     basicInformation,
     theseInformationWillBeShown,
@@ -287,12 +287,12 @@ const BasicInformation = (props: any) => {
           </div>
         </div>
 
-        <FootBtn
-          showBack={false}
+        <FootBtn 
+          showBack={isMobile}
           loading={loading}
           backText = {back}
           rightText={Next1}
-          skip={skip}
+          skipText = {skip}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
       </div>
