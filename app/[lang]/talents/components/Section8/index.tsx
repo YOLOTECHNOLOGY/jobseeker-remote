@@ -8,6 +8,7 @@ import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import {languageContext} from "../../../components/providers/languageProvider";
+import useWindowSize from "../../../../../hooks/useWindowSize";
 
 
 
@@ -24,13 +25,14 @@ const Section8 = () => {
 			link: 'https://bossjob.com'
 		},
 	]
+	const {width} = useWindowSize();
 	return <div className={style.section8}>
 		<div className={style.section8_carousel + ' ' + style.desktop}>
 			<Swiper
 				modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller]}
 				spaceBetween={35}
 				ref={swiperRef}
-				slidesPerView={2.2}
+				slidesPerView={width / 620}
 				speed={4000}
 				autoplay={{
 					delay: 0,
