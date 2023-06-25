@@ -72,8 +72,7 @@ const ProtectedHeader = ({ lang }: any) => {
   useEffect(() => {
     if(userInfo?.id){
       const hasJobPreferences = userInfo?.job_preferences.length > 0
-      console.log('userInfo', {userInfo, showUnCompletedDot: !userInfo?.is_profile_completed && !hasJobPreferences})
-      setShowUnCompletedDot(!userInfo?.is_profile_completed && !hasJobPreferences)
+      setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
 
