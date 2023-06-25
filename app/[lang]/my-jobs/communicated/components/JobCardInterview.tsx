@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import styles from '../index.module.scss'
-import useChatNow from 'app/[lang]/hooks/useChatNow'
+import useChatNow from 'app/models/hooks/useChatNow'
 import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import Tooltip from '@mui/material/Tooltip';

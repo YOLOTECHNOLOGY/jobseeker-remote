@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
-import { Stack } from 'app/[lang]/components/MUIs'
+import { Stack } from 'app/components/MUIs'
 
 import MaterialButton from 'components/MaterialButton'
 
@@ -13,10 +13,10 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
-import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
+import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 
 import styles from '../../../page.module.scss'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 type propsType = {
   jobId: number

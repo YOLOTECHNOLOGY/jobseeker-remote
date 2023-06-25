@@ -18,7 +18,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import PhoneComponent from './phoneComponent'
 import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
-import { CircularProgress } from 'app/[lang]/components/MUIs'
+import { CircularProgress } from 'app/components/MUIs'
 const countryForCountryCode = {
   ph: '+63',
   sg: '+65'

@@ -12,7 +12,7 @@ import { usePathname } from 'next/navigation'
 import FootBtn from './footBtn'
 import moment from 'moment'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 const EducationExperience = (props: any) => {
   console.log(props)
   const {

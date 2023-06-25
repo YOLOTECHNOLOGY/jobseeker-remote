@@ -2,7 +2,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import styles from '../../index.module.scss'
-import { CircularProgress } from 'app/[lang]/components/MUIs'
+import { CircularProgress } from 'app/components/MUIs'
 
 // document.documentElement.clientHeight：可见区域高度。
 // document.documentElement.scrollTop：滚动条滚动的距离。

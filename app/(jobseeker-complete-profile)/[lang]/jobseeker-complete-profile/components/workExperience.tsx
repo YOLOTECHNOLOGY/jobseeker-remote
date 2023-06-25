@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 
 
 const WorkExperience = (props: any) => {

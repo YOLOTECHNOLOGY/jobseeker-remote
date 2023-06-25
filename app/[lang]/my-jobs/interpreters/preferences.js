@@ -1,6 +1,6 @@
 
-import { registInterpreter, Result } from 'app/[lang]/abstractModels/util'
-import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
+import { registInterpreter, Result } from 'app/models/abstractModels/util'
+import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
 import { cookies } from 'next/headers'
 import { fetchJobsPreferences } from 'store/services/jobs/fetchJobsForYouLogin'
 export default registInterpreter(command =>

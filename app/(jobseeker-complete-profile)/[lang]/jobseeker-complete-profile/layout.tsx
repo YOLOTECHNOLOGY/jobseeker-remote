@@ -4,8 +4,8 @@ import { formatTemplateString } from 'helpers/formatter'
 import { getCountryKey } from 'helpers/country'
 import 'styles/globals.scss'
 import dynamic from 'next/dynamic'
-const Providers = dynamic(() => import('app/[lang]/components/providers'), { ssr: true })
-import LinkProvider from 'app/[lang]/components/providers/linkProvider'
+const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
+import LinkProvider from 'app/components/providers/linkProvider'
 export default async function RootLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo }: any = props

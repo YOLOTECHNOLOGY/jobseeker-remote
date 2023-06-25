@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import style from './index.module.scss';
 import {getCountryKey, getLang} from 'helpers/country'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 import React, {useContext} from "react";
 import {getCookie} from "../../../../../helpers/cookies";
 import useWindowSize from "../../../../../hooks/useWindowSize";

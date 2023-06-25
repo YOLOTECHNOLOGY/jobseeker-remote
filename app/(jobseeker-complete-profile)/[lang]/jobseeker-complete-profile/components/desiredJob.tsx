@@ -19,7 +19,7 @@ import {
 import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 import {generateUserResumeService} from 'store/services/users/generateUserResume'
 import { getCookie,setCookie } from 'helpers/cookies'
 const countryForCurrency = {

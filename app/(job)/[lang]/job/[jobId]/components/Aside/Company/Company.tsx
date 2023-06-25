@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Avatar, Button } from 'app/[lang]/components/MUIs'
+import { Avatar, Button } from 'app/components/MUIs'
 import styles from '../../../page.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import { getValueById } from 'helpers/config/getValueById'

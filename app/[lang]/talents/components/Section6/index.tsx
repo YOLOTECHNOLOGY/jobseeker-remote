@@ -5,7 +5,7 @@ import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swiper';
 import {useInView, InView } from "react-intersection-observer";
 import useWindowSize from "../../../../../hooks/useWindowSize";
-import {languageContext} from "../../../components/providers/languageProvider";
+import {languageContext} from "../../../../components/providers/languageProvider";
 
 let countries = [
 	{

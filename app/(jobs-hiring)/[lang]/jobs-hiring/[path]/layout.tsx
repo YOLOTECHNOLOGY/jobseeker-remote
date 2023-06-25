@@ -1,14 +1,14 @@
 
 
 import React from 'react'
-import PublicLayout from 'app/[lang]/components/publicLayout'
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
+import PublicLayout from 'app/components/publicLayout'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { getCountryKey } from 'helpers/country'
 /* eslint-disable react/no-unknown-property */
 import { formatTemplateString, getCurrentMonthYear } from 'helpers/formatter'
 import { decoder } from '../interpreters/encoder'
 import { toPairs } from 'ramda'
-import getConfigs from 'app/[lang]/interpreters/config'
+import getConfigs from 'app/models/interpreters/config'
 import { getDictionary } from 'get-dictionary'
 import { flatMap } from 'lodash-es'
 

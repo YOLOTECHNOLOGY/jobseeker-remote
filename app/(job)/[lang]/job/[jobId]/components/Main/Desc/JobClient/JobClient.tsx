@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Stack } from 'app/[lang]/components/MUIs'
+import { Stack } from 'app/components/MUIs'
 import Avatar from '@mui/material/Avatar'
 
 import ModalShare from 'components/ModalShare'
@@ -15,7 +15,7 @@ import { ShareIcon, ReportIcon } from 'images'
 import { accessToken as accessTokenKey, getCookie } from 'helpers/cookies'
 
 import styles from '../../../../page.module.scss'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 export type sharePropsType = {
   id: number

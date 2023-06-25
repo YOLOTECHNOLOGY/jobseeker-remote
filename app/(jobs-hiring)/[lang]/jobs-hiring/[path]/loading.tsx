@@ -1,7 +1,2 @@
-'use client'
-import DefaultLoading from 'app/[lang]/loading'
-export default function Loading(props) {
-  return (
-    <DefaultLoading {...props}/>
-  )
-}
+import Loading from "app/components/loading";
+export default Loading

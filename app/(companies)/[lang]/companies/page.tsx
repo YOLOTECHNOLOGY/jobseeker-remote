@@ -1,7 +1,7 @@
 
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
-import { buildComponentScript } from 'app/[lang]/abstractModels/util'
-import getConfigs from 'app/[lang]/interpreters/config'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
+import { buildComponentScript } from 'app/models/abstractModels/util'
+import getConfigs from 'app/models/interpreters/config'
 import { getDictionary } from 'get-dictionary'
 import CompanyComponent from './index'
 const configs = getConfigs([

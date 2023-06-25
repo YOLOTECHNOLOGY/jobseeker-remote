@@ -20,7 +20,7 @@ import { DocumentIcon } from 'images'
 import { SnackbarTips } from './SnackbarTips'
 import moment from 'moment'
 import { formatTemplateString } from 'helpers/formatter'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 moment.locale('en')
 type resumeObject = {
   name: string

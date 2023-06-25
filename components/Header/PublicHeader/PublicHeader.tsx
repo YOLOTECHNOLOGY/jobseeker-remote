@@ -14,7 +14,7 @@ import MaterialButton from 'components/MaterialButton'
 // nation
 import SwitchNation from 'components/SwitchNation/SwitchNation'
 import { getCountryKey, getLang } from 'helpers/country'
-import DialogLogin from 'app/[lang]/components/LoginDialog'
+import DialogLogin from 'app/components/LoginDialog'
 
 
 /* Images */

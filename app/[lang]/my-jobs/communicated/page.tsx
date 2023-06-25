@@ -4,8 +4,8 @@ import MainLeft from "./components/MainLeft"
 import MainRight from "./components/MainRight"
 import { getDictionary } from 'get-dictionary'
 import interpreter from "./intepreter"
-import { serverDataScript } from "app/[lang]/abstractModels/FetchServierComponents"
-import { buildComponentScript } from "app/[lang]/abstractModels/util"
+import { serverDataScript } from "app/models/abstractModels/FetchServierComponents"
+import { buildComponentScript } from "app/models/abstractModels/util"
 const Page = async (props:any) => {
   const {lang} = props.params
   const dictionary:any = await getDictionary(lang);

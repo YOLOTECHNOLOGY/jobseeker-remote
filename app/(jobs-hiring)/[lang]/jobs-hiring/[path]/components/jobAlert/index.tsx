@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 import { buildParams } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { BellIcon } from 'images'
 import { openManageJobAlertsModal } from 'store/actions/modals/manageJobAlertsModal'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 import { getAlertData } from './getAlertData'
 
 const JobAlert = (props: any) => {

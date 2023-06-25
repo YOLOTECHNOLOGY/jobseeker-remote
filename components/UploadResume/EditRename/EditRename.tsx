@@ -12,7 +12,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 // Server
 import { fetchRenameResumes, fetchSendResumeEmail } from 'store/services/jobs/fetchJobsCommunicated'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'

@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import classNames from "classnames";
-import {languageContext} from "../../../components/providers/languageProvider";
+import {languageContext} from "../../../../components/providers/languageProvider";
 
 
 let carouselList = [

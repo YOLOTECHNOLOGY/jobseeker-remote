@@ -3,8 +3,8 @@ import styles from '../index.module.scss'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 interface dialogProps{
     closeFun:()=>void
 }

@@ -13,7 +13,7 @@ import styles from './ModalReportJob.module.scss'
 
 /* Images */
 import { ArrowForwardIcon } from 'images'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 interface ModalReportJobProps {
   isShowReportJob?: boolean

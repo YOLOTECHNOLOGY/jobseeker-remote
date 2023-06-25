@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState, useContext } from 'react'
 import { useSelector } from 'react-redux'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 import {useRouter} from 'next/router'
 /* Components */
 import PublicHeader from './PublicHeader'

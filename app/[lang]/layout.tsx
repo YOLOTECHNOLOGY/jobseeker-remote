@@ -1,10 +1,10 @@
 // 'use client'
-import './globals.scss'
+import 'app/globals.scss'
 import { getCountryKey } from 'helpers/country'
-import './index.module.scss'
+import 'app/index.module.scss'
 import React from 'react'
 
-import PublicLayout from './components/publicLayout'
+import PublicLayout from '../components/publicLayout'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 

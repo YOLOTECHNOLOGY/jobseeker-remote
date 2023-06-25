@@ -1,5 +1,5 @@
 
-import config from 'app/[lang]/interpreters/config'
+import config from 'app/models/interpreters/config'
 const usedConfigProps = [
     ['location_lists'],
     ['main_functions'],

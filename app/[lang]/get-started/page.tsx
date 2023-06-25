@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react'
-import getConfigs from 'app/[lang]/interpreters/config'
-import { buildComponentScript } from 'app/[lang]/abstractModels/util'
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
+import getConfigs from 'app/models/interpreters/config'
+import { buildComponentScript } from 'app/models/abstractModels/util'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import styles from './index.module.scss'
 import Main from './components/main'
 import Link from 'next/link'

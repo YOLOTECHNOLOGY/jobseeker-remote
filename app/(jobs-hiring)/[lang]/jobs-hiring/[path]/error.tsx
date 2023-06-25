@@ -1,7 +1,3 @@
 'use client'
-import DefaultError from 'app/[lang]/error'
-export default function Error(props) {
-    return (
-        <DefaultError {...props} />
-    )
-}
+import Error from "app/components/error";
+export default Error

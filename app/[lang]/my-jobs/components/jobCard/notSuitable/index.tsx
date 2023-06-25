@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import styles from './index.module.scss'
 import Modal from 'components/Modal'
-import {  TextareaAutosize } from 'app/[lang]/components/MUIs'
+import {  TextareaAutosize } from 'app/components/MUIs'
 const NotSuitableModal = (props: any) => {
     const translateLang = props?.lang?.notSuitable || {}
     const {
