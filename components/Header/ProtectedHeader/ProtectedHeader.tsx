@@ -25,6 +25,7 @@ import { getCookie } from 'helpers/cookies'
 
 /* Style */
 import styles from '../Header.module.scss'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // this header will be used when user is logged in
 const ProtectedHeader = ({ lang }: any) => {
@@ -55,6 +56,7 @@ const ProtectedHeader = ({ lang }: any) => {
   // const totalUnread = 999
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
+
   useEffect(() => {
     if (pathname && isShowHeaderMenu) {
       setIsShowHeaderMenu(false)
@@ -68,13 +70,18 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if(currentUser?.id){
-      console.log({currentUser})
-      setShowUnCompletedDot(!currentUser?.is_profile_completed)
+    if(userInfo?.id){
+      const hasJobPreferences = userInfo?.job_preferences.length > 0
+      console.log('userInfo', {userInfo, showUnCompletedDot: !userInfo?.is_profile_completed && !hasJobPreferences})
+      setShowUnCompletedDot(!userInfo?.is_profile_completed && !hasJobPreferences)
     }
-  }, [currentUser])
+  }, [userInfo])
 
   useEffect(() => {
+    const accessToken = getCookie('accessToken')
+    if(accessToken) {
+      dispatch(fetchUserOwnDetailRequest({ accessToken }))
+    }
     document.addEventListener('click', handleClickOutside, true)
     return () => {
       document.removeEventListener('click', handleClickOutside, true)
