@@ -4,6 +4,7 @@ import { buildComponentScript } from 'app/models/abstractModels/util'
 import getConfigs from 'app/models/interpreters/config'
 import { getDictionary } from 'get-dictionary'
 import CompanyComponent from './index'
+import Footer from 'components/Footer'
 const configs = getConfigs([
     ['feature_banners'],
     ['company_sizes'],
@@ -13,8 +14,11 @@ const configs = getConfigs([
 const Company = async (props) => {
     const { lang }: any = props.params
     const dictionary = await getDictionary(lang)
-    return <CompanyComponent lang={dictionary} langKey={lang} {...props} />
+    return <>
+        <CompanyComponent lang={dictionary} langKey={lang} {...props} />
+        <Footer />
+    </>
 }
 export default configs(serverDataScript().chain((configs) =>
-   buildComponentScript({ configs }, Company))
+    buildComponentScript({ configs }, Company))
 ).run

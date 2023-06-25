@@ -1,4 +1,3 @@
-import Footer from 'components/Footer'
 import 'components/Header/Header.module.scss'
 import 'app/globals.scss'
 import PublicLayout from 'app/components/publicLayout'
@@ -29,7 +28,6 @@ export default async function Layout(props: any) {
     /* @ts-expect-error Async Server Component */
     <PublicLayout {...props} seo={seo} >
       {children}
-      <Footer />
     </PublicLayout>
   )
 }
