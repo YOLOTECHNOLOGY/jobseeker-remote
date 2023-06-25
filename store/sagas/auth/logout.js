@@ -6,7 +6,6 @@ import { removeCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailClear } from 'store/actions/users/fetchUserOwnDetail'
 import jobseekersLogin from 'store/reducers/auth/jobseekersLogin'
 import jobseekersSocialLogin from 'store/reducers/auth/jobseekersSocialLogin'
-import { JOBBSEEKERS_SOCIALLOGIN_CLEAR, JOBBSEEKERS_LOGIN_CLEAR } from 'store/types/auth'
 
 function* logoutReq() {
   // const payload = {

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams } from 'next/navigation'
-import classNames from 'classnames'
-import Image from 'next/image'
 
-import useGetStarted from '../../hooks/useGetStarted'
 import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
-import { removeItem } from 'helpers/localStorage'
-
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
+import { useSearchParams } from 'next/navigation'
+import classNames from 'classnames'
 
 interface IGoogle {
   className?: string
@@ -26,8 +22,6 @@ const GoogleLogin = (props: IGoogle) => {
     redirect,
     lang: { newGetStarted }
   } = props
-  const userInfo = useSelector((store: any) => store.auth.jobseekersSocialLogin.response)
-  const { defaultLoginCallBack } = useGetStarted()
   const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
   const dispatch = useDispatch()
@@ -41,7 +35,6 @@ const GoogleLogin = (props: IGoogle) => {
     setInit(typeof window?.gapi != 'undefined')
   }, [window?.gapi])
 
-  // load google script libs
   useEffect(() => {
     setGoogleAuth(null)
     if (typeof window !== 'undefined') {
@@ -73,18 +66,17 @@ const GoogleLogin = (props: IGoogle) => {
     }
   }, [])
 
-  // handle has logged redirect url
-  useEffect(() => {
-    const { data } = userInfo
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
+  const handleAuthClick = () => {
+    if (!googleAuth) {
+      console.error(new Error('Error loading google auth script'))
+      return
     }
-  }, [userInfo?.data])
+    googleAuth?.signIn().then(() => {
+      handleSigninStatus()
+    })
+  }
 
-  // handle login for service
   const callBackMethod = (payload) => {
-    console.log('44444', payload)
     const data = {
       ...payload,
       ...query,
@@ -100,18 +92,6 @@ const GoogleLogin = (props: IGoogle) => {
     dispatch(jobbseekersSocialLoginRequest(data))
   }
 
-  // login google cb
-  const handleAuthClick = () => {
-    if (!googleAuth) {
-      console.error(new Error('Error loading google auth script'))
-      return
-    }
-    googleAuth?.signIn().then(() => {
-      handleSigninStatus()
-    })
-  }
-
-  // handle login google service
   const handleSigninStatus = async () => {
     const user = googleAuth.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
@@ -150,7 +130,7 @@ const GoogleLogin = (props: IGoogle) => {
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuthClick}
     >
-      <Image width={24} height={24} alt='Sign in with google' src={GoogleLogo} />
+      <img src={GoogleLogo} />
       <span>{newGetStarted.links.google}</span>
     </div>
   )

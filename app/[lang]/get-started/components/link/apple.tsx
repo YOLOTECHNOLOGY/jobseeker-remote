@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import styles from '../../index.module.scss'
+import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
+import { AppleIcon } from 'images'
 import { useSearchParams } from 'next/navigation'
+import { useDispatch } from 'react-redux'
 import * as jose from 'jose'
 import classNames from 'classnames'
-import Image from 'next/image'
-
-import useGetStarted from '../../hooks/useGetStarted'
-import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
-import { removeItem } from 'helpers/localStorage'
-
-import { AppleIcon } from 'images'
-import styles from '../../index.module.scss'
 
 interface IApple {
   isLogin?: boolean
@@ -27,8 +22,6 @@ const AppleLogin = (props: IApple) => {
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const [init, setInit] = useState(false)
-  const userInfo = useSelector((store: any) => store.auth.jobseekersSocialLogin.response)
-  const { defaultLoginCallBack } = useGetStarted()
 
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -39,7 +32,6 @@ const AppleLogin = (props: IApple) => {
     setInit(typeof window?.AppleID != 'undefined')
   }, [window?.AppleID])
 
-  // apple config
   const appleConfig = {
     clientId: 'com.bossjob.web',
     scope: 'name email',
@@ -47,7 +39,6 @@ const AppleLogin = (props: IApple) => {
     usePopup: true
   }
 
-  // load apple script libs
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')
@@ -72,16 +63,6 @@ const AppleLogin = (props: IApple) => {
     }
   }, [])
 
-  // handle has logged redirect url
-  useEffect(() => {
-    const { data } = userInfo
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [userInfo?.data])
-
-  // handle login for apple service
   const handleAuth = async () => {
     if (!window?.AppleID) {
       console.error(new Error('Error loading apple script'))
@@ -96,7 +77,6 @@ const AppleLogin = (props: IApple) => {
     }
   }
 
-  // handle login for service
   const callBackMethod = (payload) => {
     try {
       const decodeJwt = jose.decodeJwt(payload?.authorization?.id_token)
@@ -116,11 +96,13 @@ const AppleLogin = (props: IApple) => {
   }
 
   return (
+    // <div className={styles.login_item}>
     <div
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuth}
     >
-      <Image width={24} height={24} alt='Sign in with apple ID' src={AppleIcon} />
+      <img src={AppleIcon}></img>
+      {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
       <span data-type='sign in' aria-label='Sign in with apple ID'>
         {newGetStarted.links.apple}
       </span>
