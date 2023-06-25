@@ -54,7 +54,7 @@ const AppleLogin = (props: IApple) => {
         }
         setInit(true)
         window.AppleID.auth.init(appleConfig)
-        document.body.removeChild(script)
+        document?.body?.removeChild(script)
       }
       script.src = APPLE_LOGIN_URL
       script.type = 'text/javascript'
@@ -64,7 +64,9 @@ const AppleLogin = (props: IApple) => {
       script.onerror = () => {
         setInit(false)
       }
-      document.body.appendChild(script)
+      if (!window?.AppleID) {
+        document.body.appendChild(script)
+      }
     }
   }, [])
 
