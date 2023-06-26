@@ -998,7 +998,9 @@
       "note": "By signing up, I have read and agreed to the",
       "term": "Terms of Use",
       "policy": "Privacy Policy",
-      "and": "and"
+      "and": "and",
+      "emailLabel": "Email Address",
+      "emailValid": "Please enter a valid email address."
     }
   },
   "editJobPreferencesModal": {

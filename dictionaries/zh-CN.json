@@ -999,7 +999,9 @@
       "note": "我已经阅读并同意",
       "term": "使用条款",
       "policy": "隐私政策",
-      "and": "和"
+      "and": "和",
+      "emailLabel": "邮箱",
+      "emailValid": "请输入一个有效的邮件地址."
     }
   },
   "editJobPreferencesModal": {
