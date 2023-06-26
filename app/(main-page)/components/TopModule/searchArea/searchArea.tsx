@@ -20,7 +20,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { getCountryId } from 'helpers/country';
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { setCookie } from 'helpers/cookies'
 
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
