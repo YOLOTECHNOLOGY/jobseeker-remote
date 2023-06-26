@@ -82,12 +82,13 @@ console.log({userDetail})
     const educationData = {
       school: school,
       is_currently_studying: isCurrentStudying,
-      study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
-      study_period_to: isCurrentStudying  ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
+      study_period_from: `${moment(new Date(studyPeriodFrom)).format('yyyy-MM')}-01`,
+      study_period_to: isCurrentStudying  ? null : `${moment(new Date(studyPeriodTo)).format('yyyy-MM')}-01`,
       field_of_study: fieldStudy,
       degree_id: selectedDegrees
     }
     setLoading(true)
+    console.log({educationData})
    if(educations?.length){
     const id = educations[0].id
     const educationPayload= {
