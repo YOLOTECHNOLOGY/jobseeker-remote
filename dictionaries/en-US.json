@@ -849,9 +849,9 @@
     "ImHiring": "I’m employees",
     "education": "Education",
     "skip": "Skip profile setup",
-    "skipTips":"Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
+    "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway":"skipAnyway"
+    "skipAnyway": "skipAnyway"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -995,8 +995,10 @@
       "join": "Join Bossjob",
       "start": "kick-start your career",
       "submit": "Submit",
-      "term": "By signing up, I have read and agreed to Terms of Use",
-      "policy": "and Privacy Policy"
+      "note": "By signing up, I have read and agreed to the",
+      "term": "Terms of Use",
+      "policy": "Privacy Policy",
+      "and": "and"
     }
   },
   "editJobPreferencesModal": {

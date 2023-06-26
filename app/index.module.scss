@@ -938,6 +938,23 @@
   .search {
     flex: 1;
     margin: 0px 17px;
+    background-color: #fff;
+    border-radius: 8px;
+    height: 44px;
+
+    :global {
+      .MuiAutocomplete-root {
+        background-color: #ffffff;
+      }
+      
+      .MuiOutlinedInput-root {
+        height: 44px;
+      }
+
+      .MuiInputLabel-root {
+        top: 3px;
+      }
+    }
 
     @include sm {
       margin-left: 15px;

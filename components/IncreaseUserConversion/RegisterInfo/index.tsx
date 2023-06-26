@@ -153,9 +153,15 @@ const RegisterInfo = (props: any) => {
             </MaterialButton>
 
             <Text className={styles.RegisterAgreement} textStyle='sm'>
-              {register.term}
+              {register.note}{' '}
+              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/'>
+                {register.term}
+              </a>
               <br />
-              {register.policy}
+              {register.and}{' '}
+              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/'>
+                {register.policy}
+              </a>
             </Text>
           </div>
         </div>
