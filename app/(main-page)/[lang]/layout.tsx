@@ -8,8 +8,6 @@ import PublicLayout from 'app/components/publicLayout'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 
-
-
 export default async function RootLayout(props: any) {
 
   const { children, params: { lang } } = props
