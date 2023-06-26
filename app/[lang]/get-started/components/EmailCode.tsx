@@ -72,7 +72,6 @@ const EmailCode = (props: any)=> {
 
       }
     }).catch((error) => {
-      console.log(error,7778888)
       setErrorText(error?.response?.data?.message )
       dispatch(
         displayNotification({

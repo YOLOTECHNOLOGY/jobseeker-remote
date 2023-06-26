@@ -43,7 +43,6 @@ const SearchArea = (props: any) => {
 
   const page = searchValues.page ?? '1'
 
-  console.log('config', config)
 
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(

@@ -1,21 +1,15 @@
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-// api
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
-
-// actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { jobbseekersLoginRequest } from 'store/actions/auth/jobseekersLogin'
-
 import { getCountryId, getLanguageId } from 'helpers/country'
-
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
 import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/services/auth/jobseekersSocialLogin'
+import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 
 const useGetStarted = () => {
   const routes = useRouter()
@@ -35,6 +29,8 @@ const useGetStarted = () => {
   const [error, setError] = useState<any>(null)
   const [userInfo, setUserInfo] = useState<any>(null)
   const redirect = searchParams.get('redirect')
+  const config = useSelector((store: any) => store.config.config.response ?? [])
+  const smsCountryList = getSmsCountryList(config)
   useEffect(() => {
     if (Array.isArray(redirect)) {
       setDefaultRedirectPage(redirect[0])
@@ -86,7 +82,8 @@ const useGetStarted = () => {
       otp: code,
       source: 'web',
       userId,
-      browser_serial_number: uuid
+      browser_serial_number: uuid,
+      mobile_country_id: smsCountryList.filter((country) =>phone_num.includes(country.value))?.[0]?.id
     }
     // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)

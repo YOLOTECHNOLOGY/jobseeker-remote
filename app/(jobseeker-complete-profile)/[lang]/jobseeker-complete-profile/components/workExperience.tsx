@@ -195,8 +195,8 @@ const WorkExperience = (props: any) => {
       job_title: jobFunction?.value,
       function_job_title_id: jobFunction?.id,
       company: companyName,
-      working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
-      working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      working_period_from: `${moment(new Date(workPeriodFrom)).format('yyyy-MM')}-01`,
+      working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodTo)).format('yyyy-MM')}-01`,
       is_currently_work_here: isCurrentJob,
       description
     }
