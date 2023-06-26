@@ -70,7 +70,7 @@
     "firebase": "^9.17.1",
     "gapi-script": "^1.2.0",
     "image-conversion": "^2.1.1",
-    "imforbossjob": "^0.1.89-fix2",
+    "imforbossjob": "^0.1.89-fix3",
     "jose": "^4.14.4",
     "lodash-es": "^4.17.21",
     "log4js": "^6.9.1",
