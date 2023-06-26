@@ -39,7 +39,7 @@ const VerifyFactorEmail = (props: IProps) => {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
-  console.log({userInfo})
+  console.log({userInfo},'11')
   useEffect(() => {
     if (userInfo?.data && !Object.keys(userInfo).length) {
       return
