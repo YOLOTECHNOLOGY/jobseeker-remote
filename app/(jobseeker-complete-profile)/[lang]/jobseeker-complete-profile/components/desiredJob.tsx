@@ -27,7 +27,7 @@ const countryForCurrency = {
   sg: 'sgd'
 }
 const EducationExperience = (props: any) => {
-  console.log(props)
+
   const { lang, userDetail, config } = props
   const {job_preferences,resumes} = userDetail
   const pathname = usePathname()
@@ -99,7 +99,7 @@ const EducationExperience = (props: any) => {
       getMaxSalaryOptions(minSalary)
      }
   }, [minSalary])
- console.log({maxSalaryOptions})
+
   useEffect(()=>{  
     if(jobFunction?.id && maxSalary && locationData){
       setIsDisabled(false)
@@ -107,9 +107,8 @@ const EducationExperience = (props: any) => {
       setIsDisabled(true)
     }
   },[jobFunction,maxSalary,locationData])
-  console.log({jobFunction})
+
   const handleUpdateProfile = async (data) => {
-    console.log({data},jobFunction)
     const { currency, location ,maxSalary,minSalary} = data || {}
     const params = {
       job_title: jobFunction.value || '',

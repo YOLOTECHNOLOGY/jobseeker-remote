@@ -14,7 +14,6 @@ import moment from 'moment'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { LinkContext } from 'app/components/providers/linkProvider'
 const EducationExperience = (props: any) => {
-  console.log(props)
   const {
     config: { degrees },
     lang,
@@ -67,7 +66,6 @@ const EducationExperience = (props: any) => {
     studyPeriod,
     skip
   } = lang?.profile || {}
-console.log({userDetail})
  useEffect(()=>{
    if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
     setIsDisabled(false)
