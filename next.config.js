@@ -36,7 +36,7 @@ module.exports = withBundleAnalyzer({
     // appDocumentPreloading:true,
     // newNextLinkBehavior:true,
     // cpus: 2,
-    esmExternals: 'loose'
+    // esmExternals: 'loose'
   },
   env: {
     ENV: process.env.ENV,
