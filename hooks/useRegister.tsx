@@ -24,8 +24,10 @@ import useRegisterInfo from 'hooks/useRegisterInfo'
 export interface SnackbarType extends SnackbarOrigin {
   open: boolean
 }
+type useRegisterProps = { invalidEmailMsg?: string }
 
-const useRegister = () => {
+const useRegister = (props?: useRegisterProps) => {
+  const { invalidEmailMsg } = props || {}
   const {
     vertical,
     horizontal,
@@ -125,7 +127,7 @@ const useRegister = () => {
 
     let errorText = null
     if (!email.length || !/\S+@\S+\.\S+/.test(email)) {
-      errorText = 'Please enter a valid email address.'
+      errorText = invalidEmailMsg || 'Please enter a valid email address.'
     }
     setEmailError(errorText)
   }, [email])

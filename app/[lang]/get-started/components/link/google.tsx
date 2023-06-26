@@ -98,7 +98,6 @@ const GoogleLogin = (props: IGoogle) => {
 
   // login google cb
   const handleAuthClick = () => {
-    console.log('googleAuth', googleAuth)
     if (!googleAuth) {
       console.error(new Error('Error loading google auth script'))
       return
