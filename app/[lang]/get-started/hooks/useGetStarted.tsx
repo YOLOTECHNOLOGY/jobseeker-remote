@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
@@ -10,7 +10,8 @@ import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
 import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/services/auth/jobseekersSocialLogin'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
-
+import { languageContext } from 'app/components/providers/languageProvider'
+import { formatTemplateString } from 'helpers/formatter'
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ const useGetStarted = () => {
   const redirect = searchParams.get('redirect')
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const smsCountryList = getSmsCountryList(config)
+  const { getStatred  } = useContext(languageContext) as any
   useEffect(() => {
     if (Array.isArray(redirect)) {
       setDefaultRedirectPage(redirect[0])
@@ -258,7 +260,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: `We’ve sent a magic link to ${email}. Please click on the link to proceed.`,
+            message:  formatTemplateString(getStatred?.magicLink?.haveSendEmail, email),
             severity: 'success'
           })
         )
@@ -268,7 +270,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message: error.message ?? data?.detail,
+            message: data?.detail,
             severity: 'error'
           })
         )
