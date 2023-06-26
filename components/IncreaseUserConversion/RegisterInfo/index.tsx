@@ -124,7 +124,7 @@ const RegisterInfo = (props: any) => {
               <MaterialTextField
                 className={styles.RegisterFormInput}
                 id='email'
-                label='Email Address'
+                label={register.emailLabel}
                 variant='outlined'
                 value={email}
                 size='small'
