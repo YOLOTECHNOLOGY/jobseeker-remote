@@ -33,7 +33,7 @@ const theme = parent => createTheme(({
       styleOverrides: {
         ...parent?.components?.MuiAutocomplete?.styleOverrides,
         root: {
-          ...parent?.components?.MuiAutocomplete?.styleOverrides,
+          ...parent?.components?.MuiAutocomplete?.styleOverrides?.root,
           // borderRadius: '10px',
           // overflow: 'hidden',
           // "&:Mui-focused":{
@@ -41,7 +41,8 @@ const theme = parent => createTheme(({
           //   border:'none'
           // },
           height: '100%',
-          border: 'none'
+          border: 'none',
+          overflow: 'visible'
         },
 
         // inputRoot:{
@@ -111,7 +112,6 @@ const MaterialTextFieldWithSuggestionList = ({
       <Autocomplete
         id='autocomplete-suggestion-list'
         freeSolo
-        style={{ background: '#fff', color: '#ccc' ,}}
         options={options?.map((option) => option)}
         getOptionLabel={(option: any) => option.value || option}
         className={className}
@@ -137,7 +137,6 @@ const MaterialTextFieldWithSuggestionList = ({
           <TextField
             {...refs}
             id={id}
-            style={{ background: '#fff', color: '#ccc', borderRadius: '10px', height: 44 }}
             classes={{}}
             value={value}
             hiddenLabel

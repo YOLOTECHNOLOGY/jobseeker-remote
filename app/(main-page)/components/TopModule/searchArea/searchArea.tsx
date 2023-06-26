@@ -1,9 +1,10 @@
 'use client'
 import React, { useEffect, useState, useTransition, useCallback, useContext, useMemo } from 'react'
 import { flatMap, toPairs } from 'lodash-es'
-import MaterialTextFieldWithSuggestionList from 'components/MaterialTextFieldWithSuggestionList'
+import JobSearchBar from 'app/components/commons/location/search'
 import styles from 'app/index.module.scss'
-
+import theme from 'app/components/commons/theme'
+import { ThemeProvider } from '@mui/material/styles'
 import MaterialButton from 'components/MaterialButton'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
@@ -49,13 +50,13 @@ const SearchArea = (props: any) => {
     router.refresh()
   }, [location])
   const pushJobPage = useCallback(
-    (value) => {
+    (value, type) => {
       const result = encode({
         query: value?.trim?.(),
-        location: location?.map((a) => a['seo_value'])
+        location: location?.map((a) => a['seo_value']),
+        queryFields: type
       })
       const url = new URLSearchParams(toPairs(result.params)).toString()
-      console.log({ url })
       router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
       // router.push('/' + langKey + query, { forceOptimisticNavigation: true })
     },
@@ -131,105 +132,107 @@ const SearchArea = (props: any) => {
   console.log({ location })
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
-      <div className={styles.box}>
-
-        <LocationMultiSelector
-          className={styles.location}
-          // locationList={config.location_lists}
-          value={location}
-          label={home.search.location}
-          onChange={setLocation}
-          lang={home.search}
-          sx={{
-            '> .MuiFormControl-root': {
-              borderRadius: '10px',
-              height: '40px',
-              marginTop: '4px',
-              overflow: 'hidden',
-              '> .MuiOutlinedInput-root': {
+      <ThemeProvider theme={theme}>
+        <div className={styles.box}>
+          <LocationMultiSelector
+            className={styles.location}
+            // locationList={config.location_lists}
+            value={location}
+            label={home.search.location}
+            onChange={setLocation}
+            lang={home.search}
+            sx={{
+              '> .MuiFormControl-root': {
                 borderRadius: '10px',
                 height: '40px',
+                marginTop: '4px',
                 overflow: 'hidden',
-                marginTop: '4px'
+                '> .MuiOutlinedInput-root': {
+                  borderRadius: '10px',
+                  height: '40px',
+                  overflow: 'hidden',
+                  marginTop: '4px'
+                }
               }
-            }
-          }}
-        />
-        <MaterialTextFieldWithSuggestionList
-          id='search'
-          label={home.search.title}
-          variant='outlined'
-          size='small'
-          className={styles.search}
-          renderOption={(props, option) => {
-            const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-            return type === 'company' ? (
-              <li {...props} style={styleleSelect}>
-                <Image src={logoUrl} alt={value} width='22' height='22' />
-                <span style={{ paddingLeft: '10px' }}>{value}</span>
-              </li>
-            ) : isHistory ? (
-              <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
-                <AccessTimeIcon />
-                <span style={{ paddingLeft: '10px' }}>{value}</span>
-              </li>
-            ) : (
-              <li {...props} style={styleleSelect}>
-                <SearchIcon />
-                <span style={{ paddingLeft: '10px' }}>{value || option}</span>
-              </li>
-            )
-          }}
-          // defaultValue={defaultValues?.urlQuery}
-          value={searchValue}
-          maxLength={255}
-          searchFn={handleSuggestionSearch}
-          updateSearchValue={setSearchValue}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault()
-              setSearchValue((e.target as HTMLInputElement).value)
-              addSearchHistory((e.target as HTMLInputElement).value)
-              pushJobPage((e.target as HTMLInputElement).value)
-            }
-          }}
-          options={suggestionList}
-          onSelect={(value: any) => {
-            setSearchValue(value)
-            addSearchHistory(value)
-            pushJobPage(value)
-          }}
-        />
-        <MaterialButton
-          className={styles.searchButton}
-          onClick={() => {
-            if (!searchValue) return
-            addSearchHistory(searchValue)
-            pushJobPage(searchValue)
-          }}
-          style={{
-            textTransform: 'capitalize'
-          }}
-        >
-          {' '}
-          {home.search.btn1}{' '}
-        </MaterialButton>
-        {isShow && (
-          <div className={styles.download}>
-            <PhoneIphoneIcon className={styles.icon} />
-            <p>
-              {' '}
-              {home.search.download}
-              <br />
-              {home.search.chatBoss}
-            </p>
-            <div className={styles.popver}>
-              <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-              <p>{home.search.popup.chatBoss}</p>
+            }}
+          />
+          <JobSearchBar
+            id='search'
+            label={home.search.title}
+            variant='outlined'
+            size='small'
+            className={styles.search}
+            value={searchValue}
+            maxLength={255}
+            searchFn={handleSuggestionSearch}
+            updateSearchValue={setSearchValue}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                setSearchValue((e.target as HTMLInputElement).value)
+                addSearchHistory((e.target as HTMLInputElement).value)
+                pushJobPage((e.target as HTMLInputElement).value, '')
+              }
+            }}
+            options={suggestionList}
+            onSelect={(value: any) => {
+              const newValue = value?.value || value || ''
+              const type = value?.type || ''
+              setSearchValue(newValue)
+              addSearchHistory(newValue)
+              pushJobPage(newValue, type)
+            }}
+            renderOption={(props, option) => {
+              const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+              return type === 'company' ? (
+                <li {...props} style={styleleSelect} key={props.id}>
+                  <Image src={logoUrl} alt={value} width='22' height='22' />
+                  <span style={{ paddingLeft: '10px' }}>{value}</span>
+                </li>
+              ) : isHistory ? (
+                <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
+                  <AccessTimeIcon />
+                  <span style={{ paddingLeft: '10px' }}>{value}</span>
+                </li>
+              ) : (
+                <li {...props} style={styleleSelect} key={props.id}>
+                  <SearchIcon />
+                  <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                </li>
+              )
+            }}
+          />
+          <MaterialButton
+            className={styles.searchButton}
+            onClick={() => {
+              if (!searchValue) return
+              addSearchHistory(searchValue)
+              pushJobPage(searchValue, '')
+            }}
+            style={{
+              textTransform: 'capitalize'
+            }}
+          >
+            {' '}
+            {home.search.btn1}{' '}
+          </MaterialButton>
+          {isShow && (
+            <div className={styles.download}>
+              <PhoneIphoneIcon className={styles.icon} />
+              <p>
+                {' '}
+                {home.search.download}
+                <br />
+                {home.search.chatBoss}
+              </p>
+              <div className={styles.popver}>
+                <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
+                <p>{home.search.popup.chatBoss}</p>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </ThemeProvider>
     </div>
   )
 }
