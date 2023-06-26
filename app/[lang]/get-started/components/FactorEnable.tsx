@@ -1,6 +1,5 @@
 import React, { useEffect,useRef } from 'react'
 import styles from '../index.module.scss'
-import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
 import lottie from "lottie-web";
 function FactorEnable(props: any) {
@@ -10,13 +9,10 @@ function FactorEnable(props: any) {
   const container= useRef(null);
   console.log({ userInfo })
   useEffect(() => {
-    if (userInfo && Object.keys(userInfo).length) {
-      const { data } = userInfo
-      setTimeout(() => {
-        defaultLoginCallBack(data)
-      }, 2000)
-    }
-  }, [userInfo])
+    setTimeout(() => {
+      defaultLoginCallBack({})
+    }, 3000)
+  }, [])
 
   useEffect(() => {
     lottie.loadAnimation({

@@ -995,8 +995,10 @@
       "join": "Join Bossjob",
       "start": "kick-start your career",
       "submit": "Submit",
-      "term": "By signing up, I have read and agreed to Terms of Use",
-      "policy": "and Privacy Policy"
+      "note": "By signing up, I have read and agreed to the",
+      "term": "Terms of Use",
+      "policy": "Privacy Policy",
+      "and": "and"
     }
   },
   "editJobPreferencesModal": {

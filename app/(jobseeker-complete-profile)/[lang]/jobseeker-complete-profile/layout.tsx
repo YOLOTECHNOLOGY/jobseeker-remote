@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/next-script-for-ga */
 // import styles from './index.module.scss'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'

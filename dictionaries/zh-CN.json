@@ -850,9 +850,9 @@
     "ImHiring": "我要招聘",
     "education": "教育",
     "skip": "跳过职位设置",
-    "skipTips":"跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
+    "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
-    "skipAnyway":"跳过"
+    "skipAnyway": "跳过"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -996,8 +996,10 @@
       "join": "加入Bossjob，",
       "start": "开启您的职业生涯",
       "submit": "提交",
-      "term": "我已经阅读并同意使用条款",
-      "policy": "和隐私政策"
+      "note": "我已经阅读并同意",
+      "term": "使用条款",
+      "policy": "隐私政策",
+      "and": "和"
     }
   },
   "editJobPreferencesModal": {
