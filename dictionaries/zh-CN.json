@@ -506,20 +506,6 @@
       "JD": "职位描述",
       "talkToBoss": "与老板随时谈"
     },
-    "seo": {
-      "default": {
-        "title": "搜索在{{country}}的最新工作 - 和老板在线聊，极速申请工作 - {{month}} {{year}} | Bossjob",
-        "desc": "查看最新{{country}}的高薪职位。立即上 Bossjob找工作，海量公司，高薪职位，快速开聊，极速入职！"
-      },
-      "withQuery": {
-        "title": "{{country}}的{{searchQuery}}工作，工作机会 - {{month}} {{year}} | Bossjob",
-        "desc": "查看最新{{country}}的{{searchQuery}} 职位。立即上 Bossjob找工作，海量公司，高薪职位，快速开聊，极速入职！"
-      },
-      "withQueryAndLocation": {
-        "title": "{{country}}的{{searchQuery}}工作, 现在抓住工作机会 - {{month}} {{year}} | Bossjob",
-        "desc": "在{{country}}，{{location}}的新{{searchQuery}}工作已经可申请啦。立即在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
-      }
-    },
     "noResultsFound": "没有结果",
     "pleaseUseDifferentKeyword": "请使用不同的搜索条件并重试",
     "reset2": "重置",
@@ -1197,8 +1183,8 @@
       "lifeDescription": "来Bossjob上了解位于{{country}}的{{companyName}}的企业文化和职场生活！全面了解企业的工商信息和最新招聘信息，投递前做好企业调研，入职更安心！"
     },
     "landing": {
-      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
-      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
+      "title": "下载注册Bossjob，与老板在线开聊 | Bossjob",
+      "description": "{{country}}公司在线招聘，马上加入Bossjob与老板们开聊，快速换工作升职加薪！"
     }
   },
   "landing": {
