@@ -17,10 +17,11 @@ import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
-import { getCountryId } from 'helpers/country';
+import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { setCookie } from 'helpers/cookies'
+import { HistoryIcons } from 'images'
 
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
@@ -30,9 +31,11 @@ const SearchArea = (props: any) => {
   const dispatch = useDispatch()
   const { location: defaultLoaction } = useContext(LocationContext)
   const flatLocations = useMemo(() => {
-    return flatMap(config.location_lists ?? [], item => item.locations)
+    return flatMap(config.location_lists ?? [], (item) => item.locations)
   }, [config])
-  const [location, setLocation] = useState(flatLocations.filter(item => item.id === (defaultLoaction?.id || defaultLoaction?.[0]?.id)))
+  const [location, setLocation] = useState(
+    flatLocations.filter((item) => item.id === (defaultLoaction?.id || defaultLoaction?.[0]?.id))
+  )
   const data: any = useContext(languageContext)
   const home = data.home
 
@@ -57,7 +60,9 @@ const SearchArea = (props: any) => {
         queryFields: type
       })
       const url = new URLSearchParams(toPairs(result.params)).toString()
-      router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, { forceOptimisticNavigation: true })
+      router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, {
+        forceOptimisticNavigation: true
+      })
       // router.push('/' + langKey + query, { forceOptimisticNavigation: true })
     },
     [location, router]
@@ -86,11 +91,13 @@ const SearchArea = (props: any) => {
           fetch(
             `${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(
               searchHistories
-            )}`, {
-            headers: {
-              'Country-Id': String(getCountryId())
+            )}`,
+            {
+              headers: {
+                'Country-Id': String(getCountryId())
+              }
             }
-          })
+          )
             .then((resp) => resp.json())
             .then((data) => setSuggestionList(data.data.items))
         }
@@ -192,12 +199,12 @@ const SearchArea = (props: any) => {
               ) : isHistory ? (
                 <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
                   <AccessTimeIcon />
-                  <span style={{ paddingLeft: '10px' }}>{value}</span>
+                  <span style={{ paddingLeft: '10px' }}>{value}==1</span>
                 </li>
               ) : (
                 <li {...props} style={styleleSelect} key={props.id}>
-                  <SearchIcon />
-                  <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                  <Image src={HistoryIcons} alt='history icons' width='20' height='20' />
+                  <span style={{ paddingLeft: '10px' }}>{value || option}22</span>
                 </li>
               )
             }}
