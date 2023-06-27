@@ -9,18 +9,18 @@ export default command => command.cata({
         const imState = context.getState()
         resolve(imState?.chatStatus === 'New' && imState?.initiated_role === 'recruiter')
     })),
-    isFirstReceivedMessage: () =>
+    isFirstReceivedMessage: chatId =>
         M(
             context =>
                 new Promise(resolve => {
-                    const state = context.getState()
+                    const state = context.getLocalImState(chatId)
                     const { delete_status } = state
                     resolve(!!delete_status)
                 })
         ),
-    requestFirst: () => M(context => {
+    requestFirst: aChatId => M(context => {
         context.setLoading(true)
-        const chatId = context.getChatId()
+        const chatId = aChatId || context.getChatId()
         return requestFirstService(chatId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
