@@ -25,7 +25,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
 import useUserAgent from 'helpers/useUserAgent'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
-import { AppDownQRCode } from 'images'
+import { AppDownQRCode, HistoryIcons } from 'images'
 import Image from 'next/image'
 import classNames from 'classnames'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -207,7 +207,7 @@ const SearchArea = (props: any) => {
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect}>
-                      <SearchIcon />
+                      <Image src={HistoryIcons} alt='history icons' width='20' height='20' />
                       <span style={{ paddingLeft: '10px' }}>{value || option}</span>
                     </li>
                   )
@@ -288,13 +288,10 @@ const SearchArea = (props: any) => {
                 <Button
                   className={styles.loginButton}
                   variant='outlined'
-
-
-
                   onClick={() => {
-                    sessionStorage.setItem('redirectPage',window?.location?.pathname)
+                    sessionStorage.setItem('redirectPage', window?.location?.pathname)
                     setShowLogin(true)
-                   // router.push('/get-started', { forceOptimisticNavigation: true })
+                    // router.push('/get-started', { forceOptimisticNavigation: true })
                   }}
                 >
                   <svg
