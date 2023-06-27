@@ -410,11 +410,11 @@
       "btn2": "继续",
       "content": "你正在和招聘者交流{{jobName}}职位。 你确定要更换工作嘛？"
     },
-    "completeProfileModal":{
-      "title":"注意",
-      "btn1": "不",
-      "btn2": "现在去",
-      "content": "必须完善简历以后才能与老板聊天，现在要去完善吗？"
+    "completeProfileModal": {
+      "title": "完善简历",
+      "btn1": "一会再说",
+      "btn2": "现在更新",
+      "content": "您的简历不完整, 请在聊天之前先更新简历"
     },
     "aside": {
       "company": {

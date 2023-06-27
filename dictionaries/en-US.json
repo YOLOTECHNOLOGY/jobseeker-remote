@@ -414,7 +414,7 @@
       "title":"Notice",
       "btn1": "No",
       "btn2": "Update resume",
-      "content": "You do not fulfill the job requirements, are you sure you want to update resume?"
+      "content": "Your profile is incomplete, please update your resume before starting a chat."
     },
     "aside": {
       "company": {
