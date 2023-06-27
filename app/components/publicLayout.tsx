@@ -49,7 +49,7 @@ export default async function PublicLayout(props: any) {
         {/* Schema.org markup for Google+ */}
         <meta itemProp='name' content={title} />
         <meta itemProp='image' content={imageUrl} />
-        {/* <link rel='canonical' href={canonicalPath} /> */}
+        <link rel='canonical' href={canonical} />
 
         {/* Twitter Card */}
         <meta name='twitter:card' content='summary_large_image' />

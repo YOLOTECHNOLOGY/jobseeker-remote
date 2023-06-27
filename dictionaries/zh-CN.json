@@ -432,8 +432,7 @@
     "seo": {
       "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
       "desc": "申请{{name}}的{{jobTitle}} {{jobId}}。现在开始找位于{{location}}, {{fullAddress}}的更多{{categoryMetaText}}工作！"
-    },
-    "jobs": "职位"
+    }
   },
   "search": {
     "location": "城市",
@@ -1179,7 +1178,7 @@
       "defaultTitle": " {{country}}在线找工作平台，海量高薪职位每天更新，直接和老板在线开聊，帮您快速找到工作！ - {{month}} {{year}} | Bossjob",
       "defaultDescription": "来Bossjob查看{{country}}的最新职位，各行各业的海量职位任您选择，在线和老板开聊，快速找到心仪职位入职！",
       "queryTitle": "{{country}}的{{searchQuery}}职位，工作机会 - {{month}} {{year}} | Bossjob",
-      "queryLocationTitle": "{{country}}的{{searchQuery}}职位，申请工作机会 - {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{country}}{{location}}的{{searchQuery}}职位，申请工作机会 - {{month}} {{year}} | Bossjob",
       "queryDescription": "上Bossjob 搜索最新{{country}}{{searchQuery}}岗位。海量公司老板在线招聘，AI匹配最优工作，快速找到心仪工作！",
       "queryLocationDescription": "Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
     },
