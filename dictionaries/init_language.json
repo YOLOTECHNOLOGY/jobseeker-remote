@@ -506,20 +506,7 @@
       "JD": "Job Description",
       "talkToBoss": "Talk to Boss anywhere"
     },
-    "seo": {
-      "default": {
-        "title": "Professional Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      },
-      "withQuery": {
-        "title": "{{searchQuery}} Jobs in {{country}}, Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      },
-      "withQueryAndLocation": {
-        "title": "{{searchQuery}} Jobs in {{country}}, Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      }
-    },
+    
     "noResultsFound": "No results found.",
     "pleaseUseDifferentKeyword": "Please use a different keyword or try to change your filter selection.",
     "reset2": "Reset",
