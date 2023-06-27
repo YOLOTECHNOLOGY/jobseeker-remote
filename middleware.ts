@@ -63,7 +63,7 @@ export function middleware(request: NextRequest) {
       '/images',
       '/chat-redirect'
       // Your other files in `public`
-    ].includes(pathname)
+    ].filter(item => pathname.includes(item)).length > 0
   ) { return }
 
   // Check if there is any supported locale in the pathname
