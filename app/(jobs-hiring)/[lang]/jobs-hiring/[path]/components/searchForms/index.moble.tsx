@@ -204,7 +204,7 @@ const SearchArea = (props: any) => {
                   </li>
                 ) : (
                   <li {...props} style={styleleSelect}>
-                    <Image src={HistoryIcons} alt='history icons' width='20' height='20' />
+                    <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
                     <span style={{ paddingLeft: '10px' }}>{value || option}</span>
                   </li>
                 )
