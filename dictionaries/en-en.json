@@ -66,7 +66,7 @@
     "and": "and",
     "privacyPolicy": "Privacy Policy",
     "signInWith": "Sign in with",
-    "lookingToHire": "Looking to hire people? Sign up as",
+    "lookingToHire": "Looking to hire people? Sign up as ",
     "employer": "Employer",
     "welcomeBack": "Welcome back!",
     "signUpAnAccount": "Sign up an account",
@@ -505,20 +505,6 @@
       "saved": "Saved",
       "JD": "Job Description",
       "talkToBoss": "Talk to Boss anywhere"
-    },
-    "seo": {
-      "default": {
-        "title": "Professional Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      },
-      "withQuery": {
-        "title": "{{searchQuery}} Jobs in {{country}}, Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      },
-      "withQueryAndLocation": {
-        "title": "{{searchQuery}} Jobs in {{country}}, Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-        "desc": "New {{searchQuery}} Jobs in {{location}}, {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
-      }
     },
     "noResultsFound": "No results found.",
     "pleaseUseDifferentKeyword": "Please use a different keyword or try to change your filter selection.",
@@ -1052,7 +1038,7 @@
     "verify": "Verify",
     "optLabel": "6-digit OTP",
     "errorMsg": {
-      "invalidOtp": "Invalid OTP",
+      "invalidOtp": "The OTP you have entered is wrong. Please try again.",
       "optIncorrect": "OTP is incorrect. Please try again."
     },
     "emailTip": "Receive job applications updates through your email.",
@@ -1122,7 +1108,7 @@
   "newGetStarted": {
     "title": "Log in or sign up to Bossjob",
     "employer": "Employer",
-    "tips": "Looking to hire people? Sign up as",
+    "tips": "Looking to hire people? Sign up as ",
     "continueWith": "or continue with",
     "email": "Email",
     "phone": "Phone",
@@ -1160,7 +1146,7 @@
     "verifyExtra": "This extra step show that it is really you trying to log in.",
     "optError": "Send OTP fail",
     "resendEmailCode": "Resend email'OTP success",
-    "invalidOtp": "Invalid OTP",
+    "invalidOtp": "The OTP you have entered is wrong. Please try again.",
     "resendPhoneCode": "Resend phone'OTP success",
     "verifyEmail": "Verify email",
     "thisPhoneNumberAssociated": "Choose account",
@@ -1172,18 +1158,19 @@
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
-    "siteName": "Bossjob - Career Platform for Professionals in {{country}}",
+    "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
+    "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {
-      "defaultTitle": "Professional Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-      "defaultDescription": "New Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
-      "queryTitle": "{{searchQuery}} Jobs in {{country}},Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryLocationTitle": "{{searchQuery}} Jobs in {{country}},Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
+      "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
+      "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
+      "queryTitle": "{{searchQuery}} Jobs in {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{searchQuery}} Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Talk to hiring manager directly on Bossjob.",
       "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
     },
     "job": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
-      "description": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more 'jobs' in {{location}}, {{address}} on Bossjob now!"
+      "description": "Talk to the hiring manager of  {{jobTitle}} ({{jobId}}) at {{name}}. Discover more jobs in {{location}}, {{address}} on Bossjob now!"
     },
     "company": {
       "listTitle": "Find Companies Hiring in {{country}} | Bossjob",
@@ -1191,9 +1178,13 @@
       "detailTitle": "Working at {{companyName}} | Bossjob",
       "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
       "jobsTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "jobsDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers",
+      "jobsDescription": "View all available job opportunities at {{companyName}} in {{country}} on Bossjob - Talk directly with talents on Bossjob!",
       "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
-      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob. Talk directly with hiring managers on Bossjob!"
+    },
+    "landing": {
+      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
+      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
     }
   },
   "landing": {
