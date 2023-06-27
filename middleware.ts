@@ -60,7 +60,8 @@ export function middleware(request: NextRequest) {
       '/serverError.log',
       '/getLog',
       '/maintenance',
-      '/images'
+      '/images',
+      '/chat-redirect'
       // Your other files in `public`
     ].includes(pathname)
   ) { return }
