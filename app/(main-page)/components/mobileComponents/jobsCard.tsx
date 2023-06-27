@@ -256,14 +256,16 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
             <span className={styles.tag}>{xpLvlValue}</span>
             <span className={styles.tag}>{degreeValue}</span>
             <div className={styles.contact}>
-              <div
-                className={`${styles.avator}  ${
-                  transTime(recruiterLastActiveAt) ? styles.avator2 : ''
-                }`}
-              >
-                <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
+              <div className={styles.hrFullInfo}>
+                <div
+                  className={`${styles.avator}  ${
+                    transTime(recruiterLastActiveAt) ? styles.avator2 : ''
+                  }`}
+                >
+                  <Image src={recruiterAvatar} alt={recruiterFullName} width={20} height={20} />
+                </div>
+                <span>{[recruiterFullName, recruiterJobTitle].filter((a) => a).join(' · ')}</span>
               </div>
-              {[recruiterFullName, recruiterJobTitle].filter((a) => a).join(' · ')}
               <span className={styles.location}>{jobLocation}</span>
             </div>
           </div>

@@ -183,8 +183,8 @@
     //   rgba(242, 177, 202, 0.2) 43.36%,
     //   rgba(84, 142, 237, 0.2) 99.89%
     // );
-    background: linear-gradient(90deg, #F2F9FF 0%, #FFFFFF 100%);
-    
+    background: linear-gradient(90deg, #f2f9ff 0%, #ffffff 100%);
+
     border-radius: 0px 0px 15px 15px;
     display: flex;
     align-items: center;
@@ -470,10 +470,24 @@
         font-size: 12px;
         color: #353535;
         line-height: 26px;
+        display: flex;
+        justify-content: space-between;
 
         .location {
           float: right;
           color: #707070;
+          width: 20vw;
+          text-align: right;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .hrFullInfo {
+          width: 65vw;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
@@ -613,7 +627,6 @@
     background-position: 0 50%;
   }
 }
-
 
 @keyframes wordsLoop {
   0% {
@@ -946,7 +959,7 @@
       .MuiAutocomplete-root {
         background-color: #ffffff;
       }
-      
+
       .MuiOutlinedInput-root {
         height: 44px;
       }
@@ -1348,7 +1361,7 @@
       //   rgba(242, 177, 202, 0.2) 43.36%,
       //   rgba(84, 142, 237, 0.2) 99.89%
       // );
-      background: linear-gradient(180deg, #dcefff 0%, #FFFFFF 100%);
+      background: linear-gradient(180deg, #dcefff 0%, #ffffff 100%);
 
       .img {
         width: 44px;
