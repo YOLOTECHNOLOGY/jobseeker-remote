@@ -2,7 +2,7 @@
 import CompanyCard from './CompanyCard'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
 // import Empty from './Empty'
-import Empty from 'app/[lang]/components/empty/empty'
+import Empty from 'app/components/empty/empty'
 
 
 // Styles

@@ -1,6 +1,6 @@
 
-import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
-import { registInterpreter } from 'app/[lang]/abstractModels/util';
+import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
+import { registInterpreter } from 'app/models/abstractModels/util';
 import { decoder } from './encoder';
 // parseUrl: ['url'],
 

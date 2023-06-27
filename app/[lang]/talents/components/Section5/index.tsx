@@ -8,7 +8,7 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
 import json1 from './lottie_1';
 import json2 from './lottie_2';
 import json4 from './lottie_4';
-import {languageContext} from "../../../components/providers/languageProvider";
+import {languageContext} from "../../../../components/providers/languageProvider";
 import {useInView} from "react-intersection-observer";
 import classNames from "classnames";
 

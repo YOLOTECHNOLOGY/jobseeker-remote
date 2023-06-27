@@ -16,7 +16,7 @@ import FootBtn from './footBtn'
 
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 
 import { usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
@@ -36,7 +36,7 @@ const BasicInformation = (props: any) => {
   const [selectedExperienced, setSelectedExperienced] = useState<string>(isExperienced)
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
-
+  const isMobile = document?.body.clientWidth < 750
   const {
     basicInformation,
     theseInformationWillBeShown,
@@ -287,12 +287,12 @@ const BasicInformation = (props: any) => {
           </div>
         </div>
 
-        <FootBtn
-          showBack={false}
+        <FootBtn 
+          showBack={isMobile}
           loading={loading}
           backText = {back}
           rightText={Next1}
-          skip={skip}
+          skipText = {skip}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
       </div>

@@ -19,7 +19,7 @@ import {
 import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 import {generateUserResumeService} from 'store/services/users/generateUserResume'
 import { getCookie,setCookie } from 'helpers/cookies'
 const countryForCurrency = {
@@ -27,7 +27,7 @@ const countryForCurrency = {
   sg: 'sgd'
 }
 const EducationExperience = (props: any) => {
-  console.log(props)
+
   const { lang, userDetail, config } = props
   const {job_preferences,resumes} = userDetail
   const pathname = usePathname()
@@ -99,7 +99,7 @@ const EducationExperience = (props: any) => {
       getMaxSalaryOptions(minSalary)
      }
   }, [minSalary])
- console.log({maxSalaryOptions})
+
   useEffect(()=>{  
     if(jobFunction?.id && maxSalary && locationData){
       setIsDisabled(false)
@@ -107,9 +107,8 @@ const EducationExperience = (props: any) => {
       setIsDisabled(true)
     }
   },[jobFunction,maxSalary,locationData])
-  console.log({jobFunction})
+
   const handleUpdateProfile = async (data) => {
-    console.log({data},jobFunction)
     const { currency, location ,maxSalary,minSalary} = data || {}
     const params = {
       job_title: jobFunction.value || '',
@@ -179,10 +178,14 @@ const EducationExperience = (props: any) => {
     }
     setCookie('user',userCookie)
     const isChatRedirect = localStorage.getItem('isChatRedirect')
+    const redirectPage  = sessionStorage.getItem('redirectPage')
     if(isChatRedirect){
       localStorage.removeItem('isChatRedirect')
-      push(`/${langKey}/${isChatRedirect}`)
-    }else{
+      push(isChatRedirect)
+    }else if (redirectPage) {
+      sessionStorage.removeItem('redirectPage')   
+      push(redirectPage)      
+    }  else{
       push(`/${langKey}/my-jobs`)
     }
   })
@@ -366,10 +369,9 @@ const EducationExperience = (props: any) => {
        loading={loading}
        rightText={submit}
        backText={back}
-       showBack={!isMobile}
        backClick={backClick}
        disabled={isDisabled}
-       skip={skip}
+       skipText={skip}
        handleClick={handleSubmit(handleUpdateProfile)}
        />
 

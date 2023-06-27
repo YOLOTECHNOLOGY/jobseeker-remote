@@ -11,7 +11,7 @@ import { getCookie,setCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
 import Header from './header'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 import { getLang } from 'helpers/country'
 
 const Main = (props:any)=>{

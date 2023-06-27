@@ -4,9 +4,10 @@ $paddingLeftWidth: 600px;
 $maxContentWidth: 1170px;
 $contentWidth: 894px;
 
-.profile{
+.profile {
     position: relative;
-    .bg{
+
+    .bg {
         position: absolute;
         width: 1366px;
         height: 768px;
@@ -15,12 +16,13 @@ $contentWidth: 894px;
         background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
         opacity: 0.6;
         filter: blur(154.5px);
-        transform:translateZ(0) translateY(-50%);
+        transform: translateZ(0) translateY(-50%);
     }
 }
 
 .main {
     position: relative;
+
     .header {
         width: 100%;
         height: 55px;
@@ -28,7 +30,8 @@ $contentWidth: 894px;
         line-height: 55px;
         margin-bottom: 40px;
         position: relative;
-        z-index: 2;     
+        z-index: 2;
+
         .headerMain {
             display: flex;
             width: $maxContentWidth;
@@ -37,22 +40,26 @@ $contentWidth: 894px;
             align-items: center;
             color: white;
             height: 100%;
+
             a {
                 color: white;
             }
         }
     }
-    
-    p, ul,h3{
+
+    p,
+    ul,
+    h3 {
         margin: 0;
     }
 
     .basicInfo {
         position: relative;
-        z-index: 2;     
+        z-index: 2;
         width: 770px;
         margin: 0 auto;
         padding-bottom: 30px;
+
         .topModule {
             min-height: 500px;
             background: #FFFFFF;
@@ -64,6 +71,7 @@ $contentWidth: 894px;
         .headerInfo {
             height: 95px;
             padding: 0 50px;
+
             h2 {
                 font-style: normal;
                 font-weight: 700;
@@ -114,17 +122,19 @@ $contentWidth: 894px;
                 padding-top: 24px;
                 display: flex;
                 flex-wrap: wrap;
+
                 li {
                     list-style: none;
                     position: relative;
                     margin-right: 14px;
-                     border: 3px solid #fff;
+                    border: 3px solid #fff;
                     border-radius: 50%;
                     padding: 3px;
                     box-sizing: border-box;
                     width: 70px;
                     height: 70px;
                     cursor: pointer;
+
                     &.active {
                         border: 3px solid #0EBD5C;
                     }
@@ -207,13 +217,15 @@ $contentWidth: 894px;
                 .namesFirst {
                     margin-right: 16px;
                     flex: 1;
+
                     .stepFullwidth {
                         width: 100%;
-                       :global{
-                        .MuiOutlinedInput-root{
-                            border-radius: 10px;
+
+                        :global {
+                            .MuiOutlinedInput-root {
+                                border-radius: 10px;
+                            }
                         }
-                       }
                     }
 
                     &:last-child {
@@ -227,17 +239,19 @@ $contentWidth: 894px;
 
             }
 
-           
+
             .availability {
                 padding-top: 12px;
             }
         }
 
     }
+
     .btnList {
         display: flex;
         padding-top: 8px;
         flex-wrap: wrap;
+
         button {
             width: 330px;
             margin-right: 16px;
@@ -277,28 +291,45 @@ $contentWidth: 894px;
         display: flex;
         justify-content: space-between;
         flex-direction: row-reverse;
+        position: relative;
+        z-index: 10;
+        .rightBtnBox {
+            .skip {
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: 1px;
+                color: #136FD3;
+                padding-right: 36px;
+                cursor: pointer;
+            }
+        }
+
         :global {
             .MuiLoadingButton-root:hover {
                 color: #fff;
             }
         }
     }
-    .work{
 
-        .header{
+    .work {
+
+        .header {
             margin-bottom: 26px;
         }
-        .resumeList{
+
+        .resumeList {
             margin-bottom: 8px;
         }
-        .workContainer{
+
+        .workContainer {
             width: 900px;
             margin: 0 auto;
             padding-bottom: 24px;
         }
-        .box{
+
+        .box {
             position: relative;
-            z-index: 2;     
+            z-index: 2;
             width: 770px;
             margin: 32px auto 0;
             box-shadow: 0px 0px 6px rgba(150, 149, 149, 0.25);
@@ -306,8 +337,9 @@ $contentWidth: 894px;
             min-height: 500px;
             box-sizing: border-box;
             background: #fff;
-            .headerInfo{
-                height: 69px; 
+
+            .headerInfo {
+                height: 69px;
                 line-height: 69px;
                 font-size: 30px;
                 line-height: 40px;
@@ -319,55 +351,66 @@ $contentWidth: 894px;
                 margin-bottom: 5px;
                 padding-top: 40px;
             }
-            .body{
+
+            .body {
                 padding: 0 47px 40px 47px;
-                margin-bottom: 24px; 
+                margin-bottom: 24px;
             }
-            .title{
+
+            .title {
                 font-weight: 700;
                 font-size: 18px;
                 line-height: 23px;
                 letter-spacing: 1px;
                 color: #353535;
                 padding: 24px 0 14px;
-                span{
+
+                span {
                     color: red;
                 }
             }
-            .titlePeriod{
+
+            .titlePeriod {
                 padding-bottom: 4px;
             }
-            .titleTip{
+
+            .titleTip {
                 font-size: 14px;
                 line-height: 18px;
                 letter-spacing: 1px;
                 color: #707070;
-               
+
             }
-            .upload{
-               margin: 14px 0 8px 0;
+
+            .upload {
+                margin: 14px 0 8px 0;
             }
-            .stepFieldDateItem{
+
+            .stepFieldDateItem {
                 width: 330px;
             }
-            .stepFieldToItem{
+
+            .stepFieldToItem {
                 max-width: 330px;
                 margin-top: 10px;
             }
-            .chooseSkill{
-                border: 1px solid #BCBCBC;     
+
+            .chooseSkill {
+                border: 1px solid #BCBCBC;
                 min-height: 170px;
                 border-radius: 10px;
                 margin-top: 16px;
-                p{
-                font-size: 14px;
-                line-height: 18px;
-                letter-spacing: 1px;
-                color: #707070;
-                line-height: 18px;         
+
+                p {
+                    font-size: 14px;
+                    line-height: 18px;
+                    letter-spacing: 1px;
+                    color: #707070;
+                    line-height: 18px;
 
                 }
-                .labelBox{
+
+                .labelBox {
                     display: block;
                     width: 100%;
                     height: 100%;
@@ -376,12 +419,14 @@ $contentWidth: 894px;
                     box-sizing: border-box;
                 }
             }
-            .inputTag{
 
-                .inputSkills{
+            .inputTag {
+
+                .inputSkills {
                     display: block;
                 }
-                input{
+
+                input {
                     height: 30px;
                     width: 250px;
                     max-width: 100%;
@@ -391,53 +436,63 @@ $contentWidth: 894px;
                     outline: none;
                     transition: .1s all linear;
                     background: transparent;
+                }
             }
-        }
-          
 
-            .step3Editor{
+
+            .step3Editor {
                 margin-top: 16px;
             }
-            .stepFieldDate{
+
+            .stepFieldDate {
                 display: flex;
                 justify-content: space-between;
                 margin-top: 4px;
             }
-          .fillLater{
-            font-weight: 700;
-            font-size: 16px;
-            line-height: 24px;
-            letter-spacing: 1px;
-            color: #136FD3;
-            padding-top: 34px;
-            cursor: pointer;
-          }
-          .currency{
-            width: 330px;
-          }
-          .stepJobFunction{
-            margin: 14px 0 16px;
-          }
+
+            .fillLater {
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 24px;
+                letter-spacing: 1px;
+                color: #136FD3;
+                padding-top: 34px;
+                cursor: pointer;
+            }
+
+            .currency {
+                width: 330px;
+            }
+
+            .stepJobFunction {
+                margin: 14px 0 16px;
+            }
         }
+
         .next {
             width: 770px;
             margin: 24px auto;
         }
-        .salaryBox{
+
+        .salaryBox {
             display: flex;
             justify-content: space-between;
         }
-        .minSalary{
+
+        .minSalary {
             margin-right: 16px;
             margin-top: 18px;
             flex: 1;
-            &:last-child{
+
+            &:last-child {
                 margin-right: 0;
             }
         }
-        .skillList{
+
+        .skillList {
             margin: 15px 0;
-            span{
+
+            span {
                 cursor: pointer;
                 height: 32px;
                 background: #E7F1FB;
@@ -452,64 +507,138 @@ $contentWidth: 894px;
             }
         }
     }
-    .stepMobile{
+
+    .stepMobile {
         display: flex;
         padding: 0 20px;
-        li{
+
+        li {
             margin-right: 10px;
             list-style: none;
             flex: 1;
             text-align: center;
-            color: #C4DDFE;;
-            &:last-child{                  
+            color: #C4DDFE;
+            ;
+
+            &:last-child {
                 margin-right: 0;
             }
-            &.active{
+
+            &.active {
                 color: #136FD3;
-                span{
+
+                span {
                     background: #136FD3;
                 }
             }
-            span{
+
+            span {
                 display: block;
-                height: 6px;  
+                height: 6px;
                 background: #C4DDFE;
-                margin-bottom: 8px;                    
+                margin-bottom: 8px;
             }
         }
     }
-    :global{
-        .MuiOutlinedInput-root{
-           border-radius: 10px;              
+
+    .skipModal {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        z-index: 999;
+        .bg{
+            width: 100%;
+            height: 100%;
+            position: absolute;      
+            background: rgba(196, 196, 196, 0.5); 
         }
-        .MuiFormControl-root{
+        .modalContainer {
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 740px;
+            position: absolute;
+            background: #fff;
+            border-radius:15px;
+        }
+
+        .modalHeader {
+            height: 59px;
+            background: #F9F9F9;
+            border-radius: 15px 15px 0px 0px;
+            display: flex;
+            align-items: center;
+            padding-left: 24px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .modalBody{
+            padding: 23px 48px 0 22px;
+            .tips{
+                font-size: 16px;
+                line-height: 24px;        
+                letter-spacing: 0.02em;   
+                color: #000000;
+                margin-bottom: 34px;
+               
+            }
+        }
+        .modalFooter {
+            border-top: 1px solid #BCBCBC;
+            height: 77px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 24px;
+        }
+
+    }
+
+    :global {
+        .MuiOutlinedInput-root {
+            border-radius: 10px;
+        }
+
+        .MuiFormControl-root {
             width: 100%;
         }
-        .MuiStepConnector-horizontal{
+
+        .MuiStepConnector-horizontal {
             top: 16px;
         }
+
         .MuiChip-deleteIconOutlinedColorPrimary {
-            path{
+            path {
                 color: #fff;
             }
         }
-        .MuiStepLabel-root .MuiSvgIcon-root{
+
+        .MuiStepLabel-root .MuiSvgIcon-root {
             width: 32px;
             height: 32px;
         }
-        .MuiLoadingButton-root:hover{
-         color: #fff;
+
+        .MuiLoadingButton-root:hover {
+            color: #fff;
         }
-        .MuiLoadingButton-root.Mui-disabled{
-          border: none;
+
+        .MuiLoadingButton-root.Mui-disabled {
+            border: none;
         }
-        .MuiStepLabel-label.Mui-completed, .MuiStepLabel-label.Mui-active, .MuiStepLabel-label{
+
+        .MuiStepLabel-label.Mui-completed,
+        .MuiStepLabel-label.Mui-active,
+        .MuiStepLabel-label {
             color: #4E5969;
             font-weight: 400;
         }
-        .MuiStepIcon-root.Mui-completed{
+
+        .MuiStepIcon-root.Mui-completed {
             color: #2378E5;
         }
     }
 }
+
 @import './indexMobile.module.scss';

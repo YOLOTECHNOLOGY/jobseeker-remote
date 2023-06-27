@@ -1,14 +1,14 @@
 
 
 import React from 'react'
-import PublicLayout from 'app/[lang]/components/publicLayout'
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
+import PublicLayout from 'app/components/publicLayout'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { getCountryKey } from 'helpers/country'
 /* eslint-disable react/no-unknown-property */
 import { formatTemplateString, getCurrentMonthYear } from 'helpers/formatter'
 import { decoder } from '../interpreters/encoder'
 import { toPairs } from 'ramda'
-import getConfigs from 'app/[lang]/interpreters/config'
+import getConfigs from 'app/models/interpreters/config'
 import { getDictionary } from 'get-dictionary'
 import { flatMap } from 'lodash-es'
 
@@ -42,11 +42,11 @@ async function generateSEO(props: any) {
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
 
-  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle,{
+  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, {
     country: dictionary.seo[getCountryKey()],
     month, year
   })
-  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription,  {
+  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, {
     country: dictionary.seo[getCountryKey()]
   })
   const flatLocations = flatMap(config.location_lists, item => item.locations)
@@ -54,8 +54,6 @@ async function generateSEO(props: any) {
   const location = flatLocations.find(item => item.seo_value === searchValues.location?.[0])?.value
   const url = new URLSearchParams(toPairs(searchParams)).toString()
   const seoCanonical = '/jobs-hiring/' + params.path + '?' + url
-  console.log('searchQuery', searchQuery);
-  console.log('flatLocations',flatLocations);
   if (searchQuery && !location) {
     seoMetaTitle = formatTemplateString(jobSearch.queryTitle, {
       searchQuery,
@@ -70,7 +68,7 @@ async function generateSEO(props: any) {
     seoMetaTitle = formatTemplateString(jobSearch.queryLocationTitle, {
       searchQuery,
       country: dictionary.seo[getCountryKey()],
-      month, year
+      month, year, location
     })
     seoMetaDescription = formatTemplateString(jobSearch.queryLocationDescription, {
       searchQuery,

@@ -5,7 +5,20 @@ import { i18n } from './i18n-config'
 import Negotiator from 'negotiator'
 import { configKey } from 'helpers/cookies'
 import { getCountryKey } from 'helpers/country'
-
+// import log4js from 'log4js'
+// log4js.configure({
+//     appenders: {
+//         clientError: { type: "file", filename: "public/clientError.log" },
+//         serverError: { type: "file", filename: "public/serverError.log" },
+//         serverInfo: { type: "file", filename: "public/serverInfo.log" },
+//     },
+//     categories: {
+//         clientError: { appenders: ["clientError"], level: "error", enableCallStack: false },
+//         serverError: { appenders: ["serverError"], level: "error", enableCallStack: false },
+//         serverInfo: { appenders: ["serverInfo"], level: "info", enableCallStack: false },
+//         default: { appenders: ["serverError"], level: "error", enableCallStack: false }
+//     },
+// });
 function getLocale(request: NextRequest): string | undefined {
   // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {}
@@ -46,7 +59,9 @@ export function middleware(request: NextRequest) {
       '/clientError.log',
       '/serverError.log',
       '/getLog',
-      '/maintenance'
+      '/maintenance',
+      '/images',
+      '/chat-redirect'
       // Your other files in `public`
     ].includes(pathname)
   ) { return }

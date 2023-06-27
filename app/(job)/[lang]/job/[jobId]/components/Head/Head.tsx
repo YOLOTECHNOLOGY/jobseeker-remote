@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import Btn from './Btn/Btn'
-import { Stack, Avatar } from 'app/[lang]/components/MUIs'
+import { Stack, Avatar } from 'app/components/MUIs'
 import { cookies } from 'next/headers'
 import { UploadResumeIcon, CompleteResumeIcon } from 'images'
 

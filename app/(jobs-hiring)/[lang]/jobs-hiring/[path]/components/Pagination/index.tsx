@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext } from 'react'
 import { useSearchParams, usePathname } from 'next/navigation'
-import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 
 const Pagination = (props: any) => {

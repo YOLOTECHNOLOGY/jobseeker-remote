@@ -1,4 +1,4 @@
-import { buildQuery } from 'app/[lang]/main-page/helper'
+import { buildQuery } from 'app/(main-page)/helper'
 import React from 'react'
 import styles from '../../index.module.scss'
 import Link from 'next/link'

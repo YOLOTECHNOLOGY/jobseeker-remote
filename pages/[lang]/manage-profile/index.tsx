@@ -326,9 +326,13 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper + ' '+ (workExperiences?.length>1 ? '' : styles.disabledOpacity)}
+                      className={
+                        styles.iconWrapper +
+                        ' ' +
+                        (workExperiences?.length > 1 ? '' : styles.disabledOpacity)
+                      }
                       onClick={() => {
-                        if(workExperiences?.length>1){
+                        if (workExperiences?.length > 1) {
                           handleDeleteData(sectionName, workExp.id)
                         }
                       }}
@@ -338,14 +342,12 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   </div>
                 </div>
                 <div className={styles.companyInfoWrapper}>
-                  <Text textStyle='lg'>{workExp.company}   {
-                    getValueById(
-                      config,
-                      workExp.country_id,
-                      'country_id'
-                    ) ?  <span style={{color:'#bcbcbc'}}>|</span> : null
-                  }</Text>
-                 
+                  <Text textStyle='lg'>
+                    {workExp.company}{' '}
+                    {getValueById(config, workExp.country_id, 'country_id') ? (
+                      <span style={{ color: '#bcbcbc' }}>|</span>
+                    ) : null}
+                  </Text>
 
                   <Text textStyle='lg'>{`${workExp.location || ''}${getValueById(
                     config,
@@ -439,9 +441,13 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                       <img src={PencilIcon} width='22' height='22' />
                     </div>
                     <div
-                      className={styles.iconWrapper + ' '+ (educations?.length>1 ? '' : styles.disabledOpacity)}
+                      className={
+                        styles.iconWrapper +
+                        ' ' +
+                        (educations?.length > 1 ? '' : styles.disabledOpacity)
+                      }
                       onClick={() => {
-                        if(educations?.length>1){
+                        if (educations?.length > 1) {
                           handleDeleteData(sectionName, education.id)
                         }
                       }}
@@ -913,19 +919,18 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
     <React.Fragment>
       <div className={styles.jobPreferencesSectionDetail}>
         <div style={{ right: 40 }} className={styles.iconWrapperP} onClick={handleEditClick}>
-        <img src={PencilIcon} width='22' height='22' />
+          <img src={PencilIcon} width='22' height='22' />
         </div>
 
-        {
-          userDetail?.job_preferences?.length > 1 && <div
-          style={{ right: 0 }}
-          className={styles.iconWrapperP}
-          onClick={() => setShowDelete(true)}
-        >
-          <img src={AccountSettingDeleteIconBin} width='14' height='14' />
-        </div>
-        }
-        
+        {userDetail?.job_preferences?.length > 1 && (
+          <div
+            style={{ right: 0 }}
+            className={styles.iconWrapperP}
+            onClick={() => setShowDelete(true)}
+          >
+            <img src={AccountSettingDeleteIconBin} width='14' height='14' />
+          </div>
+        )}
 
         <div className={styles.jobPreferencesSectionDetailList}>
           {preference?.job_title && (
@@ -1048,18 +1053,25 @@ const ManageProfilePage = ({ lang }: any) => {
     changeJobPreference(userDetail.job_preferences || [], config)
     return userDetail
   }, [userDetail, config])
-  const [unCompleted, setUnCompleted] = useState({"profile": false, "job-preferences": false,"resume": false})
+  const [unCompleted, setUnCompleted] = useState({
+    profile: false,
+    'job-preferences': false,
+    resume: false
+  })
   // const dispatch = useDispatch()
   // // useEffect(() => {
   // //   dispatch(fetchConfigRequest())
   // // }, [])
 
   useEffect(() => {
-    if(userDetail?.job_preferences) {
-      setUnCompleted((prev) => ({...prev, "job-preferences": userDetail?.job_preferences?.length == 0}))
+    if (userDetail?.job_preferences) {
+      setUnCompleted((prev) => ({
+        ...prev,
+        'job-preferences': userDetail?.job_preferences?.length == 0
+      }))
     }
-    if(userDetail?.resumes) {
-      setUnCompleted((prev) => ({...prev, "resume": userDetail?.resume?.length == 0}))
+    if (userDetail?.resumes) {
+      setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resume?.length == 0 }))
     }
   }, [userDetail])
 
@@ -1124,6 +1136,7 @@ const ManageProfilePage = ({ lang }: any) => {
     })
   }
   const handleModal = (modalName, showModal, data, callbackFunc) => {
+    // ======...TODO
     setModalState((rest) => ({
       ...rest,
       [modalName]: {

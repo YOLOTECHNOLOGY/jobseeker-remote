@@ -11,7 +11,7 @@ AWS.config.update({region: 'ap-southeast-1'});
 
 const s3 = new AWS.S3();
 
-const directoryPath = 'app/[lang]/talents/components/Section5';
+const directoryPath = 'app/[lang]/talents/updateImage';
 const targetPath = 'jobseeker/landing/';
 const devBucket = 'dev-assets.bossjob.com';
 const prodBucket = 'assets.bossjob.com';

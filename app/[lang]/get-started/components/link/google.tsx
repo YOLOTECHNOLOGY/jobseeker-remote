@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
-import { GoogleLogo } from 'images'
-import styles from '../../index.module.scss'
 import { useSearchParams } from 'next/navigation'
 import classNames from 'classnames'
+import useGetStarted from '../../hooks/useGetStarted'
+import { removeItem } from 'helpers/localStorage'
+import { GoogleLogo } from 'images'
+import styles from '../../index.module.scss'
 
 interface IGoogle {
   className?: string
@@ -22,9 +21,9 @@ const GoogleLogin = (props: IGoogle) => {
     redirect,
     lang: { newGetStarted }
   } = props
+  const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
-  const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -36,7 +35,6 @@ const GoogleLogin = (props: IGoogle) => {
   }, [window?.gapi])
 
   useEffect(() => {
-    setGoogleAuth(null)
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')
       const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
@@ -64,6 +62,9 @@ const GoogleLogin = (props: IGoogle) => {
       }
       document.body.appendChild(script)
     }
+    return () => {
+      setGoogleAuth(null)
+    }
   }, [])
 
   const handleAuthClick = () => {
@@ -75,6 +76,7 @@ const GoogleLogin = (props: IGoogle) => {
       handleSigninStatus()
     })
   }
+    
 
   const callBackMethod = (payload) => {
     const data = {
@@ -89,7 +91,15 @@ const GoogleLogin = (props: IGoogle) => {
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl
     }
-    dispatch(jobbseekersSocialLoginRequest(data))
+    // submit
+    handleAuthenticationSocialLogin(data).then(res => {
+      // handle has logged redirect url
+      const { data } = res
+      if (data?.token) {
+        removeItem('quickUpladResume')
+        defaultLoginCallBack(data)
+      }
+    })
   }
 
   const handleSigninStatus = async () => {

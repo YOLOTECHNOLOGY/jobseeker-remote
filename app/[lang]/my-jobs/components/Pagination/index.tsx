@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import { useSearchParams, usePathname } from 'next/navigation'
-import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
 const Pagination = (props: any) => {
     const { count, page, pageQueryKey = 'page' } = props
     const searchParams = useSearchParams()

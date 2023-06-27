@@ -16,7 +16,7 @@ import styles from './ModalShare.module.scss'
 /* Images */
 import { FacebookIcon, LinkedinIcon, TwitterIcon, CopyIcon } from 'images'
 import { useSelector } from 'react-redux'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 interface ModalShareProps {
   jobDetailUrl?: string

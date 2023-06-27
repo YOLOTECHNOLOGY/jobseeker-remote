@@ -2,15 +2,15 @@
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { Button } from 'app/[lang]/components/MUIs'
-import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
+import { Button } from 'app/components/MUIs'
+import { LocationContext } from 'app/components/providers/locationProvier'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
 
-import { buildQuery } from 'app/[lang]/main-page/helper'
+import { buildQuery } from 'app/(main-page)/helper'
 
 import styles from '../../../page.module.scss'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 import React from 'react'
 
 const Search = () => {

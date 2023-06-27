@@ -5,7 +5,7 @@ import Typical from 'react-typical'
 import {useInView , InView} from "react-intersection-observer";
 import classNames from 'classnames'
 import Image from 'next/image'
-import {languageContext} from "../../components/providers/languageProvider";
+import {languageContext} from "../../../components/providers/languageProvider";
 const Des_Schema = [
 	{
 		title: 'AI-powered job matching',

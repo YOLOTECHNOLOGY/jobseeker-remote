@@ -27,7 +27,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import styles from './index.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
-
+import { find} from 'lodash-es'
 const VerifyPhoneNumber = ({
   label,
   setEdit,
@@ -52,6 +52,7 @@ const VerifyPhoneNumber = ({
   const firstRender = useFirstRender()
 
   const smsCountryList = getSmsCountryList(config)
+  console.log({smsCountryList})
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
 
@@ -158,7 +159,8 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum })
+    const mobile_country_id =  find(smsCountryList,{'value':smsCode})?.id
+    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum , mobile_country_id})
       .then()
       .catch((exceptionHandler) => {
         const { data } = exceptionHandler.response

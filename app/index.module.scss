@@ -1,0 +1,1525 @@
+@import 'styles/variable.scss';
+@import '/styles/mixins.scss';
+
+.jobTitle {
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 1px;
+  color: #353535;
+  padding-top: 50px;
+  padding: 0 10px;
+
+  @include sm {
+    display: none;
+  }
+}
+
+.tabContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  background: #f5f6fa;
+  width: 100%;
+
+  &_more {
+    margin-top: 32px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .moreBtn {
+    color: #136fd3;
+    width: 118px;
+    height: 44px;
+    border-radius: 10px;
+    line-height: 44px;
+    text-align: center;
+    background: #ffffff;
+    margin: 0 auto 10px;
+    display: block;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid #136fd3;
+  }
+}
+
+.job {
+  &_detail {
+    width: calc(50% - 5px);
+    margin-bottom: 16px;
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in;
+    overflow: hidden;
+  }
+
+  &_detail:hover {
+    box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
+  }
+
+  &_titleWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_info {
+    color: rgb(255, 255, 255);
+    padding: 15px 19px 0 16px;
+    display: block;
+
+    &_title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: #353535;
+      width: 0;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.3s ease-in;
+    }
+
+    .transBox {
+      width: 194px;
+      height: 30px;
+      overflow-y: hidden;
+    }
+
+    &_salary {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: #fe574a;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transform: translateY(0px);
+      transition: all 0.4s ease 0s;
+      text-align: right;
+    }
+
+    &_chat {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 3px 10px;
+      background: #136fd3;
+      border: 0.5px solid #136fd3;
+      border-radius: 16px;
+      font-weight: 400;
+      width: 98px;
+      font-size: 12px;
+      letter-spacing: 0.0075em;
+      color: #ffffff;
+      transform: translateY(30px);
+      white-space: nowrap;
+      transition: all 0.4s ease 0s;
+      float: right;
+    }
+  }
+
+  &_info:hover > &_titleWrapper > &_info_title {
+    color: #136fd3;
+  }
+
+  &_info:hover {
+    .job_info_salary {
+      // display: flex;
+      transform: translateY(-26px);
+      opacity: 0;
+    }
+
+    .job_info_chat {
+      transform: translateY(-26px);
+    }
+  }
+
+  &_tags {
+    display: flex;
+    padding: 16px 0 22px;
+
+    div {
+      align-items: center;
+      padding: 3px 10px;
+      background: #f0f0f0;
+      border-radius: 16px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0.0075em;
+      color: #707070;
+      margin-right: 5px;
+    }
+  }
+
+  &_avatarWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &_box {
+    display: flex;
+    align-items: center;
+
+    img {
+      border-radius: 5px;
+    }
+  }
+
+  &_companyInfo {
+    // background: linear-gradient(
+    //   269.8deg,
+    //   rgba(255, 235, 184, 0.2) 0.12%,
+    //   rgba(242, 177, 202, 0.2) 43.36%,
+    //   rgba(84, 142, 237, 0.2) 99.89%
+    // );
+    background: linear-gradient(90deg, #f2f9ff 0%, #ffffff 100%);
+
+    border-radius: 0px 0px 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 15px;
+    display: block;
+
+    &_name {
+      margin-left: 10px;
+      transition: color 0.3s ease-in;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: 0.0075em;
+      color: #353535;
+    }
+
+    &_industry {
+      color: #707070;
+      float: right;
+    }
+  }
+
+  &_companyInfo:hover &_companyInfo_name {
+    color: #136fd3;
+  }
+}
+
+.webTab {
+  position: relative;
+
+  .preference {
+    position: absolute;
+    top: 14px;
+    right: 0;
+
+    p {
+      margin: 0;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .link {
+      color: #136fd3;
+      text-decoration: underline;
+    }
+
+    .link2 {
+      color: #136fd3;
+    }
+  }
+}
+
+.mobileTab {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@include sm {
+  .title {
+    text-align: left;
+    padding-top: 48px;
+  }
+}
+
+@include sm {
+  .webTab {
+    display: none;
+  }
+
+  .mobileTab {
+    display: none;
+  }
+}
+
+.mobileHome {
+  display: none;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 27px;
+    letter-spacing: 1px;
+    color: #353535;
+    margin-bottom: 8px;
+    padding-top: 48px;
+  }
+
+  .hiring {
+    overflow: scroll;
+    width: 100%;
+    height: auto;
+
+    .itemBox {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .item {
+      width: 100%;
+      min-height: 95px;
+      display: block;
+      background: #ffffff;
+      border-radius: 8px;
+      margin: 12px 8px 0 0;
+      display: flex;
+      padding: 12px;
+
+      img {
+        box-sizing: border-box;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #e5e6eb;
+        border-radius: 7px;
+        margin-right: 8px;
+      }
+
+      .info {
+        flex: 1;
+        width: 0;
+
+        .name {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 24px;
+          letter-spacing: 1px;
+          color: #353535;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
+          -webkit-box-orient: vertical;
+          margin: 0;
+        }
+
+        .companyInfo {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+          letter-spacing: 0.0075em;
+          color: #4e5969;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          line-clamp: 1;
+        }
+
+        .num {
+          font-size: 14px;
+          line-height: 18px;
+          color: #136fd3;
+          margin: 0;
+          padding-top: 10px;
+        }
+      }
+    }
+  }
+
+  .moreBtn {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.0075em;
+    color: #2378e5;
+
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 24px;
+    gap: 10px;
+    border: 1px solid #2378e5;
+    border-radius: 8px;
+    margin: 10px auto 0;
+    width: 82px;
+    height: 36px;
+    white-space: nowrap;
+  }
+
+  .jobs {
+    padding-bottom: 40px;
+
+    .tips {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: #707070;
+      margin: 0;
+      line-height: 30px;
+      margin-bottom: 16px;
+    }
+
+    .preference {
+      color: #136fd3;
+    }
+
+    .started {
+      line-height: 30px;
+      text-align: center;
+      width: 91px;
+      height: 30px;
+      background: #136fd3;
+      border-radius: 10px;
+      float: right;
+      cursor: pointer;
+      font-size: 12px;
+      color: #ffffff;
+    }
+
+    .jobCard {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 16px 12px 18px 12px;
+      margin-bottom: 8px;
+
+      .name {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        display: flex;
+        color: #353535;
+
+        p {
+          width: 0;
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .salary {
+          width: 152px;
+          text-align: right;
+          font-size: 14px;
+          color: #136fd3;
+        }
+      }
+
+      .company {
+        font-size: 12px;
+        letter-spacing: 1px;
+        color: #353535;
+        padding: 8px 0 12px;
+      }
+
+      .tag {
+        font-weight: 400;
+        font-size: 12px;
+        color: #707070;
+        padding: 0 10px;
+        margin-right: 6px;
+        background: #f0f0f0;
+        border-radius: 16px;
+        display: inline-block;
+      }
+
+      .contact {
+        margin: 14px 0 0;
+        font-size: 12px;
+        color: #353535;
+        line-height: 26px;
+        display: flex;
+        justify-content: space-between;
+
+        .location {
+          float: right;
+          color: #707070;
+          width: 20vw;
+          text-align: right;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .hrFullInfo {
+          width: 65vw;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  .load {
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    color: #999;
+    text-align: center;
+  }
+
+  .startedContainer {
+    position: fixed;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    left: 0;
+    line-height: 40px;
+    background: #136fd3;
+    z-index: 10;
+
+    .close {
+      float: left;
+      margin: 8px;
+      cursor: pointer;
+    }
+
+    .tips {
+      line-height: 40px;
+      color: #fff;
+      font-size: 14px;
+
+      span {
+        color: #136fd3;
+        background: #fff;
+        font-weight: 700;
+        margin: 5px 10px 0 0;
+      }
+    }
+  }
+}
+
+.avator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 10px;
+  display: inline-block;
+  top: -2px;
+
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    bottom: -5px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #32a071;
+    border: 2px solid #fff;
+  }
+}
+
+.avator2 {
+  &::after {
+    background: #ccc;
+  }
+}
+
+@media (max-width: 750px) {
+  .mobileHome {
+    display: block;
+  }
+}
+
+.recommendContainer {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 60px;
+
+  @include msd {
+    display: none;
+  }
+
+  .mainFunction,
+  .recommend {
+    width: calc(50% - 5px);
+  }
+
+  .mainFunction {
+    // background-color: bisque;
+    height: 100%;
+  }
+
+  .recommend {
+    display: flex;
+    justify-content: space-between;
+
+    &_container {
+      background-color: rosybrown;
+      animation: loading 2s ease infinite;
+      width: calc(50% - 5px);
+      height: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    @include xl {
+      width: 610px;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-size: 300% 100%;
+    background-image: linear-gradient(100deg, #eee 40%, #fff 50%, #eee 60%);
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-size: 300% 100%;
+    background-image: linear-gradient(100deg, #eee 40%, #fff 50%, #eee 60%);
+    background-position: 0 50%;
+  }
+}
+
+@keyframes wordsLoop {
+  0% {
+    transform: translateX(20%);
+  }
+
+  100% {
+    transform: translateX(-80%);
+  }
+}
+
+.functionFilter {
+  width: 552px;
+  height: 250px;
+  position: relative;
+  padding-right: 10px;
+
+  @include sm {
+    display: none;
+  }
+
+  .mainItems {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    padding: 8px 0px;
+
+    // padding: 10px 10px;
+    .mainItem {
+      // width: 100%;
+      height: 41px;
+      padding: 8px 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &.isHover {
+        border: 0.5px solid #f0f0f0;
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+
+        .mainTitle {
+          color: #136fd3;
+        }
+      }
+
+      &:hover {
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+
+        .mainTitle {
+          color: #136fd3;
+        }
+      }
+
+      .mainTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        .subContainer {
+          display: flex;
+          flex-direction: row;
+          // max-width: 358px;
+          justify-content: flex-start;
+          flex: 1;
+
+          .mainTitleSub {
+            // flex: 1;
+            display: block;
+            font-family: 'Product Sans';
+            font-style: normal;
+            width: fit-content;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.0075em;
+            color: #707070;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: min-content;
+            // max-width: 110px;
+            margin-left: 25px;
+            // max-width: 170px;
+            // flex-grow: 1;
+            cursor: pointer;
+
+            &:hover {
+              color: #136fd3;
+            }
+          }
+        }
+
+        &First {
+          font-family: 'Product Sans';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 100%;
+          color: #353535;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .more {
+        font-size: 12px;
+        position: absolute;
+        right: 10px;
+        top: 16px;
+      }
+    }
+
+    .pagination {
+      position: absolute;
+      left: 20px;
+      bottom: 8px;
+
+      label {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 0.0075em;
+        color: #353535;
+        // margin-right: 50px;
+        width: 40px;
+        position: absolute;
+        left: 5px;
+        bottom: 4px;
+      }
+
+      button {
+        background: none;
+        border: none;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        border-radius: 50%;
+        left: 44px;
+        cursor: pointer;
+        font-size: 12px;
+        background: #e7f1fb;
+        margin-left: 5px;
+        text-align: center;
+        line-height: 20px;
+        color: #136fd3;
+        &:hover {
+          background: #136fd3;
+          color: #fff;
+        }
+
+        &:disabled {
+          background: #f0f0f0;
+          color: #707070;
+        }
+
+        .icon {
+          font-size: 12px;
+          margin: 0 auto;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .sectionContainer {
+    position: absolute;
+    right: -110%;
+    top: -4px;
+    background: #fff;
+    width: 110%;
+    height: 103%;
+    border-radius: 20px;
+    overflow-y: scroll;
+    padding: 18px 18px 18px 0px;
+    flex-direction: column;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      right: 10px;
+    }
+
+    // &::-webkit-scrollbar-track {
+    //     background: #fff;
+    //     border-radius: 10px;
+    //     margin-right: 10px;
+    // }
+
+    &::-webkit-scrollbar-thumb {
+      background: $white-2;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: $white-2;
+    }
+
+    .sectionItems {
+      display: flex;
+      flex-direction: column;
+      height: inherit;
+      width: 100%;
+      height: auto;
+
+      .sectionName {
+        font-family: 'Product Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        align-items: flex-start;
+        text-align: start;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        height: 18px;
+        margin-left: 30px;
+      }
+
+      .subItems {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-flow: wrap;
+        margin-top: 15px;
+        margin-bottom: 18px;
+        padding-left: 14px;
+
+        .subItem {
+          width: 23%;
+          margin-left: 2%;
+          overflow: hidden;
+          height: 30px;
+
+          .linkText {
+            font-family: 'Product Sans';
+            text-overflow: ellipsis;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 5px;
+            letter-spacing: 0.0075em;
+            color: #353535;
+            text-overflow: ellipsis;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 100%;
+            white-space: nowrap;
+          }
+
+          &:hover {
+            .linkText {
+              color: #136fd3;
+              text-overflow: none;
+              width: fit-content;
+              // animation: 3s wordsLoop linear infinite;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.searchArea {
+  .box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .location {
+      :global {
+        .MuiInputLabel-root {
+          display: none;
+        }
+        .MuiOutlinedInput-root {
+          height: 44px;
+          overflow: hidden;
+          border-radius: 10px;
+        }
+      }
+      width: 183px;
+      height: 44px;
+      // overflow: hidden;
+      border-radius: 10px;
+
+      @include sm {
+        width: 140px;
+      }
+    }
+  }
+
+  @include sm {
+    width: 100%;
+    overflow-x: hidden;
+    padding-top: 4px;
+  }
+
+  // margin-left: 10%;
+  .location {
+    width: 183px;
+    height: 34px;
+
+    @include sm {
+      width: 140px;
+    }
+  }
+
+  .search {
+    flex: 1;
+    margin: 0px 17px;
+    background-color: #fff;
+    border-radius: 8px;
+    height: 44px;
+
+    :global {
+      .MuiAutocomplete-root {
+        background-color: #ffffff;
+      }
+
+      .MuiOutlinedInput-root {
+        height: 44px;
+      }
+
+      .MuiInputLabel-root {
+        top: 3px;
+      }
+    }
+
+    @include sm {
+      margin-left: 15px;
+      margin-right: 0px;
+    }
+  }
+
+  .searchButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 19px;
+    color: #fff;
+    width: 118.87px;
+    height: 44px;
+    background: #136fd3;
+    border-radius: 10px;
+
+    // flex: none;
+    // order: 2;
+    // flex-grow: 0;
+    &:hover {
+      background: rgb(24, 84, 163);
+    }
+
+    @include sm {
+      display: none;
+    }
+
+    // &:hover {
+    //   color: #136fd3;
+    // }
+
+    &:disabled {
+      color: #fff;
+    }
+  }
+}
+
+.popularJobs {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  height: 50px;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  @include sm {
+    flex-direction: column;
+    height: fit-content;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 48px;
+  }
+
+  label {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.0075em;
+    width: fit-content;
+    flex-shrink: 0;
+
+    @include sm {
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 21px;
+      line-height: 27px;
+      letter-spacing: 0.02em;
+      color: #353535;
+      justify-content: flex-start;
+    }
+  }
+
+  .tagContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 0px;
+
+    @include sm {
+      margin-top: 10px;
+      flex-wrap: wrap;
+      height: fit-content;
+      width: 100%;
+    }
+
+    .tag {
+      flex-shrink: 0;
+      width: fit-content;
+      height: 30px;
+      font-family: 'Product Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      letter-spacing: 0.0075em;
+      color: #136fd3;
+      margin: 0px 10px;
+      padding: 0px 10px;
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      text-overflow: clip;
+      white-space: nowrap;
+
+      @include sm {
+        width: calc(50% - 5px);
+        margin: 10px 10px 0 0;
+
+        &:nth-of-type(even) {
+          margin-right: 0;
+        }
+      }
+
+      &:hover {
+        background: #136fd3;
+        color: #fff;
+
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  // min-width: 940px;
+}
+
+@keyframes showTrans {
+  0% {
+    transform: translate(0, -25px);
+  }
+
+  35% {
+    transform: translate(0, -0.497px);
+  }
+
+  53% {
+    transform: translate(0, -6.249px);
+  }
+
+  71% {
+    transform: translate(0, -0.621px);
+  }
+
+  82% {
+    transform: translate(0, -1.488px);
+  }
+
+  88% {
+    transform: translate(0, -0.234px);
+  }
+
+  94% {
+    transform: translate(0, -0.385px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.searchAreaFix {
+  height: 92px;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background: #ffffff;
+  box-shadow: 3px 3px 3px #ccc;
+  z-index: 100;
+  transition: 0.3s;
+  animation: showTrans 0.35s linear both;
+
+  .box {
+    max-width: 1170px;
+    margin: 24px auto 0;
+  }
+
+  :global {
+    .MuiOutlinedInput-notchedOutline {
+      border-width: 0.5px !important;
+    }
+  }
+
+  .download {
+    margin-left: 62px;
+    width: 150px;
+    font-size: 14px;
+    color: #136fd3;
+    cursor: pointer;
+    position: relative;
+    word-break: keep-all;
+
+    @include msd {
+      display: none;
+    }
+
+    .icon {
+      float: left;
+      font-size: 32px;
+      line-height: 18px;
+      letter-spacing: 1px;
+      position: relative;
+      top: 4px;
+    }
+
+    > p {
+      padding-left: 24px;
+      line-height: 20px;
+    }
+
+    &:hover .popver {
+      display: block;
+    }
+  }
+
+  .popver {
+    position: absolute;
+    left: -12px;
+    top: 50px;
+    background: #ffffff;
+    border: 0.5px solid #bcbcbc;
+    border-radius: 10px;
+    padding: 14px 20px;
+    z-index: 100;
+    display: none;
+    box-shadow: 0px 0px 14px #bcbcbc;
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      left: 20px;
+      top: -16px;
+      width: 0;
+      height: 0;
+      border-width: 8px;
+      border-style: solid;
+      border-color: transparent transparent #fff transparent;
+    }
+
+    img {
+      width: 104px;
+      height: 104px;
+    }
+
+    p {
+      padding: 6px 0 0 0;
+      text-align: center;
+      line-height: 20px;
+      margin: 0;
+    }
+  }
+}
+
+.errorMain {
+  text-align: center;
+  margin: 100px 0;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  &_loadingLogo {
+    margin-bottom: 20px;
+  }
+}
+
+.container {
+  // max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  @media (max-width: 799px) {
+    max-width: 688px;
+  }
+
+  background-color: #f5f6fa;
+}
+
+.layoutHeader {
+  background: blue;
+  height: 53px;
+  width: 100vw;
+}
+
+.loading {
+  &Wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $primaryBlue;
+  }
+
+  &Logo {
+    margin-bottom: 16px;
+  }
+
+  &Indicator {
+    width: 200px;
+  }
+}
+
+.main {
+  @extend .GlobalNextAppContainer;
+
+  @include sm {
+    padding: 0px 10px;
+  }
+
+  .title {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    margin-top: 33px;
+    margin-bottom: 17px;
+    color: #136fd3;
+    padding: 0 10px;
+  }
+}
+
+.companies {
+  padding-bottom: 60px;
+
+  h2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 1px;
+    color: #353535;
+    text-align: center;
+    padding: 54px 0 24px;
+    margin: 0;
+  }
+
+  .companyContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    background: #ffffff;
+    min-height: 120px;
+    width: calc(50% - 5px);
+    border-radius: 15px 15px;
+    overflow: hidden;
+    margin-bottom: 16px;
+
+    &:nth-of-type(even) {
+      margin-right: 0;
+    }
+
+    .header {
+      height: 80px;
+      cursor: pointer;
+      display: block;
+      // background: linear-gradient(
+      //   269.8deg,
+      //   rgba(255, 235, 184, 0.2) 0.12%,
+      //   rgba(242, 177, 202, 0.2) 43.36%,
+      //   rgba(84, 142, 237, 0.2) 99.89%
+      // );
+      background: linear-gradient(180deg, #dcefff 0%, #ffffff 100%);
+
+      .img {
+        width: 44px;
+        height: 44px;
+        float: left;
+        margin: 16px 11px 0 20px;
+        border-radius: 5px;
+      }
+
+      h5 {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #353535;
+        padding: 16px 0 2px 0;
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 15px;
+        letter-spacing: 1px;
+        color: #707070;
+      }
+
+      &:hover h5 {
+        color: #136fd3;
+      }
+    }
+
+    .list {
+      padding: 16px 23px 12px 24px;
+      cursor: pointer;
+      display: block;
+
+      .jobType {
+        letter-spacing: 1px;
+        display: flex;
+        padding-bottom: 10px;
+        position: relative;
+
+        p {
+          flex: 1;
+          width: 0;
+          color: #353535;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-weight: 700;
+          font-size: 18px;
+          margin: 0;
+          transition: all 0.4s ease 0s;
+        }
+
+        .transBox {
+          width: 194px;
+          height: 30px;
+          overflow-y: hidden;
+        }
+
+        .salary {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          letter-spacing: 0.02em;
+          color: #fe574a;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          transform: translateY(0px);
+          transition: all 0.4s ease 0s;
+          text-align: right;
+        }
+
+        .chat {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 3px 10px;
+          background: #136fd3;
+          border: 0.5px solid #136fd3;
+          border-radius: 16px;
+          font-weight: 400;
+          width: 98px;
+          text-align: right;
+          font-size: 12px;
+          letter-spacing: 0.0075em;
+          color: #ffffff;
+          transform: translateY(30px);
+          white-space: nowrap;
+          transition: all 0.4s ease 0s;
+          float: right;
+        }
+      }
+
+      .tag {
+        font-weight: 400;
+        font-size: 12px;
+        color: #707070;
+        padding: 0 10px;
+        margin-right: 6px;
+        background: #f0f0f0;
+        border-radius: 16px;
+        display: inline-block;
+      }
+
+      &:hover {
+        .jobType p {
+          transition: all 0.4s ease 0s;
+          color: #136fd3;
+        }
+
+        .chat {
+          transform: translateY(-26px);
+        }
+
+        .salary {
+          transform: translateY(-26px);
+          opacity: 0;
+        }
+      }
+    }
+
+    .linkAddress {
+      text-decoration: underline;
+      color: #707070;
+      font-weight: 400;
+      font-size: 14px;
+      text-align: center;
+      margin: 10px 0 18px 0;
+      display: block;
+
+      &:hover {
+        color: #136fd3;
+      }
+    }
+  }
+
+  .moreBtn {
+    color: #136fd3;
+    width: 118px;
+    height: 44px;
+    border-radius: 10px;
+    line-height: 44px;
+    text-align: center;
+    background: #ffffff;
+    margin: 22px auto 20px;
+    display: block;
+    font-weight: 700;
+    border: 1px solid #136fd3;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 750px) {
+  .companies {
+    display: none;
+  }
+}

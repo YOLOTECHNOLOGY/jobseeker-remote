@@ -1,4 +1,4 @@
-import { Skeleton, Stack } from 'app/[lang]/components/MUIs'
+import { Skeleton, Stack } from 'app/components/MUIs'
 import styles from './page.module.scss'
 
 const Loading = () => {

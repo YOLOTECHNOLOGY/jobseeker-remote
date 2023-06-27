@@ -75,11 +75,11 @@ function PhoneCode(props: any) {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
-  const { setUserId, defaultLoginCallBack, handleAuthenticationJobseekersLoginPhone } =
+  const { setUserId, defaultLoginCallBack, handleAuthenticationJobseekersLoginPhone,userInfo,error } =
     useGetStarted()
 
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-  const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+ // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+ // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
     if(error?.data?.message){
       dispatch(jobbseekersLoginFailed({}))
@@ -140,10 +140,10 @@ function PhoneCode(props: any) {
   const sendOpt = (email) => {
     authenticationSendEmaillOtp({ email }).then((res) => {
       console.log(res?.data?.data, 'res')
-      router.push(`/${langKey}/get-started/phone?step=6&email=${email}&userId=${userId}`)
+      router.push(`/${langKey}/get-started/phone?step=6&email=${encodeURIComponent(email)}&userId=${userId}`)
     })
   }
-  console.log({ userInfo })
+  console.log({ userInfo },error?.data,7777)
   useEffect(() => {
     if (userInfo && Object.keys(userInfo).length) {
       const { data } = userInfo

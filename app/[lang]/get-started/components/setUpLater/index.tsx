@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import { useRouter} from 'next/navigation'
 const SetUpLater = (props: any)=>{
-    const {defaultLoginCallBack } =  useGetStarted()
-  const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+    const {defaultLoginCallBack,userInfo } =  useGetStarted()
+  // const userInfo =   useSelector((store: any) => store.auth.jobseekersLogin.response)
   const { newGetStarted } = props.lang
   const routes = useRouter()
   console.log({userInfo});

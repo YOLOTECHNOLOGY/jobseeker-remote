@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 import MobileCard from '../jobCard/index.mobile'
 import LoadMore from '../loadMore'
 import { lensProp, set } from 'ramda'
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import tableIp from '../../interpreters/talbeMoble'
 
 const MobileTable = (props: any) => {

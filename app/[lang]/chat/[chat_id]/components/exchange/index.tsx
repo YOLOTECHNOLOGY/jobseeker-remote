@@ -31,12 +31,13 @@ const ExchangeModal = (props: any) => {
     const countryOptions = useSelector((store: any) => store.config.config.response?.country_lists
         ?.map?.(item => ({
             label: `${item.value} (${item.code})`,
-            value: item.code
+            value: item.code,
+            id:item.id
         }))
     )
     const number = useMemo(() => {
         if (countryCode && mobileNumber) {
-            return [countryCode, mobileNumber].join(' ')
+            return [countryCode, mobileNumber].join('')
         } else {
             return ''
         }
@@ -75,9 +76,10 @@ const ExchangeModal = (props: any) => {
         if (step === 'verified') {
             actionsRef.current.sendNumber?.({ applicationId })
         } else {
-            actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber })
+            const mobile_country_id = countryOptions?.find(e=>e.value = countryCode)?.id 
+            actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber,mobile_country_id })
         }
-    }, [step, otp, applicationId, mobileNumber])
+    }, [step, otp, applicationId, mobileNumber]) 
     const sendText = useMemo(() => {
         if (step === 'init') {
             return dic?.sendOtp
@@ -176,7 +178,10 @@ const ExchangeModal = (props: any) => {
                         [styles.sendOTPButton]: true,
                         [styles.disabled]: !sendEnable
                     })}
-                        onClick={() => sendEnable && actionsRef.current.sendOTP?.({ params: { phone_num: number } })}
+                        onClick={() => {
+                            const mobile_country_id = countryOptions?.find(e=>e.value = countryCode)?.id 
+                            sendEnable && actionsRef.current.sendOTP?.({ params: { phone_num: number,mobile_country_id } })
+                        }}
                     >{sendText}</div>
                 </>}
                 {showInputCode && <>

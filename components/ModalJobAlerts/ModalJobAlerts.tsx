@@ -31,7 +31,7 @@ import {
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import Link from 'components/Link'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 /* Images */
 import { CreateIcon, DeleteIcon } from 'images'

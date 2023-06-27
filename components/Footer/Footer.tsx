@@ -6,7 +6,7 @@ import Link from 'components/Link'
 import Text from 'components/Text'
 import Accordian from 'components/Accordian'
 import { getCountry, getCountryKey ,getLang} from 'helpers/country'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
 import { getCookie } from 'helpers/cookies'
 
 /* Images */
