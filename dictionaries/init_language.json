@@ -1173,6 +1173,7 @@
     "ph": "Philippines",
     "sg": "Singapore",
     "siteName": "Bossjob - Career Platform for Professionals in {{country}}",
+    "metaDescription":"Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {
       "defaultTitle": "Professional Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
       "defaultDescription": "New Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",

@@ -14,7 +14,7 @@ export default async function RootLayout(props: any) {
   const dictionary = await getDictionary(lang)
   const defaultSEO = {
     title: formatTemplateString(dictionary.seo.siteName, dictionary.seo[getCountryKey()]),
-    description: formatTemplateString(dictionary.seo.siteName, dictionary.seo[getCountryKey()]),
+    description: formatTemplateString(dictionary.seo.metaDescription, dictionary.seo[getCountryKey()]),
     imageUrl: 'https://assets.bossjob.com/website/OGTagImage.png',
     canonical: ''
   }

@@ -1174,6 +1174,7 @@
     "ph": "菲律宾",
     "sg": "新加坡",
     "siteName": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
+    "metaDescription": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "jobSearch": {
       "defaultTitle": " {{country}}在线找工作平台，海量高薪职位每天更新，直接和老板在线开聊，帮您快速找到工作！ - {{month}} {{year}} | Bossjob",
       "defaultDescription": "来Bossjob查看{{country}}的最新职位，各行各业的海量职位任您选择，在线和老板开聊，快速找到心仪职位入职！",
