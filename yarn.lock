@@ -4183,10 +4183,10 @@ busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
-buzzmsg@^1.6.15:
-  version "1.6.15"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.15.tgz#a45c20b53a9a2feb6abf6dec3c7fe4db7f0620b0"
-  integrity sha512-+as/2y13t/6YdFo06Tg289w8B3gIaujrVIV8rRnzJn2lUNkPqTk0Q0Ry1aYS1hrL4GJ82i1d8wiDaTND9edF+Q==
+buzzmsg@^1.6.16:
+  version "1.6.16"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.16.tgz#cfb961fcca399d4f1625acb7dd5f8c19fce9c196"
+  integrity sha512-luL8aPjShZ5Kf2zcCAr/TTF3V83mUDhH8lzX6Vm85VliMm8/hAOdCipcUnTMIiOjsurYR/0XjlSaafLF/zZuCQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -6087,10 +6087,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.1.89-fix17:
-  version "0.1.89-fix17"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.89-fix17.tgz#cf7242fd21eccdced85413777d5cb618b7055623"
-  integrity sha512-rjgnGQcanX9c3kX77/kBcuLFyNs2pex4YnBuxL9Pc7eOJTDGt7lV4ewlVJXj87XDgO9uC3bU1+9wIj6xZKBTbQ==
+imforbossjob@^0.1.90:
+  version "0.1.90"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.1.90.tgz#6a0fd9525d4e552b0d8f749a74fff2e4f87d6db3"
+  integrity sha512-VLrOWBFU91z+FCL80vEgKhjQaWCXMNKb8ZE6gMS5HZZVz83TSkavW/LU6ho516mYq7rFYah10gSw/gANQarHMQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -6100,7 +6100,7 @@ imforbossjob@^0.1.89-fix17:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.6.15"
+    buzzmsg "^1.6.16"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"

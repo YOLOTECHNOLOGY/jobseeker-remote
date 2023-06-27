@@ -79,13 +79,14 @@ const interpreter = registInterpreter((command) =>
         const { router } = context
         router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
       }),
-    redirectToCompleteFile: () =>
+    modalCompleteFile: () =>
       M.do((context) => {
-        const { jobDetail, router } = context
-        const { id } = jobDetail
+        const { showCompleteModal, jobDetail: { id }, router } = context
         const source = getSourceCookie()
-        localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
-        router.push('/jobseeker-complete-profile')
+        showCompleteModal(() => {
+          localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
+          router.push('/jobseeker-complete-profile')
+        })
       }),
     createNewChat: () =>
       M.do((context) => {
@@ -100,7 +101,7 @@ const interpreter = registInterpreter((command) =>
               initiated_role: result.data?.data?.initiated_role,
               delete_status: result.data?.data?.delete_status,
               chatStatus: result.data?.data?.status,
-              self_role:'jobseeker'
+              self_role: 'jobseeker'
             }
             dispatch(updateImState({ chatId, imState: newData }))
             const userInfo = getCookie('user')

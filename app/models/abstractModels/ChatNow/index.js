@@ -17,7 +17,7 @@ export const Actions = taggedSum('ChatNowActions', {
     fetchChatData: [],
     parseToChatStatus: ['chatData'],
     redirectToLogin: [],
-    redirectToCompleteFile:[],
+    modalCompleteFile:[],
     redirectToExternal: ['link'],
     modalChangeChattingJob: ['chatData'],
     redirectToChat: ['chatId'],
@@ -47,7 +47,7 @@ export const chatNowScript = () => DO(Actions.isLogin)
 const doChatScript = chatData => DO(Actions.parseToChatStatus(chatData))
     .chain(status => status.cata({
         notLogin: () => DO(Actions.redirectToLogin),
-        notCompleteFile:() => DO(Actions.redirectToCompleteFile),
+        notCompleteFile:() => DO(Actions.modalCompleteFile),
         externalLink: link => DO(Actions.redirectToExternal(link)),
         existSameJob: () => DO(Actions.redirectToChat(chatData.id || chatData.chat_id)),
         existDiffrentJob: () => DO(Actions.modalChangeChattingJob(chatData)),

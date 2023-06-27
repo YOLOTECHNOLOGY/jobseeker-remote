@@ -410,6 +410,12 @@
       "btn2": "Proceed",
       "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
     },
+    "completeProfileModal":{
+      "title":"Notice",
+      "btn1": "No",
+      "btn2": "Update resume",
+      "content": "You do not fulfill the job requirements, are you sure you want to update resume?"
+    },
     "aside": {
       "company": {
         "title": "Company",
