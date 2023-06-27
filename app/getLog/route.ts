@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 
-export async function GET(request) {
+export async function GET() {
     const file = fs.readFileSync('public/serverInfo.log')
     const response = new NextResponse(file, {
         status: 200,
