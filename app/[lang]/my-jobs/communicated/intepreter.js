@@ -12,5 +12,6 @@ const usedConfigProps = [
     ['main_job_function_lists'],
     ['country_lists'],
     ['degrees'],
+    ['job_types']
 ]
 export default config(usedConfigProps)

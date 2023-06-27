@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { isSameDay, transDate } from 'helpers/utilities'
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
+import { getValueById } from 'helpers/config/getValueById';
+import { cloneDeep } from 'lodash-es'
 const  jobseekerDisplayStatusObject = {
   "Pending":'#D2030F',
   "Accepted":'#136FD3',
@@ -24,6 +26,19 @@ interface cardProps {
   totalPage: number,
   tabValue: string
   lang:any
+  config:any
+}
+
+const translateData = (data, config) => {
+  if(!data || !config || !Array.isArray(data)) return data;
+  return cloneDeep(data).map((item) => {
+    item.company.industry = getValueById(config, item.company.industry_id, 'industry_id');
+    item.job.job_type_value = getValueById(config, item.job.job_type_id, 'job_type_id');
+    item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl.id, 'xp_lvl_id');
+    item.job.degree.value = getValueById(config,item.job.degree.id,'degree_id')
+    item.job.location.value = getValueById(config,item.job.location.id,'location_id')
+    return item
+  });
 }
 
 const JobsCard = ({
@@ -33,7 +48,8 @@ const JobsCard = ({
   loadingList,
   totalPage,
   tabValue,
-  lang
+  lang,
+  config
 }: cardProps) => {
   const loading = useRef(null)
   const pageRef = useRef(null)
@@ -51,6 +67,8 @@ const JobsCard = ({
     }
   }, [])
 
+  // translate Data
+  const translatedData= translateData(data, config)
 
   const transTime = (time: string) => {
     return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
@@ -207,7 +225,7 @@ const JobsCard = ({
   return (
     <>
       {
-        tabValue === 'interview' ? interviewCard(data) : card(data)
+        tabValue === 'interview' ? interviewCard(translatedData) : card(translatedData)
       }
       <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? lang?.noMore : ''}</p>
 
