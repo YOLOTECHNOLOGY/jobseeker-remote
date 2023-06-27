@@ -48,20 +48,20 @@ export function middleware(request: NextRequest) {
   // // If you have one
   if (
     [
-      '/manifest.json',
-      '/favicon.ico',
-      '/ads.txt',
-      '/imbackground.js',
-      '/robots.txt',
-      '/self_worker.js',
-      '/vercel.svg',
-      '/errors/report',
-      '/clientError.log',
-      '/serverError.log',
-      '/getLog',
-      '/maintenance',
-      '/images',
-      '/chat-redirect'
+      'manifest.json',
+      'favicon.ico',
+      'ads.txt',
+      'imbackground.js',
+      'robots.txt',
+      'self_worker.js',
+      'vercel.svg',
+      'errors/report',
+      'clientError.log',
+      'serverError.log',
+      'getLog',
+      'maintenance',
+      'images',
+      'chat-redirect'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
   ) { return }
