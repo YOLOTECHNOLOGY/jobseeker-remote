@@ -12,6 +12,7 @@ import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/se
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
+
 const useGetStarted = () => {
   const routes = useRouter()
   const dispatch = useDispatch()
@@ -176,7 +177,8 @@ const useGetStarted = () => {
   const defaultLoginCallBack = async (data: any, isPhone = false) => {
     await removeServiceCache()
     const isChatRedirect = localStorage.getItem('isChatRedirect')
-    if (data.is_profile_update_required || !data.is_profile_completed) {
+    const newData = data || getCookie('user')
+    if (newData.is_profile_update_required || !newData.is_profile_completed) {
       if (isPhone) {
         sessionStorage.setItem('fromPhoneLogin', '1')
       } else {

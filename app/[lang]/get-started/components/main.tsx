@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import styles from '../index.module.scss'
 import Divider from '@mui/material/Divider'
 import PhoneLink from './link/phone'
@@ -10,6 +10,10 @@ import GoogleLogin from './link/google'
 import { useDispatch } from 'react-redux'
 import { jobbseekersLoginSuccess } from 'store/actions/auth/jobseekersLogin'
 import {jobbseekersSocialLoginSuccess} from 'store/actions/auth/jobseekersSocialLogin'
+import Image from 'next/image'
+import { GoogleLogo } from 'images'
+import QrCodeComponent from './QrCode'
+
 interface IProps {
   dictionary: any,
   isModal?:boolean,
@@ -17,19 +21,37 @@ interface IProps {
   handlePhoneClick?:()=>void,
 }
 
+
+
 const Main = (props: IProps) => {
   const { dictionary,isModal = false,handleEmailClick,handlePhoneClick } = props
-  const { newGetStarted } = dictionary
+  const { newGetStarted,getStatred } = dictionary
   const dispatch = useDispatch()
+  const [qrCode,setQrCode] = useState<boolean>(false)
 
   useEffect(()=>{
     dispatch(jobbseekersLoginSuccess({}))
     dispatch(jobbseekersSocialLoginSuccess({}))
   },[])
+ 
+  const {
+    loginUsingSocialMediaOTP,
+    loginUsingQRCode,
+  } = getStatred
 
-  return (
-    <>
-      <div className={styles.list}>
+
+  return (<>
+      <div className={styles.code}>
+      <div className={styles.codePopver}>
+          {
+            qrCode ? loginUsingSocialMediaOTP : loginUsingQRCode
+          }    
+          </div> 
+          <Image src={GoogleLogo} alt="" className={styles.codeImg}  width={30} height={30} onClick={()=>setQrCode(!qrCode)}></Image>        
+      </div>
+      { qrCode ?  <QrCodeComponent lang={dictionary}/>
+       : <>
+      <div className={styles.list}>    
         <GoogleLogin lang={dictionary} />
         <FacebookLogin lang={dictionary} />
         <AppleLogin lang={dictionary} />
@@ -41,6 +63,11 @@ const Main = (props: IProps) => {
         <EmailLink lang={dictionary} isModal={isModal} handleClick={handleEmailClick}/>
         <PhoneLink lang={dictionary} isModal={isModal} handleClick={handlePhoneClick}/>
       </ul>
+      </>
+
+      } 
+     
+
     </>
   )
 }
