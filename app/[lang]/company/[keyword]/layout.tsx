@@ -47,14 +47,14 @@ export default async function CompanyLayout(props: {
 	const cookieStore = cookies()
 	const token = cookieStore.get('accessToken')
 	const id = getIDFromKeyword(props.params.keyword);
-	const [jobs, detail, hr, hotJobs] = await Promise.all([
-		fetchJobsListReq({companyIds: id,size: 10,page: 1},  token.value), 
-		fetchCompanyDetailReq(id), 
-		fetchCompanyHR(id, token.value),
-		fetchHotJobsListService({company_id: id})
-	]);
-	
-	// const configkey =cookieStore.get(configKey);
+	try{
+		const [jobs, detail, hr, hotJobs] = await Promise.all([
+			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token.value), 
+			fetchCompanyDetailReq(id), 
+			fetchCompanyHR(id, token.value),
+			fetchHotJobsListService({company_id: id})
+		]);
+			// const configkey =cookieStore.get(configKey);
 	// console.log('configkey', configkey);
 	// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
 	return (
@@ -73,11 +73,19 @@ export default async function CompanyLayout(props: {
 					backgroundColor: '#ffffff',
 
 				}}>
-					<main data-data={JSON.stringify(hotJobs.data)}>
+					<main>
 						{props.children}
 					</main>
 				</section>
 			</CompanyDetailsProvider>
 		</>
 	)
+	}catch(e){
+		return <div data-error={JSON.stringify(e)}>
+			{e}
+		</div>
+	}
+
+	
+
 }

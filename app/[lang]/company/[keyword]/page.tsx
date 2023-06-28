@@ -59,7 +59,7 @@ const Page = () => {
 	React.useEffect(()=>{
 		(async ()=>{
 			const res = await fetchConfigService(lang);
-			console.log('config',res);
+			console.log('config',res.job_function_lists);
 			setList(res.location_lists);
 		})();
 	},[]);
