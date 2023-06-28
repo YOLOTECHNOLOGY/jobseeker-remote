@@ -3,8 +3,9 @@ import style from './index.module.scss';
 import Section from '../Section/index';
 import {CompanyDetailsType, JobData, JobsResponseType} from "../../service";
 import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
-import { languageContext } from 'app/[lang]/components/providers/languageProvider';
+// import { languageContext } from 'app/[lang]/components/providers/languageProvider';
 import JobCard from '../JobsCard/index'
+import {languageContext} from "../../../../../components/providers/languageProvider";
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType>{
 	jobs: JobData[]
@@ -124,7 +125,6 @@ const CompanyInfo = (_props: Props) => {
 		field: 'total_financing'
 	}]
 
-	console.log("props",props);
 	const contextLang = useContext(languageContext);
 	
 	return <div className={style.tab_content_wrapper}>
