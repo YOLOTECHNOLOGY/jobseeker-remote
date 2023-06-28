@@ -248,7 +248,7 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
             onClick={() => handleAddJobView(jobUrl, Id, reco_from)}
           >
             <div className={styles.name}>
-              <p>{jobTitle}</p>
+              <p className={styles.jobName}>{jobTitle}</p>
               <span className={styles.salary}>{salaryRangeValue}</span>
             </div>
             <p className={styles.company}>{companyName}</p>
