@@ -34,6 +34,17 @@ const checkIsEmailUse = (payload) => {
   return axios.post(`/check/is-email-use`,payload)
 }
 
+const getQrcode = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`/qrcode/generate`,payload)
+}
+
+const qrcodePolling = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`/qrcode/polling`,payload)
+}
+
+
 export { 
   phoneOtpenerate,
   verificationOtp,
@@ -41,5 +52,7 @@ export {
   verificationPhoneOtp,
   checkBindNumber,
   getEmailByPhoneNumber,
-  checkIsEmailUse
+  checkIsEmailUse,
+  getQrcode,
+  qrcodePolling
 }

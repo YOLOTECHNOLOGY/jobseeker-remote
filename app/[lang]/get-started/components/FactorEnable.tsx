@@ -10,7 +10,7 @@ function FactorEnable(props: any) {
   console.log({ userInfo })
   useEffect(() => {
     setTimeout(() => {
-      defaultLoginCallBack({})
+      defaultLoginCallBack(userInfo)
     }, 3000)
   }, [])
 

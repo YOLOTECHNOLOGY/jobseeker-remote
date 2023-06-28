@@ -84,7 +84,19 @@
       "signUp": "注册一个账户",
       "haveSendEmail": "我们已向{{email}}发送了一个魔法链接。 请点击链接继续。",
       "toHome": "回到主页"
-    }
+    },
+    "loginUsingSocialMediaOTP": "使用社交媒体/ OTP 登录",
+    "loginUsingQRCode": "使用二维码登录",
+    "scanQRCodeOnAppToLogin": "通过Bossjob APP扫描二维码即可登录",
+    "donHaveApp": "没有应用程序",
+    "howToScanQRCode": "如何扫描二维码",
+    "ImJobSeeker": "我是求职者",
+    "ImRecruiter": "我是招聘人员",
+    "menuLoginToVersion": "菜单 > 登录网页版",
+    "scannedSuccessfully": "扫描成功",
+    "pleaseConfirmLoginOnAPP": "请在APP上确认登录",
+    "pleaseRefreshQrCode": "请刷新二维码",
+    "clickToRefresh": "点击刷新"
   },
   "myJobs": {
     "communicated": "已沟通",
