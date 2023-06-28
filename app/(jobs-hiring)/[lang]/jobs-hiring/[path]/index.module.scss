@@ -950,7 +950,7 @@ $contentWidth: 894px;
 
     .titleContainer {
       width: 100%;
-      height: 23px;
+      // height: 23px;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
@@ -967,10 +967,15 @@ $contentWidth: 894px;
         align-items: center;
         letter-spacing: 0.02em;
         color: #353535;
-        width: 350px;
-        white-space: nowrap;
+        height: 48px;
+        width: 70%;
         overflow: hidden;
         text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /*! autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
       }
 
       .salary {
@@ -982,10 +987,8 @@ $contentWidth: 894px;
         align-items: center;
         letter-spacing: 0.02em;
         color: #fe574a;
-        white-space: nowrap;
-        // overflow: hidden;
-        // text-overflow: ellipsis;
-        width: fit-content;
+        width: 30%;
+        text-align: right;
       }
     }
 

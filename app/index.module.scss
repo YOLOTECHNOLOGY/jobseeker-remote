@@ -431,16 +431,20 @@
         display: flex;
         color: #353535;
 
-        p {
-          width: 0;
-          flex: 1;
+        .jobName {
+          width: 70%;
+          height: 48px;
           overflow: hidden;
           text-overflow: ellipsis;
-          white-space: nowrap;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          /*! autoprefixer: off */
+          -webkit-box-orient: vertical;
+          /* autoprefixer: on */
         }
 
         .salary {
-          width: 152px;
+          width: 30%;
           text-align: right;
           font-size: 14px;
           color: #136fd3;
