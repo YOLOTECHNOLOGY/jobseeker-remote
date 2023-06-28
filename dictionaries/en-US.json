@@ -198,12 +198,12 @@
       "allJobs": "View {{totalActiveJobs}} job openings"
     },
     "seoTitle": "Find Companies Hiring in {{country}} | Bossjob",
-    "seoDescription": "Find great companies hiring in {{country}}. Search job vacancies, chat and get hired! Remote jobs available.",
+    "seoDescription": "Discover great companies to work for in {{country}}! Search job vacancies, chat and get hired! IT, Web3, Remote jobs available.",
     "searchPage": {
       "title": "Search Companies",
       "subTitle": "Companies for {{searchKey}}",
       "noResult": "No Results Found.",
-      "seoText": "Find Companies Hiring in {{country}} | Bossjob"
+      "seoText": "Find great companies in {{country}}"
     },
     "companiesEmpty": "Companies Not Found"
   },
@@ -246,7 +246,7 @@
         }
       },
       "seoTitle": "Working at {{companyName}} | Bossjob",
-      "seoDescription": "Discover new career opportunities at {{companyName}}. Learn more about {{companyName}}'s employee benefits, company culture and job openings on Bossjob. Apply for jobs now!"
+      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
     },
     "life": {
       "culture": "Company Culture",
@@ -273,12 +273,12 @@
       "viewAll": "View all"
     },
     "jobs": {
-      "seoTitle": "{{companyName}} Job Openings in {{country}} | Bossjob",
-      "seoDescription": "View all {{companyName}} job openings in {{country}}. Bossjob connects quality talents with top companies. Remote jobs available. Apply for jobs now!"
+      "seoTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
+      "seoDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
     },
     "culture": {
       "seoTitle": "Culture & Life at {{companyName}} | Bossjob",
-      "seoDescription": "Discover company culture & life at {{companyName}}.  Bossjob connects quality talents with top companies. Many jobs available. Apply for jobs now! "
+      "seoDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
     }
   },
   "home": {
@@ -343,7 +343,7 @@
       "moreJob": "More jobs"
     },
     "seo": {
-      "title": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
+      "title": "Bossjob - Career Platform for Professionals in {{country}}",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     },
     "jobs": "jobs"
@@ -449,7 +449,7 @@
     },
     "seo": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
-      "desc": "Apply for {{jobTitle}} at {{name}}! Many career opportunities available on Bossjob. Find more {{categoryMetaText}} in {{location}} job vacancies. Chat and get hired! "
+      "desc": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more {{categoryMetaText}} in {{location}}, {{fullAddress}} on Bossjob now!"
     }
   },
   "search": {
@@ -458,11 +458,11 @@
     "searchBtn": "Search",
     "login": "Login to see more jobs",
     "relevance": "Relevance",
-    "function": "Job Function",
+    "function": "Job function",
     "salary": "Salary",
-    "type": "Job Type",
-    "more": "More Filters",
-    "reset": "Reset Filters",
+    "type": "Job type",
+    "more": "More filters",
+    "reset": "Reset filters",
     "newest": "Newest",
     "highestSalary": "Highest Salary",
     "searchModal": {
@@ -786,7 +786,7 @@
     "createFreeResume": "Create Free Resume",
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
-    "jobFunction": "Job function",
+    "jobFunction": "Desired job title/ Job function",
     "industry": "Industry",
     "description": "Description",
     "workingPeriod": "Working Period",
@@ -1176,11 +1176,11 @@
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
-    "siteName": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
-    "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
+    "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
+    "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {
-      "defaultTitle": "New Job Openings in {{country}}  for Professionals, {{month}} {{year}} | Bossjob",
-      "defaultDescription": "Find new job openings in {{country}} ! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob.",
+      "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
+      "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
       "queryTitle": "{{searchQuery}} Jobs in {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
       "queryLocationTitle": "{{searchQuery}} Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
       "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Talk to hiring manager directly on Bossjob.",
@@ -1188,21 +1188,21 @@
     },
     "job": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
-      "description": "Talk to the hiring manager of  {{jobTitle}} ({{jobId}}) at {{name}}. Discover more jobs in {{location}}, {{address}} on Bossjob now!"
+      "description": "Apply for {{jobTitle}} at {{name}}! Many career opportunities available on Bossjob. Find job vacancies in {{location}}. Chat and get hired! "
     },
     "company": {
       "listTitle": "Find Companies Hiring in {{country}} | Bossjob",
-      "listDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
+      "listDescription": "Discover great companies to work for in {{country}}! Search job vacancies, chat and get hired! IT, Web3, Remote jobs available.",
       "detailTitle": "Working at {{companyName}} | Bossjob",
       "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
       "jobsTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "jobsDescription": "View all {{companyName}} job openings in {{country}}. Bossjob connects quality talents with top companies. Remote jobs available. Apply for jobs now!",
+      "jobsDescription": "View all available job opportunities at {{companyName}} in {{country}} on Bossjob - Talk directly with talents on Bossjob!",
       "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
-      "lifeDescription": "Discover company culture & life at {{companyName}}.  Bossjob connects quality talents with top companies. Many jobs available. Apply for jobs now! "
+      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob. Talk directly with hiring managers on Bossjob!"
     },
     "landing": {
-      "title": "Get Started as Bossjob Talent | Bossjob",
-      "description": "Bossjob is a chat-first career platform that connects quality talents with top companies. Get started as a talent. Advance your career opportunities today!"
+      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
+      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
     }
   },
   "landing": {
