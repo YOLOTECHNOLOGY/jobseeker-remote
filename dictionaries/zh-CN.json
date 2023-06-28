@@ -55,7 +55,7 @@
     "corporation": "菲律宾：Etos Adtech Corporation"
   },
   "getStatred": {
-    "seoMetaTitle": "Get started | Bossjob",
+    "seoMetaTitle": "注册求职账号，马上开始找工作 | Bossjob",
     "JoinBossjob": "上Bossjob",
     "kickStartYourCareer": "和老板直接聊工作！",
     "enterYourEmailAddress": "输入你的电子邮箱地址",
@@ -77,7 +77,7 @@
     "resendOTP": "重新发送",
     "havingTrouble": "您需要帮助吗？",
     "requestAmagicLink": "请求魔术链接",
-    "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
+    "seoMetaDescription": "立即加入Bossjob，直接和老板聊职位！加入300万东南亚用户，立即体验最高效的找工作平台在",
     "seoMetaDescription2": "2百万注册求职者在线等你",
     "magicLink": {
       "welcomeBack": "欢迎回来！",
@@ -85,18 +85,18 @@
       "haveSendEmail": "我们已向{{email}}发送了一个魔法链接。 请点击链接继续。",
       "toHome": "回到主页"
     },
-    "loginUsingSocialMediaOTP": "使用社交媒体/ OTP 登录",
-    "loginUsingQRCode": "使用二维码登录",
-    "scanQRCodeOnAppToLogin": "通过Bossjob APP扫描二维码即可登录",
-    "donHaveApp": "没有应用程序",
-    "howToScanQRCode": "如何扫描二维码",
-    "ImJobSeeker": "我是求职者",
-    "ImRecruiter": "我是招聘人员",
-    "menuLoginToVersion": "菜单 > 登录网页版",
-    "scannedSuccessfully": "扫描成功",
-    "pleaseConfirmLoginOnAPP": "请在APP上确认登录",
-    "pleaseRefreshQrCode": "请刷新二维码",
-    "clickToRefresh": "点击刷新"
+    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
+    "loginUsingQRCode": "Login using QR code",
+    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
+    "donHaveApp": "Don’t have App",
+    "howToScanQRCode": "How to scan QR code",
+    "ImJobSeeker": "I'm a Job Seeker",
+    "ImRecruiter": "I'm a Recruiter",
+    "menuLoginToVersion": "Menu > Login to web version",
+    "scannedSuccessfully": "Scanned successfully",
+    "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
+    "pleaseRefreshQrCode": "Please refresh the QR code",
+    "clickToRefresh": "Click to refresh"
   },
   "myJobs": {
     "communicated": "已沟通",
@@ -1184,7 +1184,9 @@
       "queryTitle": "{{country}}的{{searchQuery}}职位，工作机会 - {{month}} {{year}} | Bossjob",
       "queryLocationTitle": "{{country}}{{location}}的{{searchQuery}}职位，申请工作机会 - {{month}} {{year}} | Bossjob",
       "queryDescription": "上Bossjob 搜索最新{{country}}{{searchQuery}}岗位。海量公司老板在线招聘，AI匹配最优工作，快速找到心仪工作！",
-      "queryLocationDescription": "Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来"
+      "queryLocationDescription": "Bossjob 提供{{country}}{{location}}的新{{searchQuery}}工作。今天在 Bossjob 上提升您的职业生涯 - 将经过预先筛选的经验丰富的专业人士与雇主联系起来",
+      "locationTitle": "{{country}}的{{location}}工作职位 - {{month}} {{year}} | Bossjob",
+      "locationDescription": "查看最新{{country}}{{location}}的高薪职位。立即上 Bossjob找工作，海量公司，高薪职位，快速开聊，极速入职！"
     },
     "job": {
       "title": "{{name}}正在招聘{{jobTitle}} - {{jobId}} | Bossjob",

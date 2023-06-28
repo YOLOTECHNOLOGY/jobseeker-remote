@@ -55,7 +55,7 @@
     "corporation": "Philippines: Etos Adtech Corporation"
   },
   "getStatred": {
-    "seoMetaTitle": "Get started | Bossjob",
+    "seoMetaTitle": "Sign Up or Login as Talent | Bossjob",
     "JoinBossjob": "Join Bossjob",
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",
@@ -77,7 +77,7 @@
     "resendOTP": "Resend OTP",
     "havingTrouble": "Having trouble?",
     "requestAmagicLink": "Request a Magic Link",
-    "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
+    "seoMetaDescription": "Chat with bosses in real-time and get hired fast. Join 3 million professionals in Southeast Asia! Sign up or login to find job matches in ",
     "seoMetaDescription2": "Network of 2 million+ professionals.",
     "magicLink": {
       "welcomeBack": "Welcome back!",
@@ -85,18 +85,18 @@
       "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
       "toHome": "Back to home page"
     },
-    "loginUsingSocialMediaOTP":"Login using social media/ OTP",
-    "loginUsingQRCode":"Login using QR code",
-    "scanQRCodeOnAppToLogin":"Scan QR code by  Bossjob APP to login",
-    "donHaveApp":"Don’t have App",
-    "howToScanQRCode":"How to scan QR code",
-    "ImJobSeeker":"I'm a Job Seeker",
-    "ImRecruiter":"I'm a Recruiter",
-    "menuLoginToVersion":"Menu > Login to web version",
-    "scannedSuccessfully":"Scanned successfully",
-    "pleaseConfirmLoginOnAPP":"Please confirm login on APP",
-    "pleaseRefreshQrCode":"Please refresh the QR code",
-    "clickToRefresh":"Click to refresh"
+    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
+    "loginUsingQRCode": "Login using QR code",
+    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
+    "donHaveApp": "Don’t have App",
+    "howToScanQRCode": "How to scan QR code",
+    "ImJobSeeker": "I'm a Job Seeker",
+    "ImRecruiter": "I'm a Recruiter",
+    "menuLoginToVersion": "Menu > Login to web version",
+    "scannedSuccessfully": "Scanned successfully",
+    "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
+    "pleaseRefreshQrCode": "Please refresh the QR code",
+    "clickToRefresh": "Click to refresh"
   },
   "myJobs": {
     "communicated": "Communicated",
@@ -1181,10 +1181,12 @@
     "jobSearch": {
       "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
       "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
-      "queryTitle": "{{searchQuery}} Jobs in {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryLocationTitle": "{{searchQuery}} Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Talk to hiring manager directly on Bossjob.",
-      "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
+      "queryTitle": "{{searchQuery}} Jobs Hiring in {{country}}, {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{searchQuery}} Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
+      "queryDescription": "Find new {{searchQuery}} job openings in {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
+      "queryLocationDescription": "Find new {{searchQuery}} job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
+      "locationTitle": "Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
+      "locationDescription": "Find new job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!"
     },
     "job": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",

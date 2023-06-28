@@ -75,6 +75,17 @@ async function generateSEO(props: any) {
       country: dictionary.seo[getCountryKey()],
       location
     })
+  }else if (!searchQuery && location) {
+    seoMetaTitle = formatTemplateString(jobSearch.locationTitle, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+      month, year, location
+    })
+    seoMetaDescription = formatTemplateString(jobSearch.locationDescription, {
+      searchQuery,
+      country: dictionary.seo[getCountryKey()],
+      location
+    })
   } else {
     seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, {
       country: dictionary.seo[getCountryKey()],
