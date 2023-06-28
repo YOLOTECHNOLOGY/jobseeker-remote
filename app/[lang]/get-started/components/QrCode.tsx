@@ -145,9 +145,9 @@ const qrCode = ({ lang }: any) => {
               <Image
                 src={`data:image/gif;base64,${qrCodeImg?.qrcode_base_code}`}
                 alt='app down'
-                width='170'
+                width='186'
                 className={styles.qrcode}
-                height='170'
+                height='186'
               />
             ) : <CircularProgress size={26}/> }
             {overtime && (

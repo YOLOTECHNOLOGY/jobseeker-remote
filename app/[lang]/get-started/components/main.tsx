@@ -48,8 +48,7 @@ const Main = (props: IProps) => {
           </div> 
           <div className={styles.codeImg} onClick={()=>setQrCode(!qrCode)}>
              <span className={`${qrCode ?  'icon-windows' : 'icon-appqr'}`}></span>
-          </div>
-        
+          </div> 
       </div>
        { qrCode ?  <QrCodeComponent lang={dictionary}/>
        : <>

@@ -35,7 +35,7 @@
    position: relative;  
    bottom: 10px;
    margin-bottom: 16px;
-   display: none;
+
    .codeImg{
     cursor: pointer;
     span{
@@ -57,8 +57,8 @@
    .qrCode{
     margin: 0 auto;
     display: flex;
-    width: 170px;
-    height: 170px;
+    width: 186px;
+    height: 186px;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -66,7 +66,7 @@
       position: absolute;
       height: 100%;
       width: 100%;
-      background: rgba(237, 237, 237, .8);
+      background: rgba(237, 237, 237, .9);
       left: 0;
       top: 0;
       p{
@@ -79,7 +79,7 @@
         padding-top: 52px;
       }
       button{
-        width: 101px;
+        padding: 0 10px;
         height: 35px;
         border-radius: 4px;    
         outline: none;
