@@ -2,11 +2,11 @@
 import { useState, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { Stack } from 'app/[lang]/components/MUIs'
+import { Stack } from 'app/components/MUIs'
 import MaterialButton from 'components/MaterialButton'
-import { FavoriteBorderIcon, FavoriteIcon } from 'app/[lang]/components/MuiIcons'
+import { FavoriteBorderIcon, FavoriteIcon } from 'app/components/MuiIcons'
 
-import useChatNow from 'app/[lang]/hooks/useChatNow'
+import useChatNow from 'app/models/hooks/useChatNow'
 
 import { getCookie } from 'helpers/cookies'
 import { getApplyJobLink } from 'helpers/jobPayloadFormatter'
@@ -15,8 +15,8 @@ import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-import { LoginModalContext } from 'app/[lang]/components/providers/loginModalProvider'
+import { languageContext } from 'app/components/providers/languageProvider'
+import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 
 type propsType = {
   is_saved: boolean
@@ -160,6 +160,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
             }}
             onClick={() => {
               if (!accessToken) {
+                sessionStorage.setItem('redirectPage',window?.location?.pathname)
                 setShowLogin?.(true)
                 return
               } else if (!isSave) {

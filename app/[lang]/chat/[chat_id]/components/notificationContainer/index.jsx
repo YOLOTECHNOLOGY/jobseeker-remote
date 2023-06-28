@@ -1,8 +1,11 @@
 import classNames from 'classnames'
-import { CloseIcon } from 'images'
+// import { CloseIcon } from 'images'
+import CloseIcon from '@mui/icons-material/Close';
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import styles from './index.module.scss'
 import PropTypes from 'prop-types'
+import Image from 'next/image'
+
 const animationDuration = 0.5
 const removeAfter = 5
 const showNextAfter = 5
@@ -82,13 +85,19 @@ const NotificationContainer = props => {
                     e.stopPropagation()
                     remove?.(note)
                 }}>
-                    <img src={CloseIcon} alt='logo' width='13' height='13' />
                 </div>
-                <div className={styles.title}>
-                    {note.title}
-                </div>
-                <div className={styles.content}>
-                    {note.content}
+                <div className={styles.mainWrapper} >
+                    <Image src={note.avatar} alt="avatar" width={50} height={50} />
+
+                    <div className={styles.contentWrapper} >
+                        <div className={styles.title}>
+                           <span className={styles.title_content} > {note.title}</span>
+                           <CloseIcon alt='logo' width='13' height='13' sx={{color: "rgb(3, 59, 95)"}} />
+                        </div>
+                        <div className={styles.content}>
+                            {note.content}
+                        </div>
+                    </div>
                 </div>
             </div>
         })}

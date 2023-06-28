@@ -3,7 +3,7 @@ import React, {useEffect, useCallback, useState, useContext} from 'react';
 import {useInView, InView} from "react-intersection-observer";
 import classNames from "classnames";
 import useWindowSize from "../../../../../hooks/useWindowSize";
-import {languageContext} from "../../../components/providers/languageProvider";
+import {languageContext} from "../../../../components/providers/languageProvider";
 
 
 const INFO = [

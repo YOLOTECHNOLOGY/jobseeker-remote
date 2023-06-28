@@ -18,7 +18,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import PhoneComponent from './phoneComponent'
 import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
-import { CircularProgress } from 'app/[lang]/components/MUIs'
+import { CircularProgress } from 'app/components/MUIs'
 const countryForCountryCode = {
   ph: '+63',
   sg: '+65'
@@ -31,7 +31,7 @@ const LoginForPhone = (props: any) => {
   const [phoneError, setPhoneError] = useState<string>('')
   const [loading,setLoading] = useState<boolean>(false)
   const {
-    lang: { newGetStarted },
+    lang: { newGetStarted ,errorcode},
     isModal = false,
     handleEmailClick,
     setLoginData
@@ -95,10 +95,17 @@ const LoginForPhone = (props: any) => {
         }     
       })
       .catch((error) => {
+        const code = error?.response?.data.code
+        let  transErr = errorcode[code]
+        if(code === 40006){
+          transErr = formatTemplateString(transErr,{
+            retry_after:error?.response?.data?.errors?.retry_after
+          })
+        }
         dispatch(
           displayNotification({
             open: true,
-            message: error.message ?? newGetStarted.optError,
+            message: transErr ?? newGetStarted.optError,
             severity: 'error'
           })
         )

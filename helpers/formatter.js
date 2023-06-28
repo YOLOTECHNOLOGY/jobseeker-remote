@@ -238,7 +238,7 @@ export const formatTemplateString = (string, ...rest) => {
   });
 
   if (matchedStrings.length !== len) {
-    throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
+   // throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
   }
   matchedStrings.forEach((regStr, index) => {
     if (isObject) {

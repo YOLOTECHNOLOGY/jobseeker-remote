@@ -16,7 +16,10 @@ import { getCookie } from 'helpers/cookies'
 
 const QuickUploadResume = (props: { lang: any }) => {
   const { lang } = props
-  const UseHooksRegister = useRegister()
+  const {
+    quickUploadResume: { register }
+  } = lang
+  const UseHooksRegister = useRegister({ invalidEmailMsg: register.emailValid })
   const useHooksFakeUploadResume = useFakeUploadResume()
   const { isLoading, isShowRegisterInfo, userWorkExperiences } = UseHooksRegister
   const user = getCookie('user')
@@ -96,7 +99,7 @@ const QuickUploadResume = (props: { lang: any }) => {
                 </div>
               ) : null}
 
-              {(isShowRegisterInfo() && !isLogged) ? (
+              {isShowRegisterInfo() && !isLogged ? (
                 <RegisterInfo {...UseHooksRegister} lang={lang} hideSocialMediaAuth />
               ) : (
                 <UploadResume {...useHooksFakeUploadResume} isLogged={isLogged} lang={lang} />
@@ -108,6 +111,5 @@ const QuickUploadResume = (props: { lang: any }) => {
     </>
   )
 }
-
 
 export default QuickUploadResume

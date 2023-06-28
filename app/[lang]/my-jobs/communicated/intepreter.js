@@ -1,5 +1,5 @@
 
-import config from 'app/[lang]/interpreters/config'
+import config from 'app/models/interpreters/config'
 const usedConfigProps = [
     ['location_lists'],
     ['main_functions'],
@@ -12,5 +12,6 @@ const usedConfigProps = [
     ['main_job_function_lists'],
     ['country_lists'],
     ['degrees'],
+    ['job_types']
 ]
 export default config(usedConfigProps)

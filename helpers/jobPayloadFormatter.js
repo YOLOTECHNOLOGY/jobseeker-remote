@@ -223,7 +223,8 @@ const getSmsCountryList = (config) => {
     if (country.is_sms_allowed) {
       const smsCountry = {
         value: country['code'],
-        label: country['code'] + ' (' + country['value'] + ')'
+        label: country['code'] + ' (' + country['value'] + ')',
+        id:country.id
       }
 
       smsCountryList.push(smsCountry)

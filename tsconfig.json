@@ -40,13 +40,14 @@
     "next.config.js",
     "lint-staged.config.js",
     "next-env.d.ts",
-    "app/**/*.js",
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "node_modules/buzzmsg/dist/index.js"
   ]
 }

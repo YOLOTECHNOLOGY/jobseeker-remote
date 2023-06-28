@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './index.module.scss'
 import { JoinUs } from 'images'
 import Image from 'next/image'
-import { Button } from 'app/[lang]/components/MUIs'
+import { Button } from 'app/components/MUIs'
 import Link from 'next/link'
 import { getLang } from 'helpers/country'
 const NoPreference = (props:any) => {

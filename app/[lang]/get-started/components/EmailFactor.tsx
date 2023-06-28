@@ -10,7 +10,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { checkIsEmailUse } from 'store/services/auth/newLogin'
 import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
-import { CircularProgress } from 'app/[lang]/components/MUIs'
+import { CircularProgress } from 'app/components/MUIs'
 
 function EmailFactor(props: any) {
   const [isDisable, setDisable] = useState<boolean>(true)

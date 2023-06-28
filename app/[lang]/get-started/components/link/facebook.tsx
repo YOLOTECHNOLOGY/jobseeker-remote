@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { jobbseekersSocialLoginRequest } from 'store/actions/auth/jobseekersSocialLogin'
+import React from 'react'
 import { FacebookIcon } from 'images'
-
 import styles from '../../index.module.scss'
-import useGetStartedClient from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
+import useGetStarted from '../../hooks/useGetStarted'
 
 interface IFacebook {
   className?: string
@@ -24,13 +20,14 @@ const FacebookLogin = (props: IFacebook) => {
     redirect,
     lang: { newGetStarted }
   } = props
-  const dispatch = useDispatch()
   const searchParams = useSearchParams()
+  const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const query = {}
   for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
   }
 
+  // handle login us service
   const callBackMethod = (payload) => {
     const data = {
       ...payload,
@@ -44,7 +41,15 @@ const FacebookLogin = (props: IFacebook) => {
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl
     }
-    dispatch(jobbseekersSocialLoginRequest(data))
+    // submit
+    handleAuthenticationSocialLogin(data).then(res => {
+      // handle has logged redirect url
+      const { data } = res
+      if (data?.token) {
+        removeItem('quickUpladResume')
+        defaultLoginCallBack(data)
+      }
+    })
   }
 
   const handleAuthClick = () => {

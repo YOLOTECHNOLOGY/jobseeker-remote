@@ -1,9 +1,9 @@
 import Index from './index'
-import { getGoogleJobJSON } from 'app/[lang]/components/SEO'
+import { getGoogleJobJSON } from 'app/components/SEO'
 import { getDictionary } from 'get-dictionary'
 import interpreter from "./intepreter"
-import { serverDataScript } from "app/[lang]/abstractModels/FetchServierComponents"
-import { buildComponentScript } from "app/[lang]/abstractModels/util"
+import { serverDataScript } from "app/models/abstractModels/FetchServierComponents"
+import { buildComponentScript } from "app/models/abstractModels/util"
 import React from 'react'
 import { handleFetchJobDetail } from  './service'
 export const revalidate = 3600

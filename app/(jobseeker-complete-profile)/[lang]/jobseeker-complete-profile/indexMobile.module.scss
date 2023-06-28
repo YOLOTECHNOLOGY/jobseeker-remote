@@ -73,16 +73,13 @@
             box-sizing: border-box;
             background: #fff;
             border-top: 1px solid #BCBCBC;
-            :global{
-                .MuiLoadingButton-root{
-                    flex: 1;
-                    margin-left: 8px;
-                    &:last-child{
-                        margin-left: 0;
-                    }
+            .rightBtnBox {
+                flex: 1;
+                margin-left: 8px;
+                &:last-child{
+                    margin-left: 0;
                 }
-            }
-           
+            }        
         }
         .work{       
             .workContainer{
@@ -133,6 +130,14 @@
             }
            
         }
-       
+       .skipModal {
+        .modalContainer{
+            width: 100%;
+            left: 0;
+            transform: translate(0,0);
+            bottom: 0;
+            top: unset;
+        }
+       }
     }
 }

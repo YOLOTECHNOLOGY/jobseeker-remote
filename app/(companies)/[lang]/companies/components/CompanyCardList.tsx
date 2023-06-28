@@ -2,7 +2,7 @@
 import CompanyCard from './CompanyCard'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
 // import Empty from './Empty'
-import Empty from 'app/[lang]/components/empty/empty'
+import Empty from 'app/components/empty/empty'
 
 
 // Styles
@@ -25,13 +25,6 @@ const CompanyCardList = ({
 }: ICompanyCardList) => {
   return (
     <div className={styles.companyList}>
-      {isLoading &&
-        [...Array(9)].map((_, i) => (
-          <div className={styles.companyItem} key={i}>
-            <CompanyCardLoader />
-          </div>
-        ))}
-
       {!isLoading &&
         companiesList?.length > 0 &&
         companiesList.map((item) => (

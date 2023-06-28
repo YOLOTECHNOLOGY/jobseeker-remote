@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 
 import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
-import { Avatar } from 'app/[lang]/components/MUIs'
+import { Avatar } from 'app/components/MUIs'
 import JobClient from './JobClient/JobClient'
 import ReadMore from './ReadMore'
 import React from 'react'

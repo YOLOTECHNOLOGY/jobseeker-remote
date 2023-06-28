@@ -12,9 +12,8 @@ import { usePathname } from 'next/navigation'
 import FootBtn from './footBtn'
 import moment from 'moment'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 const EducationExperience = (props: any) => {
-  console.log(props)
   const {
     config: { degrees },
     lang,
@@ -64,9 +63,9 @@ const EducationExperience = (props: any) => {
     fillThisLater,
     Next3,
     back,
-    studyPeriod
+    studyPeriod,
+    skip
   } = lang?.profile || {}
-console.log({userDetail})
  useEffect(()=>{
    if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
     setIsDisabled(false)
@@ -81,12 +80,13 @@ console.log({userDetail})
     const educationData = {
       school: school,
       is_currently_studying: isCurrentStudying,
-      study_period_from: moment(new Date(studyPeriodFrom)).format('yyyy-MM-DD'),
-      study_period_to: isCurrentStudying  ? null : moment(new Date(studyPeriodTo)).format('yyyy-MM-DD'),
+      study_period_from: `${moment(new Date(studyPeriodFrom)).format('yyyy-MM')}-01`,
+      study_period_to: isCurrentStudying  ? null : `${moment(new Date(studyPeriodTo)).format('yyyy-MM')}-01`,
       field_of_study: fieldStudy,
       degree_id: selectedDegrees
     }
     setLoading(true)
+    console.log({educationData})
    if(educations?.length){
     const id = educations[0].id
     const educationPayload= {
@@ -219,6 +219,7 @@ console.log({userDetail})
           backText={isMobile ? fillThisLater : back}
           backClick={backClick}
           disabled={isDisabled}
+          skipText={skip}
           handleClick={handleSubmit}
         />
       </div>

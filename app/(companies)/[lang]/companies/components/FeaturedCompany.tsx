@@ -24,14 +24,13 @@ const FeaturedCompany = (props: IProps) => {
 
   return (
     <>
-      {featuredCompany && (
+      {featuredCompany ? (
         <div className={styles.featuredCompany}>
           {/* company logo */}
           <div className={styles.featuredCompanyLogo}>
-            <Link to={'/' + langKey + featuredCompany?.company_url || '/'}>
+            <Link to={'/' + langKey + featuredCompany?.company_url || '/'} className={styles.featuredCompanyLogoLink} target="_blank">
               {featuredCompany?.logo && <Image
-                width={64}
-                height={64}
+                fill={true}
                 src={featuredCompany?.logo}
                 alt={`${featuredCompany?.name} logo`}
               />}
@@ -41,10 +40,12 @@ const FeaturedCompany = (props: IProps) => {
           {/* company details */}
           <div className={styles.featuredCompanyDetails}>
             {/* company name */}
-            <Text textStyle='xl' bold>
+            <Text textStyle='xl' bold className={styles.featuredCompanyNameWrapper}>
               <Link
                 to={'/' + langKey + featuredCompany?.company_url || '/'}
                 className={styles.featuredCompanyName}
+                title={featuredCompany?.name}
+                target="_blank"
               >
                 {featuredCompany?.name}
               </Link>
@@ -84,7 +85,7 @@ const FeaturedCompany = (props: IProps) => {
             </div>
           </div>
         </div>
-      )}
+      ): <div className={styles.featuredCompany} />}
     </>
   )
 }

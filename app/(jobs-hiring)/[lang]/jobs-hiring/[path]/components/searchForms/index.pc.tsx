@@ -3,20 +3,20 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import JobSearchBar from '../../../../../../[lang]/components/commons/location/search'
+import JobSearchBar from '../../../../../../components/commons/location/search'
 import styles from '../../index.module.scss'
 import MaterialButton from 'components/MaterialButton'
-import Single from 'app/[lang]/components/commons/select/single'
-import Multiple from 'app/[lang]/components/commons/select/multiple'
+import Single from 'app/components/commons/select/single'
+import Multiple from 'app/components/commons/select/multiple'
 import { encode } from '../../../interpreters/encoder'
 import { useSuggest } from './hooks'
-import theme from 'app/[lang]/components/commons/theme'
+import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
-import JobFunction from 'app/[lang]/components/commons/jobFunction'
+import JobFunction from 'app/components/commons/jobFunction'
 // import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
-import { Button } from 'app/[lang]/components/MUIs'
-import JobSearchFilters from 'app/[lang]/components/commons/JobSearchFilters'
+import { Button } from 'app/components/MUIs'
+import JobSearchFilters from 'app/components/commons/JobSearchFilters'
 import { getCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
@@ -24,15 +24,15 @@ import { useRouter } from 'next/navigation'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
 import useUserAgent from 'helpers/useUserAgent'
-import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
-import { AppDownQRCode } from 'images'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
+import { AppDownQRCode, HistoryIcons } from 'images'
 import Image from 'next/image'
 import classNames from 'classnames'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
-
+import { languageContext } from 'app/components/providers/languageProvider'
+import LocationMultiSelector from 'app/components/commons/locationMulty'
+import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search } = useContext(languageContext) as any
@@ -41,6 +41,7 @@ const SearchArea = (props: any) => {
     { label: search?.relevance, value: '2' },
     { label: search?.highestSalary, value: '3' }
   ]
+  const { setShowLogin } = useContext(LoginModalContext)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchConfigSuccess(config))
@@ -206,7 +207,7 @@ const SearchArea = (props: any) => {
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect}>
-                      <SearchIcon />
+                      <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
                       <span style={{ paddingLeft: '10px' }}>{value || option}</span>
                     </li>
                   )
@@ -288,7 +289,9 @@ const SearchArea = (props: any) => {
                   className={styles.loginButton}
                   variant='outlined'
                   onClick={() => {
-                    router.push('/get-started', { forceOptimisticNavigation: true })
+                    sessionStorage.setItem('redirectPage', window?.location?.pathname)
+                    setShowLogin(true)
+                    // router.push('/get-started', { forceOptimisticNavigation: true })
                   }}
                 >
                   <svg

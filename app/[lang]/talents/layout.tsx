@@ -5,7 +5,7 @@ import Head from "next/head";
 import {Metadata} from "next"
 
 import {useContext} from "react";
-import {languageContext} from "../components/providers/languageProvider";
+import {languageContext} from "../../components/providers/languageProvider";
 import {getCountryKey} from "../../../helpers/country";
 import {formatTemplateString} from "../../../helpers/formatter";
 import {getDictionary} from "../../../get-dictionary";

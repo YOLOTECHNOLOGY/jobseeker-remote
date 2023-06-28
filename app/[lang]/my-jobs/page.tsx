@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 import React, { Suspense } from 'react'
-import getConfigs from 'app/[lang]/interpreters/config'
-import { buildComponentScript, needLogin } from 'app/[lang]/abstractModels/util'
-import { serverDataScript } from 'app/[lang]/abstractModels/FetchServierComponents'
+import getConfigs from 'app/models/interpreters/config'
+import { buildComponentScript, needLogin } from 'app/models/abstractModels/util'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from './components/table'

@@ -35,7 +35,8 @@ const PlaceholderProtectedHeader = ({
 
   useEffect(() => {
     if(userInfo?.id){
-      setShowUnCompletedDot(!userInfo?.is_profile_completed)
+      const hasJobPreferences = userInfo?.job_preferences.length > 0
+      setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
 

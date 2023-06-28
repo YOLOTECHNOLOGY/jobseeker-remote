@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { scripts, M } from 'imforbossjob'
 import { infoAlert } from './services/chat'
 const { utils } = scripts
@@ -8,13 +9,13 @@ export default command =>
     hasPhone: text =>
       M(() =>
         Promise.resolve().then(() => {
-          return /^\d{7,}$/.test(text.replace(/[\s()+\-.]|ext/gi, ''))
+          return !!(text.replace(/[\s()+\-.]|ext/gi, '').match(/\d{7,}/g))
         })
       ),
     hasEmail: text =>
       M(() =>
         Promise.resolve().then(() => {
-          return /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(text)
+          return !!(text.match(/[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}/g))
         })
       ),
     requestAlert: (chatId, hasPhone, hasEmail) =>

@@ -7,7 +7,7 @@ import {Navigation, Pagination, Scrollbar, A11y, Autoplay, Controller} from 'swi
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {languageContext} from "../../../components/providers/languageProvider";
+import {languageContext} from "../../../../components/providers/languageProvider";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 
 

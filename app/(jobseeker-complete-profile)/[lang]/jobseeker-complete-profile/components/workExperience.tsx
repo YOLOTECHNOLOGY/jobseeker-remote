@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
-import { LinkContext } from 'app/[lang]/components/providers/linkProvider'
+import { LinkContext } from 'app/components/providers/linkProvider'
 
 
 const WorkExperience = (props: any) => {
@@ -138,7 +138,8 @@ const WorkExperience = (props: any) => {
     currentlyWorkHere,
     from,
     to,
-    placeholder
+    placeholder,
+    skip
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
@@ -194,8 +195,8 @@ const WorkExperience = (props: any) => {
       job_title: jobFunction?.value,
       function_job_title_id: jobFunction?.id,
       company: companyName,
-      working_period_from: moment(new Date(workPeriodFrom)).format('yyyy-MM-DD'),
-      working_period_to: isCurrentJob ? null : moment(new Date(workPeriodTo)).format('yyyy-MM-DD'),
+      working_period_from: `${moment(new Date(workPeriodFrom)).format('yyyy-MM')}-01`,
+      working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodTo)).format('yyyy-MM')}-01`,
       is_currently_work_here: isCurrentJob,
       description
     }
@@ -458,7 +459,9 @@ const WorkExperience = (props: any) => {
           rightText={Next2}
           backClick={backClick}
           backText={back}
+          skip={skip}
           disabled={isDisabled}
+          skipText = {skip}
           handleClick={handleSubmit}
         />
       </div>

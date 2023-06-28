@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { getValueById } from 'helpers/config/getValueById'
 import { useSelector } from 'react-redux'
 import { transState } from 'helpers/utilities'
-import common_styles from 'app/[lang]/index.module.scss'
+import common_styles from 'app/index.module.scss'
 const JobCard = (props: any) => {
   const {
     job_title,

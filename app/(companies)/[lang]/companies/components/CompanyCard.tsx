@@ -20,22 +20,22 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
   return (
     <div className={styles.companyCard}>
       <div className={styles.companyCardLeft}>
-        <Link to={'/' + langKey + companyUrl}>
-          <img
+        <Link to={'/' + langKey + companyUrl} target="_blank" className={styles.companyCardImage}>
+          <Image
+            fill={true}
             src={company?.logo_url || company?.logo}
             alt={company?.name}
-            className={styles.companyCardImage}
           />
         </Link>
       </div>
       <div className={styles.companyCardRight}>
         <Text textStyle='lg' className={styles.companyCardName}>
-          <Link to={'/' + langKey + companyUrl}>{truncateWords(company.name, 60)}</Link>
+          <Link to={'/' + langKey + companyUrl} title={company?.name} target="_blank">{truncateWords(company.name, 60)}</Link>
         </Text>
         <Text textStyle='lg' tagName='p' className={styles.companyCardCategory}>
           {company?.industry}
         </Text>
-        <Link to={`/${langKey}${companyUrl}/jobs`} className={styles.companyCardOpenings}>
+        <Link to={`/${langKey}${companyUrl}/jobs`} target="_blank" className={styles.companyCardOpenings}>
           <Text textStyle='lg' bold>
             {formatTemplateString(transitions.allJobs, company.num_of_active_jobs)}
           </Text>

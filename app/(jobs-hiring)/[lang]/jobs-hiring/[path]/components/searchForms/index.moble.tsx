@@ -4,30 +4,30 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef, useContext } from 'react'
 import { flushSync } from 'react-dom'
 import { flatMap } from 'lodash-es'
-import JobSearchBar from '../../../../../../[lang]/components/commons/location/search'
+import JobSearchBar from '../../../../../../components/commons/location/search'
 import styles from '../../index.module.scss'
-import Single from 'app/[lang]/components/mobile/select/single'
-import Multiple from 'app/[lang]/components/mobile/select/multiple'
-import MultyGroup from 'app/[lang]/components/mobile/select/groupedMulty'
+import Single from 'app/components/mobile/select/single'
+import Multiple from 'app/components/mobile/select/multiple'
+import MultyGroup from 'app/components/mobile/select/groupedMulty'
 import { encode } from '../../../interpreters/encoder'
 import { useSuggest } from './hooks'
-import theme from 'app/[lang]/components/mobile/theme'
+import theme from 'app/components/mobile/theme'
 import { ThemeProvider } from '@mui/material/styles'
-import JobFunction from 'app/[lang]/components/commons/jobFunction'
+import JobFunction from 'app/components/commons/jobFunction'
 // import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { filter } from 'ramda'
-import { LoadingContext } from 'app/[lang]/components/providers/loadingProvider'
+import { LoadingContext } from 'app/components/providers/loadingProvider'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import SearchIcon from '@mui/icons-material/Search'
 import { cloneDeep } from 'lodash-es'
-import { languageContext } from 'app/[lang]/components/providers/languageProvider'
-import LocationMultiSelector from 'app/[lang]/components/commons/locationMulty'
-
+import { languageContext } from 'app/components/providers/languageProvider'
+import LocationMultiSelector from 'app/components/commons/locationMulty'
+import { HistoryIcons } from 'images'
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search, myJobs } = useContext(languageContext) as any
@@ -42,8 +42,6 @@ const SearchArea = (props: any) => {
   }, [])
 
   const page = searchValues.page ?? '1'
-
-  console.log('config', config)
 
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
@@ -206,7 +204,7 @@ const SearchArea = (props: any) => {
                   </li>
                 ) : (
                   <li {...props} style={styleleSelect}>
-                    <SearchIcon />
+                    <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
                     <span style={{ paddingLeft: '10px' }}>{value || option}</span>
                   </li>
                 )
@@ -222,7 +220,7 @@ const SearchArea = (props: any) => {
                     setSearchValue((e.target as HTMLInputElement).value)
                   })
                   addSearchHistory?.((e.target as HTMLInputElement).value)
-                    ; ((e.target ?? {}) as any)?.blur?.()
+                  ;((e.target ?? {}) as any)?.blur?.()
                   reloadRef?.current?.()
                 }
               }}

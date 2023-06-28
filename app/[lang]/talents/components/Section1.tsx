@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Title from "./Title";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import Image from 'next/image';
-import {languageContext} from "../../components/providers/languageProvider";
+import {languageContext} from "../../../components/providers/languageProvider";
 
 // const dialog = [
 // 	{

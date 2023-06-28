@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Multiple from 'app/[lang]/components/commons/select/multiple'
+import Multiple from 'app/components/commons/select/multiple'
 // import LocationField1 from 'app/[lang]/components/mobile/location1'
 import styles from '../Companies.module.scss'
-import theme from 'app/[lang]/components/commons/theme'
+import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
-import { Button } from 'app/[lang]/components/MUIs'
+import { Button } from 'app/components/MUIs'
 
 interface IProps {
   config: any;

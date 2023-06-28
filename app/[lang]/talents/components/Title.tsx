@@ -5,7 +5,7 @@ import {useEffect, useLayoutEffect, useState, useMemo, useContext} from "react";
 import {useInView, InView} from "react-intersection-observer";
 import Link from 'next/link';
 import classNames from 'classnames';
-import {languageContext} from "../../components/providers/languageProvider";
+import {languageContext} from "../../../components/providers/languageProvider";
 
 const androidUrl = 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp '
 const iOSUrl = 'https://apps.apple.com/sg/app/bossjob/id1592073585'

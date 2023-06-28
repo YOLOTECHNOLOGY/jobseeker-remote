@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 
-import AdSlot from 'app/[lang]/components/AdSlot'
+import AdSlot from 'app/components/AdSlot'
 import Company, { propsType } from './Company/Company'
 import SignUp from './SignUp/SignUp'
 import SimilarJobs from './SimilarJobs/SimilarJobs'

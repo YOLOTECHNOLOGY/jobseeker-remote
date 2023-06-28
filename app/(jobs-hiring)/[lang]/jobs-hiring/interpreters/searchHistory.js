@@ -1,6 +1,6 @@
 
-import { registInterpreter, Result } from 'app/[lang]/abstractModels/util'
-import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
+import { registInterpreter, Result } from 'app/models/abstractModels/util'
+import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
 import { getCountryId } from 'helpers/country';
 
 export default registInterpreter(command =>

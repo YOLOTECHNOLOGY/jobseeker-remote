@@ -14,7 +14,8 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import Link from 'next/link'
-import { CircularProgress } from 'app/[lang]/components/MUIs'
+import { CircularProgress } from 'app/components/MUIs'
+
 interface IProps {
   lang: any,
   isModal?:boolean,
@@ -25,13 +26,14 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
+ 
   const {
-    lang: { newGetStarted },
+    lang: { newGetStarted ,errorcode},
     isModal=false,
     handlePhoneClick,
     setLoginData,
   } = props
-
+  console.log(props.lang)
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
   const [loading,setLoading] = useState<boolean>(false)
@@ -72,10 +74,18 @@ const loginForEmail = (props: IProps) => {
        
       })
       .catch((error) => {
+       
+        const code = error?.response?.data.code
+        let  transErr = errorcode[code]
+        if(code === 40006){
+          transErr = formatTemplateString(transErr,{
+            retry_after:error?.response?.data?.errors?.retry_after
+          })
+        }
         dispatch(
           displayNotification({
             open: true,
-            message: error.message ?? newGetStarted.optError,
+            message: transErr ?? newGetStarted.optError,
             severity: 'error'
           })
         )

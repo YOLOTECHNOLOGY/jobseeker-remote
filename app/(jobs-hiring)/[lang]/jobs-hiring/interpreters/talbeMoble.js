@@ -1,6 +1,6 @@
 
-import { registInterpreter, Result } from 'app/[lang]/abstractModels/util'
-import { ReaderTPromise as M } from 'app/[lang]/abstractModels/monads'
+import { registInterpreter, Result } from 'app/models/abstractModels/util'
+import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
 import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
 import { check } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 import { buildParams } from './encoder'
