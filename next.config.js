@@ -16,6 +16,10 @@ module.exports = withBundleAnalyzer({
           source: '/((?!maintenance).*)',
           destination: '/maintenance',
           permanent: false
+        },
+        {
+          source: '/:lang/company/:keyword/jobs',
+          destination: '/:lang/company/:keyword'
         }
       ]
     }

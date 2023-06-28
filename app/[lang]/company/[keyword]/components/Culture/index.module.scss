@@ -8,6 +8,18 @@
   background: #FFFFFF;
   border: 1px solid #E5E6EB;
   border-radius: 8px;
+
+  .social_item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+  &.social_item:first-of-type{
+    background: #fff000;
+  }
 }
 
 .culture_title {
@@ -48,6 +60,7 @@
   margin-bottom: 16px;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 100%;
 }
 
 .item{
@@ -70,4 +83,10 @@
     color: #FF7D00;
     background-color: #FFF9F4;
   }
+}
+
+
+.link_text{
+  margin-left: 20px;
+  color: #4E5969;
 }
