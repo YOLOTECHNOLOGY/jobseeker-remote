@@ -8,11 +8,11 @@ import Section from "./components/Section";
 import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
 import {useCompanyDetail} from "./DataProvider";
-import { LocationContext } from 'app/[lang]/components/providers/locationProvier';
 import { fetchConfigService } from 'store/services/config/fetchConfig';
 import { Country } from './service';
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
+import {fetchJobsFunction} from "../../../../store/services/jobs/fetchJobFunction";
 
 
 function a11yProps(index: number) {
@@ -47,19 +47,26 @@ function TabPanel(props: TabPanelProps) {
 const Page = () => {
 	const [value, setValue] = React.useState(0);
 	const [list, setList] = React.useState<Country[]>([]);
+	const [functions, setFunctions] = React.useState();
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 	const {detail, jobsRes, lang, hr, hotJobs} = useCompanyDetail();
 	
 	const tab_title = ['Company information', `Jobs(${jobsRes.total_num})`];
-	const {location} = React.useContext(LocationContext);
-	
+
 
 	React.useEffect(()=>{
 		(async ()=>{
 			const res = await fetchConfigService(lang);
 			setList(res.location_lists);
+		})();
+	},[]);
+
+	React.useEffect(()=>{
+		(async ()=>{
+			const res = await fetchJobsFunction(detail.id);
+			setFunctions(res.data.data);
 		})();
 	},[]);
 	
@@ -138,7 +145,7 @@ const Page = () => {
 						</div>
 					</Section>: 0}	
 					<div className={style.company_info_wrapper}>
-						<CompanyInfo {...detail} jobs={jobsRes.jobs}/>
+						<CompanyInfo {...detail} jobs={jobsRes.jobs} />
 						{/* <div className={style.more_job}>
 							More {jobsRes.total_num} Jobs
 						</div> */}
@@ -157,7 +164,7 @@ const Page = () => {
 				</div>
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<SearchPanel list={list}/>
+				<SearchPanel list={list} functions={functions}/>
 			</TabPanel>
 		</div>
 		<div className={style.footer}>

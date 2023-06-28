@@ -13,7 +13,7 @@ import { set } from 'date-fns';
 
 interface Props  {
     list: Country[]
-
+    functions: any[]
 }
 
 

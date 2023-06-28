@@ -16,6 +16,8 @@ import addExternalJobClickService from './addExternalJobClick'
 import updateUserVisibilityToWork from './updateUserVisibilityToWork'
 import fetchHotJobsListService from './fetchHotJobs'
 
+import fetchJobsFunction from './fetchJobFunction'
+
 export default {
   fetchJobsList,
   fetchJobDetail,
@@ -35,5 +37,6 @@ export default {
   addExternalJobClickService,
 
   updateUserVisibilityToWork,
-  fetchHotJobsListService
+  fetchHotJobsListService,
+  fetchJobsFunction
 }
