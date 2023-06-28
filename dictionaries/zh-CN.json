@@ -92,7 +92,11 @@
     "howToScanQRCode": "如何扫描二维码",
     "ImJobSeeker": "我是求职者",
     "ImRecruiter": "我是招聘人员",
-    "menuLoginToVersion": "菜单 > 登录网页版"
+    "menuLoginToVersion": "菜单 > 登录网页版",
+    "scannedSuccessfully": "扫描成功",
+    "pleaseConfirmLoginOnAPP": "请在APP上确认登录",
+    "pleaseRefreshQrCode": "请刷新二维码",
+    "clickToRefresh": "点击刷新"
   },
   "myJobs": {
     "communicated": "已沟通",

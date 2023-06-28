@@ -92,8 +92,11 @@
     "howToScanQRCode":"How to scan QR code",
     "ImJobSeeker":"I'm a Job Seeker",
     "ImRecruiter":"I'm a Recruiter",
-    "menuLoginToVersion":"Menu > Login to web version"
-
+    "menuLoginToVersion":"Menu > Login to web version",
+    "scannedSuccessfully":"Scanned successfully",
+    "pleaseConfirmLoginOnAPP":"Please confirm login on APP",
+    "pleaseRefreshQrCode":"Please refresh the QR code",
+    "clickToRefresh":"Click to refresh"
   },
   "myJobs": {
     "communicated": "Communicated",
