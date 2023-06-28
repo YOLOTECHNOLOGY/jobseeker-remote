@@ -30,58 +30,67 @@ import OfferModal from './offer'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import AutoSendResumeModal from './autoSendResume'
+import { DefaultAvatar } from 'images'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
 const msgToNote = (message, state) => {
+    const avatar = state?.recruiter?.avatar ? state?.recruiter?.avatar : DefaultAvatar
     if (message.type === 1) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: message?.content?.text,
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 2) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: '[Picture]',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 19 && message.amid.indexOf('resume_request-recruiter_create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has requested your resume',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 19 && message.amid.indexOf('contact_exchange_request-create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has requested to exchange mobile number with you',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 19 && message.amid.indexOf('interview-create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has sent you an interview invite',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 19 && message.amid.indexOf('location_confirmation-create') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has shared the working location with you',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     } else if (message.type === 19 && message.amid.indexOf('interview-update_result') >= 0) {
         return {
             id: message.amid,
             title: state?.recruiter?.full_name ?? 'New Message',
             content: 'Boss has sent you the interview result',
-            link: `/chat/${message?.aChatId}`
+            link: `/chat/${message?.aChatId}`,
+            avatar
         }
     }
 }
