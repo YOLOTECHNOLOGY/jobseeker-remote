@@ -51,7 +51,7 @@
     font-size: 24px;
     text-align: center;
     position: relative;
-    padding-top: 14px;
+    padding-top: 30px;
    }
    .qrCode{
     margin: 0 auto;
@@ -732,6 +732,9 @@
       &:last-child{
         margin-bottom: 0
       }
+     }
+     .codeTitle{
+      padding-top: 6px
      }
   }
 }
