@@ -1181,12 +1181,12 @@
     "jobSearch": {
       "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
       "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
-      "queryTitle": "{{searchQuery}} Jobs in {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryLocationTitle": "{{searchQuery}} Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
-      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Talk to hiring manager directly on Bossjob.",
-      "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
-      "locationTitle": "Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
-      "locationDescription": "New Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
+      "queryTitle": "{{searchQuery}} Jobs Hiring in {{country}}, {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{searchQuery}} Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
+      "queryDescription": "Find new {{searchQuery}} job openings in {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
+      "queryLocationDescription": "Find new {{searchQuery}} job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
+      "locationTitle": "Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
+      "locationDescription": "Find new job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!"
     },
     "job": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
