@@ -68,7 +68,7 @@ const JobsCard = ({
   }, [])
 
   // translate Data
-  const translatedData= translateData(data, config)
+  const translatedData = (data) => translateData(data, config)
 
   const transTime = (time: string) => {
     return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
@@ -221,11 +221,11 @@ const JobsCard = ({
     })
   }
 
-
+ console.log({tabValue})
   return (
     <>
       {
-        tabValue === 'interview' ? interviewCard(translatedData) : card(translatedData)
+        tabValue === 'interview' ? interviewCard(data) : card(translatedData(data))
       }
       <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? lang?.noMore : ''}</p>
 
