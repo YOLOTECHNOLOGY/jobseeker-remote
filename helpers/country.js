@@ -31,7 +31,7 @@ export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
   path = path?.split?.('//')[1]?.split?.('/')?.[1] // https://dev.bossjob.sg/en-US/...
-  if (path.length > 6) {
+  if (path?.length > 6) {
     path = ''
   }
   return path || getCookie('geoConfiguration')?.split('_')?.[1] || 'en-US'
