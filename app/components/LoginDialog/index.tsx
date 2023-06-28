@@ -40,7 +40,7 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
         localStorage.removeItem('isChatRedirect')
         handleClose();
       }} open={open} title={title} avatar={loginData?.avatar}>
-        <div className={styles.main} style={{ margin: 0, minHeight: '200px', padding: 0 }}>
+        <div className={styles.main} style={{ margin: 0, minHeight: '200px', padding: 0, overflow:'unset'}}>
           <div  className={`${styles.container} ${styles.dialogContainer}`}>
             {step == 1 && (
               <Main

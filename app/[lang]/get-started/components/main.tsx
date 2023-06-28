@@ -41,16 +41,20 @@ const Main = (props: IProps) => {
 
 
   return (<>
-      <div className={styles.code}>
+      <div className={`${styles.code} ${!isModal ? styles.codePage: ''}`}>
       <div className={styles.codePopver}>
           {
             qrCode ? loginUsingSocialMediaOTP : loginUsingQRCode
           }    
           </div> 
-          <Image src={GoogleLogo} alt="" className={styles.codeImg}  width={30} height={30} onClick={()=>setQrCode(!qrCode)}></Image>        
+          <div className={styles.codeImg} onClick={()=>setQrCode(!qrCode)}>
+             <span className={`${qrCode ?  'icon-windows' : 'icon-appqr'}`}></span>
+          </div>
+        
       </div>
-      { qrCode ?  <QrCodeComponent lang={dictionary}/>
+       { qrCode ?  <QrCodeComponent lang={dictionary}/>
        : <>
+        <h2>{newGetStarted.title}</h2>
       <div className={styles.list}>    
         <GoogleLogin lang={dictionary} />
         <FacebookLogin lang={dictionary} />

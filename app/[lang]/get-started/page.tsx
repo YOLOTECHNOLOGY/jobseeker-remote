@@ -13,7 +13,6 @@ const configs = getConfigs([['location_lists']])
 const Page = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
-
   const { newGetStarted } = dictionary
 
   return (
@@ -21,7 +20,6 @@ const Page = async (props: any) => {
       <div className={styles.main}>
         <div className={styles.bg}></div>
         <div className={styles.container}>
-          <h2>{newGetStarted.title}</h2>
           <Main dictionary={dictionary} />
         </div>
         <p className={styles.tips}>

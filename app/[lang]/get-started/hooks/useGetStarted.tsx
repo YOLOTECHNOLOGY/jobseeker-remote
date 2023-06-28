@@ -202,7 +202,7 @@ const useGetStarted = () => {
       if (pathname.indexOf('/get-started') > -1) {
         routes.push('/')
       } else {
-        window.location.reload();
+       window.location.reload();
       }
 
     }
@@ -295,7 +295,9 @@ const useGetStarted = () => {
     handleAuthenticationSocialLogin,
     emailTOPError,
     userInfo,
-    error
+    error,
+    setCookiesWithLoginData,
+    sendEventWithLoginData
   }
 }
 

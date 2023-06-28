@@ -5,7 +5,9 @@ import { getQrcode , qrcodePolling } from 'store/services/auth/newLogin'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import styles from '../index.module.scss'
 import Image from 'next/image'
-import { setCookie } from 'helpers/cookies'
+import useGetStarted from '../hooks/useGetStarted'
+import { scanHunt } from 'images'
+
 function guid() {
   return 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0
@@ -24,10 +26,14 @@ const qrCode = ({ lang }: any) => {
   const [qrCodeImg, setQrCodeImg] = useState<any>({})
   const [scanInfo, setScanInfo] = useState<any>({})
   const [overtime, setOvertime] = useState<boolean>(false)
-  const [token, setToken] = useState<any>(null)
+  const [userInfo, setUserInfo] = useState<any>(null)
   const uuidRef = useRef(null)
   const timeRef = useRef(moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss'))
-
+  const {
+    setCookiesWithLoginData,
+    sendEventWithLoginData,
+    defaultLoginCallBack
+  } = useGetStarted()
   const {
     scanQRCodeOnAppToLogin,
     donHaveApp,
@@ -41,35 +47,30 @@ const qrCode = ({ lang }: any) => {
 
   useEffect(() => {
     getQrCodeFun()
-    judgeTime();
     return ()=> clearInterval(timer)
   }, [])
 
 
   useEffect(()=>{
-   if(token?.status){
-     console.log(token)
-     console.log({})
-     const {refresh_token,access_token,token_expired_at} = token
-    setCookie('refreshToken', refresh_token)
-    setCookie('accessToken', access_token, token_expired_at)
+   if(userInfo?.status){
+    setCookiesWithLoginData(userInfo)
+    sendEventWithLoginData(userInfo)
+    defaultLoginCallBack(userInfo)
    }
-  },[token])
+  },[userInfo])
 
 
 const judgeTime = () => {
     if(timer) clearInterval(timer)
     timer = setInterval(()=>{
-        qrcodePollingFun();
+      //  qrcodePollingFun();
         if(new Date().getTime() > new Date(timeRef.current).getTime()){
             clearInterval(timer)
             setOvertime(true)
         }
      },1500)
-
 }
 
- 
 
   const getQrCodeFun = () => {
     const uuid =   guid()
@@ -79,7 +80,7 @@ const judgeTime = () => {
       expiration_time:timeRef.current
     }).then((res) => {
       setQrCodeImg(res.data.data)
-      qrcodePollingFun()
+      judgeTime();
     })
   }
 
@@ -93,9 +94,15 @@ const judgeTime = () => {
             setScanInfo(res.data?.data)
         }else if(status == 4){
            clearInterval(timer)
-           setToken(res.data?.data)
+           setUserInfo(res.data?.data)
         }
     })
+  }
+
+  const refreshCode = () => {
+    timeRef.current = moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss')
+    getQrCodeFun();
+    setOvertime(false)
   }
 
   return (
@@ -114,6 +121,13 @@ const judgeTime = () => {
          <p className={styles.loginOn}>Please confirm login on APP</p> 
         </> : <>
       <h3 className={styles.codeTitle}> {scanQRCodeOnAppToLogin}</h3>
+      <Image
+            src={scanHunt}
+            alt=''
+            width='160'
+            className={styles.qrAvator}
+            height='160'
+          />
       <div className={styles.qrCode}>
         {qrCodeImg?.qrcode_base_code && (
           <Image
@@ -127,7 +141,7 @@ const judgeTime = () => {
         {
         overtime &&  <div className={styles.overTime}>
             <p>请重新刷新二维码</p>
-            <button>点击刷新</button>
+            <button onClick={()=>refreshCode()}>点击刷新</button>
         </div>
         }
        

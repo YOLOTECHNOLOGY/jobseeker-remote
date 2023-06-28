@@ -7,7 +7,7 @@
   min-height: calc(100vh - 55px);
   position: relative;
   z-index: 1;
-
+  overflow: hidden;
   .bg {
     // position: absolute;
     // width: 1620px;
@@ -34,9 +34,16 @@
    justify-content: flex-end;
    position: relative;  
    bottom: 10px;
-   margin-bottom: 10px;
+   margin-bottom: 16px;
    .codeImg{
     cursor: pointer;
+    span{
+      color: #B3B3B3;
+      font-size: 28px;
+      &:hover{
+        color: #166AD4;
+      }
+    }
    }
    
   }
@@ -45,6 +52,7 @@
     font-size: 24px;
     text-align: center;
     position: relative;
+    padding-top: 14px;
    }
    .qrCode{
     margin: 0 auto;
@@ -56,7 +64,9 @@
       position: absolute;
       height: 100%;
       width: 100%;
-      background: rgba(237, 237, 237, .6);
+      background: rgba(237, 237, 237, .8);
+      left: 0;
+      top: 0;
       p{
         font-size: 14px;
         font-weight: 400;
@@ -95,8 +105,9 @@
     color: rgba(78, 89, 105, 1);
     border-radius: 8px;
     padding: 5px 10px;
-    margin-right: 16px;
+    margin-right: 12px;
     position: relative;
+    top: 4px;
     &::after{
       content: ' ';
       border-width:8px 0 8px 8px;
@@ -235,6 +246,12 @@
     line-height: 23px;
     color: rgba(18, 18, 18, 1);
    }
+   .codePage{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    bottom: unset;
+   }
   .container {
     width: 575px;
     background: #ffffff;
@@ -242,7 +259,7 @@
     margin: 0 auto;
     padding: 40px 36px;
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.1);
-
+    position: relative;
     h2 {
       font-weight: 700;
       font-size: 32px;
@@ -251,7 +268,7 @@
       text-align: center;
       padding-bottom: 8px;
       line-height: 40px;
-      margin-bottom: 28px;
+      margin: 20px 0 28px 0;
       span{
         color: rgba(35, 120, 229, 1);
       }
@@ -677,6 +694,9 @@
     box-shadow: none;
      width: 561px; 
      padding: 28px 20px 38px 20px;
+     >h2{
+      display: none;
+     }
      .login_item{
       margin-top: 0;
       margin-bottom: 16px;

@@ -177,3 +177,6 @@ export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
 
 export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
 export const RightArrowIcon = `${S3BucketJobseeker}/right_arrow_icon.svg`
+
+export const scanHunt = `${S3BucketJobseeker}/scanHunt.png`
+export const scanJob = `${S3BucketJobseeker}/scanJob.png`
