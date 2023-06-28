@@ -6,7 +6,7 @@ import { CompanyDetailsType } from '../../service';
 
 
 interface Props extends PropsWithChildren<CompanyDetailsType> {
-	
+	test?: number;
 }
 
 const CulturePanel = (props: Props) => {
