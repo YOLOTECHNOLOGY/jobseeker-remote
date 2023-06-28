@@ -49,9 +49,9 @@ export default async function CompanyLayout(props: {
 	const id = getIDFromKeyword(props.params.keyword);
 	try{
 		const [jobs, detail, hr, hotJobs] = await Promise.all([
-			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token.value), 
+			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token?.value), 
 			fetchCompanyDetailReq(id), 
-			fetchCompanyHR(id, token.value),
+			fetchCompanyHR(id, token?.value),
 			fetchHotJobsListService({company_id: id})
 		]);
 			// const configkey =cookieStore.get(configKey);
