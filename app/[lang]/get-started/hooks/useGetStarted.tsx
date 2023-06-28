@@ -1,9 +1,9 @@
-import { useEffect, useState,useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authenticationSendEmailMagicLink } from 'store/services/auth/authenticationSendEmailMagicLink'
-import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
+// import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { getCountryId, getLanguageId } from 'helpers/country'
+// import { getCountryId, getLanguageId } from 'helpers/country'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
@@ -25,7 +25,7 @@ const useGetStarted = () => {
   const [userId, setUserId] = useState(null)
   const [emailOTPInputDisabled, setEmailOTPInputDisabled] = useState(false)
   const [defaultRedirectPage, setDefaultRedirectPage] = useState<string>(null)
-  const redirectPage  = sessionStorage.getItem('redirectPage')
+  const redirectPage = sessionStorage.getItem('redirectPage')
   const langKey = getLang()
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const [error, setError] = useState<any>(null)
@@ -33,7 +33,7 @@ const useGetStarted = () => {
   const redirect = searchParams.get('redirect')
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const smsCountryList = getSmsCountryList(config)
-  const { getStatred  } = useContext(languageContext) as any
+  const { getStatred } = useContext(languageContext) as any
   useEffect(() => {
     if (Array.isArray(redirect)) {
       setDefaultRedirectPage(redirect[0])
@@ -86,7 +86,7 @@ const useGetStarted = () => {
       source: 'web',
       userId,
       browser_serial_number: uuid,
-      mobile_country_id: smsCountryList.filter((country) =>phone_num.includes(country.value))?.[0]?.id
+      mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]?.id
     }
     // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)
@@ -162,20 +162,20 @@ const useGetStarted = () => {
     })
   }
 
-  const removeServiceCache = async () => {
-    const token = getCookie('accessToken')
-    const countryId = getCountryId()
-    const languageId = getLanguageId()
+  // const removeServiceCache = async () => {
+  //   const token = getCookie('accessToken')
+  //   const countryId = getCountryId()
+  //   const languageId = getLanguageId()
 
-    if (token) {
-      await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
-        .then((response) => console.log(response))
-        .catch(({ response, request }) => console.log(response, request))
-    }
-  }
+  //   if (token) {
+  //     await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
+  //       .then((response) => console.log(response))
+  //       .catch(({ response, request }) => console.log(response, request))
+  //   }
+  // }
 
   const defaultLoginCallBack = async (data: any, isPhone = false) => {
-    await removeServiceCache()
+    // await removeServiceCache()
     const isChatRedirect = localStorage.getItem('isChatRedirect')
     const newData = data || getCookie('user')
     if (newData.is_profile_update_required || !newData.is_profile_completed) {
@@ -188,16 +188,17 @@ const useGetStarted = () => {
       routes.push(`/${langKey}/jobseeker-complete-profile`)
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
-      routes.push(isChatRedirect)
+      location.href = isChatRedirect
+      // routes.push(isChatRedirect)
     } else if (defaultRedirectPage) {
       routes.push(defaultRedirectPage)
     } else if (redirectPage) {
       sessionStorage.removeItem('redirectPage')
-      const url = window?.location?.pathname 
-      if(url === redirectPage ){
-        return  window.location.reload();
+      const url = window?.location?.pathname
+      if (url === redirectPage) {
+        return window.location.reload();
       }
-      routes.push(redirectPage)     
+      routes.push(redirectPage)
     } else {
       if (pathname.indexOf('/get-started') > -1) {
         routes.push('/')
@@ -213,7 +214,7 @@ const useGetStarted = () => {
     setEmailTOPError(true)
     setEmailOTPInputDisabled(false)
   }
-  
+
   const handleAuthenticationSocialLogin = async (params) => {
     return jobSeekersSocialLogin(params).then(result => {
       if (result.status >= 200 && result.status < 300) {
@@ -262,7 +263,7 @@ const useGetStarted = () => {
         dispatch(
           displayNotification({
             open: true,
-            message:  formatTemplateString(getStatred?.magicLink?.haveSendEmail, email),
+            message: formatTemplateString(getStatred?.magicLink?.haveSendEmail, email),
             severity: 'success'
           })
         )

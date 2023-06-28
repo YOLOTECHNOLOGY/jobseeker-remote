@@ -1,12 +1,9 @@
 import React from 'react'
-import { useSearchParams } from 'next/navigation'
-import Image from 'next/image'
-
-import useGetStarted from '../../hooks/useGetStarted'
-import { removeItem } from 'helpers/localStorage'
-
 import { FacebookIcon } from 'images'
 import styles from '../../index.module.scss'
+import { removeItem } from 'helpers/localStorage'
+import { useSearchParams } from 'next/navigation'
+import useGetStarted from '../../hooks/useGetStarted'
 
 interface IFacebook {
   className?: string
@@ -24,7 +21,7 @@ const FacebookLogin = (props: IFacebook) => {
     lang: { newGetStarted }
   } = props
   const searchParams = useSearchParams()
-  const { defaultLoginCallBack,handleAuthenticationSocialLogin } = useGetStarted()
+  const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const query = {}
   for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
@@ -55,7 +52,6 @@ const FacebookLogin = (props: IFacebook) => {
     })
   }
 
-  // handle login facebook service
   const handleAuthClick = () => {
     let accessToken
     if (typeof window?.FB == 'undefined') {
@@ -82,6 +78,7 @@ const FacebookLogin = (props: IFacebook) => {
             }
 
             callBackMethod(payload)
+            // eslint-disable-next-line no-console
           })
         } else {
           // User cancelled login or did not fully authorize
@@ -95,7 +92,7 @@ const FacebookLogin = (props: IFacebook) => {
 
   return (
     <div className={styles.login_item} onClick={handleAuthClick}>
-      <Image width={24} height={24} alt='Sign in with facebook' src={FacebookIcon} />
+      <img src={FacebookIcon}></img>
       <span>{newGetStarted.links.facebook}</span>
     </div>
   )

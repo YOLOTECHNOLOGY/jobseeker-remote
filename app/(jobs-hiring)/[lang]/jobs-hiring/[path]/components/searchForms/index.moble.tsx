@@ -27,7 +27,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { cloneDeep } from 'lodash-es'
 import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
-
+import { HistoryIcons } from 'images'
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search, myJobs } = useContext(languageContext) as any
@@ -42,7 +42,6 @@ const SearchArea = (props: any) => {
   }, [])
 
   const page = searchValues.page ?? '1'
-
 
   const locations = flatMap(config.location_lists, (item) => item.locations)
   const [location, setLocation] = useState(
@@ -205,7 +204,7 @@ const SearchArea = (props: any) => {
                   </li>
                 ) : (
                   <li {...props} style={styleleSelect}>
-                    <SearchIcon />
+                    <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
                     <span style={{ paddingLeft: '10px' }}>{value || option}</span>
                   </li>
                 )
@@ -221,7 +220,7 @@ const SearchArea = (props: any) => {
                     setSearchValue((e.target as HTMLInputElement).value)
                   })
                   addSearchHistory?.((e.target as HTMLInputElement).value)
-                    ; ((e.target ?? {}) as any)?.blur?.()
+                  ;((e.target ?? {}) as any)?.blur?.()
                   reloadRef?.current?.()
                 }
               }}

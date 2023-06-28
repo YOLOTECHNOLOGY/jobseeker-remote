@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import classNames from 'classnames'
-import Image from 'next/image'
-
 import useGetStarted from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
-
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
 
@@ -37,7 +34,6 @@ const GoogleLogin = (props: IGoogle) => {
     setInit(typeof window?.gapi != 'undefined')
   }, [window?.gapi])
 
-  // load google script libs
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')
@@ -71,7 +67,17 @@ const GoogleLogin = (props: IGoogle) => {
     }
   }, [])
 
-  // handle login for service
+  const handleAuthClick = () => {
+    if (!googleAuth) {
+      console.error(new Error('Error loading google auth script'))
+      return
+    }
+    googleAuth?.signIn().then(() => {
+      handleSigninStatus()
+    })
+  }
+    
+
   const callBackMethod = (payload) => {
     const data = {
       ...payload,
@@ -96,18 +102,6 @@ const GoogleLogin = (props: IGoogle) => {
     })
   }
 
-  // login google cb
-  const handleAuthClick = () => {
-    if (!googleAuth) {
-      console.error(new Error('Error loading google auth script'))
-      return
-    }
-    googleAuth?.signIn().then(() => {
-      handleSigninStatus()
-    })
-  }
-
-  // handle login google service
   const handleSigninStatus = async () => {
     const user = googleAuth.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
@@ -146,7 +140,7 @@ const GoogleLogin = (props: IGoogle) => {
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuthClick}
     >
-      <Image width={24} height={24} alt='Sign in with google' src={GoogleLogo} />
+      <img src={GoogleLogo} />
       <span>{newGetStarted.links.google}</span>
     </div>
   )

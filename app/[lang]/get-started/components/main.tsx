@@ -10,8 +10,7 @@ import GoogleLogin from './link/google'
 import { useDispatch } from 'react-redux'
 import { jobbseekersLoginSuccess } from 'store/actions/auth/jobseekersLogin'
 import {jobbseekersSocialLoginSuccess} from 'store/actions/auth/jobseekersSocialLogin'
-import Image from 'next/image'
-import { GoogleLogo } from 'images'
+
 import QrCodeComponent from './QrCode'
 
 interface IProps {

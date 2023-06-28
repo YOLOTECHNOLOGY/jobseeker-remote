@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import * as jose from 'jose'
 import classNames from 'classnames'
-import Image from 'next/image'
-
 import useGetStarted from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
-
 import { AppleIcon } from 'images'
 import styles from '../../index.module.scss'
 
@@ -35,7 +32,6 @@ const AppleLogin = (props: IApple) => {
     setInit(typeof window?.AppleID != 'undefined')
   }, [window?.AppleID])
 
-  // apple config
   const appleConfig = {
     clientId: 'com.bossjob.web',
     scope: 'name email',
@@ -43,7 +39,6 @@ const AppleLogin = (props: IApple) => {
     usePopup: true
   }
 
-  // load apple script libs
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const script = document.createElement('script')
@@ -87,7 +82,6 @@ const AppleLogin = (props: IApple) => {
     }
   }
 
-  // handle login for service
   const callBackMethod = (payload) => {
     try {
       const decodeJwt = jose.decodeJwt(payload?.authorization?.id_token)
@@ -115,11 +109,13 @@ const AppleLogin = (props: IApple) => {
   }
 
   return (
+    // <div className={styles.login_item}>
     <div
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuth}
     >
-      <Image width={24} height={24} alt='Sign in with apple ID' src={AppleIcon} />
+      <img src={AppleIcon}></img>
+      {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
       <span data-type='sign in' aria-label='Sign in with apple ID'>
         {newGetStarted.links.apple}
       </span>

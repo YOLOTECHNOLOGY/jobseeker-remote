@@ -42,11 +42,11 @@ async function generateSEO(props: any) {
   const { config } = await configs(serverDataScript()).run(props)
   const searchValues = decoder(config)(params.path, searchParams)
 
-  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle,{
+  let seoMetaTitle = formatTemplateString(jobSearch.defaultTitle, {
     country: dictionary.seo[getCountryKey()],
     month, year
   })
-  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription,  {
+  let seoMetaDescription = formatTemplateString(jobSearch.defaultDescription, {
     country: dictionary.seo[getCountryKey()]
   })
   const flatLocations = flatMap(config.location_lists, item => item.locations)
@@ -54,8 +54,6 @@ async function generateSEO(props: any) {
   const location = flatLocations.find(item => item.seo_value === searchValues.location?.[0])?.value
   const url = new URLSearchParams(toPairs(searchParams)).toString()
   const seoCanonical = '/jobs-hiring/' + params.path + '?' + url
-  console.log('searchQuery', searchQuery);
-  console.log('flatLocations',flatLocations);
   if (searchQuery && !location) {
     seoMetaTitle = formatTemplateString(jobSearch.queryTitle, {
       searchQuery,
@@ -70,7 +68,7 @@ async function generateSEO(props: any) {
     seoMetaTitle = formatTemplateString(jobSearch.queryLocationTitle, {
       searchQuery,
       country: dictionary.seo[getCountryKey()],
-      month, year
+      month, year, location
     })
     seoMetaDescription = formatTemplateString(jobSearch.queryLocationDescription, {
       searchQuery,

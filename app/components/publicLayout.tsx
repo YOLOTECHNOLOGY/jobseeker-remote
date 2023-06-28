@@ -11,13 +11,15 @@ import 'app/globals.scss'
 import 'app/index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import LinkProvider from './providers/linkProvider'
+import { getServerLang } from 'helpers/country.server'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo }: any = props
   const { title, imageUrl, description, canonical } = seo
-  const { lang } = props.params
+  let { lang } = props.params
+  lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
   return (
     <html lang={lang}>
@@ -49,7 +51,7 @@ export default async function PublicLayout(props: any) {
         {/* Schema.org markup for Google+ */}
         <meta itemProp='name' content={title} />
         <meta itemProp='image' content={imageUrl} />
-        {/* <link rel='canonical' href={canonicalPath} /> */}
+        <link rel='canonical' href={canonical} />
 
         {/* Twitter Card */}
         <meta name='twitter:card' content='summary_large_image' />

@@ -5,7 +5,7 @@
     "40003": "Authentication credentials were not provided",
     "40004": "Resource not found",
     "40005": "You do not have permission to perform this action",
-    "40006": "There has been too many attempts. Please try again in {{retry_after}} seconds",
+    "40006": "There has been too many attempts. Please try again in 60 seconds",
     "41001": "The email has already been taken",
     "41002": "The client id has already been taken",
     "41003": "The secret key has already been taken",
