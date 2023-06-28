@@ -11,6 +11,7 @@ const Page = async (props: any) => {
   const { params, config } = props
   const { data, jobId } = await handleFetchJobDetail(params)
   const dictionary = (await getDictionary(params.lang)) as any
+  //
   const jobDetail = data
 
   return (
