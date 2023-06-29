@@ -1,33 +1,32 @@
 import * as React from 'react';
 import style from './index.module.scss';
+import { Recruiter } from "../../service";
 
 
-const ChatPanel = () => {
+const ChatPanel =  (props: {
+	list: Recruiter[]
+}) => {
 	return <div className={style.wrapper}>
 		<div className={style.title}>
 			Hi Boss
 		</div>
 		<div className={style.chatList}>
-			<ChatItem></ChatItem>
-			<ChatItem></ChatItem>
-			<ChatItem></ChatItem>
-			<ChatItem></ChatItem>
-			<ChatItem></ChatItem>
+			{props.list.map((item, index)=>{
+				return <ChatItem key={index} {...item}/>
+			})}
 		</div>
 	</div>
 }
 
-const ChatItem = () => {
+const ChatItem = (props: Recruiter) => {
 	return <div className={style.chatItem}>
-		<div className={style.chatHeader}>
-
-		</div>
+		<img className={style.chatHeader} src={props.avatar} alt="avatar"/>
 		<div className={style.chatContent}>
 			<div className={style.chatTitle}>
-				test1
+				{props.full_name}
 			</div>
 			<div className={style.chatSubtitle}>
-				test2
+				{props.job_title}
 			</div>
 		</div>
 	</div>
