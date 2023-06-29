@@ -135,7 +135,7 @@ const CompanyInfo = (_props: Props) => {
 		{info.map((item, index) => {
 			const noSplit = index === 0;
 
-			if (item.id === 'Introduction' && props.description_html) {
+			if (item.id === 'Introduction' && props.description) {
 				return <Section key={index} title={item.title} split={!noSplit}>
 					<div className={style.introduction} dangerouslySetInnerHTML={{
 						__html: filterScriptContent(props.description)
@@ -151,9 +151,13 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Company Album' && props.pictures?.length > 0) {
 				return <Section key={index} title={item.title} split={!noSplit}>
 					<div className={style.album_wrapper}>
-						{props.pictures.sort((a, b) => a.sort_order - b.sort_order).map((item, index) => {
-							return <Image key={index} src={item.url} alt="alt" className={style.album_item}
-														width={226} height={150} />
+						{props.pictures
+							.sort((a, b) => a.sort_order - b.sort_order)
+							.padArrayToMultiple(3)
+							.map((item, index) => {
+								if(!item) return <div className={style.album_item} style={{width: 226, height: 150}}></div>
+								return <Image key={index} src={item.url} alt="alt" className={style.album_item}
+														width={226} height={150} 	style={{objectFit: "cover"}}/>
 						})}
 					</div>
 				</Section>

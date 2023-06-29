@@ -91,6 +91,7 @@
 .content_layout {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
   width: 1136px;
   margin: 0 auto;
@@ -256,6 +257,7 @@
 .pagination {
   display: flex;
   justify-content: center;
+  margin-bottom: 40px;
 }
 .filter_layout {
   width: 1136px;

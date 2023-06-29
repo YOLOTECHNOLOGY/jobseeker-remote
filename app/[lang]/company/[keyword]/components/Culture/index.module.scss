@@ -69,19 +69,21 @@
   justify-content: center;
   align-items: center;
   width: 158px;
-  height: 37px;
+  min-height: 37px;
   background: #f7f8fa;
   border-radius: 8px;
   margin-bottom: 12px;
   font-weight: 400;
   font-size: 14px;
   text-align: center;
+  word-break: break-word;
 }
 
 .culture {
   .item {
     color: #ff7d00;
     background-color: #fff9f4;
+    word-break: break-word;
   }
 }
 

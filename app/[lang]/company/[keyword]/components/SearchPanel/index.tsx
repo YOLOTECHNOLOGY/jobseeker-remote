@@ -220,6 +220,7 @@ const JobsSearchCard = (props: JobData) => {
 
 interface TagProps extends JobData {
     count?: number
+    classNames?: any
 }
 
 export const JobsTag = (props: TagProps) => {
@@ -228,11 +229,12 @@ export const JobsTag = (props: TagProps) => {
         {name:'', field: 'degree'},
         {name:'', field: 'job_type'},
     ]
+    console.log('JobsTag',props);
     return <div className={style.tags}>
         {tagsData.map(item=>{
             const value = props[item.field]
             if(!value) return null;
-            return <div className={style.tag_item} key={value}>
+            return <div className={style.tag_item + ' ' + ' tag_flag'} key={value}>
                 {value}
             </div>
         }).slice(0, props.count ?? 3)}
