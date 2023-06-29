@@ -433,7 +433,7 @@
       "company": {
         "title": "Company",
         "allJobHiring": "View {{jobs}} jobs hiring",
-        "employees": "Employees"
+        "employees": "employees"
       },
       "similarJob": {
         "title": "SimilarJobs",
