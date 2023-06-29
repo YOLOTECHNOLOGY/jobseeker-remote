@@ -17,7 +17,6 @@ const ExchangeModal = (props: any) => {
     const [countryCode, setCountryCode] = useState('+63')
     const [mobileNumber, setMobileNumber] = useState('')
     const [dic, setDic] = useState<any>({})
-    console.log({dic})
     useEffect(() => {
         getDictionary(lang)
             .then(dic => {
