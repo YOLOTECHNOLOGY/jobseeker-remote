@@ -217,7 +217,9 @@ const MainLeft = (props: any) => {
   const onChange = (e: string) => {
     // const children = tabList[R.findIndex(R.propEq('value', e))(tabList)]?.children
     setPage(1)
+    setData([])
     setTabValue(e)
+
     // setTabChildren(children)
     setTabValueChidren(tabChildren?.[0]?.value || '')
   }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
@@ -27,7 +27,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import styles from './index.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
-import { find} from 'lodash-es'
+import { find } from 'lodash-es'
 const VerifyPhoneNumber = ({
   label,
   setEdit,
@@ -52,7 +52,6 @@ const VerifyPhoneNumber = ({
   const firstRender = useFirstRender()
 
   const smsCountryList = getSmsCountryList(config)
-  console.log({smsCountryList})
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
 
@@ -69,6 +68,10 @@ const VerifyPhoneNumber = ({
   } else if (phoneDefault) {
     phoneDefault = phoneDefault.substring(smsCode.length, phoneDefault.length)
   }
+  const countryId = useMemo(() => {
+    return smsCountryList.find(item => item.value === smsCode)?.id
+  }, [smsCode, smsCountryList])
+
   const [isBtnDisabled, setBtnDisabled] = useState(verify)
   const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
 
@@ -154,13 +157,12 @@ const VerifyPhoneNumber = ({
     }
     setBtnDisabled(isShowCountDownSwitch)
   }, [isShowCountDownSwitch])
-
   const sendPhoneNumberOTPS = () => {
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    const mobile_country_id =  find(smsCountryList,{'value':smsCode})?.id
-    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum , mobile_country_id})
+    const mobile_country_id = find(smsCountryList, { 'value': smsCode })?.id
+    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum, mobile_country_id })
       .then()
       .catch((exceptionHandler) => {
         const { data } = exceptionHandler.response
@@ -173,7 +175,7 @@ const VerifyPhoneNumber = ({
         dispatch(
           displayNotification({
             open: true,
-            message:  errorMessage ?? exceptionHandler.message,
+            message: errorMessage ?? exceptionHandler.message,
             severity: 'warning'
           })
         )
@@ -218,11 +220,11 @@ const VerifyPhoneNumber = ({
         .catch((error) => {
           const response = error.response
           const resultError = response.data?.message
-          verifiError( resultError ?? error.message)
+          verifiError(resultError ?? error.message)
         })
     } else {
       // change
-      changePhoneNumber({ otp: Number(otp), phone_num: smsCode + Number(phoneNum) })
+      changePhoneNumber({ otp: Number(otp), mobile_country_id: countryId, phone_num: smsCode + Number(phoneNum) })
         .then(({ data }) => {
           if (data.data?.message == 'success') {
             dispatch(
@@ -238,7 +240,7 @@ const VerifyPhoneNumber = ({
         .catch((error) => {
           const response = error.response
           const resultError = response?.data?.message
-          verifiError( resultError ?? error.message)
+          verifiError(resultError ?? error.message)
         })
     }
   }

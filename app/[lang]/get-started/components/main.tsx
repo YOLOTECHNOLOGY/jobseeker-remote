@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import styles from '../index.module.scss'
 import Divider from '@mui/material/Divider'
 import PhoneLink from './link/phone'
@@ -7,12 +7,12 @@ import EmailLink from './link/email'
 import AppleLogin from './link/apple'
 import FacebookLogin from './link/facebook'
 import GoogleLogin from './link/google'
-import { useSelector } from 'react-redux'
-import { removeItem } from 'helpers/localStorage'
-import useGetStarted from '../hooks/useGetStarted'
 import { useDispatch } from 'react-redux'
 import { jobbseekersLoginSuccess } from 'store/actions/auth/jobseekersLogin'
 import {jobbseekersSocialLoginSuccess} from 'store/actions/auth/jobseekersSocialLogin'
+
+import QrCodeComponent from './QrCode'
+
 interface IProps {
   dictionary: any,
   isModal?:boolean,
@@ -20,31 +20,40 @@ interface IProps {
   handlePhoneClick?:()=>void,
 }
 
+
+
 const Main = (props: IProps) => {
   const { dictionary,isModal = false,handleEmailClick,handlePhoneClick } = props
-  const { newGetStarted } = dictionary
-  const { defaultLoginCallBack } = useGetStarted()
+  const { newGetStarted,getStatred } = dictionary
   const dispatch = useDispatch()
-  const jobseekersSocialResponse = useSelector(
-    (store: any) => store.auth.jobseekersSocialLogin?.response
-  )
+  const [qrCode,setQrCode] = useState<boolean>(false)
 
   useEffect(()=>{
     dispatch(jobbseekersLoginSuccess({}))
     dispatch(jobbseekersSocialLoginSuccess({}))
   },[])
+ 
+  const {
+    loginUsingSocialMediaOTP,
+    loginUsingQRCode,
+  } = getStatred
 
-  useEffect(() => {
-    const { data } = jobseekersSocialResponse
-    if (data?.token) {
-      removeItem('quickUpladResume')
-      defaultLoginCallBack(data)
-    }
-  }, [jobseekersSocialResponse?.data])
- console.log({jobseekersSocialResponse})
-  return (
-    <>
-      <div className={styles.list}>
+
+  return (<>
+      <div className={`${styles.code} ${!isModal ? styles.codePage: ''}`}>
+      <div className={styles.codePopver}>
+          {
+            qrCode ? loginUsingSocialMediaOTP : loginUsingQRCode
+          }    
+          </div> 
+          <div className={styles.codeImg} onClick={()=>setQrCode(!qrCode)}>
+             <span className={`${qrCode ?  'icon-windows' : 'icon-appqr'}`}></span>
+          </div> 
+      </div>
+       { qrCode ?  <QrCodeComponent lang={dictionary}/>
+       : <>
+        <h2>{newGetStarted.title}</h2>
+      <div className={styles.list}>    
         <GoogleLogin lang={dictionary} />
         <FacebookLogin lang={dictionary} />
         <AppleLogin lang={dictionary} />
@@ -56,6 +65,11 @@ const Main = (props: IProps) => {
         <EmailLink lang={dictionary} isModal={isModal} handleClick={handleEmailClick}/>
         <PhoneLink lang={dictionary} isModal={isModal} handleClick={handlePhoneClick}/>
       </ul>
+      </>
+
+      } 
+     
+
     </>
   )
 }

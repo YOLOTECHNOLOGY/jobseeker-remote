@@ -25,7 +25,7 @@
     position: fixed;
     right: 20px;
     top: 30px;
-    width: 320px;
+    width: 348px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -33,20 +33,20 @@
 
     @include sm {
         border: none;
-        top: 0px;
+        top: 16px;
         width: 100vw;
         padding: 8px 0px;
         // max-height: 100px;
         align-items: center;
         overflow: hidden;
         // background: red;
+        right: 0;
 
     }
 
     .note {
         @include sm {
-            width: 80%;
-            left: 20px;
+            width: calc(100% - 12px);
             max-height: 80px;
             overflow: hidden;
             z-index: 300000;
@@ -54,13 +54,13 @@
 
         width: 100%;
         max-height: 123px;
-        background: white;
         margin-top: 20px;
-        background: #E7F1FB;
         position: relative;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 15px;
         cursor: pointer;
+        border-radius: 10px;
+        background: #FFF;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+        padding: 16px;
 
         .close {
             position: absolute;
@@ -68,15 +68,47 @@
             top: 5px;
         }
 
+        .mainWrapper {
+            display: flex;
+            img {
+                border-radius: 50%;
+            }
+        }
+
+        .contentWrapper {
+            display: flex;
+            flex-direction: column;
+            margin-left: 8px;
+            width: 100%;
+            justify-content: space-evenly;
+            overflow: hidden;
+        }
+
         .title {
-            font-family: 'Product Sans';
-            font-style: normal;
+            color: var(--general-black, #353535);
+            /* Body/Bold/Body/Small */
+            font-size: 14px;
             font-weight: 700;
-            font-size: 16px;
+            line-height: 18px;
+            letter-spacing: 0.28px;
             line-height: 24px;
             height: 24px;
-            margin-top: 10px;
-            margin-left: 19px;
+            display: flex;
+            justify-content: space-between;
+
+            &_content {
+                width: calc(100% - 70px);
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                color: var(--general-black, #353535);
+                /* Body/Bold/Body/Small */
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 18px;
+                letter-spacing: 0.28px;
+            }
+
             @include sm {
                 line-height: 20px;
                 height: 20px;
@@ -84,24 +116,15 @@
         }
 
         .content {
-            font-family: 'Product Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            /* or 150% */
-            letter-spacing: 0.02em;
-            width: 256px;
-            max-height: 72px;
-            margin-left: 19px;
-            margin-top: 6px;
-            margin-bottom: 10px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            white-space: pre-wrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: var(--general-black, #353535);
+            /* Body/Regular/Body/Small */
+            font-size: 14px;
+            line-height: 18px;
+            letter-spacing: 0.28px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            width: calc(100% - 80px);
 
             @include sm {
                 -webkit-line-clamp: 1;

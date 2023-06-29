@@ -1,0 +1,232 @@
+.container {
+  width: 1366px;
+  margin: 0 auto;
+}
+.header {
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+  background-color: gray;
+  padding-bottom: 24px;
+  overflow: hidden;
+}
+.company_info_tab_wrapper {
+  padding-top: 48px;
+  width: 1366 - 115 - 115px;
+  margin: 0 auto;
+}
+.company_info_wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.header_cover {
+  width: 1366px;
+  min-height: 200px;
+  position: absolute;
+  background-color: gray;
+  object-fit: cover;
+  z-index: 1;
+}
+.jobs_item {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.0075em;
+  color: #c9cdd4;
+  padding: 16px;
+  width: 370px;
+  height: 91px;
+  background: #f7f8fa;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  &:hover {
+    border: 1px solid #c9cdd4;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    .chat_now {
+      opacity: 1;
+    }
+    .salary {
+      opacity: 0;
+    }
+  }
+}
+.content{
+  padding-top: 30px;
+}
+.jobs_item_layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.tab_wrapper {
+  border-bottom: 1px solid #e5e6eb;
+  display: flex;
+}
+.tab_layout {
+  width: 1366 - 115 - 115px;
+  margin: 0 auto;
+  :global {
+    .MuiTab-textColorPrimary {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.header_info {
+  position: relative;
+  padding-left: 115px;
+  padding-top: 88px;
+  display: flex;
+  z-index: 3;
+}
+.header_logo {
+  margin-right: 20px;
+}
+.header_logo_img {
+  width: 68px;
+  height: 68px;
+  border-radius: 13px;
+  object-fit: cover;
+  border: 1px solid #ffffff;
+}
+.header_content {
+}
+
+.header_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  color: #ffffff;
+}
+.header_subtitle {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.0075em;
+  color: #c9cdd4;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.header_benefit_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header_benefit_item {
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 6px;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  color: #ffffff;
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.0075em;
+  color: #fff7e8;
+  text-align: center;
+  margin-right: 4px;
+  margin-bottom: 5px;
+}
+.header_mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+.header_title_verified {
+  margin-left: 20px;
+}
+
+.footer {
+  text-align: center;
+  height: 85px;
+  line-height: 85px;
+}
+.jobs_chat_now_container {
+  position: relative;
+}
+.salary {
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 23px;
+  text-align: right;
+  letter-spacing: 0.0075em;
+  color: #2378e5;
+}
+.jobs_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.jobs_item_title {
+  width: 326px;
+  height: 23px;
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+  color: #1d2129;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 12px;
+}
+
+.chat_now {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 73px;
+  min-height: 28px;
+  background: #2378e5;
+  border-radius: 8px;
+  color: #ffffff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+.header_right {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.arrow {
+  border-left: 5px solid #000;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  margin-left: 5px;
+  width: 0;
+  height: 0;
+}
+.more_job {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 23px;
+  letter-spacing: 0.0075em;
+  text-decoration-line: underline;
+  color: #1d2129;
+}
