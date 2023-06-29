@@ -12,7 +12,7 @@
     "accountSettings": "Account Settings",
     "logOut": "Log Out",
     "Chat": "Chat",
-    "downloadApp": "Download App",
+    "downloadApp": "Download APP",
     "pleaseVerify": "Please verify your email address.",
     "verifyNow": " Verify now.",
     "switchCountry": {
@@ -25,7 +25,7 @@
     "change": "Change"
   },
   "foot": {
-    "about": "about",
+    "about": "About",
     "aboutBossjob": "About Bossjob",
     "termsConditions": "Terms & Conditions",
     "legal": "Legal",
@@ -36,7 +36,7 @@
     "createFree": "Create free resume",
     "careerGuide": "Career guide",
     "courses": "Courses",
-    "recruiter": "Recruiter",
+    "recruiter": "Employer",
     "getStarted": "Get started",
     "popularJobs": " Popular Jobs",
     "JobsIn1": "Jobs in Manila",
@@ -44,12 +44,12 @@
     "JobsIn3": "Jobs in Cebu",
     "ItJobs": "IT jobs",
     "financeJobs": "Finance jobs",
-    "customerService": "Customer Service job",
+    "customerService": "Customer Service jobs",
     "jobs": "jobs",
     "BpoJobs": "BPO jobs",
     "salesJobs": "Sales jobs",
     "healthcareJobs": "Healthcare jobs",
-    "downloadBossjobApp": " Download Bossjob App",
+    "downloadBossjobApp": " Download Bossjob APP",
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation"
@@ -67,12 +67,12 @@
     "privacyPolicy": "Privacy Policy",
     "signInWith": "Sign in with",
     "lookingToHire": "Looking to hire people? Sign up as ",
-    "employer": "Employer",
+    "employer": "an Employer",
     "welcomeBack": "Welcome back!",
     "signUpAnAccount": "Sign up an account",
     "pleaseEnter": "Please enter the 6-digit one-time password that we sent to",
     "enter6DigitOTP": "Enter 6-digit OTP",
-    "getOPT": "get OPT",
+    "getOPT": "get OTP",
     "heOTPYouHaveEnteredIsWrong": "The OTP you have entered is wrong. Please try again.",
     "resendOTP": "Resend OTP",
     "havingTrouble": "Having trouble?",
@@ -85,16 +85,16 @@
       "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
       "toHome": "Back to home page"
     },
-    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
+    "loginUsingSocialMediaOTP": "Login using social media/OTP",
     "loginUsingQRCode": "Login using QR code",
-    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
-    "donHaveApp": "Don’t have App",
-    "howToScanQRCode": "How to scan QR code",
-    "ImJobSeeker": "I'm a Job Seeker",
-    "ImRecruiter": "I'm a Recruiter",
-    "menuLoginToVersion": "Menu > Login to web version",
+    "scanQRCodeOnAppToLogin": "Use Bossjob APP to scan the QR code to login",
+    "donHaveApp": "Don’t have APP?",
+    "howToScanQRCode": "How to scan the QR code?",
+    "ImJobSeeker": "I'm a Jobseeker",
+    "ImRecruiter": "I'm an Employer",
+    "menuLoginToVersion": "Menu > Login to Web",
     "scannedSuccessfully": "Scanned successfully",
-    "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
+    "pleaseConfirmLoginOnAPP": "Please confirm the request on APP",
     "pleaseRefreshQrCode": "Please refresh the QR code",
     "clickToRefresh": "Click to refresh"
   },
@@ -113,12 +113,12 @@
     "sortBy": "Sort by",
     "filters": "Filters",
     "qualification": "Qualification",
-    "workExprerience": "Work Exprerience",
+    "workExprerience": "Work Experience",
     "experience": "Experience",
     "Industry": "Industry",
     "salary": "Salary",
     "JobType": "Job Type",
-    "companySizes": "Company Sizes",
+    "companySizes": "Company Size",
     "searchForJobTitleOrCompanyName": "Search for job title or company name",
     "resetFilters": "Reset Filters",
     "recommended": "Recommended",
@@ -130,9 +130,9 @@
     "availability": "Availability",
     "editOnlineResume": "Edit online resume",
     "uploadedResumes": " Uploaded Resumes",
-    "noResumeUploadNow": "No resume, upload now",
+    "noResumeUploadNow": "No resume found, upload now",
     "uploadResume": "Upload resume",
-    "availabilityUpdateSuccessfully": "Availability update successfully",
+    "availabilityUpdateSuccessfully": "Availability updated successfully",
     "seeMore": "See More",
     "seeJobReco": "See job reco",
     "search": "Search",
@@ -144,7 +144,7 @@
     "mobileNumber": "Mobile Number",
     "back": "Back",
     "addJobPreference": "Add Job Preference",
-    "JobClosed": "Job closed",
+    "JobClosed": "Job Closed",
     "undoSave": "Undo Save",
     "employees": "Employees",
     "InterviewTime": "Interview Time",
@@ -224,7 +224,7 @@
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
-        "noCultureTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
+        "noCultureTips": "{{companyName}} hasn't updated any information about their company life. Please come back again."
       },
       "benefit": {
         "title": "Employee Benefits",
@@ -424,7 +424,7 @@
     },
     "completeProfileModal": {
       "title": "Notice",
-      "btn1": "No",
+      "btn1": "Do it later",
       "btn2": "Update resume",
       "content": "Your profile is incomplete, please update your resume before starting a chat."
     },
@@ -669,7 +669,7 @@
         "availableModal": {
           "title": "Job Preference",
           "btn1": "Cancel",
-          "btn2": "Saves",
+          "btn2": "Save",
           "select": "Availability"
         },
         "card": {
@@ -685,7 +685,7 @@
         "editModal": {
           "title": "Job Preference",
           "btn1": "Cancel",
-          "btn2": "Saves",
+          "btn2": "Save",
           "jobTitle": "Desired job title",
           "jobType": "Desired job type",
           "location": "Desired working location",
@@ -786,7 +786,7 @@
     "createFreeResume": "Create Free Resume",
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
-    "jobFunction": "Desired job title/ Job function",
+    "jobFunction": "Job Title",
     "industry": "Industry",
     "description": "Description",
     "workingPeriod": "Working Period",
@@ -855,7 +855,7 @@
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "skipAnyway"
+    "skipAnyway": "Skip Anyway"
   },
   "chat": {
     "chatTitle": "Chat",

@@ -787,7 +787,7 @@
     "createFreeResume": "创建免费简历",
     "addYourWorkExperience": "添加工作经验",
     "fillInYourCompleteWork": "填写完整的工作经历，入围几率将提高83%。",
-    "jobFunction": "期望的职位名称/工作职能",
+    "jobFunction": "职位",
     "industry": "行业",
     "description": "描述",
     "workingPeriod": "工作期间",
@@ -856,7 +856,7 @@
     "skip": "跳过职位设置",
     "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
-    "skipAnyway": "跳过"
+    "skipAnyway": "任性跳过"
   },
   "chat": {
     "chatTitle": "聊天",
