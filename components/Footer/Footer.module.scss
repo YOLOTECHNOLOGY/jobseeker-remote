@@ -26,6 +26,7 @@
 
   &MobileContainer {
     padding: 0 20px;
+    padding-bottom: 20px;
 
     @include md {
       display: none;
@@ -135,7 +136,7 @@
   &CompanyDesc {
     width: 100%;
     font-size: 16px;
-    line-height: 18px;
+    line-height: 22px;
     margin-top: 20px;
     color: #86909C;
   }
@@ -250,14 +251,6 @@
   color: #FFF !important;
 }
 
-.footerMobileCompanyDesc {
-  color: #86909C;
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0.098px;
-  margin-top: 20px;
-}
-
 .footerCopyrightWrapper {
   @include msd {
     padding-top: 20px;
@@ -269,4 +262,10 @@
   font-size: 13px;
   line-height: 20px;
   letter-spacing: 0.098px;
+}
+
+.footerDesktopLogoLink {
+  width: 124px;
+  height: 32px;
+  display: block;
 }

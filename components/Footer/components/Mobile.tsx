@@ -31,7 +31,7 @@ const Mobile = (props: any) => {
 
       <PopularJobsLink data={data} langKey={langKey} />
 
-      <Company />
+      <Company data={data} />
 
       <DownloadApp data={data} />
 
