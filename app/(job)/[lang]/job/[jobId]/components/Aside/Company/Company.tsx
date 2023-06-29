@@ -52,7 +52,7 @@ const Company = (company: propsType) => {
               lineHeight: '18px',
               letterSpacing: '0.0075em',
               color: '#136FD3',
-              textTransform: 'capitalize'
+              textTransform: 'inherit'
             }}
           >
             {formatTemplateString(companySection.allJobHiring, company.numOfActiveJobs)}
