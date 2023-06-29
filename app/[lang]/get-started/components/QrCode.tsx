@@ -10,6 +10,9 @@ import { scanHunt } from 'images'
 import { scanJob } from 'images'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import CircularProgress from '@mui/material/CircularProgress';
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { useDispatch } from 'react-redux'
+
 function guid() {
   return 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0
@@ -44,11 +47,12 @@ const qrCode = ({ lang }: any) => {
     scannedSuccessfully,
     pleaseConfirmLoginOnAPP,
     pleaseRefreshQrCode,
-    clickToRefresh
+    clickToRefresh,
+    accountMismatch
   } = getStatred
 
   const menu = [ImJobSeeker, ImRecruiter]
-
+  const dispatch = useDispatch()
   useEffect(() => {
     getQrCodeFun()
     return () => clearInterval(timer)
@@ -102,19 +106,34 @@ const qrCode = ({ lang }: any) => {
     qrcodePolling({
       qrcode_uuid: uuidRef.current
     }).then((res) => {
-      const { status } = res.data?.data
+      const { status,role_id } = res.data?.data
       if (status === 2) {
         setScanInfo(res.data?.data)
       } else if (status === 4) {
         clearInterval(timer)
+        if(role_id !== 1){
+            dispatch(
+                displayNotification({
+                  open: true,
+                  message: accountMismatch,
+                  severity: 'error'
+                })
+              )
+        getBack()
+        return
+        }
         setUserInfo(res.data?.data)
       }else if(status === 3 ){ 
-        clearInterval(timer)
-        setScanInfo({})
-        getQrCodeFun()
+        getBack()
       }
     })
   }
+
+   const getBack = ()=>{
+        clearInterval(timer)
+        setScanInfo({})
+        getQrCodeFun()
+   }
 
   const refreshCode = () => {
     timeRef.current = moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss')
