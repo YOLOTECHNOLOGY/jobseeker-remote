@@ -3,9 +3,13 @@
 }
 
 .album_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .album_item {
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .overview_item {
