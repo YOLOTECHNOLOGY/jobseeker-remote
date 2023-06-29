@@ -97,7 +97,7 @@
     "pleaseConfirmLoginOnAPP": "请在APP上确认登录",
     "pleaseRefreshQrCode": "请刷新二维码",
     "clickToRefresh": "点击刷新",
-    "accountMismatch":"账户类型不匹配，请使用求职端登录"
+    "accountMismatch": "账户类型不匹配，请使用求职端登录"
   },
   "myJobs": {
     "communicated": "已沟通",

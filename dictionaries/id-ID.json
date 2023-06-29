@@ -96,7 +96,8 @@
     "scannedSuccessfully": "Scanned successfully",
     "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
     "pleaseRefreshQrCode": "Please refresh the QR code",
-    "clickToRefresh": "Click to refresh"
+    "clickToRefresh": "Click to refresh",
+    "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
     "communicated": "Communicated",

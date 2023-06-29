@@ -96,7 +96,8 @@
     "scannedSuccessfully": "Scanned successfully",
     "pleaseConfirmLoginOnAPP": "Please confirm the request on APP",
     "pleaseRefreshQrCode": "Please refresh the QR code",
-    "clickToRefresh": "Click to refresh"
+    "clickToRefresh": "Click to refresh",
+    "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
     "communicated": "Communicated",
@@ -238,7 +239,7 @@
         "viewAll": "See all Jobs",
         "search": {
           "jobTitle": "Search for job title",
-          "location": "location",
+          "location": "Location",
           "btn": "Search"
         },
         "card": {
@@ -252,7 +253,7 @@
       "culture": "Company Culture",
       "benefit": "Employee Benefits",
       "photo": "Photos",
-      "noPhotoTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
+      "noPhotoTips": "{{companyName}} hasn't updated any information about their company life. Please come back again."
     },
     "job": {
       "title": "Jobs",
@@ -264,11 +265,11 @@
       "pagination": {
         "tips": "Showing {{range}} of {{totalJobs}} jobs"
       },
-      "noMatchedJobs": "We couldn't find any jobs matching your search.",
-      "noJobs": "{{companyName}} does not have any job openings now. Please come back again."
+      "noMatchedJobs": "Sorry, we couldn't find any match for your search.",
+      "noJobs": "{{companyName}} doesn't have any job openings now. Please come back again."
     },
     "rightSection": {
-      "uploadResume": "Upload Resume & Apply Job!",
+      "uploadResume": "Upload Resume & Apply Jobs!",
       "othersViewed": "People also viewed...",
       "viewAll": "View all"
     },
@@ -283,8 +284,8 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "manila",
-    "defaultLocationSG": "downtown core",
+    "defaultLocationPH": "Manila",
+    "defaultLocationSG": "Downtown Core",
     "search": {
       "location": "Location",
       "title": "Job title or company",
@@ -393,7 +394,7 @@
       "title": "Share this job",
       "facebook": "Facebook",
       "twitter": "Twitter",
-      "linkedin": "Linkedin",
+      "linkedin": "LinkedIn",
       "link": "Page Link",
       "linkCopied": "Link copied"
     },
@@ -401,7 +402,7 @@
       "title": "Report Job",
       "notReportedTitle": "Why are you reporting this job?",
       "category": {
-        "spam": "I think it’s spam or scam",
+        "spam": "I think it’s spam or a scam",
         "discrimination": "I think it’s discriminatory or offensive",
         "broken": "I think something is broken"
       },
@@ -420,7 +421,7 @@
       "title": "Chat with {{name}}",
       "btn1": "Cancel",
       "btn2": "Proceed",
-      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
+      "content": "You are currently chatting with the Boss for {{jobName}}. Are you sure you want to switch to another job?"
     },
     "completeProfileModal": {
       "title": "Notice",
@@ -435,7 +436,7 @@
         "employees": "Employees"
       },
       "similarJob": {
-        "title": "SimilarJobs",
+        "title": "Similar Jobs",
         "seeMore": "See more"
       },
       "signUp": {
