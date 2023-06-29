@@ -9,6 +9,37 @@
   background: #ffffff;
   border: 1px solid #c9cdd4;
   border-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+.search_button {
+  display: flex;
+  height: 68px;
+  padding: 12px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 8px 8px 0px;
+  background: var(--main-color-blue-blue-012378-e-5, #2378e5);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  // &:hover {
+  //   background-color: lighten($color: #2378e5, $amount: 10);
+  // }
+
+  &:active {
+    background-color: lighten($color: #2378e5, $amount: 20);
+  }
+}
+.button_loading {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.search_input_wrapper {
+  display: flex;
+  justify-content: center;
   margin: 0 auto;
   margin-top: 32px;
 }
@@ -64,6 +95,15 @@
   width: 1136px;
   margin: 0 auto;
   min-height: 300px;
+  position: relative;
+}
+.loading_wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .noData {
   width: 1136px;
@@ -75,7 +115,8 @@
 }
 .title {
   width: 536px;
-  height: 22px;
+  height: 25px;
+  line-height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -83,7 +124,6 @@
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
-  line-height: 22px;
   color: #1d2129;
 }
 
@@ -95,7 +135,7 @@
   padding: 16px 12px;
 
   width: 560px;
-  height: 125px;
+  min-height: 125px;
   background: #f7f8fa;
   border-radius: 8px;
 
@@ -220,28 +260,35 @@
 .filter_layout {
   width: 1136px;
   margin: 0 auto;
-  height: 110px;
+  min-height: 90px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  padding-bottom: 24px;
 }
 .filter_tag {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 8px 20px;
-
   min-width: 57px;
   height: 39px;
   border-radius: 8px;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
   color: #1d2129;
   margin-right: 20px;
   background: #f7f8fa;
+  cursor: pointer;
+  margin-bottom: 10px;
+  &:hover {
+    background-color: #5398f5;
+    color: #ffffff;
+  }
+}
+.filter_split {
+  width: 100%;
+  border-bottom: 1px solid var(--neutral-color-border, #f2f3f5);
+  margin-bottom: 24px;
 }
 .active {
   background: #2378e5;

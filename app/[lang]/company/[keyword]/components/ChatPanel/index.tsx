@@ -1,6 +1,7 @@
 import * as React from 'react';
 import style from './index.module.scss';
 import { Recruiter } from "../../service";
+import Image from 'next/image'
 
 
 const ChatPanel =  (props: {
@@ -20,7 +21,7 @@ const ChatPanel =  (props: {
 
 const ChatItem = (props: Recruiter) => {
 	return <div className={style.chatItem}>
-		<img className={style.chatHeader} src={props.avatar} alt="avatar"/>
+		<Image width={48} height={48} className={style.chatHeader} src={props.avatar} alt="avatar"/>
 		<div className={style.chatContent}>
 			<div className={style.chatTitle}>
 				{props.full_name}
