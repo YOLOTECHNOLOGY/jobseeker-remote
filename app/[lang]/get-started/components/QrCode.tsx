@@ -29,7 +29,7 @@ const qrCode = ({ lang }: any) => {
   const [overtime, setOvertime] = useState<boolean>(false)
   const [userInfo, setUserInfo] = useState<any>(null)
   const uuidRef = useRef(null)
-  const timeRef = useRef(moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss'))
+  const timeRef = useRef(null)
   const { setCookiesWithLoginData, sendEventWithLoginData, defaultLoginCallBack } = useGetStarted()
   const {
     scanQRCodeOnAppToLogin,
@@ -88,6 +88,7 @@ const qrCode = ({ lang }: any) => {
   const getQrCodeFun = () => {
     const uuid = guid()
     uuidRef.current = uuid
+    timeRef.current = moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss')
     getQrcode({
       generate_uuid: uuid,
       expiration_time: timeRef.current
@@ -102,11 +103,15 @@ const qrCode = ({ lang }: any) => {
       qrcode_uuid: uuidRef.current
     }).then((res) => {
       const { status } = res.data?.data
-      if (status == 2) {
+      if (status === 2) {
         setScanInfo(res.data?.data)
-      } else if (status == 4) {
+      } else if (status === 4) {
         clearInterval(timer)
         setUserInfo(res.data?.data)
+      }else if(status === 3 ){ 
+        clearInterval(timer)
+        setScanInfo({})
+        getQrCodeFun()
       }
     })
   }
