@@ -239,7 +239,6 @@ const ProtectedHeader = ({ lang }: any) => {
             </li>
             <li
               className={classNames([styles.headerLink, styles.headerLinkLogin])}
-              style={{ width: '150px' }}
             >
               {!pathname.includes('/manage-profile') ? (
                 <a
@@ -258,12 +257,14 @@ const ProtectedHeader = ({ lang }: any) => {
                     sx={{
                       height: '40px !important',
                       border: '1px solid #2378E5',
-                      borderRadius: '10px',
+                      borderRadius: '4px',
                       paddingLeft: '23px',
                       paddingRight: '23px',
                       backgroundColor: '#ffffff',
+                      boxShadow: 'none',
                       ':hover': {
-                        backgroundColor: '#ffffff'
+                        backgroundColor: '#ffffff',
+                        boxShadow: 'none',
                       }
                     }}
                   >
