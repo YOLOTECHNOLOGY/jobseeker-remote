@@ -143,9 +143,9 @@ const CompanyInfo = (_props: Props) => {
 					</div>
 				</Section>
 			}
-			if (item.id === 'Address') {
+			if (item.id === 'Address' && props.full_address) {
 				return <Section key={index} title={item.title} split={!noSplit}>
-					<Map lat={props.latitude} lng={props.longitude} full_address={props.full_address} lang={contextLang.jobDetail}/>
+					<Map lat={Number(props.latitude)} lng={Number(props.longitude)} full_address={props.full_address} lang={contextLang.jobDetail}/>
 				</Section>
 			}
 			if (item.id === 'Company Album' && props.pictures?.length > 0) {
