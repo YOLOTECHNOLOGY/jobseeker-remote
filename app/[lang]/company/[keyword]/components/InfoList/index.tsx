@@ -7,6 +7,7 @@ import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
 import JobCard from '../JobsCard/index'
 import {languageContext} from "../../../../../components/providers/languageProvider";
 import { useCompanyDetail } from '../../DataProvider';
+import Image from 'next/image';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType>{
 	jobs: JobData[]
@@ -137,7 +138,7 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Introduction' && props.description_html) {
 				return <Section key={index} title={item.title} split={!noSplit}>
 					<div className={style.introduction} dangerouslySetInnerHTML={{
-						__html: filterScriptContent(props.description_html)
+						__html: filterScriptContent(props.description)
 					}}>
 					</div>
 				</Section>
@@ -151,7 +152,8 @@ const CompanyInfo = (_props: Props) => {
 				return <Section key={index} title={item.title} split={!noSplit}>
 					<div className={style.album_wrapper}>
 						{props.pictures.sort((a, b) => a.sort_order - b.sort_order).map((item, index) => {
-							return <img key={index} src={item.url} alt="alt" className={style.album_item}/>
+							return <Image key={index} src={item.url} alt="alt" className={style.album_item}
+														width={226} height={150} />
 						})}
 					</div>
 				</Section>
@@ -225,32 +227,24 @@ function BusinessInfo(
 	): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
 	const [contentHeight, setContentHeight] = useState(150);
-  
 	const handleClick = () => {
 		setIsVisible(!isVisible)
 	}
-  
-
-  
 	const contentRef = useRef(null);
-  
-  
 	const calculateContentHeight = () => {
 	  setContentHeight(contentRef.current.scrollHeight);
 	};
 	useLayoutEffect(() => {
 	  calculateContentHeight();
 	});
-
 	const _resArr = business_info.filter(_ => props.company_business_info[_.field]);
 	const showMore = _resArr.length > 6 && !isVisible;
-
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
 		<div className={style.animation_wrapper} style={{height: showMore ? 150 : contentHeight }}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.padArrayToMultiple(3)
-					.map((item, index) => {
+					.map((item) => {
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
 							{item && <div className={style.overview_item_value}>{props.company_business_info[item?.field]}</div>}

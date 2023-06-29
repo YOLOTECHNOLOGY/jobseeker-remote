@@ -9,12 +9,11 @@ import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
 import {useCompanyDetail} from "./DataProvider";
 import { fetchConfigService } from 'store/services/config/fetchConfig';
-import { Country } from './service';
+import { Country, JobClasses } from './service';
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
 import {fetchJobsFunction} from "../../../../store/services/jobs/fetchJobFunction";
-
 
 function a11yProps(index: number) {
 	return {
@@ -46,32 +45,43 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const Page = () => {
-	const [value, setValue] = React.useState(0);
+	const searchParams = new URLSearchParams(window.location.search);
+	const tabName = searchParams.get('tab');
+	const [value, setValue] = React.useState(tabName === 'jobs' ? 1 : 0);
 	const [list, setList] = React.useState<Country[]>([]);
-	const [functions, setFunctions] = React.useState();
+	const [functions, setFunctions] = React.useState<JobClasses[]>([]);
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 	const {detail, jobsRes, lang, hr, hotJobs} = useCompanyDetail();
-	
 	const tab_title = ['Company information', `Jobs(${jobsRes.total_num})`];
-
-
 	React.useEffect(()=>{
 		(async ()=>{
 			const res = await fetchConfigService(lang);
-			console.log('config',res.job_function_lists);
-			setList(res.location_lists);
+			const _res = await fetchJobsFunction(detail.id);
+			const groupData = _res.data.data.reduce((result, obj) => {
+				const key = Object.values(obj)[0];
+				const value = Object.keys(obj)[0];
+				if (result[key as string]) {
+					result[key as string].push(value);
+				} else {
+					result[key as string] = [value];
+				}
+				return result;
+			}, {});
+			const functionMap = {};
+			res.job_function_lists.map((item)=>{
+				functionMap[Object.keys(item)[0]] = Object.values(item)[0]  
+			});
+			const jobClasses = Object.keys(groupData).map((key)=>{
+				return functionMap[key]?.filter((item)=>{
+					return groupData[key]?.includes(String(item.id))
+				});
+			}).flat();
+			setList(res.location_lists)
+			setFunctions(jobClasses)
 		})();
 	},[]);
-
-	React.useEffect(()=>{
-		(async ()=>{
-			const res = await fetchJobsFunction(detail.id);
-			setFunctions(res.data.data);
-		})();
-	},[]);
-	
 	return <div className={style.container}>
 		<div className={style.header}>
 			<Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover"/>
@@ -98,7 +108,7 @@ const Page = () => {
 								return <div key={index} className={style.header_benefit_item}>
 									{item.value}
 								</div>
-							}).slice(0,3)
+							})
 						}
 					</div>
 				</div>
@@ -177,10 +187,10 @@ const Page = () => {
 				<SearchPanel list={list} functions={functions} />
 			</TabPanel>
 		</div>
-		<div className={style.footer}>
+		{/* <div className={style.footer}>
 			Copyright © 2016-{new Date().getFullYear()}&nbsp;Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
       <span>Philippines: Etos Adtech Corporation</span>
-		</div>
+		</div> */}
 	</div>
 }
 

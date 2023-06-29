@@ -12,6 +12,7 @@ import {configKey} from "../../../../helpers/cookies";
 import {CompanyDetailsProvider} from "./DataProvider";
 import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
+import Footer from "components/Footer/Footer";
 
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -49,9 +50,9 @@ export default async function CompanyLayout(props: {
 	const id = getIDFromKeyword(props.params.keyword);
 	try{
 		const [jobs, detail, hr, hotJobs] = await Promise.all([
-			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token.value), 
+			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token?.value), 
 			fetchCompanyDetailReq(id), 
-			fetchCompanyHR(id, token.value),
+			fetchCompanyHR(id, token?.value),
 			fetchHotJobsListService({company_id: id})
 		]);
 			// const configkey =cookieStore.get(configKey);
@@ -73,16 +74,17 @@ export default async function CompanyLayout(props: {
 					backgroundColor: '#ffffff',
 
 				}}>
-					<main>
+					<main data-v={JSON.stringify(detail)}>
 						{props.children}
 					</main>
 				</section>
+				<Footer/>
 			</CompanyDetailsProvider>
 		</>
 	)
 	}catch(e){
 		return <div data-error={JSON.stringify(e)}>
-			{e}
+			{/* {e} */}
 		</div>
 	}
 
