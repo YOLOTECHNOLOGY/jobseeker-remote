@@ -39,7 +39,11 @@ const loginForEmail = (props: IProps) => {
   const [loading,setLoading] = useState<boolean>(false)
   const pathname = usePathname()
   const emailRef = useRef(null)
- 
+  const isDisableRef = useRef(null);
+
+  useEffect(()=>{
+    isDisableRef.current = isDisable
+  },[isDisable])
   useEffect(()=>{
    if(email){
     emailRef.current = email
@@ -49,10 +53,10 @@ const loginForEmail = (props: IProps) => {
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
-  }, [isDisable])
+  }, [])
  
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
       sendOpt()
     }
   }

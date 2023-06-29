@@ -46,6 +46,12 @@ const LoginForPhone = (props: any) => {
   const dispatch = useDispatch()
   const phoneNumberRef = useRef(null)
  
+  const isDisableRef = useRef(null);
+
+  useEffect(()=>{
+    isDisableRef.current = isDisable
+  },[isDisable])
+
   useEffect(()=>{
    if(phoneNumber){
     phoneNumberRef.current = phoneNumber
@@ -56,10 +62,10 @@ const LoginForPhone = (props: any) => {
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
-  }, [isDisable])
+  }, [])
  
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
       sendOpt()
     }
   }
