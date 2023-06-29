@@ -164,6 +164,7 @@ const PublicHeader = ({ lang }: any) => {
               >
                 <Image
                   src={navbar_location_icon}
+                  className={styles.locationIcon}
                   width={16}
                   height={16}
                   alt={'location'}
