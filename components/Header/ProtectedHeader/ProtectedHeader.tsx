@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter, usePathname } from 'next/navigation'
 import classNames from 'classnames'
-import { HomePageChat as ChatCircleDots } from 'images'
+import { ChatCircleDots } from 'images'
 import { logoutRequest } from 'store/actions/auth/logout'
 import { useSelector } from 'react-redux'
 /* components */
@@ -16,8 +16,8 @@ import { getLanguage, getCountryId } from 'helpers/country'
 import { getValueById } from 'helpers/config/getValueById'
 import { getLang } from 'helpers/country'
 /* Images */
-import { BossjobLogoWhite as BossjobLogo, DefaultAvatar } from 'images'
-
+import { BossjobLogo, DefaultAvatar } from 'images'
+import Image from 'next/image'
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
 // import { getCountry } from 'helpers/country'
@@ -70,7 +70,7 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   useEffect(() => {
-    if(userInfo?.id){
+    if (userInfo?.id) {
       const hasJobPreferences = userInfo?.job_preferences.length > 0
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
@@ -78,7 +78,7 @@ const ProtectedHeader = ({ lang }: any) => {
 
   useEffect(() => {
     const accessToken = getCookie('accessToken')
-    if(accessToken) {
+    if (accessToken) {
       dispatch(fetchUserOwnDetailRequest({ accessToken }))
     }
     document.addEventListener('click', handleClickOutside, true)
@@ -103,14 +103,14 @@ const ProtectedHeader = ({ lang }: any) => {
   //   router.push(authPath)
   // }
 
-
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
         <div className={styles.headerLogo}>
           <Link title='Home' to={'/' + langKey}>
-            <img
-              className={styles.headerLogoImage}
+            <Image
+              width={124}
+              height={32}
               src={BossjobLogo}
               title='Bossjob logo'
               alt='Bossjob logo'
@@ -124,16 +124,15 @@ const ProtectedHeader = ({ lang }: any) => {
           <ul className={styles.headerLinksList}>
             <React.Fragment>
               <li className={styles.headerLink}>
-                {pathname != ('/' + langKey) ? (
+                {pathname != '/' + langKey ? (
                   <Link title='Home' to={'/' + langKey}>
-                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    <Text textStyle='base' className={styles.headerLinkText}>
                       {home}
                     </Text>
                   </Link>
                 ) : (
                   <Text
                     textStyle='base'
-                    textColor='darkGrey'
                     className={classNames([
                       styles.headerLinkText,
                       styles.headerLinkTextCurrentPage
@@ -146,14 +145,13 @@ const ProtectedHeader = ({ lang }: any) => {
               <li className={styles.headerLink}>
                 {!pathname?.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
-                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    <Text textStyle='base' className={styles.headerLinkText}>
                       {findJobs}
                     </Text>
                   </Link>
                 ) : (
                   <Text
                     textStyle='base'
-                    textColor='darkGrey'
                     className={classNames([
                       styles.headerLinkText,
                       styles.headerLinkTextCurrentPage
@@ -166,14 +164,13 @@ const ProtectedHeader = ({ lang }: any) => {
               <li className={styles.headerLink}>
                 {!pathname.includes('/companies') ? (
                   <Link title='Companies' to={'/' + langKey + '/companies'}>
-                    <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                    <Text textStyle='base' className={styles.headerLinkText}>
                       {companies}
                     </Text>
                   </Link>
                 ) : (
                   <Text
                     textStyle='base'
-                    textColor='darkGrey'
                     className={classNames([
                       styles.headerLinkText,
                       styles.headerLinkTextCurrentPage
@@ -185,20 +182,28 @@ const ProtectedHeader = ({ lang }: any) => {
               </li>
 
               <li className={styles.headerLink}>
-                <Link
-                  title='APP'
-                  to={'/' + langKey + '/talents'}
-                  aTag
-                >
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                {!pathname.includes('/talents') ? (
+                  <Link title='APP' to={'/' + langKey + '/talents'} aTag>
+                    <Text textStyle='base' className={styles.headerLinkText}>
+                      APP
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     APP
                   </Text>
-                </Link>
+                )}
               </li>
 
               <li className={styles.headerLink} style={{ position: 'relative' }}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph' external>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' className={styles.headerLinkText}>
                     {careerGuide}
                   </Text>
                 </Link>
@@ -214,14 +219,13 @@ const ProtectedHeader = ({ lang }: any) => {
             >
               {pathname !== '/chat/[chat_id]' ? (
                 <Link title='Jobs' to={'/' + langKey + '/chat/list'}>
-                  <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
+                  <Text textStyle='base' className={styles.headerLinkText}>
                     {Chat}
                   </Text>
                 </Link>
               ) : (
                 <Text
                   textStyle='base'
-                  textColor='darkGrey'
                   className={classNames([styles.headerLinkText, styles.headerLinkTextCurrentPage])}
                 >
                   {Chat}
@@ -246,32 +250,29 @@ const ProtectedHeader = ({ lang }: any) => {
                       : router.push('/' + langKey + '/jobseeker-complete-profile')
                     // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
                   }}
-                  style={{ color: '#353535' }}
+                  style={{ color: '#2378E5' }}
                 >
                   <MaterialButton
                     variant='contained'
                     capitalize
                     sx={{
-                      width: '150px',
-                      height: '35px !important',
-                      border: '1.5px solid #FFFFFF',
+                      height: '40px !important',
+                      border: '1px solid #2378E5',
                       borderRadius: '10px',
-                      maxWidth: '153px',
-                      paddingLeft: '0',
-                      paddingRight: '0',
-                      backgroundColor: '#136FD3',
+                      paddingLeft: '23px',
+                      paddingRight: '23px',
+                      backgroundColor: '#ffffff',
                       ':hover': {
-                        backgroundColor: '#136FD3'
+                        backgroundColor: '#ffffff'
                       }
                     }}
                   >
-                    <Text
-                      textColor='white'
-                      textStyle='base'
+                    <span
+                      style={{ color: '#2378E5', whiteSpace: 'nowrap' }}
                       className={showUnCompletedDot ? styles.unCompleted : ''}
                     >
                       {manageResume}
-                    </Text>
+                    </span>
                   </MaterialButton>
                 </a>
               ) : (
@@ -279,26 +280,23 @@ const ProtectedHeader = ({ lang }: any) => {
                   variant='contained'
                   capitalize
                   sx={{
-                    width: '150px',
-                    height: '35px !important',
-                    border: '1.5px solid #FFFFFF',
+                    height: '40px !important',
+                    border: '1px solid #2378E5',
                     borderRadius: '10px',
-                    maxWidth: '153px',
-                    paddingLeft: '0',
-                    paddingRight: '0',
-                    backgroundColor: '#136FD3',
+                    paddingLeft: '23px',
+                    paddingRight: '23px',
+                    backgroundColor: '#ffffff',
                     ':hover': {
-                      backgroundColor: '#136FD3'
+                      backgroundColor: '#ffffff'
                     }
                   }}
                 >
-                  <Text
-                    textColor='white'
-                    textStyle='base'
+                  <span
+                    style={{ color: '#2378E5', whiteSpace: 'nowrap' }}
                     className={showUnCompletedDot ? styles.unCompleted : ''}
                   >
                     {manageResume}
-                  </Text>
+                  </span>
                 </MaterialButton>
               )}
             </li>
@@ -307,9 +305,11 @@ const ProtectedHeader = ({ lang }: any) => {
                 className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
               >
-                <img
+                <Image
                   src={currentUser?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
+                  width={35}
+                  height={35}
                   alt='avatar'
                   onError={(e) => {
                     ;(e.target as HTMLInputElement).src = DefaultAvatar
@@ -334,7 +334,7 @@ const ProtectedHeader = ({ lang }: any) => {
               }}
             >
               <Link title='Jobs' to={'/' + langKey + '/chat/list'}>
-                <img src={ChatCircleDots} alt='Chat logo' />
+                <Image width={32} height={32} src={ChatCircleDots} alt='Chat logo' />
                 {totalUnread ? (
                   <span
                     className={styles.unread}
@@ -366,7 +366,12 @@ const ProtectedHeader = ({ lang }: any) => {
               </li>
 
               <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
-                <Link to={process.env.BOSSHUNT_URL+'/boss'} aTag external className={styles.headerMenuLink}>
+                <Link
+                  to={process.env.BOSSHUNT_URL + '/boss'}
+                  aTag
+                  external
+                  className={styles.headerMenuLink}
+                >
                   <Text textStyle='base'>{hiring}</Text>
                 </Link>
               </li>

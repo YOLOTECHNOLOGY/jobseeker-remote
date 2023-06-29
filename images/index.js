@@ -191,3 +191,6 @@ export const footer_instagram_icon = `${S3BucketJobseeker}/footer_instagram_icon
 export const footer_linkedIn_icon = `${S3BucketJobseeker}/footer_linkedIn_icon.svg`
 export const footer_facebook_icon = `${S3BucketJobseeker}/footer_facebook_icon.svg`
 export const footer_logo = `${S3BucketJobseeker}/footer_logo.svg`
+
+// navbar icons
+export const navbar_location_icon = `${S3BucketJobseeker}/navbar_location_icon.svg`
