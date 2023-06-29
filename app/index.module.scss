@@ -31,18 +31,18 @@
   }
 
   .moreBtn {
-    color: #136fd3;
-    width: 118px;
+    color: rgba(29, 33, 41, 1);
     height: 44px;
-    border-radius: 10px;
+    width: 112px;
+    font-size: 14px;
+    border-radius: 4px;
     line-height: 44px;
     text-align: center;
     background: #ffffff;
     margin: 0 auto 10px;
-    display: block;
-    font-weight: 700;
+    display: inline-block;
     cursor: pointer;
-    border: 1px solid #136fd3;
+    border: 1px solid rgba(201, 205, 212, 1);
   }
 }
 
@@ -1261,12 +1261,9 @@
   margin: 0 auto;
   padding-left: 10px;
   padding-right: 10px;
-
   @media (max-width: 799px) {
     max-width: 688px;
   }
-
-  background-color: #f5f6fa;
 }
 
 .layoutHeader {
@@ -1321,17 +1318,17 @@
 }
 
 .companies {
-  padding-bottom: 60px;
+  padding-bottom: 72px;
 
   h2 {
     font-style: normal;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 42px;
     line-height: 40px;
     letter-spacing: 1px;
     color: #353535;
     text-align: center;
-    padding: 54px 0 24px;
+    padding: 100px 0 60px;
     margin: 0;
   }
 
@@ -1341,37 +1338,33 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+ 
+
   }
 
   .card {
     background: #ffffff;
     min-height: 120px;
-    width: calc(50% - 5px);
-    border-radius: 15px 15px;
+    width: calc(50% - 10px);
     overflow: hidden;
     margin-bottom: 16px;
-
+    border-radius: 8px;
+    border: 1px solid#E5E6EB;
     &:nth-of-type(even) {
       margin-right: 0;
     }
 
     .header {
-      height: 80px;
+      height: 96px;
       cursor: pointer;
       display: block;
-      // background: linear-gradient(
-      //   269.8deg,
-      //   rgba(255, 235, 184, 0.2) 0.12%,
-      //   rgba(242, 177, 202, 0.2) 43.36%,
-      //   rgba(84, 142, 237, 0.2) 99.89%
-      // );
-      background: linear-gradient(180deg, #dcefff 0%, #ffffff 100%);
-
+      margin: 0 20px;
+      border-bottom: 1px solid #E5E6EB;
       .img {
         width: 44px;
         height: 44px;
         float: left;
-        margin: 16px 11px 0 20px;
+        margin: 36px 11px 0 0;
         border-radius: 5px;
       }
 
@@ -1381,7 +1374,7 @@
         font-size: 16px;
         line-height: 24px;
         color: #353535;
-        padding: 16px 0 2px 0;
+        padding: 36px 0 2px 0;
         margin: 0;
       }
 
@@ -1399,7 +1392,7 @@
     }
 
     .list {
-      padding: 16px 23px 12px 24px;
+      padding: 28px 23px 8px 24px;
       cursor: pointer;
       display: block;
 
@@ -1412,11 +1405,11 @@
         p {
           flex: 1;
           width: 0;
-          color: #353535;
+          color: #121212;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          font-weight: 700;
+          font-weight: 400;
           font-size: 18px;
           margin: 0;
           transition: all 0.4s ease 0s;
@@ -1431,9 +1424,9 @@
         .salary {
           font-style: normal;
           font-weight: 400;
-          font-size: 18px;
+          font-size: 15px;
           letter-spacing: 0.02em;
-          color: #fe574a;
+          color: #2378E5;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -1466,11 +1459,11 @@
       .tag {
         font-weight: 400;
         font-size: 12px;
-        color: #707070;
+        color: #4E5969;
         padding: 0 10px;
         margin-right: 6px;
-        background: #f0f0f0;
-        border-radius: 16px;
+        background: #F7F8FA;
+        border-radius: 4px;
         display: inline-block;
       }
 
@@ -1493,9 +1486,9 @@
 
     .linkAddress {
       text-decoration: underline;
-      color: #707070;
+      color: #4E5969;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 15px;
       text-align: center;
       margin: 10px 0 18px 0;
       display: block;
@@ -1507,18 +1500,18 @@
   }
 
   .moreBtn {
-    color: #136fd3;
-    width: 118px;
+    width: 112px;
+    color: rgba(29, 33, 41, 1);
     height: 44px;
-    border-radius: 10px;
+    font-size: 14px;
+    border-radius: 4px;
     line-height: 44px;
     text-align: center;
     background: #ffffff;
-    margin: 22px auto 20px;
+    margin: 26px auto 10px;
     display: block;
-    font-weight: 700;
-    border: 1px solid #136fd3;
     cursor: pointer;
+    border: 1px solid rgba(201, 205, 212, 1);
   }
 }
 
