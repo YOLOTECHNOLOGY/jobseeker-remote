@@ -25,6 +25,8 @@
   }
 
   &MobileContainer {
+    padding: 0 20px;
+
     @include md {
       display: none;
     }
@@ -112,6 +114,7 @@
     @include md {
       display: flex;
       flex-direction: column;
+      justify-content: space-between
     }
   }
 
@@ -189,10 +192,6 @@
   }
 }
 
-.footerDesktopApp {
-  display: flex;
-}
-
 .socialLink{
   margin-left: 10px;
 }
@@ -201,27 +200,35 @@
   margin-top: 60px;
 }
 
-.footerMobileDownload {
-  margin-top: 60px;
+.footerDownloadApp {
+
+  @include msd {
+    margin-top: 60px;
+  }
 }
 
-.footerMobileDownloadText {
+.footerDownloadAppText {
+  margin-top: 20px;
+  color: #86909C;
   font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 18px;
   text-transform: capitalize;
-  margin-bottom: 20px;
-  display: block;
-  color: #86909C;
-  font-family: 'Product Sans';
+}
+
+.footerDesktopAppList {
+  a {
+    display: inline-block;
+    height: 42px;
+    margin-right: 20px;
+  }
 }
 
 .footerMobileCompany {
   margin-top: 30px;
 }
 
-.footerMobileDownloadApp {
-  display: flex;
-}
 
 .footerMobileSocialLinks {
   display: flex;
@@ -235,21 +242,32 @@
   margin-right: 10px;
 }
 
-.footerCopyrightWrapper {
-  padding: 20px 20px 20px 20px;
-}
 
 .footerMobileLinkTitle {
   color: #FFF;
   font-size: 17px;
   line-height: 22px;
   letter-spacing: 0.128px;
+  color: #FFF;
 }
 
 .footerMobileCompanyDesc {
   color: #86909C;
   font-size: 13px;
-  font-family: 'Product Sans';
+  line-height: 20px;
+  letter-spacing: 0.098px;
+  margin-top: 20px;
+}
+
+.footerCopyrightWrapper {
+  @include msd {
+    padding-top: 20px;
+  }
+}
+
+.copyrightCompanies {
+  color: #86909C;
+  font-size: 13px;
   line-height: 20px;
   letter-spacing: 0.098px;
 }
