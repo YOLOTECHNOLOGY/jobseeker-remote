@@ -15,7 +15,6 @@
     "commitmsg": "node node_modules/commitplease .git/COMMIT_EDITMSG",
     "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest",
     "crowdin:pull": "crowdin pull --all",
-    "crowdin:pushT": "crowdin push translations",
     "crowdin:pushS": "crowdin push sources",
     "crowdin:status": "crowdin status translation"
   },
