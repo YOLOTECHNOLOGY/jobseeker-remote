@@ -80,25 +80,6 @@ const SignUp = ({ jobId, job_url }: propsType) => {
     sessionStorage.setItem('redirectPage',window?.location?.pathname)
     setShowLogin?.(true)
     return 
-    setLoading(true)
-    authenticationSendEmaillOtp({ email })
-      .then(({ status }) => {
-        if (status === 200) {
-          router.push('/get-started?setp=2&&email=' + email + '&&redirect=' + job_url)
-        }
-      })
-      // .catch((error) => {
-      //   dispatch(
-      //     displayNotification({
-      //       open: true,
-      //       message: error.message ?? 'Send EmailOTP fail',
-      //       severity: 'error'
-      //     })
-      //   )
-      // })
-      .finally(() => {
-        setLoading(false)
-      })
   }
 
   return (
@@ -143,8 +124,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
         {signUp.note}{' '}
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
           {signUp.term}
-        </a>{' '}
-        &nbsp; & &nbsp;
+        </a>&
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
           {signUp.policy}
         </a>
