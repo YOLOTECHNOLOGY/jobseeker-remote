@@ -15,7 +15,7 @@
 .overview_item {
   padding: 8px 12px;
   width: 228px;
-  height: 63px;
+  min-height: 63px;
   background: #f7f8fa;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -32,11 +32,12 @@
   font-size: 17px;
   line-height: 22px;
   color: #1d2129;
+  word-break: break-word;
 }
 .overview_item_wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 .more {
@@ -50,7 +51,7 @@
 }
 .business_item {
   width: 228px;
-  height: 63px;
+  min-height: 63px;
   margin-bottom: 12px;
   border-radius: 4px;
 }

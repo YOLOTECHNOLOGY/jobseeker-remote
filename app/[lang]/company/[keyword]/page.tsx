@@ -179,6 +179,7 @@ const Page = () => {
 							}
 							<div style={{height: 40}}></div>
 							<SocialMedia {...detail}/>
+							<div style={{height: 40}}></div>
 						</div>
 					</div>
 				</div>
