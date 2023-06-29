@@ -177,8 +177,6 @@ export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
 
 export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
 export const RightArrowIcon = `${S3BucketJobseeker}/right_arrow_icon.svg`
-
-/* HistoryIcons.svg */
 export const HistoryIcons = `${S3BucketJobseeker}/HistoryIcons.svg`
 
 /** Footer icon */
@@ -194,3 +192,5 @@ export const footer_logo = `${S3BucketJobseeker}/footer_logo.svg`
 
 // navbar icons
 export const navbar_location_icon = `${S3BucketJobseeker}/navbar_location_icon.svg`
+export const scanHunt = `${S3BucketJobseeker}/scanHunt.png`
+export const scanJob = `${S3BucketJobseeker}/scanJob.png`

@@ -6,6 +6,7 @@ import style from "./index.module.scss";
 interface SectionProps extends React.PropsWithChildren{
 	split?: boolean;
 	title: string;
+	hot?: boolean;
 }
 
 export default function Section(props: SectionProps) {
@@ -14,7 +15,7 @@ export default function Section(props: SectionProps) {
 			<div className={style.title}>{
 				props.title
 			}</div>
-			<div className={style.tag}></div>
+			{props.hot && <div className={style.tag}><span>HOT</span></div>}
 		</div>
 		<div className={style.section_content_wrapper}>
 			{props.children}

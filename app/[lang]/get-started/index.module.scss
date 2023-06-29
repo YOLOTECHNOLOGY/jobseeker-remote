@@ -6,9 +6,8 @@
   padding-top: 64px;
   min-height: calc(100vh - 55px);
   position: relative;
-  overflow: hidden;
   z-index: 1;
-
+  overflow: hidden;
   .bg {
     // position: absolute;
     // width: 1620px;
@@ -30,7 +29,260 @@
     transform: translateZ(0);
     z-index: -1;
   }
-  
+  .code{
+   display: flex;
+   justify-content: flex-end;
+   position: relative;  
+   bottom: 10px;
+   margin-bottom: 16px;
+
+   .codeImg{
+    cursor: pointer;
+    span{
+      color: #B3B3B3;
+      font-size: 28px;
+      &:hover{
+        color: #166AD4;
+      }
+    }
+   }
+  }
+  .codeTitle{
+    color: rgba(29, 33, 41, 1);
+    font-size: 24px;
+    text-align: center;
+    position: relative;
+    padding-top: 30px;
+   }
+   .qrCode{
+    margin: 0 auto;
+    display: flex;
+    width: 186px;
+    height: 186px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    .overTime{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: rgba(237, 237, 237, .9);
+      left: 0;
+      top: 0;
+      p{
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0.0075em;
+        text-align: center;
+        margin-bottom: 26px;
+        padding-top: 52px;
+      }
+      button{
+        padding: 0 10px;
+        height: 35px;
+        border-radius: 4px;    
+        outline: none;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0.0075em;
+        line-height: 35px;
+        margin: 0 auto;
+        border: none;
+        background: rgba(35, 120, 229, 1);
+        text-align: center;
+        color: #fff;
+        display: block;
+        cursor: pointer;
+      }
+    }
+   }
+   .codePopver{
+    box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.2);
+    //styleName: Regular/Body/Regular/medium;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0.0075em;
+    color: rgba(78, 89, 105, 1);
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+    &::after{
+      content: ' ';
+      border-width:8px 0 8px 8px;
+      border-style:solid;
+      display: block;
+      position: absolute; 
+      right: -8px; 
+      bottom: 7px; 
+      width: 0;
+      height: 0;
+      border-color:transparent  transparent transparent #fff;
+    }
+   }
+   .popver{
+    box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.2);  
+    padding: 13px 18px 13px 18px;
+    border-radius: 20px;
+    position: absolute;
+    right: -84px;
+    bottom: 60px;
+    background: #fff;
+    display: none;
+    &::after{
+      content: ' ';
+      position: absolute; 
+      left: -10px; 
+      bottom: 20px; 
+      border-width:28px 28px 28px 0;
+      border-style:solid;
+      display: block;
+      border-color:transparent #fff transparent transparent;
+    }
+    p{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0.0075em;
+    text-align: center;
+    color: rgba(29, 33, 41, 1);
+    }
+    h4{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0.0075em;
+    text-align: center;
+    padding-top: 24px;
+    color: rgba(0, 0, 0, 1);
+    }
+    h5{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.0075em;
+    text-align: center;
+    color: rgba(78, 89, 105, 1);
+    padding: 18px 0;
+    }
+    .menu{
+      border:  3px solid rgba(22, 106, 212, 1) ;
+      color: #fff;
+      width: 240px;
+      display: flex;
+      height: 36px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      margin: 25px 0 15px 74px;
+      li{
+       background:rgba(22, 106, 212, 1) ;
+       color: #fff;
+       list-style: none;
+       font-size: 12px;
+       flex: 1;
+       text-align: center;
+       line-height: 33px;
+        &.active{
+          background: #fff;
+          color: rgba(22, 106, 212, 1);
+        }
+      }   
+    }
+   }
+   .popver2{
+    right: -190px;
+    bottom: -68px;
+    width: 373px;
+    height: 534px;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+    h4{
+      padding-top: 52px;
+    }
+    img{
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+    .popverContent{
+      position: relative;
+      z-index: 2;
+    }
+    &::after{
+      content: none;
+    }
+   }
+   .codeTips{
+     font-size: 14px;
+     color: #4E5969;
+     display: flex;
+     justify-content: center;
+     margin-top: 25px;
+     span{
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+      font-size: 14px;
+      color: #4E5969;
+      cursor: pointer;
+      &:hover{
+        .popver{
+          display: block;
+        }
+      }
+      .icon{
+        margin-left: 4px;
+        font-size: 18px;
+      }
+      &:first-child{
+        margin-right: 27px;
+      }
+       &:hover{
+        color: #2378E5;
+       } 
+     }
+   }
+   .qrAvator{
+    border-radius: 50%;
+    margin: 24px auto;
+    display: block;
+    width: 160px;
+    height: 160px;
+    img{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+   }
+   .scanned{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 23px;
+    letter-spacing: 0.02em;
+    color:rgba(35, 120, 229, 1);
+    padding-bottom: 10px;
+    margin: 0;
+   }
+   .loginOn{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+    color: rgba(18, 18, 18, 1);
+   }
+   .codePage{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    bottom: unset;
+
+   }
   .container {
     width: 575px;
     background: #ffffff;
@@ -38,7 +290,7 @@
     margin: 0 auto;
     padding: 40px 36px;
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.1);
-
+    position: relative;
     h2 {
       font-weight: 700;
       font-size: 32px;
@@ -47,7 +299,7 @@
       text-align: center;
       padding-bottom: 8px;
       line-height: 40px;
-      margin-bottom: 28px;
+      margin: 20px 0 28px 0;
       span{
         color: rgba(35, 120, 229, 1);
       }
@@ -473,12 +725,18 @@
     box-shadow: none;
      width: 561px; 
      padding: 28px 20px 38px 20px;
+     >h2{
+      display: none;
+     }
      .login_item{
       margin-top: 0;
       margin-bottom: 16px;
       &:last-child{
         margin-bottom: 0
       }
+     }
+     .codeTitle{
+      padding-top: 6px
      }
   }
 }

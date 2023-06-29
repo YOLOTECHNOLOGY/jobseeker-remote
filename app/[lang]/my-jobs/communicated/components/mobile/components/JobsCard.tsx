@@ -34,7 +34,7 @@ const translateData = (data, config) => {
   return cloneDeep(data).map((item) => {
     item.company.industry = getValueById(config, item.company.industry_id, 'industry_id');
     item.job.job_type_value = getValueById(config, item.job.job_type_id, 'job_type_id');
-    item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl.id, 'xp_lvl_id');
+    item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl?.id, 'xp_lvl_id');
     item.job.degree.value = getValueById(config,item.job.degree.id,'degree_id')
     item.job.location.value = getValueById(config,item.job.location.id,'location_id')
     return item
@@ -68,7 +68,7 @@ const JobsCard = ({
   }, [])
 
   // translate Data
-  const translatedData= translateData(data, config)
+ // const translatedData = (data) => translateData(data, config)
 
   const transTime = (time: string) => {
     return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
@@ -220,12 +220,11 @@ const JobsCard = ({
       )
     })
   }
-
-
+console.log({tabValue},data)
   return (
     <>
       {
-        tabValue === 'interview' ? interviewCard(translatedData) : card(translatedData)
+        tabValue === 'interview' ? interviewCard(data) : card( translateData(data,config))
       }
       <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? lang?.noMore : ''}</p>
 

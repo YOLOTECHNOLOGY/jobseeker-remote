@@ -6,6 +6,7 @@ import { Button } from 'app/components/MUIs'
 import { LocationContext } from 'app/components/providers/locationProvier'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
+import SearchIcon from '@mui/icons-material/Search';
 
 import { buildQuery } from 'app/(main-page)/helper'
 
@@ -54,7 +55,7 @@ const Search = () => {
 
       <MaterialTextField
         className={styles.search_field}
-        label={content.search.title}
+        label={<div className={styles.search_label} ><SearchIcon sx={{width: "16px", height: "16px", marginRight: "3px"}} /><span>{content.search.title}</span></div>}
         variant='outlined'
         size='small'
         value={searchValue}

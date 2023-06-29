@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
 import { create, accept, decline, sendOTP, verify } from './services/exchangeNumber'
