@@ -85,7 +85,7 @@
       "haveSendEmail": "我们已向{{email}}发送了一个魔法链接。 请点击链接继续。",
       "toHome": "回到主页"
     },
-    "loginUsingSocialMediaOTP": "使用社交媒体/ OTP 登录",
+    "loginUsingSocialMediaOTP": "验证码登录/注册",
     "loginUsingQRCode": "使用二维码登录",
     "scanQRCodeOnAppToLogin": "通过Bossjob APP扫描二维码登录",
     "donHaveApp": "没有应用程序",
@@ -433,7 +433,7 @@
       "company": {
         "title": "公司介绍",
         "allJobHiring": "查看{{count}}个热招工作",
-        "employees": "人"
+        "employees": "employees"
       },
       "similarJob": {
         "title": "猜你想看",

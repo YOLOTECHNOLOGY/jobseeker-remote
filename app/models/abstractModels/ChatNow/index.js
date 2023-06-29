@@ -42,8 +42,6 @@ export const chatNowScript = () => DO(Actions.isLogin)
         }
     })
 
-
-
 const doChatScript = chatData => DO(Actions.parseToChatStatus(chatData))
     .chain(status => status.cata({
         notLogin: () => DO(Actions.redirectToLogin),

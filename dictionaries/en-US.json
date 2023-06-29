@@ -88,15 +88,15 @@
     "loginUsingSocialMediaOTP": "Login using social media/OTP",
     "loginUsingQRCode": "Login using QR code",
     "scanQRCodeOnAppToLogin": "Use Bossjob APP to scan the QR code to login",
-    "donHaveApp": "Don’t have APP?",
-    "howToScanQRCode": "How to scan the QR code?",
+    "donHaveApp": "Don’t have App",
+    "howToScanQRCode": "How to scan the QR code",
     "ImJobSeeker": "I'm a Jobseeker",
     "ImRecruiter": "I'm an Employer",
     "menuLoginToVersion": "Menu > Login to Web",
     "scannedSuccessfully": "Scanned successfully",
     "pleaseConfirmLoginOnAPP": "Please confirm the request on APP",
-    "pleaseRefreshQrCode": "Please refresh the QR code",
-    "clickToRefresh": "Click to refresh",
+    "pleaseRefreshQrCode": "Refresh QR Code",
+    "clickToRefresh": "Refresh",
     "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
@@ -433,7 +433,7 @@
       "company": {
         "title": "Company",
         "allJobHiring": "View {{jobs}} jobs hiring",
-        "employees": "Employees"
+        "employees": "employees"
       },
       "similarJob": {
         "title": "Similar Jobs",

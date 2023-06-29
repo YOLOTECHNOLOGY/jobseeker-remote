@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React from "react";
 import style from "./jobcard.module.scss"
 import { JobData } from "../../service";
 import Link from "next/link"
@@ -6,8 +6,6 @@ import { useCompanyDetail } from "../../DataProvider";
 
 
 const JobCard = (props: JobData) =>{
-    const host =
-    typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window?.location.host
     const {lang} = useCompanyDetail();
     return <div className={style.card_container}>
         <div className={style.card_title}>
@@ -33,7 +31,7 @@ const JobCard = (props: JobData) =>{
                         </div>
                     </div>
                 </div>
-                <Link href={host + '/' + lang + props.job_url} target="_blank">
+                <Link href={'/' + lang + props.job_url} target="_blank">
                     <div className={style.chat_now}>
                         Chat Now
                     </div>
