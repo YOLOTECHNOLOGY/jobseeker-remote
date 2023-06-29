@@ -1,19 +1,19 @@
-import React, { use, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
 import { flat } from 'helpers/formatter'
-import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import { useCompanyDetail } from '../../DataProvider';
 import { debounce } from 'lodash-es'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { set } from 'date-fns';
+import Image from 'next/image';
 
 interface Props  {
     list: Country[]
     functions: any[]
+
 }
 
 
@@ -22,9 +22,9 @@ const formatLocationConfig = (locationList) => {
     return locationConfig
   }
 const SearchPanel = (props:Props ) =>{
-    const formattedLocationList = flat(formatLocationConfig(props.list))
-    const params = useParams()
-    const {detail, jobsRes, lang, hr} = useCompanyDetail();
+    const formattedLocationList = flat(formatLocationConfig(props.list));
+    const params = useParams();
+    const {jobsRes} = useCompanyDetail();
     const [jobsData, setJobsData] = useState(jobsRes);
     const [location, setLocation] = useState({});
     const inputText = useRef('');
@@ -146,7 +146,7 @@ const JobsSearchCard = (props: JobData) => {
         <div className={style.footer}>
             <div className={style.chat_footer}>
                 <div className={style.avatar}>
-                    <img src={props.recruiter_avatar} alt="img" />
+                    <Image height={24} width={24} src={props.recruiter_avatar} alt="img" />
                     <div className={style.status} style={{backgroundColor: props.recruiter_is_online ? '#0ebd5c': '#E5E6EB'}}/>
                 </div>
                 <div className={style.name}>

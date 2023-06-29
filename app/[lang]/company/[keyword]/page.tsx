@@ -12,6 +12,7 @@ import { fetchConfigService } from 'store/services/config/fetchConfig';
 import { Country } from './service';
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
+import Image from 'next/image';
 import {fetchJobsFunction} from "../../../../store/services/jobs/fetchJobFunction";
 
 
@@ -73,17 +74,17 @@ const Page = () => {
 	
 	return <div className={style.container}>
 		<div className={style.header}>
-			<img className={style.header_cover} src={detail.cover_pic_url} alt="cover"/>
+			<Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover"/>
 			<div className={style.header_mask}></div>
 			<div className={style.header_info}>
 				<div className={style.header_logo}>		
-					<img className={style.header_logo_img} src={detail.logo_url} alt="logo" />
+					<Image className={style.header_logo_img} width={68} height={68} src={detail.logo_url} alt="logo" />
 				</div>
 				<div className={style.header_content}>
 					<div className={style.header_title}>
 						{detail.name} 
 						{detail.is_verify && 
-						<img className={style.header_title_verified}
+						<Image width={16} height={16} className={style.header_title_verified}
 							 src={require('./components/assets/verify.svg').default.src}
 							 alt='_'
 						/>}
@@ -97,7 +98,7 @@ const Page = () => {
 								return <div key={index} className={style.header_benefit_item}>
 									{item.value}
 								</div>
-							})
+							}).slice(0,3)
 						}
 					</div>
 				</div>
@@ -146,7 +147,15 @@ const Page = () => {
 						</div>
 					</Section>: 0}	
 					<div className={style.company_info_wrapper}>
-						<CompanyInfo {...detail} jobs={jobsRes.jobs} />
+						<CompanyInfo {...detail} jobs={jobsRes.jobs} onMore={(e)=>{
+							window.scrollTo({
+									top: 0,
+									behavior: 'smooth'
+							});
+							setTimeout(()=>{
+								handleChange(e,1)
+							},300);
+						}} />
 						{/* <div className={style.more_job}>
 							More {jobsRes.total_num} Jobs
 						</div> */}
@@ -165,7 +174,7 @@ const Page = () => {
 				</div>
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<SearchPanel list={list} functions={functions}/>
+				<SearchPanel list={list} functions={functions} />
 			</TabPanel>
 		</div>
 		<div className={style.footer}>

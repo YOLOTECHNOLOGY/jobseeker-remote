@@ -6,9 +6,11 @@ import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
 // import { languageContext } from 'app/[lang]/components/providers/languageProvider';
 import JobCard from '../JobsCard/index'
 import {languageContext} from "../../../../../components/providers/languageProvider";
+import { useCompanyDetail } from '../../DataProvider';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType>{
 	jobs: JobData[]
+	onMore: (e: React.SyntheticEvent)=>void
 }
 
 const CompanyInfo = (_props: Props) => {
@@ -18,6 +20,8 @@ const CompanyInfo = (_props: Props) => {
 		props.company_business_info.name = _props.name;
 		props.company_business_info.industry = _props.industry;
 	}
+	const contextLang = useContext(languageContext);
+
 	const info = [
 		{
 			id: "Introduction",
@@ -124,8 +128,7 @@ const CompanyInfo = (_props: Props) => {
 		name: 'Total financing',
 		field: 'total_financing'
 	}]
-
-	const contextLang = useContext(languageContext);
+	const {jobsRes} = useCompanyDetail();
 	
 	return <div className={style.tab_content_wrapper}>
 		{info.map((item, index) => {
@@ -177,7 +180,11 @@ const CompanyInfo = (_props: Props) => {
 				return <Section key={index} title={item.title}>
 					{props.jobs.map((item,index)=>{
 						return <JobCard {...item} key={index}></JobCard>
-					})}
+					}).slice(0,5)}
+					{jobsRes.total_num > 5 && <div className={style.more} onClick={props.onMore}>
+						{`More ${jobsRes.total_num} Jobs`}
+					</div>}
+					
 				</Section>
 				
 			}
