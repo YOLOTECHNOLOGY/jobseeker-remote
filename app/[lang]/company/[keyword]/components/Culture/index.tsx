@@ -12,6 +12,7 @@ interface Props extends PropsWithChildren<CompanyDetailsType> {
 
 const CulturePanel = (props: Props) => {
 	const {benefits,cultures} = props;
+	if(!cultures?.length &&  !benefits.length) return null;
 	return <div className={style.culture_wrapper}>
 		<div className={style.culture_title}>Culture and benefits</div>
 		<div className={style.culture_content}>
@@ -19,18 +20,17 @@ const CulturePanel = (props: Props) => {
 			vary depending on the position.
 		</div>
 		{
-			cultures?.length && <>
+			!!cultures?.length && <>
 				<div className={style.subtitle}>Company culture</div>
 				<div className={style.item_wrapper + ' ' + style.culture}>
 					{cultures.map((item,index)=>{
 						return <div className={style.item} key={index}><span>{item.value}</span></div>
 					})}
-					
 				</div>
 			</>
 		}
 		{
-			benefits?.length && <>
+			!!benefits?.length && <>
 				<div className={style.subtitle}>Company benefits</div>
 				<div className={style.item_wrapper}>
 					{benefits.map((item,index)=>{
@@ -39,9 +39,6 @@ const CulturePanel = (props: Props) => {
 				</div>
 			</>
 		}
-
-
-
 	</div>
 }
 

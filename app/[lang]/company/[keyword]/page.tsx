@@ -55,6 +55,9 @@ const Page = () => {
 	};
 	const {detail, jobsRes, lang, hr, hotJobs} = useCompanyDetail();
 	const tab_title = ['Company information', `Jobs(${jobsRes.total_num})`];
+
+
+	console.log('all', {detail, jobsRes, lang, hr, hotJobs} );
 	React.useEffect(()=>{
 		(async ()=>{
 			const res = await fetchConfigService(lang);

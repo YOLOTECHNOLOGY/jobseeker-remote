@@ -11,7 +11,7 @@ const JobCard = (props: JobData) =>{
     const {lang} = useCompanyDetail();
     return <div className={style.card_container}>
         <div className={style.card_title}>
-            {props.function_job_title}
+            {props.job_title}
         </div>
         <div className={style.card_content}>
             <div className={style.card_info_list}>

@@ -229,7 +229,6 @@ export const JobsTag = (props: TagProps) => {
         {name:'', field: 'degree'},
         {name:'', field: 'job_type'},
     ]
-    console.log('JobsTag',props);
     return <div className={style.tags}>
         {tagsData.map(item=>{
             const value = props[item.field]
