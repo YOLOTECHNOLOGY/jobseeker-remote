@@ -15,7 +15,7 @@
 .overview_item {
   padding: 8px 12px;
   width: 228px;
-  min-height: 63px;
+  height: 63px;
   background: #f7f8fa;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -32,7 +32,7 @@
   font-size: 17px;
   line-height: 22px;
   color: #1d2129;
-  word-break: break-word;
+  @extend .text_overflow;
 }
 .overview_item_wrapper {
   display: flex;
@@ -50,13 +50,20 @@
   cursor: pointer;
 }
 .business_item {
-  width: 228px;
-  min-height: 63px;
-  margin-bottom: 12px;
+  width: 350px;
+  height: 63px;
+  margin-bottom: 24px;
   border-radius: 4px;
 }
 
 .animation_wrapper {
   overflow: hidden;
   transition: height 0.3s linear;
+}
+
+.text_overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,7 +13,7 @@ import Loading from "app/components/loading";
 import className from 'classnames';
 
 interface Props  {
-    list: Country[]
+    CountryList: Country[]
     functions: JobClasses[]
 
 }
@@ -24,10 +24,10 @@ const formatLocationConfig = (locationList) => {
     return locationConfig
   }
 const SearchPanel = (props:Props) =>{
-    const formattedLocationList = flat(formatLocationConfig(props.list));
+    const formattedLocationList = flat(formatLocationConfig(props.CountryList));
     const params = useParams();
-    const {jobsRes} = useCompanyDetail();
-    const [jobsData, setJobsData] = useState(jobsRes);
+    const {jobs} = useCompanyDetail();
+    const [jobsData, setJobsData] = useState(jobs);
     const [location, setLocation] = useState<Country | undefined>();
     const inputText = useRef('');
     const [loading, setLoading] = useState(false);
@@ -64,7 +64,6 @@ const SearchPanel = (props:Props) =>{
             location: location?.id,
             jobFunctions: String(job_function_ids) || classes?.id,
         }, null).then((res)=>{
-            console.log('then');
             setJobsData(res.data);
             setLoading(false);
             
@@ -97,7 +96,7 @@ const SearchPanel = (props:Props) =>{
                         // className={className}
                         renderInput={(params) => (
                             <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
-                                <input {...params.inputProps} placeholder='location' className={style.location_input}/>
+                                <input {...params.inputProps} placeholder='Location' className={style.location_input}/>
                                 <div className={style.location_arrow}></div>
                                 <div className={style.location_input_border}/>
                             </label>
@@ -112,7 +111,7 @@ const SearchPanel = (props:Props) =>{
                     <input id={'input-search'} name={'input-search'} className={style.job_search_input}
                             onChange={(e)=>{
                                 inputText.current = e.target.value;
-                                searchFunc(e.target.value,location)
+                                // searchFunc(e.target.value,location)
                             }}
                             onKeyDown={handleKeyPress}
                     />
@@ -122,7 +121,7 @@ const SearchPanel = (props:Props) =>{
                 [style.search_button]: true,
                 [style.button_loading] : loading
             })} onClick={()=>{
-                if(!loading)return;
+                if(loading)return;
                 searchFunc()
             }}>
                 <span>
@@ -153,14 +152,14 @@ const SearchPanel = (props:Props) =>{
             })}
         </div>
         <div className={style.filter_split}></div>
-        {!!jobsData.jobs.length ? 
+        {!!jobs.jobs.length ? 
         <div className={style.content_layout}>
-            {jobsData.jobs.map((item)=>{
+            {!loading && jobs.jobs.map((item)=>{
                  return <JobsSearchCard key={item.job_title} {...item}/>
             })}
             {
                 loading && <>
-                    <div className={style.loading_wrapper}/>
+                    {/* <div className={style.loading_wrapper}/> */}
                     <Loading/>
                 </>
             }

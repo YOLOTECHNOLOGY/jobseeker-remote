@@ -48,19 +48,15 @@ const Page = () => {
 	const searchParams = new URLSearchParams(window.location.search);
 	const tabName = searchParams.get('tab');
 	const [value, setValue] = React.useState(tabName === 'jobs' ? 1 : 0);
-	const [list, setList] = React.useState<Country[]>([]);
 	const [functions, setFunctions] = React.useState<JobClasses[]>([]);
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	const {detail, jobsRes, lang, hr, hotJobs} = useCompanyDetail();
-	const tab_title = ['Company information', `Jobs(${jobsRes.total_num})`];
+	const {detail, jobs, lang, hr, hotJobs, config} = useCompanyDetail();
+	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
 
-
-	console.log('all', {detail, jobsRes, lang, hr, hotJobs} );
 	React.useEffect(()=>{
 		(async ()=>{
-			const res = await fetchConfigService(lang);
 			const _res = await fetchJobsFunction(detail.id);
 			const groupData = _res.data.data.reduce((result, obj) => {
 				const key = Object.values(obj)[0];
@@ -73,7 +69,7 @@ const Page = () => {
 				return result;
 			}, {});
 			const functionMap = {};
-			res.job_function_lists.map((item)=>{
+			config.job_function_lists.map((item)=>{
 				functionMap[Object.keys(item)[0]] = Object.values(item)[0]  
 			});
 			const jobClasses = Object.keys(groupData).map((key)=>{
@@ -81,9 +77,9 @@ const Page = () => {
 					return groupData[key]?.includes(String(item.id))
 				});
 			}).flat();
-			setList(res.location_lists)
 			setFunctions(jobClasses)
 		})();
+		console.log('al',{detail, jobs, lang, hr, hotJobs, config});
 	},[]);
 	return <div className={style.container}>
 		<div className={style.header}>
@@ -136,7 +132,7 @@ const Page = () => {
 									handleChange(e,1);
 								}}
 						>
-							All {jobsRes.total_num} jobs <div className={style.arrow}></div>
+							All {jobs.total_num} jobs <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
 							{hotJobs.jobs.slice(0,3).map((item)=>{
@@ -160,7 +156,7 @@ const Page = () => {
 						</div>
 					</Section>: 0}	
 					<div className={style.company_info_wrapper}>
-						<CompanyInfo {...detail} jobs={jobsRes.jobs} onMore={(e)=>{
+						<CompanyInfo {...detail} jobs={jobs.jobs} onMore={(e)=>{
 							window.scrollTo({
 									top: 0,
 									behavior: 'smooth'
@@ -177,7 +173,7 @@ const Page = () => {
 							{
 								hr?.length  && <>
 									<div style={{height: 40}}></div>
-									<ChatPanel list={hr}/>
+									<ChatPanel list={hr.concat(hr).concat(hr).concat(hr).concat(hr).concat(hr).concat(hr).concat(hr).concat(hr)}/>
 								</>
 							}
 							<div style={{height: 40}}></div>
@@ -188,7 +184,7 @@ const Page = () => {
 				</div>
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<SearchPanel list={list} functions={functions} />
+				<SearchPanel CountryList={config.location_lists} functions={functions} />
 			</TabPanel>
 		</div>
 		{/* <div className={style.footer}>
