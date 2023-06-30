@@ -194,3 +194,9 @@ export const footer_logo = `${S3BucketJobseeker}/footer_logo.svg`
 export const navbar_location_icon = `${S3BucketJobseeker}/navbar_location_icon.svg`
 export const scanHunt = `${S3BucketJobseeker}/scanHunt.png`
 export const scanJob = `${S3BucketJobseeker}/scanJob.png`
+
+// find job
+export const UploadDocIcon = `${S3BucketJobseeker}/UploadDocIcon.svg`
+export const SendEmailIcon = `${S3BucketJobseeker}/sendEmailIcon.svg`
+export const ClearIcon = `${S3BucketJobseeker}/ClearIcon.svg`
+export const MoreFilterIcon = `${S3BucketJobseeker}/MoreFilterIcon.svg`
