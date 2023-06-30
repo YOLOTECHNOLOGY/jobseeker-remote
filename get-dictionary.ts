@@ -18,7 +18,7 @@ const idLanguage = { errorcode: idErrorcode, ...idPageLanguage }
 const dictionaries = {
   'en-US': () => enLanguage,
   'zh-CN': () => zhLanguage,
-  'id-ID': () => idLanguage
+  'id': () => idLanguage
 }
 
 export const getDictionary = async (locale: Locale) => {
