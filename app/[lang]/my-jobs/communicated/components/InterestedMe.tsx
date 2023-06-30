@@ -11,7 +11,7 @@ async function getRecurites(accessToken) {
      return res?.data?.data?.['saved_candidates'] || [];
 }
 const Interested = async (props) => {
-     const {lang,config} = props;
+     const { lang, config } = props;
      const accessToken = cookies().get('accessToken')?.value
      const data = await getRecurites(accessToken);
      return (
@@ -20,27 +20,27 @@ const Interested = async (props) => {
                     data?.length ? (
                          <div className={styles.upload}>
                               <div className={styles.header}>
-                                  {lang?.InterestedInMe}
+                                   {lang?.InterestedInMe}
                               </div>
                               <div className={styles.uploadContainer}>
                                    <div className={styles.interstedBox}>
                                         {
                                              data.map(item => {
-                                                  return <InterstedCard key={item.id} item={item}  config={config}/>
+                                                  return <InterstedCard key={item.id} item={item} config={config} />
                                              })
                                         }
                                    </div>
-                                  
-                                      <button className={styles.btn}>
-                                      <Link prefetch={false} href={"/my-jobs/communicated?type=interested"} >{lang?.seeMore}</Link>
-                                      </button>
-                                 
+
+                                   <button className={styles.btn}>
+                                        <Link prefetch={false} href={"/my-jobs/communicated?type=interested"} >{lang?.seeMore}</Link>
+                                   </button>
+
                               </div>
                          </div>
-                    ):null
+                    ) : null
                }
-                 </>
-       )
-        
+          </>
+     )
+
 }
 export default Interested;
