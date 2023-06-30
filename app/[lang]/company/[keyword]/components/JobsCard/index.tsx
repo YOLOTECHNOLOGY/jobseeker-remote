@@ -3,25 +3,28 @@ import style from "./jobcard.module.scss"
 import { JobData } from "../../service";
 import Link from "next/link"
 import { useCompanyDetail } from "../../DataProvider";
+import Image from 'next/image';
+import { JobsTag } from "../SearchPanel";
 
 
 const JobCard = (props: JobData) =>{
     const {lang} = useCompanyDetail();
     return <div className={style.card_container}>
         <div className={style.card_title}>
-            {props.function_job_title}
+            {props.job_title}
         </div>
         <div className={style.card_content}>
             <div className={style.card_info_list}>
                 <div className={style.card_salary}>
                     {props.local_salary_range_value}
                 </div>
-                <div className={style.card_info_extra}></div>
+                <JobsTag {...props} count={3} />
+                {/* <div className={style.card_info_extra}></div> */}
             </div>
-
             <div className={style.card_chat_container}>
                 <div className={style.card_chat_wrapper}>
-                    <img src={props.recruiter_avatar} className={style.recruiter_avatar}/>
+                    <Image src={props.recruiter_avatar} className={style.recruiter_avatar} 
+                           width={40} height={40} alt={'alt'}/>
                     <div className={style.card_chat_content}>
                         <div className={style.card_chat_title}>
                             {props.recruiter_full_name}

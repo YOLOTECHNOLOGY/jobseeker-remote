@@ -52,7 +52,7 @@
     }
   }
 }
-.content{
+.content {
   padding-top: 30px;
 }
 .jobs_item_layout {
@@ -60,7 +60,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 
 .tab_wrapper {
   border-bottom: 1px solid #e5e6eb;
@@ -72,6 +71,17 @@
   :global {
     .MuiTab-textColorPrimary {
       text-transform: capitalize;
+      font-weight: 700;
+      color: var(--neutral-color-text, #1d2129) !important;
+      font-size: 20px;
+      line-height: 25px;
+    }
+    .MuiTabs-indicator {
+      background-color: var(--neutral-color-text, #1d2129) !important;
+      height: 3px !important;
+    }
+    .MuiTab-root {
+      padding-bottom: 20px;
     }
   }
 }

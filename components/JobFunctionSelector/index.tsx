@@ -215,9 +215,9 @@ const JobFunctionSelector = (props: any) => {
                   return (
                     <div
                       role='cell'
-                      key={key}
+                      key={key.id}
                       // @ts-ignore
-                      name={key}
+                      name={key.value}
                       className={classNames({
                         [styles.menuItem]: true,
                         [styles.selected]: key === selectedKey

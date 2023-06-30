@@ -1,83 +1,100 @@
-.card_container{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    width: 708px;
-    min-height: 105px;
-    padding: 16px;
-    transition: all 0.3s linear;
-    border-radius: 8px;
-    border: 1px solid #ffffff;
-    margin-bottom: 12px;
-    &:hover{
-        background: #F7F8FA;
-        border: 1px solid #C9CDD4;
-        .card_chat_wrapper{
-            transform: translate3d(-100px,0,0);
-        }
-        .chat_now{
-            opacity: 1;
-        }
+.card_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 708px;
+  min-height: 105px;
+  padding: 16px;
+  transition: all 0.3s linear;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  margin-bottom: 12px;
+  :global {
+    .tag_flag {
+      background-color: var(--neutral-color-fill, #f7f8fa) !important;
     }
+  }
+  &:hover {
+    background: #f7f8fa;
+    border: 1px solid #c9cdd4;
+    .card_chat_wrapper {
+      transform: translate3d(-100px, 0, 0);
+    }
+    .chat_now {
+      opacity: 1;
+    }
+    :global {
+      .tag_flag {
+        background-color: #ffffff !important;
+      }
+    }
+  }
 }
-.card_title{
-    min-height: 44px;
-    font-weight: 700;
-    font-size: 17px;
-    line-height: 22px;
-    color: #1D2129;
+.card_title {
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+  color: #1d2129;
 }
-.card_salary{
-    height: 23px;
-    font-family: 'Product Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 23px;
-    text-align: left;
-    color: #2378E5;
+.tab {
+  background: var(--neutral-color-fill, #f7f8fa) !important;
 }
-.card_content{
-    width: 100%;
-    min-height: 43px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.card_salary {
+  height: 23px;
+  font-family: 'Product Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 23px;
+  text-align: left;
+  color: #2378e5;
+  margin-right: 12px;
 }
-.card_chat_wrapper{
-    transition: transform .3s linear;
-    display: flex;
-    align-items: center;
+.card_content {
+  width: 100%;
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card_info_list {
+  display: flex;
+  align-items: center;
+}
+.card_chat_wrapper {
+  transition: transform 0.3s linear;
+  display: flex;
+  align-items: center;
 }
 
-.recruiter_avatar{
-    height: 40px;
-    width: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 7px;
+.recruiter_avatar {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 7px;
 }
-.card_chat_container{
-    position: relative;
+.card_chat_container {
+  position: relative;
 }
-.chat_now{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
-    min-width: 73px;
-    min-height: 28px;
-    background: #2378E5;
-    border-radius: 8px;
-    position: absolute;
-    right: 0;
-    color: #ffffff;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s ease;
-
+.chat_now {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  min-width: 73px;
+  min-height: 28px;
+  background: #2378e5;
+  border-radius: 8px;
+  position: absolute;
+  right: 0;
+  color: #ffffff;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
 }

@@ -7,6 +7,7 @@ import {fetchHotJobsListService} from "store/services/jobs/fetchHotJobs";
 
 
 export async function fetchJobsListReq(data, accessToken) {
+	
 	try {
 		const {
 			query,
@@ -115,6 +116,7 @@ export interface CompanyDetailsType {
 		youtube_url: string;
 		description: string;
 		description_html: string;
+		twitter_url: string;
 		cultures: {
 			id: number;
 			value: string;
@@ -320,6 +322,13 @@ export interface Recruiter {
 	locations: Location[];
   }
 
+export interface JobClasses{
+	id: number;
+	job_titles: any[];
+	["seo-value"]: string;
+	skills: any[];
+	value: string;
+}	
 export const getIDFromKeyword  = (keyword: string) =>{
 	return keyword.split('-').pop();
 }

@@ -97,7 +97,7 @@ const EditJobPreferencesModal = ({
   const { handleSubmit, getValues, setValue, control, reset, trigger } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   useEffect(() => {
-    if(minSalary){
+    if (minSalary) {
       getMaxSalaryOptions(minSalary)
     }
   }, [minSalary])
@@ -176,7 +176,9 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'jobTitle'}
-            rules={{ validate: (data) => !!data.value || lang.editJobPreferencesModal.validate.jobTitle}}
+            rules={{
+              validate: (data) => !!data.value || lang.editJobPreferencesModal.validate.jobTitle
+            }}
             render={({ field, fieldState }) => {
               return (
                 <JobFunctionSelector
@@ -186,7 +188,7 @@ const EditJobPreferencesModal = ({
                   variant='outlined'
                   autoComplete='off'
                   jobTitle={preference?.function_job_title}
-                  title={lang.profile.jobFunction}
+                  title={lang.profile.desiredJobFunction}
                   helperText={fieldState?.error?.message}
                   required
                   {...fieldState}
@@ -276,7 +278,9 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'minSalary'}
-            rules={{ validate: (value) => !!value || lang.editJobPreferencesModal.validate.minSalary }}
+            rules={{
+              validate: (value) => !!value || lang.editJobPreferencesModal.validate.minSalary
+            }}
             render={({ field, fieldState }) => {
               const { value, onChange } = field
               return (
@@ -301,7 +305,9 @@ const EditJobPreferencesModal = ({
           <Controller
             control={control}
             name={'maxSalary'}
-            rules={{ validate: (value) => !!value || lang.editJobPreferencesModal.validate.maxSalary}}
+            rules={{
+              validate: (value) => !!value || lang.editJobPreferencesModal.validate.maxSalary
+            }}
             render={({ field, fieldState }) => {
               const { value } = field
               return (
