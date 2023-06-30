@@ -58,7 +58,7 @@ const Main = async (props: any) => {
     <>
       <div className={styles.main}>
 
-        <div className={styles.title}>{home.title} <span></span></div>
+        <div className={styles.title}><span>{home.title}</span>{home.title2}</div>
         <TopModule {...props} />
         
         <Tabs config={config} langKey={langKey} location_id={locationId} />

@@ -268,7 +268,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                       letterSpacing: '1px',
                       width: 'auto',
                       padding: '12px 0',
-                      marginRight: '78px',
+                      marginRight: '68px',
                       fontWeight: '400'
                     }}
                   />

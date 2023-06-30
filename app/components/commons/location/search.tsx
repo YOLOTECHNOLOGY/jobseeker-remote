@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
 import { TextField } from '@mui/material'
 
-
 type Input = React.InputHTMLAttributes<HTMLInputElement>
 type JobSearchBar = {
   children?: React.ReactNode
@@ -133,6 +132,9 @@ const MaterialTextFieldWithSuggestionList = ({
         placeholder={label}
         defaultValue={defaultValue}
         inputValue={value}
+        sx={{
+          color:'#1D2129'
+        }}
         renderInput={(params) => (
           <TextField
             {...refs}

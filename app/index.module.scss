@@ -24,7 +24,7 @@
   width: 100%;
 
   &_more {
-    margin-top: 32px;
+    margin: 12px 0 42px 0;
     text-align: center;
     width: 100%;
   }
@@ -47,7 +47,7 @@
 
 .job {
   &_detail {
-    width: calc(50% - 5px);
+    width: calc(50% - 8px);
     margin-bottom: 20px;
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
@@ -75,7 +75,7 @@
 
     &_title {
       font-style: normal;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 17px;
       letter-spacing: 0.02em;
       color: #333945;
@@ -139,7 +139,7 @@
     }
 
     .job_info_chat {
-      transform: translateY(-26px);
+      transform: translateY(-23px);
     }
   }
 
@@ -186,11 +186,11 @@
     //   rgba(84, 142, 237, 0.2) 99.89%
     // );
     border-top: 1px solid var(--neutral-color-border, #F2F3F5);
-    margin:0 16px
+    margin:0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 15px;
+    padding: 12px 0 16px 0;
     display: block;
 
     &_name {
@@ -200,11 +200,11 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: #353535;
+      color: #4E5969;
     }
 
     &_industry {
-      color: #707070;
+      color: #86909C;
       float: right;
     }
   }
@@ -293,17 +293,18 @@
   h2 {
     font-weight: 700;
     font-size: 21px;
-    line-height: 27px;
+    line-height: 25px;
     letter-spacing: 1px;
     color: #353535;
     margin-bottom: 8px;
-    padding-top: 48px;
+    padding: 24px 16px 4px 16px;
   }
 
   .hiring {
     overflow: scroll;
     width: 100%;
     height: auto;
+    padding: 0 16px;
 
     .itemBox {
       width: 100%;
@@ -317,10 +318,12 @@
       display: block;
       background: #ffffff;
       border-radius: 8px;
-      margin: 12px 8px 0 0;
+      margin: 20px 8px 0 0;
       display: flex;
       padding: 12px;
-
+      border-radius: 4px;
+      border: 1px solid #E5E6EB;
+      background: #FFF;
       img {
         box-sizing: border-box;
         width: 48px;
@@ -960,9 +963,9 @@
       border: 1px solid  #E5E6EB;
       background: #fff;
       box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
-      @include sm {
-        width: 140px;
-      }
+      // @include sm {
+      //   width: 140px;
+      // }
     }
   }
 
@@ -1009,10 +1012,10 @@
       }
     }
 
-    @include sm {
-      margin-left: 15px;
-      margin-right: 0px;
-    }
+    // @include sm {
+    //   margin-left: 15px;
+    //   margin-right: 0px;
+    // }
   }
 
   .searchButton {
@@ -1061,15 +1064,15 @@
     justify-content: flex-start;
     overflow: hidden;
   }
-  @include sm {
-    flex-direction: column;
-    height: fit-content;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    width: 100%;
-    margin-left: 0px;
-    margin-top: 48px;
-  }
+  // @include sm {
+  //   flex-direction: column;
+  //   height: fit-content;
+  //   flex-wrap: wrap;
+  //   align-items: flex-start;
+  //   width: 100%;
+  //   margin-left: 0px;
+  //   margin-top: 48px;
+  // }
 
   label {
     font-family: 'Product Sans';
@@ -1190,7 +1193,7 @@
 }
 
 .searchAreaFix {
-  height: 92px;
+  height: 100px;
   position: fixed;
   width: 100%;
   left: 0;
@@ -1203,12 +1206,15 @@
 
   .box {
     max-width: 1136px;
-    margin: 24px auto 0;
+    margin: 20px auto 0;
   }
 
   :global {
     .MuiOutlinedInput-notchedOutline {
       border-width: 0.5px !important;
+    }
+    .MuiOutlinedInput-root{
+      overflow: unset;
     }
   }
 
@@ -1338,10 +1344,6 @@
 .main {
  // @extend .GlobalNextAppContainer;
 
-  @include sm {
-    padding: 0px 10px;
-  }
-
   .title {
     font-family: 'Product Sans';
     font-style: normal;
@@ -1371,7 +1373,7 @@
     letter-spacing: 1px;
     color: #353535;
     text-align: center;
-    padding: 100px 0 60px;
+    padding: 60px 0 60px;
     margin: 0;
   }
 
@@ -1388,7 +1390,7 @@
   .card {
     background: #ffffff;
     min-height: 120px;
-    width: calc(50% - 10px);
+    width: calc(50% - 8px);
     overflow: hidden;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -1561,7 +1563,41 @@
 }
 
 @media (max-width: 750px) {
+  .main {
+    .title{
+      font-size: 30px;
+    }
+    .search{
+      width: auto;
+    }
+
+    .searchArea {
+      padding: 0 6px;
+      .search{
+        flex: 1;
+      }
+      .box {
+        .location {
+          width: 96px;
+          :global{
+            .MuiOutlinedInput-root{
+              width: 96px;
+            }
+          }
+        }
+        .searchBox{
+          flex: 1;
+        }
+      }
+    }
+    .popularBox{
+      display: block;
+      padding: 32px 16px 27px 16px;
+    }
+    
+  }
   .companies {
     display: none;
   }
+
 }

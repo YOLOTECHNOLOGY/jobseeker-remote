@@ -16,7 +16,7 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import SearchIcon from '@mui/icons-material/Search'
+
 import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
@@ -162,8 +162,9 @@ const SearchArea = (props: any) => {
                 }
               }
             }}
+           
           />
-          <div style={{display:"flex"}}>
+          <div style={{display:"flex"}} className={styles.searchBox}>
           <JobSearchBar
             id='search'
             label={home.search.title}
@@ -173,7 +174,7 @@ const SearchArea = (props: any) => {
             value={searchValue}
             maxLength={255}
             searchFn={handleSuggestionSearch}
-            updateSearchValue={setSearchValue}
+            updateSearchValue={setSearchValue}  
             onKeyPress={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()

@@ -14,7 +14,8 @@ import { useRef } from 'react'
 import { debounce } from 'lodash-es'
 import { uniqBy, prop } from 'ramda'
 // import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
-
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import InputAdornment from '@mui/material/InputAdornment';
 const LocationMultiSelector = (props: any) => {
   const { label, className, value, isTouched, onChange, lang, ...rest } = props
   const [showModal, setShowModal] = useState(false)
@@ -189,12 +190,14 @@ const LocationMultiSelector = (props: any) => {
       <TextField
         value={valueText}
         autoComplete='off'
+        
         label={<div style={{ position: 'relative', bottom: 7 }}>{label}</div>}
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
           setShowModal(true)
         }}
+       
         classes={{}}
         style={{
           background: textValue.split(',').filter((a) => a)?.length ? '#E7F1FB' : '#F0F0F0',
@@ -202,10 +205,13 @@ const LocationMultiSelector = (props: any) => {
         }}
         inputProps={{
           style: {
-            color: textValue.split(',').filter((a) => a)?.length ? '#86909C' : '#86909C',
+            color: textValue.split(',').filter((a) => a)?.length ? '#1D2129' : '#86909C',
             background: textValue.split(',').filter((a) => a)?.length ? '#fff' : '#ffff',
-            textIndent:"29px"
-          }
+            textAlign:"center"
+          },
+        }}
+        InputProps={{
+          endAdornment : <InputAdornment position="end"><KeyboardArrowDownIcon style={{color:"#1D2129",position:'relative',left:'-8px'}} /></InputAdornment> 
         }}
         disabled={showModal}
         onFocus={(e) => {
