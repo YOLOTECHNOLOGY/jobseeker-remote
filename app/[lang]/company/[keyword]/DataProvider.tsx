@@ -1,32 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
-import {CompanyDetailsType, JobsResponseType, Recruiter} from "./service";
+import React from 'react';
+import { CompanyDetailsType, JobsResponseType, Recruiter } from "./service";
+import { ConfigType } from 'app/types';
 
 
-type ProviderData =  {
+type ProviderData = {
 	detail: CompanyDetailsType,
-	jobsRes: JobsResponseType,
+	jobs: JobsResponseType,
 	lang: string,
 	hr: Recruiter[],
 	hotJobs: JobsResponseType
+	config: Partial<ConfigType>
 }
 
 const CompanyDetails = React.createContext<
 	ProviderData | undefined
 >(undefined);
 
+interface Props extends React.PropsWithChildren<ProviderData> {
+	name?: any
+}
 export function CompanyDetailsProvider(
-	{ children, initialDetail,initalJobs,lang, hr,hotJobs}: {
-	children: React.ReactNode;
-	initialDetail: CompanyDetailsType;
-	initalJobs: JobsResponseType,
-	lang: string,
-	hr: Recruiter[],
-	hotJobs: JobsResponseType
-}) {
+	{ children, detail, jobs, lang, hr, hotJobs, config }: Props) {
 	return (
-		<CompanyDetails.Provider value={{detail: initialDetail, jobsRes: initalJobs, lang, hr, hotJobs}}>
+		<CompanyDetails.Provider value={{ detail, jobs, lang, hr, hotJobs, config }}>
 			{children}
 		</CompanyDetails.Provider>
 	);

@@ -7,15 +7,34 @@ import Image from 'next/image'
 const ChatPanel =  (props: {
 	list: Recruiter[]
 }) => {
+
+
+	const [isVisible, setIsVisible] = React.useState(false);
+	const [contentHeight, setContentHeight] = React.useState(150);
+	const handleClick = () => {
+		setIsVisible(!isVisible)
+	}
+	const contentRef = React.useRef(null);
+	const calculateContentHeight = () => {
+		setContentHeight(contentRef.current.scrollHeight);
+	};
+	React.useLayoutEffect(() => {
+		calculateContentHeight();
+	});
+	const _resArr = props.list;
+	const showMore = _resArr.length > 4 && !isVisible;
 	return <div className={style.wrapper}>
 		<div className={style.title}>
 			Hi Boss
 		</div>
-		<div className={style.chatList}>
-			{props.list.map((item, index)=>{
-				return <ChatItem key={index} {...item}/>
-			})}
+		<div className={style.animation_wrapper} style={{height: showMore ?  280 : contentHeight}}>
+			<div className={style.chatList} ref={contentRef}>
+				{props.list.map((item, index)=>{
+					return <ChatItem key={index} {...item}/>
+				})}
+			</div>
 		</div>
+		{showMore && <div className={style.more} onClick={handleClick}>More</div>}
 	</div>
 }
 

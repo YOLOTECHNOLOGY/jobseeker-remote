@@ -64,19 +64,23 @@
 }
 
 .item {
-  display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   width: 158px;
-  min-height: 37px;
+  padding: 0px 20px;
+  height: 37px;
+  line-height: 37px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background: #f7f8fa;
   border-radius: 8px;
   margin-bottom: 12px;
   font-weight: 400;
   font-size: 14px;
   text-align: center;
-  word-break: break-word;
 }
 
 .culture {
@@ -90,4 +94,12 @@
 .link_text {
   margin-left: 20px;
   color: #4e5969;
+  @extend .text_overflow;
+}
+
+.text_overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }

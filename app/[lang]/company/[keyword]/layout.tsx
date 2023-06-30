@@ -2,7 +2,8 @@
 // import './flexible';
 import Head from "next/head";
 import {Metadata} from "next"
-
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
+import { buildComponentScript } from 'app/models/abstractModels/util'
 import {getCountryKey} from "../../../../helpers/country";
 import {formatTemplateString} from "../../../../helpers/formatter";
 import {getDictionary} from "../../../../get-dictionary";
@@ -13,7 +14,14 @@ import {CompanyDetailsProvider} from "./DataProvider";
 import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 import Footer from "components/Footer/Footer";
+import getConfigs from 'app/models/interpreters/config'
 
+
+const configs = getConfigs([
+	['location_lists'],
+	['job_function_lists'],
+	['turnover_lists'],
+])
 // eslint-disable-next-line valid-jsdoc
 /**
  * Generate metadata for the page
@@ -36,12 +44,13 @@ export async function generateMetadata(
 	}
 }
 
-export default async function CompanyLayout(props: {
+async function CompanyLayout(props: {
 	children: React.ReactNode;
 	params: {
 		keyword: string;
 		lang: string;
-	}
+	},
+	configs: any
 }) {
 	// URL -> /shop/shoes/nike-air-max-97
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
@@ -62,10 +71,11 @@ export default async function CompanyLayout(props: {
 		<>
 			<CompanyDetailsProvider 
 				hr={hr.data}
-				initialDetail={detail.data} 
-				initalJobs={jobs.data} 
+				detail={detail.data} 
+				jobs={jobs.data} 
 				hotJobs={hotJobs.data.data}
 				lang={props.params.lang}
+				config={props.configs.config}
 			>
 				<section style={{
 					width: '100%',
@@ -74,7 +84,7 @@ export default async function CompanyLayout(props: {
 					backgroundColor: '#ffffff',
 
 				}}>
-					<main data-v={JSON.stringify(detail)}>
+					<main data-v={JSON.stringify(props)}>
 						{props.children}
 					</main>
 				</section>
@@ -91,3 +101,7 @@ export default async function CompanyLayout(props: {
 	
 
 }
+
+export default configs(serverDataScript().chain((configs) =>
+    buildComponentScript({ configs }, CompanyLayout))
+).run

@@ -33,7 +33,7 @@
   }
 }
 .button_loading {
-  opacity: 0.5;
+  background-color: lighten($color: #2378e5, $amount: 20);
   cursor: not-allowed !important;
 }
 
