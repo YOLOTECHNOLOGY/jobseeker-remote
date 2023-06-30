@@ -150,19 +150,20 @@ const SearchArea = (props: any) => {
             lang={home.search}
             sx={{
               '> .MuiFormControl-root': {
-                borderRadius: '10px',
-                height: '40px',
+                borderRadius: '8px',
+                height: '60px',
                 marginTop: '4px',
                 overflow: 'hidden',
                 '> .MuiOutlinedInput-root': {
-                  borderRadius: '10px',
-                  height: '40px',
+                  borderRadius: '8px',
+                  height: '60px',
                   overflow: 'hidden',
                   marginTop: '4px'
                 }
               }
             }}
           />
+          <div style={{display:"flex"}}>
           <JobSearchBar
             id='search'
             label={home.search.title}
@@ -223,6 +224,7 @@ const SearchArea = (props: any) => {
             {' '}
             {home.search.btn1}{' '}
           </MaterialButton>
+          </div>
           {isShow && (
             <div className={styles.download}>
               <PhoneIphoneIcon className={styles.icon} />

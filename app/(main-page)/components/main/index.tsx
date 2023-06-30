@@ -57,8 +57,10 @@ const Main = async (props: any) => {
   return (
     <>
       <div className={styles.main}>
-        <div className={styles.title}>{home.title}</div>
+
+        <div className={styles.title}>{home.title} <span></span></div>
         <TopModule {...props} />
+        
         <Tabs config={config} langKey={langKey} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
         <Companies langKey={langKey} lang={props.lang} config={config} location_id={locationId} />

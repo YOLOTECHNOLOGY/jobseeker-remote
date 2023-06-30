@@ -21,7 +21,6 @@
   justify-content: space-between;
   flex-wrap: wrap;
   padding-top: 28px;
-  background: #f5f6fa;
   width: 100%;
 
   &_more {
@@ -49,13 +48,15 @@
 .job {
   &_detail {
     width: calc(50% - 5px);
-    margin-bottom: 16px;
-    border-radius: 15px;
+    margin-bottom: 20px;
     background-color: rgb(255, 255, 255);
     box-sizing: border-box;
     cursor: pointer;
     transition: box-shadow 0.3s ease-in;
     overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid #E5E6EB;
+    background: #FFF;
   }
 
   &_detail:hover {
@@ -69,15 +70,15 @@
 
   &_info {
     color: rgb(255, 255, 255);
-    padding: 15px 19px 0 16px;
+    padding: 16px;
     display: block;
 
     &_title {
       font-style: normal;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 17px;
       letter-spacing: 0.02em;
-      color: #353535;
+      color: #333945;
       width: 0;
       flex: 1;
       overflow: hidden;
@@ -95,9 +96,9 @@
     &_salary {
       font-style: normal;
       font-weight: 400;
-      font-size: 18px;
+      font-size: 15px;
       letter-spacing: 0.02em;
-      color: #fe574a;
+      color: #2378E5;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -113,9 +114,9 @@
       padding: 3px 10px;
       background: #136fd3;
       border: 0.5px solid #136fd3;
-      border-radius: 16px;
+      border-radius: 4px;
       font-weight: 400;
-      width: 98px;
+      min-width: 76px;
       font-size: 12px;
       letter-spacing: 0.0075em;
       color: #ffffff;
@@ -125,7 +126,7 @@
       float: right;
     }
   }
-
+ 
   &_info:hover > &_titleWrapper > &_info_title {
     color: #136fd3;
   }
@@ -144,20 +145,21 @@
 
   &_tags {
     display: flex;
-    padding: 16px 0 22px;
+    padding: 15px 0 16px;
 
     div {
       align-items: center;
-      padding: 3px 10px;
-      background: #f0f0f0;
-      border-radius: 16px;
+      padding: 0 10px;
+      height: 25px;
+      line-height: 25px;
+      background: #F7F8FA;
+      border-radius: 4px;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
-      line-height: 15px;
       letter-spacing: 0.0075em;
-      color: #707070;
-      margin-right: 5px;
+      margin-right: 8px;
+      color: #4E5969;
     }
   }
 
@@ -183,9 +185,8 @@
     //   rgba(242, 177, 202, 0.2) 43.36%,
     //   rgba(84, 142, 237, 0.2) 99.89%
     // );
-    background: linear-gradient(90deg, #f2f9ff 0%, #ffffff 100%);
-
-    border-radius: 0px 0px 15px 15px;
+    border-top: 1px solid var(--neutral-color-border, #F2F3F5);
+    margin:0 16px
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -212,9 +213,22 @@
     color: #136fd3;
   }
 }
-
+.popularJobsBox{
+  background: #FCFCFC;
+  .jobTitle{
+    padding:40px 0 20px 0;
+    line-height: 55px;
+    margin: 0;
+  }
+}
 .webTab {
   position: relative;
+  @extend .GlobalNextAppContainer;
+  :global{
+    .MuiTabs-root .MuiTabs-indicatorSpan {
+      background-color: #1D2129,
+    }
+  }
 
   .preference {
     position: absolute;
@@ -578,12 +592,13 @@
 }
 
 .recommendContainer {
+  @extend .GlobalNextAppContainer;
   width: 100%;
   height: 250px;
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 
   @include msd {
     display: none;
@@ -609,7 +624,7 @@
       width: calc(50% - 5px);
       height: 100%;
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: 8px;
     }
 
     @include xl {
@@ -659,7 +674,7 @@
     overflow: hidden;
     position: relative;
     background: #fff;
-    padding: 8px 0px;
+    padding: 8px 0px 0 0;
 
     // padding: 10px 10px;
     .mainItem {
@@ -747,19 +762,22 @@
         position: absolute;
         right: 10px;
         top: 16px;
+        color: #707070;
       }
     }
 
     .pagination {
       position: absolute;
       left: 20px;
-      bottom: 8px;
-
+      bottom: 0px;
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
       label {
         font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 15px;
         letter-spacing: 0.0075em;
         color: #353535;
@@ -768,6 +786,9 @@
         position: absolute;
         left: 5px;
         bottom: 4px;
+        span{
+          color: #B8B8B8;
+        }
       }
 
       button {
@@ -777,7 +798,7 @@
         height: 20px;
         position: relative;
         border-radius: 50%;
-        left: 44px;
+       left: -36px;
         cursor: pointer;
         font-size: 12px;
         background: #e7f1fb;
@@ -788,6 +809,9 @@
         &:hover {
           background: #136fd3;
           color: #fff;
+          .icon{
+            color: #fff;
+          }
         }
 
         &:disabled {
@@ -799,6 +823,7 @@
           font-size: 12px;
           margin: 0 auto;
           display: block;
+          color: #707070;
         }
       }
     }
@@ -811,7 +836,7 @@
     background: #fff;
     width: 110%;
     height: 103%;
-    border-radius: 20px;
+    border-radius: 8px;
     overflow-y: scroll;
     padding: 18px 18px 18px 0px;
     flex-direction: column;
@@ -907,29 +932,34 @@
 }
 
 .searchArea {
+  background: #F0F4F7;
+ 
   .box {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
-
+    @extend .GlobalNextAppContainer;
     .location {
       :global {
         .MuiInputLabel-root {
           display: none;
         }
         .MuiOutlinedInput-root {
-          height: 44px;
+          height: 60px;
           overflow: hidden;
           border-radius: 10px;
+          background: #fff;
         }
       }
-      width: 183px;
-      height: 44px;
+      width: 164px;
+      height: 60px;
       // overflow: hidden;
-      border-radius: 10px;
-
+      border-radius: 8px;
+      border: 1px solid  #E5E6EB;
+      background: #fff;
+      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
       @include sm {
         width: 140px;
       }
@@ -953,23 +983,29 @@
   }
 
   .search {
-    flex: 1;
-    margin: 0px 17px;
+    margin: 0 0 0 12px;
     background-color: #fff;
-    border-radius: 8px;
-    height: 44px;
-
+    border-radius: 8px 0 0 8px;
+    height: 60px;
+    width: 540px;
     :global {
       .MuiAutocomplete-root {
         background-color: #ffffff;
       }
 
       .MuiOutlinedInput-root {
-        height: 44px;
+        height: 60px;
       }
 
       .MuiInputLabel-root {
-        top: 3px;
+        top: 12px;
+      }
+      .MuiFormLabel-filled, .Mui-focused {
+        top:0;
+        border-radius: unset;
+      }
+      .MuiOutlinedInput-notchedOutline {
+        border-radius: 8px 0 0 8px;
       }
     }
 
@@ -987,11 +1023,12 @@
     padding: 12px 24px;
     gap: 19px;
     color: #fff;
-    width: 118.87px;
-    height: 44px;
+    width: 126px;
+    height: 60px;
+    font-size: 20px;
     background: #136fd3;
-    border-radius: 10px;
-
+    border-radius:0 8px 8px 0;
+    font-weight: 700;
     // flex: none;
     // order: 2;
     // flex-grow: 0;
@@ -1014,14 +1051,16 @@
 }
 
 .popularJobs {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-  height: 50px;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-
+  background: #F0F4F7;
+  .popularBox{
+    @extend .GlobalNextAppContainer;
+    display: flex;
+    flex-direction: row;
+    padding: 26px 0 23px;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
   @include sm {
     flex-direction: column;
     height: fit-content;
@@ -1043,7 +1082,7 @@
     letter-spacing: 0.0075em;
     width: fit-content;
     flex-shrink: 0;
-
+     color: #86909C;
     @include sm {
       font-family: 'Product Sans';
       font-style: normal;
@@ -1072,26 +1111,27 @@
     .tag {
       flex-shrink: 0;
       width: fit-content;
-      height: 30px;
+      height: 36px;
       font-family: 'Product Sans';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
-      line-height: 18px;
+      line-height: 36px;
       justify-content: center;
       display: flex;
       align-items: center;
       text-align: center;
       letter-spacing: 0.0075em;
-      color: #136fd3;
-      margin: 0px 10px;
+      margin: 0px 0 0 15px;
       padding: 0px 10px;
+      min-width: 155px;
       background: #fff;
-      border-radius: 15px;
+      border-radius: 4px;
       overflow: hidden;
       text-overflow: clip;
       white-space: nowrap;
-
+      border: 1px solid #E5E6EB;
+      color: #4E5969;
       @include sm {
         width: calc(50% - 5px);
         margin: 10px 10px 0 0;
@@ -1102,11 +1142,11 @@
       }
 
       &:hover {
-        background: #136fd3;
-        color: #fff;
-
+       // background: #136fd3;
+        //color: #fff;
+        border: 1px solid #4E5969;
         a {
-          color: #fff;
+       //   color: #fff;
         }
       }
     }
@@ -1259,8 +1299,6 @@
   // max-width: 1136px;
   width: 100%;
   margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
   // padding-left: 10px;
   // padding-right: 10px;
 
@@ -1298,7 +1336,7 @@
 }
 
 .main {
-  @extend .GlobalNextAppContainer;
+ // @extend .GlobalNextAppContainer;
 
   @include sm {
     padding: 0px 10px;
@@ -1308,21 +1346,23 @@
     font-family: 'Product Sans';
     font-style: normal;
     font-weight: 700;
-    font-size: 30px;
-    line-height: 40px;
+    font-size: 48px;
     display: flex;
     align-items: center;
+    justify-content: center;
     letter-spacing: 0.02em;
-    margin-top: 33px;
-    margin-bottom: 17px;
-    color: #136fd3;
-    padding: 0 10px;
+    color: #121212;
+    padding: 26px  0  28px 0;
+    background: #F0F4F7;
+    span{
+      color: #2378E5;
+    }
   }
 }
 
 .companies {
   padding-bottom: 72px;
-
+  @extend .GlobalNextAppContainer;
   h2 {
     font-style: normal;
     font-weight: 700;
@@ -1350,7 +1390,7 @@
     min-height: 120px;
     width: calc(50% - 10px);
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid#E5E6EB;
     &:nth-of-type(even) {
@@ -1364,8 +1404,8 @@
       margin: 0 20px;
       border-bottom: 1px solid #E5E6EB;
       .img {
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
         float: left;
         margin: 36px 11px 0 0;
         border-radius: 5px;
@@ -1373,17 +1413,17 @@
 
       h5 {
         font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
+        font-weight: 700;
+        font-size: 18px;
         line-height: 24px;
-        color: #353535;
-        padding: 36px 0 2px 0;
+        color: #121212;
+        padding: 34px 0 4px 0;
         margin: 0;
       }
 
       p {
         margin: 0;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 15px;
         letter-spacing: 1px;
         color: #707070;
@@ -1445,17 +1485,19 @@
           padding: 3px 10px;
           background: #136fd3;
           border: 0.5px solid #136fd3;
-          border-radius: 16px;
-          font-weight: 400;
+          border-radius: 4px;
+          font-weight: 700;
           width: 98px;
           text-align: right;
           font-size: 12px;
           letter-spacing: 0.0075em;
           color: #ffffff;
-          transform: translateY(30px);
+          transform: translateY(24px);
           white-space: nowrap;
           transition: all 0.4s ease 0s;
           float: right;
+          box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+
         }
       }
 
@@ -1477,7 +1519,7 @@
         }
 
         .chat {
-          transform: translateY(-26px);
+          transform: translateY(-22px);
         }
 
         .salary {
