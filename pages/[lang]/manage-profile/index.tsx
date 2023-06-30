@@ -391,7 +391,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                     expandText={profile.readMore}
                     shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
-                    text={workExp?.description}
+                    text={workExp?.description_html}
                     className={styles.readMoreDescriptionWrapper}
                   />
                 )}
