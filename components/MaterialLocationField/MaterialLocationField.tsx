@@ -20,8 +20,8 @@ const textFieldTheme = createTheme({
           letterSpacing: '1px',
           backgroundColor: 'white',
           height: '44px'
-        },
-      },
+        }
+      }
     },
     MuiInputLabel: {
       styleOverrides: {
@@ -31,7 +31,7 @@ const textFieldTheme = createTheme({
           transform: 'translate(14px, 10px) scale(1)',
           '&.Mui-focused': {
             fontSize: '10px',
-            transform: 'translate(14px, -10px) scale(1)',
+            transform: 'translate(14px, -10px) scale(1)'
           },
           top: '4px',
           height: '44px',
@@ -39,16 +39,16 @@ const textFieldTheme = createTheme({
         },
         shrink: {
           fontSize: '10px',
-          transform: 'translate(14px, -10px) scale(1)',
+          transform: 'translate(14px, -10px) scale(1)'
         },
         outlined: {
           '&.MuiInputLabel-shrink': {
-            fontSize: '10px',
-          },
-        },
-      },
-    },
-  },
+            fontSize: '10px'
+          }
+        }
+      }
+    }
+  }
 })
 const autocompleteTheme = createTheme({
   components: {
@@ -56,13 +56,13 @@ const autocompleteTheme = createTheme({
       styleOverrides: {
         root: {
           '&.MuiInputLabel-shrink': {
-            fontSize: '13px',
+            fontSize: '13px'
           },
           height: '44px'
-        },
-      },
-    },
-  },
+        }
+      }
+    }
+  }
 })
 
 const formatLocationConfig = (locationList) => {
@@ -70,11 +70,18 @@ const formatLocationConfig = (locationList) => {
   return locationConfig
 }
 
-const MaterialLocationField = ({ className, label, disableClearable = false, defaultValue, required, fieldRef, error, ...rest }: any) => {
+const MaterialLocationField = ({
+  className,
+  label,
+  disableClearable = false,
+  defaultValue,
+  required,
+  fieldRef,
+  error,
+  ...rest
+}: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
-  const locationList = useSelector(
-    (store: any) => store.config.config.response?.location_lists
-  )
+  const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const formattedLocationList = flat(formatLocationConfig(locationList))
   return (
     <ThemeProvider theme={autocompleteTheme}>
@@ -91,12 +98,22 @@ const MaterialLocationField = ({ className, label, disableClearable = false, def
         className={className}
         renderInput={(params) => (
           <ThemeProvider theme={textFieldTheme}>
-            <TextField id='location'
+            <TextField
+              id='location'
               {...fieldRef}
               error={!!error}
               required={rest.required}
               helperText={error?.message}
-              label={<span>{label ? label : 'Location'} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}</span>} variant='outlined' size='small' {...params} />
+              label={
+                <span>
+                  {label ? label : 'Location'}{' '}
+                  {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
+                </span>
+              }
+              variant='outlined'
+              size='small'
+              {...params}
+            />
           </ThemeProvider>
         )}
         defaultValue={defaultValue}

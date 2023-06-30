@@ -1,52 +1,67 @@
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
   width: 368px;
-  border: 1px solid #E5E6EB;
+  border: 1px solid #e5e6eb;
   border-radius: 8px;
 }
-.chatItem{
+.chatItem {
   display: flex;
   flex-direction: row;
   margin-bottom: 24px;
 }
-.chatHeader{
+.chatHeader {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   background-color: gray;
   margin-right: 10px;
 }
-.chatContent{
-
+.chatContent {
 }
 
-.chatTitle{
+.chatTitle {
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 23px;
   letter-spacing: 0.0075em;
-  color: #1D2129;
+  color: #1d2129;
   margin-bottom: 2px;
 }
-.chatSubtitle{
+.chatSubtitle {
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
-  color: #86909C;
+  color: #86909c;
 }
-.title{
+.title {
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 30px;
-  color: #1D2129;
+  color: #1d2129;
   margin-bottom: 14px;
+}
+.animation_wrapper {
+  overflow: hidden;
+  transition: height 0.3s linear;
+}
+.more {
+  color: var(--neutral-color-text, #1d2129);
+  font-size: 14px;
+  font-family: Product Sans;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0.105px;
+  text-decoration-line: underline;
+  margin-top: 10px;
+  cursor: pointer;
 }

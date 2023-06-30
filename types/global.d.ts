@@ -4,3 +4,4 @@ declare namespace globalThis {
         AppleID?: any;
     }
 }
+
