@@ -10,6 +10,7 @@ import { useCompanyDetail } from '../../DataProvider';
 import Image from 'next/image';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
+import classNames from 'classnames';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -18,10 +19,13 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
+	const {config} = useCompanyDetail();
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
-		props.company_business_info.name = _props.name;
-		props.company_business_info.industry = _props.industry;
+		props.company_business_info.name = _props.legal_name;
+		// @ts-ignore
+		props.turnover = config.turnover_lists.filter((_)=>{return _.id === _props.turnover_id})[0]?.value;
+		// props.company_business_info.industry = _props.industry;
 	}
 	const contextLang = useContext(languageContext);
 
@@ -62,7 +66,7 @@ const CompanyInfo = (_props: Props) => {
 		field: 'website',
 		name: 'Company website'
 	}, {
-		field: '',
+		field: 'turnover',
 		name: 'Turnover',
 	}, {
 		field: 'phone_num',
@@ -81,7 +85,7 @@ const CompanyInfo = (_props: Props) => {
 		name: 'Registered capital',
 		field: 'registered_capital',
 	}, {
-		name: 'Paid-in capital',
+		name: 'Paid-up capital',
 		field: 'paid_in_capital',
 	}, {
 		name: 'Date of establishment',
@@ -104,22 +108,19 @@ const CompanyInfo = (_props: Props) => {
 	}, {
 		name: 'Registered address',
 		field: 'full_address'
-	}, {
-		name: 'Industry',
-		field: 'industry'
 	}]
 
 	const listing_info = [{
 		name: 'Stock code',
 		field: 'stock_code',
 	}, {
-		name: 'IPO valuation',
+		name: 'IPO valuation(USD)',
 		field: 'ipo_valuation',
 	}, {
-		name: 'Initial public offering',
+		name: 'Money Raised at IPO(USD)',
 		field: 'initial_public_offering',
 	}, {
-		name: 'IPO issue price',
+		name: 'IPO issue price(USD)',
 		field: 'ipo_issue_price',
 	}, {
 		name: 'Issue date',
@@ -137,12 +138,7 @@ const CompanyInfo = (_props: Props) => {
 		{info.map((item, index) => {
 			const noSplit = index === 0;
 			if (item.id === 'Introduction' && props.description) {
-				return <Section key={index} title={item.title} split={!noSplit}>
-					<div className={style.introduction} dangerouslySetInnerHTML={{
-						__html: filterScriptContent(props.description)
-					}}>
-					</div>
-				</Section>
+				return Introduction(index, item, noSplit, props)
 			}
 			if (item.id === 'Address' && props.full_address) {
 				return <Section key={index} title={item.title} split={!noSplit}>
@@ -226,6 +222,40 @@ Array.prototype.padArrayToMultiple = function <T>(num: number) {
 };
 
 
+
+function Introduction(index: number, item: { id: string; title: string; }, noSplit: boolean, props: { jobs: JobData[]; onMore: (e: React.SyntheticEvent) => void; id: number; coordinator_id: number; legal_name: string; name: string; num_of_members: number; cover_pic_url: string; logo_url: string; logo_tmm: any; company_size: string; industry: string; full_address: string; longitude: number; latitude: number; unit_num: any; website: string; facebook_url: string; instagram_url: string; linkedin_url: string; youtube_url: string; description: string; description_html: string; twitter_url: string; turnover_id: number; cultures: { id: number; value: string; category: string; }[]; benefits: { id: number; value: string; category: string; }[]; pictures: { id: number; url: string; sort_order: number; }[]; company_business_info: any; company_url: string; is_verify: boolean; document: any; financing_stage: string; working_addresses: any[]; industry_id: number; company_size_id: number; financing_stage_id: any; listing_info: any; country_id: number; children?: React.ReactNode; }): JSX.Element {
+	const ref = useRef(null);
+	const [isVisible, setIsVisible] = useState(false);
+	const [contentHeight, setContentHeight] = useState(150);
+	const calculateContentHeight = () => {
+		setContentHeight(ref.current.scrollHeight);
+	};
+	useLayoutEffect(() => {
+		calculateContentHeight();
+	});
+	const handleClick = () => {
+		setIsVisible(!isVisible)
+	}
+	return <Section key={index} title={item.title} split={!noSplit}>
+		<div 
+			className={classNames({
+				[style.introduce_wrapper]: true,
+				[style.ellipsis]: !isVisible
+			})}
+			style={{height: isVisible ? contentHeight :  90}}
+		>
+			<div 
+				className={style.introduction}
+				ref={ref}
+				dangerouslySetInnerHTML={{
+				__html: filterScriptContent(props.description)
+			}}>
+			</div>
+		</div>
+
+		{!isVisible && <div className={style.more} onClick={handleClick}>More</div>}
+	</Section>;
+}
 
 function BusinessInfo(
 	index: number,

@@ -1,3 +1,5 @@
+@use '../../base';
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -31,7 +33,10 @@
   letter-spacing: 0.0075em;
   color: #1d2129;
   margin-bottom: 2px;
+  width: 270px;
+  @include base.text_overflow;
 }
+
 .chatSubtitle {
   font-family: 'Product Sans';
   font-style: normal;
@@ -39,6 +44,8 @@
   font-size: 12px;
   line-height: 18px;
   color: #86909c;
+  width: 270px;
+  @include base.text_overflow;
 }
 .title {
   font-family: 'Product Sans';

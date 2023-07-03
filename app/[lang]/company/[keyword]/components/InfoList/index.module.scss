@@ -40,6 +40,16 @@
   align-items: flex-start;
   flex-wrap: wrap;
 }
+.introduce_wrapper {
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
 .more {
   font-family: 'Product Sans';
   font-weight: 400;
