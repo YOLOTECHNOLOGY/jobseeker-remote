@@ -70,6 +70,7 @@ const CompanyProfileLayout = ({
   accessToken,
   lang
 }: ICompanyProfileLayout) => {
+  console.log('company',company.company_url);
   const dispatch = useDispatch()
   const router = useRouter()
   const imgPlaceholder =
@@ -121,7 +122,7 @@ const CompanyProfileLayout = ({
 
   // const additionalCanonicalText =
   //   currentTab == 'jobs' ? '/jobs' : currentTab == 'life' ? '/life' : ''
-  const companyUrl = company.company_url
+  const companyUrl = company.company_url.replace('/company/', '/company_backup/')
   // const canonicalUrl = companyUrl + additionalCanonicalText
 
   return (
