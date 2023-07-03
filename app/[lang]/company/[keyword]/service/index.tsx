@@ -117,6 +117,7 @@ export interface CompanyDetailsType {
 	description: string;
 	description_html: string;
 	twitter_url: string;
+	turnover_id: number;
 	cultures: {
 		id: number;
 		value: string;

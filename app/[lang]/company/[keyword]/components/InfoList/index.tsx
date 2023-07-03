@@ -18,10 +18,13 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
+	const {config} = useCompanyDetail();
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
-		props.company_business_info.name = _props.name;
-		props.company_business_info.industry = _props.industry;
+		props.company_business_info.name = _props.legal_name;
+		// @ts-ignore
+		props.turnover = config.turnover_lists.filter((_)=>{return _.id === _props.turnover_id})[0]?.value;
+		// props.company_business_info.industry = _props.industry;
 	}
 	const contextLang = useContext(languageContext);
 
@@ -62,7 +65,7 @@ const CompanyInfo = (_props: Props) => {
 		field: 'website',
 		name: 'Company website'
 	}, {
-		field: '',
+		field: 'turnover',
 		name: 'Turnover',
 	}, {
 		field: 'phone_num',
@@ -81,7 +84,7 @@ const CompanyInfo = (_props: Props) => {
 		name: 'Registered capital',
 		field: 'registered_capital',
 	}, {
-		name: 'Paid-in capital',
+		name: 'Paid-up capital',
 		field: 'paid_in_capital',
 	}, {
 		name: 'Date of establishment',
@@ -104,22 +107,19 @@ const CompanyInfo = (_props: Props) => {
 	}, {
 		name: 'Registered address',
 		field: 'full_address'
-	}, {
-		name: 'Industry',
-		field: 'industry'
 	}]
 
 	const listing_info = [{
 		name: 'Stock code',
 		field: 'stock_code',
 	}, {
-		name: 'IPO valuation',
+		name: 'IPO valuation(USD)',
 		field: 'ipo_valuation',
 	}, {
-		name: 'Initial public offering',
+		name: 'Money Raised at IPO(USD)',
 		field: 'initial_public_offering',
 	}, {
-		name: 'IPO issue price',
+		name: 'IPO issue price(USD)',
 		field: 'ipo_issue_price',
 	}, {
 		name: 'Issue date',

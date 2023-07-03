@@ -140,7 +140,6 @@ const SearchPanel = (props: Props) => {
                         disableClearable={false}
                         // className={className}
                         renderInput={(params) => {
-                            console.log('params',params);
                             return (
                                 <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
                                     <input {...params.inputProps} placeholder='Location' className={style.location_input} />
