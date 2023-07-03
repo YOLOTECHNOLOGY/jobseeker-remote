@@ -43,7 +43,7 @@ export async function fetchJobsListReq(data, accessToken) {
 			is_company_verified: verifiedCompany,
 			main_functions: mainFunctions,
 			function_job_title_ids: functionTitles,
-			job_functions_ids: jobFunctions,
+			job_functions_id: jobFunctions,
 			sort,
 			page,
 			size: size || 30,
