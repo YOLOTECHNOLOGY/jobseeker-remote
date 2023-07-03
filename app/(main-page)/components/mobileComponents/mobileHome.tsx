@@ -71,15 +71,18 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
                       </p>
                       <p className={styles.num}>
                         {num_of_active_jobs} {jobs}{' '}
-                        <ArrowForwardIosIcon
+                       
+                      </p>
+                      <span className={styles.arowForward}>
+                      <ArrowForwardIosIcon
                           sx={{
                             transform: 'translateY(1px)',
                             marginLeft: '6px',
-                            color: '#2378E5',
-                            fontSize: '11px'
-                          }}
+                            color: '#86909C',
+                            fontSize: '18px'
+                          }}  
                         />
-                      </p>
+                      </span>
                     </div>
                   </Link>
                 )

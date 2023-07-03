@@ -48,7 +48,7 @@ const JobDetail = ({ detail, config, langKey }: any) => {
         className={styles.job_info}
         onClick={() => handleAddJobView('/' + langKey + detail.job_url)}
       >
-        <Link prefetch={false} className={styles.job_info} href={'/' + langKey + detail.job_url}>
+        <Link prefetch={false}  href={'/' + langKey + detail.job_url}>
           <div className={styles.job_titleWrapper}>
             <div className={styles.job_info_title}>{detail?.job_title}</div>
             <div className={styles.transBox}>
