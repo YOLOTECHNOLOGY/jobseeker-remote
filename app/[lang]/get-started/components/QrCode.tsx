@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import moment from 'moment'
 import { AppDownQRCode } from 'images'
-import { getQrcode , qrcodePolling } from 'store/services/auth/newLogin'
+import { getQrcode, qrcodePolling } from 'store/services/auth/newLogin'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import styles from '../index.module.scss'
 import Image from 'next/image'
@@ -9,7 +9,8 @@ import useGetStarted from '../hooks/useGetStarted'
 import { scanHunt } from 'images'
 import { scanJob } from 'images'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress'
+import Toast from 'app/components/Toast'
 function guid() {
   return 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0
@@ -29,7 +30,7 @@ const qrCode = ({ lang }: any) => {
   const [overtime, setOvertime] = useState<boolean>(false)
   const [userInfo, setUserInfo] = useState<any>(null)
   const uuidRef = useRef(null)
-  const timeRef = useRef(moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss'))
+  const timeRef = useRef(null)
   const { setCookiesWithLoginData, sendEventWithLoginData, defaultLoginCallBack } = useGetStarted()
   const {
     scanQRCodeOnAppToLogin,
@@ -38,17 +39,15 @@ const qrCode = ({ lang }: any) => {
     ImJobSeeker,
     ImRecruiter,
     menuLoginToVersion,
-    magicLink:{
-        welcomeBack
-    },
+    magicLink: { welcomeBack },
     scannedSuccessfully,
     pleaseConfirmLoginOnAPP,
     pleaseRefreshQrCode,
-    clickToRefresh
+    clickToRefresh,
+    accountMismatch
   } = getStatred
 
   const menu = [ImJobSeeker, ImRecruiter]
-
   useEffect(() => {
     getQrCodeFun()
     return () => clearInterval(timer)
@@ -63,9 +62,9 @@ const qrCode = ({ lang }: any) => {
   }, [userInfo])
 
   const getInfo = (userInfo) => {
-    fetchUserOwnDetailService({accessToken : userInfo.access_token }).then((res) => {
-      const userDetail = {...(res?.data?.data || {}),...userInfo}
-      console.log({userDetail})
+    fetchUserOwnDetailService({ accessToken: userInfo.access_token }).then((res) => {
+      const userDetail = { ...(res?.data?.data || {}), ...userInfo }
+      console.log({ userDetail })
       setCookiesWithLoginData(userDetail)
       sendEventWithLoginData(userDetail)
       setTimeout(() => {
@@ -82,12 +81,14 @@ const qrCode = ({ lang }: any) => {
         clearInterval(timer)
         setOvertime(true)
       }
+     
     }, 1500)
   }
 
   const getQrCodeFun = () => {
     const uuid = guid()
     uuidRef.current = uuid
+    timeRef.current = moment(new Date()).add(3, 'minute').format('YYYY-MM-DD HH:mm:ss')
     getQrcode({
       generate_uuid: uuid,
       expiration_time: timeRef.current
@@ -101,18 +102,30 @@ const qrCode = ({ lang }: any) => {
     qrcodePolling({
       qrcode_uuid: uuidRef.current
     }).then((res) => {
-      const { status } = res.data?.data
-      if (status == 2) {
+      const { status, role_id } = res.data?.data
+      if (status === 2) {
+        if (role_id !== 1) {
+          Toast.error(accountMismatch)
+          getBack()
+          return
+        }
         setScanInfo(res.data?.data)
-      } else if (status == 4) {
+      } else if (status === 4) {
         clearInterval(timer)
         setUserInfo(res.data?.data)
+      } else if (status === 3) {
+        getBack()
       }
     })
   }
 
+  const getBack = () => {
+    clearInterval(timer)
+    setScanInfo({})
+    getQrCodeFun()
+  }
+
   const refreshCode = () => {
-    timeRef.current = moment(new Date()).add(5, 'minute').format('YYYY-MM-DD HH:mm:ss')
     getQrCodeFun()
     setOvertime(false)
   }
@@ -121,7 +134,10 @@ const qrCode = ({ lang }: any) => {
     <>
       {scanInfo?.avatar ? (
         <>
-          <h3 className={styles.codeTitle}> {welcomeBack} {scanInfo?.first_name}</h3>
+          <h3 className={styles.codeTitle}>
+            {' '}
+            {welcomeBack} {scanInfo?.first_name}
+          </h3>
           {/* <Image
             src={scanInfo?.avatar}
             alt=''
@@ -145,11 +161,13 @@ const qrCode = ({ lang }: any) => {
               <Image
                 src={`data:image/gif;base64,${qrCodeImg?.qrcode_base_code}`}
                 alt='app down'
-                width='170'
+                width='186'
                 className={styles.qrcode}
-                height='170'
+                height='186'
               />
-            ) : <CircularProgress size={26}/> }
+            ) : (
+              <CircularProgress size={26} />
+            )}
             {overtime && (
               <div className={styles.overTime}>
                 <p>{pleaseRefreshQrCode}</p>
@@ -161,12 +179,12 @@ const qrCode = ({ lang }: any) => {
             <span>
               {donHaveApp} <HelpOutlineIcon className={styles.icon}></HelpOutlineIcon>
               <div className={styles.popver}>
-            <Image src={AppDownQRCode} alt='app down' width='124' height='124' />
-            <p>
-              {header.downloadApp} <br />
-              (ios, Android)
-            </p>
-          </div>
+                <Image src={AppDownQRCode} alt='app down' width='124' height='124' />
+                <p>
+                  {header.downloadApp} <br />
+                  (ios, Android)
+                </p>
+              </div>
             </span>
             <span>
               {howToScanQRCode}

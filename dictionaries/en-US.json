@@ -88,15 +88,16 @@
     "loginUsingSocialMediaOTP": "Login using social media/OTP",
     "loginUsingQRCode": "Login using QR code",
     "scanQRCodeOnAppToLogin": "Use Bossjob APP to scan the QR code to login",
-    "donHaveApp": "Don’t have APP?",
-    "howToScanQRCode": "How to scan the QR code?",
+    "donHaveApp": "Don’t have App",
+    "howToScanQRCode": "How to scan the QR code",
     "ImJobSeeker": "I'm a Jobseeker",
     "ImRecruiter": "I'm an Employer",
     "menuLoginToVersion": "Menu > Login to Web",
     "scannedSuccessfully": "Scanned successfully",
     "pleaseConfirmLoginOnAPP": "Please confirm the request on APP",
-    "pleaseRefreshQrCode": "Please refresh the QR code",
-    "clickToRefresh": "Click to refresh"
+    "pleaseRefreshQrCode": "Refresh QR Code",
+    "clickToRefresh": "Refresh",
+    "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
     "communicated": "Communicated",
@@ -238,7 +239,7 @@
         "viewAll": "See all Jobs",
         "search": {
           "jobTitle": "Search for job title",
-          "location": "location",
+          "location": "Location",
           "btn": "Search"
         },
         "card": {
@@ -252,7 +253,7 @@
       "culture": "Company Culture",
       "benefit": "Employee Benefits",
       "photo": "Photos",
-      "noPhotoTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
+      "noPhotoTips": "{{companyName}} hasn't updated any information about their company life. Please come back again."
     },
     "job": {
       "title": "Jobs",
@@ -264,11 +265,11 @@
       "pagination": {
         "tips": "Showing {{range}} of {{totalJobs}} jobs"
       },
-      "noMatchedJobs": "We couldn't find any jobs matching your search.",
-      "noJobs": "{{companyName}} does not have any job openings now. Please come back again."
+      "noMatchedJobs": "Sorry, we couldn't find any match for your search.",
+      "noJobs": "{{companyName}} doesn't have any job openings now. Please come back again."
     },
     "rightSection": {
-      "uploadResume": "Upload Resume & Apply Job!",
+      "uploadResume": "Upload Resume & Apply Jobs!",
       "othersViewed": "People also viewed...",
       "viewAll": "View all"
     },
@@ -283,8 +284,8 @@
   },
   "home": {
     "title": "Find Job. Talk to Boss.",
-    "defaultLocationPH": "manila",
-    "defaultLocationSG": "downtown core",
+    "defaultLocationPH": "Manila",
+    "defaultLocationSG": "Downtown Core",
     "search": {
       "location": "Location",
       "title": "Job title or company",
@@ -393,7 +394,7 @@
       "title": "Share this job",
       "facebook": "Facebook",
       "twitter": "Twitter",
-      "linkedin": "Linkedin",
+      "linkedin": "LinkedIn",
       "link": "Page Link",
       "linkCopied": "Link copied"
     },
@@ -401,7 +402,7 @@
       "title": "Report Job",
       "notReportedTitle": "Why are you reporting this job?",
       "category": {
-        "spam": "I think it’s spam or scam",
+        "spam": "I think it’s spam or a scam",
         "discrimination": "I think it’s discriminatory or offensive",
         "broken": "I think something is broken"
       },
@@ -420,7 +421,7 @@
       "title": "Chat with {{name}}",
       "btn1": "Cancel",
       "btn2": "Proceed",
-      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
+      "content": "You are currently chatting with the Boss for {{jobName}}. Are you sure you want to switch to another job?"
     },
     "completeProfileModal": {
       "title": "Notice",
@@ -432,10 +433,10 @@
       "company": {
         "title": "Company",
         "allJobHiring": "View {{jobs}} jobs hiring",
-        "employees": "Employees"
+        "employees": "employees"
       },
       "similarJob": {
-        "title": "SimilarJobs",
+        "title": "Similar Jobs",
         "seeMore": "See more"
       },
       "signUp": {
@@ -489,7 +490,7 @@
     "updateAlertModal": {
       "title": "Manage Job Alert",
       "btn1": "Back",
-      "btn2": "Done",
+      "btn2": "Back",
       "filters": "Filters",
       "subTitle": "Alert Frequency",
       "daily": "Daily",
@@ -600,7 +601,7 @@
           "addEdu": "Add education"
         },
         "eduModal": {
-          "title": "Education",
+          "title": "Add education",
           "btn1": "Cancel",
           "btn2": "Save",
           "school": "School Name",
@@ -608,7 +609,7 @@
           "period": "Study Period",
           "attend": "Currently attending",
           "from": "From",
-          "to": "to",
+          "to": "To",
           "startDate": "Month Year",
           "endDate": "Month Year",
           "dateErrorMsg": "Start date must be earlier than completion date.",
@@ -623,18 +624,18 @@
           "title": "Skills",
           "btn1": "Cancel",
           "btn2": "Save",
-          "suggestions": "We will suggest skill for you according to your latest job function:",
+          "suggestions": "We will suggest skill for you according to job function:",
           "jobFunction": "Job Function",
           "skill": "Search or add a skill"
         },
         "licenses": {
-          "title": "Licenses And Certifications",
+          "title": "Licenses and Certifications",
           "CID": "Credential ID",
           "noDataTips": "Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.",
-          "addLicense": "Add licenses & cert"
+          "addLicense": "Add licenses & certificates"
         },
         "licensesModal": {
-          "title": "Licenses And Certifications",
+          "title": "Licenses and Certifications",
           "btn1": "Cancel",
           "btn2": "Save",
           "licenseTitle": "Title of licenses/certification",
@@ -703,7 +704,7 @@
         },
         "openToWork": {
           "title": "Open to work",
-          "explain": "Let recruiters know that you are open to work"
+          "explain": "Let employers know that you are open to work"
         }
       },
       "resume": {
@@ -711,11 +712,11 @@
         "upload": {
           "title": "Upload your own resume",
           "tips": "Resume is an essential tool to get you to the next step in your job hunting process. Impress recruiters with additional information from your Bossjob profile.",
-          "time": "Uploaded On {{time}}",
+          "time": "Uploaded on {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
           "error": {
-            "title": "File exceed limit",
+            "title": "File exceeded limit",
             "tips": "Please upload file size lesser than 5MB."
           }
         },
@@ -744,7 +745,7 @@
           "eMailFormatIsIncorrect": "E-mail format is incorrect",
           "emailAddress": "Email address",
           "theEmailAddressYouWantToSendIs": "The email address you want to send is",
-          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "Please confirm that your email address is correct before sending",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": " please confirm that your email address is correct before sending",
           "more": "More",
           "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
           "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
@@ -787,6 +788,7 @@
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
     "jobFunction": "Job Title",
+    "desiredJobFunction": "Desired job title",
     "industry": "Industry",
     "description": "Description",
     "workingPeriod": "Working Period",
@@ -813,7 +815,7 @@
     "currentlyAttending": "Currently attending",
     "fieldOfStudy": "Field of Study",
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
-    "addAEducation": " Add a education",
+    "addAEducation": " Add an education",
     "notWantToEnterEducation": "I do not want to enter my Education now",
     "searchForJobTitle": "Search for job title",
     "year": "year",
@@ -892,12 +894,12 @@
     "uploadYourResume": "Upload your resume",
     "supportedFileType": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
     "fileSizeIsTooHuge": "File size is too huge. Please upload file that is within 5MB.",
-    "failedToUploadResume": "Failed to upload resume with error",
+    "failedToUploadResume": "Failed to upload resume",
     "pleaseContactSupport": " Please contact support@bossjob.com for assistance.",
     "sendResume": "Send Resume",
     "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
     "orUploadNewResume": "Or upload a new resume",
-    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "onlyMax3Resumes": " Max. 3 resumes, please delete at least 1 resume above",
     "uploadNewResume": "Upload a new resume",
     "JobType": "Job Type",
     "yearsOfExp": "Years of Exp",
@@ -927,8 +929,8 @@
     "confirmLabel": "Your interview cannot be cancelled now",
     "cancelAction": "Cancel interview",
     "canNotCancel": "Your interview cannot be cancelled now",
-    "checkedText": "Checked-In",
-    "checkedLabel": "Check in for the interview with recruiter",
+    "checkedText": "Checked-in",
+    "checkedLabel": "Check-in for the interview",
     "checkInText": "Check-in now",
     "canNoteCheckIn": "You cannot check in now.",
     "inProgressText": "In-progress",
@@ -944,7 +946,7 @@
     "notAttend": "You did not attend the interview.",
     "jobTitleLabel": "Job Title",
     "addressLabel": "Interview Address",
-    "timeLabel": "Date,Time",
+    "timeLabel": "Date, Time",
     "contactPersonLabel": "Contact person",
     "contactNumberLabel": "Contact number",
     "videoLink": "Video link",
@@ -1009,14 +1011,14 @@
   },
   "editJobPreferencesModal": {
     "validate": {
-      "jobTitle": "job title is required",
-      "jobType": "job type is required",
-      "location": "location is required",
-      "minSalary": "min salary is required",
-      "maxSalary": "max salary is required",
-      "currency": "currency is required",
-      "country": "country is required when location is overseas",
-      "industry": "industry is required"
+      "jobTitle": "Job title is required",
+      "jobType": "Job type is required",
+      "location": "Location is required",
+      "minSalary": "Min salary is required",
+      "maxSalary": "Max salary is required",
+      "currency": "Currency is required",
+      "country": "Country is required when location is overseas",
+      "industry": "Industry is required"
     }
   },
   "resumetemplate": {
@@ -1101,7 +1103,7 @@
     "verifyText": "To exchange mobile number with Boss, please verify your mobile number.",
     "countryCode": "Country code",
     "mobileNumber": "Mobile Number",
-    "digitPlaceholder": "Enter 6 digit OTP",
+    "digitPlaceholder": "Enter 6-digit OTP",
     "msgText": "Enter the code that we have message to {{number}}",
     "smb": "'s mobile number:",
     "boss": "Boss"
@@ -1113,7 +1115,7 @@
     "disabledAutoSendTitle": "Disable Auto-send Resume",
     "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
     "orUploadNewResume": "Or upload a new resume",
-    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
+    "onlyMax3Resumes": " Max. 3 resumes, please delete at least 1 resume before adding",
     "uploadNewResume": "Upload a new resume",
     "uploadYourResume": "Upload your Resume",
     "cancel": "Cancel",
@@ -1163,7 +1165,7 @@
     "verifyText": "Verify it’s you",
     "verifyExtra": "This extra step show that it is really you trying to log in.",
     "optError": "Send OTP fail",
-    "resendEmailCode": "Resend email'OTP success",
+    "resendEmailCode": "Resend email OTP success",
     "invalidOtp": "The OTP you have entered is wrong. Please try again.",
     "resendPhoneCode": "Resend phone'OTP success",
     "verifyEmail": "Verify email",
@@ -1171,13 +1173,13 @@
     "accounts": "accounts.",
     "thisPhoneNumber": "This phone number is associated with ",
     "youNeedToChooseVerified": "You need to choose a verified email address to associate",
-    "validateErr": "The email has been registered. Please change the binding to another email"
+    "validateErr": "This Email address has been used. Please change to another email"
   },
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
-    "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
+    "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
     "jobSearch": {
       "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
       "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
@@ -1220,7 +1222,7 @@
     "section1_message8": "Thank you, John. I look forward to speaking with you next week.",
     "section1_title": "AI Hiring APP",
     "section1_subtitle": "connect you with decision makers in real-time",
-    "section1_getApp": "Get the app",
+    "section1_getApp": "connect you with decision makers in real-time",
     "section3_subtitle": "a better & faster way to find jobs",
     "section3_list_title1": "AI-powered job matching",
     "section3_list_des1": "Match jobs for you using Big data & AI models!",

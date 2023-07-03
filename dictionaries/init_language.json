@@ -96,7 +96,8 @@
     "scannedSuccessfully": "Scanned successfully",
     "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
     "pleaseRefreshQrCode": "Please refresh the QR code",
-    "clickToRefresh": "Click to refresh"
+    "clickToRefresh": "Click to refresh",
+    "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
     "communicated": "Communicated",
@@ -432,7 +433,7 @@
       "company": {
         "title": "Company",
         "allJobHiring": "View {{jobs}} jobs hiring",
-        "employees": "Employees"
+        "employees": "employees"
       },
       "similarJob": {
         "title": "SimilarJobs",
@@ -787,6 +788,7 @@
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
     "jobFunction": "Job function",
+    "desiredJobFunction": "Desired job title",
     "industry": "Industry",
     "description": "Description",
     "workingPeriod": "Working Period",

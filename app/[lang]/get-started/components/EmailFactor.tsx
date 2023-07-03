@@ -24,13 +24,19 @@ function EmailFactor(props: any) {
   const langKey = getLang()
   const { newGetStarted } = props.lang
   const emailRef = useRef(null)
+  const isDisableRef = useRef(null);
+
+  useEffect(()=>{
+    isDisableRef.current = isDisable
+  },[isDisable])
+
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
-  }, [isDisable])
+  }, [])
  
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === 'Enter' && e.keyCode === 13 && !isDisable) {
+    if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
       checkIsEmailUseFun()
     }
   }
