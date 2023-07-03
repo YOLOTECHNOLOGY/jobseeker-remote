@@ -7,7 +7,7 @@ import { buildComponentScript } from 'app/models/abstractModels/util'
 import {getCountryKey} from "../../../../helpers/country";
 import {formatTemplateString} from "../../../../helpers/formatter";
 import {getDictionary} from "../../../../get-dictionary";
-import {cookies} from "next/headers";
+import {cookies,headers} from "next/headers";
 import {fetchCompanyDetailReq, fetchCompanyHR, fetchConfigReq, fetchJobsListReq, getIDFromKeyword, } from "./service";
 import { fetchJobsFunction } from "../../../../store/services/jobs/fetchJobFunction";
 
@@ -17,6 +17,8 @@ import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 import Footer from "components/Footer/Footer";
 import getConfigs from 'app/models/interpreters/config'
+import { redirect } from 'next/navigation'
+import { serveIsMobile } from 'helpers/utilities'
 
 const configs = getConfigs([
 	['location_lists'],
@@ -56,8 +58,15 @@ async function CompanyLayout(props: {
 	// URL -> /shop/shoes/nike-air-max-97
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
 	const cookieStore = cookies()
+	const headeStore = headers()
+  const userAgent = headeStore.get('user-agent');
+  const isMobile = serveIsMobile(userAgent);
 	const token = cookieStore.get('accessToken')
 	const id = getIDFromKeyword(props.params.keyword);
+
+	if(isMobile){
+		return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
+	}
 	try{
 		const [jobs, detail, hr, hotJobs, jobFunctions] = await Promise.all([
 			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token?.value), 

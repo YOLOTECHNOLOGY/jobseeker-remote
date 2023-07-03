@@ -12,6 +12,7 @@ import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
 
+
 function a11yProps(index: number) {
 	return {
 		id: `simple-tab-${index}`,
