@@ -166,6 +166,7 @@ const CompanyInfo = (_props: Props) => {
 				return <Section key={index} title={item.title + ' '} split={!noSplit}>
 					<div className={style.overview_item_wrapper}>
 						{listing_info
+							.filter(item => props.listing_info[item.field])
 							.padArrayToMultiple(3)
 							.map((item, index) => {
 								if (!item) {
