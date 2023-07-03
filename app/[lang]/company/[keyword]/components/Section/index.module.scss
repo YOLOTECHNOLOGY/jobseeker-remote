@@ -1,5 +1,10 @@
 .section {
   position: relative;
+  &:last-child {
+    .split {
+      opacity: 0 !important;
+    }
+  }
 }
 .title_layout {
   display: flex;
