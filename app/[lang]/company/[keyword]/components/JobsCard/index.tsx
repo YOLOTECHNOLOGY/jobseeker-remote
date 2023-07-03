@@ -9,10 +9,11 @@ import { JobsTag } from "../SearchPanel";
 
 const JobCard = (props: JobData) =>{
     const {lang} = useCompanyDetail();
+    const link = '/' + lang + props.job_url;
     return <div className={style.card_container}>
-        <div className={style.card_title}>
+        <Link className={style.card_title} href={link} target="_blank" title={props.job_title}>
             {props.job_title}
-        </div>
+        </Link>
         <div className={style.card_content}>
             <div className={style.card_info_list}>
                 <div className={style.card_salary}>
