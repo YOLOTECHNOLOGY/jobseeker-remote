@@ -3,6 +3,7 @@
 import React from 'react';
 import { CompanyDetailsType, JobsResponseType, Recruiter } from "./service";
 import { ConfigType } from 'app/types';
+import { Country, JobClasses } from './service';
 
 
 type ProviderData = {
@@ -12,6 +13,7 @@ type ProviderData = {
 	hr: Recruiter[],
 	hotJobs: JobsResponseType
 	config: Partial<ConfigType>
+	jobFunctions: JobClasses[]
 }
 
 const CompanyDetails = React.createContext<
@@ -22,9 +24,9 @@ interface Props extends React.PropsWithChildren<ProviderData> {
 	name?: any
 }
 export function CompanyDetailsProvider(
-	{ children, detail, jobs, lang, hr, hotJobs, config }: Props) {
+	{ children, detail, jobs, lang, hr, hotJobs, config, jobFunctions }: Props) {
 	return (
-		<CompanyDetails.Provider value={{ detail, jobs, lang, hr, hotJobs, config }}>
+		<CompanyDetails.Provider value={{ detail, jobs, lang, hr, hotJobs, config, jobFunctions}}>
 			{children}
 		</CompanyDetails.Provider>
 	);

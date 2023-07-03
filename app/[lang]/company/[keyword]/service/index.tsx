@@ -31,7 +31,7 @@ export async function fetchJobsListReq(data, accessToken) {
 		const [salaryFrom, salaryTo] = handleSalary(salary?.split(','))
 		const payload = {
 			query,
-			job_locations: location,
+			job_location_ids: location,
 			job_categories: category,
 			salary_from: salaryFrom,
 			salary_to: salaryTo,

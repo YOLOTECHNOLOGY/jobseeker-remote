@@ -106,7 +106,7 @@ const SearchPanel = (props: Props) => {
             page,
             query: jobTitle && inputText.current,
             location: location?.id,
-            jobFunctions: String(job_function_ids) || classes?.id,
+            jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
         }, null).then((res) => {
             setJobsData(res.data);
             setLoading(false);
@@ -133,18 +133,22 @@ const SearchPanel = (props: Props) => {
                         getOptionLabel={(option: any) => option.value || ''}
                         size='small'
                         onChange={(e, value) => {
+                            console.log('value', value);
                             setLocation(value);
                             searchFunc(inputText.current, value, 1);
                         }}
                         disableClearable={false}
                         // className={className}
-                        renderInput={(params) => (
-                            <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
-                                <input {...params.inputProps} placeholder='Location' className={style.location_input} />
-                                <div className={style.location_arrow}></div>
-                                <div className={style.location_input_border} />
-                            </label>
-                        )}
+                        renderInput={(params) => {
+                            console.log('params',params);
+                            return (
+                                <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
+                                    <input {...params.inputProps} placeholder='Location' className={style.location_input} />
+                                    <div className={style.location_arrow}></div>
+                                    <div className={style.location_input_border} />
+                                </label>
+                            )
+                        }}
                     // defaultValue={defaultValue}
                     // {...rest}
                     />

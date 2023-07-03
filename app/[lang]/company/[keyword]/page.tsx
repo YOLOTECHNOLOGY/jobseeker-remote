@@ -8,12 +8,9 @@ import Section from "./components/Section";
 import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
 import { useCompanyDetail } from "./DataProvider";
-import { fetchConfigService } from 'store/services/config/fetchConfig';
-import { Country, JobClasses } from './service';
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchJobsFunction } from "../../../../store/services/jobs/fetchJobFunction";
 
 function a11yProps(index: number) {
 	return {
@@ -48,39 +45,14 @@ const Page = () => {
 	const searchParams = new URLSearchParams(window.location.search);
 	const tabName = searchParams.get('tab');
 	const [value, setValue] = React.useState(tabName === 'jobs' ? 1 : 0);
-	const [functions, setFunctions] = React.useState<JobClasses[]>([]);
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
-	const { detail, jobs, lang, hr, hotJobs, config } = useCompanyDetail();
+	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
 
-	React.useEffect(() => {
-		(async () => {
-			const _res = await fetchJobsFunction(detail.id);
-			const groupData = _res.data.data.reduce((result, obj) => {
-				const key = Object.values(obj)[0];
-				const value = Object.keys(obj)[0];
-				if (result[key as string]) {
-					result[key as string].push(value);
-				} else {
-					result[key as string] = [value];
-				}
-				return result;
-			}, {});
-			const functionMap = {};
-			config.job_function_lists.map((item) => {
-				functionMap[Object.keys(item)[0]] = Object.values(item)[0]
-			});
-			const jobClasses = Object.keys(groupData).map((key) => {
-				return functionMap[key]?.filter((item) => {
-					return groupData[key]?.includes(String(item.id))
-				});
-			}).flat();
-			setFunctions(jobClasses)
-		})();
-		console.log('al', { detail, jobs, lang, hr, hotJobs, config });
-	}, []);
+	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
+
 	return <div className={style.container}>
 		<div className={style.header}>
 			<Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover" />
@@ -180,9 +152,6 @@ const Page = () => {
 								handleChange(e, 1)
 							}, 300);
 						}} />
-						{/* <div className={style.more_job}>
-							More {jobsRes.total_num} Jobs
-						</div> */}
 						<div className={style.company_culture}>
 							<CulturePanel {...detail} />
 							{
@@ -199,13 +168,9 @@ const Page = () => {
 				</div>
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<SearchPanel CountryList={config.location_lists} functions={functions} />
+				<SearchPanel CountryList={config.location_lists} functions={jobFunctions} />
 			</TabPanel>
 		</div>
-		{/* <div className={style.footer}>
-			Copyright © 2016-{new Date().getFullYear()}&nbsp;Singapore: Yolo Technology Pte Ltd. All Rights Reserved.
-      <span>Philippines: Etos Adtech Corporation</span>
-		</div> */}
 	</div>
 }
 
