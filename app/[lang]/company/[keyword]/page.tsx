@@ -53,7 +53,6 @@ const Page = () => {
 	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
 
 	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
-
 	return <div className={style.container}>
 		<div className={style.header}>
 			<Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover" />
