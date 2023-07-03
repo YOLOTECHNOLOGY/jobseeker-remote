@@ -296,7 +296,6 @@
     line-height: 25px;
     letter-spacing: 1px;
     color: #353535;
-    margin-bottom: 8px;
     padding: 24px 16px 4px 16px;
   }
 
@@ -324,6 +323,12 @@
       border-radius: 4px;
       border: 1px solid #E5E6EB;
       background: #FFF;
+      position: relative;
+      .arowForward{
+        position: absolute;
+        right: 20px;
+        top: 32px;
+      }
       img {
         box-sizing: border-box;
         width: 48px;
