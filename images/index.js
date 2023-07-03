@@ -197,6 +197,6 @@ export const scanJob = `${S3BucketJobseeker}/scanJob.png`
 
 // find job
 export const UploadDocIcon = `${S3BucketJobseeker}/UploadDocIcon.svg`
-export const SendEmailIcon = `${S3BucketJobseeker}/sendEmailIcon.svg`
+export const JobSearchIcon = `${S3BucketJobseeker}/jobSearchIcon.svg`
 export const ClearIcon = `${S3BucketJobseeker}/ClearIcon.svg`
 export const MoreFilterIcon = `${S3BucketJobseeker}/MoreFilterIcon.svg`

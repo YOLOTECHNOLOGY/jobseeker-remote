@@ -50,7 +50,7 @@ const Main = async (props: any) => {
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
-
+  
   return (
     <>
       <div>
@@ -58,12 +58,19 @@ const Main = async (props: any) => {
         <div style={{ position: 'sticky', top: 0, zIndex: 90 }}>
           <SearchForm config={props.config} lang={lang} searchValues={props.searchValues ?? null} />
         </div>
+        
         {/* Main Content */}
         <div className={styles.contentWrap}>
-          {/* <JobAlert searchValues={props.searchValues} config={props.config} /> */}
+
+          {/* Content */}
           <div className={styles.content}>
+
             {/* left */}
             <div className={styles.table}>
+
+              {/* job Alert */}
+              {accessToken ? <JobAlert searchValues={props.searchValues} config={props.config} /> : null}
+
               {/* <Loading/> */}
               <Suspense fallback={<Loading />}>
                 <Table
@@ -91,6 +98,7 @@ const Main = async (props: any) => {
             </div>
           </div>
         </div>
+
         {/* Download APP QrCode */}
         <QrCode />
       </div>
