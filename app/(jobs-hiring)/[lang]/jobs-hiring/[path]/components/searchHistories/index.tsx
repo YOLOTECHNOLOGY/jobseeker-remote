@@ -12,16 +12,19 @@ const SearchHistories = (props: any) => {
     }
     return <div className={styles.histories}>
         <div className={styles.title}>{lang.relatedSearch}</div>
-        {list.map(item => {
-            return <Link
-            className={styles.item}
-                key={item}
-                href={buildQuery(location, item)}
-                prefetch={false}
-            >
-               {item.value}
-            </Link>
-        })}
+        <div className={styles.historiesList}>
+            {list.map(item => {
+                return <Link
+                    className={styles.item}
+                    key={item}
+                    title={item}
+                    href={buildQuery(location, item)}
+                    prefetch={false}
+                >
+                {item.value}
+                </Link>
+            })}
+        </div>
     </div>
 }
 

@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { useSearchParams, usePathname } from 'next/navigation'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
+import styles from '../../index.module.scss'
 
 const Pagination = (props: any) => {
   const { count, page, pageQueryKey = 'page' } = props
@@ -10,7 +11,7 @@ const Pagination = (props: any) => {
   const pathname = usePathname()
   const { push } = useContext(LoadingContext)
   return (
-    <div>
+    <div className={styles.tablePagination}>
       <MaterialRoundedPagination
         totalPages={count}
         page={page}

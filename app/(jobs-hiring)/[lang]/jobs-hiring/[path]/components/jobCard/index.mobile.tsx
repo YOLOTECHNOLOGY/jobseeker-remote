@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from '../../index.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -21,6 +21,7 @@ const JobCard = (props: any) => {
     recruiter_job_title,
     company_logo,
     company_name,
+    company_size,
     id,
     job_url,
     job_type_id,
@@ -53,7 +54,9 @@ const JobCard = (props: any) => {
           <div className={styles.title}>{`${job_title}`}</div>
           <div className={styles.salary}>{salary_range_value}</div>
         </div>
-        <div className={styles.companyName}>{company_name}</div>
+        <div className={styles.companyName}>
+          {company_name} <span className={styles.companyInfoSpread}></span> {company_size}
+        </div>
         <div className={styles.labelContainer}>
           {labels.map((label) => (
             <div key={label} className={styles.label}>
@@ -61,6 +64,10 @@ const JobCard = (props: any) => {
             </div>
           ))}
         </div>
+        
+        {/* line */}
+        <div className={styles.recruiterLine}></div>
+
         <div className={styles.recruiterContainer}>
           <div className={styles.info}>
             <div

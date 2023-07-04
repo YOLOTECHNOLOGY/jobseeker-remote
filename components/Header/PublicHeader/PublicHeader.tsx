@@ -46,6 +46,7 @@ const PublicHeader = ({ lang }: any) => {
         <div className={styles.headerLinksWrapper}>
           <ul className={styles.headerLinksList}>
             <React.Fragment>
+              {/* home */}
               <li className={styles.headerLink}>
                 {pathname != '/' + langKey ? (
                   <Link title='Home' to={'/' + langKey}>
@@ -65,6 +66,7 @@ const PublicHeader = ({ lang }: any) => {
                   </Text>
                 )}
               </li>
+              {/* find jobs */}
               <li className={styles.headerLink}>
                 {!pathname.includes('/jobs-hiring/') ? (
                   <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
@@ -85,7 +87,7 @@ const PublicHeader = ({ lang }: any) => {
                   </Text>
                 )}
               </li>
-
+              {/* companies */}
               <li className={styles.headerLink}>
                 {!pathname.includes('/companies') ? (
                   <Link title='Companies' to={'/' + langKey + '/companies'}>
@@ -106,14 +108,27 @@ const PublicHeader = ({ lang }: any) => {
                   </Text>
                 )}
               </li>
+              {/* talents app */}
               <li className={styles.headerLink}>
-                <Link title='APP' to={'/' + langKey + '/talents'}>
-                  <Text textStyle='base' className={styles.headerLinkText}>
+                {!pathname.includes('/talents') ? (
+                  <Link title='APP' to={'/' + langKey + '/talents'} aTag>
+                    <Text textStyle='base' className={styles.headerLinkText}>
+                      APP
+                    </Text>
+                  </Link>
+                ) : (
+                  <Text
+                    textStyle='base'
+                    className={classNames([
+                      styles.headerLinkText,
+                      styles.headerLinkTextCurrentPage
+                    ])}
+                  >
                     APP
                   </Text>
-                </Link>
+                )}
               </li>
-
+              {/* career guide */}
               <li className={styles.headerLink}>
                 <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
                   <Text textStyle='base' className={styles.headerLinkText}>
@@ -124,6 +139,7 @@ const PublicHeader = ({ lang }: any) => {
             </React.Fragment>
           </ul>
         </div>
+
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkRightItem])}>
@@ -174,6 +190,7 @@ const PublicHeader = ({ lang }: any) => {
             </li>
           </React.Fragment>
         </ul>
+        {/* mobile */}
         <div className={styles.mobileIconWrapper}>
           <div className={styles.icon}>
             <Hamburger />

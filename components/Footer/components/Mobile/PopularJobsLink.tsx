@@ -7,8 +7,7 @@ import PopularList from '../common/PopularList'
 const PopularJobsLink = (props: any) => {
   const { data } = props
 
-  const { popularJobs } =
-    data?.foot || {}
+  const { popularJobs } = data?.foot || {}
 
   return (
     <Accordian
