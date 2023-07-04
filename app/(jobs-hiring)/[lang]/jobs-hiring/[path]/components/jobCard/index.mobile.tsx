@@ -28,6 +28,7 @@ const JobCard = (props: any) => {
     job_location_id,
     xp_lvl_id,
     degree_id,
+    is_urgent,
     recruiter_last_active_at: recruiterLastActiveAt
   } = props
   // const labels = [job_type, xp_lvl, degree].filter(a => a)
@@ -51,7 +52,7 @@ const JobCard = (props: any) => {
         }}
       >
         <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
-          <div className={styles.title}>{`${job_title}`}</div>
+          <div className={styles.title}>{is_urgent ? <span className={styles.urgent}>urgent</span>: null} {`${job_title}`}</div>
           <div className={styles.salary}>{salary_range_value}</div>
         </div>
         <div className={styles.companyName}>
