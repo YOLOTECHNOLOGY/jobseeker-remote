@@ -34,8 +34,6 @@ const filterTagView = {
 
 const SearchPanel = (props: Props) => {
     const formattedLocationList = flat(formatLocationConfig(props.CountryList));
-    const swiperRef = useRef(null);
-
     const params = useParams();
     const { jobs } = useCompanyDetail();
     const [jobsData, setJobsData] = useState(jobs);
@@ -104,10 +102,11 @@ const SearchPanel = (props: Props) => {
             companyIds: id,
             size: 10,
             page,
-            query: jobTitle && inputText.current,
+            query: jobTitle || inputText.current,
             location: location?.id,
             jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
         }
+        console.log('reqData',reqData);
         if(job_function_ids === 'all'){
             delete reqData.jobFunctions;
         }

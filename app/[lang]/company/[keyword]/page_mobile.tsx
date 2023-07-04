@@ -5,6 +5,7 @@ import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCompanyDetail } from "./DataProvider";
+import useResponsiveFont from 'app/[lang]/talents/components/responseHook';
 
 function a11yProps(index: number) {
 	return {
@@ -40,9 +41,9 @@ const MobilePage = () => {
 	const tabName = searchParams.get('tab');
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
-
+	useResponsiveFont(390,767);
 	return <div className={style.container}>
-	
+    
 	</div>
 }
 
