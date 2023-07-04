@@ -13,6 +13,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
 import MobilePage from './page_mobile';
+import useWindowSize from 'hooks/useWindowSize';
 
 
 function a11yProps(index: number) {
@@ -55,8 +56,8 @@ const Page = () => {
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
 	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
-	console.log('isMobile', isMobile);
-
+	const {width} = useWindowSize();
+	const isMobile = width < 700;
 	if(isMobile && process.env.ENV !== 'production'){
 		return <MobilePage/>
 	}

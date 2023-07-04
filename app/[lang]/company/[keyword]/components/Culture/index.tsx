@@ -68,16 +68,22 @@ export function SocialMedia(props: Props){
 	if(res.length === 0) return null;
 	return <div className={style.culture_wrapper}>
 		<div className={style.culture_title} style={{marginBottom: 30}}>Social media</div>
-		{res.map((item,index)=>{
-			return <div key={index} className={style.social_item}>
-				<div className={style.social_icon}>
-					<Image width={28} height={28} src={item.icon} alt="icon" />
+		<div className={style.social_wrapper}>
+			{res.map((item,index)=>{
+				return <div key={index} className={style.social_item}>
+					<Link  target='__blank' href={item.link} title={item.link}>
+						<div className={style.social_icon}>
+							<Image width={28} height={28} src={item.icon} alt="icon" />
+						</div>
+					</Link>
+
+					{/* <Link className={style.link_text} target='__blank' href={item.link} title={item.link}>
+						{item.link}
+					</Link> */}
 				</div>
-				<Link className={style.link_text} target='__blank' href={item.link} title={item.link}>
-					{item.link}
-				</Link>
-			</div>
-		})}
+			})}
+		</div>
+
 	</div>
 }
 
