@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
+import Link from 'next/link';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -169,8 +170,8 @@ const CompanyInfo = (_props: Props) => {
 							.filter(item => props.listing_info[item.field])
 							.padArrayToMultiple(3)
 							.map((item, index) => {
-								if (!item) {
-									return <div className={style.overview_item} style={{ background: '#ffffff' }} />
+								if (!item || !props.listing_info[item.field]) {
+									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
 								}
 								return <div key={index} className={style.overview_item}>
 									<div className={style.overview_item_name}>{item.name}</div>
@@ -302,14 +303,26 @@ export function filterScriptContent(str: string): string {
 }
 
 
+function isURL(str) {
+  // Regular expression pattern to match a URL
+  const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+  
+  // Test the string against the pattern
+  return urlPattern.test(str);
+}
 
+function isContentOverflowing(element) {
+  return element.scrollWidth > element.clientWidth;
+}
 export function MouseOverPopover(props: {
 	value: string
+	className?: string
 }) {
-	const showPop = props.value.length > 11 
+	const ref = useRef(null);
+	const [showPop, setShow] = useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
+	const is_url = isURL(props.value); 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
 		if(!showPop) return;
     setAnchorEl(event.currentTarget);
@@ -320,16 +333,25 @@ export function MouseOverPopover(props: {
   };
 
   const open = Boolean(anchorEl);
+
+	useLayoutEffect(() => {
+		if(isContentOverflowing(ref.current)){
+			setShow(true);
+		}
+	});
   return (
     <>
       <div
-				className={style.overview_item_value}
+				className={props.className ? props.className:  style.overview_item_value}
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
+				ref={ref}
       >
-				<span>{props.value}</span>
+				{is_url ? 
+					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
+					<span>{props.value}</span>}
       </div>
       <Popover
         id="mouse-over-popover"

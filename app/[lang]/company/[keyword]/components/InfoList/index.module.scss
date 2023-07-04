@@ -33,6 +33,14 @@
   line-height: 22px;
   color: #1d2129;
   @extend .text_overflow;
+  :global {
+    a {
+      color: #1d2129 !important;
+      &:hover {
+        color: #1890ff !important;
+      }
+    }
+  }
 }
 .overview_item_wrapper {
   display: flex;
