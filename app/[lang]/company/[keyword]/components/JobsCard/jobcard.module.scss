@@ -48,11 +48,6 @@
   display: block;
   width: 100%;
   @extend .text_overflow;
-  // display: -webkit-box;
-  // -webkit-box-orient: vertical;
-  // -webkit-line-clamp: 2; /* 显示的行数 */
-  // overflow: hidden;
-  // text-overflow: ellipsis;
 }
 .tab {
   background: var(--neutral-color-fill, #f7f8fa) !important;
