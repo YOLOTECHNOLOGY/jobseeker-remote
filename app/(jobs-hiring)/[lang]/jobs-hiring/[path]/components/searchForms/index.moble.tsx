@@ -153,45 +153,11 @@ const SearchArea = (props: any) => {
       <ThemeProvider theme={newTheme}>
         <div className={styles.searchFormMoblie}>
           <div className={styles.searchArea}>
-            {/* <LocationMultiSelector
-              className={styles.location}
-              locationList={config.location_lists}
-              value={location}
-              lang={search}
-              label={search.location}
-              // defaultValue={location}
-              onChange={setLocation}
-              sx={{
-                '> .MuiFormControl-root': {
-                  borderRadius: '8px',
-                  height: '60px',
-                  marginTop: '4px',
-                  overflow: 'hidden',
-                  '> .MuiOutlinedInput-root': {
-                    borderRadius: '8px',
-                    height: '60px',
-                    overflow: 'hidden',
-                    marginTop: '4px'
-                  }
-                }
-              }}
-            /> */}
-            {/* <LocationField
-              className={styles.location}
-              locationList={config.location_lists}
-              value={location}
-              label={search.location}
-              disableClearable={true}
-              isClear={true}
-              defaultValue={location}
-              onChange={(e, value) => {
-                setLocation(value)
-              }}
-            /> */}
             <JobSearchBar
               id='search'
-              label={search.title}
+              // label={search.title}
               variant='outlined'
+              placeholder={search.title}
               size='small'
               className={styles.search}
               value={searchValue}
@@ -241,10 +207,8 @@ const SearchArea = (props: any) => {
                 reloadRef.current()
               }}
             />
-            <MaterialButton
+            <button
               className={styles.searchButton}
-              variant='contained'
-              capitalize
               onClick={() => {
                 flushSync(() => {
                   setSearchValue(searchValue)
@@ -255,7 +219,7 @@ const SearchArea = (props: any) => {
               }}
             >
               {search?.find}
-            </MaterialButton>
+            </button>
           </div>
           <div className={styles.filters}>
             <LocationMultiSelector
