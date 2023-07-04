@@ -52,7 +52,8 @@
     "downloadBossjobApp": " 下载 Bossjob 应用程序",
     "followUs": "关注我们",
     "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
-    "corporation": "菲律宾：Etos Adtech Corporation"
+    "corporation": "菲律宾：Etos Adtech Corporation",
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
   },
   "getStatred": {
     "seoMetaTitle": "注册求职账号，马上开始找工作 | Bossjob",
@@ -283,7 +284,8 @@
     }
   },
   "home": {
-    "title": "找工作，与老板谈",
+    "title": "Find Job. ",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "Downtown Core",
     "search": {
