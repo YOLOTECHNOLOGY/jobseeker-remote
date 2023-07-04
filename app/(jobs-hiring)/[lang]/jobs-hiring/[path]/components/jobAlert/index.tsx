@@ -18,6 +18,7 @@ import { getAlertData,sortSearchValuesToString } from './getAlertData'
 import Image from 'next/image'
 import JobAlertsModal from './Modal'
 import { ClearIcon, UploadDocIcon } from 'images'
+import { formatTemplateString } from 'helpers/formatter'
 
 const SESSION_SHOULD_HIDE_ALERT_JOBS  = 'should-hide-alert-jobs'
 
@@ -118,6 +119,12 @@ const JobAlert = (props: any) => {
     return showAlertSetting && (viewSearchFilterString?.length > 0)
   }, [showAlertSetting, viewSearchFilterString])
 
+  const messageInfo = () => {
+    return formatTemplateString(search?.alertJobs?.info, {
+      message: `<span class="${styles.jobListOptionAlertsJobs}">[${viewSearchFilterString}]</span>`
+    })
+  }
+
   return (
     <div className={styles.jobListOptionAlerts + ' ' + (showAlertSettingModal ? '' : styles.hideAlertSetting)}>
       {/* <div className={styles.jobListOptionAlertsMain}>
@@ -154,12 +161,12 @@ const JobAlert = (props: any) => {
             width={48} height={48} 
             className={styles.jobListOptionAlertsImage} />
           <div className={styles.jobListOptionAlertsContent}>
-            <span className={styles.jobListOptionAlertsTitle}>High quality job recommendation</span>
-            <span className={styles.jobListOptionAlertsQuestion}>Send the  <span className={styles.jobListOptionAlertsJobs}>[{viewSearchFilterString}]</span>  job informationg you search to email</span>
+            <span className={styles.jobListOptionAlertsTitle}>{search?.alertJobs?.title}</span>
+            <span className={styles.jobListOptionAlertsQuestion} dangerouslySetInnerHTML={{ __html: messageInfo() }}></span>
           </div>
         </div>
         <div className={styles.jobListOptionAlertsRight}>
-          <span className={styles.jobListOptionAlertsSetting} onClick={() => setShowJobAlertsModal(true)}>setting</span>
+          <span className={styles.jobListOptionAlertsSetting} onClick={() => setShowJobAlertsModal(true)}>{search?.alertJobs?.setting}</span>
         </div>
         <div className={styles.jobListOptionAlertsClosed} onClick={closeAlertSetting}>
           <Image src={ClearIcon} width={16} height={16} alt='closed' />
@@ -167,7 +174,8 @@ const JobAlert = (props: any) => {
       </div>      
 
       <JobAlertsModal 
-        open={showJobAlertsModal} 
+        open={showJobAlertsModal}
+        lang={search}
         message={viewSearchFilterString}
         handleSave={handleSaveJobAlert}
         handleClose={() => setShowJobAlertsModal(false)} 

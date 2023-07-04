@@ -254,7 +254,7 @@ const SearchArea = (props: any) => {
                 setQueryFields('')
               }}
             >
-              Find
+              {search?.find}
             </MaterialButton>
           </div>
           <div className={styles.filters}>

@@ -99,7 +99,7 @@ const Main = async (props: any) => {
         </div>
 
         {/* Download APP QrCode */}
-        <QrCode />
+        <QrCode lang={search} />
       </div>
       {/* Footer */}
       <Footer />

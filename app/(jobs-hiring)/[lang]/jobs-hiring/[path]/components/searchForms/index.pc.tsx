@@ -245,7 +245,7 @@ const SearchArea = (props: any) => {
                     setQueryFields('')
                   }}
                 >
-                  Find Now
+                  {search?.findNow}
                 </MaterialButton>
               </div>
             </div>

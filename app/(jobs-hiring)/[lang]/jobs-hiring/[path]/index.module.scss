@@ -86,6 +86,7 @@ $contentWidth: 894px;
     max-width: $maxContentWidth;
     margin: 0 auto;
     @extend .GlobalNextAppContainer;
+    padding: 0;
   }
 
   .searchArea {
@@ -1411,7 +1412,7 @@ $contentWidth: 894px;
   top: 238px;
 
   width: 118px;
-  height: 164px;
+  // height: 164px;
   margin-bottom: 16px;
   padding: 10px;
   display: flex;
@@ -1430,6 +1431,9 @@ $contentWidth: 894px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 0.105px;
+
+    display: flex;
+    flex-direction: column;
   } 
 }
 
