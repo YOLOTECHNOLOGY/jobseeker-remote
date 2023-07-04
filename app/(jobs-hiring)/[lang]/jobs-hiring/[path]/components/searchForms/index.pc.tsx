@@ -33,6 +33,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
+import {MoreFilterIcon} from 'images'
+
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search } = useContext(languageContext) as any
@@ -149,6 +151,7 @@ const SearchArea = (props: any) => {
             [styles.isFixed]: isFixed
           })}
         >
+          <div className={styles.searchAreaContent}>
           {/* search */}
           <div className={styles.searchArea}>
             <div className={styles.searchAreaLeft}>
@@ -163,82 +166,88 @@ const SearchArea = (props: any) => {
                 onChange={setLocation}
                 sx={{
                   '> .MuiFormControl-root': {
+                    borderRadius: '8px',
+                    height: '60px',
+                    marginTop: '4px',
+                    overflow: 'hidden',
                     '> .MuiOutlinedInput-root': {
-                      borderRadius: '10px',
-                      height: '40px',
+                      borderRadius: '8px',
+                      height: '60px',
+                      overflow: 'hidden',
                       marginTop: '4px'
                     }
                   }
                 }}
               />
-              <JobSearchBar
-                id='search'
-                label={search.title}
-                variant='outlined'
-                size='small'
-                className={styles.search}
-                value={searchValue}
-                maxLength={255}
-                isLoading={searchLoading}
-                searchFn={handleSuggestionSearch as any}
-                updateSearchValue={setSearchValue}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
+              <div className={styles.searchAreaBox}>
+                <JobSearchBar
+                  id='search'
+                  label={search.title}
+                  variant='outlined'
+                  size='small'
+                  className={styles.search}
+                  value={searchValue}
+                  maxLength={255}
+                  isLoading={searchLoading}
+                  searchFn={handleSuggestionSearch as any}
+                  updateSearchValue={setSearchValue}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      flushSync(() => {
+                        setSearchValue((e.target as HTMLInputElement).value)
+                      })
+                      addSearchHistory((e.target as HTMLInputElement).value)
+                      setQueryFields('')
+                      reloadRef.current()
+                    }
+                  }}
+                  renderOption={(props, option) => {
+                    const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                    return type === 'company' ? (
+                      <li {...props} style={styleleSelect}>
+                        <Image src={logoUrl} alt={value} width='22' height='22' />
+                        <span style={{ paddingLeft: '10px' }}>{value}</span>
+                      </li>
+                    ) : isHistory ? (
+                      <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                        <AccessTimeIcon />
+                        <span style={{ paddingLeft: '10px' }}>{value}</span>
+                      </li>
+                    ) : (
+                      <li {...props} style={styleleSelect}>
+                        <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                        <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                      </li>
+                    )
+                  }}
+                  options={suggestionList}
+                  onSelect={(value: any) => {
+                    const newValue = value?.value || value || ''
+                    setQueryFields(value?.type || '')
                     flushSync(() => {
-                      setSearchValue((e.target as HTMLInputElement).value)
+                      setSearchValue(newValue)
                     })
-                    addSearchHistory((e.target as HTMLInputElement).value)
-                    setQueryFields('')
+                    addSearchHistory(newValue)
                     reloadRef.current()
-                  }
-                }}
-                renderOption={(props, option) => {
-                  const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-                  return type === 'company' ? (
-                    <li {...props} style={styleleSelect}>
-                      <Image src={logoUrl} alt={value} width='22' height='22' />
-                      <span style={{ paddingLeft: '10px' }}>{value}</span>
-                    </li>
-                  ) : isHistory ? (
-                    <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
-                      <AccessTimeIcon />
-                      <span style={{ paddingLeft: '10px' }}>{value}</span>
-                    </li>
-                  ) : (
-                    <li {...props} style={styleleSelect}>
-                      <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                      <span style={{ paddingLeft: '10px' }}>{value || option}</span>
-                    </li>
-                  )
-                }}
-                options={suggestionList}
-                onSelect={(value: any) => {
-                  const newValue = value?.value || value || ''
-                  setQueryFields(value?.type || '')
-                  flushSync(() => {
-                    setSearchValue(newValue)
-                  })
-                  addSearchHistory(newValue)
-                  reloadRef.current()
-                }}
-              />
-              <MaterialButton
-                className={styles.searchButton}
-                variant='contained'
-                capitalize
-                onClick={() => {
-                  flushSync(() => {
-                    setSearchValue(searchValue)
-                  })
-                  addSearchHistory(searchValue)
-                  reloadRef.current()
-                  setQueryFields('')
-                }}
-              >
-                {' '}
-                {search.searchBtn}{' '}
-              </MaterialButton>
+                  }}
+                />
+                <MaterialButton
+                  className={styles.searchButton}
+                  variant='contained'
+                  capitalize
+                  onClick={() => {
+                    flushSync(() => {
+                      setSearchValue(searchValue)
+                    })
+                    addSearchHistory(searchValue)
+                    reloadRef.current()
+                    setQueryFields('')
+                  }}
+                >
+                  Find Now
+                </MaterialButton>
+              </div>
             </div>
           </div>
           {/* filter */}
@@ -280,8 +289,8 @@ const SearchArea = (props: any) => {
                 onClick={() => {
                   setShowMore(true)
                 }}
+                endIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
               >
-                {' '}
                 {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
               </Button>
             </div>
@@ -308,6 +317,7 @@ const SearchArea = (props: any) => {
               </Button>
             </div>
           </div>
+          </div>        
         </div>
       </ThemeProvider>
 

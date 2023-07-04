@@ -162,9 +162,14 @@ const SearchArea = (props: any) => {
               onChange={setLocation}
               sx={{
                 '> .MuiFormControl-root': {
+                  borderRadius: '8px',
+                  height: '60px',
+                  marginTop: '4px',
+                  overflow: 'hidden',
                   '> .MuiOutlinedInput-root': {
-                    borderRadius: '10px',
-                    height: '40px',
+                    borderRadius: '8px',
+                    height: '60px',
+                    overflow: 'hidden',
                     marginTop: '4px'
                   }
                 }

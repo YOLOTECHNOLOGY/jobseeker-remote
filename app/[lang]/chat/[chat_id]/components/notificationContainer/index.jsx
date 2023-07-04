@@ -68,6 +68,9 @@ export const usePushNotification = onClick => {
 
 const NotificationContainer = props => {
     const { newAdding, noteList = [], isAnimating, remove, onClick } = props
+
+    if(noteList.length == 0) return null
+
     return <div className={styles.container}>
         {noteList.map(note => {
             return <div key={note.id}
