@@ -946,6 +946,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    position: relative;
     @extend .GlobalNextAppContainer;
     .location {
       :global {
@@ -1018,7 +1019,7 @@
     @include sm {
       :global {
         .MuiInputLabel-root {
-          top: 10px;
+          top: 3px;
         }
       }
     }
@@ -1046,7 +1047,14 @@
     }
 
     @include sm {
-      display: none;
+      position: relative;
+      height: 28px;
+      padding: 0 8px;
+      top: 9px;
+      border-radius: 4px;
+      font-size: 13px;
+      width: unset;
+      margin-right: 8px;
     }
 
     // &:hover {
@@ -1575,19 +1583,40 @@
     }
     .search{
       width: auto;
+      height: 44px;
     }
 
     .searchArea {
       padding: 0 6px;
       .search{
         flex: 1;
+        :global{
+           .MuiOutlinedInput-root{
+              height: 44px;
+           }
+           .MuiOutlinedInput-notchedOutline {
+            border-color: transparent;
+           }
+        }
       }
       .box {
+      border-radius: 4px;
+      border: 1px solid  #E5E6EB;
+      background: #FFF;
+      margin: 0 10px;
+      padding: 0;
+      width: calc(100% - 20px);
         .location {
           width: 96px;
+          height: 44px;
+          border-radius: 4px 0 0 4px;
+          border-bottom-width: 0;
+          border-top-width: 0;
+          border-left-width: 0;
           :global{
             .MuiOutlinedInput-root{
-              width: 96px;
+              width: 96px; 
+              height: 44px;          
             }
           }
         }
