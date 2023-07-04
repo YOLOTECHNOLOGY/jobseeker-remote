@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useMemo } from 'react'
 import ModalJobAlerts from 'components/ModalJobAlerts'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
@@ -18,6 +18,8 @@ import { getAlertData,sortSearchValuesToString } from './getAlertData'
 import Image from 'next/image'
 import JobAlertsModal from './Modal'
 import { ClearIcon, UploadDocIcon } from 'images'
+
+const SESSION_SHOULD_HIDE_ALERT_JOBS  = 'should-hide-alert-jobs'
 
 const JobAlert = (props: any) => {
   const accessToken = getCookie('accessToken')
@@ -97,7 +99,7 @@ const JobAlert = (props: any) => {
 
   useEffect(() => {
     if(typeof sessionStorage != 'undefined') {
-      setShowAlertSetting(!sessionStorage.getItem('should-hide-alert'))
+      setShowAlertSetting(!sessionStorage.getItem(SESSION_SHOULD_HIDE_ALERT_JOBS))
     }
   }, [])
 
@@ -108,12 +110,16 @@ const JobAlert = (props: any) => {
   const closeAlertSetting = () => {
     setShowAlertSetting(false)
     if(typeof sessionStorage != 'undefined') {
-      sessionStorage.setItem('should-hide-alert', '1')
+      sessionStorage.setItem(SESSION_SHOULD_HIDE_ALERT_JOBS, '1')
     }
   }
 
+  const showAlertSettingModal = useMemo(() => {
+    return showAlertSetting && (viewSearchFilterString?.length > 0)
+  }, [showAlertSetting, viewSearchFilterString])
+
   return (
-    <div className={styles.jobListOptionAlerts + ' ' + (showAlertSetting ? '' : styles.hideAlertSetting)}>
+    <div className={styles.jobListOptionAlerts + ' ' + (showAlertSettingModal ? '' : styles.hideAlertSetting)}>
       {/* <div className={styles.jobListOptionAlertsMain}>
         <div
           className={styles.jobListOptionAlertsItem}

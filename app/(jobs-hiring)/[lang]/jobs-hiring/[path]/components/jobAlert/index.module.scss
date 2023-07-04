@@ -168,6 +168,11 @@ $maxContentWidth: 1136px;
     cursor: pointer;
     margin-left: 24px !important;
   }
+
+  &HelperText {
+    margin-left: 0 !important;
+    color: red !important;
+  }
 }
 
 .hideAlertSetting {

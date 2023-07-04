@@ -17,6 +17,7 @@ const SearchHistories = (props: any) => {
                 return <Link
                     className={styles.item}
                     key={item}
+                    title={item}
                     href={buildQuery(location, item)}
                     prefetch={false}
                 >

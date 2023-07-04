@@ -129,6 +129,9 @@ $contentWidth: 894px;
           border-radius: 10px;
           background: #fff;
         }
+        .MuiOutlinedInput-input {
+          font-size: 16px;
+        }
       }
     }
 
@@ -145,7 +148,9 @@ $contentWidth: 894px;
           background-color: #ffffff;
           border-radius: 8px 0 0 8px;
         }
-  
+        .MuiOutlinedInput-input {
+          font-size: 16px;
+        }
         .MuiInputLabel-root {
           top: 12px;
         }
@@ -314,7 +319,7 @@ $contentWidth: 894px;
     .filterItems {
       height: 32px;
       width: 128px;
-      margin-right: 20px;
+      margin-right: 19px;
       border-radius: 4px;
       border: 1px solid #E5E6EB;
       background: #FFF;
@@ -327,6 +332,10 @@ $contentWidth: 894px;
           background-color: #ffffff !important;
         }
       }
+    }
+
+    .jobFunction {
+      width: 140px;
     }
 
     .jobSalary {
@@ -1303,7 +1312,11 @@ $contentWidth: 894px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.105px;
-    padding: 8px 0 8px 28px;
+    padding: 8px 8px 8px 28px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &:hover {
 

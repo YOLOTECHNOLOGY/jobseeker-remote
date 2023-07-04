@@ -192,7 +192,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={handleKeyUp}
               />
-              {mailError ? <FormHelperText>{mailError}</FormHelperText> : null}
+              {mailError ? <FormHelperText className={styles.jobAlertsModalHelperText}>{mailError}</FormHelperText> : null}
             </FormControl>
           </div>
 

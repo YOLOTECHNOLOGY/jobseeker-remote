@@ -265,7 +265,7 @@ const SearchArea = (props: any) => {
                 id='jobFunction'
                 label={search.function}
                 value={jobFunctionValue}
-                className={[styles.filterItems]}
+                className={[styles.filterItems, styles.jobFunction]}
                 onChange={jobFunctionChange}
               />
               <Multiple
