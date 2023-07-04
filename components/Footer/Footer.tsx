@@ -482,7 +482,7 @@ const Footer = ({lang}:any) => {
                   <li>
                     <Link
                       className={styles.footerLink}
-                      to={`${langKey}/company/bossjob-1668`}
+                      to={`/${langKey}/company/bossjob-1668`}
                       title='About Bossjob'
                       aTag={false}
                       external={false}

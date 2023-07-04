@@ -49,6 +49,7 @@ const Page = () => {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
+	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
 

@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { JobsTag } from "../SearchPanel";
 
 
-const JobCard = (props: JobData) =>{
-    const {lang} = useCompanyDetail();
+const JobCard = (props: JobData) => {
+    const { lang } = useCompanyDetail();
     const link = '/' + lang + props.job_url;
     return <div className={style.card_container}>
         <Link className={style.card_title} href={link} target="_blank" title={props.job_title}>
@@ -24,8 +24,8 @@ const JobCard = (props: JobData) =>{
             </div>
             <div className={style.card_chat_container}>
                 <div className={style.card_chat_wrapper}>
-                    <Image src={props.recruiter_avatar} className={style.recruiter_avatar} 
-                           width={40} height={40} alt={'alt'}/>
+                    <Image src={props.recruiter_avatar} className={style.recruiter_avatar}
+                        width={40} height={40} alt={'alt'} />
                     <div className={style.card_chat_content}>
                         <div className={style.card_chat_title}>
                             {props.recruiter_full_name}
@@ -33,15 +33,16 @@ const JobCard = (props: JobData) =>{
                         <div className={style.card_chat_name}>
                             {props.recruiter_job_title}
                         </div>
+                        <Link href={'/' + lang + props.job_url} target="_blank">
+                            <div className={style.chat_now}>
+                                Chat Now
+                            </div>
+                        </Link>
                     </div>
                 </div>
-                <Link href={'/' + lang + props.job_url} target="_blank">
-                    <div className={style.chat_now}>
-                        Chat Now
-                    </div>
-                </Link>
+
             </div>
-            
+
         </div>
     </div>
 }

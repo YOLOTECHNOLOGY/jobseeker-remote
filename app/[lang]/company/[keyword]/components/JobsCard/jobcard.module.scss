@@ -18,8 +18,12 @@
   &:hover {
     background: #f7f8fa;
     border: 1px solid #c9cdd4;
-    .card_chat_wrapper {
-      transform: translate3d(-100px, 0, 0);
+
+    .card_chat_title {
+      opacity: 0;
+    }
+    .card_chat_name {
+      opacity: 0;
     }
     .chat_now {
       opacity: 1;
@@ -30,6 +34,10 @@
       }
     }
   }
+}
+.card_chat_content {
+  position: relative;
+  flex: 1;
 }
 .card_title {
   min-height: 44px;
@@ -66,6 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex: 1;
 }
 .card_info_list {
   display: flex;
@@ -86,6 +95,7 @@
 }
 .card_chat_container {
   position: relative;
+  min-width: 180px;
 }
 .chat_now {
   display: flex;
@@ -98,12 +108,13 @@
   background: #2378e5;
   border-radius: 8px;
   position: absolute;
-  right: 0;
+  left: 0;
   color: #ffffff;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
   opacity: 0;
+  flex-shrink: 0;
   transition: all 0.3s ease;
 }
 .text_overflow {
@@ -115,9 +126,11 @@
 
 .card_chat_title {
   max-width: 120px;
+  transition: all 0.3s ease;
   @extend .text_overflow;
 }
 .card_chat_name {
+  transition: all 0.3s ease;
   max-width: 120px;
   @extend .text_overflow;
 }
