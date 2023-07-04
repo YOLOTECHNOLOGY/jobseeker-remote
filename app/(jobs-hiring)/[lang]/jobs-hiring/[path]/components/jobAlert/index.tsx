@@ -96,31 +96,27 @@ const JobAlert = (props: any) => {
 
   const createJobAlert = async (jobAlertData) => {
     try {
-      const createJobAlertPayload = {
-        jobAlertData,
-        accessToken,
-        user_id: userCookie?.id
-      }
+      const createJobAlertPayload = { jobAlertData, accessToken }
       const result = await createJobAlertService(createJobAlertPayload)
       if(result?.status >= 200 && result?.status < 300) {
         dispatch(displayNotification({
           "open": true,
           "severity": "success",
-          "message": "Job alert setting successfully."
+          "message": search?.alertJobs?.settingSucceed
         }))
         setShowJobAlertsModal(false)
       }else {
         dispatch(displayNotification({
           "open": true,
           "severity": "error",
-          "message": "Failed to setting job alert."
+          "message": search?.alertJobs?.settingFailed
         }))
       }
     } catch (error) {
       dispatch(displayNotification({
         "open": true,
         "severity": "error",
-        "message": "Something went wrong."
+        "message": search?.alertJobs?.somethingWrong
       }))
     }
   }

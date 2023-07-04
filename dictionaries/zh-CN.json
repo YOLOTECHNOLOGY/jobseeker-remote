@@ -536,7 +536,10 @@
     "alertJobs":{
       "title": "高质量职位推荐",
       "setting": "设置",
-      "info": "将您搜索到的 {{message}} 职位信息发送到电子邮件"
+      "info": "将您搜索到的 {{message}} 职位信息发送到电子邮件",
+      "settingSucceed": "职位提醒设置成功。",
+      "settingFailed": "职位提醒设置失败。",
+      "somethingWrong": "出了些问题."
     },
     "alertJobsModal":{
       "title": "职位提醒设置",

@@ -538,7 +538,10 @@
     "alertJobs":{
       "title": "High quality job recommendation",
       "setting": "Setting",
-      "info": "Send the {{message}} job information you search to email"
+      "info": "Send the {{message}} job information you search to email",
+      "settingSucceed": "Job alert setting successfully.",
+      "settingFailed": "Job alert setting failed.",
+      "somethingWrong": "Something went wrong."
     },
     "alertJobsModal":{
       "title": "Job Alert setting",
