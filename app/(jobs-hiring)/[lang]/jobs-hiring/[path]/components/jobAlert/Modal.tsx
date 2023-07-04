@@ -58,19 +58,19 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 
 interface ModalJobAlertsProps {
   open: boolean
-  email?: string
   message: string
   lang: any
+  userCookie: any
   handleClose: () => void
   handleSave: Function
 }
 
 export default function FormDialog(props: ModalJobAlertsProps) {
-  const { open, email = '', message, lang, handleClose, handleSave } = props
-
+  const { open, userCookie={}, message, lang, handleClose, handleSave } = props
+  const { email='' } = userCookie
   const [frequency, setFrequency] = useState('1')
   const [mail, setEmail] = useState(email)
-  const [checked, setChecked] = useState(true)
+  const [active, setActive] = useState(false)
   const [mailError, setMailError] = useState('')
 
   const alertJobsModal = lang?.alertJobsModal || {}
@@ -94,7 +94,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-    setFrequency(event.target.value as string)
+    setFrequency(event?.target?.value as string)
   }
 
   const handleCloseMethod = () => {
@@ -103,20 +103,24 @@ export default function FormDialog(props: ModalJobAlertsProps) {
 
   const handleSaveMethod = () => {
     const errorMessage = validEmail(mail || '')
-    let isError = errorMessage.length > 0
-    if (!checked) {
+    let isError = errorMessage?.length > 0
+    if (!active) {
       isError = false
     }
     if (!isError) {
-      handleSave({ mail, frequency, checked })
+      handleSave({ 
+        email: mail, 
+        frequency_id: Number(frequency), 
+        is_active: active ? 1 : 0 
+      })
     } else {
       setMailError(errorMessage)
     }
   }
 
   const handleChangeSwitch = (ev) => {
-    setChecked(ev.target.checked)
-    if (!ev.target.checked) {
+    setActive(ev.target?.checked)
+    if (!ev.target?.checked) {
       setMailError('')
     } else {
       setMailError(validEmail(mail))
@@ -131,7 +135,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} onClose={handleCloseMethod}>
-        <DialogTitle>{alertJobsModal.title}</DialogTitle>
+        <DialogTitle>{alertJobsModal?.title}</DialogTitle>
         <DialogContent>
           {/* switch */}
           <Stack
@@ -141,20 +145,16 @@ export default function FormDialog(props: ModalJobAlertsProps) {
             alignItems='center'
             justifyContent='space-between'
           >
-            <div className={styles.jobAlertsModalSwitch}>{alertJobsModal.subTitle}</div>
+            <div className={styles.jobAlertsModalSwitch}>{alertJobsModal?.subTitle}</div>
             <Stack direction='row' spacing={1} alignItems='center'>
-              <AntSwitch
-                onChange={handleChangeSwitch}
-                value={checked}
-                checked={checked}
-              />
+              <AntSwitch onChange={handleChangeSwitch} value={active} checked={active} />
             </Stack>
           </Stack>
 
           {/* job info */}
           <Stack direction='row' spacing={1} alignItems='center'>
             <div className={styles.jobAlertsModalInfo}>
-              {alertJobsModal.jobConditions}
+              {alertJobsModal?.jobConditions}
               {': '}
               <span className={styles.jobAlertsModalInfoText}>{message}</span>
             </div>
@@ -163,7 +163,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
             {/* frequency */}
             <FormControl sx={{ width: 460, margin: 0 }}>
               <div className={styles.jobAlertsModalFormControlTitle}>
-                {alertJobsModal.frequency}
+                {alertJobsModal?.frequency}
               </div>
               <Select
                 size='small'
@@ -171,17 +171,17 @@ export default function FormDialog(props: ModalJobAlertsProps) {
                 value={frequency}
                 onChange={handleChange}
                 displayEmpty
-                disabled={!checked}
+                disabled={!active}
               >
-                <MenuItem value={1}>{alertJobsModal.daily}</MenuItem>
-                <MenuItem value={2}>{alertJobsModal.weekly}</MenuItem>
+                <MenuItem value={1}>{alertJobsModal?.daily}</MenuItem>
+                <MenuItem value={2}>{alertJobsModal?.weekly}</MenuItem>
               </Select>
             </FormControl>
 
             {/* email */}
             <FormControl sx={{ width: 460, margin: 0 }}>
               <div className={styles.jobAlertsModalFormControlTitle}>
-                {alertJobsModal.sendToEmail}
+                {alertJobsModal?.sendToEmail}
               </div>
               <TextField
                 size='small'
@@ -190,9 +190,9 @@ export default function FormDialog(props: ModalJobAlertsProps) {
                 type='email'
                 fullWidth
                 variant='outlined'
-                placeholder={alertJobsModal.emailPlaceholder}
+                placeholder={alertJobsModal?.emailPlaceholder}
                 value={mail}
-                disabled={!checked}
+                disabled={!active}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={handleKeyUp}
               />
@@ -203,17 +203,14 @@ export default function FormDialog(props: ModalJobAlertsProps) {
               ) : null}
             </FormControl>
           </div>
-
-          {/* divider line */}
-          <div className={styles.jobAlertsModalDivider}></div>
         </DialogContent>
 
         <DialogActions>
           <div className={styles.jobAlertsModalCancel} onClick={handleCloseMethod}>
-            {alertJobsModal.cancel}
+            {alertJobsModal?.cancel}
           </div>
           <div className={styles.jobAlertsModalSave} onClick={handleSaveMethod}>
-            {alertJobsModal.done}
+            {alertJobsModal?.done}
           </div>
         </DialogActions>
       </Dialog>
