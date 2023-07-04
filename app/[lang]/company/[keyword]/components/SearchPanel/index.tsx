@@ -90,7 +90,7 @@ const SearchPanel = (props: Props) => {
     //         // }
     //         console.log('previousindex',previousindex);
     //         console.log('index',index);
-            
+
     //     } catch (e) {
     //         console.log('list of filter tag is end');
     //     }
@@ -106,8 +106,8 @@ const SearchPanel = (props: Props) => {
             location: location?.id,
             jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
         }
-        console.log('reqData',reqData);
-        if(job_function_ids === 'all'){
+        console.log('reqData', reqData);
+        if (job_function_ids === 'all') {
             delete reqData.jobFunctions;
         }
         fetchJobsListReq(reqData, null).then((res) => {
@@ -209,9 +209,9 @@ const SearchPanel = (props: Props) => {
                     >
                         <InView threshold={1}>
                             {({ ref, inView }) => {
-                                if(inView){
+                                if (inView) {
                                     setLeftShow(false)
-                                }else{
+                                } else {
                                     setLeftShow(true)
                                 }
                                 return <div className={className({
@@ -235,9 +235,9 @@ const SearchPanel = (props: Props) => {
                         {props.functions?.map((item, index) => {
                             return <InView threshold={1} key={index}>
                                 {({ ref, inView }) => {
-                                    if(inView && props.functions.length - 1 === index){
+                                    if (inView && props.functions.length - 1 === index) {
                                         setRightShow(false)
-                                    }else{
+                                    } else {
                                         setRightShow(true)
                                     }
                                     return <div
@@ -286,23 +286,25 @@ const SearchPanel = (props: Props) => {
             </div>
         }
         <div className={style.filter_split}></div>
-        {!!jobsData.jobs.length ?
-            <div className={style.content_layout}>
-                {!loading && jobsData.jobs.map((item) => {
-                    return <JobsSearchCard key={item.job_title} {...item} />
-                })}
-                {
-                    loading && <div className={style.loading_wrapper}>
-                        {/* <div className={style.loading_wrapper}/> */}
-                        <Loading />
+        <div className={style.content_layout}>
+            {loading ?
+                loading && <div className={style.loading_wrapper}>
+                    {/* <div className={style.loading_wrapper}/> */}
+                    <Loading />
+                </div>
+                : !!jobsData.jobs.length ?
+
+                    !loading && jobsData.jobs.map((item) => {
+                        return <JobsSearchCard key={item.job_title} {...item} />
+                    })
+                    :
+                    <div className={style.noData}>
+                        No Data
                     </div>
-                }
-            </div> :
-            <div className={style.noData}>
-                No Data
-            </div>}
+            }
+        </div>
         <div className={style.pagination}>
-            {!!jobsData.total_pages &&
+            {!!jobsData.total_pages && !loading &&
                 <Pagination
                     page={jobsData.page}
                     count={jobsData.total_pages}
@@ -345,7 +347,7 @@ const JobsSearchCard = (props: JobData) => {
                     <span title={props.recruiter_full_name}>
                         {props.recruiter_full_name}
                     </span>
-                    &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp; 
+                    &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
                     <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
                         Chat Now
