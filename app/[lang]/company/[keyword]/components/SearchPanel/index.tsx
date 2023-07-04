@@ -100,14 +100,18 @@ const SearchPanel = (props: Props) => {
     // },[offset, props.functions]);
     const searchFunc = (jobTitle?: string, location?: Country, page = 1, job_function_ids?: any) => {
         setLoading(true);
-        fetchJobsListReq({
+        const reqData = {
             companyIds: id,
             size: 10,
             page,
             query: jobTitle && inputText.current,
             location: location?.id,
             jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
-        }, null).then((res) => {
+        }
+        if(job_function_ids === 'all'){
+            delete reqData.jobFunctions;
+        }
+        fetchJobsListReq(reqData, null).then((res) => {
             setJobsData(res.data);
             setLoading(false);
 
@@ -133,7 +137,6 @@ const SearchPanel = (props: Props) => {
                         getOptionLabel={(option: any) => option.value || ''}
                         size='small'
                         onChange={(e, value) => {
-                            console.log('value', value);
                             setLocation(value);
                             searchFunc(inputText.current, value, 1);
                         }}
@@ -219,7 +222,10 @@ const SearchPanel = (props: Props) => {
                                 })}
                                     data-visible={inView}
                                     ref={ref}
-                                    onClick={() => setClasses(undefined)}
+                                    onClick={() => {
+                                        searchFunc(null, location, 1, 'all');
+                                        setClasses(undefined);
+                                    }}
                                 >
                                     All
                                 </div>
@@ -281,9 +287,9 @@ const SearchPanel = (props: Props) => {
             </div>
         }
         <div className={style.filter_split}></div>
-        {!!jobs.jobs.length ?
+        {!!jobsData.jobs.length ?
             <div className={style.content_layout}>
-                {!loading && jobs.jobs.map((item) => {
+                {!loading && jobsData.jobs.map((item) => {
                     return <JobsSearchCard key={item.job_title} {...item} />
                 })}
                 {
