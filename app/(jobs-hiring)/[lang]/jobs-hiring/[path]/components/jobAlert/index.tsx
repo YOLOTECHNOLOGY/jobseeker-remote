@@ -40,7 +40,7 @@ const JobAlert = (props: any) => {
 
   const viewSearchFilterString = sortSearchValuesToString(data)
 
-  console.log('params123', { config, searchValues, data, viewSearchFilterString })
+  // console.log('params123', { config, searchValues, data, viewSearchFilterString })
 
   const dispatch = useDispatch()
   const { search } = useContext(languageContext) as any
