@@ -164,6 +164,11 @@ $contentWidth: 894px;
           // border-width: 1px;
           // border-color: #E5E6EB;
         }
+
+        .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+          border-width: 2px;
+          border-color: #1976d2;
+        }
       }
     }
 
