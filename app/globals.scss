@@ -1,26 +1,26 @@
 @import 'styles/style.css';
 @font-face {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   src: url(../styles/font/product-sans/ProductSansRegular.ttf);
 }
 @font-face {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   src: url(../styles/font/product-sans/ProductSansBoldItalic.ttf);
   font-weight: bold;
   font-style: italic;
 }
 @font-face {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   src: url(../styles/font/product-sans/ProductSansBold.ttf);
   font-weight: bold;
 }
 @font-face {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   src: url(../styles/font/product-sans/ProductSansItalic.ttf);
   font-style: italic;
 }
 @font-face {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   src: url(../styles/font/Poppins-Bold.ttf);
   font-weight: 700;
 }
@@ -43,7 +43,7 @@ body,
   padding: 0;
   margin: 0;
   // font-family: 'Product Sans';
-  font-family: "Product Sans", "ProductSans" !important;
+  font-family: 'Product Sans', 'ProductSans' !important;
 }
 
 ol,
@@ -54,6 +54,19 @@ dl {
   padding: 0;
 }
 
-.css-ayyqgs-MuiInputBase-root-MuiOutlinedInput-root{
+.css-ayyqgs-MuiInputBase-root-MuiOutlinedInput-root {
   font-size: inherit !important;
+}
+
+.MuiAutocomplete-popper {
+  font-size: inherit !important;
+  .MuiAutocomplete-listbox {
+    font-size: 12px !important;
+    li {
+      font-size: 12px !important;
+      div {
+        font-size: 12px !important;
+      }
+    }
+  }
 }
