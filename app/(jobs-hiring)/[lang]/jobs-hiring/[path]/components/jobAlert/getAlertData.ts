@@ -63,7 +63,9 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   const salary_range_filter_ids = getValue(searchValues.salary, salaryList)
   const salary_range_values = getValue(searchValues.salary, salaryList, undefined, 'value')
   const company_size_values = getValue(searchValues.companySizes, companySizeList, undefined, 'value')
+  const company_size_ids = getValue(searchValues.companySizes, companySizeList, undefined, 'id')
   const company_financing_stage_values = getValue(searchValues.financingStages, financingStageList, 'key', 'value')
+  const financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
 
   return {
     location_ids,
@@ -83,7 +85,38 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     salary_range_filter_ids,
     salary_range_values,
     company_size_values,
-    company_financing_stage_values
+    company_size_ids,
+    company_financing_stage_values,
+    financing_stage_ids
+  }
+}
+
+export const getSearchFiltersIds = (searchValues) => {
+  const {
+    location_ids,
+    main_job_function_ids,
+    job_function_ids,
+    function_job_title_ids,
+    industry_ids,
+    xp_lvl_ids,
+    degree_ids,
+    job_type_ids,
+    salary_range_filter_ids,
+    company_size_ids,
+    financing_stage_ids
+  } = searchValues
+  return {
+    location_ids,
+    main_job_function_ids,
+    job_function_ids,
+    function_job_title_ids,
+    industry_ids,
+    xp_lvl_ids,
+    degree_ids,
+    job_type_ids,
+    salary_range_filter_ids,
+    company_size_ids,
+    financing_stage_ids
   }
 }
 

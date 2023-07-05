@@ -71,6 +71,7 @@ $maxContentWidth: 1136px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.105px;
+    word-break: break-all;
   }
 
   &Jobs {
@@ -112,7 +113,7 @@ $maxContentWidth: 1136px;
     line-height: 23px;
     letter-spacing: 0.113px;
     width: 460px;
-    word-break: break-word;
+    word-break: break-all;
 
     margin-top: 8px;
   }
