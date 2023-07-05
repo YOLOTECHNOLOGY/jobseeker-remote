@@ -12,6 +12,7 @@ import { MouseOverPopover } from '../InfoList';
 
 interface Props extends PropsWithChildren<CompanyDetailsType> {
 	test?: number;
+	type?: 'benefits' | 'culture' 
 }
 
 const CulturePanel = (props: Props) => {
@@ -43,6 +44,22 @@ const CulturePanel = (props: Props) => {
 				</div>
 			</>
 		}
+	</div>
+}
+
+export function TagContent(props: Props){
+	const {cultures , benefits} = props;
+	const _data = props.type === 'benefits'  ? benefits : cultures;
+	if(!_data?.length) return null;
+	return <div className={style.culture_wrapper}>
+		<div className={classNames({
+			[style.item_wrapper]: true,
+			[style.culture]: props.type !== 'benefits'
+		})}>
+			{_data.map((item,index)=>{
+				return <MouseOverPopover value={item.value} className={style.item} key={index}></MouseOverPopover>
+			})}
+		</div>
 	</div>
 }
 
