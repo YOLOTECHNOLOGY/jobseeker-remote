@@ -12,6 +12,7 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { set } from 'date-fns';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -170,7 +171,7 @@ const CompanyInfo = (_props: Props) => {
 							.filter(item => props.listing_info[item.field])
 							.padArrayToMultiple(3)
 							.map((item, index) => {
-								if (!item || !props.listing_info[item.field]) {
+								if (!item || !props.listing_info[item?.field]) {
 									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
 								}
 								return <div key={index} className={style.overview_item}>
@@ -232,8 +233,12 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 	const calculateContentHeight = () => {
 		setContentHeight(ref.current.scrollHeight);
 	};
+	const [showMore, setShow] = useState(false);
 	useLayoutEffect(() => {
 		calculateContentHeight();
+		if(isContentOverflowing(ref.current)){
+			setShow(true);
+		}
 	});
 	const handleClick = () => {
 		setIsVisible(!isVisible)
@@ -248,14 +253,14 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 		>
 			<div 
 				className={style.introduction}
-				ref={ref}
+				ref={ref as React.RefObject<HTMLDivElement>}
 				dangerouslySetInnerHTML={{
 				__html: filterScriptContent(props.description)
 			}}>
 			</div>
 		</div>
 
-		{!isVisible && <div className={style.more} onClick={handleClick}>More</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? "Less" : "More"}</div>}
 	</Section>;
 }
 
@@ -279,7 +284,7 @@ function BusinessInfo(
 		calculateContentHeight();
 	});
 	const _resArr = business_info.filter(_ => props[_.field]);
-	const showMore = _resArr.length > 6 && !isVisible;
+	const showMore = _resArr.length > 6;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
 		<div className={style.animation_wrapper} style={{ height: showMore ? 150 : contentHeight }}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
@@ -293,7 +298,7 @@ function BusinessInfo(
 					})}
 			</div>
 		</div>
-		{showMore && <div className={style.more} onClick={handleClick}>More</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? 'Less' : 'More'}</div>}
 	</Section>;
 }
 
@@ -312,8 +317,9 @@ function isURL(str) {
 }
 
 function isContentOverflowing(element) {
-  return element.scrollWidth > element.clientWidth;
+  return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
 }
+
 export function MouseOverPopover(props: {
 	value: string
 	className?: string
