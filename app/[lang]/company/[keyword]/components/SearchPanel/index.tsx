@@ -382,7 +382,7 @@ const JobsSearchCard = (props: JobData) => {
         <div className={style.footer}>
             <div className={style.chat_footer}>
                 <div className={style.avatar}>
-                    <Image height={24} width={24} src={props.recruiter_avatar} alt="img" />
+                    <Image fill src={props.recruiter_avatar} alt="img" />
                     <div className={style.status} style={{ backgroundColor: props.recruiter_is_online ? '#0ebd5c' : '#E5E6EB' }} />
                 </div>
                 <Link className={style.name}  href={'/' + lang + props.job_url} target='_blank' >
