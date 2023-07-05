@@ -87,7 +87,8 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     company_size_values,
     company_size_ids,
     company_financing_stage_values,
-    financing_stage_ids
+    financing_stage_ids,
+    keyword: searchValues.query
   }
 }
 
@@ -123,12 +124,26 @@ export const getSearchFiltersIds = (searchValues) => {
 
 export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>) => {
 
-  const {location_values, main_function_values, job_type_values, salary_range_values}  = values
-
+  const {
+    location_values,
+    main_function_values,
+    industry_values,
+    xp_lvl_values,
+    degree_values,
+    job_type_values,
+    salary_range_values,
+    company_size_values,
+    company_financing_stage_values,
+    keyword
+  }  = values
 
   const sortArray = [
     location_values, main_function_values,
     salary_range_values, job_type_values,
+    industry_values, xp_lvl_values,
+    degree_values, company_size_values,
+    company_financing_stage_values,
+    keyword
   ].filter(Boolean)
 
   return sortArray.join('、').replace(/,/g, '/')
