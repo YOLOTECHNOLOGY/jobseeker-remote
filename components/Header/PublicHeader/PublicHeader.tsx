@@ -1,5 +1,4 @@
 import React from 'react'
-import { usePathname } from 'next/navigation'
 /* Style */
 import styles from '../Header.module.scss'
 
@@ -13,7 +12,6 @@ import NavLeft from '../Common/NavLeft'
 import NavRight from './NavRight'
 
 const PublicHeader = ({ lang }: any) => {
-  const pathname = usePathname()
   const langKey = getLang()
   return (
     <div className={styles.header}>
@@ -24,7 +22,7 @@ const PublicHeader = ({ lang }: any) => {
 
         {/* Left Menu */}
         <div className={styles.headerLinksWrapper}>
-          <NavLeft langKey={langKey} lang={lang} pathname={pathname} />
+          <NavLeft langKey={langKey} lang={lang} />
         </div>
 
         {/* Right Menu */}

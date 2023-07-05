@@ -75,7 +75,7 @@ const ProtectedHeader = ({ lang }: any) => {
 
         {/* Left Menu */}
         <div className={styles.headerLinksWrapper}>
-          <NavLeft langKey={langKey} lang={lang} pathname={pathname} />
+          <NavLeft langKey={langKey} lang={lang} />
         </div>
 
         {/* Right Menu */}

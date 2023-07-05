@@ -2,17 +2,18 @@ import React from 'react'
 import Link from 'components/Link'
 import Text from 'components/Text'
 import classNames from 'classnames'
+import { usePathname } from 'next/navigation'
 
 import styles from '../Header.module.scss'
 
 interface IProps {
   langKey: string
-  pathname: string
   lang: any
 }
 
 const NavLeft = (props: IProps) => {
-  const { langKey, pathname, lang } = props
+  const { langKey, lang } = props
+  const pathname = usePathname()
 
   const {
     home,
