@@ -178,5 +178,25 @@ export const CompleteResumeIcon = `${S3BucketJobseeker}/CompleteResumeIcon.svg`
 export const LoginSafe = `${S3BucketJobseeker}/loginSafa.gif`
 export const RightArrowIcon = `${S3BucketJobseeker}/right_arrow_icon.svg`
 export const HistoryIcons = `${S3BucketJobseeker}/HistoryIcons.svg`
+
+/** Footer icon */
+export const footer_googleplay_download = `${S3BucketJobseeker}/footer_googleplay_download.svg`
+export const footer_apple_download = `${S3BucketJobseeker}/footer_apple_download.svg`
+export const footer_twitter_icon = `${S3BucketJobseeker}/footer_twitter_icon.svg`
+export const footer_youtube_icon = `${S3BucketJobseeker}/footer_youtube_icon.svg`
+export const footer_tiktok_icon = `${S3BucketJobseeker}/footer_tiktok_icon.svg`
+export const footer_instagram_icon = `${S3BucketJobseeker}/footer_instagram_icon.svg`
+export const footer_linkedIn_icon = `${S3BucketJobseeker}/footer_linkedIn_icon.svg`
+export const footer_facebook_icon = `${S3BucketJobseeker}/footer_facebook_icon.svg`
+export const footer_logo = `${S3BucketJobseeker}/footer_logo.svg`
+
+// navbar icons
+export const navbar_location_icon = `${S3BucketJobseeker}/navbar_location_icon.svg`
 export const scanHunt = `${S3BucketJobseeker}/scanHunt.png`
 export const scanJob = `${S3BucketJobseeker}/scanJob.png`
+
+// find job
+export const UploadDocIcon = `${S3BucketJobseeker}/UploadDocIcon.svg`
+export const JobSearchIcon = `${S3BucketJobseeker}/jobSearchIcon.svg`
+export const ClearIcon = `${S3BucketJobseeker}/ClearIcon.svg`
+export const MoreFilterIcon = `${S3BucketJobseeker}/MoreFilterIcon.svg`

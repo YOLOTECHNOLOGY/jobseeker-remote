@@ -5,20 +5,29 @@
   display: flex;
   border-top: 1px solid $dividerLine;
   position: relative;
-  background-color: $white-3;
+  background-color: #141E31;
+  color: #86909C;
+  font-family: 'Product Sans';
+
 
   &Container {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    @extend .GlobalContainer;
+    padding: 60px 0 30px;
 
-    @include md {
-      padding: 25px 0 20px;
+    p {
+      color: #86909C;
+    }
+
+    @include msd {
+      padding-top: 40px;
     }
   }
 
   &MobileContainer {
+    padding: 0 20px;
+    padding-bottom: 20px;
+
     @include md {
       display: none;
     }
@@ -33,11 +42,18 @@
   }
 
   &Link {
-    color: $black;
-    font-weight: bold;
+    color: #86909C;
+    font-size: 14px;
+    font-family: Product Sans;
+    line-height: 18px;
+    letter-spacing: 0.105px;
 
-    &:hover {
-      color: $primaryBlue;
+    span{
+      color: #86909C;
+      font-size: 14px;
+      font-family: Product Sans;
+      line-height: 18px;
+      letter-spacing: 0.105px;
     }
   }
 
@@ -48,6 +64,31 @@
 
 /* Desktop */
 .footerDesktop {
+
+  &App {
+    display: flex;
+    height: 42px;
+
+    a {
+      width: 140px;
+      height: 100%;
+      margin-right: 20px;
+    }
+  }
+
+  &LinkTitle {
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  &DividerLine {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.10);
+    margin-top: 40px;
+  }
+  
   &Wrapper {
     display: none;
 
@@ -56,7 +97,9 @@
     }
   }
 
-  &LinksWrapper {
+  &Top {
+    @extend .GlobalContainer;
+
     @include md {
       display: flex;
       flex-direction: row;
@@ -65,32 +108,43 @@
     }
   }
 
-  &SocialWrapper {
-    margin-top:25px; 
-    
-    @include md {
-      @include flex(column);
-    }
+  &Left {
+    width: 467px;
+    margin-right: 60px;
 
-    .socialLink{
-      &:hover{
-        transform:scale(1.1);
-        transition: 100ms all ease-in-out;
-      }
+    @include md {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
     }
   }
 
-  &SocialLinks {
-    @include md {
-      @include flex();
-      width: 216px;
-      float: right;
-    }
+  &LeftTop{
+
   }
 
-  &SupportWrapper {
+  &Logo{
+    width: 124px;
+    height: 32px;
+    object-fit: cover;
+  }
+
+  &LeftBottom {
+    margin-top: 75px;
+  }
+
+  &CompanyDesc {
+    width: 100%;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 20px;
+    color: #86909C;
+  }
+
+  &Right {
+    width: 572px;
+
     @include md {
-      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -104,99 +158,114 @@
     margin-top: 20px;
 
     & > li {
-      margin-bottom: 0.2em;
+      margin-bottom: 12px;
 
       &:last-child {
         margin-bottom: 0;
       }
     }
   }
+
+  &Bottom {
+    @extend .GlobalContainer;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &SocialWrapper {
+    @include md {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &SocialLinks {
+    @include md {
+      @include flex();
+      float: right;
+      align-items: center;
+    }
+  }
+
+  &SocialLinkFollow{
+    margin-right: 10px;
+  }
 }
 
-.footerMobileSections{
+.socialLink{
+  margin-left: 10px;
+}
+
+.footerMobileSocialLinks {
+  margin-top: 60px;
+}
+
+.footerDownloadApp {
+
+  @include msd {
+    margin-top: 60px;
+  }
+}
+
+.footerDownloadAppText {
   margin-top: 20px;
+  color: #86909C;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  text-transform: capitalize;
 }
 
-.footerMobileDownloadApp{
-  display:flex;
-  flex-direction: row;
-  margin-top:20px;
-}
-
-.footerMobileSocialLinks{
-  display:flex;
-  width:100%;
-  justify-content: flex-start; 
-
-  & > * {
-    margin-top: 20px;
-    margin-right: 15px;
+.footerDesktopAppList {
+  a {
+    display: inline-block;
+    height: 42px;
+    margin-right: 20px;
   }
 }
 
-/** Misc **/
-.scrollUpButton {
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  background: $white-3;
-  box-sizing: border-box;
-  box-shadow: 3px 3px 11px 0 rgba(35, 121, 234, 0.19);
-  position: absolute;
-  top: -31px;
+.footerMobileCompany {
+  margin-top: 30px;
+}
+
+
+.footerMobileSocialLinks {
   display: flex;
-  text-align: center;
-  flex-direction: row;
-  justify-content: center;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  color: $primaryBlue;
-  border: 0;
-  z-index: 2;
-  outline: 0;
+  align-items: center;
+}
 
-  &:hover {
-    cursor: pointer;
-  }
+.footerMobileSocialLinksText {
+  color: rgba(255, 255, 255, 0.60);
+  font-size: 16px;
+  font-family: Product Sans;
+  margin-right: 10px;
+}
+
+
+.footerMobileLinkTitle {
+  font-size: 17px !important;
+  line-height: 22px !important;
+  letter-spacing: 0.128px !important;
+  color: #FFF !important;
 }
 
 .footerCopyrightWrapper {
-  display: flex;
-  line-height: 6px;
-  margin: 30px 0;
-
   @include msd {
-    margin: 30px 7%;
+    padding-top: 20px;
   }
 }
 
-.copyright{
-  display:flex;
-  margin-top:1.5rem;
-  text-align: right;
-  justify-content: center;
-
-  .copyrightWrapper {
-    display: flex;
-    flex-direction: row;
-  
-    &.mobile {
-      flex-direction: column;
-      margin: 0;
-    }
-  
-    .copyrightCompanies {
-      display: inline-block;
-      text-align: left;
-    }
-  }
-
-  @include sm{
-    display:none;
-  }
+.copyrightCompanies {
+  color: #86909C;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.098px;
 }
 
-.footerColumn {
-  margin-right: 15px;
+.footerDesktopLogoLink {
+  width: 124px;
+  height: 32px;
+  display: block;
 }

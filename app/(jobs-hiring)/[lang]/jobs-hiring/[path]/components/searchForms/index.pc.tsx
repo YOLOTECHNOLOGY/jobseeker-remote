@@ -33,6 +33,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
+import {MoreFilterIcon} from 'images'
+
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search } = useContext(languageContext) as any
@@ -149,6 +151,7 @@ const SearchArea = (props: any) => {
             [styles.isFixed]: isFixed
           })}
         >
+          <div className={styles.searchAreaContent}>
           {/* search */}
           <div className={styles.searchArea}>
             <div className={styles.searchAreaLeft}>
@@ -163,169 +166,88 @@ const SearchArea = (props: any) => {
                 onChange={setLocation}
                 sx={{
                   '> .MuiFormControl-root': {
+                    borderRadius: '8px',
+                    height: '60px',
+                    marginTop: '4px',
+                    overflow: 'hidden',
                     '> .MuiOutlinedInput-root': {
-                      borderRadius: '10px',
-                      height: '40px',
+                      borderRadius: '8px',
+                      height: '60px',
+                      overflow: 'hidden',
                       marginTop: '4px'
                     }
                   }
                 }}
               />
-              <JobSearchBar
-                id='search'
-                label={search.title}
-                variant='outlined'
-                size='small'
-                className={styles.search}
-                value={searchValue}
-                maxLength={255}
-                isLoading={searchLoading}
-                searchFn={handleSuggestionSearch as any}
-                updateSearchValue={setSearchValue}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    flushSync(() => {
-                      setSearchValue((e.target as HTMLInputElement).value)
-                    })
-                    addSearchHistory((e.target as HTMLInputElement).value)
-                    setQueryFields('')
-                    reloadRef.current()
-                  }
-                }}
-                renderOption={(props, option) => {
-                  const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-                  return type === 'company' ? (
-                    <li {...props} style={styleleSelect}>
-                      <Image src={logoUrl} alt={value} width='22' height='22' />
-                      <span style={{ paddingLeft: '10px' }}>{value}</span>
-                    </li>
-                  ) : isHistory ? (
-                    <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
-                      <AccessTimeIcon />
-                      <span style={{ paddingLeft: '10px' }}>{value}</span>
-                    </li>
-                  ) : (
-                    <li {...props} style={styleleSelect}>
-                      <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                      <span style={{ paddingLeft: '10px' }}>{value || option}</span>
-                    </li>
-                  )
-                }}
-                options={suggestionList}
-                onSelect={(value: any) => {
-                  const newValue = value?.value || value || ''
-                  setQueryFields(value?.type || '')
-                  flushSync(() => {
-                    setSearchValue(newValue)
-                  })
-                  addSearchHistory(newValue)
-                  reloadRef.current()
-                }}
-              />
-              <MaterialButton
-                className={styles.searchButton}
-                variant='contained'
-                capitalize
-                onClick={() => {
-                  flushSync(() => {
-                    setSearchValue(searchValue)
-                  })
-                  addSearchHistory(searchValue)
-                  reloadRef.current()
-                  setQueryFields('')
-                }}
-              >
-                {' '}
-                {search.searchBtn}{' '}
-              </MaterialButton>
-            </div>
-            <div className={styles.searchAreaRight}>
-              {accessToken ? (
-                <div
-                  className={styles.downloadApp}
-                  onClick={() => {
-                    // app store
-                    window.location.href = userAgent.ua.isMac
-                      ? process.env.APP_STORE_LINK
-                      : process.env.GOOGLE_PLAY_STORE_LINK
-                  }}
-                >
-                  <svg
-                    width='32'
-                    height='32'
-                    viewBox='0 0 32 32'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M22.6667 2.66675H9.33341C7.86066 2.66675 6.66675 3.86066 6.66675 5.33341V26.6667C6.66675 28.1395 7.86066 29.3334 9.33341 29.3334H22.6667C24.1395 29.3334 25.3334 28.1395 25.3334 26.6667V5.33341C25.3334 3.86066 24.1395 2.66675 22.6667 2.66675Z'
-                      stroke='#136FD3'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      className={styles.downloadApp_phoneIconBorderPath}
-                    />
-                    <path
-                      d='M16 24H16.0133'
-                      stroke='#136FD3'
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      className={styles.downloadApp_phoneIconHomePath}
-                    />
-                  </svg>
-                  <div className={styles.text}> {search.downloadAPP} </div>
-                  <div className={styles.popver}>
-                    <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                    <p>
-                      {search.chatDirectly}
-                      <br />
-                      {search.withBoss}
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <Button
-                  className={styles.loginButton}
+              <div className={styles.searchAreaBox}>
+                <JobSearchBar
+                  id='search'
+                  label={search.title}
                   variant='outlined'
+                  size='small'
+                  className={styles.search}
+                  value={searchValue}
+                  maxLength={255}
+                  isLoading={searchLoading}
+                  searchFn={handleSuggestionSearch as any}
+                  updateSearchValue={setSearchValue}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      flushSync(() => {
+                        setSearchValue((e.target as HTMLInputElement).value)
+                      })
+                      addSearchHistory((e.target as HTMLInputElement).value)
+                      setQueryFields('')
+                      reloadRef.current()
+                    }
+                  }}
+                  renderOption={(props, option) => {
+                    const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                    return type === 'company' ? (
+                      <li {...props} style={styleleSelect}>
+                        <Image src={logoUrl} alt={value} width='22' height='22' />
+                        <span style={{ paddingLeft: '10px' }}>{value}</span>
+                      </li>
+                    ) : isHistory ? (
+                      <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                        <AccessTimeIcon />
+                        <span style={{ paddingLeft: '10px' }}>{value}</span>
+                      </li>
+                    ) : (
+                      <li {...props} style={styleleSelect}>
+                        <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                        <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                      </li>
+                    )
+                  }}
+                  options={suggestionList}
+                  onSelect={(value: any) => {
+                    const newValue = value?.value || value || ''
+                    setQueryFields(value?.type || '')
+                    flushSync(() => {
+                      setSearchValue(newValue)
+                    })
+                    addSearchHistory(newValue)
+                    reloadRef.current()
+                  }}
+                />
+                <MaterialButton
+                  className={styles.searchButton}
+                  variant='contained'
+                  capitalize
                   onClick={() => {
-                    sessionStorage.setItem('redirectPage', window?.location?.pathname)
-                    setShowLogin(true)
-                    // router.push('/get-started', { forceOptimisticNavigation: true })
+                    flushSync(() => {
+                      setSearchValue(searchValue)
+                    })
+                    addSearchHistory(searchValue)
+                    reloadRef.current()
+                    setQueryFields('')
                   }}
                 >
-                  <svg
-                    width='21'
-                    height='20'
-                    viewBox='0 0 21 20'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M7.84375 13.2812L11.125 10L7.84375 6.71875'
-                      stroke='#136FD3'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M2.375 10H11.125'
-                      stroke='#136FD3'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                    <path
-                      d='M11.125 3.125H15.5C15.6658 3.125 15.8247 3.19085 15.9419 3.30806C16.0592 3.42527 16.125 3.58424 16.125 3.75V16.25C16.125 16.4158 16.0592 16.5747 15.9419 16.6919C15.8247 16.8092 15.6658 16.875 15.5 16.875H11.125'
-                      stroke='#136FD3'
-                      strokeWidth='1.5'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                  <span>{search.login}</span>
-                </Button>
-              )}
+                  {search?.findNow}
+                </MaterialButton>
+              </div>
             </div>
           </div>
           {/* filter */}
@@ -343,7 +265,7 @@ const SearchArea = (props: any) => {
                 id='jobFunction'
                 label={search.function}
                 value={jobFunctionValue}
-                className={[styles.filterItems]}
+                className={[styles.filterItems, styles.jobFunction]}
                 onChange={jobFunctionChange}
               />
               <Multiple
@@ -367,8 +289,8 @@ const SearchArea = (props: any) => {
                 onClick={() => {
                   setShowMore(true)
                 }}
+                endIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
               >
-                {' '}
                 {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
               </Button>
             </div>
@@ -395,6 +317,7 @@ const SearchArea = (props: any) => {
               </Button>
             </div>
           </div>
+          </div>        
         </div>
       </ThemeProvider>
 

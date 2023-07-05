@@ -10,7 +10,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogoWhite } from 'images'
+import { BossjobLogo } from 'images'
 
 // this Header will be used when user is not logged in
 const PlaceHolderPublicHeader = (props:any) => {
@@ -21,7 +21,7 @@ const PlaceHolderPublicHeader = (props:any) => {
         <div className={styles.headerLogo}>
           <img
             className={styles.headerLogoImage}
-            src={BossjobLogoWhite}
+            src={BossjobLogo}
             title='Bossjob logo'
             alt='Bossjob logo'
           />
@@ -101,20 +101,9 @@ const PlaceHolderPublicHeader = (props:any) => {
                 variant='outlined'
                 size='medium'
                 capitalize
-                sx={{
-                  width: '123px',
-                  height: '35px !important',
-                  border: '1.5px solid #FFFFFF',
-                  borderRadius: '10px',
-                  maxWidth: '153px',
-                  paddingLeft: '0',
-                  paddingRight: '0',
-                  backgroundColor: '#136FD3'
-                }}
+                className={styles.getStartedButton}
               >
-                <Text textStyle='base' textColor='white' bold>
-                {lang.getStarted}
-                </Text>
+                <span>{lang.getStarted}</span>
               </MaterialButton>
             </li>
 

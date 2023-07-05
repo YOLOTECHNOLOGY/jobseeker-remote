@@ -158,7 +158,7 @@ const EditWorkExperienceModal = ({
       //   setIsShowCountry(true)
       // }
 
-      setDescription(data.description)
+      setDescription(data.description_html ? data.description_html : data.description)
       setJobFunction({ id: data?.function_job_title_id, value: data?.function_job_title ?? '' })
     }
   }, [data])
@@ -235,7 +235,8 @@ const EditWorkExperienceModal = ({
       salary: currency && salary ? Number(salary) : null,
       working_period_from,
       working_period_to,
-      description: description ? description : ''
+      description: description ? description : '',
+      description_html: description ? description : ''
       // location_key: location?.key || '',
     }
     const workExperiencesPayload = {

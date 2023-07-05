@@ -34,8 +34,12 @@ const CompanyInfo = (_props: Props) => {
 		props.company_business_info.name = _props.legal_name;
 		// @ts-ignore
 		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
+
 		// props.company_business_info.industry = _props.industry;
 	}
+	// @ts-ignore
+	props.turnover = (config?.turnover_lists || []).filter((_)=>{return _.id === _props.turnover_id})?.[0]?.value;
+
 	const contextLang = useContext(languageContext);
 	const info = [
 		{

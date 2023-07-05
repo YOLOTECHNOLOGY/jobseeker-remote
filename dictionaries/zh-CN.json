@@ -52,7 +52,8 @@
     "downloadBossjobApp": " 下载 Bossjob 应用程序",
     "followUs": "关注我们",
     "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
-    "corporation": "菲律宾：Etos Adtech Corporation"
+    "corporation": "菲律宾：Etos Adtech Corporation",
+    "companyDesc": "2016年，我们踏上了Yolo Technology的征程，作为技术进化和创新的先行者，为世界带来改变。"
   },
   "getStatred": {
     "seoMetaTitle": "注册求职账号，马上开始找工作 | Bossjob",
@@ -283,7 +284,8 @@
     }
   },
   "home": {
-    "title": "找工作，与老板谈",
+    "title": "Find Job. ",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -532,7 +534,32 @@
     "downloadAPP": "下载APP",
     "chatDirectly": "直接谈",
     "withBoss": "和老板",
-    "relatedSearch": "相关搜索"
+    "relatedSearch": "相关搜索",
+    "alertJobs": {
+      "title": "高质量职位推荐",
+      "setting": "设置",
+      "info": "将您搜索到的 {{message}} 职位信息发送到电子邮件",
+      "settingSucceed": "职位提醒设置成功。",
+      "settingFailed": "职位提醒设置失败。",
+      "somethingWrong": "出了些问题."
+    },
+    "alertJobsModal": {
+      "title": "职位提醒设置",
+      "subTitle": "职位提醒",
+      "jobConditions": "工作条件",
+      "frequency": "频率",
+      "daily": "每日",
+      "weekly": "每周",
+      "sendToEmail": "发送至电子邮件",
+      "cancel": "取消",
+      "done": "完成",
+      "emailPlaceholder": "请输入电子邮件地址",
+      "emailValid": "请输入有效的电子邮件地址。",
+      "emailEmpty": "电子邮件不能为空。"
+    },
+    "downloadAppWithQrCode": "下载APP与老板聊天",
+    "findNow": "搜索",
+    "find": "搜索"
   },
   "manageProfile": {
     "tab": {

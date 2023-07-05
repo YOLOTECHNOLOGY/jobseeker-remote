@@ -28,6 +28,7 @@ import { cloneDeep } from 'lodash-es'
 import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { HistoryIcons } from 'images'
+import MaterialButton from 'components/MaterialButton'
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
   const { search, myJobs } = useContext(languageContext) as any
@@ -152,40 +153,11 @@ const SearchArea = (props: any) => {
       <ThemeProvider theme={newTheme}>
         <div className={styles.searchFormMoblie}>
           <div className={styles.searchArea}>
-            <LocationMultiSelector
-              className={styles.location}
-              locationList={config.location_lists}
-              value={location}
-              lang={search}
-              label={search.location}
-              // defaultValue={location}
-              onChange={setLocation}
-              sx={{
-                '> .MuiFormControl-root': {
-                  '> .MuiOutlinedInput-root': {
-                    borderRadius: '10px',
-                    height: '40px',
-                    marginTop: '4px'
-                  }
-                }
-              }}
-            />
-            {/* <LocationField
-              className={styles.location}
-              locationList={config.location_lists}
-              value={location}
-              label={search.location}
-              disableClearable={true}
-              isClear={true}
-              defaultValue={location}
-              onChange={(e, value) => {
-                setLocation(value)
-              }}
-            /> */}
             <JobSearchBar
               id='search'
-              label={search.title}
+              // label={search.title}
               variant='outlined'
+              placeholder={search.title}
               size='small'
               className={styles.search}
               value={searchValue}
@@ -235,8 +207,44 @@ const SearchArea = (props: any) => {
                 reloadRef.current()
               }}
             />
+            <button
+              className={styles.searchButton}
+              onClick={() => {
+                flushSync(() => {
+                  setSearchValue(searchValue)
+                })
+                addSearchHistory(searchValue)
+                reloadRef.current()
+                setQueryFields('')
+              }}
+            >
+              {search?.find}
+            </button>
           </div>
           <div className={styles.filters}>
+            <LocationMultiSelector
+              className={styles.location}
+              locationList={config.location_lists}
+              value={location}
+              lang={search}
+              label={search.location}
+              // defaultValue={location}
+              onChange={setLocation}
+              sx={{
+                '> .MuiFormControl-root': {
+                  borderRadius: '8px',
+                  height: '60px',
+                  marginTop: '4px',
+                  overflow: 'hidden',
+                  '> .MuiOutlinedInput-root': {
+                    borderRadius: '8px',
+                    height: '60px',
+                    overflow: 'hidden',
+                    marginTop: '4px'
+                  }
+                }
+              }}
+            />
             <Single
               options={sortOptions}
               value={sort}
