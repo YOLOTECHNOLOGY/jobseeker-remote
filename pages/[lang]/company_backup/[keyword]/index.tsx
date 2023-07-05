@@ -50,6 +50,7 @@ const CompanyDetail = (props: any) => {
   const { companyDetail, accessToken, seoMetaTitle, seoMetaDescription, totalActiveJobs, lang } =
     props
   const company = companyDetail
+  company.company_url = company.company_url.replace('/company/', '/company_backup/')
   const [companyJobs, setCompanyJobs] = useState(null)
   const [selectedPage, setSelectedpage] = useState(Number(page) || 1)
   const [totalPages, setTotalPages] = useState(null)
@@ -136,7 +137,7 @@ const CompanyDetail = (props: any) => {
     }
     setDefaultCompanyAddress(address)
   }, [company])
-
+  
   return (
     <CompanyProfileLayout
       company={company}

@@ -11,7 +11,7 @@ const Item = (props: any) => {
         style={{}}
         onClick={() => {
             if (!disabled) {
-                router.push('my-jobs/communicated?type=' + type, { forceOptimisticNavigation: true })
+                router.push('/my-jobs/communicated?type=' + type, { forceOptimisticNavigation: true })
             }
         }}
     >

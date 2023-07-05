@@ -33,7 +33,7 @@ const Map = ({ lat, lng, full_address,lang }: propsType) => {
       <h5>{lang?.workingLocation}</h5>
       <p>{full_address}</p>
 
-      {lat && lng && (
+      {(lat && lng) ?  (
         <div className={styles.map_context} onClick={handleMapLayer}>
           <GoogleMap
             lat={Number(lat)}
@@ -45,8 +45,7 @@ const Map = ({ lat, lng, full_address,lang }: propsType) => {
             clickable={false}
           />
         </div>
-      )}
-
+      ): null}
       <Modal
         open={open}
         onClose={() => setOpen(false)}

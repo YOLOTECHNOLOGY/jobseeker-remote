@@ -68,7 +68,7 @@ const JobAlert = (props: any) => {
       xp_lvl_values: params?.xp_lvls ? params.xp_lvls : 'all',
       degree_values: params?.qualification ? params.qualification : 'all',
       main_functions: params?.main_functions ?? 'all',
-      job_functions: params?.job_functions_ids ?? 'all',
+      job_functions: params?.job_function_ids ?? 'all',
       function_titles: params?.function_job_title_ids ?? 'all',
       is_company_verified: 'all',
       frequency_id: 1

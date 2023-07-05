@@ -5,7 +5,7 @@ import styles from './Footer.module.scss'
 import PC from './components/PC'
 import Mobile from './components/Mobile'
 
-const Footer = ({lang}:any) => {
+const Footer = ({ lang }: any) => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>

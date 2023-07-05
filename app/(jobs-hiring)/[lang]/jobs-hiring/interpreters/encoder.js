@@ -180,7 +180,7 @@ export const buildParams = (config, searchValues) => {
         degree_ids: searchValues.qualification?.map?.(key => qualificationList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         company_financing_stage_ids: searchValues.financingStages?.map?.(key => financingStagesList.find(item => item?.key === key)?.id).join(',') ?? null,
         is_company_verified: searchValues.verifiedCompany ? Boolean(searchValues.verifiedCompany) : null,
-        job_functions_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
+        job_function_ids: searchValues?.jobFunctions?.map?.(seo => jobFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
         main_job_function_ids: searchValues?.mainFunctions?.map?.(seo => mainFunctionList.find(item => item.seo_value === seo)?.id)?.join?.(',') ?? null,
         company_size_ids: searchValues.companySizes?.map?.(key => companySizeList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         function_job_title_ids: searchValues?.functionTitles?.map?.(seo => functionsTitleList.find(item => item.seo_value === seo)?.id)

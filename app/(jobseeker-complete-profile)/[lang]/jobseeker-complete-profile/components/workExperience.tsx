@@ -97,6 +97,7 @@ const WorkExperience = (props: any) => {
       const {
         company,
         description,
+        description_html,
         function_job_title,
         function_job_title_id,
         working_period_from,
@@ -108,7 +109,7 @@ const WorkExperience = (props: any) => {
       setIsCurrentJob(is_currently_work_here)
       setWorkPeriodFrom(working_period_from)
       setWorkPeriodTo(working_period_to)
-      setDescription(description)
+      setDescription(description_html ? description_html : description)
     }
   }, [JSON.stringify(userDetail)])
 
@@ -198,7 +199,8 @@ const WorkExperience = (props: any) => {
       working_period_from: `${moment(new Date(workPeriodFrom)).format('yyyy-MM')}-01`,
       working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodTo)).format('yyyy-MM')}-01`,
       is_currently_work_here: isCurrentJob,
-      description
+      description,
+      description_html: description
     }
     if (isCurrentJob) {
       delete paramsWork.working_period_to

@@ -7,16 +7,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Link from 'next/link';
 import { getValueById } from 'helpers/config/getValueById';
 import { cloneDeep } from 'lodash-es'
-const  jobseekerDisplayStatusObject = {
-  "Pending":'#D2030F',
-  "Accepted":'#136FD3',
-  "Upcoming":'#136FD3',
-  "In progress":'#136FD3',
-  "Declined":'#707070',
-  "Cancelled":'#707070',
-  "Not accepted":'#707070',
+const jobseekerDisplayStatusObject = {
+  "Pending": '#D2030F',
+  "Accepted": '#136FD3',
+  "Upcoming": '#136FD3',
+  "In progress": '#136FD3',
+  "Declined": '#707070',
+  "Cancelled": '#707070',
+  "Not accepted": '#707070',
   "Completed": "#0EBD5C",
-  "Not checked in":'#D2030F',
+  "Not checked in": '#D2030F',
 };
 interface cardProps {
   data: Array<any>,
@@ -25,19 +25,42 @@ interface cardProps {
   loadingList: boolean,
   totalPage: number,
   tabValue: string
-  lang:any
-  config:any
+  lang: any
+  config: any
 }
 
 const translateData = (data, config) => {
-  if(!data || !config || !Array.isArray(data)) return data;
-  return cloneDeep(data).map((item) => {
-    item.company.industry = getValueById(config, item.company.industry_id, 'industry_id');
-    item.job.job_type_value = getValueById(config, item.job.job_type_id, 'job_type_id');
-    item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl?.id, 'xp_lvl_id');
-    item.job.degree.value = getValueById(config,item.job.degree.id,'degree_id')
-    item.job.location.value = getValueById(config,item.job.location.id,'location_id')
-    return item
+  if (!data || !config || !Array.isArray(data)) return data;
+  return data.map((item) => {
+    return {
+      ...item,
+      company: {
+        ...item.company,
+        industry: getValueById(config, item.company?.industry_id, 'industry_id')
+      },
+      job: {
+        ...item.job,
+        job_type_value: getValueById(config, item.job?.job_type_id, 'job_type_id'),
+        xp_lvl: {
+          ...item?.xp_lvl,
+          value: getValueById(config, item.job?.xp_lvl?.id, 'xp_lvl_id')
+        },
+        degree: {
+          ...item?.degree,
+          value: getValueById(config, item.job?.degree?.id, 'degree_id')
+        },
+        location: {
+          ...item?.location,
+          value: getValueById(config, item.job?.location?.id, 'location_id')
+        }
+      }
+    }
+    // item.company.industry = getValueById(config, item.company.industry_id, 'industry_id');
+    // item.job.job_type_value = getValueById(config, item.job.job_type_id, 'job_type_id');
+    // item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl?.id, 'xp_lvl_id');
+    // item.job.degree.value = getValueById(config, item.job.degree.id, 'degree_id')
+    // item.job.location.value = getValueById(config, item.job.location.id, 'location_id')
+    // return item
   });
 }
 
@@ -68,7 +91,7 @@ const JobsCard = ({
   }, [])
 
   // translate Data
- // const translatedData = (data) => translateData(data, config)
+  // const translatedData = (data) => translateData(data, config)
 
   const transTime = (time: string) => {
     return new Date().getTime() - new Date(time).getTime() > 1000 * 60 * 60 * 1
@@ -121,7 +144,7 @@ const JobsCard = ({
         salary_range_value: salaryRangeValue,
         job_type_value: jobType,
         status_key: status,
-        job_url:jobUrl
+        job_url: jobUrl
       } = item.job || {};
       const { value: xpLvl } = item.job?.xp_lvl || {};
       const { value: location } = item.job?.location || {};
@@ -131,7 +154,7 @@ const JobsCard = ({
         full_name: fullName,
         last_active_at: lastActiveAt
       } = item.recruiter || {};
-      const workJobTitle = item.recruiter?.work_experience?.job_title ;
+      const workJobTitle = item.recruiter?.work_experience?.job_title;
       const same = isSameDay(item.created_at, data[index - 1]?.created_at)
       return (
         <div key={`${item.id}`}>
@@ -145,9 +168,9 @@ const JobsCard = ({
             }
 
             <div className={styles.name}>
-             {
-               status === 'closed'  ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
-             }
+              {
+                status === 'closed' ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> : <Link href={jobUrl || ''} >{jobTitle}</Link>
+              }
               <span className={styles.salary}>{salaryRangeValue}</span>
             </div>
             <p className={styles.company}>{name}. {industry}</p>
@@ -162,8 +185,8 @@ const JobsCard = ({
                 <Image src={avatar} alt={fullName} width={20} height={20} />
               </div>
               <div className={styles.bottmBox}>
-              <span className={styles.workJob}> {fullName} · {workJobTitle}</span>
-              <span className={styles.location}>{location}</span>
+                <span className={styles.workJob}> {fullName} · {workJobTitle}</span>
+                <span className={styles.location}>{location}</span>
               </div>
             </div>
           </div>
@@ -174,16 +197,16 @@ const JobsCard = ({
 
   const interviewCard = (data) => {
     return data?.map((item, index) => {
-      const {jobseeker_display_status:status} = item
+      const { jobseeker_display_status: status } = item
       const {
         name,
-        logo_url:logoUrl
+        logo_url: logoUrl
       } = item.company || {};
       const {
         salary_range_value: salaryRangeValue,
         status_key: statusJob,
-        job_url:jobUrl,
-        job_title:jobTitle
+        job_url: jobUrl,
+        job_title: jobTitle
       } = item.job || {};
       const same = isSameDay(item.interviewed_at, data[index - 1]?.interviewed_at)
       return (
@@ -200,19 +223,19 @@ const JobsCard = ({
             <div className={styles.content}>
               <div className={styles.left}>
                 <div className={styles.company}>
-                <Image src={logoUrl} alt={name} width={24} height={24} />
-                <span className={styles.name}>{name}</span>
-                <span className={styles.status} style={{color : jobseekerDisplayStatusObject[status] || '#136FD3'}}>{status}</span>
+                  <Image src={logoUrl} alt={name} width={24} height={24} />
+                  <span className={styles.name}>{name}</span>
+                  <span className={styles.status} style={{ color: jobseekerDisplayStatusObject[status] || '#136FD3' }}>{status}</span>
                 </div>
-               <p className={styles.developer}>
-                 <div className={styles.info}>
-                 {
-                   status === 'closed'  ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> :  <Link  href={jobUrl || ''} >{jobTitle}</Link>
-                 }
-                 <span className={styles.salary}> {salaryRangeValue} </span>
-                </div>
-                <span  className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
-               </p>            
+                <p className={styles.developer}>
+                  <div className={styles.info}>
+                    {
+                      status === 'closed' ? <a onClick={(e) => e.preventDefault()} >{jobTitle}</a> : <Link href={jobUrl || ''} >{jobTitle}</Link>
+                    }
+                    <span className={styles.salary}> {salaryRangeValue} </span>
+                  </div>
+                  <span className={styles.times}>{item.interviewed_at?.substr(11, 5)}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -220,13 +243,13 @@ const JobsCard = ({
       )
     })
   }
-console.log({tabValue},data)
+  console.log({ tabValue }, data)
   return (
     <>
       {
-        tabValue === 'interview' ? interviewCard(data) : card( translateData(data,config))
+        tabValue === 'interview' ? interviewCard(data) : card(translateData(data, config))
       }
-      <p className={styles.load}>{loadingList ? <CircularProgress  style={{margin:'10px 0'}}/> : page === totalPage ? lang?.noMore : ''}</p>
+      <p className={styles.load}>{loadingList ? <CircularProgress style={{ margin: '10px 0' }} /> : page === totalPage ? lang?.noMore : ''}</p>
 
     </>
   )

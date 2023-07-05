@@ -63,7 +63,7 @@ export default function PrimarySearchAppBar({ title, onChange, onClose, lang }: 
   const inputProps = getInputProps() as any
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <Toolbar
         style={{
           background: '#F9F9F9',

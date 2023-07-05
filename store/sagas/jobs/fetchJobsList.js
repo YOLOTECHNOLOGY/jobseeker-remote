@@ -29,7 +29,7 @@ function* fetchJobsListReq(action) {
       companyIds,
     } = action.payload
 
-    const [salaryFrom, salaryTo ]= handleSalary(salary?.split(','))
+    const [salaryFrom, salaryTo] = handleSalary(salary?.split(','))
     const payload = {
       query,
       job_locations: location,
@@ -42,9 +42,9 @@ function* fetchJobsListReq(action) {
       job_types: jobType,
       company_ids: companyIds,
       is_company_verified: verifiedCompany,
-      main_functions:mainFunctions,
-      function_job_title_ids:functionTitles,
-      job_functions_ids:jobFunctions,
+      main_functions: mainFunctions,
+      function_job_title_ids: functionTitles,
+      job_function_ids: jobFunctions,
       sort,
       page,
       size: size || 30,

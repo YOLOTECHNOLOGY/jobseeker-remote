@@ -1,0 +1,26 @@
+@mixin text_overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == phone {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $breakpoint == large {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+}
