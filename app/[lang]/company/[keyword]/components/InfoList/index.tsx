@@ -25,10 +25,11 @@ const CompanyInfo = (_props: Props) => {
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
 		props.company_business_info.name = _props.legal_name;
-		// @ts-ignore
-		props.turnover = config.turnover_lists.filter((_)=>{return _.id === _props.turnover_id})[0]?.value;
 		// props.company_business_info.industry = _props.industry;
 	}
+	// @ts-ignore
+	props.turnover = (config?.turnover_lists || []).filter((_)=>{return _.id === _props.turnover_id})?.[0]?.value;
+
 	const contextLang = useContext(languageContext);
 
 	const info = [
