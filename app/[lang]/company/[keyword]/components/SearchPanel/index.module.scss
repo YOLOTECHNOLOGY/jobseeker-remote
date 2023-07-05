@@ -189,7 +189,7 @@
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #86909c);
     /* Regular/Body/Regular/medium */
-    font-size: 0.14rem;
+    font-size: 0.12rem;
     font-family: Product Sans;
     font-style: normal;
     font-weight: 400;
@@ -237,6 +237,10 @@
     width: 3.58rem;
     margin: 0 auto;
     margin-bottom: 0.08rem;
+    &:hover {
+      box-shadow: none;
+      border: 1px solid #ffffff;
+    }
   }
 }
 .search_title_layout {
@@ -274,12 +278,12 @@
         font-style: normal;
         font-weight: 400;
         line-height: 0.21rem;
-        margin-right: 0.2rem;
+        margin-right: 0.14rem;
         &::after {
           content: ' | ';
           font-size: 12px;
           position: relative;
-          left: 0.1rem;
+          left: 0.07rem;
         }
         &:last-child {
           &::after {
@@ -340,6 +344,7 @@
   align-items: center;
   :global {
     span {
+      color: var(--neutral-color-text, #4e5969);
       display: block;
       max-width: 120px;
       white-space: nowrap;
@@ -350,6 +355,7 @@
   }
 }
 .avatar {
+  position: relative;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -360,6 +366,11 @@
       border-radius: 50%;
       width: 100%;
     }
+  }
+  @include base.respond-to(phone) {
+    width: 0.24rem;
+    height: 0.24rem;
+    margin-right: 0.07rem;
   }
   .status {
     border-radius: 50%;
@@ -401,6 +412,9 @@
   opacity: 0;
   transition: all 0.3s linear;
   margin-left: 10px;
+  @include base.respond-to(phone) {
+    display: none;
+  }
 }
 
 .pagination {
