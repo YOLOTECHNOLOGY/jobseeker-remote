@@ -52,7 +52,8 @@
     "downloadBossjobApp": " Download Bossjob App",
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
-    "corporation": "Philippines: Etos Adtech Corporation"
+    "corporation": "Philippines: Etos Adtech Corporation",
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
   },
   "getStatred": {
     "seoMetaTitle": "Get started | Bossjob",
@@ -283,7 +284,8 @@
     }
   },
   "home": {
-    "title": "Find Job. Talk to Boss.",
+    "title": "Find Job. ",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
@@ -532,7 +534,29 @@
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss",
-    "relatedSearch": "Related Search"
+    "relatedSearch": "Related Search",
+    "alertJobs": {
+      "title": "High quality job recommendation",
+      "setting": "Setting",
+      "info": "Send the {{message}} job information you search to email"
+    },
+    "alertJobsModal": {
+      "title": "Job Alert setting",
+      "subTitle": "Job Alert",
+      "jobConditions": "Job Conditions",
+      "frequency": "Frequency",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "sendToEmail": "Send to email",
+      "cancel": "Cancel",
+      "done": "Done",
+      "emailPlaceholder": "Please enter email address",
+      "emailValid": "Please enter a valid email address.",
+      "emailEmpty": "Email cannot be empty."
+    },
+    "downloadAppWithQrCode": "Download APP chat with Boss",
+    "findNow": "Find Now",
+    "find": "Find"
   },
   "manageProfile": {
     "tab": {
