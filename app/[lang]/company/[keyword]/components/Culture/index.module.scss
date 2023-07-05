@@ -1,3 +1,4 @@
+@use '../../base';
 .culture_wrapper {
   box-sizing: border-box;
   display: flex;
@@ -8,7 +9,12 @@
   background: #ffffff;
   border: 1px solid #e5e6eb;
   border-radius: 8px;
-
+  @include base.respond-to(phone) {
+    border: none;
+    width: auto;
+    padding: 0;
+    border-radius: 0.08rem;
+  }
   .social_item {
     display: flex;
     align-items: center;
@@ -87,6 +93,10 @@
   font-weight: 400;
   font-size: 14px;
   text-align: center;
+  @include base.respond-to(phone) {
+    width: 1.7rem;
+    font-size: 0.14rem;
+  }
 }
 
 .culture {
@@ -94,6 +104,9 @@
     color: #ff7d00;
     background-color: #fff9f4;
     word-break: break-word;
+    // @include base.respond-to(phone) {
+    //   flex: 1;
+    // }
   }
 }
 
