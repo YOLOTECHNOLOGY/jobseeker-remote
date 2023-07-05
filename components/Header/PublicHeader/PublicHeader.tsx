@@ -19,127 +19,30 @@ import DialogLogin from 'app/components/LoginDialog'
 /* Images */
 import { BossjobLogo, navbar_location_icon } from 'images'
 
+import NavLogo from '../Common/NavLogo'
+import NavLeft from '../Common/NavLeft'
+
 const PublicHeader = ({ lang }: any) => {
-  const { findJobs, companies, courses, careerGuide, getStarted, hiring, home } = lang || {}
+  const { getStarted, hiring } = lang || {}
   const pathname = usePathname()
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const langKey = getLang()
   const [open, setOpen] = useState(false)
   return (
     <div className={styles.header}>
+      {/* Dialog Login Modal */}
       {open && <DialogLogin open={open} handleClose={() => setOpen(false)} />}
       <nav className={styles.headerContainer}>
-        <div className={styles.headerLogo}>
-          <Link title='Home' to={'/' + langKey}>
-            <Image
-              width={124}
-              height={32}
-              src={BossjobLogo}
-              title='Bossjob logo'
-              alt='Bossjob logo'
-              style={{
-                marginTop: '3px'
-              }}
-            />
-          </Link>
-        </div>
+
+        {/* Logo */}
+        <NavLogo langKey={langKey} />
+
+        {/* Left Menu */}
         <div className={styles.headerLinksWrapper}>
-          <ul className={styles.headerLinksList}>
-            <React.Fragment>
-              {/* home */}
-              <li className={styles.headerLink}>
-                {pathname != '/' + langKey ? (
-                  <Link title='Home' to={'/' + langKey}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {home}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {home}
-                  </Text>
-                )}
-              </li>
-              {/* find jobs */}
-              <li className={styles.headerLink}>
-                {!pathname.includes('/jobs-hiring/') ? (
-                  <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {findJobs}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    textColor='darkGrey'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {findJobs}
-                  </Text>
-                )}
-              </li>
-              {/* companies */}
-              <li className={styles.headerLink}>
-                {!pathname.includes('/companies') ? (
-                  <Link title='Companies' to={'/' + langKey + '/companies'}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {companies}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    textColor='darkGrey'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {companies}
-                  </Text>
-                )}
-              </li>
-              {/* talents app */}
-              <li className={styles.headerLink}>
-                {!pathname.includes('/talents') ? (
-                  <Link title='APP' to={'/' + langKey + '/talents'} aTag>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      APP
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    APP
-                  </Text>
-                )}
-              </li>
-              {/* career guide */}
-              <li className={styles.headerLink}>
-                <Link title='Career Guide' to='https://blog.bossjob.ph/' external>
-                  <Text textStyle='base' className={styles.headerLinkText}>
-                    {careerGuide}
-                  </Text>
-                </Link>
-              </li>
-            </React.Fragment>
-          </ul>
+          <NavLeft langKey={langKey} lang={lang} pathname={pathname} />
         </div>
 
+        {/* Right Menu */}
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li className={classNames([styles.headerLink, styles.headerLinkRightItem])}>
@@ -190,6 +93,7 @@ const PublicHeader = ({ lang }: any) => {
             </li>
           </React.Fragment>
         </ul>
+
         {/* mobile */}
         <div className={styles.mobileIconWrapper}>
           <div className={styles.icon}>

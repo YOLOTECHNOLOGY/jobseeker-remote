@@ -27,14 +27,13 @@ import { getCookie } from 'helpers/cookies'
 import styles from '../Header.module.scss'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
+import NavLogo from '../Common/NavLogo'
+import NavLeft from '../Common/NavLeft'
+import DropDownMenu from '../Common/DropDownMenu'
+
 // this header will be used when user is logged in
 const ProtectedHeader = ({ lang }: any) => {
   const {
-    home,
-    careerGuide,
-    companies,
-    courses,
-    findJobs,
     hiring,
     manageResume,
     myJobs,
@@ -103,114 +102,24 @@ const ProtectedHeader = ({ lang }: any) => {
   //   router.push(authPath)
   // }
 
+  const handleChangeNation = () => {
+    setOpenSwitchNationModal(true)
+    setIsShowHeaderMenu(false)
+  }
+
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
-        <div className={styles.headerLogo}>
-          <Link title='Home' to={'/' + langKey}>
-            <Image
-              width={124}
-              height={32}
-              src={BossjobLogo}
-              title='Bossjob logo'
-              alt='Bossjob logo'
-              style={{
-                marginTop: '3px'
-              }}
-            />
-          </Link>
-        </div>
+
+        {/* logo */}
+        <NavLogo langKey={langKey} />
+
+        {/* Left Menu */}
         <div className={styles.headerLinksWrapper}>
-          <ul className={styles.headerLinksList}>
-            <React.Fragment>
-              <li className={styles.headerLink}>
-                {pathname != '/' + langKey ? (
-                  <Link title='Home' to={'/' + langKey}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {home}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {home}
-                  </Text>
-                )}
-              </li>
-              <li className={styles.headerLink}>
-                {!pathname?.includes('/jobs-hiring/') ? (
-                  <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {findJobs}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {findJobs}
-                  </Text>
-                )}
-              </li>
-              <li className={styles.headerLink}>
-                {!pathname.includes('/companies') ? (
-                  <Link title='Companies' to={'/' + langKey + '/companies'}>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      {companies}
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    {companies}
-                  </Text>
-                )}
-              </li>
-
-              <li className={styles.headerLink}>
-                {!pathname.includes('/talents') ? (
-                  <Link title='APP' to={'/' + langKey + '/talents'} aTag>
-                    <Text textStyle='base' className={styles.headerLinkText}>
-                      APP
-                    </Text>
-                  </Link>
-                ) : (
-                  <Text
-                    textStyle='base'
-                    className={classNames([
-                      styles.headerLinkText,
-                      styles.headerLinkTextCurrentPage
-                    ])}
-                  >
-                    APP
-                  </Text>
-                )}
-              </li>
-
-              <li className={styles.headerLink} style={{ position: 'relative' }}>
-                <Link title='Career Guide' to='https://blog.bossjob.ph' external>
-                  <Text textStyle='base' className={styles.headerLinkText}>
-                    {careerGuide}
-                  </Text>
-                </Link>
-              </li>
-            </React.Fragment>
-          </ul>
+          <NavLeft langKey={langKey} lang={lang} pathname={pathname} />
         </div>
+
+        {/* Right Menu */}
         <ul className={styles.headerLinksList}>
           <React.Fragment>
             <li
@@ -301,7 +210,7 @@ const ProtectedHeader = ({ lang }: any) => {
                 </MaterialButton>
               )}
             </li>
-            <li className={styles.headerLink} style={{ width: '90px' }}>
+            <li className={styles.headerLink}>
               <div
                 className={styles.profileProtectedWrapper}
                 onClick={() => setIsShowHeaderMenu(!isShowHeaderMenu)}
@@ -322,6 +231,7 @@ const ProtectedHeader = ({ lang }: any) => {
           </React.Fragment>
         </ul>
 
+        {/* mobile */}
         <div className={styles.mobileIconWrapper}>
           {!pathname.includes('/chat/[chat_id]') ? (
             <li
@@ -352,52 +262,16 @@ const ProtectedHeader = ({ lang }: any) => {
           </div>
         </div>
 
+        {/* Header dropDown Menu */}
         {isShowHeaderMenu && (
-          <div className={styles.headerMenu} ref={ref}>
-            <ul className={styles.headerMenuList}>
-              <li className={styles.headerMenuItem}>
-                <Link to={'/' + langKey + '/my-jobs?page=1'} className={styles.headerMenuLink}>
-                  <Text textStyle='base'>{myJobs}</Text>
-                </Link>
-              </li>
-              <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
-                <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
-                  <Text textStyle='base'>{accountSettings}</Text>
-                </Link>
-              </li>
-
-              <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
-                <Link
-                  to={process.env.BOSSHUNT_URL + '/boss'}
-                  aTag
-                  external
-                  className={styles.headerMenuLink}
-                >
-                  <Text textStyle='base'>{hiring}</Text>
-                </Link>
-              </li>
-              <li
-                className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}
-                onClick={() => {
-                  setOpenSwitchNationModal(true)
-                  setIsShowHeaderMenu(false)
-                }}
-              >
-                <div className={styles.headerMenuLink}>
-                  <Text textStyle='base'>
-                    {getValueById(config, getCountryId(), 'country_id')}, {getLanguage()} -{' '}
-                    <span style={{ color: '#136FD3' }}>{change}</span>
-                  </Text>
-                </div>
-              </li>
-
-              <li className={styles.headerMenuItem}>
-                <div className={styles.headerMenuLink} onClick={() => handleLogOut()}>
-                  <Text textStyle='base'>{logOut}</Text>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <DropDownMenu
+            ref={ref}
+            langKey={langKey} 
+            lang={lang} 
+            pathname={pathname}
+            config={config}
+            handleChangeNation={handleChangeNation}
+          />
         )}
       </nav>
 
