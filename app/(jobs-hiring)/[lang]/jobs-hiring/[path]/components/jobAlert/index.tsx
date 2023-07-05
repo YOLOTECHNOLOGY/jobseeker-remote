@@ -22,7 +22,7 @@ import { getAlertData, sortSearchValuesToString, getSearchFiltersIds } from './g
 import Image from 'next/image'
 import JobAlertsModal from './Modal'
 import { ClearIcon, UploadDocIcon } from 'images'
-import { formatTemplateString } from 'helpers/formatter'
+import { formatTemplateString, truncateWords } from 'helpers/formatter'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
@@ -112,13 +112,9 @@ const JobAlert = (props: any) => {
   }, [showAlertSetting, viewSearchFilterString])
 
   const messageInfo = () => {
-    const maxWords = 120
-    let newStr = ''
-    if (viewSearchFilterString.length > maxWords) {
-      newStr = viewSearchFilterString.substring(0, maxWords) + '...'
-    } else {
-      newStr = viewSearchFilterString
-    }
+    if (!search?.alertJobs?.info || !viewSearchFilterString) return ''
+    const maxWords = 100
+    const newStr = truncateWords(viewSearchFilterString, maxWords)
     return formatTemplateString(search?.alertJobs?.info, {
       message: `<span title="${viewSearchFilterString}" class="${styles.jobListOptionAlertsJobs}">[${newStr}]</span>`
     })

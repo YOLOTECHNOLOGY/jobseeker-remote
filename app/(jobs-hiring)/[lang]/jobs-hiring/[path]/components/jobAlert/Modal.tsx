@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import { styled } from '@mui/material/styles'
 import { theme, validEmailReg } from './config'
+import { truncateWords } from 'helpers/formatter'
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 44,
@@ -133,13 +134,9 @@ export default function FormDialog(props: ModalJobAlertsProps) {
   }
 
   const newMessage = useMemo(() => {
+    if (!message) return ''
     const maxWords = 100
-    let newStr = ''
-    if (message.length > maxWords) {
-      newStr = message.substring(0, maxWords) + '...'
-    } else {
-      newStr = message
-    }
+    const newStr = truncateWords(message, maxWords)
     return newStr
   }, [message])
 
