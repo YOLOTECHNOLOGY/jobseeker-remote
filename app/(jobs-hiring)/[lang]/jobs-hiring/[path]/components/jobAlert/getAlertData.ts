@@ -90,19 +90,12 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
 
 export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>) => {
 
-  const {location_values, company_size_values, 
-    company_financing_stage_values, 
-    main_function_values, industry_values, 
-    xp_lvl_values, degree_values, 
-    job_type_values, salary_range_values}  = values
+  const {location_values, main_function_values, job_type_values, salary_range_values}  = values
 
 
   const sortArray = [
     location_values, main_function_values,
     salary_range_values, job_type_values,
-    xp_lvl_values, degree_values, 
-    industry_values, company_size_values,
-    company_financing_stage_values 
   ].filter(Boolean)
 
   return sortArray.join('、').replace(/,/g, '/')
