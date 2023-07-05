@@ -111,6 +111,8 @@ $maxContentWidth: 1136px;
     font-weight: 400;
     line-height: 23px;
     letter-spacing: 0.113px;
+    width: 460px;
+    word-break: break-word;
 
     margin-top: 8px;
   }
@@ -177,11 +179,11 @@ $maxContentWidth: 1136px;
 }
 
 .hideAlertSetting {
-    display: none;
-    height: 0;
-    z-index: -1;
-    opacity: 0;
-    pointer-events: none;
+  display: none;
+  height: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .jobAlertsModalActions {
