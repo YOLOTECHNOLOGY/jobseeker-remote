@@ -10,7 +10,7 @@ const TalentsList = (props: any) => {
 
   const langKey = getLang()
 
-  const { allJobs, createJobAlert, createFree, careerGuide, courses } = data?.foot || {}
+  const { allJobs, createFree, careerGuide, courses } = data?.foot || {}
 
   return (
     <ul className={styles.footerDesktopLinkList}>
@@ -23,7 +23,7 @@ const TalentsList = (props: any) => {
           <span>{allJobs}</span>
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link
           className={styles.footerLink}
           to={`/${langKey}/jobs-hiring/job-search`}
@@ -31,7 +31,7 @@ const TalentsList = (props: any) => {
         >
           <span>{createJobAlert}</span>
         </Link>
-      </li>
+      </li> */}
       <li>
         <Link
           className={styles.footerLink}
