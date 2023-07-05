@@ -11,7 +11,7 @@ import MaterialButton from 'components/MaterialButton'
 import { getCookie } from 'helpers/cookies'
 
 /* Images */
-import { BossjobLogoWhite, ChatCircleDots, DefaultAvatar } from 'images'
+import { BossjobLogo, ChatCircleDots, DefaultAvatar } from 'images'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -55,7 +55,7 @@ const PlaceholderProtectedHeader = ({
           <div className={styles.headerLogo}>
             <img
               className={styles.headerLogoImage}
-              src={BossjobLogoWhite}
+              src={BossjobLogo}
               title='Bossjob logo'
               alt='Bossjob logo'
             />
@@ -150,28 +150,20 @@ const PlaceholderProtectedHeader = ({
                     size='medium'
                     capitalize
                     sx={{
-                      width: '150px',
-                      height: '35px !important',
-                      border: '1.5px solid #FFFFFF',
+                      height: '40px !important',
+                      border: '1px solid #2378E5',
                       borderRadius: '10px',
-                      maxWidth: '153px',
-                      paddingLeft: '0',
-                      paddingRight: '0',
-                      backgroundColor: '#136FD3',
+                      paddingLeft: '23px',
+                      paddingRight: '23px',
+                      backgroundColor: '#ffffff',
                       ':hover': {
-                        backgroundColor: '#136FD3',
-                        border: '1px solid #fff'
+                        backgroundColor: '#ffffff'
                       }
                     }}
                   >
-                    <Text
-                      textStyle='base'
-                      textColor='white'
-                      bold
-                      className={showUnCompletedDot ? styles.unCompleted : ''}
-                    >
+                    <span className={showUnCompletedDot ? styles.unCompleted : ''} style={{ color: '#2378E5', whiteSpace: 'nowrap' }} >
                       {lang.manageResume}
-                    </Text>
+                    </span>
                   </MaterialButton>
                 </a>
               </li>

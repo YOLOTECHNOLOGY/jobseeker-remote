@@ -3,7 +3,7 @@
 /*                INITIAL                  */
 /*******************************************/
 
-$NextAppMaxWidth: 1170px;
+$NextAppMaxWidth: 1136px;
 
 $minWidth: 1024px;
 $sideWidth: 205px;
@@ -67,7 +67,7 @@ $mobile-font-size-lg: 16px;
 $mobile-font-size-xl: 18px;
 $mobile-font-size-xxl: 21px;
 $mobile-font-size-xxxl: 21px;
-$maxContentWidth: 1170px;
+$maxContentWidth: 1136px;
 
 /*******************************************/
 /*                 Custom                  */
@@ -117,7 +117,7 @@ $maxContentWidth: 1170px;
   // @include xsm {
   //   max-width: 320px;
   // }
-  background-color: #f5f6fa;
+
 
   @include sm {
     padding: 0px 10px;

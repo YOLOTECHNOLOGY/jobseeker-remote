@@ -25,6 +25,7 @@ const PopularJob = ({ langKey }: any) => {
 
   return (
     <div className={styles.popularJobs}>
+      <div className={styles.popularBox}>
       <label>{home.popularJobs}</label>
       <div className={styles.tagContainer}>
         {tags.map((tag, index) => (
@@ -39,6 +40,7 @@ const PopularJob = ({ langKey }: any) => {
             </div>
           </Link>
         ))}
+      </div>
       </div>
     </div>
   )

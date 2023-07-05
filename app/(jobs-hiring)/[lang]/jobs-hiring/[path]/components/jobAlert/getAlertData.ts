@@ -5,10 +5,12 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   const functionsTitleList = config.function_titles
   const jobFunctionList = config.main_functions.map(e=>e.children).flat()
   const locationLists = flatMap(config.location_lists, (item) => item.locations)
-  const qualificationList = config.educations
+  const qualificationList = config.degrees
   const salaryList = config.salary_range_filters
   const workExperienceList = config.xp_lvls
   const jobTypeList = config.job_types
+  const companySizeList = config.company_sizes
+  const financingStageList = config.company_financing_stage_lists
 
   function getValue(values, items, compareKey = 'seo-value', property = 'id') {
     return values
@@ -60,6 +62,10 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   const job_type_values = getValue(searchValues.jobType, jobTypeList, undefined, 'value')
   const salary_range_filter_ids = getValue(searchValues.salary, salaryList)
   const salary_range_values = getValue(searchValues.salary, salaryList, undefined, 'value')
+  const company_size_values = getValue(searchValues.companySizes, companySizeList, undefined, 'value')
+  const company_size_ids = getValue(searchValues.companySizes, companySizeList, undefined, 'id')
+  const company_financing_stage_values = getValue(searchValues.financingStages, financingStageList, 'key', 'value')
+  const financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
 
   return {
     location_ids,
@@ -77,6 +83,53 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     job_type_ids,
     job_type_values,
     salary_range_filter_ids,
-    salary_range_values
+    salary_range_values,
+    company_size_values,
+    company_size_ids,
+    company_financing_stage_values,
+    financing_stage_ids
   }
+}
+
+export const getSearchFiltersIds = (searchValues) => {
+  const {
+    location_ids,
+    main_job_function_ids,
+    job_function_ids,
+    function_job_title_ids,
+    industry_ids,
+    xp_lvl_ids,
+    degree_ids,
+    job_type_ids,
+    salary_range_filter_ids,
+    company_size_ids,
+    financing_stage_ids
+  } = searchValues
+  return {
+    location_ids,
+    main_job_function_ids,
+    job_function_ids,
+    function_job_title_ids,
+    industry_ids,
+    xp_lvl_ids,
+    degree_ids,
+    job_type_ids,
+    salary_range_filter_ids,
+    company_size_ids,
+    financing_stage_ids
+  }
+}
+
+
+export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>) => {
+
+  const {location_values, main_function_values, job_type_values, salary_range_values}  = values
+
+
+  const sortArray = [
+    location_values, main_function_values,
+    salary_range_values, job_type_values,
+  ].filter(Boolean)
+
+  return sortArray.join('、').replace(/,/g, '/')
 }
