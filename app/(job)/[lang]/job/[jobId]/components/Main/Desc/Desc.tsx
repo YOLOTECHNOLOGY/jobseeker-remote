@@ -73,11 +73,6 @@ const Desc = ({
           </div> */}
         </div>
 
-        <div className={styles.desc_labels}>
-          {skills?.map((skill) => (
-            <div key={skill.value}>{skill.value}</div>
-          ))}
-        </div>
         {/* <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
@@ -96,6 +91,18 @@ const Desc = ({
 
       <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
+          <h5>Key Skills</h5>
+        </div>
+
+        <div className={styles.desc_labels}>
+          {skills?.map((skill) => (
+            <div key={skill.value}>{skill.value}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
+        <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>{content.requirement}</h5>
         </div>
         {/* <div
@@ -111,7 +118,7 @@ const Desc = ({
           lineHeight={24}
         />
       </div>
-      <div className={styles.desc_footer}>
+      {/* <div className={styles.desc_footer}>
         <Avatar
           sx={{ width: '29.94px', height: '29px' }}
           src={recruiter?.avatar || DefaultAvatar}
@@ -128,7 +135,7 @@ const Desc = ({
         >
           {transState(lastActiveAt, content?.state)?.text}
         </span>
-      </div>
+      </div> */}
     </section>
   )
 }
