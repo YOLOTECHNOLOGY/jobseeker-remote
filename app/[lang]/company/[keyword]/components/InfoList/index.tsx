@@ -19,6 +19,7 @@ import { SocialMedia, TagContent } from '../Culture';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { ChatItem } from '../ChatPanel'
 import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
+import "swiper/swiper.min.css";
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -175,7 +176,7 @@ const CompanyInfo = (_props: Props) => {
 				{MobileAlbum()}
 			</Section>}
 			{listing_info
-				.filter(item => props.listing_info[item.field]).length > 0 && <Section title={info[4]['title']}>
+				.filter(item => props.listing_info?.[item.field]).length > 0 && <Section title={info[4]['title']}>
 					<div className={style.overview_item_wrapper}>
 						{listing_info
 							.filter(item => props.listing_info[item.field])
@@ -227,7 +228,7 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Listing' &&
 				props.listing_info &&
 				listing_info
-					.filter(item => props.listing_info[item.field]).length > 0) {
+					.filter(item => props.listing_info?.[item.field]).length > 0) {
 				return <Section key={index} title={item.title + ' '} split={!noSplit}>
 					<div className={style.overview_item_wrapper}>
 						{listing_info
