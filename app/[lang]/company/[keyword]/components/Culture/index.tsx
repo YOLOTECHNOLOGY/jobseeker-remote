@@ -92,7 +92,6 @@ export function SocialMedia(props: Props){
 							<Image width={28} height={28} src={item.icon} alt="icon" />
 						</div>
 					</Link>
-
 					{/* <Link className={style.link_text} target='__blank' href={item.link} title={item.link}>
 						{item.link}
 					</Link> */}

@@ -132,6 +132,36 @@ const SearchPanel = (props: Props) => {
             searchFunc(null, location);
         }
     };
+    const previousFunction = () => {
+        const all = document.getElementsByClassName('search-filter-tag');
+        const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
+        try {
+            // @ts-ignore
+            const { offsetWidth } = all[previousindex - 1];
+            setOffset((_) => _ - offsetWidth);
+        } catch (e) {
+            console.log('list of filter tag is end');
+        }
+
+        // const index = array.reverse().findIndex(item => item.visible);
+
+    }
+    const nextFunction = () => {
+        const all = document.getElementsByClassName('search-filter-tag');
+        const index = findLastIndex([...all], (item, index) => {
+            return item.getAttribute('data-visible') === 'true'
+        });
+
+        try {
+            // @ts-ignore
+            const { offsetWidth } = all[index + 1];
+            // console.log(_offset);
+            setOffset((_) => offsetWidth + _);
+        } catch (e) {
+            console.log('list of filter tag is end');
+        }
+
+    }
     return <div className={style.search_container}>
         <div className={style.search_input_wrapper}>
             <div className={style.search_input_layout}>
@@ -198,20 +228,7 @@ const SearchPanel = (props: Props) => {
                         [style.arrow_left]: true,
                         [style.opacity]: !leftShow
                     })}
-                    onClick={() => {
-                        const all = document.getElementsByClassName('search-filter-tag');
-                        const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
-                        try {
-                            // @ts-ignore
-                            const { offsetWidth } = all[previousindex - 1];
-                            setOffset((_) => _ - offsetWidth);
-                        } catch (e) {
-                            console.log('list of filter tag is end');
-                        }
-
-                        // const index = array.reverse().findIndex(item => item.visible);
-
-                    }}></div>
+                    onClick={previousFunction}></div>
                 <div className={style.filter_layout}>
                     <div className={style.filter_wrapper}
                         style={{
@@ -241,6 +258,9 @@ const SearchPanel = (props: Props) => {
                                     onClick={() => {
                                         searchFunc(null, location, 1, 'all');
                                         setClasses(undefined);
+                                        if(!inView){
+                                            previousFunction()
+                                         }
                                     }}
                                 >
                                     All
@@ -266,10 +286,24 @@ const SearchPanel = (props: Props) => {
                                             ['search-filter-tag']: true,
                                             [style.filter_tag]: true,
                                             [style.active]: item.id === classes?.id
-                                        })} key={index}
+                                        })}
                                         onClick={() => {
                                             searchFunc(null, location, 1, item.id)
                                             setClasses(item)
+                                            if(!inView){
+                                               const all = document.getElementsByClassName('search-filter-tag');
+                                               const nextElement  = all[index+2];
+                                               console.log(nextElement);
+                                               if(nextElement){
+                                                    if(nextElement.getAttribute('data-visible') === 'false'){
+                                                        nextFunction()
+                                                    }else{
+                                                        previousFunction()
+                                                    }
+                                               }else{
+                                                 nextFunction()
+                                               }
+                                            }
                                         }}>
                                         {/* {inView ? '1' : '2'} */}
                                         {item.value}
@@ -287,22 +321,7 @@ const SearchPanel = (props: Props) => {
                         [style.arrow_right]: true,
                         [style.opacity]: !rightShow
                     })}
-                    onClick={() => {
-                        const all = document.getElementsByClassName('search-filter-tag');
-                        const index = findLastIndex([...all], (item, index) => {
-                            return item.getAttribute('data-visible') === 'true'
-                        });
-
-                        try {
-                            // @ts-ignore
-                            const { offsetWidth } = all[index + 1];
-                            // console.log(_offset);
-                            setOffset((_) => offsetWidth + _);
-                        } catch (e) {
-                            console.log('list of filter tag is end');
-                        }
-
-                    }}
+                    onClick={nextFunction}
                 ></div>
             </div>
         }
