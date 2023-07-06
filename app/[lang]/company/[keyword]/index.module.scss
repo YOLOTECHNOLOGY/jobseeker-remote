@@ -291,6 +291,9 @@
 }
 .header_title_verified {
   margin-left: 20px;
+  @include base.respond-to(phone) {
+    margin-left: 0.1rem;
+  }
 }
 
 .footer {

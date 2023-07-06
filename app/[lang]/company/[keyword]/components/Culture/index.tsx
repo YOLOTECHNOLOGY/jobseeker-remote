@@ -64,7 +64,6 @@ export function TagContent(props: Props){
 }
 
 export function SocialMedia(props: Props){
-	const {} = props;
 	const arr = [{
 		icon: require('../assets/facebook.svg').default.src,
 		link: props.facebook_url,
@@ -83,7 +82,7 @@ export function SocialMedia(props: Props){
 	}];
 	const res = arr.filter(item=>item.link);
 	if(res.length === 0) return null;
-	return <div className={style.culture_wrapper}>
+	return <div className={style.culture_wrapper + ' ' + style.social_}>
 		<div className={style.culture_title} style={{marginBottom: 30}}>Social media</div>
 		<div className={style.social_wrapper}>
 			{res.map((item,index)=>{
