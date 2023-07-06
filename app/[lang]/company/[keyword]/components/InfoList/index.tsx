@@ -344,9 +344,12 @@ function BusinessInfo(
 	});
 	if(!props)return null;
 	const _resArr = business_info.filter(_ => props[_?.field]);
-	const showMore = _resArr.length > 6;
+	const showMore = _resArr.length > 4;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
-		<div className={style.animation_wrapper} style={{ height: !isVisible ? 150 : contentHeight }}>
+		<div className={style.animation_wrapper} style={{ 
+			height: !isVisible ?  !showMore ? "auto" :150 : contentHeight
+			
+		 }}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.map((item) => {
@@ -399,7 +402,11 @@ export function MouseOverPopover(props: {
 	};
 
 	const open = Boolean(anchorEl);
-
+	
+	function isContentOverflowing(element) {
+		return element?.scrollWidth > element?.clientWidth;
+	}
+	
 	useLayoutEffect(() => {
 		if (isContentOverflowing(ref.current)) {
 			setShow(true);
