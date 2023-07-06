@@ -78,7 +78,7 @@
 .location_selector_wapper {
   min-width: 128px;
   @include base.respond-to(phone) {
-    min-width: 0rem;
+    min-width: 1rem;
     padding-left: 0.08rem;
   }
 }

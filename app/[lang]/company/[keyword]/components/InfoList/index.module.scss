@@ -75,6 +75,15 @@
     }
   }
 }
+.overview_item_value_mobile {
+  color: var(--neutral-color-text, #1d2129);
+  /* Regular/title/medium and small */
+  font-size: 0.17rem;
+  font-family: Product Sans;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.22rem;
+}
 .overview_item_wrapper {
   display: flex;
   justify-content: space-between;
@@ -124,7 +133,8 @@
   margin-bottom: 24px;
   border-radius: 4px;
   @include base.respond-to(phone) {
-    width: 3.6rem;
+    height: auto;
+    width: 3.5rem;
   }
 }
 
