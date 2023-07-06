@@ -642,6 +642,8 @@ $contentWidth: 894px;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
+          height: 30px;
+          overflow: hidden;
 
           .label {
             display: flex;
@@ -678,7 +680,7 @@ $contentWidth: 894px;
           display: flex;
           flex-direction: row;
           align-items: center;
-          margin-top: 2px;
+          margin-top: 6px;
           width: 100%;
 
           .imgContainer {
