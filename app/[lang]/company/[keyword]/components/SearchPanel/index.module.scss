@@ -50,10 +50,13 @@
 .filter_container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto; /* 允许横向滚动 */
   white-space: nowrap; /* 防止内容换行 */
+  width: 1136px;
+  margin: 0 auto;
   @include base.respond-to(phone) {
+    width: auto;
     .arrow_left {
       display: none;
     }
@@ -185,7 +188,7 @@
   color: #1d2129;
   @include base.respond-to(phone) {
     width: 2rem;
-    max-height: 0.44rem;
+    height: 0.44rem;
     font-size: 0.17rem;
     font-family: Product Sans;
     font-style: normal;

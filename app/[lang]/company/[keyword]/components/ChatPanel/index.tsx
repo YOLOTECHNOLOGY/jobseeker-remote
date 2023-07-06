@@ -28,7 +28,7 @@ const ChatPanel =  (props: {
 			Hi Boss
 		</div>
 		<div className={style.animation_wrapper} style={{
-			height: !isVisible ?  !showMore ? 'auto' :280 : contentHeight
+			height: !isVisible ?  !showMore ? '' :280 : contentHeight
 			}}>
 			<div className={style.chatList} ref={contentRef}>
 				{props.list.map((item, index)=>{

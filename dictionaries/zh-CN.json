@@ -53,7 +53,7 @@
     "followUs": "关注我们",
     "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
     "corporation": "菲律宾：Etos Adtech Corporation",
-    "companyDesc": "2016年，我们踏上了Yolo Technology的征程，作为技术进化和创新的先行者，为世界带来改变。"
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
   },
   "getStatred": {
     "seoMetaTitle": "注册求职账号，马上开始找工作 | Bossjob",
@@ -211,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "公司简介",
       "life": "企业文化",
       "jobs": "热招职位"
@@ -223,6 +224,13 @@
       "website": "官方网站",
       "location": "城市",
       "socialMedia": "社交媒体",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
@@ -815,7 +823,7 @@
     "addYourWorkExperience": "添加工作经验",
     "fillInYourCompleteWork": "填写完整的工作经历，入围几率将提高83%。",
     "jobFunction": "职位",
-    "desiredJobFunction": "期望职位",
+    "desiredJobFunction": "Desired job title",
     "industry": "行业",
     "description": "描述",
     "workingPeriod": "工作期间",
