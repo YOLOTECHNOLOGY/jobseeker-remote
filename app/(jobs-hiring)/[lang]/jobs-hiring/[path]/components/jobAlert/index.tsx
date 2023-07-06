@@ -37,13 +37,31 @@ const JobAlert = (props: any) => {
   const data = getAlertData(searchValues, config)
   const [showJobAlertsModal, setShowJobAlertsModal] = useState(false)
   const [showAlertSetting, setShowAlertSetting] = useState(false)
-
-  const viewSearchFilterString = sortSearchValuesToString(data)
-
-  // console.log('params123', { config, searchValues, data, viewSearchFilterString })
-
   const dispatch = useDispatch()
   const { search } = useContext(languageContext) as any
+
+  const companyVerifiedList = [
+    {
+      key: 'verified-companies',
+      ['seo-value']: 'verified-companies',
+      value: search.searchModal.viewVerifiedCompanies,
+      label: 'View verified companies'
+    }
+  ]
+
+  const companyVerifiedValues = searchValues.verifiedCompany
+    ? (searchValues.verifiedCompany || []).map((val) => {
+        const findItem = companyVerifiedList.filter((item) => item['seo-value'] === val)
+        return findItem[0]?.value || val
+      })
+    : undefined
+
+  const viewSearchFilterString = sortSearchValuesToString({
+    ...data,
+    company_verified_values: companyVerifiedValues
+  })
+
+  // console.log('params123', {config, searchValues,  data, viewSearchFilterString})
 
   const createJobAlert = async (jobAlertData) => {
     try {

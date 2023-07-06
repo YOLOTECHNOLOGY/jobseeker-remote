@@ -92,7 +92,7 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   }
 }
 
-export const getSearchFiltersIds = (searchValues) => {
+export const getSearchFiltersIds = (searchValues: ReturnType<typeof getAlertData> ) => {
   const {
     location_ids,
     main_job_function_ids,
@@ -122,7 +122,11 @@ export const getSearchFiltersIds = (searchValues) => {
 }
 
 
-export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>) => {
+type ISortSearchValuesType  = ReturnType<typeof getAlertData> & {
+  company_verified_values: string[]
+}
+
+export const sortSearchValuesToString = (values: ISortSearchValuesType) => {
 
   const {
     location_values,
@@ -134,7 +138,7 @@ export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>
     salary_range_values,
     company_size_values,
     company_financing_stage_values,
-    keyword
+    keyword, company_verified_values
   }  = values
 
   const sortArray = [
@@ -143,7 +147,7 @@ export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>
     industry_values, xp_lvl_values,
     degree_values, company_size_values,
     company_financing_stage_values,
-    keyword
+    keyword, company_verified_values
   ].filter(Boolean)
 
   return sortArray.join('、').replace(/,/g, '/')
