@@ -65,7 +65,7 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   const company_size_values = getValue(searchValues.companySizes, companySizeList, undefined, 'value')
   const company_size_ids = getValue(searchValues.companySizes, companySizeList, undefined, 'id')
   const company_financing_stage_values = getValue(searchValues.financingStages, financingStageList, 'key', 'value')
-  const financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
+  const company_financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
 
   return {
     location_ids,
@@ -87,7 +87,7 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     company_size_values,
     company_size_ids,
     company_financing_stage_values,
-    financing_stage_ids,
+    company_financing_stage_ids,
     keyword: searchValues.query
   }
 }
@@ -104,7 +104,7 @@ export const getSearchFiltersIds = (searchValues: ReturnType<typeof getAlertData
     job_type_ids,
     salary_range_filter_ids,
     company_size_ids,
-    financing_stage_ids
+    company_financing_stage_ids
   } = searchValues
   return {
     location_ids,
@@ -117,7 +117,7 @@ export const getSearchFiltersIds = (searchValues: ReturnType<typeof getAlertData
     job_type_ids,
     salary_range_filter_ids,
     company_size_ids,
-    financing_stage_ids
+    company_financing_stage_ids
   }
 }
 
