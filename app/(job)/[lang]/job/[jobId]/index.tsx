@@ -75,7 +75,17 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     job_type_value: data.job_type_value,
     status_key: data.status_key,
     jobDetail: data,
-    languages
+    languages,
+    shareParams: {
+      id: data.id,
+      job_url: data.job_url,
+      recruiter: {
+        id: data.recruiter?.id
+      },
+      company: {
+        id: data.company?.id
+      }
+    }
   }
 
   const companyProps = {
@@ -120,9 +130,11 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   return (
     <div>
       <Head {...headProps} />
-      <div className={styles.container}>
-        <MainFC {...mainProps} />
-        <AsideFC {...companyProps} jobDetail={data} lang={lang} config={config} />
+      <div style={{ background: '#f5f7fb' }}>
+        <div className={styles.container}>
+          <MainFC {...mainProps} />
+          <AsideFC {...companyProps} jobDetail={data} lang={lang} config={config} />
+        </div>
       </div>
     </div>
   )

@@ -51,9 +51,9 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
     const headNode = document.querySelector('#jobDetaiPagelHead')
     if (scrollTopHeight > 55) {
-      ; (headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
+      ;(headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
     } else {
-      ; (headNode as HTMLElement).style.boxShadow = 'unset'
+      ;(headNode as HTMLElement).style.boxShadow = 'unset'
     }
   }
 
@@ -108,7 +108,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       const link = getApplyJobLink(jobDetail, userCookie)
       window.open(link)
     } else {
-      ; (chatNow as any)(jobDetail)
+      ;(chatNow as any)(jobDetail)
     }
   }
 
@@ -117,11 +117,14 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       <MaterialButton
         variant='contained'
         sx={{
-          maxWidth: '140px',
+          background: '#FFFFFF',
+          border: '1px solid #136FD3',
+          borderRadius: '10px',
+          width: '160px',
           lineHeight: '44px',
           height: '44px',
-          background: '#136FD3',
-          borderRadius: '10px'
+          color: '#2378E5',
+          boxShadow: 'none'
         }}
         isLoading={loading as boolean}
         onClick={() => handleBtnEvent()}
@@ -145,7 +148,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     <>
       {status_key == 'active' ? (
         <Stack spacing={2} direction='row' className={className}>
-          <MaterialButton
+          {/* <MaterialButton
             variant='outlined'
             sx={{
               height: '44px',
@@ -187,8 +190,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
               </>
             )}
 
-            {/* <FavoriteBorderIcon sx={{ color: '#136FD3' }} /> */}
-          </MaterialButton>
+          </MaterialButton> */}
           {userInfo?.id == jobDetail.recruiter?.id
             ? jobDetail.external_apply_url
               ? handleGetChatNowElement()
