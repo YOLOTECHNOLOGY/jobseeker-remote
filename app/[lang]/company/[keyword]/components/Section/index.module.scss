@@ -56,7 +56,7 @@
   }
 }
 .section_content_wrapper {
-  padding-bottom: 42px;
+  padding-bottom: 18px;
   @include base.respond-to(phone) {
     padding-bottom: 0rem;
   }

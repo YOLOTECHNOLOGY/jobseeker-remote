@@ -2,7 +2,7 @@
 .social_ {
   @include base.respond-to(phone) {
     margin: 0 0.2rem;
-    padding-bottom: 0.5rem;
+    // padding-bottom: 0.5rem;
   }
 }
 .culture_wrapper {
@@ -15,6 +15,7 @@
   background: #ffffff;
   border: 1px solid #e5e6eb;
   border-radius: 8px;
+  padding-bottom: 4px;
   @include base.respond-to(phone) {
     border: none;
     width: auto;
@@ -40,6 +41,7 @@
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .culture_title {

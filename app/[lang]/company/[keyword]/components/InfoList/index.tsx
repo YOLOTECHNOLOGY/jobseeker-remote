@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, useRef, useContext } from 'react';
 import style from './index.module.scss';
+import styles from '../SearchPanel/index.module.scss'
 import Section from '../Section/index';
 import { CompanyDetailsType, JobData, JobsResponseType } from "../../service";
 import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
@@ -27,10 +28,9 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
 	const { config, detail } = useCompanyDetail();
-
 	const { width } = useWindowSize();
 	const isMobile = width < 767;
-	if(!props.company_business_info){
+	if (!props.company_business_info) {
 		props.company_business_info = {}
 	}
 	if (props.company_business_info) {
@@ -42,31 +42,32 @@ const CompanyInfo = (_props: Props) => {
 		// props.company_business_info.industry = _props.industry;
 	}
 	// @ts-ignore
-	props.turnover = (config?.turnover_lists || []).filter((_)=>{return _.id === _props.turnover_id})?.[0]?.value;
+	props.turnover = (config?.turnover_lists || []).filter((_) => { return _.id === _props.turnover_id })?.[0]?.value;
 
 	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	const info = [
 		{
 			id: "Introduction",
-			title: 'Introduction',
+			title: overview.Introduction,
 		}, {
 			id: "Address",
-			title: 'Address',
+			title: contextLang.myJobs.address,
 		}, {
 			id: 'Company Album',
-			title: 'Company Album',
+			title: overview.CompanyAlbum,
 		}, {
 			id: 'Overview',
-			title: 'Overview',
+			title: tab.overview,
 		}, {
 			id: 'Listing',
-			title: 'Listing',
+			title: overview.Listing,
 		}, {
 			id: 'Business information',
-			title: 'Business information',
+			title: overview.BusinessInformation,
 		}, {
 			id: 'Job openings',
-			title: 'Job openings',
+			title: overview.JobOpenings,
 		}
 	];
 	const overview_fields = [{
@@ -152,11 +153,12 @@ const CompanyInfo = (_props: Props) => {
 
 	if (isMobile) {
 		return <div className={style.tab_content_wrapper}>
-			<Section title={info[1].title}>
-				<Map lat={Number(props.latitude)} lng={Number(props.longitude)} full_address={props.full_address} lang={contextLang.jobDetail} />
-			</Section>
+			{
+				props.full_address && <Section title={info[1].title}>
+					<Map lat={Number(props.latitude)} lng={Number(props.longitude)} full_address={props.full_address} lang={contextLang.jobDetail} />
+				</Section>}
 			{Introduction(0, info[0], true, props)}
-			{props.cultures && props.cultures.length  > 0 &&
+			{props.cultures && props.cultures.length > 0 &&
 				<Section title={'Company Features'}>
 					<TagContent type={'culture'} {...props}></TagContent>
 				</Section>}
@@ -171,9 +173,10 @@ const CompanyInfo = (_props: Props) => {
 				</Section>}
 			{props.pictures?.length > 0 && <Section title={info[2].title}>
 				{MobileAlbum()}
-				</Section>}
-			{props.listing_info && <Section title={info[4]['title']}>
-				<div className={style.overview_item_wrapper}>
+			</Section>}
+			{listing_info
+				.filter(item => props.listing_info[item.field]).length > 0 && <Section title={info[4]['title']}>
+					<div className={style.overview_item_wrapper}>
 						{listing_info
 							.filter(item => props.listing_info[item.field])
 							.padArrayToMultiple(2)
@@ -188,7 +191,7 @@ const CompanyInfo = (_props: Props) => {
 								</div>
 							})}
 					</div>
-			</Section>}
+				</Section>}
 			{BusinessInfo(4, info[5], true, business_info, props.company_business_info)}
 			{<SocialMedia {...detail}></SocialMedia>}
 		</div>
@@ -221,7 +224,10 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Overview') {
 				return BusinessInfo(index, item, noSplit, overview_fields, props);
 			}
-			if (item.id === 'Listing' && props.listing_info) {
+			if (item.id === 'Listing' &&
+				props.listing_info &&
+				listing_info
+					.filter(item => props.listing_info[item.field]).length > 0) {
 				return <Section key={index} title={item.title + ' '} split={!noSplit}>
 					<div className={style.overview_item_wrapper}>
 						{listing_info
@@ -342,18 +348,22 @@ function BusinessInfo(
 	useLayoutEffect(() => {
 		calculateContentHeight();
 	});
-	if(!props)return null;
+	const isMobile = useMediaQuery('(max-width: 768px)');
+	if (!props) return null;
 	const _resArr = business_info.filter(_ => props[_?.field]);
-	const showMore = _resArr.length > 6;
+	const showMore = _resArr.length > 4;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
-		<div className={style.animation_wrapper} style={{ height: !isVisible ? 150 : contentHeight }}>
+		<div className={style.animation_wrapper} style={{
+			height: !isVisible ? !showMore ? "auto" : 150 : contentHeight
+
+		}}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.map((item) => {
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
-							{item && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
-							{/* {item && <div className={style.overview_item_value}>{props[item?.field]}</div>} */}
+							{item && !isMobile &&<MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
+							{item && isMobile && <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>}
 						</div>;
 					})}
 			</div>
@@ -400,6 +410,10 @@ export function MouseOverPopover(props: {
 
 	const open = Boolean(anchorEl);
 
+	function isContentOverflowing(element) {
+		return element?.scrollWidth > element?.clientWidth;
+	}
+
 	useLayoutEffect(() => {
 		if (isContentOverflowing(ref.current)) {
 			setShow(true);
@@ -445,7 +459,15 @@ export function MouseOverPopover(props: {
 
 export function MobileHiBoss() {
 	const { hr } = useCompanyDetail();
-
+	return <div className={styles.filter_container}>
+		{
+			hr.map((item, index) => {
+				return <div key={index}>
+					<ChatItem {...item}></ChatItem>
+				</div>
+			})
+		}
+	</div>
 	return <div>
 		<Swiper
 			spaceBetween={10}

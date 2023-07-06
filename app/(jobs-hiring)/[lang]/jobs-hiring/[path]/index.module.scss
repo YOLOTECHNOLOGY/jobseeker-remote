@@ -130,9 +130,9 @@ $contentWidth: 894px;
           border-radius: 10px;
           background: #fff;
         }
-        .MuiOutlinedInput-input {
-          font-size: 16px;
-        }
+        // .MuiOutlinedInput-input {
+        //   font-size: 16px;
+        // }
       }
     }
 
@@ -183,7 +183,7 @@ $contentWidth: 894px;
 
     .searchButton {
       text-transform: capitalize !important;
-      background: #2378e5 !important;
+      background: #136fd3 !important;
       color: #fff;
       width: 127px;
       height: 60px !important;
@@ -196,7 +196,7 @@ $contentWidth: 894px;
       letter-spacing: 0.15px;
 
       &:hover {
-        background: #2378e5 !important;
+        background: #1854a3 !important;
       }
     }
 
@@ -629,6 +629,10 @@ $contentWidth: 894px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+
+            &:hover {
+              --color: #136fd3;
+            }
           }
         }
 
@@ -828,6 +832,10 @@ $contentWidth: 894px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
+
+              &:hover {
+                color: #136fd3;
+              }
             }
 
             .componylabels {
@@ -1462,7 +1470,7 @@ $contentWidth: 894px;
 
   position: fixed;
   right: 0;
-  top: 238px;
+  top: 254px;
 
   width: 118px;
   // height: 164px;
