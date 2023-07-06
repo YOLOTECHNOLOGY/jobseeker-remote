@@ -348,6 +348,7 @@ function BusinessInfo(
 	useLayoutEffect(() => {
 		calculateContentHeight();
 	});
+	const isMobile = useMediaQuery('(max-width: 768px)');
 	if (!props) return null;
 	const _resArr = business_info.filter(_ => props[_?.field]);
 	const showMore = _resArr.length > 4;
@@ -361,8 +362,8 @@ function BusinessInfo(
 					.map((item) => {
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
-							{item && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
-							{/* {item && <div className={style.overview_item_value}>{props[item?.field]}</div>} */}
+							{item && !isMobile &&<MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
+							{item && isMobile && <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>}
 						</div>;
 					})}
 			</div>
