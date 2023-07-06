@@ -71,6 +71,7 @@ $maxContentWidth: 1136px;
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0.105px;
+    word-break: break-all;
   }
 
   &Jobs {
@@ -111,8 +112,18 @@ $maxContentWidth: 1136px;
     font-weight: 400;
     line-height: 23px;
     letter-spacing: 0.113px;
+    width: 460px;
+    word-break: break-all;
 
     margin-top: 8px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
   }
 
   &InfoText {
@@ -177,11 +188,11 @@ $maxContentWidth: 1136px;
 }
 
 .hideAlertSetting {
-    display: none;
-    height: 0;
-    z-index: -1;
-    opacity: 0;
-    pointer-events: none;
+  display: none;
+  height: 0;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .jobAlertsModalActions {

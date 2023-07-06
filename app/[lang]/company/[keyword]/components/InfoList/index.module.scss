@@ -1,5 +1,9 @@
+@use '../../base';
 .tab_content_wrapper {
   width: 708px;
+  @include base.respond-to(phone) {
+    width: 100%;
+  }
 }
 
 .album_wrapper {
@@ -19,6 +23,13 @@
   background: #f7f8fa;
   margin-bottom: 12px;
   border-radius: 4px;
+  @include base.respond-to(phone) {
+    width: 1.7rem;
+    margin-bottom: 0.08rem;
+    border-radius: 0.04rem;
+    // height: 2.5rem;
+    // margin-bottom: 0.12rem;
+  }
 }
 .overview_item_name {
   font-weight: 400;
@@ -26,6 +37,9 @@
   line-height: 21px;
   color: #86909c;
   margin-bottom: 4px;
+  @include base.respond-to(phone) {
+    font-size: 0.15rem;
+  }
 }
 .overview_item_value {
   font-weight: 400;
@@ -33,6 +47,9 @@
   line-height: 22px;
   color: #1d2129;
   @extend .text_overflow;
+  @include base.respond-to(phone) {
+    font-size: 0.17rem;
+  }
   :global {
     a {
       color: #1d2129 !important;
@@ -47,6 +64,15 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+}
+.introduction {
+  @include base.respond-to(phone) {
+    font-family: 'Product Sans';
+    font-weight: 400;
+    font-size: 0.15rem;
+    line-height: 0.23rem;
+    color: #1d2129;
+  }
 }
 .introduce_wrapper {
   overflow: hidden;
@@ -66,6 +92,15 @@
   text-decoration-line: underline;
   color: #1d2129;
   cursor: pointer;
+  @include base.respond-to(phone) {
+    color: var(--neutral-color-text, #1d2129);
+    font-size: 0.14rem;
+    font-family: Product Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.23rem;
+    margin-top: 0.16rem;
+  }
 }
 .business_item {
   width: 350px;
@@ -84,4 +119,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+}
+
+.mobile_album {
+  width: 3rem;
+  height: 2.1rem;
+  position: relative;
+  border-radius: 5px;
 }

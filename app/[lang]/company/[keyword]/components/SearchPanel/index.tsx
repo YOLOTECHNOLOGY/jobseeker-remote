@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,6 +13,12 @@ import Loading from "app/components/loading";
 import className from 'classnames';
 import Button from '@mui/material/Button';
 import { useInView, InView } from "react-intersection-observer";
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Navigation, Scrollbar, A11y, Autoplay, Controller } from 'swiper';
+import 'swiper/css';
+import { useMediaQuery } from '@mui/material';
+
+
 
 interface Props {
     CountryList: Country[]
@@ -46,7 +52,8 @@ const SearchPanel = (props: Props) => {
     const [leftShow, setLeftShow] = useState(false);
     const [rightShow, setRightShow] = useState(true);
     // const filterTagView = useRef<JobVisible[]>([{}].concat(props.functions));
-
+    const touchStartref = useRef(0);
+    const isMobile = useMediaQuery('(max-width:768px)');
 
     useEffect(() => {
         if (!props.functions) return;
@@ -157,7 +164,10 @@ const SearchPanel = (props: Props) => {
                 </div>
                 <label htmlFor='input-search' className={style.job_search_container}>
                     <img className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
-                    <input id={'input-search'} name={'input-search'} className={style.job_search_input}
+                    <input 
+                        id={'input-search'} name={'input-search'} 
+                        placeholder='Find keywords'
+                        className={style.job_search_input}
                         onChange={(e) => {
                             inputText.current = e.target.value;
                             // searchFunc(e.target.value,location)
@@ -174,7 +184,9 @@ const SearchPanel = (props: Props) => {
                 searchFunc()
             }}>
                 <span>
-                    Find Now
+                    {
+                        isMobile ? 'Find' : 'Find Now'
+                    }
                 </span>
             </div>
         </div>
@@ -192,7 +204,6 @@ const SearchPanel = (props: Props) => {
                         try {
                             // @ts-ignore
                             const { offsetWidth } = all[previousindex - 1];
-                            // console.log(_offset);
                             setOffset((_) => _ - offsetWidth);
                         } catch (e) {
                             console.log('list of filter tag is end');
@@ -204,16 +215,22 @@ const SearchPanel = (props: Props) => {
                 <div className={style.filter_layout}>
                     <div className={style.filter_wrapper}
                         style={{
-                            transform: `translate3d(${-offset}px, 0px, 0px)`
+                            transform: !isMobile ? `translate3d(${-offset}px, 0px, 0px)` : 'none'
                         }}
+                        // onTouchStart={handleTouchStart}
+                        // onTouchMove={handleTouchMove}
+                        // onTouchEnd={handleTouchEnd}
                     >
                         <InView threshold={1}>
                             {({ ref, inView }) => {
-                                if (inView) {
-                                    setLeftShow(false)
-                                } else {
-                                    setLeftShow(true)
+                                if(!isMobile){
+                                    if (inView) {
+                                        setLeftShow(false)
+                                    } else {
+                                        setLeftShow(true)
+                                    }
                                 }
+
                                 return <div className={className({
                                     ['search-filter-tag']: true,
                                     [style.filter_tag]: true,
@@ -235,10 +252,12 @@ const SearchPanel = (props: Props) => {
                         {props.functions?.map((item, index) => {
                             return <InView threshold={1} key={index}>
                                 {({ ref, inView }) => {
-                                    if (inView && props.functions.length - 1 === index) {
-                                        setRightShow(false)
-                                    } else {
-                                        setRightShow(true)
+                                    if(!isMobile){
+                                        if (inView && props.functions.length - 1 === index) {
+                                            setRightShow(false)
+                                        } else {
+                                            setRightShow(true)
+                                        }
                                     }
                                     return <div
                                         ref={ref}
@@ -261,6 +280,8 @@ const SearchPanel = (props: Props) => {
                         })}
                     </div>
                 </div>
+
+
                 <div
                     className={className({
                         [style.arrow_right]: true,
@@ -316,34 +337,54 @@ const SearchPanel = (props: Props) => {
                 />
             }
         </div>
-
     </div>
 }
 
 
 const JobsSearchCard = (props: JobData) => {
     const { lang } = useCompanyDetail();
+    const isMobile = useMediaQuery('(max-width: 768px)');
     return <div className={style.search_card}>
-        <Link
-            href={'/' + lang + props.job_url}
-            target='_blank'
-            title={props.job_title}
-            className={style.title}>
-            <span>{props.job_title}</span>
-        </Link>
-        <div className={style.content}>
-            <JobsTag {...props} />
-            <div className={style.salary}>
-                {props.local_salary_range_value}
+        <div className={style.search_title_layout}>
+            <Link
+                href={'/' + lang + props.job_url}
+                target='_blank'
+                title={props.job_title}
+                className={style.title}>
+                <span>{props.job_title}</span>
+            </Link>
+            <div className={
+                className({
+                    [style.mobile]: true,
+                })
+            }>
+                <div className={style.salary + ' ' + style.mobile}>
+                    {props.local_salary_range_value}
+                </div>
             </div>
+        </div>
+
+        <div className={style.content}>
+            {tagsData.map(item => {
+                const value = props[item.field]
+                if (!value) return null;
+                return <span className={style.mobile_tag} key={value}>
+                    {value}
+                </span>
+            }).slice(0,3)}
+            {!isMobile && <JobsTag {...props} />}
+            {!isMobile && <div className={style.salary + ' ' + style.desktop}>
+                {props.local_salary_range_value}
+            </div>}
+            
         </div>
         <div className={style.footer}>
             <div className={style.chat_footer}>
                 <div className={style.avatar}>
-                    <Image height={24} width={24} src={props.recruiter_avatar} alt="img" />
+                    <Image fill src={props.recruiter_avatar} alt="img" />
                     <div className={style.status} style={{ backgroundColor: props.recruiter_is_online ? '#0ebd5c' : '#E5E6EB' }} />
                 </div>
-                <div className={style.name}>
+                <Link className={style.name}  href={'/' + lang + props.job_url} target='_blank' >
                     <span title={props.recruiter_full_name}>
                         {props.recruiter_full_name}
                     </span>
@@ -352,7 +393,7 @@ const JobsSearchCard = (props: JobData) => {
                     <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
                         Chat Now
                     </Link>
-                </div>
+                </Link>
             </div>
             <div className={style.location}>
                 {props.job_location}
@@ -366,12 +407,13 @@ interface TagProps extends JobData {
     classNames?: any
 }
 
+export const tagsData = [
+    { name: '', field: 'xp_lvl' },
+    { name: '', field: 'degree' },
+    { name: '', field: 'job_type' },
+]
 export const JobsTag = (props: TagProps) => {
-    const tagsData = [
-        { name: '', field: 'xp_lvl' },
-        { name: '', field: 'degree' },
-        { name: '', field: 'job_type' },
-    ]
+
     return <div className={style.tags}>
         {tagsData.map(item => {
             const value = props[item.field]

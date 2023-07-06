@@ -12,7 +12,12 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { set } from 'date-fns';
+import useWindowSize from 'hooks/useWindowSize';
+import { useMediaQuery } from '@mui/material';
+import { SocialMedia, TagContent } from '../Culture';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { ChatItem } from '../ChatPanel'
+import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -21,17 +26,25 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
-	const {config} = useCompanyDetail();
+	const { config, detail } = useCompanyDetail();
+
+	const { width } = useWindowSize();
+	const isMobile = width < 767;
+	if(!props.company_business_info){
+		props.company_business_info = {}
+	}
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
 		props.company_business_info.name = _props.legal_name;
+		// @ts-ignore
+		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
+
 		// props.company_business_info.industry = _props.industry;
 	}
 	// @ts-ignore
 	props.turnover = (config?.turnover_lists || []).filter((_)=>{return _.id === _props.turnover_id})?.[0]?.value;
 
 	const contextLang = useContext(languageContext);
-
 	const info = [
 		{
 			id: "Introduction",
@@ -135,8 +148,51 @@ const CompanyInfo = (_props: Props) => {
 		name: 'Total financing',
 		field: 'total_financing'
 	}]
-	const { jobs } = useCompanyDetail();
+	const { jobs, hr } = useCompanyDetail();
 
+	if (isMobile) {
+		return <div className={style.tab_content_wrapper}>
+			<Section title={info[1].title}>
+				<Map lat={Number(props.latitude)} lng={Number(props.longitude)} full_address={props.full_address} lang={contextLang.jobDetail} />
+			</Section>
+			{Introduction(0, info[0], true, props)}
+			{props.cultures && props.cultures.length  > 0 &&
+				<Section title={'Company Features'}>
+					<TagContent type={'culture'} {...props}></TagContent>
+				</Section>}
+			{props.benefits && props.benefits.length > 0 &&
+				<Section title={'Company benefits'}>
+					<TagContent type={'benefits'} {...props}></TagContent>
+				</Section>}
+			{BusinessInfo(2, info[3], true, overview_fields, props)}
+			{hr?.length > 0 &&
+				<Section title={'Hi Boss'}>
+					{MobileHiBoss()}
+				</Section>}
+			{props.pictures?.length > 0 && <Section title={info[2].title}>
+				{MobileAlbum()}
+				</Section>}
+			{props.listing_info && <Section title={info[4]['title']}>
+				<div className={style.overview_item_wrapper}>
+						{listing_info
+							.filter(item => props.listing_info[item.field])
+							.padArrayToMultiple(2)
+							.map((item, index) => {
+								if (!item || !props.listing_info[item?.field]) {
+									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
+								}
+								return <div key={index} className={style.overview_item}>
+									<div className={style.overview_item_name}>{item.name}</div>
+									{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
+									{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
+								</div>
+							})}
+					</div>
+			</Section>}
+			{BusinessInfo(4, info[5], true, business_info, props.company_business_info)}
+			{<SocialMedia {...detail}></SocialMedia>}
+		</div>
+	}
 	return <div className={style.tab_content_wrapper}>
 		{info.map((item, index) => {
 			const noSplit = index === 0;
@@ -232,32 +288,34 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 	const [isVisible, setIsVisible] = useState(false);
 	const [contentHeight, setContentHeight] = useState(150);
 	const calculateContentHeight = () => {
-		setContentHeight(ref.current.scrollHeight);
+		setContentHeight(ref.current?.scrollHeight);
 	};
 	const [showMore, setShow] = useState(false);
 	useLayoutEffect(() => {
 		calculateContentHeight();
-		if(isContentOverflowing(ref.current)){
+		if (isContentOverflowing(ref.current)) {
 			setShow(true);
 		}
 	});
 	const handleClick = () => {
 		setIsVisible(!isVisible)
 	}
+	const isMobile = useMediaQuery('(max-width: 768px)');
+	if (!props.description) return null;
 	return <Section key={index} title={item.title} split={!noSplit}>
-		<div 
+		<div
 			className={classNames({
 				[style.introduce_wrapper]: true,
 				[style.ellipsis]: !isVisible
 			})}
-			style={{height: isVisible ? contentHeight :  90}}
+			style={{ height: isVisible ? contentHeight : isMobile ? '0.94rem' : 90 }}
 		>
-			<div 
+			<div
 				className={style.introduction}
 				ref={ref as React.RefObject<HTMLDivElement>}
 				dangerouslySetInnerHTML={{
-				__html: filterScriptContent(props.description)
-			}}>
+					__html: filterScriptContent(props.description)
+				}}>
 			</div>
 		</div>
 
@@ -279,15 +337,16 @@ function BusinessInfo(
 	}
 	const contentRef = useRef(null);
 	const calculateContentHeight = () => {
-		setContentHeight(contentRef.current.scrollHeight);
+		setContentHeight(contentRef.current?.scrollHeight);
 	};
 	useLayoutEffect(() => {
 		calculateContentHeight();
 	});
-	const _resArr = business_info.filter(_ => props[_.field]);
+	if(!props)return null;
+	const _resArr = business_info.filter(_ => props[_?.field]);
 	const showMore = _resArr.length > 6;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
-		<div className={style.animation_wrapper} style={{ height: showMore ? 150 : contentHeight }}>
+		<div className={style.animation_wrapper} style={{ height: !isVisible ? 150 : contentHeight }}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.map((item) => {
@@ -310,15 +369,15 @@ export function filterScriptContent(str: string): string {
 
 
 function isURL(str) {
-  // Regular expression pattern to match a URL
-  const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
-  
-  // Test the string against the pattern
-  return urlPattern.test(str);
+	// Regular expression pattern to match a URL
+	const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+
+	// Test the string against the pattern
+	return urlPattern.test(str);
 }
 
 function isContentOverflowing(element) {
-  return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
+	return element?.scrollWidth > element?.clientWidth || element?.scrollHeight > element?.clientHeight;
 }
 
 export function MouseOverPopover(props: {
@@ -328,58 +387,103 @@ export function MouseOverPopover(props: {
 	const ref = useRef(null);
 	const [showPop, setShow] = useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-	const is_url = isURL(props.value); 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if(!showPop) return;
-    setAnchorEl(event.currentTarget);
-  };
+	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+	const is_url = isURL(props.value);
+	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+		if (!showPop) return;
+		setAnchorEl(event.currentTarget);
+	};
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+	const handlePopoverClose = () => {
+		setAnchorEl(null);
+	};
 
-  const open = Boolean(anchorEl);
+	const open = Boolean(anchorEl);
 
 	useLayoutEffect(() => {
-		if(isContentOverflowing(ref.current)){
+		if (isContentOverflowing(ref.current)) {
 			setShow(true);
 		}
 	});
-  return (
-    <>
-      <div
-				className={props.className ? props.className:  style.overview_item_value}
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
+	return (
+		<>
+			<div
+				className={props.className ? props.className : style.overview_item_value}
+				aria-owns={open ? 'mouse-over-popover' : undefined}
+				aria-haspopup="true"
+				onMouseEnter={handlePopoverOpen}
+				onMouseLeave={handlePopoverClose}
 				ref={ref}
-      >
-				{is_url ? 
+			>
+				{is_url ?
 					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
 					<span>{props.value}</span>}
-      </div>
-      <Popover
-        id="mouse-over-popover"
-        sx={{
-          pointerEvents: 'none',
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <Typography sx={{ p: 1 }} maxWidth={300} style={{wordBreak: 'break-all'}}>{props.value}</Typography>
-      </Popover>
-    </>
-  );
+			</div>
+			<Popover
+				id="mouse-over-popover"
+				sx={{
+					pointerEvents: 'none',
+				}}
+				open={open}
+				anchorEl={anchorEl}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+				onClose={handlePopoverClose}
+				disableRestoreFocus
+			>
+				<Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>{props.value}</Typography>
+			</Popover>
+		</>
+	);
+}
+
+export function MobileHiBoss() {
+	const { hr } = useCompanyDetail();
+
+	return <div>
+		<Swiper
+			spaceBetween={10}
+			slidesPerView={2.3}
+			// loop={true}
+			scrollbar={{ draggable: true }}
+		>
+			{
+				hr.map((item, index) => {
+					return <SwiperSlide key={index}>
+						<ChatItem {...item}></ChatItem>
+					</SwiperSlide>
+				})
+			}
+		</Swiper>
+	</div>
+}
+
+function MobileAlbum() {
+	const { detail } = useCompanyDetail();
+	const res = detail.pictures;
+	if (!res?.length) return null;
+	return <div>
+		<Swiper
+			spaceBetween={30}
+			slidesPerView={1.2}
+			// loop={true}
+			scrollbar={{ draggable: true }}
+		>
+			{
+				res.map((item, index) => {
+					return <SwiperSlide key={index}>
+						<div className={style.mobile_album}>
+							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'></Image>
+						</div>
+					</SwiperSlide>
+				})
+			}
+		</Swiper>
+	</div>
 }

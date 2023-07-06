@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import { styled } from '@mui/material/styles'
 import { theme, validEmailReg } from './config'
+import { truncateWords } from 'helpers/formatter'
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 44,
@@ -66,8 +67,8 @@ interface ModalJobAlertsProps {
 }
 
 export default function FormDialog(props: ModalJobAlertsProps) {
-  const { open, userCookie={}, message, lang, handleClose, handleSave } = props
-  const { email='' } = userCookie
+  const { open, userCookie = {}, message, lang, handleClose, handleSave } = props
+  const { email = '' } = userCookie
   const [frequency, setFrequency] = useState('1')
   const [mail, setEmail] = useState(email)
   const [active, setActive] = useState(false)
@@ -108,10 +109,10 @@ export default function FormDialog(props: ModalJobAlertsProps) {
       isError = false
     }
     if (!isError) {
-      handleSave({ 
-        email: mail, 
-        frequency_id: Number(frequency), 
-        is_active: active ? 1 : 0 
+      handleSave({
+        email: mail,
+        frequency_id: Number(frequency),
+        is_active: active ? 1 : 0
       })
     } else {
       setMailError(errorMessage)
@@ -131,6 +132,13 @@ export default function FormDialog(props: ModalJobAlertsProps) {
     const value = ev?.target?.value || ''
     setMailError(validEmail(value))
   }
+
+  // const newMessage = useMemo(() => {
+  //   if (!message) return ''
+  //   const maxWords = 100
+  //   const newStr = truncateWords(message, maxWords)
+  //   return newStr
+  // }, [message])
 
   return (
     <ThemeProvider theme={theme}>
@@ -156,7 +164,9 @@ export default function FormDialog(props: ModalJobAlertsProps) {
             <div className={styles.jobAlertsModalInfo}>
               {alertJobsModal?.jobConditions}
               {': '}
-              <span className={styles.jobAlertsModalInfoText}>{message}</span>
+              <span className={styles.jobAlertsModalInfoText} title={message}>
+                {message}
+              </span>
             </div>
           </Stack>
           <div className={styles.jobAlertsModalFormControl}>

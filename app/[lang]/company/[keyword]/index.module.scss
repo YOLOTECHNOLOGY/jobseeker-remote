@@ -1,6 +1,11 @@
+@use './base';
+
 .container {
   width: 1366px;
   margin: 0 auto;
+  @include base.respond-to(phone) {
+    width: 100%;
+  }
 }
 .header {
   width: 100%;
@@ -9,11 +14,24 @@
   background-color: gray;
   padding-bottom: 24px;
   overflow: hidden;
+  @include base.respond-to(phone) {
+    width: 100%;
+    overflow: visible;
+    padding: 0;
+    margin-bottom: 0.32rem;
+  }
 }
 .company_info_tab_wrapper {
   padding-top: 48px;
   width: 1366 - 115 - 115px;
   margin: 0 auto;
+}
+.header_cover_container {
+  @include base.respond-to(phone) {
+    height: 2.7rem;
+    width: 100%;
+    position: relative;
+  }
 }
 .company_info_wrapper {
   display: flex;
@@ -75,13 +93,31 @@
       color: var(--neutral-color-text, #1d2129) !important;
       font-size: 20px;
       line-height: 25px;
+      @include base.respond-to(phone) {
+        font-size: 0.16rem;
+        font-weight: 400;
+        line-height: 0.25rem;
+      }
+    }
+    .Mui-selected {
+      @include base.respond-to(phone) {
+        color: var(--main-color-blue-blue-012378-e-5, #2378e5) !important;
+      }
     }
     .MuiTabs-indicator {
       background-color: var(--neutral-color-text, #1d2129) !important;
       height: 3px !important;
+      @include base.respond-to(phone) {
+        height: 3px !important;
+        width: 0.26rem;
+        background-color: var(--main-color-blue-blue-012378-e-5, #2378e5) !important;
+      }
     }
     .MuiTab-root {
       padding-bottom: 20px;
+      @include base.respond-to(phone) {
+        padding-bottom: 0.12rem;
+      }
     }
   }
 }
@@ -95,6 +131,14 @@
 }
 .header_logo {
   margin-right: 20px;
+  @include base.respond-to(phone) {
+    position: absolute;
+    z-index: 100;
+    bottom: -0.24rem;
+    left: 0.2rem;
+    width: 0.68rem;
+    height: 0.68rem;
+  }
 }
 .header_logo_img {
   width: 68px;
@@ -102,6 +146,12 @@
   border-radius: 13px;
   object-fit: cover;
   border: 1px solid #ffffff;
+  @include base.respond-to(phone) {
+    width: 0.68rem;
+    height: 0.68rem;
+    border-radius: 0.13rem;
+    border: 1px solid var(--neutral-color-border, #e5e6eb);
+  }
 }
 .header_content {
 }
@@ -150,6 +200,15 @@
   font-size: 20px;
   line-height: 25px;
   color: #ffffff;
+  font-family: Product Sans;
+  @include base.respond-to(phone) {
+    color: var(--neutral-color-text, #1d2129);
+    font-size: 0.2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 0.25rem;
+    margin: 0 0.2rem;
+  }
 }
 .header_subtitle {
   font-family: 'Product Sans';
@@ -161,11 +220,25 @@
   color: #c9cdd4;
   margin-top: 4px;
   margin-bottom: 10px;
+  @include base.respond-to(phone) {
+    margin: 0 0.2rem;
+    color: var(--neutral-color-text, #86909c);
+    font-size: 0.13rem;
+    font-family: Product Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.2rem;
+    margin-top: 0.08rem;
+  }
 }
 
 .header_benefit_wrapper {
   display: flex;
   flex-wrap: wrap;
+
+  @include base.respond-to(phone) {
+    margin: 0 0.2rem;
+  }
 }
 
 .header_benefit_item {
@@ -185,6 +258,27 @@
   margin-right: 4px;
   margin-bottom: 5px;
   background: rgba(139, 139, 139, 0.8);
+  @include base.respond-to(phone) {
+    color: var(--neutral-color-text, #4e5969);
+    font-size: 0.13rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px;
+    font-family: Product Sans;
+    font-style: normal;
+    line-height: 0.18rem;
+    text-align: center;
+    margin-right: 0.04rem;
+    margin-bottom: 0.05rem;
+    background: var(--neutral-color-fill, #f7f8fa);
+    margin-top: 10px;
+    margin-bottom: 16px;
+  }
+}
+.split {
+  width: 100%;
+  height: 0.12rem;
+  background: #f7f8fa;
 }
 .header_mask {
   position: absolute;
@@ -197,6 +291,9 @@
 }
 .header_title_verified {
   margin-left: 20px;
+  @include base.respond-to(phone) {
+    margin-left: 0.1rem;
+  }
 }
 
 .footer {
