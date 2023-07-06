@@ -85,6 +85,10 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       transition: color 0.3s ease-in;
+
+      &:hover {
+        color: #136fd3;
+      }
     }
 
     .transBox {
@@ -126,8 +130,8 @@
       float: right;
     }
   }
- 
-  &_info:hover > &_titleWrapper > &_info_title {
+
+  &_info:hover &_titleWrapper &_info_title {
     color: #136fd3;
   }
 
@@ -186,7 +190,7 @@
     //   rgba(84, 142, 237, 0.2) 99.89%
     // );
     border-top: 1px solid var(--neutral-color-border, #F2F3F5);
-    margin:0 16px;
+    margin: 0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -213,18 +217,22 @@
     color: #136fd3;
   }
 }
-.popularJobsBox{
+
+.popularJobsBox {
   background: #FCFCFC;
-  .jobTitle{
-    padding:40px 0 20px 0;
+
+  .jobTitle {
+    padding: 40px 0 20px 0;
     line-height: 55px;
     margin: 0;
   }
 }
+
 .webTab {
   position: relative;
   @extend .GlobalNextAppContainer;
-  :global{
+
+  :global {
     .MuiTabs-root .MuiTabs-indicatorSpan {
       background-color: #1D2129,
     }
@@ -324,11 +332,13 @@
       border: 1px solid #E5E6EB;
       background: #FFF;
       position: relative;
-      .arowForward{
+
+      .arowForward {
         position: absolute;
         right: 20px;
         top: 32px;
       }
+
       img {
         box-sizing: border-box;
         width: 48px;
@@ -401,11 +411,13 @@
   }
 
   .jobs {
-     padding: 56px 16px 40px 16px;
-     h2{
+    padding: 56px 16px 40px 16px;
+
+    h2 {
       padding-left: 0;
       padding-top: 0;
-     }
+    }
+
     .tips {
       font-style: normal;
       font-weight: 400;
@@ -439,9 +451,9 @@
       padding: 16px;
       margin-bottom: 8px;
       border-radius: 12px;
-      border: 1px solid  #F2F3F5;
+      border: 1px solid #F2F3F5;
       background: #FFF;
-      
+
 
       .name {
         font-weight: 700;
@@ -497,6 +509,7 @@
         display: flex;
         justify-content: space-between;
         border-top: 1px solid #F2F3F5;
+
         .location {
           float: right;
           color: #86909C;
@@ -511,7 +524,7 @@
           width: 65vw;
           white-space: nowrap;
           overflow: hidden;
-          text-overflow: ellipsis;      
+          text-overflow: ellipsis;
         }
       }
     }
@@ -779,6 +792,7 @@
       display: flex;
       width: 100%;
       justify-content: flex-end;
+
       label {
         font-family: 'Product Sans';
         font-style: normal;
@@ -792,7 +806,8 @@
         position: absolute;
         left: 5px;
         bottom: 4px;
-        span{
+
+        span {
           color: #B8B8B8;
         }
       }
@@ -804,7 +819,7 @@
         height: 20px;
         position: relative;
         border-radius: 50%;
-       left: -36px;
+        left: -36px;
         cursor: pointer;
         font-size: 12px;
         background: #e7f1fb;
@@ -812,10 +827,12 @@
         text-align: center;
         line-height: 20px;
         color: #136fd3;
+
         &:hover {
           background: #136fd3;
           color: #fff;
-          .icon{
+
+          .icon {
             color: #fff;
           }
         }
@@ -939,7 +956,7 @@
 
 .searchArea {
   background: #F0F4F7;
- 
+
   .box {
     display: flex;
     flex-direction: row;
@@ -948,11 +965,13 @@
     width: 100%;
     position: relative;
     @extend .GlobalNextAppContainer;
+
     .location {
       :global {
         .MuiInputLabel-root {
           display: none;
         }
+
         .MuiOutlinedInput-root {
           height: 60px;
           overflow: hidden;
@@ -960,11 +979,12 @@
           background: #fff;
         }
       }
+
       width: 164px;
       height: 60px;
       // overflow: hidden;
       border-radius: 8px;
-      border: 1px solid  #E5E6EB;
+      border: 1px solid #E5E6EB;
       background: #fff;
       box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
       // @include sm {
@@ -995,6 +1015,7 @@
     border-radius: 8px 0 0 8px;
     height: 60px;
     width: 540px;
+
     :global {
       .MuiAutocomplete-root {
         background-color: #ffffff;
@@ -1007,10 +1028,13 @@
       .MuiInputLabel-root {
         top: 12px;
       }
-      .MuiFormLabel-filled, .Mui-focused {
-        top:0;
+
+      .MuiFormLabel-filled,
+      .Mui-focused {
+        top: 0;
         border-radius: unset;
       }
+
       .MuiOutlinedInput-notchedOutline {
         border-radius: 8px 0 0 8px;
       }
@@ -1037,8 +1061,9 @@
     height: 60px;
     font-size: 20px;
     background: #136fd3;
-    border-radius:0 8px 8px 0;
+    border-radius: 0 8px 8px 0;
     font-weight: 700;
+
     // flex: none;
     // order: 2;
     // flex-grow: 0;
@@ -1069,7 +1094,8 @@
 
 .popularJobs {
   background: #F0F4F7;
-  .popularBox{
+
+  .popularBox {
     @extend .GlobalNextAppContainer;
     display: flex;
     flex-direction: row;
@@ -1078,6 +1104,7 @@
     justify-content: flex-start;
     overflow: hidden;
   }
+
   // @include sm {
   //   flex-direction: column;
   //   height: fit-content;
@@ -1099,7 +1126,8 @@
     letter-spacing: 0.0075em;
     width: fit-content;
     flex-shrink: 0;
-     color: #86909C;
+    color: #86909C;
+
     @include sm {
       font-family: 'Product Sans';
       font-style: normal;
@@ -1149,6 +1177,7 @@
       white-space: nowrap;
       border: 1px solid #E5E6EB;
       color: #4E5969;
+
       @include sm {
         width: calc(50% - 5px);
         margin: 10px 10px 0 0;
@@ -1159,11 +1188,12 @@
       }
 
       &:hover {
-       // background: #136fd3;
+        // background: #136fd3;
         //color: #fff;
         border: 1px solid #4E5969;
+
         a {
-       //   color: #fff;
+          //   color: #fff;
         }
       }
     }
@@ -1227,7 +1257,8 @@
     .MuiOutlinedInput-notchedOutline {
       border-width: 0.5px !important;
     }
-    .MuiOutlinedInput-root{
+
+    .MuiOutlinedInput-root {
       overflow: unset;
     }
   }
@@ -1254,7 +1285,7 @@
       top: 4px;
     }
 
-    > p {
+    >p {
       padding-left: 24px;
       line-height: 20px;
     }
@@ -1321,6 +1352,7 @@
   margin: 0 auto;
   // padding-left: 10px;
   // padding-right: 10px;
+  background-color: #fff;
 
   @media (max-width: 799px) {
     max-width: 688px;
@@ -1356,7 +1388,7 @@
 }
 
 .main {
- // @extend .GlobalNextAppContainer;
+  // @extend .GlobalNextAppContainer;
 
   .title {
     font-family: 'Product Sans';
@@ -1368,9 +1400,10 @@
     justify-content: center;
     letter-spacing: 0.02em;
     color: #121212;
-    padding: 26px  0  28px 0;
+    padding: 26px 0 28px 0;
     background: #F0F4F7;
-    span{
+
+    span {
       color: #2378E5;
     }
   }
@@ -1379,6 +1412,7 @@
 .companies {
   padding-bottom: 72px;
   @extend .GlobalNextAppContainer;
+
   h2 {
     font-style: normal;
     font-weight: 700;
@@ -1397,7 +1431,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
- 
+
 
   }
 
@@ -1409,6 +1443,7 @@
     margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid#E5E6EB;
+
     &:nth-of-type(even) {
       margin-right: 0;
     }
@@ -1419,6 +1454,7 @@
       display: block;
       margin: 0 20px;
       border-bottom: 1px solid #E5E6EB;
+
       .img {
         width: 48px;
         height: 48px;
@@ -1578,59 +1614,69 @@
 
 @media (max-width: 750px) {
   .main {
-    .title{
+    .title {
       font-size: 30px;
     }
-    .search{
+
+    .search {
       width: auto;
       height: 44px;
     }
 
     .searchArea {
       padding: 0 6px;
-      .search{
+
+      .search {
         flex: 1;
-        :global{
-           .MuiOutlinedInput-root{
-              height: 44px;
-           }
-           .MuiOutlinedInput-notchedOutline {
+
+        :global {
+          .MuiOutlinedInput-root {
+            height: 44px;
+          }
+
+          .MuiOutlinedInput-notchedOutline {
             border-color: transparent;
-           }
+          }
         }
       }
+
       .box {
-      border-radius: 4px;
-      border: 1px solid  #E5E6EB;
-      background: #FFF;
-      margin: 0 10px;
-      padding: 0;
-      width: calc(100% - 20px);
+        border-radius: 4px;
+        border: 1px solid #E5E6EB;
+        background: #FFF;
+        margin: 0 10px;
+        padding: 0;
+        width: calc(100vw - 20px);
+
         .location {
-          width: 96px;
+          width: 110px;
           height: 44px;
           border-radius: 4px 0 0 4px;
           border-bottom-width: 0;
           border-top-width: 0;
           border-left-width: 0;
-          :global{
-            .MuiOutlinedInput-root{
-              width: 96px; 
-              height: 44px;          
+
+          :global {
+            .MuiOutlinedInput-root {
+              width: 110px;
+              height: 44px;
             }
           }
         }
-        .searchBox{
+
+        .searchBox {
           flex: 1;
         }
       }
     }
-    .popularBox{
+
+    .popularBox {
       display: block;
       padding: 32px 16px 27px 16px;
     }
-    
+
   }
+
   .companies {
     display: none;
   }

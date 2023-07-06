@@ -64,7 +64,7 @@ async function CompanyLayout(props: {
 	const token = cookieStore.get('accessToken')
 	const id = getIDFromKeyword(props.params.keyword);
 
-	if(isMobile){
+	if(isMobile && process.env.ENV === 'production'){
 		return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
 	}
 	try{

@@ -1,3 +1,5 @@
+@use '../../base';
+
 .section {
   position: relative;
   &:last-child {
@@ -5,10 +7,17 @@
       opacity: 0 !important;
     }
   }
+  @include base.respond-to(phone) {
+    margin: 0 0.2rem;
+    padding: 0.16rem 0;
+  }
 }
 .title_layout {
   display: flex;
   margin-bottom: 20px;
+  @include base.respond-to(phone) {
+    margin-bottom: 0.2rem;
+  }
 }
 
 .title {
@@ -20,6 +29,14 @@
   display: flex;
   align-items: center;
   color: #000000;
+  @include base.respond-to(phone) {
+    color: #000;
+    font-size: 0.2rem;
+    font-family: Product Sans;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 0.25rem;
+  }
 }
 .tag {
   width: 38px;
@@ -40,9 +57,16 @@
 }
 .section_content_wrapper {
   padding-bottom: 42px;
+  @include base.respond-to(phone) {
+    padding-bottom: 0rem;
+  }
 }
 
 .split {
   border-bottom: 1px solid #e5e6eb;
   margin-bottom: 42px;
+  @include base.respond-to(phone) {
+    border: none;
+    margin-bottom: 0;
+  }
 }

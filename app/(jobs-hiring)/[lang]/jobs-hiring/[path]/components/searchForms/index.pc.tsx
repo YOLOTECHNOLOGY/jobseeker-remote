@@ -284,7 +284,7 @@ const SearchArea = (props: any) => {
                 defaultValue={jobTypes}
               />
               <Button
-                className={styles.moreButton}
+                className={classNames([styles.moreButton, moreCount ? styles.moreButtonCount : ''])}
                 variant='outlined'
                 onClick={() => {
                   setShowMore(true)
