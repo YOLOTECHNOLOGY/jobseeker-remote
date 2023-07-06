@@ -293,7 +293,6 @@ const SearchPanel = (props: Props) => {
                                             if(!inView){
                                                const all = document.getElementsByClassName('search-filter-tag');
                                                const nextElement  = all[index+2];
-                                               console.log(nextElement);
                                                if(nextElement){
                                                     if(nextElement.getAttribute('data-visible') === 'false'){
                                                         nextFunction()
