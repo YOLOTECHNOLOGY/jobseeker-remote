@@ -120,12 +120,11 @@
   height: 64px;
   user-select: none;
   margin-right: 16px;
-  
+
   a {
     display: inline-block;
   }
 }
-
 
 .featuredCompanyLogoLink {
   width: 64px;
@@ -323,9 +322,9 @@
 }
 
 .companyItem {
-  width: 372px;
-  margin-right: 16px;
-  margin-bottom: 16px;
+  width: 368px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   overflow: hidden;
 
   @include msd {
