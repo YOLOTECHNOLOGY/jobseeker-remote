@@ -14,9 +14,10 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import useWindowSize from 'hooks/useWindowSize';
 import { useMediaQuery } from '@mui/material';
-import { TagContent } from '../Culture';
+import { SocialMedia, TagContent } from '../Culture';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { ChatItem } from '../ChatPanel'
+import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -25,10 +26,13 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
-	const { config } = useCompanyDetail();
+	const { config, detail } = useCompanyDetail();
 
 	const { width } = useWindowSize();
 	const isMobile = width < 767;
+	if(!props.company_business_info){
+		props.company_business_info = {}
+	}
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
 		props.company_business_info.name = _props.legal_name;
@@ -165,7 +169,7 @@ const CompanyInfo = (_props: Props) => {
 				<Section title={'Hi Boss'}>
 					{MobileHiBoss()}
 				</Section>}
-			{props.pictures?.length > 0 && <Section title={'company Album'}>
+			{props.pictures?.length > 0 && <Section title={info[2].title}>
 				{MobileAlbum()}
 				</Section>}
 			{props.listing_info && <Section title={info[4]['title']}>
@@ -186,6 +190,7 @@ const CompanyInfo = (_props: Props) => {
 					</div>
 			</Section>}
 			{BusinessInfo(4, info[5], true, business_info, props.company_business_info)}
+			{<SocialMedia {...detail}></SocialMedia>}
 		</div>
 	}
 	return <div className={style.tab_content_wrapper}>
@@ -303,7 +308,7 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 				[style.introduce_wrapper]: true,
 				[style.ellipsis]: !isVisible
 			})}
-			style={{ height: isVisible ? contentHeight : isMobile ? '0.95rem' : 90 }}
+			style={{ height: isVisible ? contentHeight : isMobile ? '0.94rem' : 90 }}
 		>
 			<div
 				className={style.introduction}

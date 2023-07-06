@@ -58,7 +58,7 @@
 .section_content_wrapper {
   padding-bottom: 42px;
   @include base.respond-to(phone) {
-    // padding-bottom: 0.36rem;
+    padding-bottom: 0rem;
   }
 }
 

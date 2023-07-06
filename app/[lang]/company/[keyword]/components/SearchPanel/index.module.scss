@@ -16,6 +16,7 @@
     width: 2.94rem;
     height: 0.48rem;
     padding: 0.12rem 0.08rem;
+    padding-left: 0;
   }
 }
 .search_button {
@@ -74,7 +75,8 @@
 .location_selector_wapper {
   min-width: 128px;
   @include base.respond-to(phone) {
-    min-width: 0.8rem;
+    min-width: 0rem;
+    padding-left: 0.08rem;
   }
 }
 .location_input {
@@ -97,8 +99,10 @@
   margin: 0 12px;
   @include base.respond-to(phone) {
     height: 0.23rem;
-    margin: 0 0.08rem;
     border-right: 1px solid #e5e6eb;
+    position: absolute;
+    right: 0.08rem;
+    margin: 0;
   }
 }
 .job_search_container {
@@ -106,6 +110,9 @@
   align-items: center;
   height: 68px;
   flex: 1;
+  @include base.respond-to(phone) {
+    position: relative;
+  }
 }
 .job_search_input {
   border: none;
@@ -113,9 +120,16 @@
   outline: none;
   flex: 1;
   position: relative;
+  @include base.respond-to(phone) {
+    padding-left: 0.2rem;
+  }
 }
 .job_prefix {
-  margin-right: 10px;
+  position: absolute;
+  left: 0;
+  width: 0.16rem;
+  height: 0.16rem;
+  z-index: 10;
 }
 .location_arrow {
   width: 7px;
@@ -128,7 +142,8 @@
   @include base.respond-to(phone) {
     width: 0.07rem;
     height: 0.07rem;
-    right: 0.15rem;
+    right: 0.17rem;
+    top: 0.07rem;
   }
 }
 .content_layout {
@@ -421,6 +436,10 @@
   display: flex;
   justify-content: center;
   padding-bottom: 60px;
+  @include base.respond-to(phone) {
+    padding-top: 0.2rem;
+    padding-bottom: 0.3rem;
+  }
   :global {
     @include base.respond-to(phone) {
       .MuiPaginationItem-icon {

@@ -356,7 +356,6 @@ const JobsSearchCard = (props: JobData) => {
             <div className={
                 className({
                     [style.mobile]: true,
-                    
                 })
             }>
                 <div className={style.salary + ' ' + style.mobile}>
