@@ -133,12 +133,12 @@ export default function FormDialog(props: ModalJobAlertsProps) {
     setMailError(validEmail(value))
   }
 
-  const newMessage = useMemo(() => {
-    if (!message) return ''
-    const maxWords = 100
-    const newStr = truncateWords(message, maxWords)
-    return newStr
-  }, [message])
+  // const newMessage = useMemo(() => {
+  //   if (!message) return ''
+  //   const maxWords = 100
+  //   const newStr = truncateWords(message, maxWords)
+  //   return newStr
+  // }, [message])
 
   return (
     <ThemeProvider theme={theme}>
@@ -165,7 +165,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
               {alertJobsModal?.jobConditions}
               {': '}
               <span className={styles.jobAlertsModalInfoText} title={message}>
-                {newMessage}
+                {message}
               </span>
             </div>
           </Stack>
