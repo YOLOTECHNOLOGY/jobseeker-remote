@@ -27,7 +27,6 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
 	const { config, detail } = useCompanyDetail();
-
 	const { width } = useWindowSize();
 	const isMobile = width < 767;
 	if(!props.company_business_info){
@@ -45,28 +44,29 @@ const CompanyInfo = (_props: Props) => {
 	props.turnover = (config?.turnover_lists || []).filter((_)=>{return _.id === _props.turnover_id})?.[0]?.value;
 
 	const contextLang = useContext(languageContext);
+	const {overview,tab} = contextLang.companyDetail;
 	const info = [
 		{
 			id: "Introduction",
-			title: 'Introduction',
+			title: overview.Introduction,
 		}, {
 			id: "Address",
-			title: 'Address',
+			title: contextLang.myJobs.address,
 		}, {
 			id: 'Company Album',
-			title: 'Company Album',
+			title: overview.CompanyAlbum,
 		}, {
 			id: 'Overview',
-			title: 'Overview',
+			title: tab.overview,
 		}, {
 			id: 'Listing',
-			title: 'Listing',
+			title: overview.Listing,
 		}, {
 			id: 'Business information',
-			title: 'Business information',
+			title: overview.BusinessInformation,
 		}, {
 			id: 'Job openings',
-			title: 'Job openings',
+			title: overview.JobOpenings,
 		}
 	];
 	const overview_fields = [{
@@ -402,7 +402,7 @@ export function MouseOverPopover(props: {
 	};
 
 	const open = Boolean(anchorEl);
-	
+
 	function isContentOverflowing(element) {
 		return element?.scrollWidth > element?.clientWidth;
 	}
