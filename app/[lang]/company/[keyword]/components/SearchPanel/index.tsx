@@ -5,18 +5,14 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { flat } from 'helpers/formatter'
 import Pagination from '@mui/material/Pagination';
 import { useCompanyDetail } from '../../DataProvider';
-import { debounce, findLastIndex } from 'lodash-es'
+import { findLastIndex } from 'lodash-es'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Loading from "app/components/loading";
 import className from 'classnames';
-import Button from '@mui/material/Button';
-import { useInView, InView } from "react-intersection-observer";
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
-import { Navigation, Scrollbar, A11y, Autoplay, Controller } from 'swiper';
-import 'swiper/css';
-import { useMediaQuery } from '@mui/material';
+import { InView } from "react-intersection-observer";
+import useMediaQuery  from '@mui/material/useMediaQuery';
 
 
 
