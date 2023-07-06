@@ -26,7 +26,10 @@ export default async function PublicLayout(props: any) {
       <head key={title + description + canonical}>
         <title>{title}</title>
         <meta name='description' content={decodeURI(description)} />
-        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        />
         <meta
           name='copyright'
           content={`
@@ -86,17 +89,19 @@ export default async function PublicLayout(props: any) {
       <body id='next-app'>
         <Providers LG={dictionary} lang={lang}>
           {/* Google Tag Manager (noscript) */}
-          <noscript dangerouslySetInnerHTML={{
-            __html: `
-          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'}"
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${
+            process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+          }"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
-        `}}>
-          </noscript>
+        `
+            }}
+          ></noscript>
           <Header lang={dictionary} />
           <HamburgerMenu lang={dictionary} />
-          <LinkProvider>
-            {children}
-          </LinkProvider>
+          <LinkProvider>{children}</LinkProvider>
           <AutoShowModalAppRedirect />
         </Providers>
         <Initial />
