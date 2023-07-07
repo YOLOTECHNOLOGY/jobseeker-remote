@@ -763,6 +763,12 @@ $contentWidth: 894px;
                 height: 25px !important;
                 cursor: pointer;
               }
+
+              :global {
+                .MuiCircularProgress-root {
+                  color: #ffffff;
+                }
+              }
             }
 
             // height: 21px;
