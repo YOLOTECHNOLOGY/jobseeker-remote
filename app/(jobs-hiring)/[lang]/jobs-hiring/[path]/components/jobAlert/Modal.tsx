@@ -76,7 +76,7 @@ export default function FormDialog(props: ModalJobAlertsProps) {
   const alertJobsModal = lang?.alertJobsModal || {}
 
   useEffect(() => {
-    setEmail(email)
+    email && setEmail(email)
   }, [email])
 
   useEffect(() => {
