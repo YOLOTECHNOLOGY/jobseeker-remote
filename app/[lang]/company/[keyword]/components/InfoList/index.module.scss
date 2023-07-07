@@ -91,6 +91,7 @@
   flex-wrap: wrap;
 }
 .introduction {
+  line-height: 23px;
   @include base.respond-to(phone) {
     font-family: 'Product Sans';
     font-weight: 400;
@@ -116,6 +117,7 @@
   line-height: 23px;
   text-decoration-line: underline;
   color: #1d2129;
+  margin-top: 16px;
   cursor: pointer;
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #1d2129);

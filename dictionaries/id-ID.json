@@ -231,6 +231,13 @@
       "Listing": "Listing",
       "BusinessInformation": "Business information",
       "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",

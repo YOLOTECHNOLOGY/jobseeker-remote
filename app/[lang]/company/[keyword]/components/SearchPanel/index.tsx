@@ -48,7 +48,7 @@ const SearchPanel = (props: Props) => {
     const [leftShow, setLeftShow] = useState(false);
     const [rightShow, setRightShow] = useState(true);
     // const filterTagView = useRef<JobVisible[]>([{}].concat(props.functions));
-    const touchStartref = useRef(0);
+    const firstRef = useRef<HTMLDivElement | null>(null);
     const isMobile = useMediaQuery('(max-width:768px)');
 
     useEffect(() => {
@@ -320,7 +320,7 @@ const SearchPanel = (props: Props) => {
                 ></div>
             </div>
         }
-        <div className={style.filter_split}></div>
+        <div className={style.filter_split} ref={firstRef}></div>
         <div className={style.content_layout}>
             {loading ?
                 loading && <div className={style.loading_wrapper}>
@@ -344,6 +344,9 @@ const SearchPanel = (props: Props) => {
                     page={jobsData.page}
                     count={jobsData.total_pages}
                     onChange={(e, v) => {
+                        if(isMobile){
+                            firstRef.current && firstRef.current?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                        }
                         searchFunc(null, location, v);
                     }}
                     shape="rounded"

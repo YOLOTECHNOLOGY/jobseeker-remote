@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useContext, useMemo } from 'react'
 // import ModalJobAlerts from 'components/ModalJobAlerts'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 // import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 // import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
@@ -25,12 +25,10 @@ import { ClearIcon, UploadDocIcon } from 'images'
 import { formatTemplateString, truncateWords } from 'helpers/formatter'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-
-const SESSION_SHOULD_HIDE_ALERT_JOBS = 'should-hide-alert-jobs'
+import { getCountryKey } from 'helpers/country'
 
 const JobAlert = (props: any) => {
   const accessToken = getCookie('accessToken')
-  const userCookie = getCookie('user')
   // const router = useRouter()
   const { searchValues, config } = props
   const params = buildParams(config, searchValues)
@@ -39,6 +37,7 @@ const JobAlert = (props: any) => {
   const [showAlertSetting, setShowAlertSetting] = useState(false)
   const dispatch = useDispatch()
   const { search } = useContext(languageContext) as any
+  const SESSION_SHOULD_HIDE_ALERT_JOBS = `${getCountryKey()}:should-hide-alert-jobs`
 
   const companyVerifiedList = [
     {
@@ -178,7 +177,6 @@ const JobAlert = (props: any) => {
         open={showJobAlertsModal}
         lang={search}
         message={viewSearchFilterString}
-        userCookie={userCookie}
         handleSave={handleSaveJobAlert}
         handleClose={() => setShowJobAlertsModal(false)}
       />

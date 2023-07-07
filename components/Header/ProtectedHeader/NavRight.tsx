@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
@@ -20,7 +20,7 @@ import { DefaultAvatar } from 'images'
 interface IProps {
   langKey: string
   lang: any
-  totalUnread: number|string
+  totalUnread: number | string
   handleShowMenu: Function
 }
 
@@ -126,10 +126,7 @@ const NavRight = (props: IProps) => {
           )}
         </li>
         <li className={styles.headerLink}>
-          <div
-            className={styles.profileProtectedWrapper}
-            onClick={() => handleShowMenu()}
-          >
+          <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
             <Image
               src={currentUser?.avatar || DefaultAvatar}
               className={styles.profilePlaceHolder}
@@ -140,7 +137,9 @@ const NavRight = (props: IProps) => {
                 ;(e.target as HTMLInputElement).src = DefaultAvatar
               }}
             />
-            <div className={styles.profileCaret} />
+            <div className={styles.profileCaretWrapper}>
+              <div className={styles.profileCaret} />
+            </div>
           </div>
         </li>
       </React.Fragment>
