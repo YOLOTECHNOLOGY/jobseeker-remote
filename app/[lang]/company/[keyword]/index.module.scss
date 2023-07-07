@@ -238,6 +238,7 @@
 
   @include base.respond-to(phone) {
     margin: 0 0.2rem;
+    padding-bottom: 0.1rem;
   }
 }
 

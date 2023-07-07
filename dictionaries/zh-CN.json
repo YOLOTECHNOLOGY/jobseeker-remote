@@ -231,6 +231,13 @@
       "Listing": "融资信息",
       "BusinessInformation": "工商信息",
       "JobOpenings": "在招岗位",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
