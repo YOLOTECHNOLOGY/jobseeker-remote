@@ -48,7 +48,7 @@ $contentWidth: 894px;
 .searchForm {
   --box-shadow: none;
   width: 100%;
-  height: 180px;
+  height: 148px;
   // max-width: 100%;
   display: flex;
   // position: sticky;
@@ -61,7 +61,7 @@ $contentWidth: 894px;
   transition: all ease-in 0.5s;
   // margin: 0 auto;
   background: #f0f4f7;
-  padding: 34px 0;
+  padding: 16px 0;
   box-sizing: border-box;
 
   &.isFixed {
@@ -308,7 +308,7 @@ $contentWidth: 894px;
     // width: calc(50vw + $paddingLeftWidth);
     max-width: $maxContentWidth;
     height: 50px;
-    padding-top: 20px;
+    padding-top: 16px;
     // padding-left: 24px;
     // padding-right: 24px;
 
@@ -686,6 +686,10 @@ $contentWidth: 894px;
           .imgContainer {
             position: relative;
             overflow: visible;
+
+            img {
+              border: 1px solid #e5e6eb;
+            }
 
             .isOnline {
               width: 9px;
