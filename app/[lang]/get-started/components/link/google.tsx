@@ -22,7 +22,6 @@ const GoogleLogin = (props: IGoogle) => {
     lang: { newGetStarted }
   } = props
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
-  const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
   const searchParams = useSearchParams()
   const query = {}
@@ -31,7 +30,7 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   useEffect(() => {
-    setInit(typeof window?.gapi != 'undefined')
+    setInit(typeof window?.gAPIAuthInstance != 'undefined')
   }, [window?.gapi])
 
   useEffect(() => {
@@ -46,9 +45,9 @@ const GoogleLogin = (props: IGoogle) => {
             scope: 'https://www.googleapis.com/auth/userinfo.profile'
           })
           .then(() => {
-            setGoogleAuth(window.gapi.auth2.getAuthInstance())
+            window.gAPIAuthInstance = window.gapi.auth2.getAuthInstance()
+            setInit(true)
           })
-        setInit(true)
         document?.body?.removeChild?.(script)
       }
 
@@ -62,21 +61,17 @@ const GoogleLogin = (props: IGoogle) => {
       }
       document.body.appendChild(script)
     }
-    return () => {
-      setGoogleAuth(null)
-    }
   }, [])
 
   const handleAuthClick = () => {
-    if (!googleAuth) {
+    if (!window.gAPIAuthInstance) {
       console.error(new Error('Error loading google auth script'))
       return
     }
-    googleAuth?.signIn().then(() => {
+    window.gAPIAuthInstance?.signIn().then(() => {
       handleSigninStatus()
     })
   }
-    
 
   const callBackMethod = (payload) => {
     const data = {
@@ -92,7 +87,7 @@ const GoogleLogin = (props: IGoogle) => {
       data.avatar = payload.pictureUrl
     }
     // submit
-    handleAuthenticationSocialLogin(data).then(res => {
+    handleAuthenticationSocialLogin(data).then((res) => {
       // handle has logged redirect url
       const { data } = res
       if (data?.token) {
@@ -103,7 +98,7 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   const handleSigninStatus = async () => {
-    const user = googleAuth.currentUser.get()
+    const user = window.gAPIAuthInstance.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
 
     if (isAuthorized) {
