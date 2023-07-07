@@ -73,22 +73,22 @@ const CompanyInfo = (_props: Props) => {
 	];
 	const overview_fields = [{
 		field: 'industry',
-		name: 'Industry',
+		name: overview.industry,
 	}, {
 		field: 'financing_stage',
-		name: 'Financing',
+		name: overview.Financing,
 	}, {
 		field: 'created_date',
-		name: 'Creation time'
+		name: overview.CreationTime
 	}, {
 		field: 'website',
-		name: 'Company website'
+		name: overview.CompanyWebsite
 	}, {
 		field: 'turnover',
-		name: 'Turnover',
+		name: overview.Turnover,
 	}, {
 		field: 'phone_num',
-		name: 'Telephone'
+		name: overview.Telephone
 	}];
 	const business_info = [{
 		field: 'name',
@@ -351,6 +351,7 @@ function BusinessInfo(
 	});
 	const isMobile = useMediaQuery('(max-width: 768px)');
 	if (!props) return null;
+
 	const _resArr = business_info.filter(_ => props[_?.field]);
 	const showMore = _resArr.length > 4;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
@@ -361,10 +362,15 @@ function BusinessInfo(
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.map((item) => {
+						const value = props[item?.field];
+						const is_url = isURL(value);
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
-							{item && !isMobile &&<MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
-							{item && isMobile && <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>}
+							{item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
+							{(()=>{
+								if(item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
+								if(item && isMobile )return <div className={style.overview_item_value}>{props[item?.field]}</div>
+							})()}
 						</div>;
 					})}
 			</div>

@@ -91,6 +91,7 @@
   flex-wrap: wrap;
 }
 .introduction {
+  line-height: 23px;
   @include base.respond-to(phone) {
     font-family: 'Product Sans';
     font-weight: 400;
