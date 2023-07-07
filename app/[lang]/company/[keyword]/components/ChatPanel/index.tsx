@@ -2,13 +2,12 @@ import * as React from 'react';
 import style from './index.module.scss';
 import { Recruiter } from "../../service";
 import Image from 'next/image'
+import { languageContext } from 'app/components/providers/languageProvider';
 
 
 const ChatPanel =  (props: {
 	list: Recruiter[]
 }) => {
-
-
 	const [isVisible, setIsVisible] = React.useState(false);
 	const [contentHeight, setContentHeight] = React.useState(150);
 	const handleClick = () => {
@@ -23,9 +22,12 @@ const ChatPanel =  (props: {
 	});
 	const _resArr = props.list;
 	const showMore = _resArr.length > 4;
+
+	const contextLang = React.useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	return <div className={style.wrapper}>
 		<div className={style.title}>
-			Hi Boss
+			{overview.HiBoss}
 		</div>
 		<div className={style.animation_wrapper} style={{
 			height: !isVisible ?  !showMore ? '' :280 : contentHeight
@@ -36,7 +38,7 @@ const ChatPanel =  (props: {
 				})}
 			</div>
 		</div>
-		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? "Less": 'More'}</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? overview.Less: overview.More}</div>}
 	</div>
 }
 

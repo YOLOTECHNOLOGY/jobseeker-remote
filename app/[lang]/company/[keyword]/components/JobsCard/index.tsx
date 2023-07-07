@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./jobcard.module.scss"
 import { JobData } from "../../service";
 import Link from "next/link"
 import { useCompanyDetail } from "../../DataProvider";
 import Image from 'next/image';
 import { JobsTag } from "../SearchPanel";
+import { languageContext } from "app/components/providers/languageProvider";
 
 
 const JobCard = (props: JobData) => {
     const { lang } = useCompanyDetail();
+    const contextLang = useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
     const link = '/' + lang + props.job_url;
     return <div className={style.card_container}>
         <Link className={style.card_title} href={link} target="_blank" title={props.job_title}>
@@ -35,7 +38,7 @@ const JobCard = (props: JobData) => {
                         </div>
                         <Link href={'/' + lang + props.job_url} target="_blank">
                             <div className={style.chat_now}>
-                                Chat Now
+                                {overview.jobs.card.chatNow}
                             </div>
                         </Link>
                     </div>

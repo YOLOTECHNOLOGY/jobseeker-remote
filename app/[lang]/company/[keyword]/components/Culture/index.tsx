@@ -7,6 +7,7 @@ import { CompanyDetailsType } from '../../service';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { MouseOverPopover } from '../InfoList';
+import { languageContext } from 'app/components/providers/languageProvider';
 
 
 
@@ -17,16 +18,17 @@ interface Props extends PropsWithChildren<CompanyDetailsType> {
 
 const CulturePanel = (props: Props) => {
 	const {benefits,cultures} = props;
+	const contextLang = React.useContext(languageContext);
+	const { overview , culture} = contextLang.companyDetail;
 	if(!cultures?.length &&  !benefits.length) return null;
 	return <div className={style.culture_wrapper}>
-		<div className={style.culture_title}>Culture and benefits</div>
+		<div className={style.culture_title}>{overview.CultureAndBenefits}</div>
 		<div className={style.culture_content}>
-			Benefits are provided by the company and may
-			vary depending on the position.
+			{overview.CultureAndBenefits}
 		</div>
 		{
 			!!cultures?.length && <>
-				<div className={style.subtitle}>Company culture</div>
+				<div className={style.subtitle}>{overview.culture.title}</div>
 				<div className={style.item_wrapper + ' ' + style.culture}>
 					{cultures.map((item,index)=>{
 						return <MouseOverPopover value={item.value} className={style.item} key={index}></MouseOverPopover>
@@ -36,7 +38,7 @@ const CulturePanel = (props: Props) => {
 		}
 		{
 			!!benefits?.length && <>
-				<div className={style.subtitle}>Company benefits</div>
+				<div className={style.subtitle}>{overview.CompanyBenefits}</div>
 				<div className={style.item_wrapper}>
 					{benefits.map((item,index)=>{
 						return <MouseOverPopover value={item.value} className={style.item} key={index}></MouseOverPopover>
@@ -81,9 +83,12 @@ export function SocialMedia(props: Props){
 		link: props.twitter_url
 	}];
 	const res = arr.filter(item=>item.link);
+
+	const contextLang = React.useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
 	if(res.length === 0) return null;
 	return <div className={style.culture_wrapper + ' ' + style.social_}>
-		<div className={style.culture_title} style={{marginBottom: 30}}>Social media</div>
+		<div className={style.culture_title} style={{marginBottom: 30}}>{overview.socialMedia}</div>
 		<div className={style.social_wrapper}>
 			{res.map((item,index)=>{
 				return <div key={index} className={style.social_item}>

@@ -9,6 +9,7 @@ import useResponsiveFont from 'app/[lang]/talents/components/responseHook';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import CompanyInfo from './components/InfoList';
+import { languageContext } from 'app/components/providers/languageProvider';
 
 function a11yProps(index: number) {
 	return {
@@ -48,8 +49,10 @@ const MobilePage = () => {
 	};
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 
+	const contextLang = React.useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	useResponsiveFont(390, 767);
-	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
+	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
 
 	return <div className={style.container}>
 		<div className={style.header}>
