@@ -1,5 +1,5 @@
 # Use the docker image node:11-alpine
-FROM node:18.9-alpine as builder
+FROM node:16-alpine as builder
 
 # Copy package dependencies 
 COPY package.json yarn.lock ./
