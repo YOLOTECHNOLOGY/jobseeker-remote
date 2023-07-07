@@ -558,7 +558,7 @@ $contentWidth: 894px;
 
   .urgent {
     display: flex;
-    padding: 2.5px 4px 5.5px 3px;
+    padding: 2px 4px 2px 3px;
     justify-content: center;
     align-items: center;
 
@@ -745,7 +745,6 @@ $contentWidth: 894px;
               border-radius: 4px;
               background: #2378e5;
               box-shadow: 0px 4px 10px 0px rgba(35, 120, 229, 0.15);
-
               display: none;
 
               &::after {
@@ -761,7 +760,7 @@ $contentWidth: 894px;
 
               &.isHover {
                 display: flex;
-                height: 25px;
+                height: 25px !important;
                 cursor: pointer;
               }
             }
