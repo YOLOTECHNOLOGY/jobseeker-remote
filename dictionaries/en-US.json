@@ -263,8 +263,8 @@
       "HiBoss": "Hi Boss",
       "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
       "CultureAndBenefits": "Culture and benefits",
-      "Find": "Find",
-      "FindNow": "Find Now",
+      "Find": "Search",
+      "FindNow": "Search",
       "All": "All",
       "culture": {
         "title": "Company Culture",
@@ -602,7 +602,7 @@
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
     "findNow": "Search",
-    "find": "Find"
+    "find": "Search"
   },
   "manageProfile": {
     "tab": {
