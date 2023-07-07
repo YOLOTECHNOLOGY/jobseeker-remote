@@ -25,8 +25,7 @@ import { ClearIcon, UploadDocIcon } from 'images'
 import { formatTemplateString, truncateWords } from 'helpers/formatter'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-
-const SESSION_SHOULD_HIDE_ALERT_JOBS = 'should-hide-alert-jobs'
+import { getCountryKey } from 'helpers/country'
 
 const JobAlert = (props: any) => {
   const accessToken = getCookie('accessToken')
@@ -38,6 +37,7 @@ const JobAlert = (props: any) => {
   const [showAlertSetting, setShowAlertSetting] = useState(false)
   const dispatch = useDispatch()
   const { search } = useContext(languageContext) as any
+  const SESSION_SHOULD_HIDE_ALERT_JOBS = `${getCountryKey()}:should-hide-alert-jobs`
 
   const companyVerifiedList = [
     {
