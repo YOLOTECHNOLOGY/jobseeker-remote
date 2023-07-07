@@ -86,7 +86,8 @@ const useGetStarted = () => {
       source: 'web',
       userId,
       browser_serial_number: uuid,
-      mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]?.id
+      mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]
+        ?.id
     }
     // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)
@@ -94,7 +95,7 @@ const useGetStarted = () => {
     //   dispatch(jobbseekersLoginRequest(data))
     // })
   }
-  const setCookiesWithLoginData = loginData => {
+  const setCookiesWithLoginData = (loginData) => {
     const { refresh_token, token, token_expired_at } = loginData
     const userCookie = {
       active_key: loginData.active_key,
@@ -117,11 +118,12 @@ const useGetStarted = () => {
     setCookie('user', userCookie)
     setCookie('accessToken', token, token_expired_at)
   }
-  const sendEventWithLoginData = loginData => {
+  const sendEventWithLoginData = (loginData) => {
     // Send register event (First time login user)
     if (
       // process.env.ENV === 'production' &&
-      loginData.is_new_account && typeof window !== 'undefined'
+      loginData.is_new_account &&
+      typeof window !== 'undefined'
     ) {
       // Facebook Pixel
       const window = globalThis as any
@@ -144,22 +146,24 @@ const useGetStarted = () => {
         window.ttq.track('CompleteRegistration', {
           user_id: loginData?.id,
           email: loginData?.email
-        });
+        })
       }
     }
   }
   const loginRequest = (data) => {
-    authenticationJobseekersLogin(data).then(res => {
-      console.log(res.data, 999999)
-      if (res.data) {
-        setUserInfo(res.data)
-        setCookiesWithLoginData(res.data.data)
-        sendEventWithLoginData(res.data.data)
-      }
-    }).catch(err => {
-      console.log(err.response, '8888')
-      setError(err?.response)
-    })
+    authenticationJobseekersLogin(data)
+      .then((res) => {
+        console.log(res.data, 999999)
+        if (res.data) {
+          setUserInfo(res.data)
+          setCookiesWithLoginData(res.data.data)
+          sendEventWithLoginData(res.data.data)
+        }
+      })
+      .catch((err) => {
+        console.log(err.response, '8888')
+        setError(err?.response)
+      })
   }
 
   // const removeServiceCache = async () => {
@@ -196,16 +200,15 @@ const useGetStarted = () => {
       sessionStorage.removeItem('redirectPage')
       const url = window?.location?.pathname
       if (url === redirectPage) {
-        return window.location.reload();
+        return window.location.reload()
       }
       routes.push(redirectPage)
     } else {
       if (pathname.indexOf('/get-started') > -1) {
         routes.push('/')
       } else {
-       window.location.reload();
+        window.location.reload()
       }
-
     }
     setEmailOTPInputDisabled(false)
   }
@@ -216,17 +219,19 @@ const useGetStarted = () => {
   }
 
   const handleAuthenticationSocialLogin = async (params) => {
-    return jobSeekersSocialLogin(params).then(result => {
-      if (result.status >= 200 && result.status < 300) {
-        setUserInfo(result.data)
-        setCookiesWithLoginData(result.data.data)
-        sendEventWithLoginData(result.data.data)
-        return Promise.resolve(result.data)
-      }
-    }).catch(error => {
-      setError(error?.response)
-      return Promise.reject(error)
-    })
+    return jobSeekersSocialLogin(params)
+      .then((result) => {
+        if (result.status >= 200 && result.status < 300) {
+          setUserInfo(result.data)
+          setCookiesWithLoginData(result.data.data)
+          sendEventWithLoginData(result.data.data)
+          return Promise.resolve(result.data)
+        }
+      })
+      .catch((error) => {
+        setError(error?.response)
+        return Promise.reject(error)
+      })
   }
 
   const handleAuthenticationSendEmailMagicLink = () => {

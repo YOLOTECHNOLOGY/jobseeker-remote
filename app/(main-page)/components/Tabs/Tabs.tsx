@@ -29,7 +29,6 @@ const theme = createTheme({
     MuiTabs: {
       styleOverrides: {
         root: {
-          background: '#F5F6FA',
           alignItems: 'center',
           borderBottom: '0.5px solid #BCBCBC'
         },
@@ -40,7 +39,6 @@ const theme = createTheme({
           height: '24px'
         },
         indicator: {
-          background: '#136FD3',
           borderRadius: '5px',
           height: '3px'
         }
@@ -89,7 +87,8 @@ interface StyledTabProps {
 
 const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
   '&.Mui-selected': {
-    color: '#136FD3'
+    color: '#1D2129',
+    fontWeight: '700'
   }
 }))
 
@@ -242,10 +241,10 @@ const Tabs = ({ config, location_id, langKey }: any) => {
   }
 
   return (
-    <div>
+    <div className={styles.popularJobsBox}>
       <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
       <div className={styles.webTab}>
-        <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' }}>
+        <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper', backgroundColor: 'transparent' }}>
           <TabContext value='1'>
             <ThemeProvider theme={theme}>
               <StyledTabs
@@ -264,13 +263,13 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                     sx={{
                       fontSize: '16px',
                       textTransform: 'capitalize',
-                      color: '#707070',
-                      background: '#F5F6FA',
+                      color: '#4E5969',
                       fontFamily: 'product sans',
                       letterSpacing: '1px',
                       width: 'auto',
                       padding: '12px 0',
-                      marginRight: '78px'
+                      marginRight: '52px',
+                      fontWeight: '400'
                     }}
                   />
                 ))}

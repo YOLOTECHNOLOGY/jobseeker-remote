@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, useRef, useContext } from 'react';
 import style from './index.module.scss';
+import styles from '../SearchPanel/index.module.scss'
 import Section from '../Section/index';
 import { CompanyDetailsType, JobData, JobsResponseType } from "../../service";
 import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
@@ -12,6 +13,14 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import Link from 'next/link';
+import useWindowSize from 'hooks/useWindowSize';
+import { useMediaQuery } from '@mui/material';
+import { SocialMedia, TagContent } from '../Culture';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { ChatItem } from '../ChatPanel'
+import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
+import "swiper/swiper.min.css";
+import { formatTemplateString } from 'helpers/formatter';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -20,121 +29,185 @@ interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 
 const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
-	const {config} = useCompanyDetail();
+	const { config, detail } = useCompanyDetail();
+	const { width } = useWindowSize();
+	const isMobile = width < 767;
+	if (!props.company_business_info) {
+		props.company_business_info = {}
+	}
 	if (props.company_business_info) {
 		props.company_business_info.full_address = _props.full_address;
 		props.company_business_info.name = _props.legal_name;
 		// @ts-ignore
-		props.turnover = config.turnover_lists.filter((_)=>{return _.id === _props.turnover_id})[0]?.value;
+		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
+
 		// props.company_business_info.industry = _props.industry;
 	}
-	const contextLang = useContext(languageContext);
+	// @ts-ignore
+	props.turnover = (config?.turnover_lists || []).filter((_) => { return _.id === _props.turnover_id })?.[0]?.value;
 
+	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	const info = [
 		{
 			id: "Introduction",
-			title: 'Introduction',
+			title: overview.Introduction,
 		}, {
 			id: "Address",
-			title: 'Address',
+			title: contextLang.myJobs.address,
 		}, {
 			id: 'Company Album',
-			title: 'Company Album',
+			title: overview.CompanyAlbum,
 		}, {
 			id: 'Overview',
-			title: 'Overview',
+			title: tab.overview,
 		}, {
 			id: 'Listing',
-			title: 'Listing',
+			title: overview.Listing,
 		}, {
 			id: 'Business information',
-			title: 'Business information',
+			title: overview.BusinessInformation,
 		}, {
 			id: 'Job openings',
-			title: 'Job openings',
+			title: overview.JobOpenings,
 		}
 	];
 	const overview_fields = [{
 		field: 'industry',
-		name: 'Industry',
+		name: overview.industry,
 	}, {
 		field: 'financing_stage',
-		name: 'Financing',
+		name: overview.Financing,
 	}, {
 		field: 'created_date',
-		name: 'Creation time'
+		name: overview.CreationTime
 	}, {
 		field: 'website',
-		name: 'Company website'
+		name: overview.CompanyWebsite
 	}, {
 		field: 'turnover',
-		name: 'Turnover',
+		name: overview.Turnover,
 	}, {
 		field: 'phone_num',
-		name: 'Telephone'
+		name: overview.Telephone
 	}];
 	const business_info = [{
 		field: 'name',
-		name: 'Company name',
+		name: overview.CompanyName,
 	}, {
-		name: 'Unified Social Credit Code',
 		field: 'social_credit_code',
+		name: overview.UnifiedSocialCreditCode,
 	}, {
-		name: 'Legal representative',
-		field: 'legal_representative'
+		field: 'legal_representative',
+		name: overview.LegalRepresentative,
+
 	}, {
-		name: 'Registered capital',
+		name: overview.RegisteredCapital,
 		field: 'registered_capital',
 	}, {
-		name: 'Paid-up capital',
+		name: overview.PaidUpCapital,
 		field: 'paid_in_capital',
 	}, {
-		name: 'Date of establishment',
+		name: overview.DateOfEstablishment,
 		field: 'establishment_date',
 	}, {
-		name: 'Organization Code',
+		name: overview.OrganizationCode,
 		field: 'organization_code'
 	}, {
-		name: 'Business registration number',
+		name: overview.BusinessRegistrationNumber,
 		field: 'business_registration_number',
 	}, {
-		name: 'Taxpayer Identification Number',
+		name: overview.TaxpayerIdentificationNumber,
 		field: 'taxpayer_identification_number'
 	}, {
-		name: 'Type of enterprise',
+		name: overview.TypeOfEnterprise,
 		field: 'type_of_enterprise'
 	}, {
-		name: 'Approval date',
+		name: overview.ApprovalDate,
 		field: 'approval_date'
 	}, {
-		name: 'Registered address',
+		name: overview.RegisteredAddress,
 		field: 'full_address'
 	}]
 
-	const listing_info = [{
-		name: 'Stock code',
-		field: 'stock_code',
-	}, {
-		name: 'IPO valuation(USD)',
-		field: 'ipo_valuation',
-	}, {
-		name: 'Money Raised at IPO(USD)',
-		field: 'initial_public_offering',
-	}, {
-		name: 'IPO issue price(USD)',
-		field: 'ipo_issue_price',
-	}, {
-		name: 'Issue date',
-		field: 'issue_date',
-	}, {
-		name: 'Number of financing',
-		field: 'number_of_financing',
-	}, {
-		name: 'Total financing',
-		field: 'total_financing'
-	}]
-	const { jobs } = useCompanyDetail();
+	const listing_info = [
+		{
+			name: overview.StockCode,
+			field: 'stock_code',
+		},
+		{
+			name: overview.IpoValuationUsd,
+			field: 'ipo_valuation',
+		},
+		{
+			name: overview.MoneyRaisedAtIpoUsd,
+			field: 'initial_public_offering',
+		},
+		{
+			name: overview.IpoIssuePriceUsd,
+			field: 'ipo_issue_price',
+		},
+		{
+			name: overview.IssueDate,
+			field: 'issue_date',
+		},
+		{
+			name: overview.NumberOfFinancing,
+			field: 'number_of_financing',
+		},
+		{
+			name: overview.TotalFinancing,
+			field: 'total_financing',
+		},
+	];
+	
+	const { jobs, hr } = useCompanyDetail();
 
+	if (isMobile) {
+		return <div className={style.tab_content_wrapper}>
+			{
+				props.full_address && <Section title={info[1].title}>
+					<Map lat={Number(props.latitude)} lng={Number(props.longitude)} full_address={props.full_address} lang={contextLang.jobDetail} />
+				</Section>}
+			{Introduction(0, info[0], true, props)}
+			{props.cultures && props.cultures.length > 0 &&
+				<Section title={overview.CompanyFeatures}>
+					<TagContent type={'culture'} {...props}></TagContent>
+				</Section>}
+			{props.benefits && props.benefits.length > 0 &&
+				<Section title={overview.CompanyBenefits}>
+					<TagContent type={'benefits'} {...props}></TagContent>
+				</Section>}
+			{BusinessInfo(2, info[3], true, overview_fields, props)}
+			{hr?.length > 0 &&
+				<Section title={overview.HiBoss}>
+					{MobileHiBoss()}
+				</Section>}
+			{props.pictures?.length > 0 && <Section title={info[2].title}>
+				{MobileAlbum()}
+			</Section>}
+			{listing_info
+				.filter(item => props.listing_info?.[item.field]).length > 0 && <Section title={info[4]['title']}>
+					<div className={style.overview_item_wrapper}>
+						{listing_info
+							.filter(item => props.listing_info[item.field])
+							.padArrayToMultiple(2)
+							.map((item, index) => {
+								if (!item || !props.listing_info[item?.field]) {
+									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
+								}
+								return <div key={index} className={style.overview_item}>
+									<div className={style.overview_item_name}>{item.name}</div>
+									{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
+									{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
+								</div>
+							})}
+					</div>
+				</Section>}
+			{BusinessInfo(4, info[5], true, business_info, props.company_business_info)}
+			{<SocialMedia {...detail}></SocialMedia>}
+		</div>
+	}
 	return <div className={style.tab_content_wrapper}>
 		{info.map((item, index) => {
 			const noSplit = index === 0;
@@ -163,14 +236,17 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Overview') {
 				return BusinessInfo(index, item, noSplit, overview_fields, props);
 			}
-			if (item.id === 'Listing' && props.listing_info) {
+			if (item.id === 'Listing' &&
+				props.listing_info &&
+				listing_info
+					.filter(item => props.listing_info?.[item.field]).length > 0) {
 				return <Section key={index} title={item.title + ' '} split={!noSplit}>
 					<div className={style.overview_item_wrapper}>
 						{listing_info
 							.filter(item => props.listing_info[item.field])
 							.padArrayToMultiple(3)
 							.map((item, index) => {
-								if (!item || !props.listing_info[item.field]) {
+								if (!item || !props.listing_info[item?.field]) {
 									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
 								}
 								return <div key={index} className={style.overview_item}>
@@ -191,7 +267,8 @@ const CompanyInfo = (_props: Props) => {
 						return <JobCard {...item} key={index}></JobCard>
 					}).slice(0, 5)}
 					{jobs.total_num > 5 && <div className={style.more} onClick={props.onMore}>
-						{`More ${jobs.total_num} Jobs`}
+						{formatTemplateString(overview.AllJobs, { total_num: jobs.total_num })}
+						{/* {`More ${jobs.total_num} Jobs`} */}
 					</div>}
 
 				</Section>
@@ -230,32 +307,41 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 	const [isVisible, setIsVisible] = useState(false);
 	const [contentHeight, setContentHeight] = useState(150);
 	const calculateContentHeight = () => {
-		setContentHeight(ref.current.scrollHeight);
+		setContentHeight(ref.current?.scrollHeight);
 	};
+	const [showMore, setShow] = useState(false);
 	useLayoutEffect(() => {
 		calculateContentHeight();
+		if (isContentOverflowing(ref.current)) {
+			setShow(true);
+		}
 	});
 	const handleClick = () => {
 		setIsVisible(!isVisible)
 	}
+	const isMobile = useMediaQuery('(max-width: 768px)');
+
+	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
+	if (!props.description) return null;
 	return <Section key={index} title={item.title} split={!noSplit}>
-		<div 
+		<div
 			className={classNames({
 				[style.introduce_wrapper]: true,
 				[style.ellipsis]: !isVisible
 			})}
-			style={{height: isVisible ? contentHeight :  90}}
+			style={{ height: isVisible ? contentHeight : isMobile ? '0.94rem' : 90 }}
 		>
-			<div 
+			<div
 				className={style.introduction}
-				ref={ref}
+				ref={ref as React.RefObject<HTMLDivElement>}
 				dangerouslySetInnerHTML={{
-				__html: filterScriptContent(props.description)
-			}}>
+					__html: filterScriptContent(props.description)
+				}}>
 			</div>
 		</div>
 
-		{!isVisible && <div className={style.more} onClick={handleClick}>More</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? overview.Less : overview.More}</div>}
 	</Section>;
 }
 
@@ -273,27 +359,41 @@ function BusinessInfo(
 	}
 	const contentRef = useRef(null);
 	const calculateContentHeight = () => {
-		setContentHeight(contentRef.current.scrollHeight);
+		setContentHeight(contentRef.current?.scrollHeight);
 	};
 	useLayoutEffect(() => {
 		calculateContentHeight();
 	});
-	const _resArr = business_info.filter(_ => props[_.field]);
-	const showMore = _resArr.length > 6 && !isVisible;
+	const isMobile = useMediaQuery('(max-width: 768px)');
+
+	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
+	if (!props) return null;
+
+	const _resArr = business_info.filter(_ => props[_?.field]);
+	const showMore = _resArr.length > 4;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
-		<div className={style.animation_wrapper} style={{ height: showMore ? 150 : contentHeight }}>
+		<div className={style.animation_wrapper} style={{
+			height: !isVisible ? !showMore ? "auto" : 130 : contentHeight
+
+		}}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
 				{_resArr
 					.map((item) => {
+						const value = props[item?.field];
+						const is_url = isURL(value);
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
-							{item && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
-							{/* {item && <div className={style.overview_item_value}>{props[item?.field]}</div>} */}
+							{item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
+							{(()=>{
+								if(item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
+								if(item && isMobile )return <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>
+							})()}
 						</div>;
 					})}
 			</div>
 		</div>
-		{showMore && <div className={style.more} onClick={handleClick}>More</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? overview.Less : overview.More}</div>}
 	</Section>;
 }
 
@@ -304,16 +404,17 @@ export function filterScriptContent(str: string): string {
 
 
 function isURL(str) {
-  // Regular expression pattern to match a URL
-  const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
-  
-  // Test the string against the pattern
-  return urlPattern.test(str);
+	// Regular expression pattern to match a URL
+	const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+
+	// Test the string against the pattern
+	return urlPattern.test(str);
 }
 
 function isContentOverflowing(element) {
-  return element.scrollWidth > element.clientWidth;
+	return element?.scrollWidth > element?.clientWidth || element?.scrollHeight > element?.clientHeight;
 }
+
 export function MouseOverPopover(props: {
 	value: string
 	className?: string
@@ -321,58 +422,115 @@ export function MouseOverPopover(props: {
 	const ref = useRef(null);
 	const [showPop, setShow] = useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-	const is_url = isURL(props.value); 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if(!showPop) return;
-    setAnchorEl(event.currentTarget);
-  };
+	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+	const is_url = isURL(props.value);
+	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+		if (!showPop) return;
+		setAnchorEl(event.currentTarget);
+	};
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+	const handlePopoverClose = () => {
+		setAnchorEl(null);
+	};
 
-  const open = Boolean(anchorEl);
+	const open = Boolean(anchorEl);
+
+	function isContentOverflowing(element) {
+		return element?.scrollWidth > element?.clientWidth;
+	}
 
 	useLayoutEffect(() => {
-		if(isContentOverflowing(ref.current)){
+		if (isContentOverflowing(ref.current)) {
 			setShow(true);
 		}
 	});
-  return (
-    <>
-      <div
-				className={props.className ? props.className:  style.overview_item_value}
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
+	return (
+		<>
+			<div
+				className={props.className ? props.className : style.overview_item_value}
+				aria-owns={open ? 'mouse-over-popover' : undefined}
+				aria-haspopup="true"
+				onMouseEnter={handlePopoverOpen}
+				onMouseLeave={handlePopoverClose}
 				ref={ref}
-      >
-				{is_url ? 
+			>
+				{is_url ?
 					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
 					<span>{props.value}</span>}
-      </div>
-      <Popover
-        id="mouse-over-popover"
-        sx={{
-          pointerEvents: 'none',
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <Typography sx={{ p: 1 }} maxWidth={300} style={{wordBreak: 'break-all'}}>{props.value}</Typography>
-      </Popover>
-    </>
-  );
+			</div>
+			<Popover
+				id="mouse-over-popover"
+				sx={{
+					pointerEvents: 'none',
+				}}
+				open={open}
+				anchorEl={anchorEl}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+				onClose={handlePopoverClose}
+				disableRestoreFocus
+			>
+				<Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>{props.value}</Typography>
+			</Popover>
+		</>
+	);
+}
+
+export function MobileHiBoss() {
+	const { hr } = useCompanyDetail();
+	return <div className={styles.filter_container}>
+		{
+			hr.map((item, index) => {
+				return <div key={index}>
+					<ChatItem {...item}></ChatItem>
+				</div>
+			})
+		}
+	</div>
+	// return <div>
+	// 	<Swiper
+	// 		spaceBetween={10}
+	// 		slidesPerView={2.3}
+	// 		// loop={true}
+	// 		scrollbar={{ draggable: true }}
+	// 	>
+	// 		{
+	// 			hr.map((item, index) => {
+	// 				return <SwiperSlide key={index}>
+	// 					<ChatItem {...item}></ChatItem>
+	// 				</SwiperSlide>
+	// 			})
+	// 		}
+	// 	</Swiper>
+	// </div>
+}
+
+function MobileAlbum() {
+	const { detail } = useCompanyDetail();
+	const res = detail.pictures;
+	if (!res?.length) return null;
+	return <div>
+		<Swiper
+			spaceBetween={30}
+			slidesPerView={1.2}
+			// loop={true}
+			scrollbar={{ draggable: true }}
+		>
+			{
+				res.map((item, index) => {
+					return <SwiperSlide key={index}>
+						<div className={style.mobile_album}>
+							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'></Image>
+						</div>
+					</SwiperSlide>
+				})
+			}
+		</Swiper>
+	</div>
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from '../../index.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -21,12 +21,14 @@ const JobCard = (props: any) => {
     recruiter_job_title,
     company_logo,
     company_name,
+    company_size,
     id,
     job_url,
     job_type_id,
     job_location_id,
     xp_lvl_id,
     degree_id,
+    is_urgent,
     recruiter_last_active_at: recruiterLastActiveAt
   } = props
   // const labels = [job_type, xp_lvl, degree].filter(a => a)
@@ -50,10 +52,18 @@ const JobCard = (props: any) => {
         }}
       >
         <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
-          <div className={styles.title}>{`${job_title}`}</div>
+          <div className={styles.title}>{is_urgent ? <span className={styles.urgent}>urgent</span>: null} {`${job_title}`}</div>
           <div className={styles.salary}>{salary_range_value}</div>
         </div>
-        <div className={styles.companyName}>{company_name}</div>
+        <div className={styles.companyInfo}>
+          <span className={styles.companyName}>{company_name}</span>
+          {
+            company_size ? (<>
+              <span className={styles.companyInfoSpread}></span>
+              <span className={styles.companySize}>{company_size}</span>
+              </>) : null
+          }
+        </div>
         <div className={styles.labelContainer}>
           {labels.map((label) => (
             <div key={label} className={styles.label}>
@@ -61,11 +71,15 @@ const JobCard = (props: any) => {
             </div>
           ))}
         </div>
+        
+        {/* line */}
+        <div className={styles.recruiterLine}></div>
+
         <div className={styles.recruiterContainer}>
           <div className={styles.info}>
             <div
               className={`${common_styles.avator}  ${transState(recruiterLastActiveAt).state === 1 ? '' :  common_styles.avator2}`}>
-              <Image src={company_logo} height={20} width={20} alt={''} />
+              <Image src={company_logo} height={24} width={24} alt={''} />
             </div>
             <div
               className={styles.hrTitle}

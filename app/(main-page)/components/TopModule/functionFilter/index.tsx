@@ -137,13 +137,15 @@ const FunctionFilter: FunctionComponent<FunctionFilterProps> = hoverable((props:
         ))}
 
             <div className={styles.pagination}>
-                <label>{currentPage}/{totalPages}</label>
-                <button type='button' disabled={!preEnable} className={styles.prePage} style={{ paddingLeft: '6px' }} onClick={onPre}>
-                    <ArrowBackIosIcon className={styles.icon} />
-                </button>
-                <button type='button' disabled={!nextEnable} onClick={onNext}>
-                    <ArrowForwardIosIcon className={styles.icon} />
-                </button>
+                <label>{currentPage}/<span>{totalPages}</span></label>
+                <div>
+                    <button type='button' disabled={!preEnable} className={styles.prePage} style={{ paddingLeft: '6px' }} onClick={onPre}>
+                        <ArrowBackIosIcon className={styles.icon} />
+                    </button>
+                    <button type='button' disabled={!nextEnable} onClick={onNext}>
+                        <ArrowForwardIosIcon className={styles.icon} />
+                    </button>
+                </div>
             </div>
         </div>
         {hoverData && <div className={styles.sectionContainer}>

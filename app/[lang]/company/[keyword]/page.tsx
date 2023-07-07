@@ -13,6 +13,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { isMobile } from 'react-device-detect';
 import MobilePage from './page_mobile';
+import useWindowSize from 'hooks/useWindowSize';
+import { useContext } from 'react';
+import { languageContext } from 'app/components/providers/languageProvider';
+import { formatTemplateString } from 'helpers/formatter';
 
 
 function a11yProps(index: number) {
@@ -51,13 +55,15 @@ const Page = () => {
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
+	const contextLang = useContext(languageContext);
+	const {tab, overview ,life} = contextLang.companyDetail
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
-	const tab_title = ['Company information', `Jobs(${jobs.total_num})`];
+	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
 	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
-	console.log('isMobile', isMobile);
-
-	if(isMobile && process.env.ENV !== 'production'){
+	const {width} = useWindowSize();
+	const isMobile = width < 767;
+	if(isMobile){
 		return <MobilePage/>
 	}
 	return <div className={style.container}>
@@ -115,14 +121,15 @@ const Page = () => {
 			</div>
 			<TabPanel value={value} index={0}>
 				<div className={style.company_info_tab_wrapper}>
-					{!!hotJobs.jobs.length ? <Section title={'Hot Jobs'} hot>
+					{!!hotJobs.jobs.length ? <Section title={overview.HotJobs} hot>
 						<div
 							className={style.header_right}
 							onClick={(e) => {
 								handleChange(e, 1);
 							}}
 						>
-							All {jobs.total_num} jobs <div className={style.arrow}></div>
+							{formatTemplateString(overview.ViewAllJobs, { total_num: jobs.total_num })}
+							 <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
 							{hotJobs.jobs.slice(0, 3).map((item) => {
@@ -141,7 +148,7 @@ const Page = () => {
 												item.local_salary_range_value
 											}</div>
 											<Link className={style.chat_now} target={'_blank'} href={`/${lang}${item.job_url}`}>
-												Chat Now
+												{overview.jobs.card.chatNow}
 											</Link>
 										</div>
 									</div>

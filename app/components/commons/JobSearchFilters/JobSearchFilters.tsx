@@ -313,7 +313,7 @@ const NavSearchFilter = ({
                 options={[
                   {
                     key: 'verified-companies',
-                    ['seo-value']: 'verified-companies111',
+                    ['seo-value']: 'verified-companies',
                     value: searchModal.viewVerifiedCompanies,
                     label: 'View verified companies'
                   }

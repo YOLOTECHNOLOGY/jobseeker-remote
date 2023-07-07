@@ -4,7 +4,7 @@ import QuickUploadResume from './quickUploadResume'
 import { getDictionary } from 'get-dictionary'
 
 export default async function (props) {
-    const { lang } = props.params
-    const dic = await getDictionary(lang)
-    return <QuickUploadResume lang={dic}></QuickUploadResume>
+  const { lang } = props.params
+  const dic = await getDictionary(lang)
+  return <QuickUploadResume lang={dic} />
 }

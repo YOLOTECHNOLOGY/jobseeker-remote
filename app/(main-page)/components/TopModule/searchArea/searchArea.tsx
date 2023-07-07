@@ -16,7 +16,7 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import SearchIcon from '@mui/icons-material/Search'
+
 import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
@@ -150,79 +150,86 @@ const SearchArea = (props: any) => {
             lang={home.search}
             sx={{
               '> .MuiFormControl-root': {
-                borderRadius: '10px',
-                height: '40px',
+                borderRadius: '8px',
+                height: '60px',
                 marginTop: '4px',
                 overflow: 'hidden',
                 '> .MuiOutlinedInput-root': {
-                  borderRadius: '10px',
-                  height: '40px',
+                  borderRadius: '8px',
+                  height: '60px',
                   overflow: 'hidden',
                   marginTop: '4px'
                 }
               }
             }}
           />
-          <JobSearchBar
-            id='search'
-            label={home.search.title}
-            variant='outlined'
-            size='small'
-            className={styles.search}
-            value={searchValue}
-            maxLength={255}
-            searchFn={handleSuggestionSearch}
-            updateSearchValue={setSearchValue}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                setSearchValue((e.target as HTMLInputElement).value)
-                addSearchHistory((e.target as HTMLInputElement).value)
-                pushJobPage((e.target as HTMLInputElement).value, '')
-              }
-            }}
-            options={suggestionList}
-            onSelect={(value: any) => {
-              const newValue = value?.value || value || ''
-              const type = value?.type || ''
-              setSearchValue(newValue)
-              addSearchHistory(newValue)
-              pushJobPage(newValue, type)
-            }}
-            renderOption={(props, option) => {
-              const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-              return type === 'company' ? (
-                <li {...props} style={styleleSelect} key={props.id}>
-                  <Image src={logoUrl} alt={value} width='22' height='22' />
-                  <span style={{ paddingLeft: '10px' }}>{value}</span>
-                </li>
-              ) : isHistory ? (
-                <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
-                  <AccessTimeIcon />
-                  <span style={{ paddingLeft: '10px' }}>{value}==1</span>
-                </li>
-              ) : (
-                <li {...props} style={styleleSelect} key={props.id}>
-                  <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                  <span style={{ paddingLeft: '10px' }}>{value || option}22</span>
-                </li>
-              )
-            }}
-          />
-          <MaterialButton
-            className={styles.searchButton}
-            onClick={() => {
-              if (!searchValue) return
-              addSearchHistory(searchValue)
-              pushJobPage(searchValue, '')
-            }}
-            style={{
-              textTransform: 'capitalize'
-            }}
-          >
-            {' '}
-            {home.search.btn1}{' '}
-          </MaterialButton>
+          <div style={{ display: 'flex' }} className={styles.searchBox}>
+            <JobSearchBar
+              id='search'
+              label={home.search.title}
+              variant='outlined'
+              size='small'
+              className={styles.search}
+              value={searchValue}
+              maxLength={255}
+              searchFn={handleSuggestionSearch}
+              updateSearchValue={setSearchValue}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  const value = (e.target as HTMLInputElement).value
+                  setSearchValue(value)
+                  addSearchHistory(value)
+                  if (value) {
+                    pushJobPage(value, '')
+                  }
+                }
+              }}
+              options={suggestionList}
+              onSelect={(value: any) => {
+                const newValue = value?.value || value || ''
+                const type = value?.type || ''
+                setSearchValue(newValue)
+                addSearchHistory(newValue)
+                if (newValue) {
+                  pushJobPage(newValue, type)
+                }
+              }}
+              renderOption={(props, option) => {
+                const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                return type === 'company' ? (
+                  <li {...props} style={styleleSelect} key={props.id}>
+                    <Image src={logoUrl} alt={value} width='22' height='22' />
+                    <span style={{ paddingLeft: '10px' }}>{value}</span>
+                  </li>
+                ) : isHistory ? (
+                  <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
+                    <AccessTimeIcon />
+                    <span style={{ paddingLeft: '10px' }}>{value}==1</span>
+                  </li>
+                ) : (
+                  <li {...props} style={styleleSelect} key={props.id}>
+                    <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                    <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                  </li>
+                )
+              }}
+            />
+            <MaterialButton
+              className={styles.searchButton}
+              onClick={() => {
+                if (!searchValue) return
+                addSearchHistory(searchValue)
+                pushJobPage(searchValue, '')
+              }}
+              style={{
+                textTransform: 'capitalize'
+              }}
+            >
+              {' '}
+              {home.search.btn1}{' '}
+            </MaterialButton>
+          </div>
           {isShow && (
             <div className={styles.download}>
               <PhoneIphoneIcon className={styles.icon} />

@@ -1,18 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
 import { flat } from 'helpers/formatter'
 import Pagination from '@mui/material/Pagination';
 import { useCompanyDetail } from '../../DataProvider';
-import { debounce, findLastIndex } from 'lodash-es'
+import { findLastIndex } from 'lodash-es'
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Loading from "app/components/loading";
 import className from 'classnames';
-import Button from '@mui/material/Button';
-import { useInView, InView } from "react-intersection-observer";
+import { InView } from "react-intersection-observer";
+import useMediaQuery  from '@mui/material/useMediaQuery';
+import { languageContext } from 'app/components/providers/languageProvider';
+
+
 
 interface Props {
     CountryList: Country[]
@@ -34,8 +37,6 @@ const filterTagView = {
 
 const SearchPanel = (props: Props) => {
     const formattedLocationList = flat(formatLocationConfig(props.CountryList));
-    const swiperRef = useRef(null);
-
     const params = useParams();
     const { jobs } = useCompanyDetail();
     const [jobsData, setJobsData] = useState(jobs);
@@ -48,8 +49,10 @@ const SearchPanel = (props: Props) => {
     const [leftShow, setLeftShow] = useState(false);
     const [rightShow, setRightShow] = useState(true);
     // const filterTagView = useRef<JobVisible[]>([{}].concat(props.functions));
-
-
+    const firstRef = useRef<HTMLDivElement | null>(null);
+    const isMobile = useMediaQuery('(max-width:768px)');
+    const contextLang = useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
     useEffect(() => {
         if (!props.functions) return;
         // filterTagView.current = [{}].concat(props.functions);
@@ -92,7 +95,7 @@ const SearchPanel = (props: Props) => {
     //         // }
     //         console.log('previousindex',previousindex);
     //         console.log('index',index);
-            
+
     //     } catch (e) {
     //         console.log('list of filter tag is end');
     //     }
@@ -104,11 +107,12 @@ const SearchPanel = (props: Props) => {
             companyIds: id,
             size: 10,
             page,
-            query: jobTitle && inputText.current,
+            query: jobTitle || inputText.current,
             location: location?.id,
             jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
         }
-        if(job_function_ids === 'all'){
+        console.log('reqData', reqData);
+        if (job_function_ids === 'all') {
             delete reqData.jobFunctions;
         }
         fetchJobsListReq(reqData, null).then((res) => {
@@ -126,6 +130,36 @@ const SearchPanel = (props: Props) => {
             searchFunc(null, location);
         }
     };
+    const previousFunction = () => {
+        const all = document.getElementsByClassName('search-filter-tag');
+        const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
+        try {
+            // @ts-ignore
+            const { offsetWidth } = all[previousindex - 1];
+            setOffset((_) => _ - offsetWidth);
+        } catch (e) {
+            console.log('list of filter tag is end');
+        }
+
+        // const index = array.reverse().findIndex(item => item.visible);
+
+    }
+    const nextFunction = () => {
+        const all = document.getElementsByClassName('search-filter-tag');
+        const index = findLastIndex([...all], (item, index) => {
+            return item.getAttribute('data-visible') === 'true'
+        });
+
+        try {
+            // @ts-ignore
+            const { offsetWidth } = all[index + 1];
+            // console.log(_offset);
+            setOffset((_) => offsetWidth + _);
+        } catch (e) {
+            console.log('list of filter tag is end');
+        }
+
+    }
     return <div className={style.search_container}>
         <div className={style.search_input_wrapper}>
             <div className={style.search_input_layout}>
@@ -158,7 +192,10 @@ const SearchPanel = (props: Props) => {
                 </div>
                 <label htmlFor='input-search' className={style.job_search_container}>
                     <img className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
-                    <input id={'input-search'} name={'input-search'} className={style.job_search_input}
+                    <input 
+                        id={'input-search'} name={'input-search'} 
+                        placeholder='Find keywords'
+                        className={style.job_search_input}
                         onChange={(e) => {
                             inputText.current = e.target.value;
                             // searchFunc(e.target.value,location)
@@ -175,7 +212,9 @@ const SearchPanel = (props: Props) => {
                 searchFunc()
             }}>
                 <span>
-                    Find Now
+                    {
+                        isMobile ? overview.Find : overview['FindNow']
+                    }
                 </span>
             </div>
         </div>
@@ -187,34 +226,26 @@ const SearchPanel = (props: Props) => {
                         [style.arrow_left]: true,
                         [style.opacity]: !leftShow
                     })}
-                    onClick={() => {
-                        const all = document.getElementsByClassName('search-filter-tag');
-                        const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
-                        try {
-                            // @ts-ignore
-                            const { offsetWidth } = all[previousindex - 1];
-                            // console.log(_offset);
-                            setOffset((_) => _ - offsetWidth);
-                        } catch (e) {
-                            console.log('list of filter tag is end');
-                        }
-
-                        // const index = array.reverse().findIndex(item => item.visible);
-
-                    }}></div>
+                    onClick={previousFunction}></div>
                 <div className={style.filter_layout}>
                     <div className={style.filter_wrapper}
                         style={{
-                            transform: `translate3d(${-offset}px, 0px, 0px)`
+                            transform: !isMobile ? `translate3d(${-offset}px, 0px, 0px)` : 'none'
                         }}
+                        // onTouchStart={handleTouchStart}
+                        // onTouchMove={handleTouchMove}
+                        // onTouchEnd={handleTouchEnd}
                     >
                         <InView threshold={1}>
                             {({ ref, inView }) => {
-                                if(inView){
-                                    setLeftShow(false)
-                                }else{
-                                    setLeftShow(true)
+                                if(!isMobile){
+                                    if (inView) {
+                                        setLeftShow(false)
+                                    } else {
+                                        setLeftShow(true)
+                                    }
                                 }
+
                                 return <div className={className({
                                     ['search-filter-tag']: true,
                                     [style.filter_tag]: true,
@@ -225,9 +256,12 @@ const SearchPanel = (props: Props) => {
                                     onClick={() => {
                                         searchFunc(null, location, 1, 'all');
                                         setClasses(undefined);
+                                        if(!inView){
+                                            previousFunction()
+                                         }
                                     }}
                                 >
-                                    All
+                                    {overview.All}
                                 </div>
                             }}
 
@@ -236,10 +270,12 @@ const SearchPanel = (props: Props) => {
                         {props.functions?.map((item, index) => {
                             return <InView threshold={1} key={index}>
                                 {({ ref, inView }) => {
-                                    if(inView && props.functions.length - 1 === index){
-                                        setRightShow(false)
-                                    }else{
-                                        setRightShow(true)
+                                    if(!isMobile){
+                                        if (inView && props.functions.length - 1 === index) {
+                                            setRightShow(false)
+                                        } else {
+                                            setRightShow(true)
+                                        }
                                     }
                                     return <div
                                         ref={ref}
@@ -248,10 +284,23 @@ const SearchPanel = (props: Props) => {
                                             ['search-filter-tag']: true,
                                             [style.filter_tag]: true,
                                             [style.active]: item.id === classes?.id
-                                        })} key={index}
+                                        })}
                                         onClick={() => {
                                             searchFunc(null, location, 1, item.id)
                                             setClasses(item)
+                                            if(!inView){
+                                               const all = document.getElementsByClassName('search-filter-tag');
+                                               const nextElement  = all[index+2];
+                                               if(nextElement){
+                                                    if(nextElement.getAttribute('data-visible') === 'false'){
+                                                        nextFunction()
+                                                    }else{
+                                                        previousFunction()
+                                                    }
+                                               }else{
+                                                 nextFunction()
+                                               }
+                                            }
                                         }}>
                                         {/* {inView ? '1' : '2'} */}
                                         {item.value}
@@ -262,52 +311,44 @@ const SearchPanel = (props: Props) => {
                         })}
                     </div>
                 </div>
+
+
                 <div
                     className={className({
                         [style.arrow_right]: true,
                         [style.opacity]: !rightShow
                     })}
-                    onClick={() => {
-                        const all = document.getElementsByClassName('search-filter-tag');
-                        const index = findLastIndex([...all], (item, index) => {
-                            return item.getAttribute('data-visible') === 'true'
-                        });
-
-                        try {
-                            // @ts-ignore
-                            const { offsetWidth } = all[index + 1];
-                            // console.log(_offset);
-                            setOffset((_) => offsetWidth + _);
-                        } catch (e) {
-                            console.log('list of filter tag is end');
-                        }
-
-                    }}
+                    onClick={nextFunction}
                 ></div>
             </div>
         }
-        <div className={style.filter_split}></div>
-        {!!jobsData.jobs.length ?
-            <div className={style.content_layout}>
-                {!loading && jobsData.jobs.map((item) => {
-                    return <JobsSearchCard key={item.job_title} {...item} />
-                })}
-                {
-                    loading && <div className={style.loading_wrapper}>
-                        {/* <div className={style.loading_wrapper}/> */}
-                        <Loading />
+        <div className={style.filter_split} ref={firstRef}></div>
+        <div className={style.content_layout}>
+            {loading ?
+                loading && <div className={style.loading_wrapper}>
+                    {/* <div className={style.loading_wrapper}/> */}
+                    <Loading />
+                </div>
+                : !!jobsData.jobs.length ?
+
+                    !loading && jobsData.jobs.map((item) => {
+                        return <JobsSearchCard key={item.job_title} {...item} />
+                    })
+                    :
+                    <div className={style.noData}>
+                        No Data
                     </div>
-                }
-            </div> :
-            <div className={style.noData}>
-                No Data
-            </div>}
+            }
+        </div>
         <div className={style.pagination}>
-            {!!jobsData.total_pages &&
+            {!!jobsData.total_pages && !loading &&
                 <Pagination
                     page={jobsData.page}
                     count={jobsData.total_pages}
                     onChange={(e, v) => {
+                        if(isMobile){
+                            firstRef.current && firstRef.current?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                        }
                         searchFunc(null, location, v);
                     }}
                     shape="rounded"
@@ -315,43 +356,65 @@ const SearchPanel = (props: Props) => {
                 />
             }
         </div>
-
     </div>
 }
 
 
 const JobsSearchCard = (props: JobData) => {
     const { lang } = useCompanyDetail();
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const contextLang = useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
     return <div className={style.search_card}>
-        <Link
-            href={'/' + lang + props.job_url}
-            target='_blank'
-            title={props.job_title}
-            className={style.title}>
-            <span>{props.job_title}</span>
-        </Link>
-        <div className={style.content}>
-            <JobsTag {...props} />
-            <div className={style.salary}>
-                {props.local_salary_range_value}
+        <div className={style.search_title_layout}>
+            <Link
+                href={'/' + lang + props.job_url}
+                target='_blank'
+                title={props.job_title}
+                className={style.title}>
+                <span>{props.job_title}</span>
+            </Link>
+            <div className={
+                className({
+                    [style.mobile]: true,
+                })
+            }>
+                <div className={style.salary + ' ' + style.mobile}>
+                    {props.local_salary_range_value}
+                </div>
             </div>
+        </div>
+
+        <div className={style.content}>
+            {tagsData.map(item => {
+                const value = props[item.field]
+                if (!value) return null;
+                return <span className={style.mobile_tag} key={value}>
+                    {value}
+                </span>
+            }).slice(0,3)}
+            {!isMobile && <JobsTag {...props} />}
+            {!isMobile && <div className={style.salary + ' ' + style.desktop}>
+                {props.local_salary_range_value}
+            </div>}
+            
         </div>
         <div className={style.footer}>
             <div className={style.chat_footer}>
                 <div className={style.avatar}>
-                    <Image height={24} width={24} src={props.recruiter_avatar} alt="img" />
+                    <Image fill src={props.recruiter_avatar} alt="img" />
                     <div className={style.status} style={{ backgroundColor: props.recruiter_is_online ? '#0ebd5c' : '#E5E6EB' }} />
                 </div>
-                <div className={style.name}>
+                <Link className={style.name}  href={'/' + lang + props.job_url} target='_blank' >
                     <span title={props.recruiter_full_name}>
                         {props.recruiter_full_name}
                     </span>
-                    &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp; 
+                    &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
                     <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
-                        Chat Now
+                        {overview.jobs.card.chatNow}
                     </Link>
-                </div>
+                </Link>
             </div>
             <div className={style.location}>
                 {props.job_location}
@@ -365,12 +428,13 @@ interface TagProps extends JobData {
     classNames?: any
 }
 
+export const tagsData = [
+    { name: '', field: 'xp_lvl' },
+    { name: '', field: 'degree' },
+    { name: '', field: 'job_type' },
+]
 export const JobsTag = (props: TagProps) => {
-    const tagsData = [
-        { name: '', field: 'xp_lvl' },
-        { name: '', field: 'degree' },
-        { name: '', field: 'job_type' },
-    ]
+
     return <div className={style.tags}>
         {tagsData.map(item => {
             const value = props[item.field]

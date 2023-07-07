@@ -13,6 +13,8 @@ import ClearIcon from '@mui/icons-material/Clear'
 import { getValueById } from 'helpers/config/getValueById'
 import { addJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 const pageParams = {
   size: 20,
   sort: 1,
@@ -277,7 +279,9 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
           {tipsFun}
         </div>
       ) : null}
-      <p className={styles.load}>{loading ? 'Loading~' : current === totalPage ? 'No more' : ''}</p>
+      <p className={styles.load}>{loading ?  <Box sx={{ display: 'flex',justifyContent:'center',marginTop:'20px' }}>
+      <CircularProgress size={24}/>
+    </Box> : current === totalPage ? 'No more' : ''}</p>
     </>
   )
 }

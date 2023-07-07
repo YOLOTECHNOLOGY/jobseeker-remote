@@ -52,7 +52,8 @@
     "downloadBossjobApp": " Download Bossjob App",
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
-    "corporation": "Philippines: Etos Adtech Corporation"
+    "corporation": "Philippines: Etos Adtech Corporation",
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
   },
   "getStatred": {
     "seoMetaTitle": "Get started | Bossjob",
@@ -210,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "Overview",
       "life": "Life",
       "jobs": "Jobs"
@@ -222,6 +224,48 @@
       "website": "Website",
       "location": "Location",
       "socialMedia": "Social Media",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "AllJobs": "More {{total_num}} Jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
+      "LegalRepresentative": "Legal representative",
+      "RegisteredCapital": "Registered capital",
+      "PaidUpCapital": "Paid-up capital",
+      "DateOfEstablishment": "Date of establishment",
+      "OrganizationCode": "Organization Code",
+      "BusinessRegistrationNumber": "Business registration number",
+      "TaxpayerIdentificationNumber": "Taxpayer Identification Number",
+      "TypeOfEnterprise": "Type of enterprise",
+      "ApprovalDate": "Approval date",
+      "RegisteredAddress": "Registered address",
+      "StockCode": "Stock code",
+      "IpoValuationUsd": "IPO valuation(USD)",
+      "MoneyRaisedAtIpoUsd": "Money Raised at IPO(USD)",
+      "IpoIssuePriceUsd": "IPO issue price(USD)",
+      "IssueDate": "Issue date",
+      "NumberOfFinancing": "Number of financing",
+      "TotalFinancing": "Total financing",
+      "CompanyFeatures": "Company Features",
+      "CompanyBenefits": "Company Benefits",
+      "Less": "Less",
+      "More": "More",
+      "HiBoss": "Hi Boss",
+      "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
+      "CultureAndBenefits": "Culture and benefits",
+      "Find": "Find",
+      "FindNow": "Find Now",
+      "All": "All",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -283,7 +327,8 @@
     }
   },
   "home": {
-    "title": "Find Job. Talk to Boss.",
+    "title": "Find Job. ",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
@@ -532,7 +577,32 @@
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss",
-    "relatedSearch": "Related Search"
+    "relatedSearch": "Related Search",
+    "alertJobs": {
+      "title": "High quality job recommendation",
+      "setting": "Setting",
+      "info": "Send the {{message}} job information you search to email",
+      "settingSucceed": "Job alert setting successfully.",
+      "settingFailed": "Job alert setting failed.",
+      "somethingWrong": "Something went wrong."
+    },
+    "alertJobsModal": {
+      "title": "Job Alert setting",
+      "subTitle": "Job Alert",
+      "jobConditions": "Job Conditions",
+      "frequency": "Frequency",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "sendToEmail": "Send to email",
+      "cancel": "Cancel",
+      "done": "Done",
+      "emailPlaceholder": "Please enter email address",
+      "emailValid": "Please enter a valid email address.",
+      "emailEmpty": "Email cannot be empty."
+    },
+    "downloadAppWithQrCode": "Download APP chat with Boss",
+    "findNow": "Find Now",
+    "find": "Find"
   },
   "manageProfile": {
     "tab": {

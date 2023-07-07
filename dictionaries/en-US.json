@@ -52,7 +52,8 @@
     "downloadBossjobApp": " Download Bossjob APP",
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
-    "corporation": "Philippines: Etos Adtech Corporation"
+    "corporation": "Philippines: Etos Adtech Corporation",
+    "companyDesc": "Launched in 2018, Bossjob is a chat-first, AI-powered hiring platform, modelled after the one thing that we need in our daily lives: instant gratification. Bossjob aims to provide speedy communications between talents and bosses to eliminate the lengthy job application process through direct chat."
   },
   "getStatred": {
     "seoMetaTitle": "Sign Up or Login as Talent | Bossjob",
@@ -210,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "Overview",
       "life": "Life",
       "jobs": "Jobs"
@@ -222,6 +224,48 @@
       "website": "Website",
       "location": "Location",
       "socialMedia": "Social Media",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "AllJobs": "More {{total_num}} Jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified social credit code",
+      "LegalRepresentative": "Legal representative",
+      "RegisteredCapital": "Registered capital",
+      "PaidUpCapital": "Paid-up capital",
+      "DateOfEstablishment": "Date of establishment",
+      "OrganizationCode": "Organization Code",
+      "BusinessRegistrationNumber": "Business registration number",
+      "TaxpayerIdentificationNumber": "Taxpayer Identification Number",
+      "TypeOfEnterprise": "Type of enterprise",
+      "ApprovalDate": "Approval date",
+      "RegisteredAddress": "Registered address",
+      "StockCode": "Stock code",
+      "IpoValuationUsd": "IPO valuation(USD)",
+      "MoneyRaisedAtIpoUsd": "Money Raised at IPO(USD)",
+      "IpoIssuePriceUsd": "IPO issue price(USD)",
+      "IssueDate": "Issue date",
+      "NumberOfFinancing": "Number of financing",
+      "TotalFinancing": "Total financing",
+      "CompanyFeatures": "Company Features",
+      "CompanyBenefits": "Company Benefits",
+      "Less": "Less",
+      "More": "More",
+      "HiBoss": "Hi Boss",
+      "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
+      "CultureAndBenefits": "Culture and benefits",
+      "Find": "Find",
+      "FindNow": "Find Now",
+      "All": "All",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -283,7 +327,8 @@
     }
   },
   "home": {
-    "title": "Find Job. Talk to Boss.",
+    "title": "Find Job. ",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "Manila",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -341,7 +386,7 @@
       "chatNow": "Chat now",
       "employee": "Employee",
       "jobHiring": "jobs hiring",
-      "moreJob": "More jobs"
+      "moreJob": "More"
     },
     "seo": {
       "title": "Bossjob - Career Platform for Professionals in {{country}}",
@@ -532,7 +577,32 @@
     "downloadAPP": " Download APP and chat with Boss",
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss",
-    "relatedSearch": "Related Search"
+    "relatedSearch": "Related Search",
+    "alertJobs": {
+      "title": "Receive email reminder for new jobs",
+      "setting": "Setting",
+      "info": "Send new jobs for {{message}} to my email",
+      "settingSucceed": "Job alert created successfully.",
+      "settingFailed": "Failed to create job alert.",
+      "somethingWrong": "Sorry, something went wrong."
+    },
+    "alertJobsModal": {
+      "title": "Job Alert Settings",
+      "subTitle": "Job Alert",
+      "jobConditions": "Filters selected",
+      "frequency": "Frequency",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "sendToEmail": "Email to receive alert",
+      "cancel": "Cancel",
+      "done": "Done",
+      "emailPlaceholder": "Please enter an email address",
+      "emailValid": "Please enter a valid email address.",
+      "emailEmpty": "Emails can not be empty"
+    },
+    "downloadAppWithQrCode": "Download APP chat with Boss",
+    "findNow": "Search",
+    "find": "Find"
   },
   "manageProfile": {
     "tab": {

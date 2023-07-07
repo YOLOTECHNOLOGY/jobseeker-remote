@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
 import { TextField } from '@mui/material'
 
-
 type Input = React.InputHTMLAttributes<HTMLInputElement>
 type JobSearchBar = {
   children?: React.ReactNode
@@ -23,7 +22,7 @@ type JobSearchBar = {
   searchFn?: Function
   updateSearchValue?: Function
   maxLength?: Number
-  renderOption?:any
+  renderOption?: any
 } & Omit<Input, 'size'>
 
 const theme = parent => createTheme(({
@@ -74,10 +73,15 @@ const theme = parent => createTheme(({
 
       }
     },
-    MuiInputLabel:{
+    MuiInputLabel: {
       styleOverrides: {
         root: {
           fontSize: '14px',
+          '&.Mui-focused': {
+            // color: 'red',
+            transform: 'translate(14px, -5px) scale(0.75)',
+          },
+
         }
       }
     }
@@ -133,6 +137,9 @@ const MaterialTextFieldWithSuggestionList = ({
         placeholder={label}
         defaultValue={defaultValue}
         inputValue={value}
+        sx={{
+          color: '#1D2129'
+        }}
         renderInput={(params) => (
           <TextField
             {...refs}

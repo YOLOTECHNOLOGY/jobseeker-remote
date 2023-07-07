@@ -52,7 +52,8 @@
     "downloadBossjobApp": " 下载 Bossjob 应用程序",
     "followUs": "关注我们",
     "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
-    "corporation": "菲律宾：Etos Adtech Corporation"
+    "corporation": "菲律宾：Etos Adtech Corporation",
+    "companyDesc": "Bossjob是亚洲首发，专注于AI和直聊的在线找工作平台。品牌由2018年创始以来，为求职者和Boss们提供精准岗位和人才匹配，在线直聊功能减少沟通成本提高招聘效率！"
   },
   "getStatred": {
     "seoMetaTitle": "注册求职账号，马上开始找工作 | Bossjob",
@@ -210,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "公司信息",
       "overview": "公司简介",
       "life": "企业文化",
       "jobs": "热招职位"
@@ -222,6 +224,48 @@
       "website": "官方网站",
       "location": "城市",
       "socialMedia": "社交媒体",
+      "ViewAllJobs": "在招{{total_num}}岗位",
+      "AllJobs": "More {{total_num}} Jobs",
+      "HotJobs": "热招中",
+      "Introduction": "公司简介",
+      "CompanyAlbum": "公司相册",
+      "Listing": "融资信息",
+      "BusinessInformation": "工商信息",
+      "JobOpenings": "在招岗位",
+      "Financing": "财务信息",
+      "CreationTime": "创建时间",
+      "CompanyWebsite": "公司官网",
+      "Turnover": "营业额",
+      "Telephone": "电话",
+      "CompanyName": "公司名称",
+      "UnifiedSocialCreditCode": "统一社会信用代码",
+      "LegalRepresentative": "Legal representative",
+      "RegisteredCapital": "Registered capital",
+      "PaidUpCapital": "Paid-up capital",
+      "DateOfEstablishment": "Date of establishment",
+      "OrganizationCode": "Organization Code",
+      "BusinessRegistrationNumber": "Business registration number",
+      "TaxpayerIdentificationNumber": "Taxpayer Identification Number",
+      "TypeOfEnterprise": "Type of enterprise",
+      "ApprovalDate": "Approval date",
+      "RegisteredAddress": "Registered address",
+      "StockCode": "Stock code",
+      "IpoValuationUsd": "IPO valuation(USD)",
+      "MoneyRaisedAtIpoUsd": "Money Raised at IPO(USD)",
+      "IpoIssuePriceUsd": "IPO issue price(USD)",
+      "IssueDate": "Issue date",
+      "NumberOfFinancing": "Number of financing",
+      "TotalFinancing": "Total financing",
+      "CompanyFeatures": "Company Features",
+      "CompanyBenefits": "Company Benefits",
+      "Less": "Less",
+      "More": "More",
+      "HiBoss": "Hi Boss",
+      "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
+      "CultureAndBenefits": "Culture and benefits",
+      "Find": "Find",
+      "FindNow": "Find Now",
+      "All": "All",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
@@ -283,7 +327,8 @@
     }
   },
   "home": {
-    "title": "找工作，与老板谈",
+    "title": "找工作， ",
+    "title2": "和老板直接沟通！",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -532,7 +577,32 @@
     "downloadAPP": "下载APP",
     "chatDirectly": "直接谈",
     "withBoss": "和老板",
-    "relatedSearch": "相关搜索"
+    "relatedSearch": "相关搜索",
+    "alertJobs": {
+      "title": "新职位发布通知我",
+      "setting": "设置",
+      "info": "将新发布的 {{message}} 职位发送到我的Email",
+      "settingSucceed": "职位提醒设置成功。",
+      "settingFailed": "职位提醒设置失败。",
+      "somethingWrong": "哦豁，出问题了～"
+    },
+    "alertJobsModal": {
+      "title": "新职位提醒设置",
+      "subTitle": "新职位提醒",
+      "jobConditions": "筛选条件",
+      "frequency": "频率",
+      "daily": "每日",
+      "weekly": "每周",
+      "sendToEmail": "发送至电子邮件",
+      "cancel": "取消",
+      "done": "完成",
+      "emailPlaceholder": "请输入电子邮件地址",
+      "emailValid": "请输入有效的电子邮件地址。",
+      "emailEmpty": "电子邮件不能为空。"
+    },
+    "downloadAppWithQrCode": "下载APP与老板聊天",
+    "findNow": "搜索",
+    "find": "搜索"
   },
   "manageProfile": {
     "tab": {
