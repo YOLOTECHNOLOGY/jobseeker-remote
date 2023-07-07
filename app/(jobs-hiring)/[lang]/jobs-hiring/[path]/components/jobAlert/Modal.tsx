@@ -68,9 +68,9 @@ interface ModalJobAlertsProps {
 export default function FormDialog(props: ModalJobAlertsProps) {
   const { open, message, lang, handleClose, handleSave } = props
   const userCookie = getCookie('user') || {}
-  const { email = '' } = userCookie
+  const { email } = userCookie
   const [frequency, setFrequency] = useState('1')
-  const [mail, setEmail] = useState(email)
+  const [mail, setEmail] = useState(email || '')
   const [active, setActive] = useState(false)
   const [mailError, setMailError] = useState('')
   const alertJobsModal = lang?.alertJobsModal || {}
