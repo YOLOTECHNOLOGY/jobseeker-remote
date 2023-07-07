@@ -20,6 +20,7 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { ChatItem } from '../ChatPanel'
 import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 import "swiper/swiper.min.css";
+import { formatTemplateString } from 'helpers/formatter';
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -92,64 +93,74 @@ const CompanyInfo = (_props: Props) => {
 	}];
 	const business_info = [{
 		field: 'name',
-		name: 'Company name',
+		name: overview.CompanyName,
 	}, {
 		field: 'social_credit_code',
-		name: 'Unified Social Credit Code',
+		name: overview.UnifiedSocialCreditCode,
 	}, {
-		name: 'Legal representative',
-		field: 'legal_representative'
+		field: 'legal_representative',
+		name: overview.LegalRepresentative,
+
 	}, {
-		name: 'Registered capital',
+		name: overview.RegisteredCapital,
 		field: 'registered_capital',
 	}, {
-		name: 'Paid-up capital',
+		name: overview.PaidUpCapital,
 		field: 'paid_in_capital',
 	}, {
-		name: 'Date of establishment',
+		name: overview.DateOfEstablishment,
 		field: 'establishment_date',
 	}, {
-		name: 'Organization Code',
+		name: overview.OrganizationCode,
 		field: 'organization_code'
 	}, {
-		name: 'Business registration number',
+		name: overview.BusinessRegistrationNumber,
 		field: 'business_registration_number',
 	}, {
-		name: 'Taxpayer Identification Number',
+		name: overview.TaxpayerIdentificationNumber,
 		field: 'taxpayer_identification_number'
 	}, {
-		name: 'Type of enterprise',
+		name: overview.TypeOfEnterprise,
 		field: 'type_of_enterprise'
 	}, {
-		name: 'Approval date',
+		name: overview.ApprovalDate,
 		field: 'approval_date'
 	}, {
-		name: 'Registered address',
+		name: overview.RegisteredAddress,
 		field: 'full_address'
 	}]
 
-	const listing_info = [{
-		name: 'Stock code',
-		field: 'stock_code',
-	}, {
-		name: 'IPO valuation(USD)',
-		field: 'ipo_valuation',
-	}, {
-		name: 'Money Raised at IPO(USD)',
-		field: 'initial_public_offering',
-	}, {
-		name: 'IPO issue price(USD)',
-		field: 'ipo_issue_price',
-	}, {
-		name: 'Issue date',
-		field: 'issue_date',
-	}, {
-		name: 'Number of financing',
-		field: 'number_of_financing',
-	}, {
-		name: 'Total financing',
-		field: 'total_financing'
-	}]
+	const listing_info = [
+		{
+			name: overview.StockCode,
+			field: 'stock_code',
+		},
+		{
+			name: overview.IpoValuationUsd,
+			field: 'ipo_valuation',
+		},
+		{
+			name: overview.MoneyRaisedAtIpoUsd,
+			field: 'initial_public_offering',
+		},
+		{
+			name: overview.IpoIssuePriceUsd,
+			field: 'ipo_issue_price',
+		},
+		{
+			name: overview.IssueDate,
+			field: 'issue_date',
+		},
+		{
+			name: overview.NumberOfFinancing,
+			field: 'number_of_financing',
+		},
+		{
+			name: overview.TotalFinancing,
+			field: 'total_financing',
+		},
+	];
+	
 	const { jobs, hr } = useCompanyDetail();
 
 	if (isMobile) {
@@ -160,16 +171,16 @@ const CompanyInfo = (_props: Props) => {
 				</Section>}
 			{Introduction(0, info[0], true, props)}
 			{props.cultures && props.cultures.length > 0 &&
-				<Section title={'Company Features'}>
+				<Section title={overview.CompanyFeatures}>
 					<TagContent type={'culture'} {...props}></TagContent>
 				</Section>}
 			{props.benefits && props.benefits.length > 0 &&
-				<Section title={'Company benefits'}>
+				<Section title={overview.CompanyBenefits}>
 					<TagContent type={'benefits'} {...props}></TagContent>
 				</Section>}
 			{BusinessInfo(2, info[3], true, overview_fields, props)}
 			{hr?.length > 0 &&
-				<Section title={'Hi Boss'}>
+				<Section title={overview.HiBoss}>
 					{MobileHiBoss()}
 				</Section>}
 			{props.pictures?.length > 0 && <Section title={info[2].title}>
@@ -256,7 +267,8 @@ const CompanyInfo = (_props: Props) => {
 						return <JobCard {...item} key={index}></JobCard>
 					}).slice(0, 5)}
 					{jobs.total_num > 5 && <div className={style.more} onClick={props.onMore}>
-						{`More ${jobs.total_num} Jobs`}
+						{formatTemplateString(overview.AllJobs, { total_num: jobs.total_num })}
+						{/* {`More ${jobs.total_num} Jobs`} */}
 					</div>}
 
 				</Section>
@@ -308,6 +320,9 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 		setIsVisible(!isVisible)
 	}
 	const isMobile = useMediaQuery('(max-width: 768px)');
+
+	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	if (!props.description) return null;
 	return <Section key={index} title={item.title} split={!noSplit}>
 		<div
@@ -326,7 +341,7 @@ function Introduction(index: number, item: { id: string; title: string; }, noSpl
 			</div>
 		</div>
 
-		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? "Less" : "More"}</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? overview.Less : overview.More}</div>}
 	</Section>;
 }
 
@@ -350,6 +365,9 @@ function BusinessInfo(
 		calculateContentHeight();
 	});
 	const isMobile = useMediaQuery('(max-width: 768px)');
+
+	const contextLang = useContext(languageContext);
+	const { overview, tab } = contextLang.companyDetail;
 	if (!props) return null;
 
 	const _resArr = business_info.filter(_ => props[_?.field]);
@@ -375,7 +393,7 @@ function BusinessInfo(
 					})}
 			</div>
 		</div>
-		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? 'Less' : 'More'}</div>}
+		{showMore && <div className={style.more} onClick={handleClick}>{isVisible ? overview.Less : overview.More}</div>}
 	</Section>;
 }
 
@@ -475,22 +493,22 @@ export function MobileHiBoss() {
 			})
 		}
 	</div>
-	return <div>
-		<Swiper
-			spaceBetween={10}
-			slidesPerView={2.3}
-			// loop={true}
-			scrollbar={{ draggable: true }}
-		>
-			{
-				hr.map((item, index) => {
-					return <SwiperSlide key={index}>
-						<ChatItem {...item}></ChatItem>
-					</SwiperSlide>
-				})
-			}
-		</Swiper>
-	</div>
+	// return <div>
+	// 	<Swiper
+	// 		spaceBetween={10}
+	// 		slidesPerView={2.3}
+	// 		// loop={true}
+	// 		scrollbar={{ draggable: true }}
+	// 	>
+	// 		{
+	// 			hr.map((item, index) => {
+	// 				return <SwiperSlide key={index}>
+	// 					<ChatItem {...item}></ChatItem>
+	// 				</SwiperSlide>
+	// 			})
+	// 		}
+	// 	</Swiper>
+	// </div>
 }
 
 function MobileAlbum() {
