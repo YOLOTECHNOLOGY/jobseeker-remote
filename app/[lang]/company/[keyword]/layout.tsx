@@ -111,7 +111,7 @@ async function CompanyLayout(props: {
 			>
 				<section style={{
 					width: '100%',
-					overflowX: 'clip',
+					overflowX: 'hidden',
 					minHeight: '100vh',
 					backgroundColor: '#ffffff',
 
