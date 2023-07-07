@@ -4183,10 +4183,10 @@ busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
-buzzmsg@1.7.0-beta.1:
-  version "1.7.0-beta.1"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.7.0-beta.1.tgz#99e8c96bb7b66f2739da8286fdde9949f4ba97ca"
-  integrity sha512-qZiOFAW4l9zEoLxs7+48dORd2bemoZ58lyaYVqmb+/7AK5D+stHkzAYnEIBo40qjiktjTcn7xjGdbYJX4ec93A==
+buzzmsg@^1.6.17:
+  version "1.6.17"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.17.tgz#b1666c0e9a04df86fbad4e3ef6a2c3a44d652e07"
+  integrity sha512-Fnoxo6qyCJFk1VDI1XxRkmUYmSf66JBtHx1ELXBcM5wVLglnW9A2Hwi4fWuXcZH3fu0IHV4PM0cqQv8vQ0pOcQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -6102,7 +6102,7 @@ imforbossjob@^0.1.97:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "1.7.0-beta.1"
+    buzzmsg "^1.6.17"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
