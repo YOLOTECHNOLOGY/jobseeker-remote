@@ -94,8 +94,8 @@ const CompanyInfo = (_props: Props) => {
 		field: 'name',
 		name: 'Company name',
 	}, {
-		name: 'Unified Social Credit Code',
 		field: 'social_credit_code',
+		name: 'Unified Social Credit Code',
 	}, {
 		name: 'Legal representative',
 		field: 'legal_representative'
