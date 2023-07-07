@@ -90,11 +90,13 @@
       line-height: 14px;
 
       i {
-        display: inline-block;
-        width: 2px;
-        height: 14px;
-        background-color: #bcbcbc;
-        margin: 0 0 0 20px;
+        margin-left: 20px;
+        margin-right: 4px;
+
+        &:first-child {
+          margin-left: 0;
+
+        }
       }
 
     }
