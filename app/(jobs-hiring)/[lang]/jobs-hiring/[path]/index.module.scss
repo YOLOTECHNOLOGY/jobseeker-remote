@@ -851,6 +851,8 @@ $contentWidth: 894px;
               flex-direction: row;
               justify-content: flex-start;
               margin-top: 8px;
+              max-height: 62px;
+              overflow: hidden;
 
               .label {
                 display: flex;
