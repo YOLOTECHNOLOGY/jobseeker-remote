@@ -1,4 +1,3 @@
-import Footer from 'components/Footer'
 import 'components/Header/Header.module.scss'
 import 'app/globals.scss'
 import PublicLayout from 'app/components/publicLayout'
@@ -11,7 +10,6 @@ async function generateSEO() {
     title: 'Sign Up | Bossjob',
     canonical: '/register/jobseeker',
     description: `Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ${getCountry()}. Network of 2 million+ professionals.`
-
   }
 }
 export default async function Layout(props: any) {
@@ -19,9 +17,8 @@ export default async function Layout(props: any) {
   const seo = await generateSEO()
   return (
     /* @ts-expect-error Async Server Component */
-    <PublicLayout {...props} seo={seo} >
+    <PublicLayout {...props} seo={seo}>
       {children}
-      <Footer />
     </PublicLayout>
   )
 }

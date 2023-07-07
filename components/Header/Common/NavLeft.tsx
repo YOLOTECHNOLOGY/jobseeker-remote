@@ -15,18 +15,13 @@ const NavLeft = (props: IProps) => {
   const { langKey, lang } = props
   const pathname = usePathname()
 
-  const {
-    home,
-    careerGuide,
-    companies,
-    findJobs,
-  } = lang || {}
+  const { home, careerGuide, companies, findJobs } = lang || {}
 
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
         <li className={styles.headerLink}>
-          {pathname != '/' + langKey ? (
+          {pathname != '/' + langKey && pathname != '/' ? (
             <Link title='Home' to={'/' + langKey}>
               <Text textStyle='base' className={styles.headerLinkText}>
                 {home}

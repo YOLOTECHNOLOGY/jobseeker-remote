@@ -65,7 +65,7 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
   const company_size_values = getValue(searchValues.companySizes, companySizeList, undefined, 'value')
   const company_size_ids = getValue(searchValues.companySizes, companySizeList, undefined, 'id')
   const company_financing_stage_values = getValue(searchValues.financingStages, financingStageList, 'key', 'value')
-  const financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
+  const company_financing_stage_ids = getValue(searchValues.financingStages, financingStageList, 'key', 'id')
 
   return {
     location_ids,
@@ -87,11 +87,12 @@ export function getAlertData(searchValues: Record<string, any>, config: Record<s
     company_size_values,
     company_size_ids,
     company_financing_stage_values,
-    financing_stage_ids
+    company_financing_stage_ids,
+    keyword: searchValues.query
   }
 }
 
-export const getSearchFiltersIds = (searchValues) => {
+export const getSearchFiltersIds = (searchValues: ReturnType<typeof getAlertData> ) => {
   const {
     location_ids,
     main_job_function_ids,
@@ -103,7 +104,7 @@ export const getSearchFiltersIds = (searchValues) => {
     job_type_ids,
     salary_range_filter_ids,
     company_size_ids,
-    financing_stage_ids
+    company_financing_stage_ids
   } = searchValues
   return {
     location_ids,
@@ -116,19 +117,37 @@ export const getSearchFiltersIds = (searchValues) => {
     job_type_ids,
     salary_range_filter_ids,
     company_size_ids,
-    financing_stage_ids
+    company_financing_stage_ids
   }
 }
 
 
-export const sortSearchValuesToString = (values: ReturnType<typeof getAlertData>) => {
+type ISortSearchValuesType  = ReturnType<typeof getAlertData> & {
+  company_verified_values: string[]
+}
 
-  const {location_values, main_function_values, job_type_values, salary_range_values}  = values
+export const sortSearchValuesToString = (values: ISortSearchValuesType) => {
 
+  const {
+    location_values,
+    main_function_values,
+    industry_values,
+    xp_lvl_values,
+    degree_values,
+    job_type_values,
+    salary_range_values,
+    company_size_values,
+    company_financing_stage_values,
+    keyword, company_verified_values
+  }  = values
 
   const sortArray = [
     location_values, main_function_values,
     salary_range_values, job_type_values,
+    industry_values, xp_lvl_values,
+    degree_values, company_size_values,
+    company_financing_stage_values,
+    keyword, company_verified_values
   ].filter(Boolean)
 
   return sortArray.join('、').replace(/,/g, '/')
