@@ -356,7 +356,7 @@ function BusinessInfo(
 	const showMore = _resArr.length > 4;
 	return <Section key={index} title={item.title + ' '} split={!noSplit}>
 		<div className={style.animation_wrapper} style={{
-			height: !isVisible ? !showMore ? "auto" : 150 : contentHeight
+			height: !isVisible ? !showMore ? "auto" : 130 : contentHeight
 
 		}}>
 			<div className={style.overview_item_wrapper} ref={contentRef}>
