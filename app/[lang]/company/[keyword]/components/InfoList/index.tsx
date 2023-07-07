@@ -369,7 +369,7 @@ function BusinessInfo(
 							{item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
 							{(()=>{
 								if(item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
-								if(item && isMobile )return <div className={style.overview_item_value}>{props[item?.field]}</div>
+								if(item && isMobile )return <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>
 							})()}
 						</div>;
 					})}
