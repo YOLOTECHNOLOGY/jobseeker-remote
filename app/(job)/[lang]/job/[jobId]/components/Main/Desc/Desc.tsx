@@ -94,7 +94,7 @@ const Desc = ({
         id='KeySkills'
       >
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
-          <h5>Key Skills</h5>
+          <h5>{content.keySkills}</h5>
         </div>
 
         <div className={styles.desc_labels}>

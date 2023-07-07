@@ -22,7 +22,7 @@ type propsT = propsType & { jobDetail: any } & {
 const AsideFC = (props: propsT) => {
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
-  const { content, header } = props.languages
+  const { content, header, aside } = props.languages
   const { id, is_saved, chat, recruiter } = props.jobDetail
   const chatResponseRate = recruiter?.response_rate
   const lastActiveAt = recruiter?.last_active_at
@@ -157,8 +157,8 @@ const AsideFC = (props: propsT) => {
             </svg>
           </span>
           <div className={styles.uploadInfo}>
-            <p>Upload Resume</p>
-            <span>Apply Job!</span>
+            <p>{aside.uploadResume}</p>
+            <span>{aside.applyJob}</span>
           </div>
         </div>
         <Link

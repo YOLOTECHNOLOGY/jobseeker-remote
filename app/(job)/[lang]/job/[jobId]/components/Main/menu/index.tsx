@@ -4,33 +4,42 @@ import styles from '../../../page.module.scss'
 import JobClient from '../Desc/JobClient/JobClient'
 import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
-import { useFirstRender } from 'helpers/useFirstRender'
-const Menu = ({ shareParams }: any) => {
+
+const Menu = ({ shareParams, lang, isbenefits }: any) => {
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState(0)
-  const firstRender = useFirstRender()
+  const [menuNew, setMneuNew] = useState([])
+  console.log(lang, isbenefits, 7777)
+  const { content } = lang
   const menu = [
     {
-      name: 'Job Description',
+      name: content.JD,
       id: 'JobDescription'
     },
     {
-      name: 'Key Skills',
+      name: content.keySkills,
       id: 'KeySkills'
     },
     {
-      name: 'Requirement',
+      name: content.requirement,
       id: 'Requirement'
     },
     {
-      name: 'Benefits',
+      name: content.benefits,
       id: 'Benefits'
     },
     {
-      name: 'Working  Location',
+      name: content.location,
       id: 'WorkingLocation'
     }
   ]
+  useEffect(() => {
+    if (isbenefits) {
+      setMneuNew(menu)
+    } else {
+      setMneuNew(menu.splice(3, 1))
+    }
+  }, [isbenefits])
 
   useEffect(() => {
     if (current === 0) return
@@ -80,7 +89,7 @@ const Menu = ({ shareParams }: any) => {
     <div className={styles.menu}>
       <div className={styles.menuMain}>
         <ul>
-          {menu.map((item, index) => (
+          {menuNew.map((item, index) => (
             <li
               key={index}
               onClick={() => handleClick(index)}
