@@ -177,9 +177,12 @@ const SearchArea = (props: any) => {
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault()
-                  setSearchValue((e.target as HTMLInputElement).value)
-                  addSearchHistory((e.target as HTMLInputElement).value)
-                  pushJobPage((e.target as HTMLInputElement).value, '')
+                  const value = (e.target as HTMLInputElement).value
+                  setSearchValue(value)
+                  addSearchHistory(value)
+                  if (value) {
+                    pushJobPage(value, '')
+                  }
                 }
               }}
               options={suggestionList}
@@ -188,7 +191,9 @@ const SearchArea = (props: any) => {
                 const type = value?.type || ''
                 setSearchValue(newValue)
                 addSearchHistory(newValue)
-                pushJobPage(newValue, type)
+                if (newValue) {
+                  pushJobPage(newValue, type)
+                }
               }}
               renderOption={(props, option) => {
                 const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}

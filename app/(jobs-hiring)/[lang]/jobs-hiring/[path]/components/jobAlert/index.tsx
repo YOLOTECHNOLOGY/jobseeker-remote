@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useContext, useMemo } from 'react'
 // import ModalJobAlerts from 'components/ModalJobAlerts'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 // import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 // import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
@@ -22,28 +22,45 @@ import { getAlertData, sortSearchValuesToString, getSearchFiltersIds } from './g
 import Image from 'next/image'
 import JobAlertsModal from './Modal'
 import { ClearIcon, UploadDocIcon } from 'images'
-import { formatTemplateString } from 'helpers/formatter'
+import { formatTemplateString, truncateWords } from 'helpers/formatter'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-
-const SESSION_SHOULD_HIDE_ALERT_JOBS = 'should-hide-alert-jobs'
+import { getCountryKey } from 'helpers/country'
 
 const JobAlert = (props: any) => {
   const accessToken = getCookie('accessToken')
-  const userCookie = getCookie('user')
   // const router = useRouter()
   const { searchValues, config } = props
   const params = buildParams(config, searchValues)
   const data = getAlertData(searchValues, config)
   const [showJobAlertsModal, setShowJobAlertsModal] = useState(false)
   const [showAlertSetting, setShowAlertSetting] = useState(false)
-
-  const viewSearchFilterString = sortSearchValuesToString(data)
-
-  // console.log('params123', { config, searchValues, data, viewSearchFilterString })
-
   const dispatch = useDispatch()
   const { search } = useContext(languageContext) as any
+  const SESSION_SHOULD_HIDE_ALERT_JOBS = `${getCountryKey()}:should-hide-alert-jobs`
+
+  const companyVerifiedList = [
+    {
+      key: 'verified-companies',
+      ['seo-value']: 'verified-companies',
+      value: search.searchModal.viewVerifiedCompanies,
+      label: 'View verified companies'
+    }
+  ]
+
+  const companyVerifiedValues = searchValues.verifiedCompany
+    ? (searchValues.verifiedCompany || []).map((val) => {
+        const findItem = companyVerifiedList.filter((item) => item['seo-value'] === val)
+        return findItem[0]?.value || val
+      })
+    : undefined
+
+  const viewSearchFilterString = sortSearchValuesToString({
+    ...data,
+    company_verified_values: companyVerifiedValues
+  })
+
+  // console.log('params123', {config, searchValues,  data, viewSearchFilterString})
 
   const createJobAlert = async (jobAlertData) => {
     try {
@@ -112,13 +129,9 @@ const JobAlert = (props: any) => {
   }, [showAlertSetting, viewSearchFilterString])
 
   const messageInfo = () => {
-    const maxWords = 120
-    let newStr = ''
-    if (viewSearchFilterString.length > maxWords) {
-      newStr = viewSearchFilterString.substring(0, maxWords) + '...'
-    } else {
-      newStr = viewSearchFilterString
-    }
+    if (!search?.alertJobs?.info || !viewSearchFilterString) return ''
+    const maxWords = 100
+    const newStr = truncateWords(viewSearchFilterString, maxWords)
     return formatTemplateString(search?.alertJobs?.info, {
       message: `<span title="${viewSearchFilterString}" class="${styles.jobListOptionAlertsJobs}">[${newStr}]</span>`
     })
@@ -164,7 +177,6 @@ const JobAlert = (props: any) => {
         open={showJobAlertsModal}
         lang={search}
         message={viewSearchFilterString}
-        userCookie={userCookie}
         handleSave={handleSaveJobAlert}
         handleClose={() => setShowJobAlertsModal(false)}
       />

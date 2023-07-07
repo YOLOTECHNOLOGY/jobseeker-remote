@@ -1,7 +1,7 @@
 @import '/styles/mixins.scss';
 
 .container {
-  --box-shadow:none;
+  --box-shadow: none;
   width: 894px;
   height: 228px;
   max-width: 100%;
@@ -21,8 +21,7 @@
   }
 
   &.isFixed {
-    --box-shadow: 0px 0px 20px #BCBCBC;
-
+    --box-shadow: 0px 0px 20px #bcbcbc;
   }
 
   .searchArea {
@@ -37,6 +36,8 @@
     .location {
       width: 137px;
       height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.23);
     }
 
     .search {
@@ -55,7 +56,7 @@
     .searchButton {
       margin-left: 8px;
       text-transform: capitalize !important;
-      background: #136FD3;
+      background: #136fd3;
       color: #fff;
       width: 118px;
       height: 44px;
@@ -108,9 +109,9 @@
     }
   }
 }
-.sortBox{
+.sortBox {
   height: 50px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 15px;
   line-height: 50px;
   display: flex;

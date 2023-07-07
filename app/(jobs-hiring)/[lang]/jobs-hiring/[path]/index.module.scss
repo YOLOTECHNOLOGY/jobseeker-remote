@@ -6,7 +6,7 @@ $maxContentWidth: 1136px;
 $contentWidth: 894px;
 
 .contentWrap {
-  background: #FCFCFC;
+  background: #fcfcfc;
 }
 
 .content {
@@ -60,7 +60,7 @@ $contentWidth: 894px;
   padding-left: 0;
   transition: all ease-in 0.5s;
   // margin: 0 auto;
-  background: #F0F4F7;;
+  background: #f0f4f7;
   padding: 34px 0;
   box-sizing: border-box;
 
@@ -68,13 +68,13 @@ $contentWidth: 894px;
     --box-shadow: 0px 0px 20px #bcbcbc;
     background: #ffffff;
 
-      :global {
-        .MuiOutlinedInput-notchedOutline {
-          border-radius: 8px 0 0 8px;
-          border-width: 1px;
-          border-color: #E5E6EB;
-        }
+    :global {
+      .MuiOutlinedInput-notchedOutline {
+        border-radius: 8px 0 0 8px;
+        border-width: 1px;
+        border-color: #e5e6eb;
       }
+    }
   }
 
   @include sm {
@@ -111,10 +111,10 @@ $contentWidth: 894px;
     }
 
     .location {
-      width: 154px;
+      width: 160px;
       height: 60px;
       border-radius: 8px;
-      border: 1px solid  #E5E6EB;
+      border: 1px solid #e5e6eb;
       background: #fff;
       box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
       position: relative;
@@ -130,9 +130,9 @@ $contentWidth: 894px;
           border-radius: 10px;
           background: #fff;
         }
-        .MuiOutlinedInput-input {
-          font-size: 16px;
-        }
+        // .MuiOutlinedInput-input {
+        //   font-size: 16px;
+        // }
       }
     }
 
@@ -141,9 +141,8 @@ $contentWidth: 894px;
       margin-left: 12px;
       border-radius: 8px 0 0 8px;
       box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
-  
+
       :global {
-        
         .MuiOutlinedInput-root {
           height: 60px;
           background-color: #ffffff;
@@ -155,8 +154,9 @@ $contentWidth: 894px;
         .MuiInputLabel-root {
           top: 12px;
         }
-        .MuiFormLabel-filled, .Mui-focused {
-          top:0;
+        .MuiFormLabel-filled,
+        .Mui-focused {
+          top: 0;
           border-radius: 8px 0 0 8px;
         }
         .MuiOutlinedInput-notchedOutline {
@@ -173,7 +173,7 @@ $contentWidth: 894px;
     }
 
     .search {
-      width: 550px;
+      width: 560px;
       height: 60px;
       border-radius: 0px 8px 8px 0px;
       // background: #fff;
@@ -183,7 +183,7 @@ $contentWidth: 894px;
 
     .searchButton {
       text-transform: capitalize !important;
-      background: #2378E5 !important;
+      background: #136fd3 !important;
       color: #fff;
       width: 127px;
       height: 60px !important;
@@ -196,7 +196,7 @@ $contentWidth: 894px;
       letter-spacing: 0.15px;
 
       &:hover {
-        background: #2378E5 !important;
+        background: #1854a3 !important;
       }
     }
 
@@ -327,11 +327,11 @@ $contentWidth: 894px;
       width: 128px;
       margin-right: 19px;
       border-radius: 4px;
-      border: 1px solid #E5E6EB;
-      background: #FFF;
+      border: 1px solid #e5e6eb;
+      background: #fff;
 
       :global {
-        .MuiOutlinedInput-root{
+        .MuiOutlinedInput-root {
           background-color: #ffffff !important;
         }
         .MuiOutlinedInput-input {
@@ -341,7 +341,7 @@ $contentWidth: 894px;
     }
 
     .jobFunction {
-      width: 140px;
+      width: 152px;
     }
 
     .jobSalary {
@@ -351,8 +351,8 @@ $contentWidth: 894px;
     .moreButton {
       text-transform: inherit;
       border-radius: 4px;
-      width: 128px;
-      border: 1px solid #E5E6EB;
+      width: 140px;
+      border: 1px solid #e5e6eb;
       padding: 0;
       background-color: #ffffff;
 
@@ -362,6 +362,10 @@ $contentWidth: 894px;
       font-weight: 400;
       line-height: 18px;
       letter-spacing: 0.28px;
+    }
+
+    .moreButtonCount {
+      color: #136fd3;
     }
 
     .clearButton {
@@ -388,7 +392,7 @@ $contentWidth: 894px;
   top: 0px;
   flex-direction: column;
   align-items: center;
-  background: #F0F4F7;
+  background: #f0f4f7;
   padding: 24px 16px 14px 16px;
   box-sizing: border-box;
   @extend .GlobalNextAppContainer;
@@ -407,10 +411,10 @@ $contentWidth: 894px;
     justify-content: flex-start;
     align-items: flex-end;
     // height: 74px;
-    border: 1px solid #E5E6EB;
+    border: 1px solid #e5e6eb;
     border-radius: 4px;
     background: #ffffff;
-    
+
     :global {
       .MuiOutlinedInput-root {
         height: 44px;
@@ -439,12 +443,12 @@ $contentWidth: 894px;
 
     .searchButton {
       text-transform: capitalize;
-      background: #2378E5;
+      background: #2378e5;
       padding: 4px 10px;
       border-radius: 4px;
       outline: none;
       border: 0;
-      color: #FFF;
+      color: #fff;
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
@@ -468,7 +472,7 @@ $contentWidth: 894px;
       width: 48%;
       height: 32px;
       border-radius: 4px;
-      border: 1px solid #E5E6EB;
+      border: 1px solid #e5e6eb;
       background: #fff;
       margin-bottom: 10px;
 
@@ -488,12 +492,12 @@ $contentWidth: 894px;
       width: 48%;
       // margin-right: 2px;
       border-radius: 4px;
-      border: 1px solid #E5E6EB;
-      background: #FFF;
+      border: 1px solid #e5e6eb;
+      background: #fff;
       margin-bottom: 10px;
 
       :global {
-        .MuiOutlinedInput-root{
+        .MuiOutlinedInput-root {
           background-color: #ffffff !important;
         }
         .MuiOutlinedInput-input {
@@ -556,7 +560,7 @@ $contentWidth: 894px;
     justify-content: center;
     align-items: center;
 
-    color: #FFFEFE;
+    color: #fffefe;
     font-size: 10px;
     font-family: 'Product Sans';
     font-style: normal;
@@ -564,8 +568,8 @@ $contentWidth: 894px;
     letter-spacing: 0.075px;
 
     border-radius: 4px;
-    background: linear-gradient(128deg, #F64A88 0%, #F56A6A 100%);
-    box-shadow: 0px 4px 13px 0px rgba(255, 60, 60, 0.10);
+    background: linear-gradient(128deg, #f64a88 0%, #f56a6a 100%);
+    box-shadow: 0px 4px 13px 0px rgba(255, 60, 60, 0.1);
 
     margin-right: 8px;
   }
@@ -578,16 +582,16 @@ $contentWidth: 894px;
     transition: box-shadow 0.3s ease-in;
     cursor: pointer;
     border-radius: 8px;
-    border: 1px solid #E5E6EB;
-    background: #FFF;
+    border: 1px solid #e5e6eb;
+    background: #fff;
 
     &:hover {
-      border: 1px solid #579BF5;
+      border: 1px solid #579bf5;
       box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 
       .bottomContainer {
         &::before {
-          background: linear-gradient(75deg, #DFF6FF 0%, #FFF 100%);
+          background: linear-gradient(75deg, #dff6ff 0%, #fff 100%);
         }
       }
     }
@@ -613,7 +617,7 @@ $contentWidth: 894px;
           align-items: center;
 
           .title {
-            --color: #1D2129;
+            --color: #1d2129;
             color: var(--color);
 
             font-size: 17px;
@@ -625,9 +629,12 @@ $contentWidth: 894px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+
+            &:hover {
+              --color: #136fd3;
+            }
           }
         }
-
 
         .labelContainer {
           margin-top: 12px;
@@ -635,6 +642,8 @@ $contentWidth: 894px;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
+          height: 30px;
+          overflow: hidden;
 
           .label {
             display: flex;
@@ -642,10 +651,10 @@ $contentWidth: 894px;
             align-items: flex-start;
 
             border-radius: 6px;
-            background: #F7F8FA;
+            background: #f7f8fa;
             margin-right: 8px;
 
-            color: #4E5969;
+            color: #4e5969;
             font-size: 12px;
             font-style: normal;
             font-weight: 400;
@@ -654,7 +663,7 @@ $contentWidth: 894px;
           }
 
           .salary {
-            color: #2378E5;
+            color: #2378e5;
             text-align: right;
             font-size: 15px;
             font-style: normal;
@@ -671,7 +680,7 @@ $contentWidth: 894px;
           display: flex;
           flex-direction: row;
           align-items: center;
-          margin-top: 2px;
+          margin-top: 6px;
           width: 100%;
 
           .imgContainer {
@@ -696,13 +705,13 @@ $contentWidth: 894px;
 
               padding: 2px 0px;
               margin-left: 4px;
-           
-              color: #4E5969;
+
+              color: #4e5969;
               font-size: 12px;
               font-style: normal;
               font-weight: 400;
               letter-spacing: 0.09px;
-              
+
               height: 24px;
               line-height: 24px;
 
@@ -728,20 +737,20 @@ $contentWidth: 894px;
               padding: 4px 16px;
 
               border-radius: 4px;
-              background: #2378E5;
+              background: #2378e5;
               box-shadow: 0px 4px 10px 0px rgba(35, 120, 229, 0.15);
 
               display: none;
 
               &::after {
                 content: '';
-                background: #2378E5;
+                background: #2378e5;
                 width: 8px;
                 height: 8px;
                 position: absolute;
                 top: 8px;
                 left: -3px;
-                transform: rotate(45deg);              
+                transform: rotate(45deg);
               }
 
               &.isHover {
@@ -756,7 +765,7 @@ $contentWidth: 894px;
 
           .online {
             border-radius: 4px;
-            background: #F2F9F3;
+            background: #f2f9f3;
             padding: 7px 8px;
             display: flex;
             align-items: center;
@@ -770,7 +779,7 @@ $contentWidth: 894px;
               content: '';
               background: #4caf50;
               border-radius: 3px;
-              border: 1px solid #4CAF50;
+              border: 1px solid #4caf50;
               width: 6px;
               height: 6px;
               margin-right: 4px;
@@ -805,7 +814,7 @@ $contentWidth: 894px;
             border-radius: 4px;
             overflow: hidden;
             margin-right: 12px;
-            border: 1px solid  #E5E6EB;
+            border: 1px solid #e5e6eb;
           }
 
           .labelContainer {
@@ -813,7 +822,7 @@ $contentWidth: 894px;
             margin-top: -2px;
 
             .name {
-              color: #1D2129;
+              color: #1d2129;
               font-size: 16px;
               font-family: Product Sans;
               font-style: normal;
@@ -825,6 +834,10 @@ $contentWidth: 894px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
+
+              &:hover {
+                color: #136fd3;
+              }
             }
 
             .componylabels {
@@ -840,8 +853,8 @@ $contentWidth: 894px;
                 padding: 5px 10px;
                 align-items: flex-start;
                 border-radius: 6px;
-                background: #F7F8FA;                
-                color: #4E5969;
+                background: #f7f8fa;
+                color: #4e5969;
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 400;
@@ -875,7 +888,7 @@ $contentWidth: 894px;
         height: 100%;
         opacity: 1;
         z-index: 1;
-        background: linear-gradient(75deg, #F4FAFF 0%, #FFF 100%);
+        background: linear-gradient(75deg, #f4faff 0%, #fff 100%);
         // background: linear-gradient(90deg, #F2F9FF 0%, #FFFFFF 100%);
       }
 
@@ -889,9 +902,8 @@ $contentWidth: 894px;
       .skills {
         width: 478px;
         height: 15px;
-       
-        
-        color: #4E5969;
+
+        color: #4e5969;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -909,7 +921,7 @@ $contentWidth: 894px;
         width: 280px;
         margin-left: 48px;
 
-        color: #4E5969;
+        color: #4e5969;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -1068,8 +1080,8 @@ $contentWidth: 894px;
     padding: 16px;
     cursor: pointer;
     border-radius: 12px;
-    border: 1px solid #F2F3F5;
-    background: #FFF;
+    border: 1px solid #f2f3f5;
+    background: #fff;
 
     &:hover {
       box-shadow: 0px 12px 30px rgb(0, 0, 0, 0.1);
@@ -1089,18 +1101,18 @@ $contentWidth: 894px;
         padding: 0 4px 0 3px;
         justify-content: center;
         align-items: center;
-    
-        color: #FFFEFE;
+
+        color: #fffefe;
         font-size: 10px;
         font-family: 'Product Sans';
         font-style: normal;
         font-weight: 700;
         letter-spacing: 0.075px;
-    
+
         border-radius: 4px;
-        background: linear-gradient(128deg, #F64A88 0%, #F56A6A 100%);
-        box-shadow: 0px 4px 13px 0px rgba(255, 60, 60, 0.10);
-    
+        background: linear-gradient(128deg, #f64a88 0%, #f56a6a 100%);
+        box-shadow: 0px 4px 13px 0px rgba(255, 60, 60, 0.1);
+
         margin-right: 4px;
         vertical-align: top;
       }
@@ -1129,7 +1141,7 @@ $contentWidth: 894px;
         font-weight: 400;
         line-height: 23px;
         letter-spacing: 0.113px;
-        color: #2378E5;
+        color: #2378e5;
         width: 30%;
         text-align: right;
       }
@@ -1143,7 +1155,7 @@ $contentWidth: 894px;
       letter-spacing: 0.28px;
       display: flex;
       align-items: center;
-      color: #4E5969;
+      color: #4e5969;
       margin-top: 8px;
       margin-bottom: 4px;
     }
@@ -1163,7 +1175,7 @@ $contentWidth: 894px;
     .companyInfoSpread {
       height: 12px;
       margin: 0 10px;
-      border-left: 1px solid #E5E6EB;
+      border-left: 1px solid #e5e6eb;
       width: 0;
       display: inline-block;
       vertical-align: bottom;
@@ -1181,8 +1193,8 @@ $contentWidth: 894px;
         padding: 5px 10px;
         align-items: flex-start;
         border-radius: 6px;
-        background: #F7F8FA;
-        color: #4E5969;
+        background: #f7f8fa;
+        color: #4e5969;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -1200,7 +1212,7 @@ $contentWidth: 894px;
     .recruiterLine {
       display: block;
       width: 100%;
-      background: #F2F3F5;
+      background: #f2f3f5;
       height: 1px;
       margin: 16px 0;
     }
@@ -1235,7 +1247,7 @@ $contentWidth: 894px;
 
         .hrTitle {
           max-width: 300px;
-          color: #4E5969;
+          color: #4e5969;
           font-size: 14px;
           font-style: normal;
           font-weight: 400;
@@ -1253,7 +1265,7 @@ $contentWidth: 894px;
         font-size: 12px;
         line-height: 18px;
         letter-spacing: 0.09px;
-        color: #86909C;
+        color: #86909c;
         display: block;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1338,14 +1350,14 @@ $contentWidth: 894px;
   flex-direction: column;
   align-items: flex-start;
   border-radius: 8px;
-  border: 1px solid #E5E6EB;
-  background: #FFF;
+  border: 1px solid #e5e6eb;
+  background: #fff;
 
   .title {
     padding: 20px 16px;
 
     width: 100%;
-    color: #1D2129;
+    color: #1d2129;
     font-size: 20px;
     font-family: Product Sans;
     font-style: normal;
@@ -1353,7 +1365,7 @@ $contentWidth: 894px;
     line-height: 25px;
     letter-spacing: 0.15px;
 
-    border-bottom: 1px solid #E5E6EB;
+    border-bottom: 1px solid #e5e6eb;
   }
 
   &List {
@@ -1367,7 +1379,7 @@ $contentWidth: 894px;
   }
 
   .item {
-    --color: #86909C;
+    --color: #86909c;
 
     width: 100%;
 
@@ -1384,9 +1396,8 @@ $contentWidth: 894px;
     white-space: nowrap;
 
     &:hover {
-
-      --color: #1D2129;
-      background: #F4F9FF;
+      --color: #1d2129;
+      background: #f4f9ff;
     }
   }
 }
@@ -1454,17 +1465,14 @@ $contentWidth: 894px;
   margin-bottom: 16px;
 }
 
-
 .qrCode {
-
   @include sm {
     display: none;
   }
 
-
   position: fixed;
   right: 0;
-  top: 238px;
+  top: 254px;
 
   width: 118px;
   // height: 164px;
@@ -1474,11 +1482,11 @@ $contentWidth: 894px;
   flex-direction: column;
 
   border-radius: 8px 0px 0px 8px;
-  background: #FFF;
-  box-shadow: 0px 0px 41px 0px rgba(0, 0, 0, 0.10);
- 
+  background: #fff;
+  box-shadow: 0px 0px 41px 0px rgba(0, 0, 0, 0.1);
+
   &Text {
-    color: #2378E5;
+    color: #2378e5;
     text-align: center;
     font-size: 14px;
     font-family: Product Sans;
@@ -1489,7 +1497,7 @@ $contentWidth: 894px;
 
     display: flex;
     flex-direction: column;
-  } 
+  }
 }
 
 .tablePagination {
@@ -1504,15 +1512,14 @@ $contentWidth: 894px;
   align-items: center;
 
   border-radius: 8px;
-  border: 1px solid #92C2FF;
-  background: linear-gradient(142deg, #EDFBFF 0%, #F3F8FF 100%);
+  border: 1px solid #92c2ff;
+  background: linear-gradient(142deg, #edfbff 0%, #f3f8ff 100%);
 
   &Image {
     margin-left: -32px;
   }
 
-
-  &Main{
+  &Main {
     display: flex;
   }
 
@@ -1522,7 +1529,7 @@ $contentWidth: 894px;
   }
 
   &Text1 {
-    color: #1D2129;
+    color: #1d2129;
 
     font-size: 17px;
     font-style: normal;
@@ -1532,7 +1539,7 @@ $contentWidth: 894px;
   }
 
   &Text2 {
-    color: #4E5969;
+    color: #4e5969;
 
     font-size: 14px;
     font-style: normal;
@@ -1549,16 +1556,16 @@ $contentWidth: 894px;
     align-items: center;
     gap: 10px;
     border-radius: 4px;
-    background: #FFF;
+    background: #fff;
     border-radius: 8px;
-    border: 1px solid #2378E5;
+    border: 1px solid #2378e5;
 
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
   }
 }
 
 .chatButtonText {
-  color: #FFF;
+  color: #fff;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;

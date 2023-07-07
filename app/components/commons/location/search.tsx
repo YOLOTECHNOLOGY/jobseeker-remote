@@ -22,7 +22,7 @@ type JobSearchBar = {
   searchFn?: Function
   updateSearchValue?: Function
   maxLength?: Number
-  renderOption?:any
+  renderOption?: any
 } & Omit<Input, 'size'>
 
 const theme = parent => createTheme(({
@@ -73,10 +73,15 @@ const theme = parent => createTheme(({
 
       }
     },
-    MuiInputLabel:{
+    MuiInputLabel: {
       styleOverrides: {
         root: {
           fontSize: '14px',
+          '&.Mui-focused': {
+            // color: 'red',
+            transform: 'translate(14px, -5px) scale(0.75)',
+          },
+
         }
       }
     }
@@ -133,7 +138,7 @@ const MaterialTextFieldWithSuggestionList = ({
         defaultValue={defaultValue}
         inputValue={value}
         sx={{
-          color:'#1D2129'
+          color: '#1D2129'
         }}
         renderInput={(params) => (
           <TextField
