@@ -38,7 +38,7 @@ const theme = createTheme({
           width: '24px',
           height: '24px'
         },
-        indicator: {    
+        indicator: {
           borderRadius: '5px',
           height: '3px'
         }
@@ -89,7 +89,7 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
-  },
+  }
 }))
 
 const Tabs = ({ config, location_id, langKey }: any) => {
@@ -244,7 +244,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
     <div className={styles.popularJobsBox}>
       <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
       <div className={styles.webTab}>
-        <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper' ,backgroundColor:"transparent"}}>
+        <Box sx={{ maxWidth: '100%', bgcolor: 'background.paper', backgroundColor: 'transparent' }}>
           <TabContext value='1'>
             <ThemeProvider theme={theme}>
               <StyledTabs
@@ -268,7 +268,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                       letterSpacing: '1px',
                       width: 'auto',
                       padding: '12px 0',
-                      marginRight: '68px',
+                      marginRight: '52px',
                       fontWeight: '400'
                     }}
                   />

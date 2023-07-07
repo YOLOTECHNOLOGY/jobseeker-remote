@@ -53,7 +53,7 @@
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation",
-    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
+    "companyDesc": "Launched in 2018, Bossjob is a chat-first, AI-powered hiring platform, modelled after the one thing that we need in our daily lives: instant gratification. Bossjob aims to provide speedy communications between talents and bosses to eliminate the lengthy job application process through direct chat."
   },
   "getStatred": {
     "seoMetaTitle": "Sign Up or Login as Talent | Bossjob",
@@ -211,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "Overview",
       "life": "Life",
       "jobs": "Jobs"
@@ -223,6 +224,20 @@
       "website": "Website",
       "location": "Location",
       "socialMedia": "Social Media",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -343,7 +358,7 @@
       "chatNow": "Chat now",
       "employee": "Employee",
       "jobHiring": "jobs hiring",
-      "moreJob": "More jobs"
+      "moreJob": "More"
     },
     "seo": {
       "title": "Bossjob - Career Platform for Professionals in {{country}}",
@@ -536,29 +551,29 @@
     "withBoss": "with Boss",
     "relatedSearch": "Related Search",
     "alertJobs": {
-      "title": "High quality job recommendation",
+      "title": "Receive email reminder for new jobs",
       "setting": "Setting",
-      "info": "Send the {{message}} job information you search to email",
-      "settingSucceed": "Job alert setting successfully.",
-      "settingFailed": "Job alert setting failed.",
-      "somethingWrong": "Something went wrong."
+      "info": "Send new jobs for {{message}} to my email",
+      "settingSucceed": "Job alert created successfully.",
+      "settingFailed": "Failed to create job alert.",
+      "somethingWrong": "Sorry, something went wrong."
     },
     "alertJobsModal": {
-      "title": "Job Alert setting",
+      "title": "Job Alert Settings",
       "subTitle": "Job Alert",
-      "jobConditions": "Job Conditions",
+      "jobConditions": "Filters selected",
       "frequency": "Frequency",
       "daily": "Daily",
       "weekly": "Weekly",
-      "sendToEmail": "Send to email",
+      "sendToEmail": "Email to receive alert",
       "cancel": "Cancel",
       "done": "Done",
-      "emailPlaceholder": "Please enter email address",
+      "emailPlaceholder": "Please enter an email address",
       "emailValid": "Please enter a valid email address.",
-      "emailEmpty": "Email cannot be empty."
+      "emailEmpty": "Emails can not be empty"
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
-    "findNow": "Find Now",
+    "findNow": "Search",
     "find": "Find"
   },
   "manageProfile": {

@@ -8,6 +8,7 @@
   width: 368px;
   border: 1px solid #e5e6eb;
   border-radius: 8px;
+  padding-bottom: 0px;
 }
 .chatItem {
   display: flex;
@@ -18,7 +19,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: gray;
+  background-color: transparent;
   margin-right: 10px;
 }
 .chatContent {
@@ -35,6 +36,10 @@
   margin-bottom: 2px;
   width: 270px;
   @include base.text_overflow;
+  @include base.respond-to(phone) {
+    width: auto;
+    margin-right: 0.2rem;
+  }
 }
 
 .chatSubtitle {
@@ -46,6 +51,10 @@
   color: #86909c;
   width: 270px;
   @include base.text_overflow;
+  @include base.respond-to(phone) {
+    width: auto;
+    margin-right: 0.2rem;
+  }
 }
 .title {
   font-family: 'Product Sans';
@@ -67,8 +76,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: 23px;
-  letter-spacing: 0.105px;
   text-decoration-line: underline;
   margin-top: 10px;
   cursor: pointer;
+  margin-bottom: 20px;
 }

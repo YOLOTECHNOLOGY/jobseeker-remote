@@ -50,10 +50,13 @@
 .filter_container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto; /* 允许横向滚动 */
   white-space: nowrap; /* 防止内容换行 */
+  width: 1136px;
+  margin: 0 auto;
   @include base.respond-to(phone) {
+    width: auto;
     .arrow_left {
       display: none;
     }
@@ -75,7 +78,7 @@
 .location_selector_wapper {
   min-width: 128px;
   @include base.respond-to(phone) {
-    min-width: 0rem;
+    min-width: 1rem;
     padding-left: 0.08rem;
   }
 }
@@ -122,6 +125,7 @@
   position: relative;
   @include base.respond-to(phone) {
     padding-left: 0.2rem;
+    width: 1rem;
   }
 }
 .job_prefix {
@@ -185,7 +189,7 @@
   color: #1d2129;
   @include base.respond-to(phone) {
     width: 2rem;
-    max-height: 0.44rem;
+    height: 0.44rem;
     font-size: 0.17rem;
     font-family: Product Sans;
     font-style: normal;
@@ -218,7 +222,7 @@
     font-family: Product Sans;
     font-style: normal;
     font-weight: 400;
-    line-height: 0.18rem;
+    line-height: 0.28rem;
     letter-spacing: 0.09px;
   }
 }
@@ -280,7 +284,8 @@
   justify-content: space-between;
   margin-top: 4px;
   width: 100%;
-
+  flex-wrap: nowrap;
+  @include base.text_overflow;
   @include base.respond-to(phone) {
     justify-content: flex-start;
     :global {
@@ -294,6 +299,7 @@
         font-weight: 400;
         line-height: 0.21rem;
         margin-right: 0.14rem;
+        flex-shrink: 0;
         &::after {
           content: ' | ';
           font-size: 12px;
@@ -361,7 +367,7 @@
     span {
       color: var(--neutral-color-text, #4e5969);
       display: block;
-      max-width: 120px;
+      max-width: 100px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

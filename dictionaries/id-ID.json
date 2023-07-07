@@ -211,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "Overview",
       "life": "Life",
       "jobs": "Jobs"
@@ -223,6 +224,20 @@
       "website": "Website",
       "location": "Location",
       "socialMedia": "Social Media",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -538,7 +553,10 @@
     "alertJobs": {
       "title": "High quality job recommendation",
       "setting": "Setting",
-      "info": "Send the {{message}} job information you search to email"
+      "info": "Send the {{message}} job information you search to email",
+      "settingSucceed": "Job alert setting successfully.",
+      "settingFailed": "Job alert setting failed.",
+      "somethingWrong": "Something went wrong."
     },
     "alertJobsModal": {
       "title": "Job Alert setting",

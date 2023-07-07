@@ -13,6 +13,7 @@ import useFakeUploadResume from 'hooks/useFakeUploadResume'
 import styles from './styles.module.scss'
 import { getCookie } from 'helpers/cookies'
 // import { useSelector } from 'react-redux'
+import Footer from 'components/Footer'
 
 const QuickUploadResume = (props: { lang: any }) => {
   const { lang } = props
@@ -107,6 +108,7 @@ const QuickUploadResume = (props: { lang: any }) => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   )

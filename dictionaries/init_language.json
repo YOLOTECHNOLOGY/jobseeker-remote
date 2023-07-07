@@ -211,6 +211,7 @@
   },
   "companyDetail": {
     "tab": {
+      "CompanyInformation": "Company information",
       "overview": "Overview",
       "life": "Life",
       "jobs": "Jobs"
@@ -223,6 +224,20 @@
       "website": "Website",
       "location": "Location",
       "socialMedia": "Social Media",
+      "ViewAllJobs": "All {{total_num}} jobs",
+      "HotJobs": "Hot Jobs",
+      "Introduction": "Introduction",
+      "CompanyAlbum": "Company Album",
+      "Listing": "Listing",
+      "BusinessInformation": "Business information",
+      "JobOpenings": "Job openings",
+      "Financing": "Financing",
+      "CreationTime": "Creation time",
+      "CompanyWebsite": "Company website",
+      "Turnover": "Turnover",
+      "Telephone": "Telephone",
+      "CompanyName": "Company name",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -285,7 +300,7 @@
   },
   "home": {
     "title": "Find Job. ",
-   "title2":"Talk to Boss.",
+    "title2": "Talk to Boss.",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
@@ -535,7 +550,7 @@
     "chatDirectly": " Chat directly",
     "withBoss": "with Boss",
     "relatedSearch": "Related Search",
-    "alertJobs":{
+    "alertJobs": {
       "title": "High quality job recommendation",
       "setting": "Setting",
       "info": "Send the {{message}} job information you search to email",
@@ -543,16 +558,16 @@
       "settingFailed": "Job alert setting failed.",
       "somethingWrong": "Something went wrong."
     },
-    "alertJobsModal":{
+    "alertJobsModal": {
       "title": "Job Alert setting",
       "subTitle": "Job Alert",
       "jobConditions": "Job Conditions",
       "frequency": "Frequency",
       "daily": "Daily",
       "weekly": "Weekly",
-      "sendToEmail":"Send to email",
+      "sendToEmail": "Send to email",
       "cancel": "Cancel",
-      "done":"Done",
+      "done": "Done",
       "emailPlaceholder": "Please enter email address",
       "emailValid": "Please enter a valid email address.",
       "emailEmpty": "Email cannot be empty."
