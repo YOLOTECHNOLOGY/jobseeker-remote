@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/components/MUIs'
-import JobClient from './JobClient/JobClient'
+
 import ReadMore from './ReadMore'
 import React from 'react'
 import { accessToken } from 'helpers/cookies'
@@ -65,7 +65,7 @@ const Desc = ({
         </div>
       </div>
 
-      <div className={styles.desc_jobDescWrapper}>
+      <div className={styles.desc_jobDescWrapper} id='JobDescription'>
         <div className={styles.desc_title}>
           <h5>{content.JD}</h5>
           {/* <div className={styles.desc_title_change}>
@@ -89,7 +89,10 @@ const Desc = ({
 
       <div className={styles.desc_mobileLine}></div>
 
-      <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
+      <div
+        className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}
+        id='KeySkills'
+      >
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>Key Skills</h5>
         </div>
@@ -101,7 +104,10 @@ const Desc = ({
         </div>
       </div>
 
-      <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
+      <div
+        className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}
+        id='Requirement'
+      >
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>{content.requirement}</h5>
         </div>

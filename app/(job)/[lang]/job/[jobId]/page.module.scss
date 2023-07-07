@@ -138,33 +138,11 @@
           //   transform: translateX(-100px);
           // }
         }
+
+
       }
     }
 
-    .operator {
-      display: flex;
-      align-items: center;
-      color: #fff;
-
-      .item {
-        display: flex;
-        align-items: center;
-        margin-left: 13px;
-      }
-    }
-
-    .jobClient {
-      &_btn {
-        &_wrapper {
-          display: flex;
-          cursor: pointer;
-
-          .MuiAvatar-root {
-            margin-right: 3px;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -267,7 +245,7 @@
       }
 
       &_requirement {
-        margin-top: 34px;
+        padding-top: 34px;
 
         h5 {
           margin-bottom: 0;
@@ -329,18 +307,7 @@
         }
       }
 
-      .jobClient {
-        &_btn {
-          &_wrapper {
-            display: flex;
-            cursor: pointer;
 
-            .MuiAvatar-root {
-              margin-right: 3px;
-            }
-          }
-        }
-      }
     }
 
     .map {
@@ -399,13 +366,15 @@
       color: #707070;
       margin-top: 24px;
       display: block;
+      padding-bottom: 40px;
+      padding-left: 4px;
     }
   }
 
   .benefits {
     background: #ffffff;
-    padding: 0 0 40px 0;
-    margin: 40px 24px 0 24px;
+    padding: 40px 0 40px 0;
+    margin: 0 24px 0 24px;
     border-bottom: 1px solid #E4E4E4;
 
     h2 {
@@ -890,6 +859,8 @@
   .head {
     padding-bottom: 0;
 
+
+
     &_main {
       &_change {
         display: none;
@@ -1250,4 +1221,63 @@
 
 .search_label {
   display: flex;
+}
+
+.menu {
+  width: 100%;
+  height: 90px;
+  background: #fff;
+
+  .menuMain {
+    max-width: $NextAppMaxWidth;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    ul {
+      display: flex;
+
+      li {
+        list-style: none;
+        cursor: pointer;
+        margin-right: 40px;
+        line-height: 88px;
+        font-size: 16px;
+        color: #000;
+
+        &.active {
+          color: #2378E5;
+          font-weight: 700;
+          border-bottom: 3px solid #2378E5;
+        }
+      }
+    }
+
+    .operator {
+      display: flex;
+      align-items: center;
+
+      .item {
+        display: flex;
+        align-items: center;
+        margin-right: 13px;
+        cursor: pointer;
+      }
+
+      .jobClient {
+        &_btn {
+          &_wrapper {
+            display: flex;
+            cursor: pointer;
+            color: #121212;
+
+            .MuiAvatar-root {
+              margin-right: 3px;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
 }

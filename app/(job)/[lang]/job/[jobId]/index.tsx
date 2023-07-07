@@ -11,7 +11,7 @@ import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs
 
 import styles from './page.module.scss'
 import { getValueById } from 'helpers/config/getValueById'
-
+import Menu from './components/Main/menu'
 const Index = ({ data, jobId, languages, config, lang }: any) => {
   const cookieStore = cookies()
   const headeStore = headers()
@@ -117,7 +117,8 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
       },
       company: {
         id: data.company?.id
-      }
+      },
+      is_saved: data.is_saved
     },
     lat: data.latitude,
     lng: data.longitude,
@@ -130,6 +131,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   return (
     <div>
       <Head {...headProps} />
+      <Menu {...mainProps} />
       <div style={{ background: '#f5f7fb' }}>
         <div className={styles.container}>
           <MainFC {...mainProps} />

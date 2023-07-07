@@ -106,7 +106,7 @@ const Head = ({
                 </Link>
               </div> */}
             </Stack>
-            <div className={styles.operator}>
+            {/* <div className={styles.operator}>
               <span className={styles.item}>
                 {is_saved ? (
                   <>
@@ -127,7 +127,7 @@ const Head = ({
               <span className={styles.item}>
                 <JobClient isLogin={Boolean(token)} {...shareParams} />
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
