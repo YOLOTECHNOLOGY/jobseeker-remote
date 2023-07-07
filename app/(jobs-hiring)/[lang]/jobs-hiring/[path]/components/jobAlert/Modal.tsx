@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import { styled } from '@mui/material/styles'
 import { theme, validEmailReg } from './config'
-import { truncateWords } from 'helpers/formatter'
+import { getCookie } from 'helpers/cookies'
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 44,
@@ -61,19 +61,18 @@ interface ModalJobAlertsProps {
   open: boolean
   message: string
   lang: any
-  userCookie: any
   handleClose: () => void
   handleSave: Function
 }
 
 export default function FormDialog(props: ModalJobAlertsProps) {
-  const { open, userCookie = {}, message, lang, handleClose, handleSave } = props
+  const { open, message, lang, handleClose, handleSave } = props
+  const userCookie = getCookie('user') || {}
   const { email = '' } = userCookie
   const [frequency, setFrequency] = useState('1')
   const [mail, setEmail] = useState(email)
   const [active, setActive] = useState(false)
   const [mailError, setMailError] = useState('')
-
   const alertJobsModal = lang?.alertJobsModal || {}
 
   useEffect(() => {
