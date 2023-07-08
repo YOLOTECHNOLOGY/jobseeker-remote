@@ -1,13 +1,13 @@
-# Use the docker image node:11-alpine
-FROM node:18.9-alpine as builder
+# Use the docker image node:18-alpine
+FROM node:18.9-alpine
 
 RUN apk add --no-cache git openssh
 
 # Copy package dependencies 
-COPY package.json yarn.lock ./
+COPY package*.json yarn.lock ./
 
 # Run yarn to install and build the project
-RUN yarn install && mkdir /app && mv ./node_modules ./app
+RUN yarn install --frozen-lockfile
 
 # Into which the source will be copied inside the destination container.
 WORKDIR /app
