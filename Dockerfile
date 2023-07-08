@@ -3,17 +3,14 @@ FROM node:18.9-alpine
 
 RUN apk add --no-cache git openssh
 
-# Into which the source will be copied inside the destination container.
-WORKDIR /app
-
 # Copy package dependencies 
 COPY package*.json yarn.lock ./
 
 # Run yarn to install and build the project
-RUN yarn install --frozen-lockfile
+RUN yarn install && mkdir /app && mv ./node_modules ./app
 
-# Install env-cmd globally
-RUN yarn global add env-cmd
+# Into which the source will be copied inside the destination container.
+WORKDIR /app
 
 COPY . .
 
