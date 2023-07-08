@@ -28,7 +28,13 @@ module.exports = withBundleAnalyzer({
   },
   reactStrictMode: false,
   compiler: {
-    removeConsole: process.env.ENV === 'production'
+    removeConsole: process.env.ENV === 'production',
+    // relay: {
+    //   src: 'node_modules/buzzmsg',
+    //   // artifactDirectory?: '';
+    //   language: 'typescript',
+    //   eagerEsModules: true,
+    // }
   },
   experimental: {
     // concurrentFeatures: true,
@@ -112,6 +118,15 @@ module.exports = withBundleAnalyzer({
       exclude: path.resolve('./node_modules'),
       use: [
         'thread-loader'
+        // your expensive loader (e.g babel-loader)
+      ]
+    })
+    config.module.rules.push({
+      test: /node_modules\/dist\/index.js/,
+      // include: path.resolve('./'),
+      // exclude: path.resolve('./node_modules'),
+      use: [
+        'url-loader'
         // your expensive loader (e.g babel-loader)
       ]
     })
