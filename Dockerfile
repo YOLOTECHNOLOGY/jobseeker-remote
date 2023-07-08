@@ -1,5 +1,5 @@
 # Use the docker image node:11-alpine
-FROM node:18-alpine as builder
+FROM node:18.9-alpine as builder
 
 # Copy package dependencies 
 COPY package.json yarn.lock ./
@@ -9,8 +9,6 @@ RUN yarn install && mkdir /app && mv ./node_modules ./app
 
 # Into which the source will be copied inside the destination container.
 WORKDIR /app
-
-COPY . .
 
 # Define Argument variables
 ARG ENV="development"
