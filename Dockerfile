@@ -12,6 +12,8 @@ RUN yarn install && mkdir /app && mv ./node_modules ./app
 # Into which the source will be copied inside the destination container.
 WORKDIR /app
 
+COPY . .
+
 # Define Argument variables
 ARG ENV="development"
 ARG MAINTENANCE="false"
