@@ -122,11 +122,11 @@ module.exports = withBundleAnalyzer({
       ]
     })
     config.module.rules.push({
-      test: /node_modules\/dist\/index.js/,
+      test: /node_modules\/buzzmsg\/dist\/index.js/,
       // include: path.resolve('./'),
       // exclude: path.resolve('./node_modules'),
       use: [
-        'url-loader'
+        './any-loader.js'
         // your expensive loader (e.g babel-loader)
       ]
     })
