@@ -13,8 +13,7 @@ export default command => command.cata({
         M(
             context =>
                 new Promise(resolve => {
-                    const state = context.getLocalImState(chatId)
-                    const { delete_status } = state
+                    const delete_status = context.getLocalImState(chatId)?.delete_status
                     resolve(!!delete_status)
                 })
         ),
