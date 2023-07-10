@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -13,6 +13,7 @@ import Loading from "app/components/loading";
 import className from 'classnames';
 import { InView } from "react-intersection-observer";
 import useMediaQuery  from '@mui/material/useMediaQuery';
+import { languageContext } from 'app/components/providers/languageProvider';
 
 
 
@@ -50,7 +51,8 @@ const SearchPanel = (props: Props) => {
     // const filterTagView = useRef<JobVisible[]>([{}].concat(props.functions));
     const firstRef = useRef<HTMLDivElement | null>(null);
     const isMobile = useMediaQuery('(max-width:768px)');
-
+    const contextLang = useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
     useEffect(() => {
         if (!props.functions) return;
         // filterTagView.current = [{}].concat(props.functions);
@@ -211,7 +213,7 @@ const SearchPanel = (props: Props) => {
             }}>
                 <span>
                     {
-                        isMobile ? 'Find' : 'Find Now'
+                        isMobile ? overview.Find : overview['FindNow']
                     }
                 </span>
             </div>
@@ -259,7 +261,7 @@ const SearchPanel = (props: Props) => {
                                          }
                                     }}
                                 >
-                                    All
+                                    {overview.All}
                                 </div>
                             }}
 
@@ -361,6 +363,8 @@ const SearchPanel = (props: Props) => {
 const JobsSearchCard = (props: JobData) => {
     const { lang } = useCompanyDetail();
     const isMobile = useMediaQuery('(max-width: 768px)');
+    const contextLang = useContext(languageContext);
+	const { overview } = contextLang.companyDetail;
     return <div className={style.search_card}>
         <div className={style.search_title_layout}>
             <Link
@@ -408,7 +412,7 @@ const JobsSearchCard = (props: JobData) => {
                     &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
                     <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
-                        Chat Now
+                        {overview.jobs.card.chatNow}
                     </Link>
                 </Link>
             </div>

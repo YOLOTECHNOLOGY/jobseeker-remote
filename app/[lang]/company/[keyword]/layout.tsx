@@ -64,9 +64,9 @@ async function CompanyLayout(props: {
 	const token = cookieStore.get('accessToken')
 	const id = getIDFromKeyword(props.params.keyword);
 
-	if(isMobile && process.env.ENV === 'production'){
-		return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
-	}
+	// if(isMobile && process.env.ENV === 'production'){
+	// 	return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
+	// }
 	try{
 		const [jobs, detail, hr, hotJobs, jobFunctions] = await Promise.all([
 			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token?.value), 
