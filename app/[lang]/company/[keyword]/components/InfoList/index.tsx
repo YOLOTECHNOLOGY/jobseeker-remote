@@ -160,7 +160,7 @@ const CompanyInfo = (_props: Props) => {
 			field: 'total_financing',
 		},
 	];
-	
+
 	const { jobs, hr } = useCompanyDetail();
 
 	if (isMobile) {
@@ -189,19 +189,19 @@ const CompanyInfo = (_props: Props) => {
 			{listing_info
 				.filter(item => props.listing_info?.[item.field]).length > 0 && <Section title={info[4]['title']}>
 					<div className={style.overview_item_wrapper}>
-						{listing_info
-							.filter(item => props.listing_info[item.field])
-							._padArrayToMultiple(2)
-							.map((item, index) => {
-								if (!item || !props.listing_info[item?.field]) {
-									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
-								}
-								return <div key={index} className={style.overview_item}>
-									<div className={style.overview_item_name}>{item.name}</div>
-									{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
-									{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
-								</div>
-							})}
+						{
+							padArrayToMultiple(listing_info
+								.filter(item => props.listing_info[item.field]))(2)
+								.map((item, index) => {
+									if (!item || !props.listing_info[item?.field]) {
+										return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
+									}
+									return <div key={index} className={style.overview_item}>
+										<div className={style.overview_item_name}>{item.name}</div>
+										{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
+										{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
+									</div>
+								})}
 					</div>
 				</Section>}
 			{BusinessInfo(4, info[5], true, business_info, props.company_business_info)}
@@ -222,14 +222,14 @@ const CompanyInfo = (_props: Props) => {
 			if (item.id === 'Company Album' && props.pictures?.length > 0) {
 				return <Section key={index} title={item.title} split={!noSplit}>
 					<div className={style.album_wrapper}>
-						{props.pictures
-							.sort((a, b) => a.sort_order - b.sort_order)
-							._padArrayToMultiple(3)
-							.map((item, index) => {
-								if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
-								return <Image key={index} src={item.url} alt="alt" className={style.album_item}
-									width={226} height={150} style={{ objectFit: "cover" }} />
-							})}
+						{
+							padArrayToMultiple(props.pictures
+								.sort((a, b) => a.sort_order - b.sort_order))(3)
+								.map((item, index) => {
+									if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
+									return <Image key={index} src={item.url} alt="alt" className={style.album_item}
+										width={226} height={150} style={{ objectFit: "cover" }} />
+								})}
 					</div>
 				</Section>
 			}
@@ -242,19 +242,19 @@ const CompanyInfo = (_props: Props) => {
 					.filter(item => props.listing_info?.[item.field]).length > 0) {
 				return <Section key={index} title={item.title + ' '} split={!noSplit}>
 					<div className={style.overview_item_wrapper}>
-						{listing_info
-							.filter(item => props.listing_info[item.field])
-							._padArrayToMultiple(3)
-							.map((item, index) => {
-								if (!item || !props.listing_info[item?.field]) {
-									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
-								}
-								return <div key={index} className={style.overview_item}>
-									<div className={style.overview_item_name}>{item.name}</div>
-									{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
-									{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
-								</div>
-							})}
+						{
+							padArrayToMultiple(listing_info
+								.filter(item => props.listing_info[item.field]))(3)
+								.map((item, index) => {
+									if (!item || !props.listing_info[item?.field]) {
+										return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
+									}
+									return <div key={index} className={style.overview_item}>
+										<div className={style.overview_item_name}>{item.name}</div>
+										{item && <MouseOverPopover value={props.listing_info[item?.field]}></MouseOverPopover>}
+										{/* <div className={style.overview_item_value}>{props.listing_info[item.field]}</div> */}
+									</div>
+								})}
 					</div>
 				</Section>
 			}
@@ -281,23 +281,15 @@ const CompanyInfo = (_props: Props) => {
 export default CompanyInfo
 
 
-
-
-declare global {
-	interface Array<T> {
-		_padArrayToMultiple(num: number): T[];
-	}
-}
-
-Array.prototype._padArrayToMultiple = function <T>(num: number) {
-	const length = this.length;
+const padArrayToMultiple = arr => function <T>(num: number) {
+	const length = arr.length;
 	const remainder = length % num;
 	if (remainder === 0) {
-		return this; // Array length is already a multiple of num
+		return arr; // Array length is already a multiple of num
 	}
 	const paddingLength = num - remainder;
 	const padding = new Array(paddingLength).fill(null);
-	return this.concat(padding) as T[];
+	return arr.concat(padding) as T[];
 };
 
 
@@ -385,9 +377,9 @@ function BusinessInfo(
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
 							{item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
-							{(()=>{
-								if(item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
-								if(item && isMobile )return <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>
+							{(() => {
+								if (item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
+								if (item && isMobile) return <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>
 							})()}
 						</div>;
 					})}
