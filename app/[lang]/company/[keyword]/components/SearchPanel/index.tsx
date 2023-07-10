@@ -80,7 +80,7 @@ const SearchPanel = (props: Props) => {
     //     console.log("all.index",all.length);
     //     try {
     //         const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
-    //         const index = findLastIndex([...all], (item, index) => {
+    //         const index = <findLastIn></findLastIn>dex([...all], (item, index) => {
     //             return item.getAttribute('data-visible') === 'true'
     //         });
     //         // if(previousindex < 2){

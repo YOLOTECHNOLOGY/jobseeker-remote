@@ -3,7 +3,7 @@ import * as React from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import CompanyInfo from './components/InfoList';
+// import CompanyInfo from './components/InfoList';
 import Section from "./components/Section";
 import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
@@ -157,7 +157,7 @@ const Page = () => {
 						</div>
 					</Section> : null}
 					<div className={style.company_info_wrapper}>
-						<CompanyInfo {...detail} jobs={jobs.jobs} onMore={(e) => {
+						{/* <CompanyInfo {...detail} jobs={jobs.jobs} onMore={(e) => {
 							window.scrollTo({
 								top: 0,
 								behavior: 'smooth'
@@ -165,7 +165,7 @@ const Page = () => {
 							setTimeout(() => {
 								handleChange(e, 1)
 							}, 300);
-						}} />
+						}} /> */}
 						<div className={style.company_culture}>
 							<CulturePanel {...detail} />
 							{

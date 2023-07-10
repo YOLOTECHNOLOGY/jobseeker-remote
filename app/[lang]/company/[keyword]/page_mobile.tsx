@@ -87,7 +87,7 @@ const MobilePage = () => {
 		</div>
 		<div className={style.split}></div>
 		<div className={style.tab_layout}>
-					<Tabs value={value} onChange={handleChange}>
+					<Tabs value={value} onChange={handleChange} variant='fullWidth' >
 						<Tab label={tab_title[0]} {...a11yProps(0)} />
 						<Tab label={tab_title[1]} {...a11yProps(1)} />
 					</Tabs>
