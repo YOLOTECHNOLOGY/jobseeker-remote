@@ -143,7 +143,7 @@ const Head = ({
 
           <div className={styles.head_main_change_resume}>
             <Stack spacing={2} direction='row'>
-              {isLogin && (
+              {/* {isLogin && (
                 <div>
                   <Link color='#000000' href='/manage-profile'>
                     <div className={styles.head_main_change_resume_btnWrapper}>
@@ -157,7 +157,7 @@ const Head = ({
                     </div>
                   </Link>
                 </div>
-              )}
+              )} */}
               {/* <div>
                 <Link
                   color='#000000'
