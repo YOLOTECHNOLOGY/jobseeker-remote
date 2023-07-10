@@ -11,17 +11,17 @@ import CloseIcon from '@mui/icons-material/Close'
 export type propsType = {
   lat: number
   lng: number
-  full_address: string,
-  lang:any
+  full_address: string
+  lang: any
 }
 
 export interface DialogTitleProps {
   id?: string
   children?: React.ReactNode
-  onClose: () => void,
+  onClose: () => void
 }
 
-const Map = ({ lat, lng, full_address,lang }: propsType) => {
+const Map = ({ lat, lng, full_address, lang }: propsType) => {
   const [open, setOpen] = useState(false)
 
   const handleMapLayer = () => {
@@ -29,11 +29,11 @@ const Map = ({ lat, lng, full_address,lang }: propsType) => {
   }
 
   return (
-    <section className={styles.map}>
+    <section className={styles.map} id='WorkingLocation'>
       <h5>{lang?.workingLocation}</h5>
       <p>{full_address}</p>
 
-      {(lat && lng) ?  (
+      {lat && lng ? (
         <div className={styles.map_context} onClick={handleMapLayer}>
           <GoogleMap
             lat={Number(lat)}
@@ -45,7 +45,7 @@ const Map = ({ lat, lng, full_address,lang }: propsType) => {
             clickable={false}
           />
         </div>
-      ): null}
+      ) : null}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
