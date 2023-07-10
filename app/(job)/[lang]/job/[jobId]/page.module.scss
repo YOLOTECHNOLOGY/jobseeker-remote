@@ -145,6 +145,11 @@
       }
     }
 
+    :global {
+      .MuiButton-root:hover {
+        background-color: #fff;
+      }
+    }
   }
 }
 
@@ -249,9 +254,9 @@
       &_requirement {
         padding-top: 34px;
 
-        h5 {
-          margin-bottom: 0;
-        }
+        // h5 {
+        //   margin-bottom: 0;
+        // }
       }
 
       &_footer {
@@ -522,6 +527,12 @@
         font-size: 16px;
         margin-left: 10px;
         color: #353535;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
       }
 
       .chatBox {
@@ -627,7 +638,7 @@
       border-radius: 8px;
       overflow: hidden;
       margin-top: 24px;
-      padding: 20px 16px;
+      padding: 20px 16px 30px 16px;
 
       h3 {
         font-style: normal;
@@ -659,7 +670,6 @@
 
       &_title {
         font-style: normal;
-        font-weight: 700;
         font-size: 18px;
         color: #353535;
         margin-bottom: 0;
@@ -826,6 +836,10 @@
     }
   }
 
+  .menu {
+    display: none;
+  }
+
   .container {
     padding: 0 15px;
   }
@@ -880,7 +894,7 @@
         font-size: 18px;
         line-height: 23px;
         letter-spacing: 0.02em;
-        color: #353535;
+        color: #fff;
       }
 
       &_titleWrapper {
@@ -899,7 +913,7 @@
           font-size: 18px;
           line-height: 23px;
           letter-spacing: 0.02em;
-          color: #353535;
+          color: #fff;
           display: flex;
 
           &_type {

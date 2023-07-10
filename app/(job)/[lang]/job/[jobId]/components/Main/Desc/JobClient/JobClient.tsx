@@ -36,7 +36,6 @@ export type sharePropsType = {
 
 const JobClient = (props: sharePropsType) => {
   const { isLogin, is_saved, id } = props
-  console.log(props, 111)
   const accessToken = getCookie('accessToken')
   const { jobDetail } = useContext(languageContext) as any
   const { header } = jobDetail

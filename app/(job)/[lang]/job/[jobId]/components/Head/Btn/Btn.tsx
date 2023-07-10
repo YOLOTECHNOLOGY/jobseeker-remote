@@ -121,6 +121,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
           border: '1px solid #136FD3',
           borderRadius: '10px',
           width: '160px',
+          fontWeight: '700',
           lineHeight: '44px',
           height: '44px',
           color: '#2378E5',
