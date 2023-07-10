@@ -191,7 +191,7 @@ const CompanyInfo = (_props: Props) => {
 					<div className={style.overview_item_wrapper}>
 						{listing_info
 							.filter(item => props.listing_info[item.field])
-							.padArrayToMultiple(2)
+							._padArrayToMultiple(2)
 							.map((item, index) => {
 								if (!item || !props.listing_info[item?.field]) {
 									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
@@ -224,7 +224,7 @@ const CompanyInfo = (_props: Props) => {
 					<div className={style.album_wrapper}>
 						{props.pictures
 							.sort((a, b) => a.sort_order - b.sort_order)
-							.padArrayToMultiple(3)
+							._padArrayToMultiple(3)
 							.map((item, index) => {
 								if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
 								return <Image key={index} src={item.url} alt="alt" className={style.album_item}
@@ -244,7 +244,7 @@ const CompanyInfo = (_props: Props) => {
 					<div className={style.overview_item_wrapper}>
 						{listing_info
 							.filter(item => props.listing_info[item.field])
-							.padArrayToMultiple(3)
+							._padArrayToMultiple(3)
 							.map((item, index) => {
 								if (!item || !props.listing_info[item?.field]) {
 									return <div className={style.overview_item} key={index} style={{ background: '#ffffff' }} />
@@ -285,11 +285,11 @@ export default CompanyInfo
 
 declare global {
 	interface Array<T> {
-		padArrayToMultiple(num: number): T[];
+		_padArrayToMultiple(num: number): T[];
 	}
 }
 
-Array.prototype.padArrayToMultiple = function <T>(num: number) {
+Array.prototype._padArrayToMultiple = function <T>(num: number) {
 	const length = this.length;
 	const remainder = length % num;
 	if (remainder === 0) {
