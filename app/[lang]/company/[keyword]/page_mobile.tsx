@@ -56,38 +56,37 @@ const MobilePage = () => {
 
 	return <div className={style.container}>
 		<div className={style.header}>
-			<div className={style.header_cover_container}>
-				<Image
-					priority
-					src={detail.cover_pic_url} className={style.header_cover} alt={'cover'} fill />
+			{/* <Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover" /> */}
+			{/* <div className={style.header_cover}/> */}
+			{/* <div className={style.header_mask}></div> */}
+			<div className={style.header_info}>
 				<div className={style.header_logo}>
 					<Image className={style.header_logo_img} fill src={detail.logo_url} alt="logo" />
 				</div>
+				<div className={style.header_content}>
+					<div className={style.header_title}>
+						{detail.name}
+						{detail.is_verify &&
+							<Image width={16} height={16} className={style.header_title_verified}
+								src={require('./components/assets/verify.svg').default.src}
+								alt='_'
+							/>}
+					</div>
+					<div className={style.header_subtitle}>
+						{[detail.financing_stage, detail.company_size, detail.industry]
+							.filter(Boolean)
+							.map((value,index)=>{
+								return <span key={index} className={style.header_subtitle_item}>{value}</span>
+							})
+						}
+					</div>
+				</div>
 			</div>
 		</div>
-		<div className={style.header_title}>
-			{detail.name}
-			{detail.is_verify &&
-				<Image width={16} height={16} className={style.header_title_verified}
-					src={require('./components/assets/verify.svg').default.src}
-					alt='_'
-				/>}
-		</div>
-		<div className={style.header_subtitle}>
-			{[detail.financing_stage, detail.company_size, detail.industry].filter(Boolean).join(' | ')}
-		</div>
-		<div className={style.header_benefit_wrapper}>
-			{
-				detail.benefits.slice(0, 3).map((item, index) => {
-					return <div key={index} className={style.header_benefit_item}>
-						{item.value}
-					</div>
-				})
-			}
-		</div>
-		<div className={style.split}></div>
 		<div className={style.tab_layout}>
-					<Tabs value={value} onChange={handleChange} variant='fullWidth' >
+					<Tabs value={value} onChange={handleChange}
+								TabIndicatorProps={{ children: <span /> }}
+					>
 						<Tab label={tab_title[0]} {...a11yProps(0)} />
 						<Tab label={tab_title[1]} {...a11yProps(1)} />
 					</Tabs>
