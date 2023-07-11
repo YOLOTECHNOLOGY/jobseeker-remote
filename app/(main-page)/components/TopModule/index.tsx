@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 const SearchArea = dynamic(() => import('./searchArea'))
 const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
 import styles from '../../../index.module.scss'
-import { BannerBackground } from 'images'
+import HomeBanner from './HomeBanner'
 
 const TopModule = (props: any) => {
   const langKey =
@@ -19,10 +19,8 @@ const TopModule = (props: any) => {
   return (
     <>
       <div className={styles.searchMain}>
-        <div
-          className={styles.searchMainBackground}
-          style={{ backgroundImage: `url(${BannerBackground})` }}
-        >
+        <div className={styles.searchMainContainer}>
+          <HomeBanner />
           <div className={styles.title}>
             <p className={styles.titleText}>{home.slog}</p>
           </div>
