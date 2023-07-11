@@ -22,12 +22,12 @@ const persistConfig = {
   }
 }
 const bindMiddleware = (middleware) => {
-  if (process.env.NODE_ENV !== 'production') {
-    const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware
-      , process.env.ENV === 'development' && logger
-    ))
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+  //   const { composeWithDevTools } = require('redux-devtools-extension')
+  //   return composeWithDevTools(applyMiddleware(...middleware
+  //     , process.env.ENV === 'development' && logger
+  //   ))
+  // }
   return applyMiddleware(...middleware)
 }
 export let persistor

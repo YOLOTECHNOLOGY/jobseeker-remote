@@ -6,7 +6,7 @@ import { Button } from 'app/components/MUIs'
 import { LocationContext } from 'app/components/providers/locationProvier'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 
 import { buildQuery } from 'app/(main-page)/helper'
 
@@ -41,7 +41,7 @@ const Search = () => {
           fontSize: '14px',
           '> .MuiFormControl-root': {
             '> .MuiOutlinedInput-root': {
-              borderRadius: '10px',
+              borderRadius: '8px',
 
               '> .MuiOutlinedInput-notchedOutline': {
                 borderColor: '#BCBCBC',
@@ -52,42 +52,48 @@ const Search = () => {
         }}
         onChange={(e, value) => setLocation(value)}
       />
-
-      <MaterialTextField
-        className={styles.search_field}
-        label={<div className={styles.search_label} ><SearchIcon sx={{width: "16px", height: "16px", marginRight: "3px"}} /><span>{content.search.title}</span></div>}
-        variant='outlined'
-        size='small'
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target?.value)}
-        onKeyUp={(e) => e.code == 'Enter' && handleUpdatePath()}
-        maxLength={60}
-        sx={{
-          '> .MuiOutlinedInput-root': {
-            borderRadius: '10px',
-
-            '> .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#BCBCBC',
-              borderWidth: '0.5px'
-            }
+      <div className={styles.inputBox}>
+        <MaterialTextField
+          className={styles.search_field}
+          label={
+            <div className={styles.search_label}>
+              <SearchIcon sx={{ width: '16px', height: '16px', marginRight: '3px' }} />
+              <span>{content.search.title}</span>
+            </div>
           }
-        }}
-      />
+          variant='outlined'
+          size='small'
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target?.value)}
+          onKeyUp={(e) => e.code == 'Enter' && handleUpdatePath()}
+          maxLength={60}
+          sx={{
+            '> .MuiOutlinedInput-root': {
+              borderRadius: '8px  0 0 8px',
 
-      <Button
-        variant='contained'
-        sx={{
-          textTransform: 'capitalize',
-          width: '119px',
-          height: '44px',
-          background: '#136FD3',
-          borderRadius: '10px'
-        }}
-        onClick={handleUpdatePath}
-        className={styles.search_field_bingo}
-      >
-        {content.search.btn}
-      </Button>
+              '> .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#BCBCBC',
+                borderWidth: '0.5px'
+              }
+            }
+          }}
+        />
+
+        <Button
+          variant='contained'
+          sx={{
+            textTransform: 'capitalize',
+            width: '119px',
+            height: '44px',
+            background: '#136FD3',
+            borderRadius: '0px 8px 8px 0px'
+          }}
+          onClick={handleUpdatePath}
+          className={styles.search_field_bingo}
+        >
+          {content.search.btn}
+        </Button>
+      </div>
     </section>
   )
 }

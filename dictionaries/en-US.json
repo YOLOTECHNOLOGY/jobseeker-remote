@@ -264,7 +264,7 @@
       "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
       "CultureAndBenefits": "Culture and benefits",
       "Find": "Search",
-      "FindNow": "Search",
+      "FindNow": "Search Now",
       "All": "All",
       "culture": {
         "title": "Company Culture",
@@ -329,6 +329,7 @@
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
+    "slog": "Find Job. Talk to Boss",
     "defaultLocationPH": "Manila",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -413,6 +414,7 @@
       "showMore": "Read More",
       "showLess": "Read Less",
       "rate": "response rate",
+      "keySkills": "Key Skills",
       "state": {
         "online": "Online",
         "now": "Active just now",
@@ -491,7 +493,9 @@
         "note": "By signing up, I have read and agreed to the",
         "term": "Terms of Use",
         "policy": "Privacy Policy"
-      }
+      },
+      "uploadResume": "Upload Resume",
+      "applyJob": "Apply Job!"
     },
     "seo": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",

@@ -49,16 +49,16 @@ const Main = async (props: any) => {
   }
   const langKey = props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
   console.log({ locationId, location })
-  const {
-    lang: { home }
-  } = props || {}
+  // const {
+  //   lang: { home }
+  // } = props || {}
   const { config } = await configs(serverDataScript()).run(props)
 
   return (
     <>
       <div className={styles.main}>
 
-        <div className={styles.title}><span>{home.title}</span>{home.title2}</div>
+        {/* <div className={styles.title}><span>{home.title}</span>{home.title2}</div> */}
         <TopModule {...props} />
         
         <Tabs config={config} langKey={langKey} location_id={locationId} />

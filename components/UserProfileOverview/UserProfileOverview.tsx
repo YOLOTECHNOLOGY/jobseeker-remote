@@ -8,7 +8,7 @@ import ReadMore from 'components/ReadMore'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
-
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 /* Images */
 import {
   DefaultAvatar,
@@ -58,22 +58,22 @@ const UserProfileOverview = ({
 }: UserProfileOverviewProps) => {
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
-  let age 
-  if (birthdate){
+  let age
+  if (birthdate) {
     age = getAge(birthdate)
   }
-  
+
   const getYearString = (age: number) => {
-    if(age > 1) {
-      return formatTemplateString((lang as any).profile.year_other, {age})
+    if (age > 1) {
+      return formatTemplateString((lang as any).profile.year_other, { age })
     } else {
-      return formatTemplateString((lang as any).profile.year_one, {age})
+      return formatTemplateString((lang as any).profile.year_one, { age })
     }
   }
 
   return (
     <div className={styles.userOverview}>
-      <div className={styles.userOverviewEditIcon} onClick={()=>handleEditClick()}>
+      <div className={styles.userOverviewEditIcon} onClick={() => handleEditClick()}>
         <img src={PencilIcon} width='24' height='24' />
       </div>
       <div className={styles.userOverviewAvatar}>
@@ -90,17 +90,21 @@ const UserProfileOverview = ({
             <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
             <Text textStyle='lg'>{getYearString(age)}</Text>
           </div>
-        )}  
+        )}
         {location && (
           <div className={styles.userOverviewInfoDetail}>
             <img src={LocationIcon} width='14' height='14' style={{ marginRight: '6px' }} />
             <Text textStyle='lg'>{location}</Text>
           </div>
         )}
-        <div className={styles.userOverviewInfoDetail}>
-          <img src={MailIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-          <Text textStyle='lg'>{email}</Text>
-        </div>
+        {email && (
+          <div className={styles.userOverviewInfoDetail}>
+            {/* <img src={MailIcon} style={{ marginRight: '6px' }} /> */}
+            <EmailOutlinedIcon style={{ fontSize: '15px', color: '#2379ea', marginRight: '6px' }} />
+            <Text textStyle='lg'>{email}</Text>
+          </div>
+        )}
+
         {contactNumber && (
           <div className={styles.userOverviewInfoDetail}>
             <img src={MobileIcon} width='14' height='14' style={{ marginRight: '6px' }} />

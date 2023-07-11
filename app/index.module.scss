@@ -55,12 +55,12 @@
     transition: box-shadow 0.3s ease-in;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid #E5E6EB;
-    background: #FFF;
+    border: 1px solid #e5e6eb;
+    background: #fff;
   }
 
   &_detail:hover {
-    border: 1px solid #579BF5;
+    border: 1px solid #579bf5;
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
   }
 
@@ -103,7 +103,7 @@
       font-weight: 400;
       font-size: 15px;
       letter-spacing: 0.02em;
-      color: #2378E5;
+      color: #2378e5;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -157,14 +157,14 @@
       padding: 0 10px;
       height: 25px;
       line-height: 25px;
-      background: #F7F8FA;
+      background: #f7f8fa;
       border-radius: 4px;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
       letter-spacing: 0.0075em;
       margin-right: 8px;
-      color: #4E5969;
+      color: #4e5969;
     }
   }
 
@@ -178,9 +178,8 @@
     display: flex;
     align-items: center;
 
-
     img {
-      border: 1px solid #E5E6EB;
+      border: 1px solid #e5e6eb;
       border-radius: 5px;
     }
   }
@@ -192,7 +191,7 @@
     //   rgba(242, 177, 202, 0.2) 43.36%,
     //   rgba(84, 142, 237, 0.2) 99.89%
     // );
-    border-top: 1px solid var(--neutral-color-border, #F2F3F5);
+    border-top: 1px solid var(--neutral-color-border, #f2f3f5);
     margin: 0 16px;
     display: flex;
     align-items: center;
@@ -207,11 +206,11 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: #4E5969;
+      color: #4e5969;
     }
 
     &_industry {
-      color: #86909C;
+      color: #86909c;
       float: right;
     }
   }
@@ -222,7 +221,7 @@
 }
 
 .popularJobsBox {
-  background: #FCFCFC;
+  background: #fcfcfc;
 
   .jobTitle {
     padding: 40px 0 20px 0;
@@ -237,7 +236,7 @@
 
   :global {
     .MuiTabs-root .MuiTabs-indicatorSpan {
-      background-color: #1D2129,
+      background-color: #1d2129;
     }
   }
 
@@ -332,8 +331,8 @@
       display: flex;
       padding: 12px;
       border-radius: 4px;
-      border: 1px solid #E5E6EB;
-      background: #FFF;
+      border: 1px solid #e5e6eb;
+      background: #fff;
       position: relative;
 
       .arowForward {
@@ -454,16 +453,15 @@
       padding: 16px;
       margin-bottom: 8px;
       border-radius: 12px;
-      border: 1px solid #F2F3F5;
-      background: #FFF;
-
+      border: 1px solid #f2f3f5;
+      background: #fff;
 
       .name {
         font-weight: 700;
         font-size: 17px;
         line-height: 22px;
         display: flex;
-        color: #1D2129;
+        color: #1d2129;
 
         .jobName {
           width: 70%;
@@ -481,7 +479,7 @@
           width: 30%;
           text-align: right;
           font-size: 15px;
-          color: #2378E5;
+          color: #2378e5;
         }
       }
 
@@ -495,10 +493,10 @@
       .tag {
         font-weight: 400;
         font-size: 12px;
-        color: #4E5969;
+        color: #4e5969;
         padding: 0 10px;
         margin-right: 8px;
-        background: #F7F8FA;
+        background: #f7f8fa;
         border-radius: 6px;
         display: inline-block;
       }
@@ -507,15 +505,15 @@
         margin: 16px 0 0;
         padding-top: 10px;
         font-size: 12px;
-        color: #4E5969;
+        color: #4e5969;
         line-height: 26px;
         display: flex;
         justify-content: space-between;
-        border-top: 1px solid #F2F3F5;
+        border-top: 1px solid #f2f3f5;
 
         .location {
           float: right;
-          color: #86909C;
+          color: #86909c;
           width: 20vw;
           text-align: right;
           white-space: nowrap;
@@ -692,11 +690,13 @@
   .mainItems {
     width: 100%;
     height: 100%;
-    border-radius: 20px;
+    // border-radius: 20px;
     overflow: hidden;
     position: relative;
     background: #fff;
-    padding: 8px 0px 0 0;
+    padding: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #e4e4e4;
 
     // padding: 10px 10px;
     .mainItem {
@@ -710,9 +710,11 @@
       position: relative;
 
       &.isHover {
-        border: 0.5px solid #f0f0f0;
-        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
+        // border: 0.5px solid #f0f0f0;
+        // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+        // border-radius: 10px;
+        border-radius: 4px;
+        background: #f7f8fa;
 
         .mainTitle {
           color: #136fd3;
@@ -720,7 +722,7 @@
       }
 
       &:hover {
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+        // box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
 
         .mainTitle {
           color: #136fd3;
@@ -789,12 +791,15 @@
     }
 
     .pagination {
-      position: absolute;
-      left: 20px;
-      bottom: 0px;
+      // position: absolute;
+      // left: 20px;
+      // bottom: 0px;
       display: flex;
       width: 100%;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin-top: 8px;
 
       label {
         font-family: 'Product Sans';
@@ -806,12 +811,12 @@
         color: #353535;
         // margin-right: 50px;
         width: 40px;
-        position: absolute;
-        left: 5px;
-        bottom: 4px;
+        // position: absolute;
+        // left: 5px;
+        // bottom: 4px;
 
         span {
-          color: #B8B8B8;
+          color: #b8b8b8;
         }
       }
 
@@ -820,9 +825,9 @@
         border: none;
         width: 20px;
         height: 20px;
-        position: relative;
+        // position: relative;
         border-radius: 50%;
-        left: -36px;
+        // left: -36px;
         cursor: pointer;
         font-size: 12px;
         background: #e7f1fb;
@@ -858,15 +863,16 @@
   .sectionContainer {
     position: absolute;
     right: -110%;
-    top: -4px;
+    top: 0px;
     background: #fff;
     width: 110%;
-    height: 103%;
+    height: 100%;
     border-radius: 8px;
     overflow-y: scroll;
     padding: 18px 18px 18px 0px;
     flex-direction: column;
-    overflow: scroll;
+    overflow: auto;
+    // border: 1px solid #e4e4e4;
 
     &::-webkit-scrollbar {
       width: 5px;
@@ -957,17 +963,66 @@
   }
 }
 
+.searchMain {
+  width: 100%;
+  height: 273px;
+  position: relative;
+  background-image: linear-gradient(272deg, #26bcf7 0%, #367bff 100%);
+
+  @include sm {
+    height: 200px;
+  }
+}
+
+.searchMainBackground {
+  height: 100%;
+  position: relative;
+  display: block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  max-width: 1136px;
+  margin: 0 auto;
+
+  @include sm {
+    max-width: 100%;
+  }
+}
+
 .searchArea {
-  background: #F0F4F7;
+  // background: #f0f4f7;
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 
   .box {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    // width: 100%;
+    width: 832px;
     position: relative;
     @extend .GlobalNextAppContainer;
+
+    .searchWrapper {
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
+      padding: 14px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      @include sm {
+        flex: 1;
+        padding: 0 5px;
+      }
+    }
 
     .location {
       :global {
@@ -981,15 +1036,19 @@
           border-radius: 10px;
           background: #fff;
         }
+
+        .MuiOutlinedInput-input {
+          padding-left: 0;
+        }
       }
 
-      width: 164px;
+      width: 128px;
       height: 60px;
       // overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid #E5E6EB;
+      // border-radius: 8px;
+      // border: 1px solid #e5e6eb;
       background: #fff;
-      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
+      // box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
       // @include sm {
       //   width: 140px;
       // }
@@ -1012,6 +1071,17 @@
     }
   }
 
+  .searchSpread {
+    height: 48px;
+    width: 1px;
+    margin-left: 10px;
+    background-color: #e4e4e4;
+
+    @include sm {
+      margin-left: 0;
+    }
+  }
+
   .search {
     margin: 0 0 0 12px;
     background-color: #fff;
@@ -1022,6 +1092,10 @@
     :global {
       .MuiAutocomplete-root {
         background-color: #ffffff;
+      }
+
+      .MuiAutocomplete-input {
+        font-size: 16px;
       }
 
       .MuiOutlinedInput-root {
@@ -1039,7 +1113,8 @@
       }
 
       .MuiOutlinedInput-notchedOutline {
-        border-radius: 8px 0 0 8px;
+        // border-radius: 8px 0 0 8px;
+        border-width: 0 !important;
       }
     }
 
@@ -1057,13 +1132,12 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 12px 24px;
-    gap: 19px;
+    padding: 12px 20px;
     color: #fff;
     width: 126px;
     height: 60px;
-    font-size: 20px;
-    background: #136fd3;
+    font-size: 18px;
+    background: #2378e5;
     border-radius: 0 8px 8px 0;
     font-weight: 700;
 
@@ -1082,7 +1156,7 @@
       border-radius: 4px;
       font-size: 13px;
       width: unset;
-      margin-right: 8px;
+      // margin-right: 8px;
     }
 
     // &:hover {
@@ -1096,13 +1170,18 @@
 }
 
 .popularJobs {
-  background: #F0F4F7;
+  // background: #f0f4f7;
+  margin-top: 75px;
+
+  @include sm {
+    margin-top: 26px;
+  }
 
   .popularBox {
     @extend .GlobalNextAppContainer;
     display: flex;
     flex-direction: row;
-    padding: 26px 0 23px 32px;
+    // padding: 26px 0 23px 32px;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
@@ -1129,7 +1208,7 @@
     letter-spacing: 0.0075em;
     width: fit-content;
     flex-shrink: 0;
-    color: #86909C;
+    color: #86909c;
 
     @include sm {
       font-family: 'Product Sans';
@@ -1178,8 +1257,8 @@
       overflow: hidden;
       text-overflow: clip;
       white-space: nowrap;
-      border: 1px solid #E5E6EB;
-      color: #4E5969;
+      // border: 1px solid #e5e6eb;
+      color: #4e5969;
 
       @include sm {
         width: calc(50% - 5px);
@@ -1191,13 +1270,7 @@
       }
 
       &:hover {
-        // background: #136fd3;
-        //color: #fff;
-        border: 1px solid #4E5969;
-
-        a {
-          //   color: #fff;
-        }
+        background-color: #f7f8fa;
       }
     }
   }
@@ -1240,7 +1313,7 @@
 }
 
 .searchAreaFix {
-  height: 100px;
+  height: 110px;
   position: fixed;
   width: 100%;
   left: 0;
@@ -1249,11 +1322,15 @@
   box-shadow: 3px 3px 3px #ccc;
   z-index: 100;
   transition: 0.3s;
-  animation: showTrans 0.35s linear both;
+  animation: showTrans 0.25s ease-in-out both;
 
   .box {
-    max-width: 1136px;
-    margin: 20px auto 0;
+    min-width: 1136px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
   }
 
   :global {
@@ -1288,7 +1365,7 @@
       top: 4px;
     }
 
-    >p {
+    > p {
       padding-left: 24px;
       line-height: 20px;
     }
@@ -1402,12 +1479,35 @@
     align-items: center;
     justify-content: center;
     letter-spacing: 0.02em;
-    color: #121212;
+    color: #fff;
     padding: 26px 0 28px 0;
-    background: #F0F4F7;
+    flex-direction: column;
+    // background: #f0f4f7;
 
-    span {
-      color: #2378E5;
+    // span {
+    //   color: #2378e5;
+    // }
+  }
+
+  .titleText {
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    margin-top: 40px;
+
+    @include sm {
+      font-size: 32px;
+      // padding-top: 58px;
+    }
+  }
+  .subTitle {
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+
+    @include sm {
+      font-size: 28px;
     }
   }
 }
@@ -1434,8 +1534,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
-
   }
 
   .card {
@@ -1456,7 +1554,7 @@
       cursor: pointer;
       display: block;
       margin: 0 20px;
-      border-bottom: 1px solid #E5E6EB;
+      border-bottom: 1px solid #e5e6eb;
 
       .img {
         width: 48px;
@@ -1464,7 +1562,7 @@
         float: left;
         margin: 34px 11px 0 0;
         border-radius: 5px;
-        border: 1px solid #E5E6EB;
+        border: 1px solid #e5e6eb;
       }
 
       h5 {
@@ -1525,7 +1623,7 @@
           font-weight: 400;
           font-size: 15px;
           letter-spacing: 0.02em;
-          color: #2378E5;
+          color: #2378e5;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -1553,17 +1651,16 @@
           transition: all 0.4s ease 0s;
           float: right;
           box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
-
         }
       }
 
       .tag {
         font-weight: 400;
         font-size: 12px;
-        color: #4E5969;
+        color: #4e5969;
         padding: 0 10px;
         margin-right: 6px;
-        background: #F7F8FA;
+        background: #f7f8fa;
         border-radius: 4px;
         display: inline-block;
       }
@@ -1587,7 +1684,7 @@
 
     .linkAddress {
       text-decoration: underline;
-      color: #4E5969;
+      color: #4e5969;
       font-weight: 400;
       font-size: 15px;
       text-align: center;
@@ -1625,10 +1722,11 @@
     .search {
       width: auto;
       height: 44px;
+      margin: 0;
     }
 
     .searchArea {
-      padding: 0 6px;
+      padding: 0 18px;
 
       .search {
         flex: 1;
@@ -1646,14 +1744,14 @@
 
       .box {
         border-radius: 4px;
-        border: 1px solid #E5E6EB;
-        background: #FFF;
-        margin: 0 10px;
+        border: 1px solid #e5e6eb;
+        background: #fff;
+        margin: 0;
         padding: 0;
-        width: calc(100vw - 20px);
+        width: 100%;
 
         .location {
-          width: 110px;
+          width: 118px;
           height: 44px;
           border-radius: 4px 0 0 4px;
           border-bottom-width: 0;
@@ -1662,7 +1760,7 @@
 
           :global {
             .MuiOutlinedInput-root {
-              width: 110px;
+              width: 118px;
               height: 44px;
             }
           }
@@ -1678,11 +1776,9 @@
       display: block;
       padding: 32px 16px 27px 16px;
     }
-
   }
 
   .companies {
     display: none;
   }
-
 }

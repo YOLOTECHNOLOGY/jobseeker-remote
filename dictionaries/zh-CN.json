@@ -232,7 +232,7 @@
       "Listing": "融资信息",
       "BusinessInformation": "工商信息",
       "JobOpenings": "在招岗位",
-      "Financing": "财务信息",
+      "Financing": "融资阶段",
       "CreationTime": "创建时间",
       "CompanyWebsite": "公司官网",
       "Turnover": "营业额",
@@ -250,9 +250,9 @@
       "ApprovalDate": "审批日期",
       "RegisteredAddress": "注册地址",
       "StockCode": "股票代码",
-      "IpoValuationUsd": "IPO估值（美元）",
-      "MoneyRaisedAtIpoUsd": "IPO募资总和（美元）",
-      "IpoIssuePriceUsd": "IPO股票发行价（美元）",
+      "IpoValuationUsd": "IPO估值(USD)",
+      "MoneyRaisedAtIpoUsd": "IPO募资总和(USD)",
+      "IpoIssuePriceUsd": "IPO 发行价格(USD)",
       "IssueDate": "发行日期",
       "NumberOfFinancing": "融资轮数",
       "TotalFinancing": "融资总额",
@@ -264,8 +264,8 @@
       "BenefitsDes": "福利由公司提供，可能因职位不同有所差异。",
       "CultureAndBenefits": "文化与福利",
       "Find": "搜索",
-      "FindNow": "搜索",
-      "All": "共",
+      "FindNow": "立即搜索",
+      "All": "全部",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
@@ -329,6 +329,7 @@
   "home": {
     "title": "找工作， ",
     "title2": "和老板直接沟通！",
+    "slog": "找工作，与老板谈",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -413,6 +414,7 @@
       "showMore": "显示更多",
       "showLess": "显示更少",
       "rate": "回复率",
+      "keySkills": "Key Skills",
       "state": {
         "online": "在线",
         "now": "刚刚活跃",
@@ -491,7 +493,9 @@
         "note": "注册即表示我已阅读并同意",
         "term": "使用条款",
         "policy": "隐私政策"
-      }
+      },
+      "uploadResume": "上传简历",
+      "applyJob": "Apply Job!"
     },
     "seo": {
       "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
