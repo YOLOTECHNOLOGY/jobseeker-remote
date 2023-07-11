@@ -24,3 +24,34 @@
     }
   }
 }
+
+@mixin split {
+  display: block;
+  color: var(--neutral-color-text, #86909c);
+  /* Regular/Body/Regular/medium */
+  font-family: Product Sans;
+  font-weight: 400;
+  flex-shrink: 0;
+  color: var(--neutral-color-text, #fff);
+  /* Regular/Body/Regular/Small */
+  font-family: Product Sans;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  &::after {
+    content: '';
+    font-size: 12px;
+    height: 6px;
+    width: 1px;
+    margin: 0 8px;
+    background: #c9cdd4;
+    display: inline-block;
+  }
+  &:last-child {
+    &::after {
+      content: '';
+      display: none;
+    }
+  }
+}
