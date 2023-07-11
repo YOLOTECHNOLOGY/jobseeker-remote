@@ -263,9 +263,11 @@
       "HiBoss": "Hi Boss",
       "BenefitsDes": "福利由公司提供，可能因职位不同有所差异。",
       "CultureAndBenefits": "文化与福利",
-      "Find": "Search",
-      "FindNow": "Search Now",
+      "Find": "Find",
+      "FindNow": "Find Now",
       "All": "全部",
+      "Location:": "Location",
+      "SearchPlaceholder": "Search for job title",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
@@ -329,6 +331,7 @@
   "home": {
     "title": "找工作， ",
     "title2": "和老板直接沟通！",
+    "slog": "找工作，与老板谈",
     "defaultLocationPH": "马尼拉",
     "defaultLocationSG": "Downtown Core",
     "search": {
@@ -493,7 +496,7 @@
         "term": "使用条款",
         "policy": "隐私政策"
       },
-      "uploadResume": "Upload Resume",
+      "uploadResume": "上传简历",
       "applyJob": "Apply Job!"
     },
     "seo": {

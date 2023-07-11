@@ -263,9 +263,11 @@
       "HiBoss": "Hi Boss",
       "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
       "CultureAndBenefits": "Culture and benefits",
-      "Find": "Search",
-      "FindNow": "Search Now",
+      "Find": "Find",
+      "FindNow": "Find Now",
       "All": "All",
+      "Location:": "Location",
+      "SearchPlaceholder": "Search for job title",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -329,6 +331,7 @@
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
+    "slog": "Find Job. Talk to Boss",
     "defaultLocationPH": "Manila",
     "defaultLocationSG": "Downtown Core",
     "search": {

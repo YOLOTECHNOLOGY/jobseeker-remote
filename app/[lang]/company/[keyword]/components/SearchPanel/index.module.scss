@@ -5,7 +5,7 @@
   align-items: center;
   padding: 20px;
   width: 777px;
-  height: 68px;
+  height: 60px;
   background: #ffffff;
   border: 1px solid #c9cdd4;
   border-radius: 8px;
@@ -21,15 +21,21 @@
 }
 .search_button {
   display: flex;
-  height: 68px;
+  min-width: 145px;
+  height: 60px;
   padding: 12px 20px;
   justify-content: center;
   align-items: center;
   border-radius: 0px 8px 8px 0px;
   background: var(--main-color-blue-blue-012378-e-5, #2378e5);
-  color: #ffffff;
   cursor: pointer;
   transition: all 0.3s linear;
+  color: #fff;
+  font-family: Product Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
   // &:hover {
   //   background-color: lighten($color: #2378e5, $amount: 10);
   // }
@@ -39,8 +45,13 @@
   }
   @include base.respond-to(phone) {
     height: 0.48rem;
-    padding: 0.12rem 0.08rem;
-    width: 0.56rem;
+    padding: 0.12rem;
+    // width: 0.56rem;
+    min-width: 0.56rem;
+    font-size: 0.17rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.22rem;
   }
 }
 .button_loading {
@@ -70,9 +81,10 @@
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  margin-top: 32px;
+  padding-top: 32px;
   @include base.respond-to(phone) {
-    margin-top: 0.32rem;
+    padding-top: 0px;
+    margin-top: 0.36rem;
   }
 }
 .location_selector_wapper {
@@ -97,7 +109,7 @@
   position: relative;
 }
 .location_input_border {
-  height: 23px;
+  height: 44px;
   border-right: 1px solid #c9cdd4;
   margin: 0 12px;
   @include base.respond-to(phone) {
@@ -113,8 +125,11 @@
   align-items: center;
   height: 68px;
   flex: 1;
+  position: relative;
+  padding-left: 15px;
   @include base.respond-to(phone) {
     position: relative;
+    padding-left: 0px;
   }
 }
 .job_search_input {
@@ -123,26 +138,30 @@
   outline: none;
   flex: 1;
   position: relative;
+  padding-left: 10px;
   @include base.respond-to(phone) {
     padding-left: 0.2rem;
     width: 1rem;
   }
 }
 .job_prefix {
-  position: absolute;
-  left: 0;
-  width: 0.16rem;
-  height: 0.16rem;
-  z-index: 10;
+  @include base.respond-to(phone) {
+    width: 0.16rem;
+    height: 0.16rem;
+    position: absolute;
+    left: 0;
+    z-index: 10;
+  }
 }
 .location_arrow {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-right: 1px solid #4e5969;
   border-bottom: 1px solid #4e5969;
   transform: rotate(45deg);
   position: absolute;
-  right: 35px;
+  right: 45px;
+  top: 17px;
   @include base.respond-to(phone) {
     width: 0.07rem;
     height: 0.07rem;
@@ -176,20 +195,21 @@
   justify-content: center;
 }
 .title {
-  width: 536px;
-  height: 25px;
-  line-height: 25px;
+  width: 446px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: 'Product Sans';
   font-style: normal;
-  font-weight: 500;
   font-size: 17px;
-  color: #1d2129;
+  color: var(--neutral-color-text, #1d2129);
+  font-family: Product Sans;
+  font-weight: 700;
+  line-height: 22px;
   @include base.respond-to(phone) {
-    width: 2rem;
-    height: 0.44rem;
+    width: 2.3rem;
+    word-break: break-all;
+    height: 0.22rem;
     font-size: 0.17rem;
     font-family: Product Sans;
     font-style: normal;
@@ -199,8 +219,9 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     white-space: pre-wrap;
+    margin-bottom: 0.08rem;
   }
 }
 .mobile_tag {
@@ -234,16 +255,17 @@
   padding: 16px 12px;
 
   width: 560px;
-  min-height: 125px;
-  background: #f7f8fa;
+  min-height: 128px;
+  background: #ffffff;
   border-radius: 8px;
 
   transition: all 0.3s linear;
   margin-bottom: 16px;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--neutral-color-border, #e5e6eb);
+
   &:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-    border: 1px solid #c9cdd4;
+    border: 1px solid var(--brand-color, #2378e5);
     .chat_now {
       opacity: 1;
     }
@@ -285,8 +307,17 @@
   margin-top: 4px;
   width: 100%;
   flex-wrap: nowrap;
+  :global {
+    .tag_flag {
+      border-radius: 6px;
+      padding: 5px 10px;
+      background: var(--neutral-color-fill, #f7f8fa);
+      margin-top: 10px;
+    }
+  }
   @include base.text_overflow;
   @include base.respond-to(phone) {
+    margin-top: 0px;
     justify-content: flex-start;
     :global {
       span {
@@ -312,10 +343,21 @@
           }
         }
       }
+      .tag_flag {
+        border-radius: 0.06rem;
+        background: var(--neutral-color-fill, #f7f8fa);
+        padding: 0.05rem 0.1rem;
+      }
     }
   }
 }
+
+.jobcard_salary_wrapper {
+  position: relative;
+  flex: 1;
+}
 .salary {
+  position: absolute;
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 400;
@@ -323,6 +365,7 @@
   line-height: 25px;
   text-align: right;
   color: #2378e5;
+  width: 100%;
   @include base.respond-to(phone) {
     color: var(--main-color-blue-blue-012378-e-5, #2378e5);
     text-align: right;
@@ -355,10 +398,13 @@
 }
 
 .footer {
-  margin-top: 16px;
+  margin-top: 18px;
   display: flex;
   justify-content: space-between;
   width: 100%;
+  @include base.respond-to(phone) {
+    margin-top: 0.16rem;
+  }
 }
 .name {
   display: flex;
@@ -410,12 +456,13 @@
   align-items: center;
 }
 .chat_now {
+  position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 5px 10px;
-  min-width: 73px;
+  min-width: 78px;
   min-height: 28px;
   background: #2378e5;
   border-radius: 8px;
@@ -435,6 +482,9 @@
   margin-left: 10px;
   @include base.respond-to(phone) {
     display: none;
+  }
+  &:hover {
+    color: #fff !important;
   }
 }
 
@@ -528,6 +578,9 @@
       color: #1d2129;
     }
   }
+}
+.search_content_wrapper {
+  background-color: #fcfcfc;
 }
 .filter_split {
   width: 100%;
