@@ -194,7 +194,7 @@ const SearchPanel = (props: Props) => {
                     <Image width={16} height={16} className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
                     <input 
                         id={'input-search'} name={'input-search'} 
-                        placeholder='Job title or company'
+                        placeholder={overview.SearchPlaceholder}
                         className={style.job_search_input}
                         onChange={(e) => {
                             inputText.current = e.target.value;
