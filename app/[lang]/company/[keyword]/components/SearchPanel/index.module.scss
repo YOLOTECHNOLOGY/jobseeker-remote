@@ -270,6 +270,9 @@
   &:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--brand-color, #2378e5);
+    .salary {
+      opacity: 0;
+    }
     .chat_now {
       opacity: 1;
     }
@@ -473,6 +476,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
+  right: 0;
   /* identical to box height, or 150% */
 
   text-align: right;
