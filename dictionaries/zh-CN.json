@@ -263,9 +263,11 @@
       "HiBoss": "Hi Boss",
       "BenefitsDes": "福利由公司提供，可能因职位不同有所差异。",
       "CultureAndBenefits": "文化与福利",
-      "Find": "搜索",
-      "FindNow": "立即搜索",
+      "Find": "Find",
+      "FindNow": "Find Now",
       "All": "全部",
+      "Location:": "Location",
+      "SearchPlaceholder": "Search for job title",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",

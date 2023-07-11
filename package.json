@@ -2,7 +2,7 @@
   "name": "next-fe-boilerplate",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_HOST_PATH='http://localhost:3004' NODE_OPTIONS='--max_old_space_size=12000' next dev -p 3004   ",
+    "dev": "NEXT_PUBLIC_HOST_PATH='http://localhost:3004'  yarn link imforbossjob && next dev -p 3004   ",
     "build:development": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.devsite --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:staging": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:production": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
@@ -69,7 +69,7 @@
     "firebase": "^9.17.1",
     "gapi-script": "^1.2.0",
     "image-conversion": "^2.1.1",
-    "imforbossjob": "^0.2.0-beta-fix2",
+    "imforbossjob": "^0.2.0-beta-fix3",
     "jose": "^4.14.4",
     "lodash-es": "^4.17.21",
     "log4js": "^6.9.1",
