@@ -360,11 +360,10 @@ $contentWidth: 894px;
     .moreButton {
       text-transform: inherit;
       border-radius: 4px;
-      width: 140px;
+      min-width: 140px;
+      padding: 0 12px;
       border: 1px solid #e5e6eb;
-      padding: 0;
       background-color: #ffffff;
-
       color: #707070;
       font-size: 14px;
       font-style: normal;

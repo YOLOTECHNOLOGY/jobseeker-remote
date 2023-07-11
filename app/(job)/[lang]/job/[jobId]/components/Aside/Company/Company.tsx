@@ -37,7 +37,7 @@ const Company = (company: propsType) => {
             <div>
               <h5 className={styles.company_name}>{company.name}</h5>
               <div className={styles.company_financingStage}>
-                {company.companySize} <span>|</span> {companySection.employees} {industry}
+                {company.companySize} <span>|</span> {industry}
               </div>
             </div>
           </div>
