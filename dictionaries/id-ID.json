@@ -329,6 +329,7 @@
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
+    "slog": "Find Job. Talk to Boss",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {

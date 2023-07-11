@@ -78,7 +78,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, langKey) => {
       return
     }
     if (!accessToken) {
-      sessionStorage.setItem('redirectPage',window.location.pathname)
+      sessionStorage.setItem('redirectPage', window.location.pathname)
       setShowLogin(true)
       return
     }
@@ -112,7 +112,7 @@ const useJobDetail = (jobId) => {
   return [jobDetail, detailLoading, startLoading]
 }
 
-const VIf = (props: {show: boolean, children: any}) =>  props.show ? props.children : null
+const VIf = (props: { show: boolean; children: any }) => (props.show ? props.children : null)
 
 const JobCard = (props: any) => {
   const {
@@ -196,7 +196,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    (chatNow as any)().catch(err => {
+    ;(chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -227,7 +227,9 @@ const JobCard = (props: any) => {
                 className={styles.titleContainer}
                 title={`${job_title}`}
               >
-                <VIf show={!!is_urgent}><div className={styles.urgent}>urgent</div></VIf> 
+                <VIf show={!!is_urgent}>
+                  <div className={styles.urgent}>Urgent</div>
+                </VIf>
                 <div className={styles.title}>{`${job_title}`}</div>
               </div>
 
@@ -371,7 +373,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg

@@ -136,6 +136,12 @@ const SearchArea = (props: any) => {
     alignItems: 'center',
     cursor: 'pointer'
   }
+
+  const spanStyle = {
+    paddingLeft: '10px',
+    fontSize: '15px'
+  }
+
   console.log({ location })
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
@@ -203,17 +209,17 @@ const SearchArea = (props: any) => {
                   return type === 'company' ? (
                     <li {...props} style={styleleSelect} key={props.id}>
                       <Image src={logoUrl} alt={value} width='22' height='22' />
-                      <span style={{ paddingLeft: '10px' }}>{value}</span>
+                      <span style={spanStyle}>{value}</span>
                     </li>
                   ) : isHistory ? (
                     <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
                       <AccessTimeIcon />
-                      <span style={{ paddingLeft: '10px' }}>{value}==1</span>
+                      <span style={spanStyle}>{value}==1</span>
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect} key={props.id}>
                       <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                      <span style={{ paddingLeft: '10px' }}>{value || option}</span>
+                      <span style={spanStyle}>{value || option}</span>
                     </li>
                   )
                 }}
