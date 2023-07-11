@@ -4,12 +4,14 @@ import styles from '../../../page.module.scss'
 import JobClient from '../Desc/JobClient/JobClient'
 import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
-
-const Menu = ({ shareParams, lang, isbenefits }: any) => {
+import { useFirstRender } from 'helpers/useFirstRender'
+const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
+  console.log({ jobDetail })
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
   console.log(lang, isbenefits, 7777)
+  const firstRender = useFirstRender()
   const { content } = lang
   const menu = [
     {
@@ -29,7 +31,7 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
       id: 'Benefits'
     },
     {
-      name: content.location,
+      name: content.workLocation,
       id: 'WorkingLocation'
     }
   ]
@@ -42,7 +44,7 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
   }, [isbenefits])
 
   useEffect(() => {
-    if (current === 0) return
+    if (firstRender) return
     // document.getElementById('workingLocation').scrollIntoView({
     //   behavior: 'smooth'
     // })
@@ -51,7 +53,7 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
     if (domID) {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
-      const position = domTop - headerHeight - 40
+      const position = domTop - headerHeight - 100
       console.log(position, domTop, headerHeight)
       position && scrollSmoothTo(position)
     }
