@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { transState } from 'helpers/utilities'
 import { DefaultAvatar } from 'images'
 import { Avatar } from 'app/components/MUIs'
-import JobClient from './JobClient/JobClient'
+
 import ReadMore from './ReadMore'
 import React from 'react'
 import { accessToken } from 'helpers/cookies'
@@ -65,19 +65,14 @@ const Desc = ({
         </div>
       </div>
 
-      <div className={styles.desc_jobDescWrapper}>
+      <div className={styles.desc_jobDescWrapper} id='JobDescription'>
         <div className={styles.desc_title}>
           <h5>{content.JD}</h5>
-          <div className={styles.desc_title_change}>
+          {/* <div className={styles.desc_title_change}>
             <JobClient isLogin={Boolean(token)} {...shareParams} />
-          </div>
+          </div> */}
         </div>
 
-        <div className={styles.desc_labels}>
-          {skills?.map((skill) => (
-            <div key={skill.value}>{skill.value}</div>
-          ))}
-        </div>
         {/* <div
           className={styles.desc_context}
           dangerouslySetInnerHTML={{ __html: description }}
@@ -94,7 +89,25 @@ const Desc = ({
 
       <div className={styles.desc_mobileLine}></div>
 
-      <div className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}>
+      <div
+        className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}
+        id='KeySkills'
+      >
+        <div className={classNames([styles.desc_title, styles.desc_requirement])}>
+          <h5 style={{ marginBottom: '0' }}>{content.keySkills}</h5>
+        </div>
+
+        <div className={styles.desc_labels}>
+          {skills?.map((skill) => (
+            <div key={skill.value}>{skill.value}</div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}
+        id='Requirement'
+      >
         <div className={classNames([styles.desc_title, styles.desc_requirement])}>
           <h5>{content.requirement}</h5>
         </div>
@@ -111,7 +124,7 @@ const Desc = ({
           lineHeight={24}
         />
       </div>
-      <div className={styles.desc_footer}>
+      {/* <div className={styles.desc_footer}>
         <Avatar
           sx={{ width: '29.94px', height: '29px' }}
           src={recruiter?.avatar || DefaultAvatar}
@@ -128,7 +141,7 @@ const Desc = ({
         >
           {transState(lastActiveAt, content?.state)?.text}
         </span>
-      </div>
+      </div> */}
     </section>
   )
 }

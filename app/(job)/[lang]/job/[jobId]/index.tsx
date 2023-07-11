@@ -11,7 +11,7 @@ import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs
 
 import styles from './page.module.scss'
 import { getValueById } from 'helpers/config/getValueById'
-
+import Menu from './components/Main/menu'
 const Index = ({ data, jobId, languages, config, lang }: any) => {
   const cookieStore = cookies()
   const headeStore = headers()
@@ -75,7 +75,17 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     job_type_value: data.job_type_value,
     status_key: data.status_key,
     jobDetail: data,
-    languages
+    languages,
+    shareParams: {
+      id: data.id,
+      job_url: data.job_url,
+      recruiter: {
+        id: data.recruiter?.id
+      },
+      company: {
+        id: data.company?.id
+      }
+    }
   }
 
   const companyProps = {
@@ -107,7 +117,8 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
       },
       company: {
         id: data.company?.id
-      }
+      },
+      is_saved: data.is_saved
     },
     lat: data.latitude,
     lng: data.longitude,
@@ -120,9 +131,12 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   return (
     <div>
       <Head {...headProps} />
-      <div className={styles.container}>
-        <MainFC {...mainProps} />
-        <AsideFC {...companyProps} jobDetail={data} lang={lang} config={config} />
+      <Menu {...mainProps} lang={languages} isbenefits={!!mainProps?.benefitsProps?.length} />
+      <div style={{ background: '#f5f7fb' }}>
+        <div className={styles.container}>
+          <MainFC {...mainProps} />
+          <AsideFC {...companyProps} jobDetail={data} lang={lang} config={config} />
+        </div>
       </div>
     </div>
   )
