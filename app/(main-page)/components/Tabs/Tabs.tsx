@@ -89,6 +89,9 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => 
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
+  },
+  '&:hover': {
+    color: '#1D2129'
   }
 }))
 
