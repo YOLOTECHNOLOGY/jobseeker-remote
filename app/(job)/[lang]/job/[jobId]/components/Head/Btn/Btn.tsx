@@ -120,7 +120,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
           background: '#FFFFFF',
           border: '1px solid #136FD3',
           borderRadius: '10px',
-          width: '160px',
+          minWidth: '160px',
           fontWeight: '700',
           lineHeight: '44px',
           height: '44px',
