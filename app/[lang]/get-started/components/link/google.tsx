@@ -5,6 +5,7 @@ import useGetStarted from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
+import Image from 'next/image'
 
 interface IGoogle {
   className?: string
@@ -136,7 +137,7 @@ const GoogleLogin = (props: IGoogle) => {
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuthClick}
     >
-      <img src={GoogleLogo} />
+      <Image src={GoogleLogo} alt='google' width={24} height={24} />
       <span>{newGetStarted.links.google}</span>
     </div>
   )
