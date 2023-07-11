@@ -16,7 +16,11 @@ import { accessToken as accessTokenKey, getCookie } from 'helpers/cookies'
 
 import styles from '../../../../page.module.scss'
 import { languageContext } from 'app/components/providers/languageProvider'
-
+import { FavoriteBorderIcon, FavoriteIcon } from 'app/components/MuiIcons'
+import { LoginModalContext } from 'app/components/providers/loginModalProvider'
+import { postSaveJobService } from 'store/services/jobs/postSaveJob'
+import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 export type sharePropsType = {
   id: number
   job_url: string
@@ -27,14 +31,19 @@ export type sharePropsType = {
     id: number
   }
   isLogin?: boolean
+  is_saved: boolean
 }
 
 const JobClient = (props: sharePropsType) => {
-  const { isLogin } = props
+  const { isLogin, is_saved, id } = props
+  const accessToken = getCookie('accessToken')
   const { jobDetail } = useContext(languageContext) as any
+  const { header } = jobDetail
   const dispatch = useDispatch()
+  const { setShowLogin } = useContext(LoginModalContext)
   const [reportJobReasonList, setReportJobReasonList] = useState<Array<any>>(null)
-
+  const [isSave, setIsSave] = useState<boolean>(is_saved)
+  const [saveLoading, setSaveLoading] = useState<boolean>(false)
   const config = useSelector(
     (store: any) => store?.config?.config?.response ?? initialState.response
   )
@@ -59,8 +68,81 @@ const JobClient = (props: sharePropsType) => {
     dispatch(postReportRequest(postReportJobPayload))
   }
 
+  const handleSaveJob = () => {
+    setSaveLoading(true)
+
+    postSaveJobService({
+      // job_title_id: null,
+      job_id: id
+    })
+      .then(() => {
+        setIsSave(true)
+      })
+      .catch(({ response: { data } }) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: data.message ? data.message : 'Save job fail',
+            severity: 'error'
+          })
+        )
+      })
+      .finally(() => {
+        setSaveLoading(false)
+      })
+  }
+
+  const handleUnSaveJob = () => {
+    setSaveLoading(true)
+
+    deleteSaveJobService(id)
+      .then(() => {
+        setIsSave(false)
+      })
+      .catch((error) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            message: error.message ? error.message : 'UnSave job fail',
+            severity: 'error'
+          })
+        )
+      })
+      .finally(() => {
+        setSaveLoading(false)
+      })
+  }
+
   return (
     <>
+      <span
+        className={styles.item}
+        onClick={() => {
+          if (!accessToken) {
+            sessionStorage.setItem('redirectPage', window?.location?.pathname)
+            setShowLogin?.(true)
+            return
+          } else if (!isSave) {
+            handleSaveJob?.()
+          } else {
+            handleUnSaveJob?.()
+          }
+        }}
+      >
+        {is_saved ? (
+          <>
+            <FavoriteIcon sx={{ color: '#136FD3', fontSize: '18px' }} />
+            <span style={{ textTransform: 'capitalize', marginLeft: '2px' }}>
+              {header.undoSave}
+            </span>
+          </>
+        ) : (
+          <>
+            <FavoriteBorderIcon sx={{ fontSize: '18px' }} />
+            <span style={{ textTransform: 'capitalize', marginLeft: '2px' }}>{header.save}</span>
+          </>
+        )}
+      </span>
       {reportJobReasonList?.length ? (
         <Stack direction='row' spacing={2}>
           <div onClick={() => setIsShowSearch(true)} className={styles.jobClient_btn_wrapper}>

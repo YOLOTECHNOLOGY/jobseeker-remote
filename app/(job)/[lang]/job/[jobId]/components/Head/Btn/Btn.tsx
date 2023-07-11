@@ -51,9 +51,9 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
     const headNode = document.querySelector('#jobDetaiPagelHead')
     if (scrollTopHeight > 55) {
-      ; (headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
+      ;(headNode as HTMLElement).style.boxShadow = '10px 5px 5px rgba(217,217,217, 0.6)'
     } else {
-      ; (headNode as HTMLElement).style.boxShadow = 'unset'
+      ;(headNode as HTMLElement).style.boxShadow = 'unset'
     }
   }
 
@@ -108,7 +108,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       const link = getApplyJobLink(jobDetail, userCookie)
       window.open(link)
     } else {
-      ; (chatNow as any)(jobDetail)
+      ;(chatNow as any)(jobDetail)
     }
   }
 
@@ -117,16 +117,36 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
       <MaterialButton
         variant='contained'
         sx={{
-          maxWidth: '140px',
+          background: '#FFFFFF',
+          border: '1px solid #136FD3',
+          borderRadius: '10px',
+          width: '160px',
+          fontWeight: '700',
           lineHeight: '44px',
           height: '44px',
-          background: '#136FD3',
-          borderRadius: '10px'
+          color: '#2378E5',
+          boxShadow: 'none'
         }}
         isLoading={loading as boolean}
         onClick={() => handleBtnEvent()}
       >
         <span style={{ textTransform: 'capitalize' }}>
+          <span style={{ paddingRight: '4px', position: 'relative', top: '5px' }}>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+            >
+              <path
+                fill-rule='evenodd'
+                clip-rule='evenodd'
+                d='M18.6899 19.7306C17.7133 20.5907 16.5618 21.2539 15.2936 21.6693C14.3462 21.9827 13.3258 22.1503 12.269 22.1503H2.00729C2.00729 22.1503 2 22.1503 2 22.143V12.8725C2 7.24599 6.5624 2.68359 12.1889 2.68359C14.8855 2.68359 17.3416 3.76953 19.1199 5.53327C20.9274 7.32616 22.0425 9.81872 21.9988 12.5664C21.9696 14.3665 21.4522 16.0501 20.5776 17.4859C20.1767 18.1418 19.6957 18.754 19.1564 19.2934C19.01 19.4397 18.8636 19.5728 18.7108 19.7117L18.7108 19.7117L18.6899 19.7306ZM16.4571 13.291C16.7558 13.0041 16.7655 12.5293 16.4786 12.2305C16.1917 11.9318 15.7169 11.9221 15.4181 12.209C14.5897 13.0045 13.3297 13.474 12.0213 13.4958C10.7164 13.5175 9.45537 13.0933 8.59609 12.223C8.30505 11.9283 7.83019 11.9253 7.53545 12.2163C7.2407 12.5074 7.2377 12.9822 7.52873 13.277C8.73488 14.4985 10.4238 15.0226 12.0463 14.9956C13.6653 14.9686 15.3102 14.3923 16.4571 13.291Z'
+                fill='#2378E5'
+              />
+            </svg>
+          </span>
           {(() => {
             if (jobDetail.external_apply_url) {
               return header.apply
@@ -145,7 +165,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
     <>
       {status_key == 'active' ? (
         <Stack spacing={2} direction='row' className={className}>
-          <MaterialButton
+          {/* <MaterialButton
             variant='outlined'
             sx={{
               height: '44px',
@@ -187,8 +207,7 @@ const Btn = ({ jobId, chat, is_saved, className, jobDetail }: propsType) => {
               </>
             )}
 
-            {/* <FavoriteBorderIcon sx={{ color: '#136FD3' }} /> */}
-          </MaterialButton>
+          </MaterialButton> */}
           {userInfo?.id == jobDetail.recruiter?.id
             ? jobDetail.external_apply_url
               ? handleGetChatNowElement()
