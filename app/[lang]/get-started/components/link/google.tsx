@@ -31,10 +31,11 @@ const GoogleLogin = (props: IGoogle) => {
 
   useEffect(() => {
     setInit(typeof window?.gAPIAuthInstance != 'undefined')
-  }, [window?.gapi])
+  }, [window?.gAPIAuthInstance])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (window.gAPIAuthInstance) return
       const script = document.createElement('script')
       const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
       const initClient = () => {

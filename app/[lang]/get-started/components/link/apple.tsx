@@ -21,7 +21,7 @@ const AppleLogin = (props: IApple) => {
   } = props
   const searchParams = useSearchParams()
   const [init, setInit] = useState(false)
-  const { defaultLoginCallBack,handleAuthenticationSocialLogin } = useGetStarted()
+  const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
 
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -41,6 +41,7 @@ const AppleLogin = (props: IApple) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (window.AppleID) return
       const script = document.createElement('script')
       const handleClientLoad = () => {
         if (!window?.AppleID) {
@@ -95,7 +96,7 @@ const AppleLogin = (props: IApple) => {
         source: 'web'
       }
       // submit
-      handleAuthenticationSocialLogin(data).then(res => {
+      handleAuthenticationSocialLogin(data).then((res) => {
         // handle has logged redirect url
         const { data } = res
         if (data?.token) {
