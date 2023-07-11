@@ -14,6 +14,7 @@ import className from 'classnames';
 import { InView } from "react-intersection-observer";
 import useMediaQuery  from '@mui/material/useMediaQuery';
 import { languageContext } from 'app/components/providers/languageProvider';
+import Empty from 'app/components/empty/empty';
 
 
 
@@ -337,7 +338,7 @@ const SearchPanel = (props: Props) => {
                     })
                     :
                     <div className={style.noData}>
-                        No Data
+                        <Empty lang={contextLang.search} description={null} />
                     </div>
             }
         </div>
