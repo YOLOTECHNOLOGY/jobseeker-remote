@@ -696,10 +696,6 @@
         letter-spacing: 0.02em;
         color: #353535;
         margin-bottom: 10px;
-
-        &:hover {
-          color: #2378e5;
-        }
       }
 
       &_card:first-child {
@@ -734,6 +730,10 @@
         text-overflow: ellipsis;
         -o-text-overflow: ellipsis;
         flex: 0.7;
+
+        &:hover {
+          color: #2378e5;
+        }
       }
 
       &_salary {
