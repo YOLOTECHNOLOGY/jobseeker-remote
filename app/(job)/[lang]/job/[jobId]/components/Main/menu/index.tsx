@@ -1,10 +1,11 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from '../../../page.module.scss'
 import JobClient from '../Desc/JobClient/JobClient'
 import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+import { throttle } from 'lodash-es'
 const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
   console.log({ jobDetail })
   const token = getCookie(accessToken)
@@ -13,6 +14,8 @@ const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
   console.log(lang, isbenefits, 7777)
   const firstRender = useFirstRender()
   const { content } = lang
+  const scrollRef = useRef(null)
+
   const menu = [
     {
       name: content.JD,
@@ -35,6 +38,43 @@ const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
       id: 'WorkingLocation'
     }
   ]
+
+  useEffect(() => {
+    window.document.addEventListener('scroll', throttle(handleScroll, 500))
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleScroll = () => {
+    // scrollRef.current = new Date().getTime() // window.document.body.scrollTop
+    // console.log(scrollRef.current, 999)
+  }
+
+  useEffect(() => {
+    console.log(scrollRef.current, 666)
+    if (scrollRef.current) {
+      const jobDescriptionTop = document.getElementById('JobDescription')?.offsetTop
+      const keySkillsTop = document.getElementById('KeySkills')?.offsetTop
+      const requirementTop = document.getElementById('Requirement')?.offsetTop
+      const benefitsTop = document.getElementById('Benefits')?.offsetTop
+      const wrkingLocationTop = document.getElementById('WorkingLocation')?.offsetTop
+
+      // const position = domTop - headerHeight - 100
+
+      console.log(
+        computeHeight(jobDescriptionTop),
+        computeHeight(keySkillsTop),
+        computeHeight(requirementTop),
+        computeHeight(benefitsTop),
+        computeHeight(wrkingLocationTop)
+      )
+    }
+  }, [scrollRef.current])
+
+  const computeHeight = (top) => {
+    const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
+    return top - headerHeight - 100
+  }
+
   useEffect(() => {
     if (isbenefits) {
       setMneuNew(menu)

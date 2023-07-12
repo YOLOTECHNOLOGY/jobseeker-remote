@@ -58,13 +58,12 @@ const Head = ({
               ) : null}
               {title}
             </h1>
-            <div className={styles.head_main_title_context}>
-              {/* <span className={styles.head_main_title_context_type}>({job_type_value})</span> */}
+            {/* <div className={styles.head_main_title_context}>
 
               {jobDetail.is_urgent ? (
                 <span className={styles.head_main_title_context_status}>{header.urgent}</span>
               ) : null}
-            </div>
+            </div> */}
           </div>
           <div className={styles.head_main_salary}>{salary}</div>
         </div>
