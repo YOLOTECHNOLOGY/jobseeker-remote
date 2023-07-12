@@ -2,7 +2,7 @@
 @import 'styles/variable.scss';
 
 .container {
-  background-color: #f7f8fa;
+  background: #fcfcfc;
 }
 
 .companies {
@@ -16,7 +16,7 @@
 }
 
 .searchContainer {
-  background-color: #fff;
+  background: #f0f4f7;
 }
 
 .searchCompany {
@@ -49,14 +49,14 @@
 .filters {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  padding-top: 20px;
+  justify-content: center;
+  padding-top: 24px;
   flex-wrap: wrap;
 
   .filterItems {
     height: 30px;
-    width: 207px;
-    margin: 0 8px 8px 0;
+    width: 176px;
+    margin: 0 20px 20px 0;
     :global {
       .MuiPaper-root {
         width: 300px;
@@ -64,6 +64,13 @@
         .MuiAutocomplete-paper {
           width: 300px;
         }
+      }
+      .MuiOutlinedInput-root {
+        background-color: #fff !important;
+        border-radius: 4px !important;
+      }
+      .MuiOutlinedInput-input {
+        background-color: #ffffff !important;
       }
     }
 
@@ -81,7 +88,7 @@
     line-height: 15px;
     align-items: center;
     letter-spacing: 0.0075em;
-    color: #707070;
+    color: #86909c;
     font-size: 14px;
     margin-left: 4px;
     height: 30px;
@@ -246,15 +253,46 @@
 
 .searchField {
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   &InputContainer {
     width: 570px;
     position: relative;
-    margin-right: 16px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
 
     :global {
       .MuiOutlinedInput-root {
-        border-radius: 8px;
+        height: 60px;
+        background-color: #ffffff;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .MuiOutlinedInput-input {
+        font-size: 16px;
+      }
+
+      .MuiInputLabel-root {
+        top: 12px;
+      }
+
+      .MuiFormLabel-filled,
+      .Mui-focused {
+        top: 0;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-radius: 8px 0 0 8px;
+        border-width: 0;
+        // border-width: 1px;
+        // border-color: #E5E6EB;
+      }
+
+      .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+        border-width: 2px;
+        border-color: #1976d2;
       }
     }
   }
@@ -293,9 +331,22 @@
   }
 
   &Button {
-    padding: 6px 25px !important;
-    width: 12%;
-    border-radius: 8px !important;
+    text-transform: capitalize !important;
+    background: #136fd3 !important;
+    color: #fff;
+    width: 127px;
+    height: 60px !important;
+    border-radius: 0 8px 8px 0 !important;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.15px;
+
+    &:hover {
+      background: #1854a3 !important;
+    }
   }
 
   @include msd {
