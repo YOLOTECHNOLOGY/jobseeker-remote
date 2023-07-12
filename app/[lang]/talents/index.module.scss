@@ -1,3 +1,8 @@
+.page_container {
+  @media screen and (max-width: 540px) {
+    overflow: hidden;
+  }
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -496,8 +501,9 @@
   @media screen and (max-width: 540px) {
     background-color: transparent;
     transform: inherit;
-    width: 100%;
     padding: 0 0.1rem;
+    width: 100vw;
+    overflow: hidden;
   }
 }
 
@@ -705,6 +711,7 @@
   width: 100%;
   @media screen and (max-width: 540px) {
     height: 825px;
+    overflow-x: clip;
   }
 }
 
@@ -925,6 +932,7 @@
   @media screen and (max-width: 540px) {
     padding-top: 0.7rem;
     height: 1600px;
+    overflow-x: clip;
     //margin-bottom: 600px;
     :global {
       .swiper {

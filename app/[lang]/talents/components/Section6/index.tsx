@@ -69,6 +69,10 @@ let countries = [
 if (countries.length % 2 !== 0) {
 	countries = countries.concat(countries)
 }
+
+
+// 用法:
+
 const Section6 = () => {
 	const contextLang = useContext(languageContext);
 	return <section className={style.section6}>
