@@ -345,7 +345,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                   <Text textStyle='lg'>
                     {workExp.company}{' '}
                     {getValueById(config, workExp.country_id, 'country_id') ? (
-                      <span style={{ color: '#bcbcbc' }}>|</span>
+                      <span style={{ color: '#bcbcbc', padding: '0 8px' }}>|</span>
                     ) : null}
                   </Text>
 

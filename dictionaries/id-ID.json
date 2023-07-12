@@ -266,6 +266,8 @@
       "Find": "Find",
       "FindNow": "Find Now",
       "All": "All",
+      "Location:": "Location",
+      "SearchPlaceholder": "Search for job title",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -329,6 +331,7 @@
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
+    "slog": "Find Job. Talk to Boss",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
@@ -413,6 +416,7 @@
       "showMore": "Read More",
       "showLess": "Read Less",
       "rate": "response rate",
+      "keySkills": "Key Skills",
       "state": {
         "online": "Online",
         "now": "Active just now",
@@ -491,7 +495,9 @@
         "note": "By signing up, I have read and agreed to the",
         "term": "Terms of Use",
         "policy": "Privacy Policy"
-      }
+      },
+      "uploadResume": "Upload Resume",
+      "applyJob": "Apply Job!"
     },
     "seo": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",

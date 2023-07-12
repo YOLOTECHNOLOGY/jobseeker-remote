@@ -228,7 +228,7 @@ const CompanyInfo = (_props: Props) => {
 								.map((item, index) => {
 									if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
 									return <Image key={index} src={item.url} alt="alt" className={style.album_item}
-										width={226} height={150} style={{ objectFit: "cover" }} />
+										width={238} height={134} style={{ objectFit: "cover" }} />
 								})}
 					</div>
 				</Section>

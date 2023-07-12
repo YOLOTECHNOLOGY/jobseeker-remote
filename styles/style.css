@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bossjob';
-  src:  url('fonts/bossjob.eot?7rxob8');
-  src:  url('fonts/bossjob.eot?7rxob8#iefix') format('embedded-opentype'),
-    url('fonts/bossjob.ttf?7rxob8') format('truetype'),
-    url('fonts/bossjob.woff?7rxob8') format('woff'),
-    url('fonts/bossjob.svg?7rxob8#bossjob') format('svg');
+  src:  url('fonts/bossjob.eot?r1di5l');
+  src:  url('fonts/bossjob.eot?r1di5l#iefix') format('embedded-opentype'),
+    url('fonts/bossjob.ttf?r1di5l') format('truetype'),
+    url('fonts/bossjob.woff?r1di5l') format('woff'),
+    url('fonts/bossjob.svg?r1di5l#bossjob') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,51 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Homebased:before {
+  content: "\e902";
+}
+.icon-Bachelor:before {
+  content: "\e903";
+}
+.icon-bpo:before {
+  content: "\e904";
+}
+.icon-years:before {
+  content: "\e905";
+}
+.icon-search:before {
+  content: "\e906";
+}
+.icon-in:before {
+  content: "\e907";
+}
+.icon-Icon-2:before {
+  content: "\e908";
+}
+.icon-youtube:before {
+  content: "\e909";
+}
+.icon-tw:before {
+  content: "\e90a";
+}
+.icon-Icon:before {
+  content: "\e90b";
+}
+.icon-full-time:before {
+  content: "\e90c";
+}
+.icon-Share:before {
+  content: "\e90d";
+}
+.icon-Icons111:before {
+  content: "\e90e";
+}
+.icon-save:before {
+  content: "\e90f";
+}
+.icon-chat:before {
+  content: "\e92f";
+}
 .icon-windows:before {
   content: "\e900";
 }

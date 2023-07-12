@@ -24,7 +24,7 @@ const CulturePanel = (props: Props) => {
 	return <div className={style.culture_wrapper}>
 		<div className={style.culture_title}>{overview.CultureAndBenefits}</div>
 		<div className={style.culture_content}>
-			{overview.CultureAndBenefits}
+			{overview.BenefitsDes}
 		</div>
 		{
 			!!cultures?.length && <>

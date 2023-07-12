@@ -1,6 +1,6 @@
 'use client'
 import React, { createContext, useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { IMManager, hooks,scripts } from 'imforbossjob'
+import { IMManager, hooks, scripts } from 'imforbossjob'
 import 'imforbossjob/dist/style.css'
 import SendResumeModal from 'app/[lang]/chat/[chat_id]/components/sendResume'
 import { useDispatch, useSelector } from 'react-redux'
@@ -427,7 +427,7 @@ const IMProvider = ({ children, lang }: any) => {
                     im_body: JSON.stringify([
                         {
                             t: 't',
-                            v: msg.content
+                            v: msg?.content
                         }
                     ])
                 }

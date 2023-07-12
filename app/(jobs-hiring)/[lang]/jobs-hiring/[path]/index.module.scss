@@ -126,12 +126,14 @@ $contentWidth: 894px;
         .MuiInputLabel-root {
           display: none;
         }
+
         .MuiOutlinedInput-root {
           height: 60px;
           overflow: hidden;
           border-radius: 10px;
           background: #fff;
         }
+
         // .MuiOutlinedInput-input {
         //   font-size: 16px;
         // }
@@ -150,17 +152,21 @@ $contentWidth: 894px;
           background-color: #ffffff;
           border-radius: 8px 0 0 8px;
         }
+
         .MuiOutlinedInput-input {
           font-size: 16px;
         }
+
         .MuiInputLabel-root {
           top: 12px;
         }
+
         .MuiFormLabel-filled,
         .Mui-focused {
           top: 0;
           border-radius: 8px 0 0 8px;
         }
+
         .MuiOutlinedInput-notchedOutline {
           border-radius: 8px 0 0 8px;
           // border-width: 1px;
@@ -336,6 +342,7 @@ $contentWidth: 894px;
         .MuiOutlinedInput-root {
           background-color: #ffffff !important;
         }
+
         .MuiOutlinedInput-input {
           background-color: #ffffff !important;
         }
@@ -353,11 +360,10 @@ $contentWidth: 894px;
     .moreButton {
       text-transform: inherit;
       border-radius: 4px;
-      width: 140px;
+      min-width: 140px;
+      padding: 0 12px;
       border: 1px solid #e5e6eb;
-      padding: 0;
       background-color: #ffffff;
-
       color: #707070;
       font-size: 14px;
       font-style: normal;
@@ -482,6 +488,7 @@ $contentWidth: 894px;
         .MuiOutlinedInput-root {
           background-color: #ffffff;
         }
+
         .MuiOutlinedInput-input {
           color: rgba(0, 0, 0, 0.6) !important;
           text-align: left !important;
@@ -502,6 +509,7 @@ $contentWidth: 894px;
         .MuiOutlinedInput-root {
           background-color: #ffffff !important;
         }
+
         .MuiOutlinedInput-input {
           background-color: #ffffff !important;
         }
@@ -858,7 +866,7 @@ $contentWidth: 894px;
               flex-direction: row;
               justify-content: flex-start;
               margin-top: 8px;
-              max-height: 62px;
+              // max-height: 62px;
               overflow: hidden;
 
               .label {
