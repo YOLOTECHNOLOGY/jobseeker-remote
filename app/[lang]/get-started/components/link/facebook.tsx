@@ -35,7 +35,7 @@ const FacebookLogin = (props: IFacebook) => {
       ...query,
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
-      social_type: payload.socialType,
+      social_type: 'facebook',
       social_user_id: payload.userId,
       source: 'web'
     }
