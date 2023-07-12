@@ -9,6 +9,10 @@
   @extend .GlobalContainer;
   padding-bottom: 88px;
 
+  @include sm {
+    padding-bottom: 60px;
+  }
+
   &Pagination {
     margin-top: 50px;
     display: flex;
@@ -22,7 +26,6 @@
 .searchCompany {
   @extend .GlobalContainer;
   padding-top: 32px;
-  margin-bottom: 48px;
 
   > p {
     margin-top: 32px;
@@ -53,10 +56,24 @@
   padding-top: 24px;
   flex-wrap: wrap;
 
+  @include sm {
+    justify-content: flex-start;
+  }
+
   .filterItems {
     height: 30px;
     width: 176px;
     margin: 0 20px 20px 0;
+
+    @include msd {
+      flex: 0 1 48%;
+      margin: 0 8px 15px 0;
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+    }
+
     :global {
       .MuiPaper-root {
         width: 300px;
@@ -72,10 +89,6 @@
       .MuiOutlinedInput-input {
         background-color: #ffffff !important;
       }
-    }
-
-    @include msd {
-      width: calc(50% - 10px);
     }
   }
 
@@ -95,14 +108,27 @@
   }
 }
 
+.featuredCompanyWrapper {
+  background-color: #ffffff;
+  padding-bottom: 80px;
+
+  @include msd {
+    padding-bottom: 20px;
+  }
+}
+
+.featuredCompanyMain {
+  @extend .GlobalContainer;
+}
+
 .featuredEmployer {
   display: flex;
   justify-content: space-between;
-  height: 255px;
 
   @include msd {
     flex-direction: column;
     height: auto;
+    margin-top: 20px;
   }
 }
 
@@ -111,14 +137,16 @@
   display: flex;
   padding: 28px 0 0 28px;
   box-sizing: border-box;
-  border-radius: 15px;
   overflow: hidden;
   background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e6eb;
+  height: 274px;
 
-  @include msd {
-    flex-direction: column;
+  @include sm {
     width: 100%;
-    padding: 10px;
+    padding: 28px 12px;
+    height: auto;
   }
 }
 
@@ -145,6 +173,7 @@
 .featuredCompanyDetails {
   display: flex;
   flex-direction: column;
+  width: calc(100% - 80px);
 }
 
 .featuredCompanyAbout {
@@ -178,6 +207,10 @@
 .featuredCompanyNameWrapper {
   display: flex;
   align-items: center;
+
+  img {
+    margin-top: 3px;
+  }
 }
 
 .featuredCompanyName {
@@ -225,30 +258,57 @@
   width: 136px;
   height: 94px;
   margin-right: 8px;
-  margin-bottom: 8px;
   user-select: none;
   -webkit-user-drag: none;
+  border: 1px solid rgba(229, 230, 235, 0.3);
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   @include msd {
-    width: 45%;
+    flex: 0 1 30%;
+    height: 0;
+    padding-bottom: 25%;
   }
 }
 
 .featuredSectionTitle {
-  margin-bottom: 30px;
-  font-weight: 700;
-  font-size: 21px;
-  line-height: 27px;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  text-align: center;
+  margin: 0;
+
   color: #353535;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 55px;
+  letter-spacing: 0.33px;
+
+  @include sm {
+    display: none;
+  }
 }
 
 .popularCompanyTitle {
-  margin-top: 54px;
-  margin-bottom: 30px;
-  font-weight: 700;
-  font-size: 21px;
-  line-height: 27px;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  text-align: center;
+  margin: 0;
+
   color: #353535;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 55px;
+  letter-spacing: 0.33px;
+
+  @include sm {
+    padding-top: 60px;
+    padding-bottom: 20px;
+    font-size: 32px;
+  }
 }
 
 .searchField {
@@ -350,15 +410,14 @@
   }
 
   @include msd {
-    flex-direction: column;
+    flex-direction: row;
 
     &InputContainer {
       width: 100%;
-      margin-bottom: 24px;
     }
 
     &Button {
-      width: 100%;
+      width: 35%;
     }
   }
 }
@@ -366,6 +425,7 @@
 .companyList {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 
   @include msd {
     flex-direction: column;
@@ -385,10 +445,11 @@
 
 .companyCard {
   display: flex;
-  padding: 24px 16px;
-  border-radius: 15px;
+  padding: 20px 24px;
   background-color: #fff;
   overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e6eb;
 
   @include msd {
     flex-direction: row;
@@ -396,8 +457,8 @@
 
   &Image {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     border-radius: 5px;
     border: 1px solid #f2f5fa;
@@ -405,11 +466,11 @@
   }
 
   &Left {
-    margin-right: 21px;
+    margin-right: 16px;
   }
 
   &Right {
-    width: 280px;
+    width: 274px;
 
     p {
       margin: 0;
@@ -428,20 +489,27 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 18px;
-      line-height: 23px;
+
       color: #353535;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 23px;
+      letter-spacing: 0.36px;
     }
   }
 
   &Category {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    color: #353535;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0.113px;
   }
 
   &Openings {
@@ -449,13 +517,20 @@
     margin-top: 14px;
     display: inline-block;
 
+    p {
+      color: #4e5969;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 23px;
+      letter-spacing: 0.113px;
+
+      padding: 0;
+      margin: 0;
+    }
+
     span {
       color: #2378e5;
-      font-size: 16px;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 
