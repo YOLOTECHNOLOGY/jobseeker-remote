@@ -37,7 +37,9 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
             {truncateWords(company.name, 60)}
           </Link>
         </div>
-        <p className={styles.companyCardCategory}>{company?.industry}</p>
+        <p className={styles.companyCardCategory} title={company?.industry}>
+          {company?.industry}
+        </p>
         <Link
           to={`/${langKey}${companyUrl}/jobs`}
           target='_blank'
