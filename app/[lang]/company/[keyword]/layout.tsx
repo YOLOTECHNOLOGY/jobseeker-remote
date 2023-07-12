@@ -24,6 +24,13 @@ const configs = getConfigs([
 	['location_lists'],
 	['job_function_lists'],
 	['turnover_lists'],
+	['job_functions'],
+	['company_types'],
+	['company_benefit_lists'],
+	['company_culture_lists'],
+	['xp_lvls'],
+	['degrees'],
+	['job_types'],
 ])
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -59,8 +66,6 @@ async function CompanyLayout(props: {
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
 	const cookieStore = cookies()
 	const headeStore = headers()
-  const userAgent = headeStore.get('user-agent');
-  const isMobile = serveIsMobile(userAgent);
 	const token = cookieStore.get('accessToken')
 	const id = getIDFromKeyword(props.params.keyword);
 
@@ -86,15 +91,8 @@ async function CompanyLayout(props: {
 			}
 			return result;
 		}, {});
-		const functionMap = {};
-		props.configs.config.job_function_lists.map((item) => {
-			functionMap[Object.keys(item)[0]] = Object.values(item)[0]
-		});
-		const jobClasses = Object.keys(groupData).map((key) => {
-			return functionMap[key]?.filter((item) => {
-				return groupData[key]?.includes(String(item.id))
-			});
-		}).flat();
+		const function_ids = Object.values(groupData).flat();
+		const jobClasses = props.configs.config.job_functions.filter((item) => function_ids.includes(String(item.id)))
 			// const configkey =cookieStore.get(configKey);
 	// console.log('configkey', configkey);
 	// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
@@ -116,7 +114,7 @@ async function CompanyLayout(props: {
 					backgroundColor: '#ffffff',
 
 				}}>
-					<main>
+					<main data-string={{}}>
 						{props.children}
 					</main>
 				</section>
