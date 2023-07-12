@@ -98,12 +98,16 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: #fff;
+      color: rgba(255, 255, 255, 0.5);
       margin-top: 15px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       line-height: 14px;
+
+      svg path {
+        fill: rgba(255, 255, 255, 0.5);
+      }
 
       span {
         display: none;
@@ -380,12 +384,22 @@
     .search {
       display: flex;
       width: 100%;
-      margin-top: 40px;
+      margin-top: 10px;
+      padding: 14px;
+      background: #fff;
+      border-radius: 8px;
 
       &_location {
         width: 154px;
         // height: 24px;
-        margin-right: 12px;
+        //  margin-right: 12px;
+      }
+
+      .line {
+        height: 60px;
+        width: 1px;
+        background-color: #E4E4E4;
+        margin: 0 12px;
       }
 
       .inputBox {
@@ -463,7 +477,7 @@
   }
 
   .aside {
-    margin-left: 25px;
+    margin-left: 10px;
     width: 340px;
 
     .search {
@@ -1326,7 +1340,8 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
-        padding: 0 10px;
+        padding: 14px;
+        background: #fff;
 
         :global {
           .MuiOutlinedInput-root {
@@ -1334,10 +1349,18 @@
           }
         }
 
+        .line {
+          height: 60px;
+          width: 1px;
+          background-color: #E4E4E4;
+          margin: 0 12px;
+        }
+
         &_location {
           flex: 0.3;
-          margin-right: 10px;
+
         }
+
 
         .inputBox {
           flex: 0.7;
@@ -1427,6 +1450,10 @@
         color: #000;
         position: relative;
 
+        &:hover {
+          color: #2378E5;
+        }
+
         &::after {
           content: " ";
           position: absolute;
@@ -1460,6 +1487,7 @@
     .operator {
       display: flex;
       align-items: center;
+      font-size: 16px;
 
       i {
         color: #121212;
