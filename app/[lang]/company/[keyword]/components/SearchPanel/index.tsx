@@ -14,6 +14,7 @@ import className from 'classnames';
 import { InView } from "react-intersection-observer";
 import useMediaQuery  from '@mui/material/useMediaQuery';
 import { languageContext } from 'app/components/providers/languageProvider';
+import Empty from 'app/components/empty/empty';
 
 
 
@@ -80,7 +81,7 @@ const SearchPanel = (props: Props) => {
     //     console.log("all.index",all.length);
     //     try {
     //         const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
-    //         const index = findLastIndex([...all], (item, index) => {
+    //         const index = <findLastIn></findLastIn>dex([...all], (item, index) => {
     //             return item.getAttribute('data-visible') === 'true'
     //         });
     //         // if(previousindex < 2){
@@ -191,10 +192,10 @@ const SearchPanel = (props: Props) => {
 
                 </div>
                 <label htmlFor='input-search' className={style.job_search_container}>
-                    <img className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
+                    <Image width={16} height={16} className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
                     <input 
                         id={'input-search'} name={'input-search'} 
-                        placeholder='Find keywords'
+                        placeholder={overview.SearchPlaceholder}
                         className={style.job_search_input}
                         onChange={(e) => {
                             inputText.current = e.target.value;
@@ -322,6 +323,7 @@ const SearchPanel = (props: Props) => {
                 ></div>
             </div>
         }
+        <div className={style.search_content_wrapper}>
         <div className={style.filter_split} ref={firstRef}></div>
         <div className={style.content_layout}>
             {loading ?
@@ -336,7 +338,7 @@ const SearchPanel = (props: Props) => {
                     })
                     :
                     <div className={style.noData}>
-                        No Data
+                        <Empty lang={contextLang.search} description={null} />
                     </div>
             }
         </div>
@@ -356,6 +358,8 @@ const SearchPanel = (props: Props) => {
                 />
             }
         </div>
+        </div>
+
     </div>
 }
 
@@ -374,14 +378,13 @@ const JobsSearchCard = (props: JobData) => {
                 className={style.title}>
                 <span>{props.job_title}</span>
             </Link>
-            <div className={
-                className({
-                    [style.mobile]: true,
-                })
-            }>
-                <div className={style.salary + ' ' + style.mobile}>
+            <div className={style.jobcard_salary_wrapper}>
+                <div className={style.salary}>
                     {props.local_salary_range_value}
                 </div>
+                <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
+                        {overview.jobs.card.chatNow}
+                </Link>
             </div>
         </div>
 
@@ -394,10 +397,6 @@ const JobsSearchCard = (props: JobData) => {
                 </span>
             }).slice(0,3)}
             {!isMobile && <JobsTag {...props} />}
-            {!isMobile && <div className={style.salary + ' ' + style.desktop}>
-                {props.local_salary_range_value}
-            </div>}
-            
         </div>
         <div className={style.footer}>
             <div className={style.chat_footer}>
@@ -411,9 +410,7 @@ const JobsSearchCard = (props: JobData) => {
                     </span>
                     &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
-                    <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
-                        {overview.jobs.card.chatNow}
-                    </Link>
+
                 </Link>
             </div>
             <div className={style.location}>
@@ -426,6 +423,7 @@ const JobsSearchCard = (props: JobData) => {
 interface TagProps extends JobData {
     count?: number
     classNames?: any
+    type?: 'background'
 }
 
 export const tagsData = [

@@ -9,7 +9,7 @@ import ReadMore from './ReadMore'
 import React from 'react'
 import { accessToken } from 'helpers/cookies'
 import styles from '../../../page.module.scss'
-
+import JobClient from './JobClient/JobClient'
 type propsType = {
   description?: string
   requirements?: string
@@ -38,7 +38,7 @@ const Desc = ({
   const { content } = languages
 
   return (
-    <section className={styles.desc}>
+    <section className={styles.desc} id='JobDescription'>
       <div className={styles.desc_mobileHead}>
         <Avatar
           sx={{ width: '50px', height: '50px', marginRight: '17px' }}
@@ -65,9 +65,15 @@ const Desc = ({
         </div>
       </div>
 
-      <div className={styles.desc_jobDescWrapper} id='JobDescription'>
+      <div className={styles.desc_jobDescWrapper}>
         <div className={styles.desc_title}>
-          <h5>{content.JD}</h5>
+          <h5>
+            {content.JD}
+
+            <p>
+              <JobClient isLogin={Boolean(token)} showText={false} {...shareParams} />
+            </p>
+          </h5>
           {/* <div className={styles.desc_title_change}>
             <JobClient isLogin={Boolean(token)} {...shareParams} />
           </div> */}
@@ -82,7 +88,7 @@ const Desc = ({
           shrinkText={content.showLess}
           className={styles.desc_context}
           text={description}
-          line={5}
+          line={15}
           lineHeight={24}
         />
       </div>
@@ -120,7 +126,7 @@ const Desc = ({
           shrinkText={content.showLess}
           className={styles.desc_context}
           text={requirements}
-          line={5}
+          line={15}
           lineHeight={24}
         />
       </div>

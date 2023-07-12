@@ -32,10 +32,11 @@ export type sharePropsType = {
   }
   isLogin?: boolean
   is_saved: boolean
+  showText?: boolean
 }
 
 const JobClient = (props: sharePropsType) => {
-  const { isLogin, is_saved, id } = props
+  const { isLogin, is_saved, id, showText = true } = props
   const accessToken = getCookie('accessToken')
   const { jobDetail } = useContext(languageContext) as any
   const { header } = jobDetail
@@ -113,6 +114,11 @@ const JobClient = (props: sharePropsType) => {
       })
   }
 
+  const styleICon = {
+    fontSize: '18px',
+    paddingRight: '4px'
+  }
+
   return (
     <>
       <span
@@ -129,38 +135,32 @@ const JobClient = (props: sharePropsType) => {
           }
         }}
       >
-        {is_saved ? (
+        {isSave ? (
           <>
-            <FavoriteIcon sx={{ color: '#136FD3', fontSize: '18px' }} />
-            <span style={{ textTransform: 'capitalize', marginLeft: '2px' }}>
-              {header.undoSave}
-            </span>
+            <i
+              className='icon-save'
+              style={{ ...styleICon, color: '#136FD3', marginRight: '2px' }}
+            />
+            {/* <FavoriteIcon sx={{ color: '#136FD3', fontSize: '18px', marginRight: '2px' }} /> */}
+            {showText && <span style={{ textTransform: 'capitalize' }}>{header.undoSave}</span>}
           </>
         ) : (
           <>
-            <FavoriteBorderIcon sx={{ fontSize: '18px' }} />
-            <span style={{ textTransform: 'capitalize', marginLeft: '2px' }}>{header.save}</span>
+            <i className='icon-save' style={{ ...styleICon, marginRight: '2px' }} />
+            {showText && <span style={{ textTransform: 'capitalize' }}>{header.save}</span>}
           </>
         )}
       </span>
       {reportJobReasonList?.length ? (
         <Stack direction='row' spacing={2}>
           <div onClick={() => setIsShowSearch(true)} className={styles.jobClient_btn_wrapper}>
-            <Avatar
-              src={ShareIcon}
-              alt='share'
-              sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-            />
-            {jobDetail.content.jobShare}
+            <i className='icon-Share' style={styleICon} />
+            {showText && jobDetail.content.jobShare}
           </div>
           {isLogin && (
             <div onClick={() => setIsShowReportJob(true)} className={styles.jobClient_btn_wrapper}>
-              <Avatar
-                src={ReportIcon}
-                alt='report'
-                sx={{ width: '17px', height: '17px', marginRight: '4px' }}
-              />
-              {jobDetail.content.report}
+              <i className='icon-Icons111' style={styleICon} />
+              {showText && jobDetail.content.report}
             </div>
           )}
         </Stack>

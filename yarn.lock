@@ -4183,10 +4183,10 @@ busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
-buzzmsg@1.7.0-beta.2:
-  version "1.7.0-beta.2"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.7.0-beta.2.tgz#8560b907c2e3b96f790c82bb3bd60a72f94dc16c"
-  integrity sha512-4F5+U/NOWUAY77GsX+GLbyhky8OpA1z+3NmonDmgPwaAK2caqS49lz+NKxhlvPRq2hBzaYNgO75BxN5bEqE9Ow==
+buzzmsg@1.6.18:
+  version "1.6.18"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.6.18.tgz#8172b92ccd1fd9b319d9cacc8b7c0b2c19b5a8b5"
+  integrity sha512-X9Z/R+vBkcxfrl4MIRWJA/VKKJBFOFPfxNqHUh92tqN6nP9f7HixAWhoDz32RQWWEHkNxAePPh3230+fzU5ZZQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -4207,8 +4207,6 @@ buzzmsg@1.7.0-beta.2:
     nanoid "^4.0.0"
     react-infinite-scroller "^1.2.6"
     react-intl "^5.18.1"
-    ts-streamclient-base "https://github.com/xpwu/ts-streamclient-base.git#v0.1.1"
-    ts-streamclient-browser "https://github.com/xpwu/ts-streamclient-browser.git#v0.1.1"
     viewerjs "^1.11.0"
 
 bytes@3.1.2:
@@ -6089,10 +6087,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.2.0-beta:
-  version "0.2.0-beta"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.0-beta.tgz#9f546e1f1128522eb8d44f1574e334bc43d179c2"
-  integrity sha512-eKxq0b4z2CJHJXcE+diGM6E/qs7uzZuex0cBFfe8lTkkxxUQHkTtH2YZaifugnsCrfiTaSJRs6py6XmkuNAk9A==
+imforbossjob@^0.2.0-beta-fix5:
+  version "0.2.0-beta-fix5"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.0-beta-fix5.tgz#46abb0ddeb8e8e98df6ca5caf9f30dbc34882c25"
+  integrity sha512-tJPuGHRtgQj+GDriO5GxvV07qdUK6ZuG96MG+GSwLgNNYDopprhe7RX7cR3Bu6UgT5EvTBBGV5vnRNjsoFi6cg==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -6102,7 +6100,7 @@ imforbossjob@^0.2.0-beta:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "1.7.0-beta.2"
+    buzzmsg "1.6.18"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
@@ -9441,29 +9439,6 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
-
-"ts-streamclient-base@git+https://github.com/xpwu/ts-streamclient-base.git#v0.1.1":
-  version "0.1.1"
-  resolved "git+https://github.com/xpwu/ts-streamclient-base.git#732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
-  dependencies:
-    ts-xutils "https://github.com/xpwu/ts-xutils.git#v0.1.2"
-
-"ts-streamclient-base@https://github.com/xpwu/ts-streamclient-base.git#v0.1.1":
-  version "0.1.1"
-  uid "732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
-  resolved "https://github.com/xpwu/ts-streamclient-base.git#732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
-  dependencies:
-    ts-xutils "https://github.com/xpwu/ts-xutils.git#v0.1.2"
-
-"ts-streamclient-browser@git+https://github.com/xpwu/ts-streamclient-browser.git#v0.1.1":
-  version "0.1.1"
-  resolved "git+https://github.com/xpwu/ts-streamclient-browser.git#785a3fb50b9f438b337544a37573db495432cc84"
-  dependencies:
-    ts-streamclient-base "https://github.com/xpwu/ts-streamclient-base.git#v0.1.1"
-
-"ts-xutils@https://github.com/xpwu/ts-xutils.git#v0.1.2":
-  version "0.1.2"
-  resolved "https://github.com/xpwu/ts-xutils.git#06ec3ac20d354fe189ad1d0ffb81174054caa072"
 
 tsconfig-paths@^3.14.1:
   version "3.14.2"

@@ -48,17 +48,22 @@ const Head = ({
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
   return (
-    <section id='jobDetaiPagelHead' className={classNames([styles.head, styles.headSticky])}>
+    <section id='jobDetaiPagelHead' className={classNames([styles.head])}>
       <div className={styles.head_main}>
         <div className={styles.head_main_title}>
           <div className={styles.head_main_titleWrapper}>
-            <h1>{title}</h1>
-            <div className={styles.head_main_title_context}>
-              <span className={styles.head_main_title_context_type}>({job_type_value})</span>
+            <h1>
               {jobDetail.is_urgent ? (
                 <span className={styles.head_main_title_context_status}>{header.urgent}</span>
               ) : null}
-            </div>
+              {title}
+            </h1>
+            {/* <div className={styles.head_main_title_context}>
+
+              {jobDetail.is_urgent ? (
+                <span className={styles.head_main_title_context_status}>{header.urgent}</span>
+              ) : null}
+            </div> */}
           </div>
           <div className={styles.head_main_salary}>{salary}</div>
         </div>
@@ -81,6 +86,7 @@ const Head = ({
             </svg>
           </i>
           {localhost}
+          <span>|</span>
           <i>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -98,6 +104,7 @@ const Head = ({
             </svg>
           </i>
           {degree}
+          <span>|</span>
           <i>
             {' '}
             <svg
@@ -115,7 +122,8 @@ const Head = ({
               />
             </svg>
           </i>
-          {xp_lvl}{' '}
+          {xp_lvl}
+          <span>|</span>
           <i>
             {' '}
             <svg

@@ -34,12 +34,14 @@ const Company = (company: propsType) => {
               src={company.logo}
               sx={{ borderRadius: '5px', width: '60px', height: '60px', margin: '8px 0' }}
             />
-            <h5 className={styles.company_name}>{company.name}</h5>
+            <div>
+              <h5 className={styles.company_name}>{company.name}</h5>
+              <div className={styles.company_financingStage}>
+                {company.companySize} <span>|</span> {industry}
+              </div>
+            </div>
           </div>
 
-          <div className={styles.company_financingStage}>
-            {company.companySize} <span>|</span> {companySection.employees} {industry}
-          </div>
           {/* <div className={styles.company_financingStage}>
           
           </div> */}
@@ -70,7 +72,7 @@ const Company = (company: propsType) => {
       <Link href={'/' + lang + company?.companyUrl}>
         <section className={styles.company_mobileHead}>
           <Avatar
-            sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
+            sx={{ width: '60px', height: '60px', borderRadius: '5px', marginRight: '8px' }}
             src={company?.logo}
           ></Avatar>
           <div className={styles.company_mobileHead_info}>

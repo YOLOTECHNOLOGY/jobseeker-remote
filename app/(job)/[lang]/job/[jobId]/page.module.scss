@@ -25,11 +25,12 @@
   position: sticky;
   top: 0;
   z-index: 2;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 }
 
 .head {
   width: 100%;
-  background: linear-gradient(161.27deg, #2375E8 39.55%, #80C2F6 80.83%, #F2FDFF 137.9%);
+  background: linear-gradient(176deg, #2375E8 39.55%, #53B0F9 80.83%, #70FAFF 137.9%);
   padding: 20px 0 28px 0;
 
   &_main {
@@ -46,9 +47,9 @@
       display: flex;
       justify-content: space-between;
 
-      &_context {
-        display: none;
-      }
+      // &_context {
+      //   display: none;
+      // }
     }
 
     h1 {
@@ -58,7 +59,6 @@
       font-size: 40px;
       letter-spacing: 0.8px;
       color: #353535;
-      justify-content: space-between;
       margin-bottom: 0;
       line-height: 48px;
       // text-overflow: ellipsis;
@@ -67,6 +67,22 @@
       padding: 6px 0 2px 0;
       // white-space: nowrap;
       color: #fff;
+      display: flex;
+      align-items: center;
+
+      span {
+        line-height: 30px;
+        border-radius: 3px;
+        font-size: 16px;
+        color: #fff;
+        display: inline-block;
+        padding: 0 5px;
+        margin-right: 10px;
+        background: linear-gradient(128deg, #F64A88 0%, #F56A6A 100%);
+        position: relative;
+        top: 1px;
+        box-shadow: 0px 6px 22px 0px rgba(255, 60, 60, 0.10);
+      }
     }
 
     &_salary {
@@ -88,6 +104,10 @@
       flex-wrap: wrap;
       align-items: center;
       line-height: 14px;
+
+      span {
+        display: none;
+      }
 
       i {
         margin-left: 20px;
@@ -169,7 +189,7 @@
   margin: 0 auto;
   display: flex;
   padding-bottom: 24px;
-  padding-top: 24px;
+  padding-top: 10px;
 
   .main {
     width: calc(100% - 275px);
@@ -217,6 +237,20 @@
           line-height: 24px;
           color: #353535;
           margin-bottom: 20px;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+
+          p {
+            display: none;
+            align-items: center;
+
+            .item {
+              margin-right: 20px;
+              position: relative;
+              top: 2px;
+            }
+          }
         }
       }
 
@@ -320,8 +354,7 @@
     .map {
       background: #ffffff;
       border-radius: 15px;
-      padding: 0 24px;
-      margin-top: 40px;
+      padding: 40px 24px 0;
 
       h5 {
         font-style: normal;
@@ -351,7 +384,7 @@
 
       &_location {
         width: 154px;
-        height: 24px;
+        // height: 24px;
         margin-right: 12px;
       }
 
@@ -470,7 +503,7 @@
       background: #ffffff;
       border-radius: 8px;
       padding: 20px 16px;
-      margin-bottom: 24px;
+      margin-bottom: 10px;
 
       &_info {
         display: flex;
@@ -499,7 +532,7 @@
         font-size: 14px;
         letter-spacing: 0.0075em;
         color: #707070;
-        padding: 8px 0 10px;
+        padding: 0px 0 10px 10px;
 
         span {
           color: #E4E4E4;
@@ -516,7 +549,7 @@
       border-radius: 8px;
       background: #FFF;
       padding: 20px 16px;
-      margin-bottom: 24px;
+      margin-bottom: 10px;
 
       >div {
         display: flex;
@@ -584,7 +617,7 @@
       border-radius: 8px;
       border: 1px solid #92C2FF;
       height: 156px;
-      margin-bottom: 24px;
+      margin-bottom: 10px;
       background: linear-gradient(142deg, #EDFBFF 0%, #F3F8FF 100%);
       padding: 20px 16px;
 
@@ -637,8 +670,9 @@
       background: #ffffff;
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 24px;
+      margin-top: 10px;
       padding: 20px 16px 30px 16px;
+
 
       h3 {
         font-style: normal;
@@ -648,6 +682,10 @@
         letter-spacing: 0.02em;
         color: #353535;
         margin-bottom: 10px;
+
+        &:hover {
+          color: #2378e5;
+        }
       }
 
       &_card:first-child {
@@ -668,9 +706,13 @@
         padding-top: 0;
       }
 
+      &_webCard {
+        display: none;
+      }
+
       &_title {
         font-style: normal;
-        font-size: 18px;
+        font-size: 17px;
         color: #353535;
         margin-bottom: 0;
         overflow: hidden;
@@ -682,7 +724,7 @@
 
       &_salary {
         font-style: normal;
-        font-size: 20px;
+        font-size: 15px;
         letter-spacing: 0.02em;
         color: #2378E5;
         ;
@@ -702,8 +744,72 @@
         }
       }
 
+
+      &_mobileCardWrapper {
+        display: flex;
+        justify-content: space-between;
+      }
+
       &_mobileCard {
-        display: none;
+        display: block;
+
+        &_name {
+          font-weight: 400;
+          font-size: 12px;
+          letter-spacing: 0.0075em;
+          color: #353535;
+
+        }
+
+        &_tags {
+          span {
+            margin: 12px 0 0 0;
+            padding: 3px 10px;
+            background: #F7F8FA;
+            border-radius: 6px;
+            font-weight: 400;
+            font-size: 12px;
+            letter-spacing: 0.0075em;
+            color: #4E5969;
+            margin-right: 3px;
+            display: inline-block;
+          }
+        }
+
+        &_loca {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          letter-spacing: 0.0075em;
+          color: #353535;
+
+          &_value {
+            color: #707070;
+          }
+        }
+      }
+
+      &_infoWrpper {
+        position: relative;
+
+        &_status {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          background-color: white;
+          border-radius: 50%;
+          position: absolute;
+          right: 4px;
+          bottom: 0px;
+        }
+
+        &_lineStatus {
+          border: 1px solid white;
+          background-color: #32a071;
+        }
       }
     }
 
@@ -727,15 +833,16 @@
     &_mobilesticky_btnGroup {
       display: none;
       width: 100%;
-      padding: 8px 20px;
+      padding: 16px 20px;
       background-color: white;
       position: fixed;
-      bottom: 0px;
+      bottom: -1px;
       z-index: 10;
+      border-top: 0.5px solid #bcbcbc;
 
       &_change {
         button {
-          width: 50%;
+          width: 100%;
         }
 
         button:first-child {
@@ -831,13 +938,12 @@
 // < 1136px
 @media (max-width: $NextAppMaxWidth) {
   .head {
+
+
     &_main {
       padding: 0 15px;
-    }
-  }
 
-  .menu {
-    display: none;
+    }
   }
 
   .container {
@@ -874,7 +980,7 @@
 
   .head {
     padding-bottom: 0;
-
+    background: #fff;
 
 
     &_main {
@@ -886,6 +992,7 @@
         font-weight: 700;
         font-size: 18px;
         letter-spacing: 0.02em;
+        color: #2378E5;
       }
 
       h1 {
@@ -894,7 +1001,7 @@
         font-size: 18px;
         line-height: 23px;
         letter-spacing: 0.02em;
-        color: #fff;
+        color: #353535;
       }
 
       &_titleWrapper {
@@ -903,6 +1010,16 @@
 
       &_desc {
         line-height: 18px;
+        color: #707070;
+
+        i {
+          display: none;
+        }
+
+        span {
+          display: block;
+          padding: 0 6px;
+        }
       }
 
       &_title {
@@ -922,6 +1039,7 @@
             word-break: break-all;
             white-space: nowrap;
             display: inline-block;
+            display: none;
           }
 
           &_status {
@@ -941,6 +1059,10 @@
     }
   }
 
+  .menu {
+    display: none;
+  }
+
   .container {
     display: block;
     padding: 0px;
@@ -950,6 +1072,11 @@
     .main {
       width: 100%;
 
+      .benefits {
+        margin: 0;
+        padding: 20px
+      }
+
       .desc,
       .benefits,
       .map {
@@ -957,34 +1084,53 @@
       }
 
       .desc {
-        padding: 24px 0;
+        padding: 20px 0;
+
+        h5 {
+          p {
+            display: flex;
+
+            i {
+              color: #B8B8B8;
+            }
+          }
+        }
 
         &_jobDescWrapper {
-          padding: 29px 20px 20px;
+          padding: 20px 20px 20px;
           overflow: hidden;
         }
 
         &_jobRequireWrapper {
-          padding: 0px 20px;
+          padding: 20px;
+
+
         }
 
-        &_mobileLine {
-          height: 8px;
-          background: #f0f0f0;
-          width: 100%;
+        &_requirement {
+          padding-top: 0px;
         }
+
+        // &_mobileLine {
+        //   height: 8px;
+        //   background: #f0f0f0;
+        //   width: 100%;
+        // }
 
         &_mobileHead {
           display: flex;
-          align-items: center;
+          //align-items: center;
           background: #e7f1fb;
-          padding: 15px 20px;
+          padding: 20px 16px;
 
           &_info {
             display: flex;
             flex-direction: column;
 
-            &_rate,
+            &_rate {
+              margin: 6px 0 8px;
+            }
+
             &_name,
             &_active {
               margin-left: 0;
@@ -1010,9 +1156,12 @@
         }
       }
 
-      .benefits,
+      .benefits {
+        padding-top: 0;
+      }
+
       .map {
-        margin-top: 8px;
+        padding-top: 20px;
       }
 
       .search {
@@ -1035,14 +1184,14 @@
       .company {
         border-radius: 0;
         margin-top: 0;
-        background: #e7f1fb;
         display: none;
+
 
         &_mobileHead {
           display: flex;
-          align-items: center;
-          background: #e7f1fb;
-          padding: 15px 20px;
+          padding: 20px 16px;
+          background: #fff;
+          border-bottom: 1px solid #E4E4E4;
 
           &_info {
             display: flex;
@@ -1057,20 +1206,28 @@
             &_name {
               font-style: normal;
               font-weight: 700;
-              font-size: 16px;
+              font-size: 20px;
               color: #353535;
+              position: relative;
+              top: -6px;
             }
 
             &_tag {
               font-style: normal;
               font-weight: 400;
-              font-size: 12px;
+              font-size: 14px;
               letter-spacing: 0.0075em;
               color: #707070;
             }
           }
         }
       }
+
+      .jobseeker,
+      .upload {
+        display: none;
+      }
+
 
       .ad {
         &_container {
@@ -1080,23 +1237,20 @@
 
       .similarJobs {
         border-radius: 0;
-        background: transparent;
-
-        h3 {
-          background: rgb(245, 246, 250);
-        }
+        background: #fff;
+        margin-top: 0;
 
         &_card {
           background: #ffffff;
-          border-radius: 10px;
+          border-radius: 0;
           padding: 16px 13px;
           margin-top: 7px;
         }
 
-        &_seeMore {
-          background: #136fd3;
-          color: #ffffff;
-        }
+        // &_seeMore {
+        //   background: #136fd3;
+        //   color: #ffffff;
+        // }
 
         &_webCard {
           display: none;
@@ -1170,16 +1324,27 @@
 
       .search {
         display: flex;
-        padding: 0 20px;
         justify-content: space-between;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+        padding: 0 10px;
+
+        :global {
+          .MuiOutlinedInput-root {
+            border-radius: 8px;
+          }
+        }
 
         &_location {
           flex: 0.3;
+          margin-right: 10px;
+        }
+
+        .inputBox {
+          flex: 0.7;
         }
 
         &_field {
-          flex: 0.67;
+          width: 100%;
 
           &_bingo {
             display: none;
@@ -1260,11 +1425,34 @@
         line-height: 88px;
         font-size: 16px;
         color: #000;
+        position: relative;
+
+        &::after {
+          content: " ";
+          position: absolute;
+          width: 100%;
+          transform: scaleX(0);
+          height: 3px;
+          bottom: -2px;
+          left: 0;
+          background-color: #2378E5;
+          transform-origin: bottom right;
+          transition: transform .25s ease-out
+        }
+
+        &:hover {
+          &::after {
+            transform: scaleX(1);
+            transform-origin: bottom left
+          }
+
+        }
 
         &.active {
-          color: #2378E5;
-          font-weight: 700;
-          border-bottom: 3px solid #2378E5;
+          &::after {
+            transform: scaleX(1);
+          }
+
         }
       }
     }
@@ -1272,6 +1460,10 @@
     .operator {
       display: flex;
       align-items: center;
+
+      i {
+        color: #121212;
+      }
 
       .item {
         display: flex;
