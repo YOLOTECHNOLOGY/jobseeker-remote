@@ -268,6 +268,7 @@
       "All": "All",
       "Location:": "Location",
       "SearchPlaceholder": "Search for job title",
+      "CompanyType": "Company type",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -1330,6 +1331,9 @@
     "Malaysia": "Malaysia",
     "Thailand": "Thailand",
     "Vietnam": "Vietnam",
+    "Macao": "Macao",
+    "Taiwan": "Taiwan",
+    "Japan": "Japan",
     "section6_title": "Best hiring APP in Southeast-Asia",
     "section6_subtitle": "Find jobs anywhere, everywhere",
     "section6_coming_soon": "Coming soon...",
