@@ -30,11 +30,6 @@ let countries = [
 		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png`,
 	},
 	{
-		"country": "Japan",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/japen-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/japen.png`
-	},
-	{
 		"country": "Macao",
 		"flag": `${process.env.S3_BUCKET_URL}/landing/macao-flag.png`,
 		"image": `${process.env.S3_BUCKET_URL}/landing/Macao.png`
@@ -43,6 +38,11 @@ let countries = [
 		"country": "Taiwan",
 		"flag": `${process.env.S3_BUCKET_URL}/landing/taiwan-flag.png`,
 		"image": `${process.env.S3_BUCKET_URL}/landing/taiwan.png`
+	},
+	{
+		"country": "Japan",
+		"flag": `${process.env.S3_BUCKET_URL}/landing/japen-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/japen.png`
 	},
 	{
 		"country": "Malaysia",

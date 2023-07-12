@@ -175,6 +175,7 @@ const SearchPanel = (props: Props) => {
                             setLocation(value);
                             searchFunc(inputText.current, value, 1);
                         }}
+                        key={location?.id}
                         disableClearable={false}
                         // className={className}
                         renderInput={(params) => {
@@ -269,7 +270,7 @@ const SearchPanel = (props: Props) => {
                         </InView>
 
                         {props.functions?.map((item, index) => {
-                            return <InView threshold={1} key={index}>
+                            return <InView threshold={1} key={item.id}>
                                 {({ ref, inView }) => {
                                     if(!isMobile){
                                         if (inView && props.functions.length - 1 === index) {
@@ -334,7 +335,7 @@ const SearchPanel = (props: Props) => {
                 : !!jobsData.jobs.length ?
 
                     !loading && jobsData.jobs.map((item) => {
-                        return <JobsSearchCard key={item.job_title} {...item} />
+                        return <JobsSearchCard key={item.job_title + item.id} {...item} />
                     })
                     :
                     <div className={style.noData}>
@@ -363,12 +364,26 @@ const SearchPanel = (props: Props) => {
     </div>
 }
 
+export const getLocation = (region_id: number, location_id: number) =>{
+    const { config } = useCompanyDetail();
+    const location_list = config?.location_lists || [];
+    const region = location_list.find(item => item.id === region_id)?.locations || [];
+    const location = region.find((item) => item.id === location_id)?.value || '';
+    return `${location}`;
+} 
 
 const JobsSearchCard = (props: JobData) => {
-    const { lang } = useCompanyDetail();
+    const { lang , config } = useCompanyDetail();
     const isMobile = useMediaQuery('(max-width: 768px)');
     const contextLang = useContext(languageContext);
-	const { overview } = contextLang.companyDetail;
+	const { overview,  } = contextLang.companyDetail;
+    const degree_list = config?.degrees || [];
+    const xp_lvl_list = config?.xp_lvls || [];
+    const job_type_list = config?.job_types || [];
+    const _tagsData = [...tagsData];
+    _tagsData[0].name = xp_lvl_list.find(item => item.id === props.xp_lvl_id)?.value || '';
+    _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
+    _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
     return <div className={style.search_card}>
         <div className={style.search_title_layout}>
             <Link
@@ -389,11 +404,11 @@ const JobsSearchCard = (props: JobData) => {
         </div>
 
         <div className={style.content}>
-            {tagsData.map(item => {
+            {_tagsData.map(item => {
                 const value = props[item.field]
                 if (!value) return null;
                 return <span className={style.mobile_tag} key={value}>
-                    {value}
+                    {item.name}
                 </span>
             }).slice(0,3)}
             {!isMobile && <JobsTag {...props} />}
@@ -410,11 +425,10 @@ const JobsSearchCard = (props: JobData) => {
                     </span>
                     &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
-
                 </Link>
             </div>
             <div className={style.location}>
-                {props.job_location}
+                {getLocation(props.job_region_id, props.job_location_id)}
             </div>
         </div>
     </div>
@@ -427,18 +441,25 @@ interface TagProps extends JobData {
 }
 
 export const tagsData = [
-    { name: '', field: 'xp_lvl' },
-    { name: '', field: 'degree' },
-    { name: '', field: 'job_type' },
+    { name: '', field: 'xp_lvl_id' },
+    { name: '', field: 'degree_id' },
+    { name: '', field: 'job_type_id' },
 ]
 export const JobsTag = (props: TagProps) => {
-
+    const {config } = useCompanyDetail();
+    const degree_list = config?.degrees || [];
+    const xp_lvl_list = config?.xp_lvls || [];
+    const job_type_list = config?.job_types || [];
+    const _tagsData = [...tagsData];
+    _tagsData[0].name = xp_lvl_list.find(item => item.id === props.xp_lvl_id)?.value || '';
+    _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
+    _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
     return <div className={style.tags}>
-        {tagsData.map(item => {
+        {_tagsData.map(item => {
             const value = props[item.field]
             if (!value) return null;
             return <div className={style.tag_item + ' ' + ' tag_flag'} key={value}>
-                {value}
+                {item.name}
             </div>
         }).slice(0, props.count ?? 3)}
     </div>

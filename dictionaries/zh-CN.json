@@ -266,8 +266,9 @@
       "Find": "Find",
       "FindNow": "Find Now",
       "All": "全部",
-      "Location:": "Location",
+      "Location:": "地区",
       "SearchPlaceholder": "Search for job title",
+      "CompanyType": "Company type",
       "culture": {
         "title": "公司文化",
         "viewAll": "查看全部",
@@ -416,7 +417,7 @@
       "showMore": "显示更多",
       "showLess": "显示更少",
       "rate": "回复率",
-      "keySkills": "Key Skills",
+      "keySkills": "专业技能",
       "state": {
         "online": "在线",
         "now": "刚刚活跃",
