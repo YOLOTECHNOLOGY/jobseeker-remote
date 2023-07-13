@@ -246,7 +246,7 @@
           display: flex;
           justify-content: space-between;
 
-          p {
+          >div {
             display: none;
             align-items: center;
 
@@ -830,14 +830,14 @@
 
     .ad {
       &_container {
-        width: 250px;
+        width: 340px;
         height: 250px;
         background-color: rosybrown;
         animation: loading 2s ease infinite;
         overflow: hidden;
         border-radius: 8px;
         margin-top: 24px;
-        margin: 24px auto;
+        margin: 10px auto;
       }
     }
 
@@ -1110,7 +1110,7 @@
         padding: 20px 0;
 
         h5 {
-          p {
+          >div {
             display: flex;
 
             i {
@@ -1254,7 +1254,7 @@
 
       .ad {
         &_container {
-          margin: 24px auto 45px;
+          margin: 10px auto 45px;
         }
       }
 
@@ -1366,13 +1366,13 @@
         }
 
         &_location {
-          flex: 0.3;
+          flex: 0.4;
 
         }
 
 
         .inputBox {
-          flex: 0.7;
+          flex: 0.6;
         }
 
         &_field {
