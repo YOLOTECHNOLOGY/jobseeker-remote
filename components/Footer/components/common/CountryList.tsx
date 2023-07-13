@@ -3,8 +3,7 @@ import Link from 'components/Link'
 import { getCountryKey } from 'helpers/country'
 import styles from '../../Footer.module.scss'
 
-const CountryList = (props:any) => {
-
+const CountryList = (props: any) => {
   const { data, langKey } = props
   const countryKey = getCountryKey()
   const { JobsIn1, JobsIn2, JobsIn3 } = data || {}
@@ -12,29 +11,29 @@ const CountryList = (props:any) => {
   const COUNTRY_MAP = {
     ph: [
       {
-        to: `${langKey}/jobs-hiring/manila-jobs`,
+        to: `/${langKey}/jobs-hiring/manila-jobs`,
         title: JobsIn1
       },
       {
-        to: `${langKey}/jobs-hiring/makati-jobs`,
+        to: `/${langKey}/jobs-hiring/makati-jobs`,
         title: JobsIn2
       },
       {
-        to: `${langKey}/jobs-hiring/cebu-jobs`,
+        to: `/${langKey}/jobs-hiring/cebu-jobs`,
         title: JobsIn3
       }
     ],
     sg: [
       {
-        to: `${langKey}/jobs-hiring/downtown-core-jobs`,
+        to: `/${langKey}/jobs-hiring/downtown-core-jobs`,
         title: JobsIn1
       },
       {
-        to: `${langKey}/jobs-hiring/kallang-jobs`,
+        to: `/${langKey}/jobs-hiring/kallang-jobs`,
         title: JobsIn2
       },
       {
-        to: `${langKey}/jobs-hiring/jurong-east-jobs`,
+        to: `/${langKey}/jobs-hiring/jurong-east-jobs`,
         title: JobsIn3
       }
     ]
