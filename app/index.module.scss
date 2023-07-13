@@ -974,7 +974,7 @@
   }
 }
 
-.searchMainBackground {
+.searchMainContainer {
   height: 100%;
   position: relative;
   display: block;
@@ -990,13 +990,21 @@
   }
 }
 
+.searchBackground {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .searchArea {
   // background: #f0f4f7;
   position: absolute;
   bottom: -25px;
   left: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 
   .box {
     display: flex;
@@ -1252,7 +1260,7 @@
       margin: 0px 0 0 15px;
       padding: 0px 10px;
       min-width: 155px;
-      background: #fff;
+      background: #f7f8fa;
       border-radius: 4px;
       overflow: hidden;
       text-overflow: clip;
@@ -1270,7 +1278,7 @@
       }
 
       &:hover {
-        background-color: #f7f8fa;
+        background-color: #f2f3f5;
       }
     }
   }
@@ -1494,6 +1502,7 @@
     font-style: normal;
     font-weight: 700;
     margin-top: 40px;
+    z-index: 10;
 
     @include sm {
       font-size: 32px;
@@ -1550,11 +1559,12 @@
     }
 
     .header {
-      height: 96px;
+      // height: 110px;
       cursor: pointer;
       display: block;
       margin: 0 20px;
       border-bottom: 1px solid #e5e6eb;
+      padding-bottom: 34px;
 
       .img {
         width: 48px;
