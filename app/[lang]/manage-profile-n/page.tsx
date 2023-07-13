@@ -1,16 +1,16 @@
 'use client';
 import { useLanguage } from 'app/components/providers/languageProvider';
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useManageProfileData } from './DataProvider';
 import ProfileLayout from 'components/ProfileLayout'
 import ResumeView from './components/ResumeView';
 
-const ManageProfilePage = () =>{
+const ManageProfilePage = () => {
   const lang = useLanguage();
-  const {profile : userDetail, config} = useManageProfileData()
+  const { profile: userDetail, config } = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
-	const tab = searchParams.get('tab');;
+  const tab = searchParams.get('tab');;
   const {
     manageProfile: { tab: tabDic }
   } = lang
@@ -67,18 +67,18 @@ const ManageProfilePage = () =>{
       data: null
     }
   })
-  console.log({lang,userDetail,config,tab});
+  console.log({ lang, userDetail, config, tab });
   return <>
-     <ProfileLayout
-        dic={tabDic}
-        userDetail={userDetail}
-        tabValue={tabValue}
-        setTabValue={setTabValue}
-        modalName='profile'
-        handleModal={handleModal}
-        unCompleted={unCompleted}
-      >
-        {/* {tabValue === 'profile' && (
+    <ProfileLayout
+      dic={tabDic}
+      userDetail={userDetail}
+      tabValue={tabValue}
+      setTabValue={setTabValue}
+      modalName='profile'
+      handleModal={handleModal}
+      unCompleted={unCompleted}
+    >
+      {/* {tabValue === 'profile' && (
           <RenderProfileView
             lang={lang}
             userDetail={userDetail}
@@ -86,11 +86,12 @@ const ManageProfilePage = () =>{
             config={config}
           />
         )} */}
-        {tabValue === 'job-preferences'}
-        {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
-      </ProfileLayout>
+      {tabValue === 'profile' && <h1>hello profile</h1>}
+      {tabValue === 'job-preferences' && <h1>hello preferences</h1>}
+      {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
+    </ProfileLayout>
   </>
-  
+
 }
 
 

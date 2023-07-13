@@ -6,9 +6,9 @@ import { addUserLicensesAndCertificationsService } from 'store/services/users/ad
 import { updateUserLicensesAndCertificationsService } from 'store/services/users/updateUserLicensesAndCertifications'
 import { deleteUserLicensesAndCertificationsService } from 'store/services/users/deleteUserLicensesAndCertifications'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
-import { 
-  manageUserLicensesAndCertificationsFailed, 
-  manageUserLicensesAndCertificationsSuccess 
+import {
+  manageUserLicensesAndCertificationsFailed,
+  manageUserLicensesAndCertificationsSuccess
 } from 'store/actions/users/manageUserLicensesAndCertifications'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
