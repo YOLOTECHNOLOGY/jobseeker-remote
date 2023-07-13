@@ -61,9 +61,9 @@ const SearchArea = (props: any) => {
       })
       const url = new URLSearchParams(toPairs(result.params)).toString()
       router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, {
-        forceOptimisticNavigation: true
+        scroll: true
       })
-      // router.push('/' + langKey + query, { forceOptimisticNavigation: true })
+      // router.push('/' + langKey + query, { scroll: true })
     },
     [location, router]
   )
