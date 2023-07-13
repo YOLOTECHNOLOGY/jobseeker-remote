@@ -858,6 +858,10 @@
       &_change {
         button {
           width: 100%;
+
+          &:hover {
+            background-color: #fff;
+          }
         }
 
         button:first-child {
