@@ -15,7 +15,8 @@ const Copyright = (props: any) => {
         <span>{IndonesiaPT}</span>
         <br />
         <span>
-          {JapanYolo} <i>|</i> {JapanAddress}
+          {JapanYolo}
+          {/* <i>|</i> {JapanAddress} */}
         </span>
       </div>
     </div>
