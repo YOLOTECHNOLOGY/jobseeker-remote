@@ -70,9 +70,9 @@ const Desc = ({
           <h5>
             {content.JD}
 
-            <p>
+            <div>
               <JobClient isLogin={Boolean(token)} showText={false} {...shareParams} />
-            </p>
+            </div>
           </h5>
           {/* <div className={styles.desc_title_change}>
             <JobClient isLogin={Boolean(token)} {...shareParams} />
