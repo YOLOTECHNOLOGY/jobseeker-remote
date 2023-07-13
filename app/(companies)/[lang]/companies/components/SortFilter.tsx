@@ -7,10 +7,10 @@ import { ThemeProvider } from '@mui/material/styles'
 import { Button } from 'app/components/MUIs'
 
 interface IProps {
-  config: any;
-  resetFilterFn: Function;
-  sortFilterFn: Function;
-  lang: any;
+  config: any
+  resetFilterFn: Function
+  sortFilterFn: Function
+  lang: any
 }
 
 const SortFilter = (props: IProps) => {
@@ -107,6 +107,7 @@ const SortFilter = (props: IProps) => {
           options={industryList}
           className={styles.filterItems}
           onSelect={setIndustry}
+          defaultValue={industry}
         />
         {/* Location */}
         {/* <LocationField1

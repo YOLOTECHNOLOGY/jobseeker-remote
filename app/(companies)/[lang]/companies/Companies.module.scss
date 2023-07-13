@@ -2,12 +2,16 @@
 @import 'styles/variable.scss';
 
 .container {
-  background-color: #f7f8fa;
+  background: #fcfcfc;
 }
 
 .companies {
   @extend .GlobalContainer;
   padding-bottom: 88px;
+
+  @include sm {
+    padding-bottom: 60px;
+  }
 
   &Pagination {
     margin-top: 50px;
@@ -16,13 +20,12 @@
 }
 
 .searchContainer {
-  background-color: #fff;
+  background: #f0f4f7;
 }
 
 .searchCompany {
   @extend .GlobalContainer;
-  padding-top: 32px;
-  margin-bottom: 48px;
+  padding-top: 20px;
 
   > p {
     margin-top: 32px;
@@ -49,14 +52,28 @@
 .filters {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  padding-top: 20px;
+  justify-content: center;
+  padding-top: 24px;
   flex-wrap: wrap;
+
+  @include sm {
+    justify-content: flex-start;
+  }
 
   .filterItems {
     height: 30px;
-    width: 207px;
-    margin: 0 8px 8px 0;
+    width: 176px;
+    margin: 0 20px 20px 0;
+
+    @include msd {
+      flex: 0 1 48%;
+      margin: 0 8px 15px 0;
+
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+    }
+
     :global {
       .MuiPaper-root {
         width: 300px;
@@ -65,10 +82,13 @@
           width: 300px;
         }
       }
-    }
-
-    @include msd {
-      width: calc(50% - 10px);
+      .MuiOutlinedInput-root {
+        background-color: #fff !important;
+        border-radius: 4px !important;
+      }
+      .MuiOutlinedInput-input {
+        background-color: #ffffff !important;
+      }
     }
   }
 
@@ -81,21 +101,38 @@
     line-height: 15px;
     align-items: center;
     letter-spacing: 0.0075em;
-    color: #707070;
+    color: #86909c;
     font-size: 14px;
     margin-left: 4px;
     height: 30px;
+
+    &:hover {
+      background: transparent;
+    }
   }
+}
+
+.featuredCompanyWrapper {
+  background-color: #ffffff;
+  padding-bottom: 80px;
+
+  @include msd {
+    padding-bottom: 20px;
+  }
+}
+
+.featuredCompanyMain {
+  @extend .GlobalContainer;
 }
 
 .featuredEmployer {
   display: flex;
   justify-content: space-between;
-  height: 255px;
 
   @include msd {
     flex-direction: column;
     height: auto;
+    margin-top: 20px;
   }
 }
 
@@ -104,14 +141,16 @@
   display: flex;
   padding: 28px 0 0 28px;
   box-sizing: border-box;
-  border-radius: 15px;
   overflow: hidden;
   background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e6eb;
+  height: 274px;
 
-  @include msd {
-    flex-direction: column;
+  @include sm {
     width: 100%;
-    padding: 10px;
+    padding: 28px 12px;
+    height: auto;
   }
 }
 
@@ -138,6 +177,7 @@
 .featuredCompanyDetails {
   display: flex;
   flex-direction: column;
+  width: calc(100% - 80px);
 }
 
 .featuredCompanyAbout {
@@ -171,6 +211,10 @@
 .featuredCompanyNameWrapper {
   display: flex;
   align-items: center;
+
+  img {
+    margin-top: 3px;
+  }
 }
 
 .featuredCompanyName {
@@ -218,43 +262,105 @@
   width: 136px;
   height: 94px;
   margin-right: 8px;
-  margin-bottom: 8px;
   user-select: none;
   -webkit-user-drag: none;
+  border: 1px solid rgba(229, 230, 235, 0.3);
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   @include msd {
-    width: 45%;
+    flex: 0 1 30%;
+    height: 0;
+    padding-bottom: 25%;
   }
 }
 
 .featuredSectionTitle {
-  margin-bottom: 30px;
-  font-weight: 700;
-  font-size: 21px;
-  line-height: 27px;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  text-align: center;
+  margin: 0;
+
   color: #353535;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 55px;
+  letter-spacing: 0.33px;
+
+  @include sm {
+    display: none;
+  }
 }
 
 .popularCompanyTitle {
-  margin-top: 54px;
-  margin-bottom: 30px;
-  font-weight: 700;
-  font-size: 21px;
-  line-height: 27px;
+  padding-top: 80px;
+  padding-bottom: 40px;
+  text-align: center;
+  margin: 0;
+
   color: #353535;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 55px;
+  letter-spacing: 0.33px;
+
+  @include sm {
+    padding-top: 60px;
+    padding-bottom: 20px;
+    font-size: 32px;
+  }
 }
 
 .searchField {
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   &InputContainer {
     width: 570px;
     position: relative;
-    margin-right: 16px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
 
     :global {
       .MuiOutlinedInput-root {
-        border-radius: 8px;
+        height: 60px;
+        background-color: #ffffff;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .MuiOutlinedInput-input {
+        font-size: 16px;
+      }
+
+      .MuiInputLabel-root {
+        top: 12px;
+      }
+
+      .MuiFormLabel-filled,
+      .Mui-focused {
+        top: 0;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-radius: 8px 0 0 8px;
+        border-width: 0;
+        // border-width: 1px;
+        // border-color: #E5E6EB;
+      }
+
+      .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+        border-width: 2px;
+        border-color: #1976d2;
+      }
+
+      .MuiAutocomplete-input {
+        padding: 2.5px 28px 2.5px 6px !important;
       }
     }
   }
@@ -293,21 +399,35 @@
   }
 
   &Button {
-    padding: 6px 25px !important;
-    width: 12%;
-    border-radius: 8px !important;
+    text-transform: capitalize;
+    background: #136fd3;
+    color: #fff;
+    width: 127px;
+    height: 60px;
+    border-radius: 0 8px 8px 0;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.15px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #136fd3;
+
+    &:hover {
+      background: #1854a3;
+    }
   }
 
   @include msd {
-    flex-direction: column;
+    flex-direction: row;
 
     &InputContainer {
       width: 100%;
-      margin-bottom: 24px;
     }
 
     &Button {
-      width: 100%;
+      width: 35%;
     }
   }
 }
@@ -315,6 +435,7 @@
 .companyList {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 20px;
 
   @include msd {
     flex-direction: column;
@@ -334,10 +455,11 @@
 
 .companyCard {
   display: flex;
-  padding: 24px 16px;
-  border-radius: 15px;
+  padding: 20px 24px;
   background-color: #fff;
   overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e6eb;
 
   @include msd {
     flex-direction: row;
@@ -345,8 +467,8 @@
 
   &Image {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     border-radius: 5px;
     border: 1px solid #f2f5fa;
@@ -354,11 +476,11 @@
   }
 
   &Left {
-    margin-right: 21px;
+    margin-right: 16px;
   }
 
   &Right {
-    width: 280px;
+    width: 274px;
 
     p {
       margin: 0;
@@ -371,26 +493,32 @@
 
   &Name {
     display: flex;
-    margin-bottom: 8px;
 
     a {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 18px;
-      line-height: 23px;
+
       color: #353535;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 23px;
+      letter-spacing: 0.36px;
     }
   }
 
   &Category {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    color: #353535;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0.113px;
   }
 
   &Openings {
@@ -398,13 +526,20 @@
     margin-top: 14px;
     display: inline-block;
 
+    p {
+      color: #4e5969;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 23px;
+      letter-spacing: 0.113px;
+
+      padding: 0;
+      margin: 0;
+    }
+
     span {
       color: #2378e5;
-      font-size: 16px;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 

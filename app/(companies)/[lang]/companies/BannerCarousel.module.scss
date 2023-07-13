@@ -14,11 +14,13 @@
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 15px;
+  border-radius: 12px;
   overflow: hidden;
+  height: 274px;
 
   @include sm {
-    margin-top: 10px;
+    margin-top: 12px;
+    height: auto;
   }
 }
 
@@ -46,10 +48,10 @@
   position: relative;
   overflow: hidden;
   display: inline-block;
-  border-radius: 15px;
-  height: 255px;
+  border-radius: 12px;
+  height: 274px;
   width: 560px;
-  
+
   @include sm {
     width: 100%;
     height: 0;
@@ -57,7 +59,7 @@
   }
 
   @include lg {
-    height: 255px;
+    height: 274px;
     width: 560px;
   }
 }
@@ -104,7 +106,7 @@
 }
 
 .embla__button__svg {
-  color: $primaryBlue;;
+  color: $primaryBlue;
   width: 100%;
   height: 100%;
 }
@@ -149,7 +151,7 @@
   width: 100%;
   height: 8px;
   border-radius: 4px;
-  content: "";
+  content: '';
 }
 
 .bannerDot.is_selected:after {
