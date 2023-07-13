@@ -48,7 +48,7 @@ const JobCard = (props: any) => {
         className={styles.container}
         onClick={(e) => {
           e.stopPropagation()
-          router.push(job_url, { forceOptimisticNavigation: true })
+          router.push(job_url, { scroll: true })
         }}
       >
         <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
@@ -80,9 +80,8 @@ const JobCard = (props: any) => {
         <div className={styles.recruiterContainer}>
           <div className={styles.info}>
             <div
-              className={`${common_styles.avator}  ${
-                transState(recruiterLastActiveAt).state === 1 ? '' : common_styles.avator2
-              }`}
+              className={`${common_styles.avator}  ${transState(recruiterLastActiveAt).state === 1 ? '' : common_styles.avator2
+                }`}
             >
               <Image src={company_logo} height={24} width={24} alt={''} />
             </div>
