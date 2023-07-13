@@ -415,8 +415,9 @@ const Footer = () => {
         <p> {corporation}</p>
         <p>{IndonesiaPT}</p>
         <p>
-          {JapanYolo} <span>|</span>
-          {JapanAddress}
+          {JapanYolo}
+          {/* <span>|</span> */}
+          {/* {JapanAddress} */}
         </p>
       </div>
     </div>
