@@ -37,7 +37,7 @@ const tabListInterstedArr = ['interested', 'viewedMe']
 
 const MainLeft = (props: any) => {
   const { type } = props.searchParams
-  const {lang,config,langKey} = props;
+  const { lang, config, langKey } = props;
   const {
     communicated,
     exchanged,
@@ -92,7 +92,7 @@ const MainLeft = (props: any) => {
       key: 'interviews',
       children: []
     },
-  
+
     {
       tab: viewed,
       value: 'viewed',
@@ -101,7 +101,7 @@ const MainLeft = (props: any) => {
       key: 'viewed_jobs'
     }
   ]
-  
+
   const tabListIntersted = [
     {
       tab: InterestedInMe,
@@ -147,7 +147,7 @@ const MainLeft = (props: any) => {
   }, [tabValue, tabList, page])
   const tabChildren = useMemo(() => {
     return tabList[R.findIndex(R.propEq('value', tabValue))(tabList)]?.children ?? []
-  }, [tabList,tabValue])
+  }, [tabList, tabValue])
 
   useEffect(() => {
     if (tabValueChildren) {
@@ -233,7 +233,7 @@ const MainLeft = (props: any) => {
     deleteSaveJobService(id).then(res => {
       checkSavedData(res, index, id)
     })
-    
+
   }
 
 
@@ -242,7 +242,7 @@ const MainLeft = (props: any) => {
     if (jobData) {
       const newSearchParams = new URLSearchParams(searchParams.toString())
       newSearchParams.set('unsaveId', id)
-      router.push(pathname + '?' + newSearchParams.toString(), { forceOptimisticNavigation: true })
+      router.push(pathname + '?' + newSearchParams.toString(), { scroll: true })
       data.splice(index, 1)
       setData([...data])
       setOpen(true)

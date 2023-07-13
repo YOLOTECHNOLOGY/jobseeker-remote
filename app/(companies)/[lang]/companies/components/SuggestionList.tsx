@@ -21,7 +21,7 @@ type MaterialTextFieldWithSuggestionListProps = {
   onSelect?: Function
   searchFn?: Function
   updateSearchValue?: Function
-  maxLength?: Number,
+  maxLength?: Number
   renderOption?: any
 } & Omit<Input, 'size'>
 
@@ -83,6 +83,11 @@ const MaterialTextFieldWithSuggestionList = ({
         options={options?.map((option) => option)}
         className={className}
         size={size}
+        onInputChange={(_, val: any, reason) => {
+          if (reason === 'clear' && onSelect) {
+            onSelect(val ?? '')
+          }
+        }}
         onChange={(_, val: any, reason) => {
           if ((reason === 'selectOption' || reason === 'clear') && onSelect) {
             const value = val?.value ? val?.value : val || ''

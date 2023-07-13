@@ -159,7 +159,7 @@ const SearchArea = (props: any) => {
                 className={styles.icon}
                 onClick={() => {
                   router.push('/manage-profile?tab=job-preferences', {
-                    forceOptimisticNavigation: true
+                    scroll: true
                   })
                 }}
               >
@@ -168,7 +168,7 @@ const SearchArea = (props: any) => {
               <div
                 className={styles.icon}
                 onClick={() => {
-                  router.push('/jobs-hiring/job-search', { forceOptimisticNavigation: true })
+                  router.push('/jobs-hiring/job-search', { scroll: true })
                 }}
               >
                 <Image src={Search} width={18} height={18} alt='' />

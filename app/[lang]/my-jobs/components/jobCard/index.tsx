@@ -81,7 +81,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, jobTitleId) => {
       return
     }
     if (!accessToken) {
-      router.push(`/${langKey}` + '/get-started', { forceOptimisticNavigation: true })
+      router.push(`/${langKey}` + '/get-started', { scroll: true })
       return
     }
     if (!isSaved) {
@@ -126,8 +126,8 @@ const JobCard = (props: any) => {
   }, [originJob])
 
   const jobBenefits = useMemo(() => {
-    const benefits =  originJob?.job_benefits || []
-    return benefits.map( (benefit) => {
+    const benefits = originJob?.job_benefits || []
+    return benefits.map((benefit) => {
       return getValueById(config, benefit.id, 'job_benefit_id', 'name')
     }).filter(Boolean).join(' | ')
   }, [originJob?.job_benefits, config])
@@ -206,7 +206,7 @@ const JobCard = (props: any) => {
   const handleRouterToPath = (job_url: string) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
-    router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })
+    router.push(`/${langKey}` + job_url, { scroll: true })
   }
 
   return (
@@ -246,7 +246,7 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              // onClick={() => router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })}
+              // onClick={() => router.push(`/${langKey}` + job_url, { scroll: true })}
               onClick={() => handleRouterToPath(job_url)}
             >
               <div
@@ -341,7 +341,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        ;(chatNow as any)()
+                          ; (chatNow as any)()
                       }}
                     >
                       <Image src={HomePageChat} width={16} height={16} alt={''} />
@@ -369,7 +369,7 @@ const JobCard = (props: any) => {
               onClick={(e) => {
                 e.stopPropagation()
                 window.location.href = `/${langKey}` + company_url
-                // router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
+                // router.push(`/${langKey}` + company_url, { scroll: true })
               }}
             >
               <div className={styles.company}>
@@ -426,7 +426,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg

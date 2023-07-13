@@ -52,12 +52,12 @@ const interpreter = registInterpreter((command) =>
         const source = jobSource()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
         showLogin()
-        // router.push('/get-started', { forceOptimisticNavigation: true })
+        // router.push('/get-started', { scroll: true })
       }),
     redirectToExternal: (link) =>
       M.do((context) => {
         const { router } = context
-        router.push(link, { forceOptimisticNavigation: true })
+        router.push(link, { scroll: true })
       }),
     modalChangeChattingJob: (chatDetail) =>
       M.do((context) => {
@@ -77,7 +77,7 @@ const interpreter = registInterpreter((command) =>
     redirectToChat: (chatId) =>
       M.do((context) => {
         const { router } = context
-        router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
+        router.push('/chat/' + chatId, { scroll: true })
       }),
     modalCompleteFile: () =>
       M.do((context) => {
