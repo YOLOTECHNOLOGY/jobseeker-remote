@@ -6,16 +6,14 @@ import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
-const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
-  console.log({ jobDetail })
+const Menu = ({ shareParams, lang, isbenefits }: any) => {
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
-  console.log(lang, isbenefits, 7777)
   const firstRender = useFirstRender()
   const { content } = lang
-  const scrollRef = useRef(null)
-
+  const [timeStamp, setTimeStamp] = useState(0)
+  const scrollRef = useRef(false)
   const menu = [
     {
       name: content.JD,
@@ -40,39 +38,55 @@ const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
   ]
 
   useEffect(() => {
-    window.document.addEventListener('scroll', throttle(handleScroll, 500))
+    window.document.addEventListener('scroll', throttle(handleScroll, 200))
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const handleScroll = () => {
     // scrollRef.current = new Date().getTime() // window.document.body.scrollTop
     // console.log(scrollRef.current, 999)
+    setTimeStamp(new Date().getTime())
   }
 
   useEffect(() => {
-    console.log(scrollRef.current, 666)
-    if (scrollRef.current) {
-      const jobDescriptionTop = document.getElementById('JobDescription')?.offsetTop
-      const keySkillsTop = document.getElementById('KeySkills')?.offsetTop
-      const requirementTop = document.getElementById('Requirement')?.offsetTop
-      const benefitsTop = document.getElementById('Benefits')?.offsetTop
-      const wrkingLocationTop = document.getElementById('WorkingLocation')?.offsetTop
+    if (timeStamp) {
+      const top =
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
 
-      // const position = domTop - headerHeight - 100
-
-      console.log(
-        computeHeight(jobDescriptionTop),
-        computeHeight(keySkillsTop),
-        computeHeight(requirementTop),
-        computeHeight(benefitsTop),
-        computeHeight(wrkingLocationTop)
+      const jobDescriptionTop = computeHeight(
+        getOffsetTop('JobDescription') - 50,
+        top,
+        headerHeight
       )
-    }
-  }, [scrollRef.current])
+      const keySkillsTop = computeHeight(getOffsetTop('KeySkills'), top, headerHeight)
+      const requirementTop = computeHeight(getOffsetTop('Requirement'), top, headerHeight)
+      const benefitsTop = computeHeight(getOffsetTop('Benefits'), top, headerHeight)
+      const wrkingLocationTop = computeHeight(getOffsetTop('WorkingLocation'), top, headerHeight)
 
-  const computeHeight = (top) => {
-    const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
-    return top - headerHeight - 100
+      const arr = [jobDescriptionTop, keySkillsTop, requirementTop, benefitsTop, wrkingLocationTop]
+      if (!isbenefits) {
+        arr.splice(3, 1)
+      }
+      console.log(arr)
+      arr.map((e, index) => {
+        if (Math.abs(e) < 100) {
+          scrollRef.current = true
+          setCurrent(index)
+        }
+      })
+      if (wrkingLocationTop < -600) {
+        setCurrent(arr?.length - 1)
+      }
+    }
+  }, [timeStamp])
+
+  const computeHeight = (top, bodyTop, headerHeight) => {
+    return top - headerHeight - bodyTop - 100
+  }
+
+  const getOffsetTop = (dom) => {
+    return document.getElementById(dom)?.offsetTop || 0
   }
 
   useEffect(() => {
@@ -84,12 +98,11 @@ const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
   }, [isbenefits])
 
   useEffect(() => {
-    if (firstRender) return
+    if (firstRender || scrollRef.current) return
     // document.getElementById('workingLocation').scrollIntoView({
     //   behavior: 'smooth'
     // })
     const domID = menuNew[current]?.id
-    console.log(domID, 9999)
     if (domID) {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
@@ -121,6 +134,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobDetail }: any) => {
   }
 
   const handleClick = (index) => {
+    scrollRef.current = false
     setCurrent(index)
   }
 

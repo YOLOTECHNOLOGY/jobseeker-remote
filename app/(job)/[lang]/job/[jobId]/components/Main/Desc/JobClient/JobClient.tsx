@@ -115,7 +115,7 @@ const JobClient = (props: sharePropsType) => {
   }
 
   const styleICon = {
-    fontSize: '18px',
+    fontSize: '20px',
     paddingRight: '4px'
   }
 

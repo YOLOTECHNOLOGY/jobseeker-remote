@@ -17,6 +17,8 @@ export default function Page({
 	params: { slug: string };
 	searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+	
 	useResponsiveFont(360,540);
 	return <>
 		<Section1></Section1>

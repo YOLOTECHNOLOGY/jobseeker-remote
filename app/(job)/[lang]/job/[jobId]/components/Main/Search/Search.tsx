@@ -38,13 +38,13 @@ const Search = () => {
         defaultValue='Las Pinas'
         disableClearable
         sx={{
-          fontSize: '14px',
+          fontSize: '16px',
           '> .MuiFormControl-root': {
             '> .MuiOutlinedInput-root': {
               borderRadius: '8px',
-
+              height: '60px',
               '> .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#BCBCBC',
+                borderColor: '#fff',
                 borderWidth: '0.5px'
               }
             }
@@ -52,6 +52,7 @@ const Search = () => {
         }}
         onChange={(e, value) => setLocation(value)}
       />
+      <span className={styles.line}></span>
       <div className={styles.inputBox}>
         <MaterialTextField
           className={styles.search_field}
@@ -68,13 +69,18 @@ const Search = () => {
           onKeyUp={(e) => e.code == 'Enter' && handleUpdatePath()}
           maxLength={60}
           sx={{
+            fontSize: '16px',
+            top: '8px',
             '> .MuiOutlinedInput-root': {
               borderRadius: '8px  0 0 8px',
-
+              fontSize: '16px',
               '> .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#BCBCBC',
+                borderColor: '#fff !important',
                 borderWidth: '0.5px'
               }
+            },
+            '> .MuiInputLabel-root': {
+              fontSize: '16px'
             }
           }}
         />
@@ -84,8 +90,9 @@ const Search = () => {
           sx={{
             textTransform: 'capitalize',
             width: '119px',
-            height: '44px',
-            background: '#136FD3',
+            height: '60px',
+            background: '#2378E5',
+            fontSize: '20px',
             borderRadius: '0px 8px 8px 0px'
           }}
           onClick={handleUpdatePath}
