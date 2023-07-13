@@ -38,11 +38,16 @@ const NavLeft = (props: IProps) => {
         </li>
         <li className={styles.headerLink}>
           {!pathname?.includes('/jobs-hiring/') ? (
-            <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
+            // <Link title='Jobs' to={'/' + langKey + '/jobs-hiring/job-search'}>
+            //   <Text textStyle='base' className={styles.headerLinkText}>
+            //     {findJobs}
+            //   </Text>
+            // </Link>
+            <a title='Jobs' href={'/' + langKey + '/jobs-hiring/job-search'}>
               <Text textStyle='base' className={styles.headerLinkText}>
                 {findJobs}
               </Text>
-            </Link>
+            </a>
           ) : (
             <Text
               textStyle='base'
