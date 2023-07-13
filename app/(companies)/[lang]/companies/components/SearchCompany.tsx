@@ -24,7 +24,6 @@ const SearchCompanyField = ({
   transitions,
   clearSearchRef
 }: ISearchCompanyField) => {
-
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
 
@@ -37,10 +36,9 @@ const SearchCompanyField = ({
   }, [searchValue])
 
   const handleSuggestionSearch = (val) => {
-    fetchCompanySuggestionsService({ size: 5, query: val })
-      .then((data) =>
-        setSuggestionList(data.data.data.items)
-      )
+    fetchCompanySuggestionsService({ size: 5, query: val }).then((data) =>
+      setSuggestionList(data.data.data.items)
+    )
   }
 
   return (
@@ -56,6 +54,13 @@ const SearchCompanyField = ({
           updateSearchValue={setSearchValue}
           defaultValue={defaultQuery}
           value={searchValue}
+          renderOption={(props, option) => {
+            return (
+              <li {...props} key={props.id}>
+                <span style={{ fontSize: '16px' }}>{option}</span>
+              </li>
+            )
+          }}
           onSelect={(val: any) => {
             setSearchValue(val)
             onKeywordSearch(val)
@@ -70,16 +75,9 @@ const SearchCompanyField = ({
         />
       </div>
 
-      <MaterialButton
-        variant='contained'
-        capitalize
-        className={styles.searchFieldButton}
-        onClick={() => onKeywordSearch(searchValue)}
-      >
-        <Text textColor='white' bold>
-          {transitions?.btn}
-        </Text>
-      </MaterialButton>
+      <button className={styles.searchFieldButton} onClick={() => onKeywordSearch(searchValue)}>
+        {transitions?.btn}
+      </button>
     </div>
   )
 }

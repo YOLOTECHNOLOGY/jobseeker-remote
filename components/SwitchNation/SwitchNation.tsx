@@ -140,7 +140,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}`
     }
-    window.location.href = newOrigin + query + location.search
+    window.location.href = newOrigin + query
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {
