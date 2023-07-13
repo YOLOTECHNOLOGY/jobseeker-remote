@@ -19,8 +19,7 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
 
   const viewJobString = () => {
     return formatTemplateString(transitions.allJobs, {
-      totalActiveJobs:
-        company.num_of_active_jobs > 0 ? `<span>${company.num_of_active_jobs}</span>` : ''
+      totalActiveJobs: `<span>${company.num_of_active_jobs}</span>`
     })
   }
 
