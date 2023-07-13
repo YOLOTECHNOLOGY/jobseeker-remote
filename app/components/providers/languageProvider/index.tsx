@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import json from '../../../../dictionaries/init_language.json'
 export const languageContext = createContext<typeof json>(json)
 const Provider = languageContext.Provider
@@ -9,3 +9,6 @@ const LanguageProvider = ({ children, store }: any) => {
 }
 
 export default LanguageProvider
+export const useLanguage = () => {
+  return useContext(languageContext);
+}
