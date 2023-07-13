@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from '../../Footer.module.scss'
 
-const Copyright = (props:any) => {
+const Copyright = (props: any) => {
   const { data } = props
-  const { technology, corporation } = data?.foot || {}
+  const { technology, corporation, IndonesiaPT, JapanYolo, JapanAddress } = data?.foot || {}
 
   return (
     <div className={styles.footerCopyrightWrapper}>
@@ -11,6 +11,12 @@ const Copyright = (props:any) => {
         Copyright © {new Date().getFullYear()}&nbsp;{technology}
         <br />
         <span>{corporation}</span>
+        <br />
+        <span>{IndonesiaPT}</span>
+        <br />
+        <span>
+          {JapanYolo} <i>|</i> {JapanAddress}
+        </span>
       </div>
     </div>
   )

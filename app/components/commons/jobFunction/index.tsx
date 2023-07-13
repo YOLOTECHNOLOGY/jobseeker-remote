@@ -12,7 +12,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { useRef } from 'react'
 import { debounce } from 'lodash-es'
-
+import PlayArrowSharpIcon from '@mui/icons-material/PlayArrowSharp'
 const toSeo = (value) => value?.replaceAll('/', '-')?.replaceAll(' ', '-')?.toLowerCase()
 
 const JobFunctionMultiSelector = (props: any) => {
@@ -20,6 +20,7 @@ const JobFunctionMultiSelector = (props: any) => {
   const [showModal, setShowModal] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
+  const [rotate, setRotate] = useState('90deg')
   const { width } = useWindowDimensions()
   const isMobile = useMemo(() => {
     return window.screen.width < 768
@@ -86,6 +87,9 @@ const JobFunctionMultiSelector = (props: any) => {
         jobFunctions: functionIds,
         functionTitles: functionTitleIds
       })
+    }
+    if (!showModal) {
+      setRotate('90deg')
     }
     preShowModal.current = showModal
   }, [showModal])
@@ -342,6 +346,7 @@ const JobFunctionMultiSelector = (props: any) => {
           e.preventDefault()
           e.stopPropagation()
           setShowModal(true)
+          setRotate('-90deg')
         }}
         classes={{}}
         style={{
@@ -354,6 +359,19 @@ const JobFunctionMultiSelector = (props: any) => {
             background: textValue.split(',').filter((a) => a)?.length ? '#E7F1FB' : '#F0F0F0'
           }
         }}
+        InputProps={{
+          endAdornment: (
+            <PlayArrowSharpIcon
+              style={{
+                fontSize: '14px',
+                transform: `rotate(${rotate})`,
+                color: 'rgba(0, 0, 0, 0.54)',
+                position: 'relative',
+                right: '8px'
+              }}
+            />
+          )
+        }}
         disabled={showModal}
         onFocus={(e) => {
           e.preventDefault()
@@ -361,6 +379,7 @@ const JobFunctionMultiSelector = (props: any) => {
           if (!isTouched) {
             setShowModal(true)
           }
+
           rest?.onFocus?.(e)
           Promise.resolve().then(() => {
             e.target.blur()
