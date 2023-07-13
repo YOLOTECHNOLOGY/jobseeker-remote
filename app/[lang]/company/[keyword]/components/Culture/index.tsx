@@ -33,8 +33,10 @@ const CulturePanel = (props: Props) => {
 			!!cultures?.length && <>
 				<div className={style.subtitle}>{overview.culture.title}</div>
 				<div className={style.item_wrapper + ' ' + style.culture}>
-					{cultures.map((item,index)=>{
-						return <MouseOverPopover value={company_benefit_lists[item.id - 1].value} className={style.item} key={index}></MouseOverPopover>
+					{cultures
+					.filter(item=>company_culture_lists[item.id - 1]?.value)
+					.map((item,index)=>{
+						return <MouseOverPopover value={company_culture_lists[item.id - 1]?.value} className={style.item} key={index}></MouseOverPopover>
 					})}
 				</div>
 			</>
@@ -43,8 +45,10 @@ const CulturePanel = (props: Props) => {
 			!!benefits?.length && <>
 				<div className={style.subtitle}>{overview.CompanyBenefits}</div>
 				<div className={style.item_wrapper}>
-					{benefits.map((item,index)=>{
-						return <MouseOverPopover value={company_culture_lists[item.id - 1].value} className={style.item} key={index}></MouseOverPopover>
+					{benefits
+					.filter(item=>company_benefit_lists[item.id - 1]?.value)
+					.map((item,index)=>{
+						return <MouseOverPopover value={company_benefit_lists[item.id - 1]?.value} className={style.item} key={index}></MouseOverPopover>
 					})}
 				</div>
 			</>

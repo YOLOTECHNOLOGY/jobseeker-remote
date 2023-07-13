@@ -179,7 +179,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     <React.Fragment>
       <div className={styles.sectionContainer}>
         <div className={styles.resumeTitle}>
-          <Text textColor='primaryBlue' textStyle='xl' bold>
+          <Text textColor='primaryBlue' bold>
             {/* Upload your own resume */}
             {transitions.upload.title}
           </Text>
