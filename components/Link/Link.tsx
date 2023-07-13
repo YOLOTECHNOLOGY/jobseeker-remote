@@ -17,7 +17,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 
 /*
  * If using for external link without external | aTag, it is required to append "http/https" in front of the URL.
- * If using for internal link with external | aTag, make sure to append hostpath in front 
+ * If using for internal link with external | aTag, make sure to append hostpath in front
  */
 const Link = ({
   children,
@@ -49,20 +49,19 @@ const Link = ({
   }
 
   return (
-    <NextLink
+    <a
       href={to}
-      prefetch={false}
-      passHref={passHref}
+      // prefetch={false}
+      // passHref={passHref}
       target={external ? '_blank' : '_self'}
       rel='noopener noreferrer'
       className={className}
-      style={
-        className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined
-      } {...rest}>
-
+      data-url={to}
+      style={className == 'default' ? { color: '#2379ea', textDecoration: 'underline' } : undefined}
+      {...rest}
+    >
       {children}
-
-    </NextLink>
+    </a>
   )
 }
 
