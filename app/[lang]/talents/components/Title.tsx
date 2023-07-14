@@ -4,7 +4,7 @@ import Typical from 'react-typical'
 import { useLayoutEffect, useState, useMemo, useContext } from "react";
 import { useInView, InView } from "react-intersection-observer";
 import Link from 'next/link';
-import classNames from 'classNames';
+import classNames from 'classnames';
 import { languageContext } from "../../../components/providers/languageProvider";
 import Image from 'next/image'
 

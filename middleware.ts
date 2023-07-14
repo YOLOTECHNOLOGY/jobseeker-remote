@@ -61,7 +61,8 @@ export function middleware(request: NextRequest) {
       'getLog',
       'maintenance',
       'images',
-      'chat-redirect'
+      'chat-redirect',
+      'huawei-jobs'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
   ) { return }
