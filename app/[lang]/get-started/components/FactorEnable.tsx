@@ -9,9 +9,9 @@ function FactorEnable(props: any) {
   const containerIMg = useRef(null)
   console.log({ userInfo })
   useEffect(() => {
-    // setTimeout(() => {
-    //   defaultLoginCallBack(userInfo)
-    // }, 3000)
+    setTimeout(() => {
+      defaultLoginCallBack(userInfo)
+    }, 3000)
   }, [])
 
   useEffect(() => {

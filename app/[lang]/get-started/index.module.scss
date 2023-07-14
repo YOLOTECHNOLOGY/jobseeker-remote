@@ -424,7 +424,8 @@
 
     .account {
       list-style: none;
-      min-height: 160px;
+      height: 340px;
+      overflow-y: auto;
 
       li {
         width: 100%;
