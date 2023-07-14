@@ -5,7 +5,7 @@ import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
 import Link from 'components/Link'
 import EditRename from './EditRename/EditRename'
-
+import Image from 'next/image'
 /* Helpers */
 import { maxFileSize } from 'helpers/handleInput'
 
@@ -97,7 +97,7 @@ const UploadResume = ({
     manageProfile: {
       tab: { resume: transitions }
     }
-  } = lang || (useContext(languageContext) as any)
+  } = useContext(languageContext) 
   const [isExceedLimit, setIsExceedLimit] = useState(false)
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
@@ -121,11 +121,11 @@ const UploadResume = ({
                 <div key={index+'~'+ item?.id} className={styles.uploadedResume}>
                   <div className={styles.leftResume}>
                     <div className={styles.documentDiv}>
-                      <img src={DocumentIcon} alt='document' width='21' height='21' />
+                      <Image src={require('./document.png').default.src} fill alt='document'/>
                     </div>
-                    <div>
+                    <div className={styles.document_info}>
                       <Link to={item?.url} external>
-                        <Text textStyle='lg' bold className={styles.resumeName}>
+                        <Text className={styles.resumeName}>
                           {item?.name}
                         </Text>
                       </Link>
@@ -170,7 +170,7 @@ const UploadResume = ({
           </div>
         )}
         <Text textStyle='sm' block className={styles.upToFiles}>
-          {transitions.upload.upTo3files}
+          {formatTemplateString(transitions.upload.upToFiles, 3)}
         </Text>
         <Text textColor='darkgrey' textStyle='sm'>
           {transitions.upload.support}

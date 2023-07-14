@@ -97,11 +97,11 @@ const Page = () => {
 
 				<div className={style.header_title_right}>
 					<div className={style.header_title_num_wrapper}>
-						<span className={style.header_title_num}>{jobs.total_num}</span>
+						<span className={style.header_title_num}>{jobs?.total_num}</span>
 						<span className={style.header_title_string}>Jobs</span>
 					</div>
 					<div className={style.header_title_num_wrapper}>
-						<span className={style.header_title_num}>{hr.length}</span>
+						<span className={style.header_title_num}>{hr?.length}</span>
 						<span className={style.header_title_string}>Boss</span>
 					</div>
 				</div>
