@@ -578,9 +578,20 @@
     }
 
     .enabled {
-      >img {
+      .imgContainer {
         display: block;
-        margin: 0 auto 16px;
+        margin: 60px auto 32px;
+      }
+
+      h3 {
+        color: #1D2129;
+        text-align: center;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+        /* 153.846% */
+        letter-spacing: 0.195px;
       }
     }
 
@@ -606,7 +617,7 @@
       .btn {
         width: 100%;
         border: 1px solid #2378e5;
-        color: #2378e5;
+        color: #2378E5;
         font-weight: 700;
         font-size: 14px;
         height: 60px;
@@ -629,6 +640,11 @@
           background: #F6F6F6;
           border: 1px solid #F6F6F6;
         }
+      }
+
+      .upLater {
+        height: 44px;
+        margin-top: 24px;
       }
 
       .msg {
@@ -700,6 +716,19 @@
             color: rgba(35, 120, 229, 1);
           }
         }
+
+        .checkYourSpam {
+          color: #1D2129;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          /* 150% */
+          letter-spacing: 0.12px;
+          margin: 0;
+          position: relative;
+          top: -14px;
+        }
       }
     }
 
@@ -744,12 +773,12 @@
 
     .emailTips {
       margin-top: 5px;
-      margin-bottom: 16px;
+      margin-bottom: 50px;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 24px;
       letter-spacing: 1px;
-      color: #4e5969;
+      color: #1D2129;
 
       span {
         color: #1D2129;
