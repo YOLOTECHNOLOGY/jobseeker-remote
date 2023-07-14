@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-// Components
-import MaterialButton from 'components/MaterialButton'
-import Text from 'components/Text'
-
-/* Material Components */
-import SuggestionList from './SuggestionList'
+/* Components */
+import theme from 'app/components/commons/theme'
+import { ThemeProvider } from '@mui/material/styles'
+import JobSearchBar from 'app/components/commons/location/search'
 
 // Styles
 import styles from '../Companies.module.scss'
@@ -44,35 +42,38 @@ const SearchCompanyField = ({
   return (
     <div className={styles.searchField}>
       <div className={styles.searchFieldInputContainer}>
-        <SuggestionList
-          id='search'
-          label={transitions?.companyName}
-          variant='outlined'
-          size='small'
-          className={styles.searchField}
-          searchFn={handleSuggestionSearch}
-          updateSearchValue={setSearchValue}
-          defaultValue={defaultQuery}
-          value={searchValue}
-          renderOption={(props, option) => {
-            return (
-              <li {...props} key={props.id}>
-                <span style={{ fontSize: '16px' }}>{option}</span>
-              </li>
-            )
-          }}
-          onSelect={(val: any) => {
-            setSearchValue(val)
-            onKeywordSearch(val)
-          }}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              setSuggestionList([])
-              onKeywordSearch(searchValue)
-            }
-          }}
-          options={suggestionList}
-        />
+        <ThemeProvider theme={theme}>
+          <JobSearchBar
+            id='companies-search-input'
+            label={transitions?.companyName}
+            variant='outlined'
+            size='small'
+            className={styles.searchField}
+            maxLength={255}
+            searchFn={handleSuggestionSearch}
+            updateSearchValue={setSearchValue}
+            defaultValue={defaultQuery}
+            value={searchValue}
+            renderOption={(props, option) => {
+              return (
+                <li {...props} key={props.id}>
+                  <span style={{ fontSize: '16px' }}>{option}</span>
+                </li>
+              )
+            }}
+            onSelect={(val: any) => {
+              setSearchValue(val)
+              onKeywordSearch(val)
+            }}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                setSuggestionList([])
+                onKeywordSearch(searchValue)
+              }
+            }}
+            options={suggestionList}
+          />
+        </ThemeProvider>
       </div>
 
       <button className={styles.searchFieldButton} onClick={() => onKeywordSearch(searchValue)}>
