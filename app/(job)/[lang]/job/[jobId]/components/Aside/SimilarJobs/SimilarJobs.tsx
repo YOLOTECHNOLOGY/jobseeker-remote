@@ -11,8 +11,8 @@ import React from 'react'
 type propsType = {
   id?: number
   jobDetail: any
-  languages: Record<string, any>,
-  config: Array<any>,
+  languages: Record<string, any>
+  config: Array<any>
   lang: string
 }
 
@@ -29,7 +29,7 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
   if (!data.error) {
     const ids = data.map((item) => item.recruiter?.id)
     if (ids.length) {
-      const lines = await fetchRecruiterLastActiveService(ids.filter(a => a).join(','))
+      const lines = await fetchRecruiterLastActiveService(ids.filter((a) => a).join(','))
         .then(({ data: { data } }) => data)
         .catch(() => ({ error: true }))
       recruiterLineStatus = lines
@@ -98,9 +98,9 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
                       <div className={styles.similarJobs_mobileCard_name}>{item.company_name}</div>
 
                       <div className={styles.similarJobs_mobileCard_tags}>
-                        <span>{ getValueById(config,item.job_type_id,'job_type_id')}</span>
-                        <span>{ getValueById(config,item?.xp_lvl_id,'xp_lvl_id')}</span>
-                        <span>{ getValueById(config,item?.degree_id,'degree_id')}</span>
+                        <span>{getValueById(config, item.job_type_id, 'job_type_id')}</span>
+                        <span>{getValueById(config, item?.xp_lvl_id, 'xp_lvl_id')}</span>
+                        <span>{getValueById(config, item?.degree_id, 'degree_id')}</span>
                       </div>
 
                       <div className={styles.similarJobs_info}>
@@ -126,7 +126,11 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
                           ></span>
                         </div>
                         <div className={classNames([styles.similarJobs_mobileCard_loca])}>
-                          <div>{[item?.recruiter_full_name, item?.recruiter_job_title].filter(a => a).join(' · ')}</div>
+                          <div className={styles.similarJobs_mobileCard_loca_name}>
+                            {[item?.recruiter_full_name, item?.recruiter_job_title]
+                              .filter((a) => a)
+                              .join(' · ')}
+                          </div>
                           <div className={styles.similarJobs_mobileCard_loca_value}>
                             {getValueById(config, item?.job_location_id, 'location_id')}
                           </div>

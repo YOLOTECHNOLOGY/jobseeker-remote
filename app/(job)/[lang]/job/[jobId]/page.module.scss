@@ -802,6 +802,14 @@
           letter-spacing: 0.0075em;
           color: #353535;
 
+          &_name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            white-space: nowrap;
+            display: inline-block;
+          }
+
           &_value {
             color: #707070;
           }
@@ -819,7 +827,7 @@
           border-radius: 50%;
           position: absolute;
           right: 4px;
-          bottom: 0px;
+          top: 8px;
         }
 
         &_lineStatus {
