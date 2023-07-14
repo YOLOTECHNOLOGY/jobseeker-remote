@@ -176,7 +176,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     }
   }
   return (
-    <React.Fragment>
+    <div className={styles.tab_content_wrapper}>
       <div className={styles.sectionContainer}>
         <div className={styles.resumeTitle}>
           <Text textColor='primaryBlue' className={styles.resume_title_text}>
@@ -184,7 +184,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             {transitions.upload.title}
           </Text>
           {resume.length < 3 && (
-            <label>
+            <label className={styles.add}>
               <img style={{ cursor: 'pointer' }} src={AddIcon} width={14} height={14} />
               <Upload
                 onChange={(event) => {
@@ -211,14 +211,15 @@ const ResumeView = ({ userDetail, lang }: any) => {
           buttonClassname={styles.buttonCTA}
           deleteResumeLoading={deleteResumeLoading}
         />
+        <div className={styles.split}></div>
       </div>
       <div className={styles.sectionContainer}>
-        <Text textColor='primaryBlue' textStyle='xl' bold>
-          {transitions.bossjob.title}2222
-        </Text>
-        <Text textStyle='lg'>
-          {transitions.bossjob.tips}1111
-        </Text>
+        <div className={styles.preview_title}>
+          {transitions.bossjob.title}
+        </div>
+        <div className={styles.preview_subtitle}>
+          {transitions.bossjob.tips}
+        </div>
         <div className={styles.resumePreview}>
           <div className={styles.embla}>
             <div className={styles.emblaViewport} ref={emblaRef}>
@@ -392,7 +393,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
           Failed to delete resume
         </Alert>
       </Snackbar>
-    </React.Fragment>
+    </div>
   )
 }
 

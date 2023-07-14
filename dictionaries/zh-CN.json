@@ -791,6 +791,7 @@
           "tips": "Boss会向你索要简历附件，建议你至少上传一个！",
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
+          "upToFiles": "最多上传{{number}}个文件",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
           "error": {
             "title": "文件大小超出了限制",

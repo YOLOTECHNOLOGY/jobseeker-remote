@@ -88,7 +88,7 @@ async function ManageProfileLayout(props: {
 					width: '100%',
 					overflowX: 'hidden',
 					minHeight: '100vh',
-					backgroundColor: '#ffffff',
+					backgroundColor: '#F5F7FB',
 
 				}}>
 					<main data-string={JSON.stringify(profile)}>

@@ -97,7 +97,7 @@ const UploadResume = ({
     manageProfile: {
       tab: { resume: transitions }
     }
-  } = lang || (useContext(languageContext) as any)
+  } = useContext(languageContext) 
   const [isExceedLimit, setIsExceedLimit] = useState(false)
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
@@ -170,7 +170,7 @@ const UploadResume = ({
           </div>
         )}
         <Text textStyle='sm' block className={styles.upToFiles}>
-          {transitions.upload.upTo3files}
+          {formatTemplateString(transitions.upload.upToFiles, 3)}
         </Text>
         <Text textColor='darkgrey' textStyle='sm'>
           {transitions.upload.support}

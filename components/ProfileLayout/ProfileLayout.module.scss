@@ -1,10 +1,19 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.pageBanner {
+  height: 227px;
+  position: absolute;
+  top: 65px;
+  left: 0;
+  width: 100vw;
+}
 .profileLayout {
   @extend .GlobalContainer;
-  margin-top: 48px;
+  margin-top: 148px;
   margin-bottom: 150px;
+  position: relative;
+  z-index: 2;
 
   @include msd {
     display: flex;
@@ -22,23 +31,35 @@
     grid-area: overview;
     width: 264px;
     height: 100%;
-    
-    @include msd{
-      width:100%;
+
+    @include msd {
+      width: 100%;
     }
   }
 
   &Settings {
     grid-area: detail;
-    width: 838px;
+    width: 852px;
     height: 100%;
+    display: flex;
+    padding: 24px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 0;
+    align-self: stretch;
+    border-radius: 8px;
 
-    @include msd{
-      width:100%;
+    background-color: #ffffff;
+
+    @include msd {
+      width: 100%;
     }
   }
 }
 
+.profileLayoutUserOverview {
+}
 .settingTabs {
   width: 100%;
   margin-bottom: 24px;
@@ -66,7 +87,7 @@
   height: 8px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #F44336;
+  background-color: #f44336;
   margin-left: 4px;
   display: inline-block;
   margin-bottom: 1px;

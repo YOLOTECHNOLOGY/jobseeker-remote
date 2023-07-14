@@ -792,6 +792,7 @@
           "time": "Uploaded On {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "File exceed limit",
             "tips": "Please upload file size lesser than 5MB."

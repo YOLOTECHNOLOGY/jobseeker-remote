@@ -19,6 +19,7 @@ import {
   PencilIcon,
   BodyIcon
 } from '../../images'
+import Image from 'next/image';
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
@@ -74,46 +75,61 @@ const UserProfileOverview = ({
   return (
     <div className={styles.userOverview}>
       <div className={styles.userOverviewEditIcon} onClick={() => handleEditClick()}>
-        <img src={PencilIcon} width='24' height='24' />
+        <Image src={require('./edit.svg').default.src} width={24} height={24} alt={'edit_icon'} />
       </div>
       <div className={styles.userOverviewAvatar}>
-        <Avatar sx={{ width: '80px', height: '80px' }} src={avatarUrl || DefaultAvatar} />
+        <Avatar sx={{ width: '110px', height: '110px', margin: 0 }} src={avatarUrl || DefaultAvatar} />
       </div>
       <div className={styles.userOverviewName}>
-        <Text bold={true} textColor='primaryBlue' textStyle='xl'>
-          {name}
-        </Text>
+        {name}
       </div>
       <div className={styles.userOverviewInfo}>
         {birthdate && age >= 16 && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
             <Text textStyle='lg'>{getYearString(age)}</Text>
           </div>
         )}
         {location && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={LocationIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Image src={require('./location.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
             <Text textStyle='lg'>{location}</Text>
           </div>
         )}
         {email && (
           <div className={styles.userOverviewInfoDetail}>
+            <Image src={require('./email.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
             {/* <img src={MailIcon} style={{ marginRight: '6px' }} /> */}
-            <EmailOutlinedIcon style={{ fontSize: '15px', color: '#2379ea', marginRight: '6px' }} />
+            {/* <EmailOutlinedIcon style={{ fontSize: '15px', color: '#2379ea', marginRight: '6px' }} /> */}
             <Text textStyle='lg'>{email}</Text>
           </div>
         )}
 
         {contactNumber && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={MobileIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Image src={require('./tel.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
             <Text textStyle='lg'>{contactNumber}</Text>
           </div>
         )}
         {expLevel && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={BriefcaseIcon} width='14' height='14' style={{ marginRight: '6px' }} />
+            <Image src={require('./exp.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
             <Text textStyle='lg'>{expLevel}</Text>
           </div>
         )}
