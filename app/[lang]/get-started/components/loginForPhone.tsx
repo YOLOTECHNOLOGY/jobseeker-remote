@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from '../index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { useSelector } from 'react-redux'
@@ -29,9 +29,9 @@ const LoginForPhone = (props: any) => {
   const [isDisable, setDisable] = useState<boolean>(true)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneError, setPhoneError] = useState<string>('')
-  const [loading,setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const {
-    lang: { newGetStarted ,errorcode},
+    lang: { newGetStarted, errorcode },
     isModal = false,
     handleEmailClick,
     setLoginData
@@ -45,25 +45,24 @@ const LoginForPhone = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const phoneNumberRef = useRef(null)
- 
-  const isDisableRef = useRef(null);
 
-  useEffect(()=>{
+  const isDisableRef = useRef(null)
+
+  useEffect(() => {
     isDisableRef.current = isDisable
-  },[isDisable])
+  }, [isDisable])
 
-  useEffect(()=>{
-   if(phoneNumber){
-    phoneNumberRef.current = phoneNumber
-   }
-  },[phoneNumber])
-
+  useEffect(() => {
+    if (phoneNumber) {
+      phoneNumberRef.current = phoneNumber
+    }
+  }, [phoneNumber])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
   }, [])
- 
+
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
       sendOpt()
@@ -85,27 +84,34 @@ const LoginForPhone = (props: any) => {
   }, [phoneNumber])
 
   const sendOpt = () => {
-    const phoneNum = countryValue +  phoneNumberRef.current
+    const phoneNum = countryValue + phoneNumberRef.current
     setLoading(true)
     phoneOtpenerate({ phone_num: phoneNum })
       .then((res) => {
-        const { user_id, avatar, first_name, browser_serial_number, email ,is_multiple_phones_num} = res?.data?.data ?? {}
-        if(isModal){
-          setLoginData({...res?.data?.data,phoneNum} ?? {})
-        }else{
+        const {
+          user_id,
+          avatar,
+          first_name,
+          browser_serial_number,
+          email,
+          is_multiple_phones_num
+        } = res?.data?.data ?? {}
+        if (isModal) {
+          setLoginData({ ...res?.data?.data, phoneNum } ?? {})
+        } else {
           let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}`
           if (user_id) {
             url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
           }
           router.push(url)
-        }     
+        }
       })
       .catch((error) => {
         const code = error?.response?.data.code
-        let  transErr = errorcode[code]
-        if(code === 40006){
-          transErr = formatTemplateString(transErr,{
-            retry_after:error?.response?.data?.errors?.retry_after
+        let transErr = errorcode[code]
+        if (code === 40006) {
+          transErr = formatTemplateString(transErr, {
+            retry_after: error?.response?.data?.errors?.retry_after
           })
         }
         dispatch(
@@ -115,7 +121,8 @@ const LoginForPhone = (props: any) => {
             severity: 'error'
           })
         )
-      }).finally(()=>  setLoading(false))
+      })
+      .finally(() => setLoading(false))
   }
 
   const agreementWord = formatTemplateString(newGetStarted.agreement, {
@@ -135,7 +142,11 @@ const LoginForPhone = (props: any) => {
 
   return (
     <>
-      {!isModal && <h2>{newGetStarted.title}</h2>} 
+      {!isModal && (
+        <h2>
+          {newGetStarted.title} <span>Bossjob</span>
+        </h2>
+      )}
       <div className={styles.phoneNumber}>
         <div className={styles.item}>
           <MaterialBasicSelect
@@ -143,6 +154,7 @@ const LoginForPhone = (props: any) => {
             label={newGetStarted.country}
             options={countryList}
             value={countryValue}
+            variant='standard'
             onChange={(e) => setCountry(e.target.value)}
           />
         </div>
@@ -154,27 +166,31 @@ const LoginForPhone = (props: any) => {
             setDisable={setDisable}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>  
-          {
-           loading ? <CircularProgress color={'primary' } size={16} /> : newGetStarted.sendCode
-          }
-         
+        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+          {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
-        {!isModal &&  <p className={styles.tips}>
-          {newGetStarted.tips}{' '}
-          <Link
-            href={
-              process.env.ENV === 'development'
-                ? 'https://dev.employer.bossjob.com'
-                : 'https://employer.bossjob.com'
-            }
-            className={styles.AuthCTALink}
-          >
-            {newGetStarted.employer}
-          </Link>
-        </p>}      
+        {!isModal && (
+          <p className={styles.tips}>
+            {newGetStarted.tips}{' '}
+            <Link
+              href={
+                process.env.ENV === 'development'
+                  ? 'https://dev.employer.bossjob.com'
+                  : 'https://employer.bossjob.com'
+              }
+              className={styles.AuthCTALink}
+            >
+              {newGetStarted.employer}
+            </Link>
+          </p>
+        )}
+      </div>
+      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '18px' }}>
+        <GoogleLogin lang={props.lang} showTitle={false} />
+        <FacebookLogin lang={props.lang} showTitle={false} />
+        <AppleLogin lang={props.lang} showTitle={false} />
       </div>
       <div>
         <div className={classNames([styles.divider, styles.divider_none])}>
@@ -182,10 +198,7 @@ const LoginForPhone = (props: any) => {
         </div>
       </div>
       <div className={styles.list}>
-        <GoogleLogin lang={props.lang} />
-        <FacebookLogin lang={props.lang} />
-        <AppleLogin lang={props.lang} />
-        <EmailLogin lang={props.lang}  isModal={isModal} handleClick={handleEmailClick}/>
+        <EmailLogin lang={props.lang} isModal={isModal} handleClick={handleEmailClick} />
       </div>
     </>
   )

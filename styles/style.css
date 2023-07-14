@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bossjob';
-  src:  url('fonts/bossjob.eot?r1di5l');
-  src:  url('fonts/bossjob.eot?r1di5l#iefix') format('embedded-opentype'),
-    url('fonts/bossjob.ttf?r1di5l') format('truetype'),
-    url('fonts/bossjob.woff?r1di5l') format('woff'),
-    url('fonts/bossjob.svg?r1di5l#bossjob') format('svg');
+  src:  url('fonts/bossjob.eot?sgn0w4');
+  src:  url('fonts/bossjob.eot?sgn0w4#iefix') format('embedded-opentype'),
+    url('fonts/bossjob.ttf?sgn0w4') format('truetype'),
+    url('fonts/bossjob.woff?sgn0w4') format('woff'),
+    url('fonts/bossjob.svg?sgn0w4#bossjob') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,40 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-apple:before {
+  content: "\e910";
+}
+.icon-email:before {
+  content: "\e911";
+}
+.icon-facebook:before {
+  content: "\e912";
+}
+.icon-google:before {
+  content: "\e913";
+}
+.icon-googlecolor .path1:before {
+  content: "\e914";
+  color: rgb(66, 133, 244);
+}
+.icon-googlecolor .path2:before {
+  content: "\e915";
+  margin-left: -1em;
+  color: rgb(52, 168, 83);
+}
+.icon-googlecolor .path3:before {
+  content: "\e916";
+  margin-left: -1em;
+  color: rgb(251, 188, 5);
+}
+.icon-googlecolor .path4:before {
+  content: "\e917";
+  margin-left: -1em;
+  color: rgb(234, 67, 53);
+}
+.icon-phone:before {
+  content: "\e918";
+}
 .icon-Homebased:before {
   content: "\e902";
 }

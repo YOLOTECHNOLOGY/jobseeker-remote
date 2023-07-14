@@ -14,36 +14,41 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 
 function PhoneCode(props: any) {
-  const { lang:{newGetStarted}, isModal = false ,loginData,setStep} = props
+  const {
+    lang: { newGetStarted },
+    isModal = false,
+    loginData,
+    setStep
+  } = props
   const searchParams = useSearchParams()
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
   const langKey = getLang()
 
-  let userId:string;
-  let phoneNum:string;
-  let avatar:string;
-  let name:string; 
-  let email:string; 
-  let browserId:string;
-  let isMultiplePhonesNum:string;
+  let userId: string
+  let phoneNum: string
+  let avatar: string
+  let name: string
+  let email: string
+  let browserId: string
+  let isMultiplePhonesNum: string
 
-  if(isModal){
-    const { user_id, first_name, browser_serial_number, is_multiple_phones_num} = loginData
+  if (isModal) {
+    const { user_id, first_name, browser_serial_number, is_multiple_phones_num } = loginData
     userId = user_id
     phoneNum = loginData.phoneNum
     avatar = loginData.avatar
     name = first_name
     email = loginData.email
     browserId = browser_serial_number
-   isMultiplePhonesNum = String(is_multiple_phones_num)
-  }else{
-     userId = searchParams.get('userId')
-     phoneNum = '+' + searchParams.get('phone')?.trim?.()
-     avatar = searchParams.get('avatar')
-     name = searchParams.get('name')
-     email = searchParams.get('email')
-     browserId = searchParams.get('browserId')
+    isMultiplePhonesNum = String(is_multiple_phones_num)
+  } else {
+    userId = searchParams.get('userId')
+    phoneNum = '+' + searchParams.get('phone')?.trim?.()
+    avatar = searchParams.get('avatar')
+    name = searchParams.get('name')
+    email = searchParams.get('email')
+    browserId = searchParams.get('browserId')
     isMultiplePhonesNum = searchParams.get('isMultiplePhonesNum')
   }
 
@@ -51,12 +56,11 @@ function PhoneCode(props: any) {
   const router = useRouter()
   const pathname = usePathname()
 
-
   const dispatch = useDispatch()
   console.log({ uuid })
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(jobbseekersLoginFailed({}))
-  },[])
+  }, [])
   useEffect(() => {
     if (!uuid) {
       const fpPromise = FingerprintJS.load()
@@ -67,7 +71,7 @@ function PhoneCode(props: any) {
         // This is the visitor identifier:
         uuid = result.visitorId
         localStorage.setItem('uuid', uuid)
-        console.log({newUUid: uuid })
+        console.log({ newUUid: uuid })
       })()
     }
   }, [])
@@ -75,22 +79,27 @@ function PhoneCode(props: any) {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
-  const { setUserId, defaultLoginCallBack, handleAuthenticationJobseekersLoginPhone,userInfo,error } =
-    useGetStarted()
+  const {
+    setUserId,
+    defaultLoginCallBack,
+    handleAuthenticationJobseekersLoginPhone,
+    userInfo,
+    error
+  } = useGetStarted()
 
- // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
- // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const onChange = (otp) => {
-    if(error?.data?.message){
+    if (error?.data?.message) {
       dispatch(jobbseekersLoginFailed({}))
     }
-    console.log({otp},otp?.length)
+    console.log({ otp }, otp?.length)
     if (otp?.length === 6) {
       console.log(otp, uuid, browserId)
-     
-      if(isMultiplePhonesNum === 'true'){
+
+      if (isMultiplePhonesNum === 'true') {
         router.push(`/${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
-         return
+        return
       }
 
       if (uuid != browserId && browserId && email) {
@@ -98,7 +107,6 @@ function PhoneCode(props: any) {
       } else {
         handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
       }
-
     }
   }
 
@@ -140,10 +148,12 @@ function PhoneCode(props: any) {
   const sendOpt = (email) => {
     authenticationSendEmaillOtp({ email }).then((res) => {
       console.log(res?.data?.data, 'res')
-      router.push(`/${langKey}/get-started/phone?step=6&email=${encodeURIComponent(email)}&userId=${userId}`)
+      router.push(
+        `/${langKey}/get-started/phone?step=6&email=${encodeURIComponent(email)}&userId=${userId}`
+      )
     })
   }
-  console.log({ userInfo },error?.data,7777)
+  console.log({ userInfo }, error?.data, 7777)
   useEffect(() => {
     if (userInfo && Object.keys(userInfo).length) {
       const { data } = userInfo
@@ -161,27 +171,27 @@ function PhoneCode(props: any) {
   return (
     <>
       <div className={styles.phoneNumber}>
-        <div className={styles.optBox} >
-
-         {
-          !isModal && <>
-            {userId ? (
-            <h2>
-              {newGetStarted.welcomeBack} {name} 🎉
-            </h2>
-          ) : (
-            <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
+        <div className={styles.optBox}>
+          {!isModal && (
+            <>
+              {userId ? (
+                <h2>
+                  {newGetStarted.welcomeBack} {name} 🎉
+                </h2>
+              ) : (
+                <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
+              )}
+              {avatar && avatar != 'null' ? (
+                <div className={styles.avatar}>
+                  <img className={styles.avatar_img} src={avatar} alt='avatar' />
+                </div>
+              ) : null}
+            </>
           )}
-          {avatar && avatar != 'null' ? (
-            <div className={styles.avatar}>
-              <img className={styles.avatar_img} src={avatar} alt='avatar' />
-            </div>
-          ) : null}
-          </>
-         }
 
           <p className={styles.enterTips}>
-            {newGetStarted.sendCodeDigit} <span>{phoneNum}.</span>
+            {newGetStarted.sendCodeDigit}
+            {/* <span>{phoneNum}.</span> */}
           </p>
           <Captcha
             lang={props.lang}
@@ -193,7 +203,10 @@ function PhoneCode(props: any) {
           />
           <p className={styles.trouble}>
             {newGetStarted.havingTrouble}{' '}
-            <span className={styles.link} onClick={()=>isModal ? setStep(1) :  router.push(`/${langKey}/get-started`)} >
+            <span
+              className={styles.link}
+              onClick={() => (isModal ? setStep(1) : router.push(`/${langKey}/get-started`))}
+            >
               {newGetStarted.otherOptions}.
             </span>
           </p>
