@@ -179,7 +179,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     <React.Fragment>
       <div className={styles.sectionContainer}>
         <div className={styles.resumeTitle}>
-          <Text textColor='primaryBlue' bold>
+          <Text textColor='primaryBlue' className={styles.resume_title_text}>
             {/* Upload your own resume */}
             {transitions.upload.title}
           </Text>
@@ -199,7 +199,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
-        <Text tagName='p' textStyle='lg'>
+        <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
         </Text>
         <UploadResume
@@ -214,10 +214,10 @@ const ResumeView = ({ userDetail, lang }: any) => {
       </div>
       <div className={styles.sectionContainer}>
         <Text textColor='primaryBlue' textStyle='xl' bold>
-          {transitions.bossjob.title}
+          {transitions.bossjob.title}2222
         </Text>
-        <Text tagName='p' textStyle='lg'>
-          {transitions.bossjob.tips}
+        <Text textStyle='lg'>
+          {transitions.bossjob.tips}1111
         </Text>
         <div className={styles.resumePreview}>
           <div className={styles.embla}>

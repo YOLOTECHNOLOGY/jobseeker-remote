@@ -1,3 +1,25 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
 .resumeTitle {
+  display: flex;
+  align-items: center;
+}
+.resume_title_text {
+  flex: 1;
+  //styleName: title/h3 24px;
+  font-family: Product Sans;
   font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.resume_subtitle {
+  margin-top: 20px;
+  display: block;
+  margin-bottom: 20px;
+}
+.add {
+  width: 40px;
+  text-align: center;
 }
