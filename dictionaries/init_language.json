@@ -1255,7 +1255,8 @@
     "youNeedToChooseVerified": "You need to choose a verified email address to associate",
     "validateErr": "The email has been registered. Please change the binding to another email",
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
-    "authenticationSuccessful": "Authentication Successful"
+    "authenticationSuccessful": "Authentication Successful",
+    "Bossjob": "Bossjob"
   },
   "seo": {
     "ph": "Philippines",

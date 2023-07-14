@@ -1224,7 +1224,7 @@
     "emailLabel": "邮件地址",
     "sendCode": "发送验证码",
     "welcomeBack": "欢迎回来",
-    "sendCodeDigit": "请输入我们发送到的6位验证码",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
     "signUpAnAccount": "注册新帐户",
     "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件",
     "havingTrouble": "还是有问题？ 尝试注册",
@@ -1234,10 +1234,10 @@
     "resendCode": "重新发送验证码",
     "country": "国家",
     "phoneNumber": "电话号码",
-    "twoFactor": "启用双因素",
+    "twoFactor": "Safety Verification",
     "authentication": "验证",
     "secure": "保护您的帐户并在您的电子邮件中接收代码",
-    "emailTips": "当您登录我们无法识别的设备或浏览器时，我们会要求您提供额外的代码。 请输入电子邮件地址以接收代码。",
+    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
     "setUpLater": "稍后设置",
     "enableTwoFactor": "双因素",
     "authenticationEnabled": "验证已启用",
@@ -1253,7 +1253,10 @@
     "accounts": "帐号",
     "thisPhoneNumber": "此电话号码已关联的账号",
     "youNeedToChooseVerified": "您需要选择并验证Email来关联账号",
-    "validateErr": "电子邮件已注册。请更改绑定到另一个email"
+    "validateErr": "电子邮件已注册。请更改绑定到另一个email",
+    "checkYourSpam": "Check your spam mail if you didn’t receive code.",
+    "authenticationSuccessful": "Authentication Successful",
+    "Bossjob": "Bossjob"
   },
   "seo": {
     "ph": "菲律宾",
