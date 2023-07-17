@@ -6,23 +6,23 @@ export default createTheme({
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    width:'100vw',
-                    height:'100%',
+                    width: '100vw',
+                    height: '100%',
                     padding: '0px',
-                    top:'0px',
-                    left:'0px'
+                    top: '0px',
+                    left: '0px'
                 },
-                
+
             },
         },
         MuiList: {
             styleOverrides: {
                 root: {
-                    width:'100vw',
-                    height:'100%',
+                    width: '100vw',
+                    height: '100%',
                     padding: '0px'
                 },
-                
+
             },
         },
         MuiOutlinedInput: {
@@ -58,7 +58,7 @@ export default createTheme({
                     shrink: {
                         backgroundColor: '#E7F1FB'
                     },
-                    focused: {
+                    '&.Mui-focused': {
                         backgroundColor: '#E7F1FB',
                         '&.MuiInputLabel': {
                             display: 'none'
