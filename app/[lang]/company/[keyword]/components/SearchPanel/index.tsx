@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -15,6 +15,7 @@ import { InView } from "react-intersection-observer";
 import useMediaQuery  from '@mui/material/useMediaQuery';
 import { languageContext } from 'app/components/providers/languageProvider';
 import Empty from 'app/components/empty/empty';
+import TextField from '@mui/material/TextField';
 
 
 
@@ -54,6 +55,7 @@ const SearchPanel = (props: Props) => {
     const isMobile = useMediaQuery('(max-width:768px)');
     const contextLang = useContext(languageContext);
 	const { overview } = contextLang.companyDetail;
+    const currentLocation = useRef<Country>();
     useEffect(() => {
         if (!props.functions) return;
         // filterTagView.current = [{}].concat(props.functions);
@@ -161,36 +163,48 @@ const SearchPanel = (props: Props) => {
         }
 
     }
+
+
+    const AutocompleteComponent = useMemo(()=>{
+        return <Autocomplete
+        id='location-autocomplete1'
+        options={formattedLocationList}
+        groupBy={(option: any) => option.region_display_name}
+        getOptionLabel={(option: any) => {
+            return option.value
+        }}
+        
+        size='small'
+        onChange={(e, value) => {
+            // console.log('value',value);
+            currentLocation.current = value;
+            setLocation(value);
+            searchFunc(inputText.current, value, 1);
+        }}
+        
+        key={location?.id}
+        // disablePortal
+        disableClearable={false}
+        // className={className}
+        // disableCloseOnSelect
+        renderInput={(params) => {
+            return (
+                <label {...params.InputProps}  htmlFor={"location-autocomplete"} className={style.location_input_wrapper}>
+                    <input {...params.inputProps} placeholder='Location' className={style.location_input} />
+                    <div className={style.location_arrow}></div>
+                    <div className={style.location_input_border} />
+                </label>
+            )
+        }}
+    // defaultValue={defaultValue}
+    // {...rest}
+    />
+    },[])
     return <div className={style.search_container}>
         <div className={style.search_input_wrapper}>
             <div className={style.search_input_layout}>
                 <div className={style.location_selector_wapper}>
-                    <Autocomplete
-                        id='location-autocomplete'
-                        options={formattedLocationList}
-                        groupBy={(option: any) => option.region_display_name}
-                        getOptionLabel={(option: any) => option.value || ''}
-                        size='small'
-                        onChange={(e, value) => {
-                            setLocation(value);
-                            searchFunc(inputText.current, value, 1);
-                        }}
-                        key={location?.id}
-                        disableClearable={false}
-                        // className={className}
-                        renderInput={(params) => {
-                            return (
-                                <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
-                                    <input {...params.inputProps} placeholder='Location' className={style.location_input} />
-                                    <div className={style.location_arrow}></div>
-                                    <div className={style.location_input_border} />
-                                </label>
-                            )
-                        }}
-                    // defaultValue={defaultValue}
-                    // {...rest}
-                    />
-
+                    {AutocompleteComponent}
                 </div>
                 <label htmlFor='input-search' className={style.job_search_container}>
                     <Image width={16} height={16} className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
@@ -404,10 +418,10 @@ const JobsSearchCard = (props: JobData) => {
         </div>
 
         <div className={style.content}>
-            {_tagsData.map(item => {
+            {_tagsData.map((item,index) => {
                 const value = props[item.field]
                 if (!value) return null;
-                return <span className={style.mobile_tag} key={value}>
+                return <span className={style.mobile_tag} key={index}>
                     {item.name}
                 </span>
             }).slice(0,3)}
@@ -455,10 +469,10 @@ export const JobsTag = (props: TagProps) => {
     _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
     _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
     return <div className={style.tags}>
-        {_tagsData.map(item => {
+        {_tagsData.map((item,index) => {
             const value = props[item.field]
             if (!value) return null;
-            return <div className={style.tag_item + ' ' + ' tag_flag'} key={value}>
+            return <div className={style.tag_item + ' ' + ' tag_flag'} key={index}>
                 {item.name}
             </div>
         }).slice(0, props.count ?? 3)}
