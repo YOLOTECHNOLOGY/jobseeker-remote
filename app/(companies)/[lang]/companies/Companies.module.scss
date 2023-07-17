@@ -278,7 +278,7 @@
 }
 
 .featuredSectionTitle {
-  padding-top: 80px;
+  padding-top: 60px;
   padding-bottom: 60px;
   text-align: center;
   margin: 0;
@@ -291,12 +291,14 @@
   letter-spacing: 0.33px;
 
   @include sm {
-    display: none;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 32px;
   }
 }
 
 .popularCompanyTitle {
-  padding-top: 80px;
+  padding-top: 60px;
   padding-bottom: 40px;
   text-align: center;
   margin: 0;
@@ -309,7 +311,7 @@
   letter-spacing: 0.33px;
 
   @include sm {
-    padding-top: 60px;
+    padding-top: 40px;
     padding-bottom: 20px;
     font-size: 32px;
   }
