@@ -69,7 +69,7 @@ export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
-  { value: 'ja-JP', id: 4, label: '日本語' }
+  // { value: 'ja-JP', id: 4, label: '日本語' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
