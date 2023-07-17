@@ -117,28 +117,25 @@ const verifyEmail = function (props) {
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
-          {!isModal && (
+          {userId ? (
             <>
-              {userId ? (
-                <>
-                  <h2>{newGetStarted.welcomeBack}! 🎉</h2>
+              <h2>{newGetStarted.welcomeBack}! 🎉</h2>
 
-                  <div className={styles.avatar}>
-                    <img className={styles.avatar_img} src={avatar} alt='avatar' />
-                  </div>
-                  <p className={styles.enterTips}>
-                    {newGetStarted.sendCodeDigit}
-                    {/* <span className={styles.phone_text}>{email}</span> */}
-                  </p>
-                </>
-              ) : (
-                <>
-                  <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
-                  <p className={styles.enterTips}>
-                    {newGetStarted.sendCodeDigit} <span className={styles.phone_text}>{email}</span>
-                  </p>
-                </>
-              )}
+              <div className={styles.avatar}>
+                <img className={styles.avatar_img} src={avatar} alt='avatar' />
+              </div>
+              <p className={styles.enterTips}>
+                {newGetStarted.sendCodeDigit}
+                {/* <span className={styles.phone_text}>{email}</span> */}
+              </p>
+            </>
+          ) : (
+            <>
+              <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
+              <p className={styles.enterTips}>
+                {newGetStarted.sendCodeDigit}
+                {/* <span className={styles.phone_text}>{email}</span> */}
+              </p>
             </>
           )}
 
@@ -156,7 +153,7 @@ const verifyEmail = function (props) {
               {newGetStarted.havingTrouble}{' '}
               <span
                 className={styles.link}
-                onClick={() => (isModal ? setStep(1) : router.push(`/${langKey}/get-started`))}
+                onClick={() => (isModal ? setStep() : router.push(`/${langKey}/get-started`))}
               >
                 {newGetStarted.otherOptions}
               </span>

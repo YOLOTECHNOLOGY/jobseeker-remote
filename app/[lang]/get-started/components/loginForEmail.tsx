@@ -19,7 +19,7 @@ import { CircularProgress } from 'app/components/MUIs'
 interface IProps {
   lang: any
   isModal?: boolean
-  handlePhoneClick?: () => void
+  handleEmailClick?: () => void
   setLoginData?: any
 }
 
@@ -30,10 +30,9 @@ const loginForEmail = (props: IProps) => {
   const {
     lang: { newGetStarted, errorcode },
     isModal = false,
-    handlePhoneClick,
+    handleEmailClick,
     setLoginData
   } = props
-  console.log(props.lang)
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
@@ -175,7 +174,7 @@ const loginForEmail = (props: IProps) => {
         </div>
       </div>
       <div className={styles.list}>
-        <PhoneLink lang={props.lang} isModal={isModal} handleClick={handlePhoneClick} />
+        <PhoneLink lang={props.lang} isModal={isModal} handleClick={handleEmailClick} />
       </div>
     </>
   )

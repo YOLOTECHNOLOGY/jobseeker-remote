@@ -40,6 +40,7 @@ const Main = (props: IProps) => {
           qrCode={qrCode}
           dictionary={dictionary}
           isModal={isModal}
+          isLeft={false}
         />
         {qrCode ? (
           <QrCodeComponent lang={dictionary} />

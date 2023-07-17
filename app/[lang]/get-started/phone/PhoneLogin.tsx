@@ -12,12 +12,28 @@ import PhoneChooseEmail from '../components/PhoneChooseEmail'
 import LeftBanner from '../components/leftBanner'
 import CodePopver from '../components/codePopver'
 import QrCodeComponent from '../components/QrCode'
+
 interface IProps {
   lang: any
+  isModal?: boolean
+  stepModal?: number
+  setLoginData?: any
+  handleEmailClick?: () => void
+  loginData?: any
+  setLoginType?: (e: any) => void
 }
 
 const PhoneLogin = (props: IProps) => {
-  const { lang } = props
+  const {
+    lang,
+    isModal = false,
+    stepModal,
+    setLoginData,
+    handleEmailClick,
+    loginData,
+    setLoginType
+  } = props
+  console.log(props, 999)
   const searchParams = useSearchParams()
   const search = searchParams.get('step')
   const [step, setStep] = useState(1)
@@ -25,36 +41,64 @@ const PhoneLogin = (props: IProps) => {
 
   useEffect(() => {
     const hasStep = [1, 2, 3, 4, 5, 6, 7].includes(+search)
+    if (isModal) {
+      setStep(stepModal)
+      return
+    }
     if (search && hasStep) {
       setStep(Number(search))
     } else {
       setStep(1)
     }
-  }, [search])
+  }, [search, stepModal, isModal])
 
-  return (
-    <div className={styles.main}>
-      <div className={styles.bg}></div>
-      <div className={styles.container}>
-        <LeftBanner />
-        <div className={styles.rightContainer}>
-          <CodePopver setQrCode={setQrCode} qrCode={qrCode} dictionary={lang} isModal={false} />
-          {qrCode ? (
-            <QrCodeComponent lang={lang} />
-          ) : (
-            <>
-              {step === 1 && <LoginForPhone lang={props.lang} />}
-              {step === 2 && <PhoneCode lang={props.lang} />}
-              {step === 3 && <EmailFactor lang={props.lang} />}
-              {step === 4 && <EmailCode lang={props.lang} />}
-              {step === 5 && <FactorEnable lang={props.lang} />}
-              {step === 6 && <VerifyFactorEmail lang={props.lang} />}
-              {step === 7 && <PhoneChooseEmail lang={props.lang} />}
-            </>
-          )}
-        </div>
+  const main = (
+    <div className={styles.container}>
+      <LeftBanner />
+      <div className={styles.rightContainer}>
+        <CodePopver setQrCode={setQrCode} qrCode={qrCode} dictionary={lang} isModal={isModal} />
+        {qrCode ? (
+          <QrCodeComponent lang={lang} />
+        ) : (
+          <>
+            {step === 1 && (
+              <LoginForPhone
+                lang={props.lang}
+                isModal={isModal}
+                setLoginData={setLoginData}
+                handleEmailClick={handleEmailClick}
+              />
+            )}
+            {step === 2 && (
+              <PhoneCode
+                lang={props.lang}
+                setStep={setLoginType}
+                isModal={isModal}
+                loginData={loginData}
+              />
+            )}
+            {step === 3 && <EmailFactor lang={props.lang} />}
+            {step === 4 && <EmailCode lang={props.lang} />}
+            {step === 5 && <FactorEnable lang={props.lang} />}
+            {step === 6 && <VerifyFactorEmail lang={props.lang} />}
+            {step === 7 && <PhoneChooseEmail lang={props.lang} />}
+          </>
+        )}
       </div>
     </div>
+  )
+
+  return (
+    <>
+      {isModal ? (
+        main
+      ) : (
+        <div className={styles.main}>
+          <div className={styles.bg}></div>
+          {main}
+        </div>
+      )}
+    </>
   )
 }
 

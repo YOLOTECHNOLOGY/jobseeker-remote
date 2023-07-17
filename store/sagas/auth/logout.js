@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { LOGOUT_REQUEST } from 'store/types/auth/logout'
 // import { logoutFailed, logoutSuccess } from 'store/actions/auth/logout'
-// import { logoutService } from 'store/services/auth/logout'
+import { logoutService } from 'store/services/auth/logout'
 import { removeCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailClear } from 'store/actions/users/fetchUserOwnDetail'
 import jobseekersLogin from 'store/reducers/auth/jobseekersLogin'

@@ -10,15 +10,6 @@
   overflow: hidden;
 
   .bg {
-    // position: absolute;
-    // width: 1620px;
-    // height: 800px;
-    // left: 0;
-    // background: linear-gradient(86.06deg, #9DEDFF 59.41%, #9DEDFF 68.95%, #1052FB 76.03%, #1052FB 80.45%, rgba(16, 82, 251, 0.89) 88.18%);
-    // opacity: 0.2;
-    // filter: blur(154.5px);
-    // transform: rotate(90deg);
-    // z-index: -1;
     position: absolute;
     width: 1366px;
     height: 768px;
@@ -35,7 +26,7 @@
     display: flex;
     justify-content: flex-end;
     position: relative;
-    bottom: 10px;
+    // bottom: 10px;
     margin-bottom: 16px;
     z-index: 10;
 
@@ -58,7 +49,7 @@
     font-size: 18px;
     text-align: center;
     position: relative;
-    padding-top: 150px;
+    padding-top: 100px;
     padding-bottom: 15px;
     margin: 0;
   }
@@ -121,6 +112,7 @@
     padding: 4px 10px;
     margin-right: 20px;
     position: relative;
+    line-height: 28px;
 
     &::after {
       content: ' ';
@@ -141,8 +133,8 @@
     padding: 13px 18px 13px 18px;
     border-radius: 20px;
     position: absolute;
-    right: -84px;
-    bottom: 60px;
+    right: -112px;
+    bottom: 99px;
     background: #fff;
     display: none;
 
@@ -214,8 +206,8 @@
   }
 
   .popver2 {
-    right: -190px;
-    bottom: -68px;
+    right: -270px;
+    bottom: 28px;
     width: 373px;
     height: 534px;
     padding: 0;
@@ -313,11 +305,30 @@
   }
 
   .codePage {
-    position: absolute;
-    right: 34px;
-    top: 20px;
-    bottom: unset;
-    z-index: 10;
+    justify-content: flex-start;
+
+    .codeImg {
+      transform: rotate(-90deg);
+    }
+
+    .iconWindows {
+      transform: rotateY(-180deg);
+      transform-origin: center;
+    }
+
+    .codePopver {
+      margin-left: 20px;
+
+      &::after {
+        content: ' ';
+        border-width: 8px 8px 8px 0;
+        right: unset;
+        left: -8px;
+        bottom: 7px;
+        border-color: transparent #fff transparent transparent;
+      }
+    }
+
   }
 
   .container {
@@ -337,7 +348,7 @@
       letter-spacing: 0.0075em;
       color: #121212;
       line-height: 44px;
-      padding: 60px 0 20px 0;
+      padding: 20px 0 34px 0;
       margin: 0;
 
       span {
@@ -494,7 +505,7 @@
       text-align: center;
       letter-spacing: 0.02em;
       color: #86909c;
-      padding: 102px 0 24px;
+      padding: 90px 0 24px;
 
       &.divider_none {
         margin: 0;
@@ -597,6 +608,7 @@
     }
 
     .phoneNumber {
+
       .item {
         margin-top: 16px;
 
@@ -858,25 +870,23 @@
 
   .dialogContainer {
     box-shadow: none;
-    width: 561px;
-    padding: 28px 20px 38px 20px;
+    // width: 880px;
+    // padding: 28px 20px 38px 20px;
 
-    >h2 {
-      display: none;
-    }
+    // >h2 {
+    //   display: none;
+    // }
 
-    .login_item {
-      margin-top: 0;
-      margin-bottom: 16px;
+    // .login_item {
+    //   margin-top: 0;
+    //   margin-bottom: 16px;
 
-      &:last-child {
-        margin-bottom: 0
-      }
-    }
+    //   &:last-child {
+    //     margin-bottom: 0
+    //   }
+    // }
 
-    .codeTitle {
-      padding-top: 6px
-    }
+
   }
 }
 

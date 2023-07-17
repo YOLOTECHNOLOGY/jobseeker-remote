@@ -54,7 +54,6 @@ function PhoneCode(props: any) {
 
   let uuid = localStorage.getItem('uuid')
   const router = useRouter()
-  const pathname = usePathname()
 
   const dispatch = useDispatch()
   console.log({ uuid })
@@ -172,22 +171,18 @@ function PhoneCode(props: any) {
     <>
       <div className={styles.phoneNumber}>
         <div className={styles.optBox}>
-          {!isModal && (
-            <>
-              {userId ? (
-                <h2>
-                  {newGetStarted.welcomeBack} {name} 🎉
-                </h2>
-              ) : (
-                <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
-              )}
-              {avatar && avatar != 'null' ? (
-                <div className={styles.avatar}>
-                  <img className={styles.avatar_img} src={avatar} alt='avatar' />
-                </div>
-              ) : null}
-            </>
+          {userId ? (
+            <h2>
+              {newGetStarted.welcomeBack} {name} 🎉
+            </h2>
+          ) : (
+            <h2>{newGetStarted.signUpAnAccount} 🎉</h2>
           )}
+          {avatar && avatar != 'null' ? (
+            <div className={styles.avatar}>
+              <img className={styles.avatar_img} src={avatar} alt='avatar' />
+            </div>
+          ) : null}
 
           <p className={styles.enterTips}>
             {newGetStarted.sendCodeDigit}
@@ -205,7 +200,7 @@ function PhoneCode(props: any) {
             {newGetStarted.havingTrouble}{' '}
             <span
               className={styles.link}
-              onClick={() => (isModal ? setStep(1) : router.push(`/${langKey}/get-started`))}
+              onClick={() => (isModal ? setStep() : router.push(`/${langKey}/get-started`))}
             >
               {newGetStarted.otherOptions}.
             </span>

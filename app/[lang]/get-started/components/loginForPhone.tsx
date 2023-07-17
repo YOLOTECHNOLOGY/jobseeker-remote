@@ -142,11 +142,9 @@ const LoginForPhone = (props: any) => {
 
   return (
     <>
-      {!isModal && (
-        <h2>
-          {newGetStarted.title} <span>Bossjob</span>
-        </h2>
-      )}
+      <h2 style={{ padding: '10px 0 20px 0' }}>
+        {newGetStarted.title} <span>Bossjob</span>
+      </h2>
       <div className={styles.phoneNumber}>
         <div className={styles.item}>
           <MaterialBasicSelect
@@ -187,7 +185,7 @@ const LoginForPhone = (props: any) => {
           </p>
         )}
       </div>
-      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '18px' }}>
+      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '16px' }}>
         <GoogleLogin lang={props.lang} showTitle={false} />
         <FacebookLogin lang={props.lang} showTitle={false} />
         <AppleLogin lang={props.lang} showTitle={false} />
