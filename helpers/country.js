@@ -40,10 +40,9 @@ export const getCountryKey = () => {
     typeof window === 'undefined' ?
       process.env.NEXT_PUBLIC_HOST_PATH :
       window.location.hostname
-
   // path maybe is  localhost
   // don't use 127.0.0.1 as dev public path
-  const countryKey = path.includes('.') && path?.split?.('.')?.pop()
+  const countryKey = path?.includes('.') && path?.split?.('.')?.pop()
 
   return countryKey || defaultCountryKey()
 }
