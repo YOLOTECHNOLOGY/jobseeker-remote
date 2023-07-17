@@ -5,12 +5,15 @@ import SocialList from '../common/SocialList'
 
 const SocialLink = (props: any) => {
   const { data } = props
-  const { followUs } = data?.foot || {}
+  const { followUs, workingDate } = data?.foot || {}
 
   return (
     <div className={styles.footerMobileSocialLinks}>
-      <div className={styles.footerMobileSocialLinksText}>{followUs}</div>
-      <SocialList />
+      <div className={styles.footerMobileSocialDate}>{workingDate}</div>
+      <div className={styles.footerMobileSocialList}>
+        <div className={styles.footerMobileSocialLinksText}>{followUs}</div>
+        <SocialList />
+      </div>
     </div>
   )
 }

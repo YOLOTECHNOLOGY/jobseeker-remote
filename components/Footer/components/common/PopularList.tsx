@@ -1,27 +1,19 @@
 import React from 'react'
 import Link from 'components/Link'
 import styles from '../../Footer.module.scss'
-import CountryList from './CountryList'
+// import CountryList from './CountryList'
 import { getLang } from 'helpers/country'
 
 const PopularList = (props: any) => {
+  const { data } = props
 
-  const {data} = props
-  
   const langKey = getLang()
 
-  const {
-    ItJobs,
-    financeJobs,
-    customerService,
-    BpoJobs,
-    salesJobs,
-    healthcareJobs,
-  } = data?.foot || {}
+  const { ItJobs, financeJobs, customerService, BpoJobs, salesJobs, healthcareJobs } =
+    data?.foot || {}
 
   return (
     <ul className={styles.footerDesktopLinkList}>
-      <CountryList data={data?.foot || {}} langKey={langKey} />
       <li>
         <Link
           className={styles.footerLink}
