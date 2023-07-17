@@ -94,7 +94,7 @@ export const defaultLanguageId = () => languages[0].id
 export const getCountryKey = () => {
   const path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
-  const country = countryCounfig.find(item => path.includes(item.url))
+  const country = countryCounfig.find(item => path?.includes?.(item.url))
   if (country) {
     return country.key
   } else {
