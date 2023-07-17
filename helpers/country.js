@@ -70,6 +70,14 @@ export const languages = [
   { value: 'id-ID', id: 3, label: 'Indonesia' },
   { value: 'ja-JP', id: 4, label: '日本語' }
 ]
+export const serverContryCodeMap = {
+  'en-US': 'en',
+  'zh-CN': 'zh-CN',
+  'id-ID': 'id',
+  'ja-JP': 'ja'
+}
+
+export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey
 
 export const nations = countryCounfig.map(item => {
   return {
