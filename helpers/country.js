@@ -9,7 +9,7 @@ const countryCounfig = [
     defaultLocation: {
       id: 63,
       key: "manila",
-      value: "Manila111",
+      value: "Manila",
       is_popular: false,
       region_display_name: "National Capital Region",
       seo_value: "manila"
@@ -32,11 +32,43 @@ const countryCounfig = [
     currency: 'sgd',
     id: 193
   },
+  {
+    name: 'Japan',
+    key: 'jp',
+    url: 'bossjob.jp',
+    defaultLocation: {
+      id: 68,
+      is_popular: false,
+      key: "tokyo",
+      region_display_name: "Tokyo To",
+      seo_value: "tokyo_to",
+      value: "Tokyo To",
+    },
+    currency: 'jpy',
+    id: 81
+  },
+  {
+    name: 'Indonesia',
+    key: 'id',
+    url: 'bossjob.id',
+    defaultLocation: {
+      id: 450,
+      is_popular: false,
+      key: "jakarta_pusat",
+      region_display_name: "Jakarta Pusat",
+      seo_value: "jakarta_pusat",
+      value: "Jakarta Pusat",
+    },
+    currency: 'idr',
+    id: 62
+  },
 ]
 
 export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
-  { value: 'zh-CN', id: 2, label: '中文 (简体)' }
+  { value: 'zh-CN', id: 2, label: '中文 (简体)' },
+  { value: 'id-ID', id: 3, label: 'Indonesia' },
+  { value: 'jp', id: 4, label: '日本語' }
 ]
 
 export const nations = countryCounfig.map(item => {
