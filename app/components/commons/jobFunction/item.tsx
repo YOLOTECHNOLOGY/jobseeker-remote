@@ -21,7 +21,7 @@ const JobItem = (props: any) => {
                 id={'job-item-icon' + data.value + data?.id}
                 fill='red'
                 height='16' width='16' />}</div>
-            {!noArrow && <div  id={'job-item-no-arrow' + data.value + data?.id} className={styles.arrow} onClick={onArrowClick} style={{ width: 40 }}>
+            {!noArrow && <div id={'job-item-no-arrow' + data.value + data?.id} className={styles.arrow} onClick={onArrowClick} style={{ width: 40 }}>
                 <KeyboardArrowRightOutlined style={{ color: '#707070', margin: 'auto' }} />
             </div>}
         </div>
