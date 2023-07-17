@@ -22,7 +22,8 @@ const jpLanguage = { errorcode: jpErrorcode, ...jpPageLanguage }
 const dictionaries = {
   'en-US': () => enLanguage,
   'zh-CN': () => zhLanguage,
-  'id-ID': () => idLanguage
+  'id-ID': () => idLanguage,
+  'ja-JP': () => jpLanguage
 }
 
 export const getDictionary = async (locale: Locale) => {
