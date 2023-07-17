@@ -1,36 +1,44 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.profileFormTitleText {
+  color: var(--general-black, #353535);
+  font-family: Product Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 150% */
+}
 .profile {
   // max-height: 50vh;
 
   &Form {
-    margin-top: 24px;
+    margin-top: 20px;
 
     &Group {
       display: flex;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       @include msd {
         flex-direction: column;
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
 
-      &Field{
-        display:flex;
-        width:100%;
+      &Field {
+        display: flex;
+        width: 100%;
         flex-direction: column;
       }
     }
 
     &Title {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     &Input {
       flex-grow: 1;
-      
+
       @include msd {
-        margin-bottom: 24px;
+        margin-bottom: 20px;
       }
 
       &:last-child {
@@ -40,23 +48,23 @@
   }
 }
 
-.descriptionField{
-  display:flex;
+.descriptionField {
+  display: flex;
   flex-direction: column;
-  width:100%;
+  width: 100%;
 }
 
-.footerButton{
-  @include sm{
-    width:100%;
+.footerButton {
+  @include sm {
+    width: 100%;
   }
 }
 
-.requiredField{
-  color:$red;
+.requiredField {
+  color: $red;
 }
 
-.fieldError{
-  display:flex;
-  margin:8px 0 0 0;
+.fieldError {
+  display: flex;
+  margin: 8px 0 0 0;
 }

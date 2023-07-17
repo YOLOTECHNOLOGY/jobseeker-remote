@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useManageProfileData } from './DataProvider';
 import ProfileLayout from 'components/ProfileLayout'
 import ResumeView from './components/ResumeView';
+import EditProfileModal from 'components/EditProfileModal'
 
 const ManageProfilePage = () =>{
   const lang = useLanguage();
@@ -69,6 +70,14 @@ const ManageProfilePage = () =>{
   })
   console.log({lang,userDetail,config,tab});
   return <>
+      <EditProfileModal
+        lang={lang}
+        modalName='profile'
+        showModal={modalState.profile.showModal}
+        config={config}
+        userDetail={userDetail}
+        handleModal={handleModal}
+      />
      <ProfileLayout
         dic={tabDic}
         userDetail={userDetail}

@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { DatePicker, LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { TextField } from '@mui/material'
+import styles from 'styles/maintenance.module.scss'
 
 interface MaterialDatePickerProps {
   value?: any
@@ -12,6 +13,7 @@ interface MaterialDatePickerProps {
   views?: any
   fullWidth?: boolean
   refs?: any
+  hiddenLabel? : boolean
 }
 
 const MaterialDatePicker = ({
@@ -22,6 +24,7 @@ const MaterialDatePicker = ({
   views,
   fullWidth,
   refs,
+  hiddenLabel
 }: MaterialDatePickerProps) => {
   const theme = createTheme({
     components: {
@@ -86,6 +89,7 @@ const MaterialDatePicker = ({
               {...params}
               fullWidth={fullWidth}
               helperText={null}
+              className={hiddenLabel ? styles.hiddenLabel : ''}
             />
           )}
         />

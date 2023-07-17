@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { FormHelperText } from '@mui/material'
+import styles from 'styles/maintenance.module.scss'
+
 
 const MaterialBasicSelect = ({
   id,
@@ -20,6 +22,7 @@ const MaterialBasicSelect = ({
   required,
   error,
   useID = false,
+  hiddenLabel = false,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue || '1')
@@ -92,7 +95,10 @@ const MaterialBasicSelect = ({
   return (
     <ThemeProvider theme={theme}>
       <FormControl className={className} size='small' error={!!error}>
-        <InputLabel id={`${id}-select-label`}>
+        <InputLabel id={`${id}-select-label`} 
+          className={'testInput'}
+          // className={hiddenLabel ? styles.hiddenLabel : ''}
+        >
           {
             <span>
               {label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
@@ -109,6 +115,7 @@ const MaterialBasicSelect = ({
           onOpen={onOpen}
           disabled={disabled}
           helpertext={error?.message}
+          
           {...rest}
         >
           {options &&

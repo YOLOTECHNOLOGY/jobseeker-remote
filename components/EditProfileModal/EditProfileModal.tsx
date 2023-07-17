@@ -316,6 +316,7 @@ const EditProfileModal = ({
                     })
                   }}
                   label={aboutMeModal.birthday}
+                  hiddenLabel
                   views={['year', 'month', 'day']}
                   inputFormat='yyyy-MM-dd'
                   value={birthdate}
@@ -324,6 +325,12 @@ const EditProfileModal = ({
                 />
                 {errors.birthdate && errorText(errors.birthdate.message as any)}
               </div>
+            </div>
+
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>
+                {requiredLabel(aboutMeModal.location)}
+              </Text>
             </div>
             <div className={styles.profileFormGroup}>
               <div className={styles.profileFormGroupField}>
@@ -339,12 +346,19 @@ const EditProfileModal = ({
                   className={styles.profileFormInput}
                   label={requiredLabel(aboutMeModal.location)}
                   error={errors.location ? true : false}
+                  hiddenLabel
                   value={location}
                   defaultValue={location}
                   onChange={onLocationSearch}
                 />
                 {errors.location && errorText(errors.location.message as any)}
               </div>
+            </div>
+
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>
+                {aboutMeModal.exp}
+              </Text>
             </div>
             <div className={styles.profileFormGroup}>
               <MaterialBasicSelect
@@ -355,6 +369,7 @@ const EditProfileModal = ({
                 label={aboutMeModal.exp}
                 value={yearsOfExperience}
                 options={formattedXpLevelList}
+                hiddenLabel
                 onChange={(e) => {
                   setYearsOfExperience(e.target.value)
                 }}
@@ -374,6 +389,7 @@ const EditProfileModal = ({
                   autoComplete='off'
                   multiline
                   rows={6}
+                  
                 />
                 {errors.summary && errorText(errors.summary.message as any)}
               </div>

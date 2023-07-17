@@ -6,6 +6,8 @@ import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import { Download } from '@mui/icons-material';
+
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -26,7 +28,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 moment.locale('en')
 /* Services */
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
-
+import { ColorButton } from './Button';
 /* Assets */
 import {
   ResumeTemplate1,
@@ -77,7 +79,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   })
 
   useEffect(() => {
-    setResume(userDetail.resumes||[])
+    setResume(userDetail.resumes || [])
   }, [userDetail.resumes])
 
   useEffect(() => {
@@ -248,29 +250,21 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        capitalize
-                        onClick={() => {
-                          handleDownloadResume('corporate')
-                        }}
-                        className={
-                          isTemplateDownloadable?.corporate
-                            ? styles.downloadResumeButtonActive
-                            : styles.downloadResumeButton
-                        }
-                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                      >
-                        <img
-                          src={DownloadWhiteIcon}
-                          alt='Download Corporate Template'
-                          className={styles.downloadIcon}
-                        />
-                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                        <ColorButton 
+                          sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                          className={
+                            isTemplateDownloadable?.corporate
+                              ? styles.downloadResumeButtonActive
+                              : styles.downloadResumeButton
+                          }
+                          startIcon={<Download/>}
+                          onClick={()=>{
+                              handleDownloadResume('corporate')
+                          }}
+                        >
                           {transitions.bossjob.download}
-                        </Text>
-                      </MaterialButton>
+                        </ColorButton>
+
                     )}
                   </div>
                 </div>
@@ -286,29 +280,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                      <MaterialButton
-                        variant='contained'
-                        size='medium'
-                        capitalize
-                        onClick={() => handleDownloadResume('creative')}
-                        className={
-                          isTemplateDownloadable?.creative
-                            ? styles.downloadResumeButtonActive
-                            : styles.downloadResumeButton
-                        }
-                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                      >
-                        <img
-                          src={DownloadWhiteIcon}
-                          alt='Download Creative Template'
-                          className={styles.downloadIcon}
-                          width='24px'
-                          height='24px'
-                        />
-                        <Text textStyle='lg' textColor='white' className={styles.downloadText}>
+                      <ColorButton 
+                          sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                          className={
+                            isTemplateDownloadable?.corporate
+                              ? styles.downloadResumeButtonActive
+                              : styles.downloadResumeButton
+                          }
+                          startIcon={<Download/>}
+                          onClick={()=>{
+                              handleDownloadResume('corporate')
+                          }}
+                        >
                           {transitions.bossjob.download}
-                        </Text>
-                      </MaterialButton>
+                        </ColorButton>
                     )}
                   </div>
                 </div>
