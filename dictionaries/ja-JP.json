@@ -12,7 +12,7 @@
     "accountSettings": "Account Settings",
     "logOut": "Log Out",
     "Chat": "Chat",
-    "downloadApp": "Download APP",
+    "downloadApp": "Download App",
     "pleaseVerify": "Please verify your email address.",
     "verifyNow": " Verify now.",
     "switchCountry": {
@@ -25,7 +25,7 @@
     "change": "Change"
   },
   "foot": {
-    "about": "About",
+    "about": "about",
     "aboutBossjob": "About Bossjob",
     "termsConditions": "Terms & Conditions",
     "legal": "Legal",
@@ -36,7 +36,7 @@
     "createFree": "Create free resume",
     "careerGuide": "Career guide",
     "courses": "Courses",
-    "recruiter": "Employer",
+    "recruiter": "Recruiter",
     "getStarted": "Get started",
     "popularJobs": " Popular Jobs",
     "JobsIn1": "Jobs in Manila",
@@ -44,16 +44,16 @@
     "JobsIn3": "Jobs in Cebu",
     "ItJobs": "IT jobs",
     "financeJobs": "Finance jobs",
-    "customerService": "Customer Service jobs",
+    "customerService": "Customer Service job",
     "jobs": "jobs",
     "BpoJobs": "BPO jobs",
     "salesJobs": "Sales jobs",
     "healthcareJobs": "Healthcare jobs",
-    "downloadBossjobApp": " Download Bossjob APP",
+    "downloadBossjobApp": " Download Bossjob App",
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation",
-    "companyDesc": "Launched in 2018, Bossjob is a chat-first, AI-powered hiring platform, modelled after the one thing that we need in our daily lives: instant gratification. Bossjob aims to provide speedy communications between talents and bosses to eliminate the lengthy job application process through direct chat.",
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world.",
     "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
     "JapanYolo": "Japan: Yolo Technology 株式会社",
     "JapanAddress": "東京都港区浜松町2-4-1 世界貿易センタービルディング南館17階",
@@ -61,7 +61,7 @@
     "workingDate": "Monday to Saturday 10:00 - 19:00"
   },
   "getStatred": {
-    "seoMetaTitle": "Sign Up or Login as Talent | Bossjob",
+    "seoMetaTitle": "Get started | Bossjob",
     "JoinBossjob": "Join Bossjob",
     "kickStartYourCareer": "kick-start your career!",
     "enterYourEmailAddress": "Enter your email address",
@@ -73,17 +73,17 @@
     "privacyPolicy": "Privacy Policy",
     "signInWith": "Sign in with",
     "lookingToHire": "Looking to hire people? Sign up as ",
-    "employer": "an Employer",
+    "employer": "Employer",
     "welcomeBack": "Welcome back!",
     "signUpAnAccount": "Sign up an account",
     "pleaseEnter": "Please enter the 6-digit one-time password that we sent to",
     "enter6DigitOTP": "Enter 6-digit OTP",
-    "getOPT": "get OTP",
+    "getOPT": "get OPT",
     "heOTPYouHaveEnteredIsWrong": "The OTP you have entered is wrong. Please try again.",
     "resendOTP": "Resend OTP",
     "havingTrouble": "Having trouble?",
     "requestAmagicLink": "Request a Magic Link",
-    "seoMetaDescription": "Chat with bosses in real-time and get hired fast. Join 3 million professionals in Southeast Asia! Sign up or login to find job matches in ",
+    "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
     "seoMetaDescription2": "Network of 2 million+ professionals.",
     "magicLink": {
       "welcomeBack": "Welcome back!",
@@ -91,18 +91,18 @@
       "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
       "toHome": "Back to home page"
     },
-    "loginUsingSocialMediaOTP": "Login using social media/OTP",
+    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
     "loginUsingQRCode": "Login using QR code",
-    "scanQRCodeOnAppToLogin": "Use Bossjob APP to scan the QR code to login",
+    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
     "donHaveApp": "Don’t have App",
-    "howToScanQRCode": "How to scan the QR code",
-    "ImJobSeeker": "I'm a Jobseeker",
-    "ImRecruiter": "I'm an Employer",
-    "menuLoginToVersion": "Menu > Login to Web",
+    "howToScanQRCode": "How to scan QR code",
+    "ImJobSeeker": "I'm a Job Seeker",
+    "ImRecruiter": "I'm a Recruiter",
+    "menuLoginToVersion": "Menu > Login to web version",
     "scannedSuccessfully": "Scanned successfully",
-    "pleaseConfirmLoginOnAPP": "Please confirm the request on APP",
-    "pleaseRefreshQrCode": "Refresh QR Code",
-    "clickToRefresh": "Refresh",
+    "pleaseConfirmLoginOnAPP": "Please confirm login on APP",
+    "pleaseRefreshQrCode": "Please refresh the QR code",
+    "clickToRefresh": "Click to refresh",
     "accountMismatch": "The account type does not match, please use the job application to log in"
   },
   "myJobs": {
@@ -120,12 +120,12 @@
     "sortBy": "Sort by",
     "filters": "Filters",
     "qualification": "Qualification",
-    "workExprerience": "Work Experience",
+    "workExprerience": "Work Exprerience",
     "experience": "Experience",
     "Industry": "Industry",
     "salary": "Salary",
     "JobType": "Job Type",
-    "companySizes": "Company Size",
+    "companySizes": "Company Sizes",
     "searchForJobTitleOrCompanyName": "Search for job title or company name",
     "resetFilters": "Reset Filters",
     "recommended": "Recommended",
@@ -137,9 +137,9 @@
     "availability": "Availability",
     "editOnlineResume": "Edit online resume",
     "uploadedResumes": " Uploaded Resumes",
-    "noResumeUploadNow": "No resume found, upload now",
+    "noResumeUploadNow": "No resume, upload now",
     "uploadResume": "Upload resume",
-    "availabilityUpdateSuccessfully": "Availability updated successfully",
+    "availabilityUpdateSuccessfully": "Availability update successfully",
     "seeMore": "See More",
     "seeJobReco": "See job reco",
     "search": "Search",
@@ -151,7 +151,7 @@
     "mobileNumber": "Mobile Number",
     "back": "Back",
     "addJobPreference": "Add Job Preference",
-    "JobClosed": "Job Closed",
+    "JobClosed": "Job closed",
     "undoSave": "Undo Save",
     "employees": "Employees",
     "InterviewTime": "Interview Time",
@@ -205,12 +205,12 @@
       "allJobs": "View {{totalActiveJobs}} job openings"
     },
     "seoTitle": "Find Companies Hiring in {{country}} | Bossjob",
-    "seoDescription": "Discover great companies to work for in {{country}}! Search job vacancies, chat and get hired! IT, Web3, Remote jobs available.",
+    "seoDescription": "Find great companies hiring in {{country}}. Search job vacancies, chat and get hired! Remote jobs available.",
     "searchPage": {
       "title": "Search Companies",
       "subTitle": "Companies for {{searchKey}}",
       "noResult": "No Results Found.",
-      "seoText": "Find great companies in {{country}}"
+      "seoText": "Find Companies Hiring in {{country}} | Bossjob"
     },
     "companiesEmpty": "Companies Not Found"
   },
@@ -243,7 +243,7 @@
       "Turnover": "Turnover",
       "Telephone": "Telephone",
       "CompanyName": "Company name",
-      "UnifiedSocialCreditCode": "Unified social credit code",
+      "UnifiedSocialCreditCode": "Unified Social Credit Code",
       "LegalRepresentative": "Legal representative",
       "RegisteredCapital": "Registered capital",
       "PaidUpCapital": "Paid-up capital",
@@ -268,8 +268,8 @@
       "HiBoss": "Hi Boss",
       "BenefitsDes": "Benefits are provided by the company and may vary depending on the position.",
       "CultureAndBenefits": "Culture and benefits",
-      "Find": "Search",
-      "FindNow": "Search",
+      "Find": "Find",
+      "FindNow": "Find Now",
       "All": "All",
       "Location:": "Location",
       "SearchPlaceholder": "Search for job title",
@@ -277,7 +277,7 @@
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
-        "noCultureTips": "{{companyName}} hasn't updated any information about their company life. Please come back again."
+        "noCultureTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
       },
       "benefit": {
         "title": "Employee Benefits",
@@ -291,7 +291,7 @@
         "viewAll": "See all Jobs",
         "search": {
           "jobTitle": "Search for job title",
-          "location": "Location",
+          "location": "location",
           "btn": "Search"
         },
         "card": {
@@ -299,13 +299,13 @@
         }
       },
       "seoTitle": "Working at {{companyName}} | Bossjob",
-      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
+      "seoDescription": "Discover new career opportunities at {{companyName}}. Learn more about {{companyName}}'s employee benefits, company culture and job openings on Bossjob. Apply for jobs now!"
     },
     "life": {
       "culture": "Company Culture",
       "benefit": "Employee Benefits",
       "photo": "Photos",
-      "noPhotoTips": "{{companyName}} hasn't updated any information about their company life. Please come back again."
+      "noPhotoTips": "{{companyName}} has not uploaded any information about their company life. Please come back again."
     },
     "job": {
       "title": "Jobs",
@@ -317,29 +317,29 @@
       "pagination": {
         "tips": "Showing {{range}} of {{totalJobs}} jobs"
       },
-      "noMatchedJobs": "Sorry, we couldn't find any match for your search.",
-      "noJobs": "{{companyName}} doesn't have any job openings now. Please come back again."
+      "noMatchedJobs": "We couldn't find any jobs matching your search.",
+      "noJobs": "{{companyName}} does not have any job openings now. Please come back again."
     },
     "rightSection": {
-      "uploadResume": "Upload Resume & Apply Jobs!",
+      "uploadResume": "Upload Resume & Apply Job!",
       "othersViewed": "People also viewed...",
       "viewAll": "View all"
     },
     "jobs": {
-      "seoTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "seoDescription": "View all current job opportunities at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+      "seoTitle": "{{companyName}} Job Openings in {{country}} | Bossjob",
+      "seoDescription": "View all {{companyName}} job openings in {{country}}. Bossjob connects quality talents with top companies. Remote jobs available. Apply for jobs now!"
     },
     "culture": {
       "seoTitle": "Culture & Life at {{companyName}} | Bossjob",
-      "seoDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob - Connecting pre-screened experienced professionals to employers"
+      "seoDescription": "Discover company culture & life at {{companyName}}.  Bossjob connects quality talents with top companies. Many jobs available. Apply for jobs now! "
     }
   },
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
     "slog": "Find Job. Talk to Boss",
-    "defaultLocationPH": "Manila",
-    "defaultLocationSG": "Downtown Core",
+    "defaultLocationPH": "manila",
+    "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
       "title": "Job title or company",
@@ -395,10 +395,10 @@
       "chatNow": "Chat now",
       "employee": "Employee",
       "jobHiring": "jobs hiring",
-      "moreJob": "More"
+      "moreJob": "More jobs"
     },
     "seo": {
-      "title": "Bossjob - Career Platform for Professionals in {{country}}",
+      "title": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     },
     "jobs": "jobs"
@@ -443,13 +443,13 @@
       "jobPostedOn": "Posted on",
       "benefits": "Benefits",
       "workingLocation": "Working Location",
-      "workLocation": "Working Location"
+      "workLocation": "Work Location"
     },
     "shareModal": {
       "title": "Share this job",
       "facebook": "Facebook",
       "twitter": "Twitter",
-      "linkedin": "LinkedIn",
+      "linkedin": "Linkedin",
       "link": "Page Link",
       "linkCopied": "Link copied"
     },
@@ -457,7 +457,7 @@
       "title": "Report Job",
       "notReportedTitle": "Why are you reporting this job?",
       "category": {
-        "spam": "I think it’s spam or a scam",
+        "spam": "I think it’s spam or scam",
         "discrimination": "I think it’s discriminatory or offensive",
         "broken": "I think something is broken"
       },
@@ -476,11 +476,11 @@
       "title": "Chat with {{name}}",
       "btn1": "Cancel",
       "btn2": "Proceed",
-      "content": "You are currently chatting with the Boss for {{jobName}}. Are you sure you want to switch to another job?"
+      "content": "You are currently chatting with recruiter for the {{jobName}} position. Are you sure you want to switch job?"
     },
     "completeProfileModal": {
       "title": "Notice",
-      "btn1": "Do it later",
+      "btn1": "No",
       "btn2": "Update resume",
       "content": "Your profile is incomplete, please update your resume before starting a chat."
     },
@@ -491,7 +491,7 @@
         "employees": "employees"
       },
       "similarJob": {
-        "title": "Similar Jobs",
+        "title": "SimilarJobs",
         "seeMore": "See more"
       },
       "signUp": {
@@ -507,7 +507,7 @@
     },
     "seo": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
-      "desc": "Apply for {{jobTitle}} ({{jobId}}) at {{name}}. Discover more {{categoryMetaText}} in {{location}}, {{fullAddress}} on Bossjob now!"
+      "desc": "Apply for {{jobTitle}} at {{name}}! Many career opportunities available on Bossjob. Find more {{categoryMetaText}} in {{location}} job vacancies. Chat and get hired! "
     }
   },
   "search": {
@@ -516,11 +516,11 @@
     "searchBtn": "Search",
     "login": "Login to see more jobs",
     "relevance": "Relevance",
-    "function": "Job function",
+    "function": "Job Function",
     "salary": "Salary",
-    "type": "Job type",
-    "more": "More filters",
-    "reset": "Reset filters",
+    "type": "Job Type",
+    "more": "More Filters",
+    "reset": "Reset Filters",
     "newest": "Newest",
     "highestSalary": "Highest Salary",
     "searchModal": {
@@ -547,7 +547,7 @@
     "updateAlertModal": {
       "title": "Manage Job Alert",
       "btn1": "Back",
-      "btn2": "Back",
+      "btn2": "Done",
       "filters": "Filters",
       "subTitle": "Alert Frequency",
       "daily": "Daily",
@@ -591,30 +591,30 @@
     "withBoss": "with Boss",
     "relatedSearch": "Related Search",
     "alertJobs": {
-      "title": "Receive email reminder for new jobs",
+      "title": "High quality job recommendation",
       "setting": "Setting",
-      "info": "Send new jobs for {{message}} to my email",
-      "settingSucceed": "Job alert created successfully.",
-      "settingFailed": "Failed to create job alert.",
-      "somethingWrong": "Sorry, something went wrong."
+      "info": "Send the {{message}} job information you search to email",
+      "settingSucceed": "Job alert setting successfully.",
+      "settingFailed": "Job alert setting failed.",
+      "somethingWrong": "Something went wrong."
     },
     "alertJobsModal": {
-      "title": "Job Alert Settings",
+      "title": "Job Alert setting",
       "subTitle": "Job Alert",
-      "jobConditions": "Filters selected",
+      "jobConditions": "Job Conditions",
       "frequency": "Frequency",
       "daily": "Daily",
       "weekly": "Weekly",
-      "sendToEmail": "Email to receive alert",
+      "sendToEmail": "Send to email",
       "cancel": "Cancel",
       "done": "Done",
-      "emailPlaceholder": "Please enter an email address",
+      "emailPlaceholder": "Please enter email address",
       "emailValid": "Please enter a valid email address.",
-      "emailEmpty": "Emails can not be empty"
+      "emailEmpty": "Email cannot be empty."
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
-    "findNow": "Search",
-    "find": "Search"
+    "findNow": "Find Now",
+    "find": "Find"
   },
   "manageProfile": {
     "tab": {
@@ -683,7 +683,7 @@
           "addEdu": "Add education"
         },
         "eduModal": {
-          "title": "Add education",
+          "title": "Education",
           "btn1": "Cancel",
           "btn2": "Save",
           "school": "School Name",
@@ -691,7 +691,7 @@
           "period": "Study Period",
           "attend": "Currently attending",
           "from": "From",
-          "to": "To",
+          "to": "to",
           "startDate": "Month Year",
           "endDate": "Month Year",
           "dateErrorMsg": "Start date must be earlier than completion date.",
@@ -706,18 +706,18 @@
           "title": "Skills",
           "btn1": "Cancel",
           "btn2": "Save",
-          "suggestions": "We will suggest skill for you according to job function:",
+          "suggestions": "We will suggest skill for you according to your latest job function:",
           "jobFunction": "Job Function",
           "skill": "Search or add a skill"
         },
         "licenses": {
-          "title": "Licenses and Certifications",
+          "title": "Licenses And Certifications",
           "CID": "Credential ID",
           "noDataTips": "Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.",
-          "addLicense": "Add licenses & certificates"
+          "addLicense": "Add licenses & cert"
         },
         "licensesModal": {
-          "title": "Licenses and Certifications",
+          "title": "Licenses And Certifications",
           "btn1": "Cancel",
           "btn2": "Save",
           "licenseTitle": "Title of licenses/certification",
@@ -752,7 +752,7 @@
         "availableModal": {
           "title": "Job Preference",
           "btn1": "Cancel",
-          "btn2": "Save",
+          "btn2": "Saves",
           "select": "Availability"
         },
         "card": {
@@ -768,7 +768,7 @@
         "editModal": {
           "title": "Job Preference",
           "btn1": "Cancel",
-          "btn2": "Save",
+          "btn2": "Saves",
           "jobTitle": "Desired job title",
           "jobType": "Desired job type",
           "location": "Desired working location",
@@ -786,7 +786,7 @@
         },
         "openToWork": {
           "title": "Open to work",
-          "explain": "Let employers know that you are open to work"
+          "explain": "Let recruiters know that you are open to work"
         }
       },
       "resume": {
@@ -794,11 +794,11 @@
         "upload": {
           "title": "Upload your own resume",
           "tips": "Resume is an essential tool to get you to the next step in your job hunting process. Impress recruiters with additional information from your Bossjob profile.",
-          "time": "Uploaded on {{time}}",
+          "time": "Uploaded On {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
           "error": {
-            "title": "File exceeded limit",
+            "title": "File exceed limit",
             "tips": "Please upload file size lesser than 5MB."
           }
         },
@@ -827,7 +827,7 @@
           "eMailFormatIsIncorrect": "E-mail format is incorrect",
           "emailAddress": "Email address",
           "theEmailAddressYouWantToSendIs": "The email address you want to send is",
-          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": " please confirm that your email address is correct before sending",
+          "pleaseConfirmThatYourEmailAddressIsCorrectBeforeSending": "Please confirm that your email address is correct before sending",
           "more": "More",
           "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
           "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
@@ -869,7 +869,7 @@
     "createFreeResume": "Create Free Resume",
     "addYourWorkExperience": "Add your work experience",
     "fillInYourCompleteWork": "Fill in your complete work experiences will increase your chances of being shortlisted by 83%.",
-    "jobFunction": "Job Title",
+    "jobFunction": "Job function",
     "desiredJobFunction": "Desired job title",
     "industry": "Industry",
     "description": "Description",
@@ -897,7 +897,7 @@
     "currentlyAttending": "Currently attending",
     "fieldOfStudy": "Field of Study",
     "fillUpTheFieldsWith": " Fill up the fields with (*) to proceed.",
-    "addAEducation": " Add an education",
+    "addAEducation": " Add a education",
     "notWantToEnterEducation": "I do not want to enter my Education now",
     "searchForJobTitle": "Search for job title",
     "year": "year",
@@ -934,12 +934,12 @@
     "experienced": "Experienced",
     "freshGraduate": "Fresh Graduate",
     "companyName": "Company name",
-    "ImHiring": "I'm an Employer",
+    "ImHiring": "I’m employees",
     "education": "Education",
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "Skip Anyway"
+    "skipAnyway": "skipAnyway"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -976,12 +976,12 @@
     "uploadYourResume": "Upload your resume",
     "supportedFileType": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
     "fileSizeIsTooHuge": "File size is too huge. Please upload file that is within 5MB.",
-    "failedToUploadResume": "Failed to upload resume",
+    "failedToUploadResume": "Failed to upload resume with error",
     "pleaseContactSupport": " Please contact support@bossjob.com for assistance.",
     "sendResume": "Send Resume",
     "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
     "orUploadNewResume": "Or upload a new resume",
-    "onlyMax3Resumes": " Max. 3 resumes, please delete at least 1 resume above",
+    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
     "uploadNewResume": "Upload a new resume",
     "JobType": "Job Type",
     "yearsOfExp": "Years of Exp",
@@ -1011,8 +1011,8 @@
     "confirmLabel": "Your interview cannot be cancelled now",
     "cancelAction": "Cancel interview",
     "canNotCancel": "Your interview cannot be cancelled now",
-    "checkedText": "Checked-in",
-    "checkedLabel": "Check-in for the interview",
+    "checkedText": "Checked-In",
+    "checkedLabel": "Check in for the interview with recruiter",
     "checkInText": "Check-in now",
     "canNoteCheckIn": "You cannot check in now.",
     "inProgressText": "In-progress",
@@ -1028,7 +1028,7 @@
     "notAttend": "You did not attend the interview.",
     "jobTitleLabel": "Job Title",
     "addressLabel": "Interview Address",
-    "timeLabel": "Date, Time",
+    "timeLabel": "Date,Time",
     "contactPersonLabel": "Contact person",
     "contactNumberLabel": "Contact number",
     "videoLink": "Video link",
@@ -1093,14 +1093,14 @@
   },
   "editJobPreferencesModal": {
     "validate": {
-      "jobTitle": "Job title is required",
-      "jobType": "Job type is required",
-      "location": "Location is required",
-      "minSalary": "Min salary is required",
-      "maxSalary": "Max salary is required",
-      "currency": "Currency is required",
-      "country": "Country is required when location is overseas",
-      "industry": "Industry is required"
+      "jobTitle": "job title is required",
+      "jobType": "job type is required",
+      "location": "location is required",
+      "minSalary": "min salary is required",
+      "maxSalary": "max salary is required",
+      "currency": "currency is required",
+      "country": "country is required when location is overseas",
+      "industry": "industry is required"
     }
   },
   "resumetemplate": {
@@ -1185,7 +1185,7 @@
     "verifyText": "To exchange mobile number with Boss, please verify your mobile number.",
     "countryCode": "Country code",
     "mobileNumber": "Mobile Number",
-    "digitPlaceholder": "Enter 6-digit OTP",
+    "digitPlaceholder": "Enter 6 digit OTP",
     "msgText": "Enter the code that we have message to {{number}}",
     "smb": "'s mobile number:",
     "boss": "Boss"
@@ -1197,7 +1197,7 @@
     "disabledAutoSendTitle": "Disable Auto-send Resume",
     "pleaseSelectResume": "Please select the resume that you would like to share with recruiter.",
     "orUploadNewResume": "Or upload a new resume",
-    "onlyMax3Resumes": " Max. 3 resumes, please delete at least 1 resume before adding",
+    "onlyMax3Resumes": "only max. of 3 resumes can be uploaded, please delete at least 1 resume above",
     "uploadNewResume": "Upload a new resume",
     "uploadYourResume": "Upload your Resume",
     "cancel": "Cancel",
@@ -1247,7 +1247,7 @@
     "verifyText": "Verify it’s you",
     "verifyExtra": "This extra step show that it is really you trying to log in.",
     "optError": "Send OTP fail",
-    "resendEmailCode": "Resend email OTP success",
+    "resendEmailCode": "Resend email'OTP success",
     "invalidOtp": "The OTP you have entered is wrong. Please try again.",
     "resendPhoneCode": "Resend phone'OTP success",
     "verifyEmail": "Verify email",
@@ -1255,40 +1255,40 @@
     "accounts": "accounts.",
     "thisPhoneNumber": "This phone number is associated with ",
     "youNeedToChooseVerified": "You need to choose a verified email address to associate",
-    "validateErr": "This Email address has been used. Please change to another email"
+    "validateErr": "The email has been registered. Please change the binding to another email"
   },
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
-    "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
+    "siteName": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
     "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
     "jobSearch": {
-      "defaultTitle": "Find Jobs in {{country}} - Search & Apply Job Opportunities - {{month}} {{year}} | Bossjob",
-      "defaultDescription": "Find new job openings in {{country}}! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob",
-      "queryTitle": "{{searchQuery}} Jobs Hiring in {{country}}, {{month}} {{year}} | Bossjob",
-      "queryLocationTitle": "{{searchQuery}} Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
-      "queryDescription": "Find new {{searchQuery}} job openings in {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
-      "queryLocationDescription": "Find new {{searchQuery}} job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!",
-      "locationTitle": "Jobs Hiring in {{location}} {{country}}, {{month}} {{year}} | Bossjob",
-      "locationDescription": "Find new job openings in {{location}} {{country}}! Remote jobs available in {{country}}. Chat directly with boss for fast job hiring on Bossjob!"
+      "defaultTitle": "New Job Openings in {{country}}  for Professionals, {{month}} {{year}} | Bossjob",
+      "defaultDescription": "Find new job openings in {{country}} ! Apply for the best professional jobs hiring based on your skills. Work from home, high salary and more on Bossjob.",
+      "queryTitle": "{{searchQuery}} Jobs in {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryLocationTitle": "{{searchQuery}} Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
+      "queryDescription": "New {{searchQuery}} Jobs in {{country}} available on Bossjob. Advance your professional career on Bossjob today - Talk to hiring manager directly on Bossjob.",
+      "queryLocationDescription": "New {{searchQuery}} Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers",
+      "locationTitle": "Jobs in {{location}} {{country}}. New Job Opportunities - {{month}} {{year}} | Bossjob",
+      "locationDescription": "New Jobs in {{location}} {{country}} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers"
     },
     "job": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
-      "description": "Apply for {{jobTitle}} at {{name}}! Many career opportunities available on Bossjob. Find job vacancies in {{location}}. Chat and get hired! "
+      "description": "Talk to the hiring manager of  {{jobTitle}} ({{jobId}}) at {{name}}. Discover more jobs in {{location}}, {{address}} on Bossjob now!"
     },
     "company": {
       "listTitle": "Find Companies Hiring in {{country}} | Bossjob",
-      "listDescription": "Discover great companies to work for in {{country}}! Search job vacancies, chat and get hired! IT, Web3, Remote jobs available.",
+      "listDescription": "Discover great companies to work for in {{country}}! Learn more about the company and apply to job openings on Bossjob!",
       "detailTitle": "Working at {{companyName}} | Bossjob",
       "detailDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
       "jobsTitle": "{{companyName}} Careers in {{country}}, Job Opportunities | Bossjob",
-      "jobsDescription": "View all available job opportunities at {{companyName}} in {{country}} on Bossjob - Talk directly with talents on Bossjob!",
+      "jobsDescription": "View all {{companyName}} job openings in {{country}}. Bossjob connects quality talents with top companies. Remote jobs available. Apply for jobs now!",
       "lifeTitle": "Culture & Life at {{companyName}} | Bossjob",
-      "lifeDescription": "Discover company culture & life at {{companyName}} in {{country}} on Bossjob. Talk directly with hiring managers on Bossjob!"
+      "lifeDescription": "Discover company culture & life at {{companyName}}.  Bossjob connects quality talents with top companies. Many jobs available. Apply for jobs now! "
     },
     "landing": {
-      "title": "Download Bossjob hiring APP & talk to 10k+ bosses online. | Bossjob",
-      "description": "Discover job opportunities in {{country}} on Bossjob! Explore jobs hiring from companies in {{country}} & get hired fast!"
+      "title": "Get Started as Bossjob Talent | Bossjob",
+      "description": "Bossjob is a chat-first career platform that connects quality talents with top companies. Get started as a talent. Advance your career opportunities today!"
     }
   },
   "landing": {
@@ -1304,7 +1304,7 @@
     "section1_message8": "Thank you, John. I look forward to speaking with you next week.",
     "section1_title": "AI Hiring APP",
     "section1_subtitle": "connect you with decision makers in real-time",
-    "section1_getApp": "connect you with decision makers in real-time",
+    "section1_getApp": "Get the app",
     "section3_subtitle": "a better & faster way to find jobs",
     "section3_list_title1": "AI-powered job matching",
     "section3_list_des1": "Match jobs for you using Big data & AI models!",
@@ -1332,14 +1332,14 @@
     "Philippines": "Philippines",
     "Singapore": "Singapore",
     "Indonesia": "Indonesia",
-    "Hongkong": "China Hong Kong",
+    "Hongkong": "Hongkong",
     "Malaysia": "Malaysia",
     "Thailand": "Thailand",
     "Vietnam": "Vietnam",
-    "Macao": "China Macau",
-    "Taiwan": "China Taiwan",
+    "Macao": "Macao",
+    "Taiwan": "Taiwan",
     "Japan": "Japan",
-    "section6_title": "Best hiring APP",
+    "section6_title": "Best hiring APP in Southeast-Asia",
     "section6_subtitle": "Find jobs anywhere, everywhere",
     "section6_coming_soon": "Coming soon...",
     "section7_title": "Bossjob is in the news",
