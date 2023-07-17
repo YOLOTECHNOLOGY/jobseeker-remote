@@ -11,6 +11,7 @@ import { flatMap } from 'lodash-es'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 import { getCountryKey } from 'helpers/country'
+import { getDefaultLocation } from '../../../helpers/country'
 
 export const LocationContext = createContext()
 const Provider = LocationContext.Provider
