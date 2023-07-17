@@ -1,4 +1,4 @@
-import { getCookie } from './cookies'
+import { configKey, getCookie } from './cookies'
 
 // Warning: the English language's value must be en-US,
 const countryCounfig = [
