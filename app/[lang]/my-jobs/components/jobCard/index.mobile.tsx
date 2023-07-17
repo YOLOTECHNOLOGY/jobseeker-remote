@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { CloseIcon } from 'images'
 import useNotSuitable from './hooks'
-import NotSuitableModal from './notSuitable'
+import NotSuitableModal from '../notSuitable'
 import classNames from 'classnames'
 import { getValueById } from 'helpers/config/getValueById'
 import { useSelector } from 'react-redux'
@@ -84,8 +84,9 @@ const JobCard = (props: any) => {
         <div className={styles.recruiterContainer}>
           <div className={styles.info}>
             <div
-              className={`${styles.avator}  ${transTime(recruiter_last_active_at) ? styles.avator2 : ''
-                }`}
+              className={`${styles.avator}  ${
+                transTime(recruiter_last_active_at) ? styles.avator2 : ''
+              }`}
             >
               <Image
                 className={styles.image}

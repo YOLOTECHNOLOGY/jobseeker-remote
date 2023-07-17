@@ -1,33 +1,33 @@
-"use client"
-import React, { useEffect } from "react";
-import styles from '../index.module.scss';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+'use client'
+import React, { useEffect } from 'react'
+import styles from '../index.module.scss'
+import Box from '@mui/material/Box'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useSelector } from 'react-redux'
-import { updateNoticePeriod, fetchDeleteResumes, fetchPersonalInfo } from 'store/services/jobs/fetchJobsCommunicated'
+import {
+  updateNoticePeriod,
+  fetchDeleteResumes,
+  fetchPersonalInfo
+} from 'store/services/jobs/fetchJobsCommunicated'
 import { getCookie } from 'helpers/cookies'
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Link from 'next/link';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import Link from 'next/link'
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
 import { useSearchParams } from 'next/navigation'
 import moment from 'moment'
 import { getValueById } from 'helpers/config/getValueById'
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref,
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import Image from 'next/image'
+import classNames from 'classnames'
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
+})
 
-const Resume = ({
-  resumes,
-  lang
-}: any) => {
+const Resume = ({ resumes, lang }: any) => {
   const {
     yearsOld,
     availability,
@@ -41,7 +41,7 @@ const Resume = ({
     uploadResume,
     availabilityUpdateSuccessfully,
     uploadedResumes,
-    deleteSuccess,
+    deleteSuccess
   } = lang || {}
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const config = useSelector((store: any) => store.config.config.response)
@@ -53,25 +53,25 @@ const Resume = ({
     notice_period_id: noticePeriodId,
     avatar,
     birthdate,
-    educations,
+    educations
   } = userDetail
-  const [noticePeriodData, setNoticePeriodData] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-  const [message,setMessgae] = React.useState(availabilityUpdateSuccessfully)
-  const [resumeData, setResumeData] = React.useState([]);
+  const [noticePeriodData, setNoticePeriodData] = React.useState('')
+  const [open, setOpen] = React.useState(false)
+  const [message, setMessgae] = React.useState(availabilityUpdateSuccessfully)
+  const [resumeData, setResumeData] = React.useState([])
   const [jobData, setJobTotal] = React.useState({
     no_of_applied_jobs: 0,
     no_of_chats: 0,
     no_of_interviews: 0,
     no_of_saved_jobs: 0,
     no_of_viewed_jobs: 0
-  });
-  const accessToken = getCookie('accessToken');
+  })
+  const accessToken = getCookie('accessToken')
   const searchParams = useSearchParams()
   const searchType = searchParams.get('unsaveId') || ''
 
   useEffect(() => {
-    getPersonalInfo();
+    getPersonalInfo()
   }, [searchType])
 
   useEffect(() => {
@@ -86,18 +86,17 @@ const Resume = ({
     }
   }, [noticePeriodId])
 
-
   const getPersonalInfo = () => {
-    fetchPersonalInfo({ accessToken }).then(res => {
-      const data = res?.data?.data || {};
+    fetchPersonalInfo({ accessToken }).then((res) => {
+      const data = res?.data?.data || {}
       setJobTotal(data)
     })
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-    setNoticePeriodData(event.target.value as string);
+    setNoticePeriodData(event.target.value as string)
     changeNoticePeriod(event.target.value)
-  };
+  }
 
   const ageFun = (birthdate) => {
     const now = moment(new Date())
@@ -108,21 +107,21 @@ const Resume = ({
   }
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const deleteResume = (e, index) => {
     fetchDeleteResumes({
       id: e.id,
       accessToken
-    }).then(res => {
+    }).then((res) => {
       if (res.data?.data) {
         resumeData.splice(index, 1)
-        setResumeData([...resumeData]);
+        setResumeData([...resumeData])
         setMessgae(deleteSuccess)
-        setOpen(true);
+        setOpen(true)
       }
     })
   }
@@ -131,10 +130,10 @@ const Resume = ({
     updateNoticePeriod({
       id,
       accessToken
-    }).then(res => {
+    }).then((res) => {
       if (res.data?.data) {
         setMessgae(availabilityUpdateSuccessfully)
-        setOpen(true);
+        setOpen(true)
       }
     })
   }
@@ -146,97 +145,138 @@ const Resume = ({
     no_of_saved_jobs: noOfSavedJobs,
     no_of_viewed_jobs: noOfViewedJobs
   } = jobData || {}
-   
-  
- console.log(userDetail,11111)
+
+  const VIf = (props) => {
+    return props.show ? props.children : null
+  }
+
   return (
     <>
-      <div className={styles.resume}>
-        <div className={styles.user}>
-          <img src={avatar} />
-          <div className={styles.info}>
-            <p>{fullName}</p>
-            {birthdate ? <span>{ageFun(birthdate)} {yearsOld}</span> : null}
-            {birthdate && xpLvl ? <i>|</i> : null}
-            <span> { getValueById(config,xp_lvl_id,'xp_lvl_id')}</span>
-            {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
-            <span> {educations?.[0]?.field_of_study}</span>
+      <div className={styles.resumeContainer}>
+        <div className={styles.resume}>
+          <div className={styles.user}>
+            <Image src={avatar} width={60} height={60} alt='avatar' />
+            <VIf show={fullName || birthdate || xpLvl || educations?.length > 0}>
+              <div className={styles.info}>
+                <p>{fullName}</p>
+                <div>
+                  {birthdate ? (
+                    <span>
+                      {ageFun(birthdate)} {yearsOld}
+                    </span>
+                  ) : null}
+                  {/*  lvl */}
+                  {birthdate && xpLvl ? <i>|</i> : null}
+                  <span> {getValueById(config, xp_lvl_id, 'xp_lvl_id')}</span>
+                  {/* educations */}
+                  {(xpLvl || birthdate) && educations?.[0]?.field_of_study ? <i>|</i> : null}
+                  <span> {educations?.[0]?.field_of_study}</span>
+                </div>
+              </div>
+            </VIf>
           </div>
-        </div>
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">{availability}</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={noticePeriodData}
-              label={availability}
-              sx={{
-                '> .MuiSelect-select': {
-                 padding:'10px 14px'
-                }
-              }}
-              onChange={handleChange}
-            >
-              {
-                notice_period_lists.map(e => <MenuItem key={e.id} value={e.id}>{e.value}</MenuItem>)
-              }
-            </Select>
-          </FormControl>
-        </Box>
-        <button className={styles.btn} >
-          <Link href="/manage-profile?tab=profile" prefetch={false}>
-          {editOnlineResume}
-          </Link>
-        </button>
-      </div>
-      <ul className={styles.type}>
-        <li><Link href={'/my-jobs/communicated'}> {communicated} ( {noOfChats} )</Link></li>
-        <li><Link href={'/my-jobs/communicated?type=exchanged'}> {exchanged} ( {noOfAppliedJobs} )</Link></li>
-        <li><Link href={'/my-jobs/communicated?type=saved'}> {saved} ( {noOfSavedJobs} )</Link></li>
-        <li><Link href={'/my-jobs/communicated?type=interview'}> {Interview} ( {noOfInterviews} )</Link></li>
-        <li><Link href={'/my-jobs/communicated?type=viewed'}> {viewed} ( {noOfViewedJobs} )</Link></li>
-      </ul>
-
-      <div className={styles.upload}>
-        <div className={styles.header}>
-          {uploadedResumes}
-        </div>
-        <div className={styles.uploadContainer}>
-          {
-            resumeData?.length ? (
-              <ul>
-                {
-                  resumeData?.map((e, index) => <li key={e.id}>
-                    <Link href={e.url}>{e.name}</Link>
-                    {
-                      resumeData?.length > 1 ? <DeleteForeverOutlinedIcon onClick={() => deleteResume(e, index)} className={styles.deleteIcoc} /> : null
-                    }
-                  </li>)
-                }
-              </ul>
-            ) : <p className={styles.noMore}>{noResumeUploadNow}!</p>
-          }
-
-          {!(resumeData?.length >= 3) && <button disabled={resumeData?.length >= 3} className={styles.btn}>
-            <Link href="/manage-profile?tab=resume">
-             {uploadResume}
+          <Box sx={{ minWidth: 120 }} className={styles.noticeSelect}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>{availability}</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value={noticePeriodData}
+                label={availability}
+                sx={{
+                  '> .MuiSelect-select': {
+                    padding: '10px 14px'
+                  }
+                }}
+                onChange={handleChange}
+              >
+                {notice_period_lists.map((e) => (
+                  <MenuItem key={e.id} value={e.id}>
+                    {e.value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <button className={styles.button}>
+            <Link href='/manage-profile?tab=profile' prefetch={false}>
+              {editOnlineResume}
             </Link>
-          </button>}
+          </button>
+        </div>
+        <ul className={styles.type}>
+          <li>
+            <Link href={'/my-jobs/communicated'}>
+              {communicated} ( {noOfChats} )
+            </Link>
+          </li>
+          <li>
+            <Link href={'/my-jobs/communicated?type=exchanged'}>
+              {exchanged} ( {noOfAppliedJobs} )
+            </Link>
+          </li>
+          <li>
+            <Link href={'/my-jobs/communicated?type=saved'}>
+              {saved} ( {noOfSavedJobs} )
+            </Link>
+          </li>
+          <li>
+            <Link href={'/my-jobs/communicated?type=interview'}>
+              {Interview} ( {noOfInterviews} )
+            </Link>
+          </li>
+          <li>
+            <Link href={'/my-jobs/communicated?type=viewed'}>
+              {viewed} ( {noOfViewedJobs} )
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      {/* <UploadResumeButton classNames={styles.uploadResumeBtn} lang={lang} /> */}
+
+      <div className={classNames([styles.upload, styles.uploadResume])}>
+        <div className={styles.header}>{uploadedResumes}</div>
+        <div className={styles.uploadContainer}>
+          {resumeData?.length ? (
+            <ul>
+              {resumeData?.map((e, index) => (
+                <li key={e.id}>
+                  <Link href={e.url}>{e.name}</Link>
+                  {resumeData?.length > 1 ? (
+                    <DeleteForeverOutlinedIcon
+                      onClick={() => deleteResume(e, index)}
+                      className={styles.deleteIcoc}
+                    />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={styles.noMore}>{noResumeUploadNow}!</p>
+          )}
+
+          {!(resumeData?.length >= 3) && (
+            <button disabled={resumeData?.length >= 3} className={styles.button}>
+              <Link href='/manage-profile?tab=resume'>{uploadResume}</Link>
+            </button>
+          )}
         </div>
       </div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left'
         }}
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-        {message}!
+        <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+          {message}!
         </Alert>
       </Snackbar>
-
     </>
   )
 }
-export default Resume;
+export default Resume

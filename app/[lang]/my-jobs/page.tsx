@@ -44,8 +44,8 @@ const Main = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
   return (
-    <>
-      <div className={styles.main}>
+    <div className={styles.container}>
+      <main className={styles.main}>
         <div className={styles.left}>
           <MobileHeader lang={dictionary?.myJobs} />
           <SortProvider>
@@ -82,9 +82,9 @@ const Main = async (props: any) => {
           {/* @ts-expect-error Async Server Component */}
           <MainRight lang={dictionary?.myJobs} config={props.config} />
         </div>
-      </div>
+      </main>
       <Footer />
-    </>
+    </div>
   )
 }
 

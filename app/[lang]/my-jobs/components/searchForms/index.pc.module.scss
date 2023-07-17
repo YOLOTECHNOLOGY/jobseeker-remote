@@ -1,21 +1,19 @@
-@import '/styles/mixins.scss';
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
 
 .container {
   --box-shadow: none;
-  width: 894px;
-  height: 228px;
   max-width: 100%;
   display: flex;
-  // position: sticky;
-  top: 0px;
   flex-direction: column;
-  align-items: center;
   background: #fff;
-  margin-left: calc(50vw - 585px + 24px);
-  border-radius: 15px;
   z-index: 231;
   transition: box-shadow ease-in 0.5s;
   box-shadow: var(--box-shadow);
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e4e4e4;
+
   @include sm {
     display: none;
   }
@@ -24,45 +22,126 @@
     --box-shadow: 0px 0px 20px #bcbcbc;
   }
 
+  .searchSpread {
+    height: 30px;
+    width: 1px;
+    margin-left: 10px;
+    background-color: #e4e4e4;
+
+    @include sm {
+      margin-left: 0;
+    }
+  }
+
   .searchArea {
+    border-radius: 8px;
+    background: #fff;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-end;
-    width: fit-content;
-    height: 74px;
-    padding-left: 0px;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border: 2px solid #2378e5;
+
+    @include sm {
+      flex: 1;
+      padding: 0 5px;
+    }
 
     .location {
       width: 137px;
       height: 44px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.23);
+
+      :global {
+        .MuiInputLabel-root {
+          display: none;
+        }
+
+        .MuiOutlinedInput-root {
+          height: 60px;
+          overflow: hidden;
+          border-radius: 10px;
+          background: #fff;
+        }
+
+        .MuiOutlinedInput-input {
+          padding-left: 0;
+        }
+      }
     }
 
     .search {
       width: 586px;
-      height: 44px;
-      // border: 1px solid #ccc;
+      height: 54px;
       background: #fff;
       margin-left: 8px;
-      // label {
-      //   line-height: 100%;
-      // }
-      position: relative;
-      top: 2px;
+
+      :global {
+        .MuiAutocomplete-root {
+          background-color: #ffffff;
+        }
+
+        .MuiAutocomplete-input {
+          font-size: 16px;
+        }
+
+        .MuiOutlinedInput-root {
+          height: 54px;
+        }
+
+        .MuiInputLabel-root {
+          top: 12px;
+        }
+
+        .MuiFormLabel-filled,
+        .Mui-focused {
+          top: 0;
+          border-radius: unset;
+        }
+
+        .MuiOutlinedInput-notchedOutline {
+          // border-radius: 8px 0 0 8px;
+          border-width: 0 !important;
+        }
+      }
+
+      @include sm {
+        :global {
+          .MuiInputLabel-root {
+            top: 3px;
+          }
+        }
+      }
     }
 
     .searchButton {
-      margin-left: 8px;
-      text-transform: capitalize !important;
-      background: #136fd3;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 20px;
       color: #fff;
-      width: 118px;
-      height: 44px;
-      border-radius: 10px;
+      width: 126px;
+      height: 60px;
+      font-size: 18px;
+      background: #2378e5;
+      border-radius: 0 8px 8px 0;
+      font-weight: 700;
+      outline: none;
+      border: 0;
+
       &:hover {
         background: rgb(24, 84, 163);
+      }
+
+      @include sm {
+        position: relative;
+        height: 28px;
+        padding: 0 8px;
+        top: 9px;
+        border-radius: 4px;
+        font-size: 13px;
+        width: unset;
       }
     }
   }
@@ -71,20 +150,29 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height: 50px;
-    padding-top: 20px;
-    padding-left: 20px;
     flex-wrap: wrap;
+
     .filterItems {
       height: 30px;
-      width: 207px;
+      width: 194px;
       margin: 0 9px 13px 0;
+      border-radius: 6px;
+
       :global {
         .MuiPaper-root {
           width: 300px;
+
           .MuiAutocomplete-paper {
             width: 300px;
           }
+        }
+        .MuiOutlinedInput-root {
+          background-color: #f7f8fa !important;
+          border-radius: 6px !important;
+        }
+        .MuiOutlinedInput-input {
+          background-color: #f7f8fa !important;
+          margin-top: -2px;
         }
       }
     }
@@ -94,32 +182,23 @@
     }
 
     .clearButton {
-      text-transform: capitalize !important;
-      font-family: 'Product Sans';
+      text-transform: capitalize;
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
       line-height: 15px;
-      align-items: center;
-      letter-spacing: 0.0075em;
-      color: #707070;
+      color: #bcbcbc;
       font-size: 14px;
-      margin-left: 4px;
       height: 30px;
+      border: 0;
+      outline: none;
+      background-color: #ffffff;
+      width: 194px;
+      text-align: right;
+
+      &:hover {
+        background-color: transparent;
+      }
     }
-  }
-}
-.sortBox {
-  height: 50px;
-  background: #ffffff;
-  border-radius: 15px;
-  line-height: 50px;
-  display: flex;
-  padding: 0 0 0 20px;
-  font-size: 16px;
-  width: 894px;
-  margin: 24px 0 0 calc(50vw - 585px + 24px);
-  @include sm {
-    display: none;
   }
 }

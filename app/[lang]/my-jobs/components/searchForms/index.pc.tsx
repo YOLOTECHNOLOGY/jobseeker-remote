@@ -40,11 +40,13 @@ const SearchArea = (props: any) => {
     dispatch(fetchConfigSuccess(config))
   }, [])
   const flatLoaction = useMemo(() => {
-    return flatMap(config?.location_lists, item => item.locations) ?? []
+    return flatMap(config?.location_lists, (item) => item.locations) ?? []
   }, [config?.location_lists])
   const { push } = useContext(LoadingContext)
   const [location, setLocation] = useState<any>([])
-  const [filterLocation, setFilterLocation] = useState<any>(flatLoaction?.find(location => location.id == searchParams.get('location')))
+  const [filterLocation, setFilterLocation] = useState<any>(
+    flatLoaction?.find((location) => location.id == searchParams.get('location'))
+  )
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
   const pushJobSearch = useCallback(() => {
@@ -53,7 +55,7 @@ const SearchArea = (props: any) => {
     }
     const params = {
       query: searchValue?.trim?.(),
-      location: location.map(a => a['seo_value'])
+      location: location.map((a) => a['seo_value'])
     }
     const result = encode(params)
     const url = new URLSearchParams(toPairs(result.params)).toString()
@@ -151,7 +153,7 @@ const SearchArea = (props: any) => {
   ])
 
   return (
-    <div>
+    <>
       <ThemeProvider theme={theme}>
         <div
           className={classNames({
@@ -160,7 +162,7 @@ const SearchArea = (props: any) => {
           })}
         >
           <div className={styles.searchArea}>
-
+            {/* location */}
             <LocationMultiSelector
               className={styles.location}
               value={location}
@@ -181,9 +183,11 @@ const SearchArea = (props: any) => {
                 }
               }}
             />
+            <div className={styles.searchSpread} />
+            {/* search input */}
             <JobSearchBar
               id='search'
-              label={searchForJobTitleOrCompanyName}
+              placeholder={searchForJobTitleOrCompanyName}
               variant='outlined'
               size='small'
               className={styles.search}
@@ -209,25 +213,28 @@ const SearchArea = (props: any) => {
                 })
               }}
             />
-            <MaterialButton
+
+            {/* search button */}
+            <button
               className={styles.searchButton}
-              variant='contained'
-              capitalize
               onClick={() => {
                 addSearchHistory(searchValue)
                 pushJobSearchRef.current()
               }}
             >
-              {' '}
-              {lang.search}{' '}
-            </MaterialButton>
+              {lang.search}
+            </button>
           </div>
+
+          {/* preference */}
           <PreferenceSelector
             lang={allLang}
             preferences={preferences}
             preferenceId={preferenceId}
             config={config}
           />
+
+          {/* filters items */}
           <div className={styles.filters}>
             <LocationField1
               className={styles.filterItems}
@@ -294,9 +301,8 @@ const SearchArea = (props: any) => {
               onSelect={setCompanySizes}
               defaultValue={companySizes}
             />
-            <Button
+            <button
               className={styles.clearButton}
-              variant='text'
               onClick={() => {
                 setLocation(null)
                 setSearchValue('')
@@ -313,11 +319,11 @@ const SearchArea = (props: any) => {
               }}
             >
               {resetFilters}{' '}
-            </Button>
+            </button>
           </div>
         </div>
       </ThemeProvider>
-    </div>
+    </>
   )
 }
 export default SearchArea

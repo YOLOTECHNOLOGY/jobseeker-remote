@@ -1,5 +1,11 @@
 @import 'styles/variable.scss';
 
+.text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .container {
   @extend .GlobalNextAppContainer;
   display: flex;
@@ -28,9 +34,9 @@
 
     .headerTop {
       height: 50px;
-      background: #FFFFFF;
-      border: 0.5px solid #BCBCBC;
-      border-radius: 15px;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+      background: #fff;
       line-height: 50px;
       display: flex;
       padding: 0 0 0 15px;
@@ -57,13 +63,14 @@
 
     .bactText {
       cursor: pointer;
-      padding-right: 36px;
+      padding-right: 20px;
       white-space: nowrap;
+      color: #353535;
     }
 
     .line {
-      color: rgba(188, 188, 188, 1);
-      padding: 0 40px 0 0px;
+      color: #e4e4e4;
+      padding: 0 20px 0 0px;
     }
 
     .time {
@@ -80,8 +87,8 @@
     .noData {
       padding-top: 135px;
       min-height: calc(100vh - 260px);
-      background: #FFFFFF;
-      border: 0.5px solid #BCBCBC;
+      background: #ffffff;
+      border: 0.5px solid #bcbcbc;
       border-radius: 15px;
 
       .noDataImg {
@@ -97,35 +104,34 @@
         width: 128px;
         height: 44px;
         line-height: 44px;
-        background: #136FD3;
+        background: #136fd3;
         border-radius: 10px;
         outline: none;
         border: none;
         cursor: pointer;
         margin: 28px auto;
         display: block;
-        transition: background-color .2s;
+        transition: background-color 0.2s;
         position: relative;
 
         a {
           display: block;
-          color: #FFFFFF;
+          color: #ffffff;
         }
 
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           width: 50px;
           height: 200%;
-          background-color: rgba(255, 255, 255, .6);
+          background-color: rgba(255, 255, 255, 0.6);
           transform: skew(45deg) translate3d(-200px, 0, 0);
         }
 
         &:hover::before {
-          transition: ease-in-out .5s;
+          transition: ease-in-out 0.5s;
           transform: skew(45deg) translate3d(200px, 0, 0);
         }
-
       }
     }
 
@@ -138,32 +144,32 @@
       color: #353535;
       font-size: 14px;
       background: #fff;
-      border-radius: 10px;
-      transition: .3s;
+      border-radius: 8px;
+      transition: 0.3s;
+      border: 1px solid #e4e4e4;
 
       &:hover {
-        box-shadow: 5px 5px 7px #ccc;
-        transition: .3s;
+        border: 1px solid #2378e5;
+        box-shadow: 2px 4px 55px 0px rgba(0, 0, 0, 0.09);
+        transition: 0.3s;
 
         .chatBox {
           transform: translateY(0) !important;
-          transition: .3s;
+          transition: 0.3s;
         }
       }
 
       .header {
-        background: linear-gradient(269.8deg, rgba(255, 235, 184, 0.2) 0.12%, rgba(242, 177, 202, 0.2) 43.36%, rgba(84, 142, 237, 0.2) 99.89%);
-        border-radius: 10px 10px 0px 0px;
         padding: 0 0 0 24px;
         height: 47px;
         box-sizing: content-box;
         display: flex;
         justify-content: space-between;
+        border-bottom: 1px solid rgba(228, 228, 228, 0.3);
 
         .headerInfo {
           display: flex;
           align-items: center;
-
         }
 
         .name {
@@ -171,19 +177,19 @@
           padding-left: 8px;
           font-size: 14px;
           letter-spacing: 1px;
-          color: #353535;
+          color: #707070;
         }
 
         .nameLine {
-          color: rgba(188, 188, 188, 1);
+          color: #bcbcbc;
           padding: 0 10px;
           display: inline-block;
         }
 
         .avator {
-          width: 24px;
-          height: 24px;
           border-radius: 50%;
+          border: 1px solid #e4e4e4;
+          overflow: hidden;
         }
 
         .operator {
@@ -196,7 +202,7 @@
             width: 105px;
             height: 33px;
             line-height: 33px;
-            background: #136FD3;
+            background: #136fd3;
             border-radius: 10px;
             font-weight: 700;
             font-size: 12px;
@@ -207,7 +213,7 @@
             justify-content: center;
             margin-left: 8px;
             padding: 0;
-            transition: .3s;
+            transition: 0.3s;
 
             :global {
               .css-6krx5u-MuiCircularProgress-root {
@@ -257,8 +263,8 @@
           padding: 2px 10px;
           color: #707070;
           display: inline-block;
-          background: #F0F0F0;
-          border-radius: 16px;
+          background: #f7f8fa;
+          border-radius: 6px;
           margin: 5px 9px 0 0;
         }
 
@@ -279,7 +285,7 @@
               max-width: 260px;
 
               &:hover {
-                color: #136FD3;
+                color: #136fd3;
               }
             }
 
@@ -288,8 +294,7 @@
               font-weight: 700;
               font-size: 18px;
               display: flex;
-              letter-spacing: 1px;
-              color: #FE574A;
+              color: #2378e5;
               margin-left: 10px;
             }
           }
@@ -322,12 +327,10 @@
           }
         }
       }
-
     }
 
     .interested {
-      >.header {
-
+      > .header {
         .name,
         .nameLine {
           font-size: 14px;
@@ -338,13 +341,15 @@
         .jobrStatus {
           padding: 0 12px;
           height: 21px;
-          background: #FFFFFF;
-          border-radius: 16px;
           font-size: 12px;
-          line-height: 21px;
-          letter-spacing: 1px;
-          color: #136FD3;
+          line-height: 20px;
+          color: #136fd3;
           margin-left: 13px;
+          border-radius: 4px;
+          border-width: 1px;
+          border-style: solid;
+          border-color: #2378e5;
+          background: #fff;
         }
       }
 
@@ -379,7 +384,6 @@
           .companyName {
             font-size: 14px;
             line-height: 18px;
-            letter-spacing: 1;
             color: #353535;
           }
         }
@@ -421,12 +425,7 @@
     .jobClosed {
       opacity: 0.5;
     }
-
   }
-
- 
-
-  
 
   .page {
     display: flex;
@@ -443,48 +442,66 @@
       }
 
       .MuiButtonBase-root.Mui-selected {
-        background: #136FD3;
+        background: #136fd3;
         color: white;
       }
-
     }
   }
-
-
 }
+
 .aside {
-  width: 250px;
-  margin-left: 24px;
-  .btn {
-    width: 216px;
-    border: 2px solid #136FD3;
-    border-radius: 10px;
-    font-weight: 700;
+  width: 257px;
+  margin-left: 16px;
+  margin-bottom: 16px;
+
+  .button {
+    width: 225px;
+    border: 1.5px solid #136fd3;
+    border-radius: 8px;
     font-size: 14px;
-    color: #136FD3;
+    color: #136fd3;
     text-align: center;
     display: block;
-    margin: 16px auto 0;
+    margin: 20px auto 0;
     height: 44px;
-    line-height: 41px;
     outline: none;
     background: #fff;
-    letter-spacing: 1px;
-    transition: .3s;
+    transition: 0.3s;
     cursor: pointer;
     overflow: hidden;
+
     a {
       display: block;
+      color: #136fd3;
       line-height: 42px;
-      color: #136FD3;
+      height: inherit;
+      font-weight: 700;
     }
 
     a:hover {
-      background: #136FD3;
+      background: #136fd3;
       color: white;
-      transition: .2s;
+      transition: 0.2s;
     }
   }
+
+  .resumeContainer {
+    border-radius: 8px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .noticeSelect {
+    :global {
+      .MuiOutlinedInput-notchedOutline {
+        border-width: 0.5px !important;
+        border-color: #bcbcbc;
+        border-radius: 8px;
+      }
+    }
+  }
+
   .resume {
     background: #fff;
     padding: 16px;
@@ -492,16 +509,18 @@
 
     .user {
       display: flex;
+      margin-bottom: 20px;
+      justify-content: center;
 
       img {
-        width: 29px;
-        height: 29px;
-        margin-right: 6px;
         border-radius: 50%;
+        overflow: hidden;
+        border: 1px solid #e4e4e4;
       }
 
       .info {
         flex: 1;
+        margin-left: 10px;
         margin-bottom: 12px;
 
         p {
@@ -512,22 +531,22 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
-          max-width: 180px;
+          max-width: 152px;
         }
 
         span {
           font-weight: 400;
           font-size: 12px;
           line-height: 15px;
-          color: #707070;
+          color: #7d7d7d;
           display: inline-block;
         }
 
         i {
           font-style: normal;
           display: inline-block;
-          padding: 0 8px;
-          color: rgba(188, 188, 188, 1);
+          padding: 0 4px;
+          color: #7d7d7d;
         }
       }
     }
@@ -537,38 +556,46 @@
         border-width: 0.5px;
       }
     }
-
   }
 
   .type {
-    background: #E7F1FB;
-    border-radius: 0 0 10px 10px;
-    padding: 16px 16px 8px;
+    background: linear-gradient(142deg, #edfbff 0%, #f3f8ff 100%);
+    padding: 16px 24px;
 
-    >li {
+    > li {
       list-style: none;
       margin-bottom: 16px;
-      font-size: 16px;
-      line-height: 24px;
       color: #353535;
+      font-size: 16px;
+      font-style: normal;
       font-weight: 400;
-      a{
+      line-height: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
         display: block;
         color: #353535;
-        &:hover{
-          color: #136FD3;
+        height: inherit;
+
+        &:hover {
+          color: #136fd3;
         }
       }
     }
   }
 
   .upload {
-    margin-top: 24px;
+    margin-top: 16px;
+    border-radius: 8px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    overflow: hidden;
 
     .uploadContainer {
       padding: 0 0 16px 0;
-      background: #FFFFFF;
-      border-radius: 0px 0px 10px 10px;
 
       ul {
         padding: 10px 16px 0 16px;
@@ -593,18 +620,17 @@
             width: 20px;
             color: #646161;
             display: none;
-
           }
 
           &:hover {
             a {
-              color: #136FD3;
+              color: #136fd3;
               text-decoration: underline;
             }
 
             .deleteIcoc {
               display: block;
-              color: #136FD3;
+              color: #136fd3;
             }
           }
         }
@@ -616,32 +642,40 @@
         font-weight: 400;
         font-size: 14px;
         padding: 12px 0 0 16px;
-        margin: 0;
+        margin: 8px 0 0 0;
       }
     }
   }
 
   .header {
-    background: #E7F1FB;
     font-weight: 700;
     font-size: 18px;
-    line-height: 42px;
-    letter-spacing: 1px;
     color: #353535;
-    padding-left: 16px;
-    border-radius: 10px 10px 0px 0px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .uploadResume {
+    border-radius: 8px;
+    border: 1px solid #92c2ff;
+    background: linear-gradient(142deg, #edfbff 0%, #f3f8ff 100%);
+    .header {
+      border-bottom: 1px solid #c4ddfe;
+    }
   }
 
   .interstedBox {
-    padding-top: 11px;
+    // padding-top: 11px;
   }
 
   .cardList {
     display: block;
-    padding: 14px 16px 13px;
+    padding: 14px;
     color: #353535;
+    border-bottom: 1px solid #e0e0e0;
+
     &:hover {
-      background: #F0F0F0;
+      background: #f0f0f0;
     }
 
     &:last-child {
@@ -650,6 +684,7 @@
 
     .name {
       display: flex;
+      align-items: center;
 
       img {
         width: 20px;
@@ -660,38 +695,49 @@
 
       p {
         flex: 1;
-        width: 0;
+        margin: 0;
+        color: #121212;
+        font-size: 16px;
+        font-style: normal;
         font-weight: 700;
-        @extend .row
+        line-height: 24px;
+
+        @extend .text-overflow;
       }
 
       .jobType {
+        color: #515151;
         font-size: 12px;
-        line-height: 15px;
-        color: #353535;
+        font-style: normal;
         font-weight: 400;
+        line-height: 15px;
+        letter-spacing: 0.09px;
+        flex: 1;
+
+        @extend .text-overflow;
       }
 
       .salary {
         width: fit-content;
-        font-size: 12px;
+        color: #2378e5;
         text-align: right;
-        letter-spacing: 1px;
-        color: #FC5555;
-        margin-left: 10px;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 700;
         line-height: 15px;
+        letter-spacing: 0.09px;
       }
     }
 
     .recruite {
-      font-weight: 400;
+      color: #7d7d7d;
       font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
       line-height: 15px;
-      display: flex;
-      align-items: flex-end;
-      letter-spacing: 1px;
-      color: #707070;
-      margin: 4px 0 12px 0;
+      letter-spacing: 0.09px;
+      margin-bottom: 10px;
+      margin-top: 4px;
     }
   }
 }
@@ -738,7 +784,6 @@
             padding: 0 12px;
             list-style: none;
             color: #353535;
-            ;
             position: relative;
             margin-right: 8px;
             cursor: pointer;
@@ -749,7 +794,7 @@
                 position: absolute;
                 width: 60px;
                 height: 3px;
-                background-color: #136FD3;
+                background-color: #136fd3;
                 left: 0;
                 bottom: 0px;
                 left: 50%;
@@ -761,13 +806,13 @@
       }
 
       .mobileHeaderChild {
-        background: #E7F1FB;
+        background: #e7f1fb;
         border-radius: 15px;
         padding: 0 16px;
         height: 32px;
         line-height: 32px;
         text-align: center;
-        color: #136FD3;
+        color: #136fd3;
         position: absolute;
         right: 17px;
         top: 60px;
@@ -778,27 +823,30 @@
 
         .arrow {
           font-size: 30px;
-          color: #BCBCBC;
+          color: #bcbcbc;
         }
       }
 
       .resumeBox {
         .title {
           height: 54px;
-          background: #F0F0F0;
+          background: #f0f0f0;
           border-radius: 10px 10px 0px 0px;
         }
 
-        .item>li {
+        .item > li {
           height: 42px;
           line-height: 42px;
 
           &:hover {
-            color: #136FD3;
+            color: #136fd3;
           }
         }
       }
     }
   }
+}
 
+.uploadResumeBtn {
+  margin-top: 16px;
 }

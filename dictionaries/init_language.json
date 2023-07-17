@@ -179,7 +179,9 @@
       "reason5": "Industry mismatch",
       "reason6": "Not interested in this company"
     },
-    "deleteSuccess": "delete seccess"
+    "deleteSuccess": "delete seccess",
+    "applyJob": "Apply Job!",
+    "login": "Login"
   },
   "companies": {
     "title": "Find great companies in {{country}}",

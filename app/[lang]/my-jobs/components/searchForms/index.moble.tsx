@@ -141,7 +141,7 @@ const SearchArea = (props: any) => {
   newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
 
   return (
-    <div>
+    <>
       <ThemeProvider theme={newTheme}>
         <div className={styles.container}>
           <div className={styles.top}>
@@ -214,7 +214,7 @@ const SearchArea = (props: any) => {
           </div>
         </div>
       </ThemeProvider>
-    </div>
+    </>
   )
 }
 export default SearchArea
