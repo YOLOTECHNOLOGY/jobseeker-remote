@@ -9,7 +9,7 @@
   height: 239px;
   box-shadow: 24px;
   border-radius: 15px;
-  overflow: hidden;
+  overflow: visible;
   background-color: white;
 
   &_head {
@@ -24,6 +24,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 
     p {
       font-style: normal;

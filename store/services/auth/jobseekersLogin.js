@@ -1,5 +1,5 @@
 import configuredAxios from 'helpers/configuredAxios'
-import { getLang } from 'helpers/country'
+import { getLanguageCode } from '../../../helpers/country'
 
 const authenticationJobseekersLogin = (payload) => {
   const axios = configuredAxios('auth', 'protected')
@@ -10,7 +10,7 @@ const authenticationJobseekersLogin = (payload) => {
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
     fcm_token_web_jobseeker:msgToken,
-    language_code: getLang()
+    language_code: getLanguageCode()
   })
 }
 
