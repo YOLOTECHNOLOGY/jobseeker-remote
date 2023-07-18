@@ -4,6 +4,7 @@ import styles from '../../index.module.scss'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 import useGetStarted from '../../hooks/useGetStarted'
+import Image from 'next/image'
 
 interface IFacebook {
   className?: string
@@ -11,6 +12,7 @@ interface IFacebook {
   isLogin?: boolean
   redirect?: string | string[]
   lang: any
+  showTitle?: boolean
 }
 
 const FacebookLogin = (props: IFacebook) => {
@@ -18,7 +20,8 @@ const FacebookLogin = (props: IFacebook) => {
     activeKey,
     isLogin,
     redirect,
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    showTitle = true
   } = props
   const searchParams = useSearchParams()
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
@@ -42,7 +45,7 @@ const FacebookLogin = (props: IFacebook) => {
       data.avatar = payload.pictureUrl
     }
     // submit
-    handleAuthenticationSocialLogin(data).then(res => {
+    handleAuthenticationSocialLogin(data).then((res) => {
       // handle has logged redirect url
       const { data } = res
       if (data?.token) {
@@ -92,8 +95,9 @@ const FacebookLogin = (props: IFacebook) => {
 
   return (
     <div className={styles.login_item} onClick={handleAuthClick}>
-      <img src={FacebookIcon}></img>
-      <span>{newGetStarted.links.facebook}</span>
+      {/* <Image src={FacebookIcon} width={24} height={24} alt='facebook' /> */}
+      <i className='icon-facebook' style={{ color: '#0062E0' }}></i>
+      {showTitle && <span>{newGetStarted.links.facebook}</span>}
     </div>
   )
 }

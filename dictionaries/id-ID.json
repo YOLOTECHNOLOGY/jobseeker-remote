@@ -53,7 +53,12 @@
     "followUs": "Follow us",
     "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation",
-    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world."
+    "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world.",
+    "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
+    "JapanYolo": "Japan: Yolo Technology 株式会社",
+    "JapanAddress": "東京都港区浜松町2-4-1 世界貿易センタービルディング南館17階",
+    "workTitle": "Work Time",
+    "workingDate": "Monday to Saturday 10:00 - 19:00"
   },
   "getStatred": {
     "seoMetaTitle": "Get started | Bossjob",
@@ -266,6 +271,9 @@
       "Find": "Find",
       "FindNow": "Find Now",
       "All": "All",
+      "Location:": "Location",
+      "SearchPlaceholder": "Search for job title",
+      "CompanyType": "Company type",
       "culture": {
         "title": "Company Culture",
         "viewAll": "View all",
@@ -329,6 +337,7 @@
   "home": {
     "title": "Find Job. ",
     "title2": "Talk to Boss.",
+    "slog": "Find Job. Talk to Boss",
     "defaultLocationPH": "manila",
     "defaultLocationSG": "downtown core",
     "search": {
@@ -413,6 +422,7 @@
       "showMore": "Read More",
       "showLess": "Read Less",
       "rate": "response rate",
+      "keySkills": "Key Skills",
       "state": {
         "online": "Online",
         "now": "Active just now",
@@ -491,7 +501,9 @@
         "note": "By signing up, I have read and agreed to the",
         "term": "Terms of Use",
         "policy": "Privacy Policy"
-      }
+      },
+      "uploadResume": "Upload Resume",
+      "applyJob": "Apply Job!"
     },
     "seo": {
       "title": "{{name}} is hiring {{jobTitle}} - {{jobId}} | Bossjob",
@@ -1214,7 +1226,7 @@
     "emailLabel": "Email Address",
     "sendCode": "Send verification code",
     "welcomeBack": "Welcome back",
-    "sendCodeDigit": "Please enter the 6-digit code that we sent to",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
     "signUpAnAccount": "Sign up an account",
     "checkSpamEmail": "Check your spam mail if you didn’t receive code",
     "havingTrouble": "Still having trouble? Try to sign up with",
@@ -1224,10 +1236,10 @@
     "resendCode": "Resend code",
     "country": "Country",
     "phoneNumber": "Phone Number",
-    "twoFactor": "Enable two-factor",
+    "twoFactor": "Safety Verification",
     "authentication": "authentication",
     "secure": "Secure your account and receive code on your email",
-    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
     "setUpLater": "Set this up later",
     "enableTwoFactor": "two-factor",
     "authenticationEnabled": "authentication enabled",
@@ -1243,7 +1255,10 @@
     "accounts": "accounts.",
     "thisPhoneNumber": "This phone number is associated with ",
     "youNeedToChooseVerified": "You need to choose a verified email address to associate",
-    "validateErr": "The email has been registered. Please change the binding to another email"
+    "validateErr": "The email has been registered. Please change the binding to another email",
+    "checkYourSpam": "Check your spam mail if you didn’t receive code.",
+    "authenticationSuccessful": "Authentication Successful",
+    "Bossjob": "Bossjob"
   },
   "seo": {
     "ph": "Philippines",
@@ -1324,6 +1339,9 @@
     "Malaysia": "Malaysia",
     "Thailand": "Thailand",
     "Vietnam": "Vietnam",
+    "Macao": "Macao",
+    "Taiwan": "Taiwan",
+    "Japan": "Japan",
     "section6_title": "Best hiring APP in Southeast-Asia",
     "section6_subtitle": "Find jobs anywhere, everywhere",
     "section6_coming_soon": "Coming soon...",

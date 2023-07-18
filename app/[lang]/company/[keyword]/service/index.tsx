@@ -147,6 +147,7 @@ export interface CompanyDetailsType {
 		social_credit_code: string
 		taxpayer_identification_number: number
 		type_of_enterprise: string
+		type_of_enterprise_id: string
 		address: string
 		industry: string
 	} | any;

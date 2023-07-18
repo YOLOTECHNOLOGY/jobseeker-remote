@@ -5,6 +5,7 @@ import useGetStarted from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
 import { GoogleLogo } from 'images'
 import styles from '../../index.module.scss'
+import Image from 'next/image'
 
 interface IGoogle {
   className?: string
@@ -12,6 +13,7 @@ interface IGoogle {
   isLogin?: boolean
   redirect?: string | string[]
   lang: any
+  showTitle?: boolean
 }
 
 const GoogleLogin = (props: IGoogle) => {
@@ -19,10 +21,10 @@ const GoogleLogin = (props: IGoogle) => {
     activeKey,
     isLogin,
     redirect,
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    showTitle = true
   } = props
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
-  const [googleAuth, setGoogleAuth] = useState(null)
   const [init, setInit] = useState(false)
   const searchParams = useSearchParams()
   const query = {}
@@ -31,11 +33,12 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   useEffect(() => {
-    setInit(typeof window?.gapi != 'undefined')
-  }, [window?.gapi])
+    setInit(typeof window?.gAPIAuthInstance != 'undefined')
+  }, [window?.gAPIAuthInstance])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (window.gAPIAuthInstance) return
       const script = document.createElement('script')
       const handleClientLoad = () => window.gapi.load('client:auth2', initClient)
       const initClient = () => {
@@ -46,9 +49,9 @@ const GoogleLogin = (props: IGoogle) => {
             scope: 'https://www.googleapis.com/auth/userinfo.profile'
           })
           .then(() => {
-            setGoogleAuth(window.gapi.auth2.getAuthInstance())
+            window.gAPIAuthInstance = window.gapi.auth2.getAuthInstance()
+            setInit(true)
           })
-        setInit(true)
         document?.body?.removeChild?.(script)
       }
 
@@ -62,21 +65,17 @@ const GoogleLogin = (props: IGoogle) => {
       }
       document.body.appendChild(script)
     }
-    return () => {
-      setGoogleAuth(null)
-    }
   }, [])
 
   const handleAuthClick = () => {
-    if (!googleAuth) {
+    if (!window.gAPIAuthInstance) {
       console.error(new Error('Error loading google auth script'))
       return
     }
-    googleAuth?.signIn().then(() => {
+    window.gAPIAuthInstance?.signIn().then(() => {
       handleSigninStatus()
     })
   }
-    
 
   const callBackMethod = (payload) => {
     const data = {
@@ -84,7 +83,7 @@ const GoogleLogin = (props: IGoogle) => {
       ...query,
       email: payload.email ? payload.email : '',
       social_user_token: payload.accessToken,
-      social_type: payload.socialType,
+      social_type: 'google',
       social_user_id: payload.userId,
       source: 'web'
     }
@@ -92,7 +91,7 @@ const GoogleLogin = (props: IGoogle) => {
       data.avatar = payload.pictureUrl
     }
     // submit
-    handleAuthenticationSocialLogin(data).then(res => {
+    handleAuthenticationSocialLogin(data).then((res) => {
       // handle has logged redirect url
       const { data } = res
       if (data?.token) {
@@ -103,7 +102,7 @@ const GoogleLogin = (props: IGoogle) => {
   }
 
   const handleSigninStatus = async () => {
-    const user = googleAuth.currentUser.get()
+    const user = window.gAPIAuthInstance.currentUser.get()
     const isAuthorized = user.hasGrantedScopes('profile')
 
     if (isAuthorized) {
@@ -137,11 +136,18 @@ const GoogleLogin = (props: IGoogle) => {
 
   return (
     <div
-      className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
+      className={classNames([
+        styles.login_item,
+        !init ? styles.login_disabled : styles.login_itemActive
+      ])}
       onClick={handleAuthClick}
     >
-      <img src={GoogleLogo} />
-      <span>{newGetStarted.links.google}</span>
+      {showTitle ? (
+        <i className='icon-google'></i>
+      ) : (
+        <Image src={GoogleLogo} alt='google' width={24} height={24} />
+      )}
+      {showTitle && <span>{newGetStarted.links.google}</span>}
     </div>
   )
 }

@@ -28,9 +28,22 @@ let countries = [
 		"country": "Hongkong",
 		"flag": `${process.env.S3_BUCKET_URL}/landing/Hongkong-flag.png`,
 		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png`,
-		"coming": true,
 	},
-
+	{
+		"country": "Macao",
+		"flag": `${process.env.S3_BUCKET_URL}/landing/macao-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Macao.png`
+	},
+	{
+		"country": "Taiwan",
+		"flag": `${process.env.S3_BUCKET_URL}/landing/taiwan-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/taiwan.png`
+	},
+	{
+		"country": "Japan",
+		"flag": `${process.env.S3_BUCKET_URL}/landing/japen-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/japen.png`
+	},
 	{
 		"country": "Malaysia",
 		"flag": `${process.env.S3_BUCKET_URL}/landing/Malaysia-flag.png`,
@@ -50,11 +63,16 @@ let countries = [
 		"image": `${process.env.S3_BUCKET_URL}/landing/Vietnam.png`,
 		"coming": true,
 	},
+	
 ];
 
 if (countries.length % 2 !== 0) {
 	countries = countries.concat(countries)
 }
+
+
+// 用法:
+
 const Section6 = () => {
 	const contextLang = useContext(languageContext);
 	return <section className={style.section6}>

@@ -11,7 +11,7 @@ const LinkProvider = ({ children }: any) => {
     console.log({ linkLoading: loading })
     const push = useCallback((url) => {
         startTransition(() => {
-            router.push(url, { forceOptimisticNavigation: false })
+            router.push(url, { scroll: false })
         })
     }, [router, startTransition])
     const refresh = useCallback(() => {

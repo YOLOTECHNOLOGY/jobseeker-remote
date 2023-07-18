@@ -4,8 +4,7 @@ import Link from 'components/Link'
 import styles from '../../Footer.module.scss'
 
 const AboutList = (props: any) => {
-
-  const {data} = props;
+  const { data } = props
 
   const { aboutBossjob, termsConditions, legal, FAQ } = data?.foot || {}
 
@@ -16,7 +15,7 @@ const AboutList = (props: any) => {
       <li>
         <Link
           className={styles.footerLink}
-          to={`${langKey}/company/bossjob-1668`}
+          to={`/${langKey}/company/bossjob-1668`}
           title='About Bossjob'
           aTag={false}
           external={false}

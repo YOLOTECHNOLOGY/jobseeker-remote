@@ -9,7 +9,7 @@ import {languageContext} from "../../components/providers/languageProvider";
 import {getCountryKey} from "../../../helpers/country";
 import {formatTemplateString} from "../../../helpers/formatter";
 import {getDictionary} from "../../../get-dictionary";
-
+import style from "./index.module.scss"
 // eslint-disable-next-line valid-jsdoc
 /**
  * Generate metadata for the page
@@ -45,13 +45,14 @@ export default function ShopLayout(props: {
 		<>
 
 			<section style={{
-				width: '100%',
 				// overflow: "hidden",
 				overflowX: 'clip',
 				minHeight: '100vh',
 				backgroundColor: '#ffffff',
 
-			}}>
+			}}
+				className={style.page_container}
+			>
 				{/* <header> */}
 				{/*     <h1>boosJob</h1> */}
 				{/* </header> */}

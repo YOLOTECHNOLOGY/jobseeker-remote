@@ -39,22 +39,28 @@ export default createTheme({
                     shrink: {
                         backgroundColor: '#E7F1FB'
                     },
-                    focused: {
+                    '&.Mui-focused': {
                         backgroundColor: '#E7F1FB',
                         '&.MuiInputLabel': {
                             display: 'none'
                         }
                     },
+                    // focused: {
+                    //     backgroundColor: '#E7F1FB',
+                    //     '&.MuiInputLabel': {
+                    //         display: 'none'
+                    //     }
+                    // },
                 },
                 select: {
                     focused: {
                         background: '#F0F0F0'
                     },
-                    padding:'0px'
+                    padding: '0px'
                 },
-                focused: {
-                    background: '#F0F0F0'
-                }
+                // focused: {
+                //     background: '#F0F0F0'
+                // }
             }
         },
         MuiMenuItem: {

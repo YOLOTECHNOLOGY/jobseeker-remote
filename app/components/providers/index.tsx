@@ -19,7 +19,7 @@ const ClientProviders = (props: any) => {
     return <Provider store={store}>
         <CountryProvider>
             <CookiesProvider>
-                <LocationProvider lang={LG}>
+                <LocationProvider >
                     <PersistGate loading={null} persistor={persistor}>
                         <LanguageProvider store={LG}>
                             <IMProvider lang={lang}>

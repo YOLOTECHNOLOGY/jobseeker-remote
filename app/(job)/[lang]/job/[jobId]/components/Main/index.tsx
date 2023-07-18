@@ -28,11 +28,15 @@ const MainFC = (props: propsType) => {
   const { content } = props.languages
   return (
     <main className={styles.main}>
-      <Desc {...props} />
-      {props.benefitsProps?.length ? <Benefits benefits={props.benefitsProps} lang={content}/> : null}
-      <Map lat={props.lat} lng={props.lng} full_address={props.full_address} lang={content}/>
-      <Search />
+      <div className={styles.mainBox}>
+        <Desc {...props} />
+        {props.benefitsProps?.length ? (
+          <Benefits benefits={props.benefitsProps} lang={content} />
+        ) : null}
+        <Map lat={props.lat} lng={props.lng} full_address={props.full_address} lang={content} />
+      </div>
 
+      <Search />
       <span className={styles.published_at}>
         {content.jobPostedOn} {props.published_at}
       </span>

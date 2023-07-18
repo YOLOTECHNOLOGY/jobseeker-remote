@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRouter } from 'next/navigation'
+
 import { useDispatch } from 'react-redux'
 
 import Link from 'components/Link'
@@ -21,20 +21,14 @@ interface IProps {
 }
 
 const DropDownMenu = (props: IProps, ref: React.LegacyRef<HTMLDivElement>) => {
-  const { langKey, lang, config, pathname,handleChangeNation } = props
+  const { langKey, lang, config, pathname, handleChangeNation } = props
 
   const { hiring, myJobs, accountSettings, logOut, change } = lang || {}
 
   const dispatch = useDispatch()
-  const router = useRouter()
 
   const handleLogOut = () => {
     dispatch(logoutRequest())
-    if (pathname === '/') {
-      location.reload()
-    } else {
-      router.push('/')
-    }
   }
 
   return (

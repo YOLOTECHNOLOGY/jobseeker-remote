@@ -155,30 +155,31 @@ const Companies = (props: IProps) => {
           </div>
         </div>
 
+        {/* featured company */}
+        {!isFeaturedCompaniesFetching && reset ? (
+          <div className={styles.featuredCompanyWrapper}>
+            <div className={styles.featuredCompanyMain}>
+              <FeaturedCompanied
+                featuredCompany={featuredCompany}
+                langKey={langKey}
+                featureBanners={featureBanners}
+                lang={props.lang}
+              />
+            </div>
+          </div>
+        ) : null}
+
         {/* companies list */}
         <div className={styles.companies}>
-
           {/* fetching loading: true */}
           {isFeaturedCompaniesFetching && <CompaniesLoader />}
 
           {/* fetching loading: false */}
           {!isFeaturedCompaniesFetching && (
             <>
-              {/* featured company */}
-              {reset ? (
-                <FeaturedCompanied
-                  featuredCompany={featuredCompany}
-                  langKey={langKey}
-                  featureBanners={featureBanners}
-                  lang={props.lang}
-                />
-              ) : null}
-
               {/* company card title */}
               {reset ? (
-                <Text textStyle='xxl' tagName='h2' bold className={styles.popularCompanyTitle}>
-                  {companies.popularCompany.title}
-                </Text>
+                <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
               ) : null}
 
               {/* company card list */}

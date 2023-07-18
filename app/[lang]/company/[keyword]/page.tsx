@@ -17,6 +17,7 @@ import useWindowSize from 'hooks/useWindowSize';
 import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
+import classNames from 'classnames';
 
 
 function a11yProps(index: number) {
@@ -68,8 +69,9 @@ const Page = () => {
 	}
 	return <div className={style.container}>
 		<div className={style.header}>
-			<Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover" />
-			<div className={style.header_mask}></div>
+			{/* <Image className={style.header_cover} fill={true} src={detail.cover_pic_url} alt="cover" /> */}
+			{/* <div className={style.header_cover}/> */}
+			{/* <div className={style.header_mask}></div> */}
 			<div className={style.header_info}>
 				<div className={style.header_logo}>
 					<Image className={style.header_logo_img} width={68} height={68} src={detail.logo_url} alt="logo" />
@@ -84,14 +86,10 @@ const Page = () => {
 							/>}
 					</div>
 					<div className={style.header_subtitle}>
-						{[detail.financing_stage, detail.company_size, detail.industry].filter(Boolean).join(' | ')}
-					</div>
-					<div className={style.header_benefit_wrapper}>
-						{
-							detail.benefits.slice(0, 3).map((item, index) => {
-								return <div key={index} className={style.header_benefit_item}>
-									{item.value}
-								</div>
+						{[detail.financing_stage, detail.company_size, detail.industry]
+							.filter(Boolean)
+							.map((value,index)=>{
+								return <span key={index} className={style.header_subtitle_item}>{value}</span>
 							})
 						}
 					</div>
@@ -112,7 +110,13 @@ const Page = () => {
 		<div className={style.content}>
 			<div className={style.tab_wrapper}>
 				<div className={style.tab_layout}>
-					<Tabs value={value} onChange={handleChange}>
+					<Tabs 
+						value={value} onChange={handleChange}
+						classes={{
+							indicator: "indicator"
+						}}
+						TabIndicatorProps={{ children: <span /> }}
+					>
 						<Tab label={tab_title[0]} {...a11yProps(0)} />
 						<Tab label={tab_title[1]} {...a11yProps(1)} />
 					</Tabs>
@@ -120,8 +124,8 @@ const Page = () => {
 
 			</div>
 			<TabPanel value={value} index={0}>
-				<div className={style.company_info_tab_wrapper}>
-					{!!hotJobs.jobs.length ? <Section title={overview.HotJobs} hot>
+			{!!hotJobs.jobs.length ? <div className={style.hot_jobs_wrapper}>
+						<Section title={overview.HotJobs} hot>
 						<div
 							className={style.header_right}
 							onClick={(e) => {
@@ -142,7 +146,7 @@ const Page = () => {
 										{item.job_title}
 									</Link>
 									<div className={style.jobs_content}>
-										<JobsTag {...item} count={2} />
+										<JobsTag {...item} count={2}/>
 										<div className={style.jobs_chat_now_container}>
 											<div className={style.salary}>{
 												item.local_salary_range_value
@@ -155,7 +159,10 @@ const Page = () => {
 								</div>
 							})}
 						</div>
-					</Section> : null}
+					</Section> 
+					</div>
+					: null}
+				<div className={style.company_info_tab_wrapper}>
 					<div className={style.company_info_wrapper}>
 						<CompanyInfo {...detail} jobs={jobs.jobs} onMore={(e) => {
 							window.scrollTo({

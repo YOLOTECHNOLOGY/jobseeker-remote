@@ -111,14 +111,6 @@
   position: relative;
   letter-spacing: 0.05em;
 
-  a {
-    span {
-      &:hover {
-        color: #2378e5;
-      }
-    }
-  }
-
   &Item,
   &Icon {
     &:hover {
@@ -134,17 +126,6 @@
     padding: 0 20px;
   }
 
-  &::after {
-    width: auto;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
-    content: '';
-    -webkit-transition: -webkit-transform 0.3s;
-    transition: transform 0.3s;
-  }
-
   &:last-child {
     padding-right: 0;
   }
@@ -156,15 +137,33 @@
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
+    position: relative;
 
     &.isActive {
       color: #1d2129;
       font-weight: 700;
     }
 
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 2px;
+      bottom: -10px;
+      left: 0;
+      background-color: #1d2129;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+
     &:hover {
       color: #1d2129;
-      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
     }
   }
 

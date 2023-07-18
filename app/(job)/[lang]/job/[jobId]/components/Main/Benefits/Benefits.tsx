@@ -3,12 +3,12 @@ import styles from '../../../page.module.scss'
 
 export type propsType = {
   benefits?: Array<any>
-  lang:Record<string, any>
+  lang: Record<string, any>
 }
 
-const Benefits = ({ benefits,lang }: propsType) => {
+const Benefits = ({ benefits, lang }: propsType) => {
   return (
-    <section className={styles.benefits}>
+    <section className={styles.benefits} id='Benefits'>
       <h2>{lang?.benefits}</h2>
 
       <div className={styles.benefits_labels}>

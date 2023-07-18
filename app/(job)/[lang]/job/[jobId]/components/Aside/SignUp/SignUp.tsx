@@ -77,9 +77,9 @@ const SignUp = ({ jobId, job_url }: propsType) => {
   const [email, setEmail] = useState<string>('')
   const { setShowLogin } = useContext(LoginModalContext)
   const handleSendEmailTOP = () => {
-    sessionStorage.setItem('redirectPage',window?.location?.pathname)
+    sessionStorage.setItem('redirectPage', window?.location?.pathname)
     setShowLogin?.(true)
-    return 
+    return
     // setLoading(true)
     // authenticationSendEmaillOtp({ email })
     //   .then(({ status }) => {
@@ -131,7 +131,7 @@ const SignUp = ({ jobId, job_url }: propsType) => {
               textTransform: 'capitalize !important'
             }}
             isLoading={loading}
-           // disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
+            // disabled={! /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(email)}
             onClick={handleSendEmailTOP}
           >
             {signUp.btn}
@@ -143,7 +143,8 @@ const SignUp = ({ jobId, job_url }: propsType) => {
         {signUp.note}{' '}
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
           {signUp.term}
-        </a>&
+        </a>{' '}
+        &
         <a href='https://blog.bossjob.ph/terms-and-conditions/' target='_blank' rel='noreferrer'>
           {signUp.policy}
         </a>

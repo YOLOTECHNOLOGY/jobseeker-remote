@@ -33,7 +33,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
-import {MoreFilterIcon} from 'images'
+import { MoreFilterIcon } from 'images'
 
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
@@ -142,6 +142,10 @@ const SearchArea = (props: any) => {
     alignItems: 'center',
     cursor: 'pointer'
   }
+  const spanStyle = {
+    paddingLeft: '10px',
+    fontSize: '15px'
+  }
   return (
     <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
@@ -152,172 +156,175 @@ const SearchArea = (props: any) => {
           })}
         >
           <div className={styles.searchAreaContent}>
-          {/* search */}
-          <div className={styles.searchArea}>
-            <div className={styles.searchAreaLeft}>
-              <LocationMultiSelector
-                className={styles.location}
-                locationList={config.location_lists}
-                value={location}
-                // isClear={true}
-                label={search.location}
-                // defaultValue={location}
-                lang={search}
-                onChange={setLocation}
-                sx={{
-                  '> .MuiFormControl-root': {
-                    borderRadius: '8px',
-                    height: '60px',
-                    marginTop: '4px',
-                    overflow: 'hidden',
-                    '> .MuiOutlinedInput-root': {
+            {/* search */}
+            <div className={styles.searchArea}>
+              <div className={styles.searchAreaLeft}>
+                <LocationMultiSelector
+                  className={styles.location}
+                  locationList={config.location_lists}
+                  value={location}
+                  // isClear={true}
+                  label={search.location}
+                  // defaultValue={location}
+                  lang={search}
+                  onChange={setLocation}
+                  sx={{
+                    '> .MuiFormControl-root': {
                       borderRadius: '8px',
                       height: '60px',
+                      marginTop: '4px',
                       overflow: 'hidden',
-                      marginTop: '4px'
+                      '> .MuiOutlinedInput-root': {
+                        borderRadius: '8px',
+                        height: '60px',
+                        overflow: 'hidden',
+                        marginTop: '4px'
+                      }
                     }
-                  }
-                }}
-              />
-              <div className={styles.searchAreaBox}>
-                <JobSearchBar
-                  id='search'
-                  label={search.title}
-                  variant='outlined'
-                  size='small'
-                  className={styles.search}
-                  value={searchValue}
-                  maxLength={255}
-                  isLoading={searchLoading}
-                  searchFn={handleSuggestionSearch as any}
-                  updateSearchValue={setSearchValue}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault()
-                      flushSync(() => {
-                        setSearchValue((e.target as HTMLInputElement).value)
-                      })
-                      addSearchHistory((e.target as HTMLInputElement).value)
-                      setQueryFields('')
-                      reloadRef.current()
-                    }
-                  }}
-                  renderOption={(props, option) => {
-                    const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-                    return type === 'company' ? (
-                      <li {...props} style={styleleSelect}>
-                        <Image src={logoUrl} alt={value} width='22' height='22' />
-                        <span style={{ paddingLeft: '10px' }}>{value}</span>
-                      </li>
-                    ) : isHistory ? (
-                      <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
-                        <AccessTimeIcon />
-                        <span style={{ paddingLeft: '10px' }}>{value}</span>
-                      </li>
-                    ) : (
-                      <li {...props} style={styleleSelect}>
-                        <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                        <span style={{ paddingLeft: '10px' }}>{value || option}</span>
-                      </li>
-                    )
-                  }}
-                  options={suggestionList}
-                  onSelect={(value: any) => {
-                    const newValue = value?.value || value || ''
-                    setQueryFields(value?.type || '')
-                    flushSync(() => {
-                      setSearchValue(newValue)
-                    })
-                    addSearchHistory(newValue)
-                    reloadRef.current()
                   }}
                 />
-                <MaterialButton
-                  className={styles.searchButton}
-                  variant='contained'
-                  capitalize
+                <div className={styles.searchAreaBox}>
+                  <JobSearchBar
+                    id='search'
+                    label={search.title}
+                    variant='outlined'
+                    size='small'
+                    className={styles.search}
+                    value={searchValue}
+                    maxLength={255}
+                    isLoading={searchLoading}
+                    searchFn={handleSuggestionSearch as any}
+                    updateSearchValue={setSearchValue}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        flushSync(() => {
+                          setSearchValue((e.target as HTMLInputElement).value)
+                        })
+                        addSearchHistory((e.target as HTMLInputElement).value)
+                        setQueryFields('')
+                        reloadRef.current()
+                      }
+                    }}
+                    renderOption={(props, option) => {
+                      const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                      return type === 'company' ? (
+                        <li {...props} style={styleleSelect}>
+                          <Image src={logoUrl} alt={value} width='22' height='22' />
+                          <span style={spanStyle}>{value}</span>
+                        </li>
+                      ) : isHistory ? (
+                        <li {...props} style={{ ...styleleSelect, color: '#136fd3' }}>
+                          <AccessTimeIcon />
+                          <span style={spanStyle}>{value}</span>
+                        </li>
+                      ) : (
+                        <li {...props} style={styleleSelect}>
+                          <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                          <span style={spanStyle}>{value || option}</span>
+                        </li>
+                      )
+                    }}
+                    options={suggestionList}
+                    onSelect={(value: any) => {
+                      const newValue = value?.value || value || ''
+                      setQueryFields(value?.type || '')
+                      flushSync(() => {
+                        setSearchValue(newValue)
+                      })
+                      addSearchHistory(newValue)
+                      reloadRef.current()
+                    }}
+                  />
+                  <MaterialButton
+                    className={styles.searchButton}
+                    variant='contained'
+                    capitalize
+                    onClick={() => {
+                      flushSync(() => {
+                        setSearchValue(searchValue)
+                      })
+                      addSearchHistory(searchValue)
+                      reloadRef.current()
+                      setQueryFields('')
+                    }}
+                  >
+                    {search?.findNow}
+                  </MaterialButton>
+                </div>
+              </div>
+            </div>
+            {/* filter */}
+            <div className={styles.filters}>
+              <div className={styles.filtersLeft}>
+                <Single
+                  options={sortOptions}
+                  value={sort}
+                  onSelect={setSort}
+                  className={styles.filterItems}
+                  label='Sort by'
+                />
+                <JobFunction
+                  // label='Job Function'
+                  id='jobFunction'
+                  label={search.function}
+                  value={jobFunctionValue}
+                  className={[styles.filterItems, styles.jobFunction]}
+                  onChange={jobFunctionChange}
+                />
+                <Multiple
+                  label={search.salary}
+                  value={salaries}
+                  options={salaryOptions}
+                  className={classNames([styles.filterItems, styles.jobSalary])}
+                  onSelect={setSelaries}
+                />
+                <Multiple
+                  label={search.type}
+                  value={jobTypes}
+                  options={jobTypeList}
+                  className={styles.filterItems}
+                  onSelect={setJobtypes}
+                  defaultValue={jobTypes}
+                />
+                <Button
+                  className={classNames([
+                    styles.moreButton,
+                    moreCount ? styles.moreButtonCount : ''
+                  ])}
+                  variant='outlined'
                   onClick={() => {
-                    flushSync(() => {
-                      setSearchValue(searchValue)
+                    setShowMore(true)
+                  }}
+                  endIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
+                >
+                  {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
+                </Button>
+              </div>
+              <div className={styles.filtersRight}>
+                <Button
+                  className={styles.clearButton}
+                  variant='text'
+                  onClick={() => {
+                    setLocation([])
+                    setSearchValue('')
+                    setSort('1')
+                    jobFunctionChange({
+                      jobFunctions: [],
+                      mainFunctions: [],
+                      functionTitles: []
                     })
-                    addSearchHistory(searchValue)
-                    reloadRef.current()
-                    setQueryFields('')
+                    setJobtypes([])
+                    setSelaries([])
+                    setMoreData({} as any)
+                    setPage('1')
                   }}
                 >
-                  {search?.findNow}
-                </MaterialButton>
+                  {search.reset}{' '}
+                </Button>
               </div>
             </div>
           </div>
-          {/* filter */}
-          <div className={styles.filters}>
-            <div className={styles.filtersLeft}>
-              <Single
-                options={sortOptions}
-                value={sort}
-                onSelect={setSort}
-                className={styles.filterItems}
-                label='Sort by'
-              />
-              <JobFunction
-                // label='Job Function'
-                id='jobFunction'
-                label={search.function}
-                value={jobFunctionValue}
-                className={[styles.filterItems, styles.jobFunction]}
-                onChange={jobFunctionChange}
-              />
-              <Multiple
-                label={search.salary}
-                value={salaries}
-                options={salaryOptions}
-                className={classNames([styles.filterItems, styles.jobSalary])}
-                onSelect={setSelaries}
-              />
-              <Multiple
-                label={search.type}
-                value={jobTypes}
-                options={jobTypeList}
-                className={styles.filterItems}
-                onSelect={setJobtypes}
-                defaultValue={jobTypes}
-              />
-              <Button
-                className={classNames([styles.moreButton, moreCount ? styles.moreButtonCount : ''])}
-                variant='outlined'
-                onClick={() => {
-                  setShowMore(true)
-                }}
-                endIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
-              >
-                {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
-              </Button>
-            </div>
-            <div className={styles.filtersRight}>
-              <Button
-                className={styles.clearButton}
-                variant='text'
-                onClick={() => {
-                  setLocation([])
-                  setSearchValue('')
-                  setSort('1')
-                  jobFunctionChange({
-                    jobFunctions: [],
-                    mainFunctions: [],
-                    functionTitles: []
-                  })
-                  setJobtypes([])
-                  setSelaries([])
-                  setMoreData({} as any)
-                  setPage('1')
-                }}
-              >
-                {search.reset}{' '}
-              </Button>
-            </div>
-          </div>
-          </div>        
         </div>
       </ThemeProvider>
 

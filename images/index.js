@@ -200,3 +200,6 @@ export const UploadDocIcon = `${S3BucketJobseeker}/UploadDocIcon.svg`
 export const JobSearchIcon = `${S3BucketJobseeker}/jobSearchIcon.svg`
 export const ClearIcon = `${S3BucketJobseeker}/ClearIcon.svg`
 export const MoreFilterIcon = `${S3BucketJobseeker}/MoreFilterIcon.svg`
+
+// home
+export const BannerBackground = `${S3BucketJobseeker}/banner.svg`

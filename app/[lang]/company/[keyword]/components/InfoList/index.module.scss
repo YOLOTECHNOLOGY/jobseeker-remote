@@ -1,6 +1,6 @@
 @use '../../base';
 .tab_content_wrapper {
-  width: 708px;
+  width: 746px;
   @include base.respond-to(phone) {
     width: 100%;
     padding-bottom: 0.5rem;

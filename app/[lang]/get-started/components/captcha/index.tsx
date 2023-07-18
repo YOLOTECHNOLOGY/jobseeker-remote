@@ -55,7 +55,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   // 验证码数组
   const codeArray = useMemo(() => {
     setCurrentIndex(inputValue?.length)
-    console.log({inputValue})
+    console.log({ inputValue })
     onChange?.(inputValue)
     return new Array(length).fill('').map((item, index) => inputValue[index] || '')
   }, [inputValue, length])
@@ -105,7 +105,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
 
   const handleCodeBoxClick = (e: any) => {
     if (inputValue?.length === DEFAULT_LENGTH) {
-      setCurrentIndex(DEFAULT_LENGTH -1)
+      setCurrentIndex(DEFAULT_LENGTH - 1)
     }
     e.preventDefault()
     inputRef.current?.focus()
@@ -114,17 +114,19 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
 
   return (
     <>
-      <div className={`${styles.captcha} ${styles.captchaThemeBox}`} >
-        <div className={styles.codeBox}  onMouseDown={(e) => handleCodeBoxClick(e)}>
+      <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
+        <div className={styles.codeBox} onMouseDown={(e) => handleCodeBoxClick(e)}>
           {codeArray.map((item, index, array) => {
             const prevItemValue = index === 0 ? '-1' : array[index - 1]
             // const isItemActive = isFocused && !!prevItemValue && !item
             const isItemActive = isFocused && index == currentIndex
             return (
               <div
-               
                 key={index}
-                className={`${styles.itemContent} ${isItemActive ? styles.itemContentActive : ''}`}
+                className={`
+                ${styles.itemContent}
+                ${item ? styles.itemContentHit : ''}
+                ${isItemActive ? styles.itemContentActive : ''}`}
               >
                 {item}
               </div>

@@ -5,19 +5,17 @@ import BannerCarousel from './BannerCarousel'
 import styles from '../Companies.module.scss'
 
 interface IProps {
-  featuredCompany: object;
-  langKey: string;
-  featureBanners: any[];
-  lang: any;
+  featuredCompany: object
+  langKey: string
+  featureBanners: any[]
+  lang: any
 }
 
 const FeaturedCompanied = (props: IProps) => {
   const { langKey, featuredCompany, featureBanners, lang } = props
   return (
     <>
-      <Text textStyle='xxl' tagName='h2' bold className={styles.featuredSectionTitle}>
-        {lang.companies.employer.title}
-      </Text>
+      <h2 className={styles.featuredSectionTitle}>{lang.companies.employer.title}</h2>
       <div className={styles.featuredEmployer}>
         <FeaturedCompany featuredCompany={featuredCompany} langKey={langKey} />
         <BannerCarousel slides={featureBanners} />

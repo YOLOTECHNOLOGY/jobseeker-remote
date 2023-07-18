@@ -13,7 +13,7 @@ export type propsType = {
   jobId: number
   companyUrl: string
   jobDetail: any
-  languages: Record<string, any>,
+  languages: Record<string, any>
   config: Array<any>
   lang: string
 }
@@ -28,13 +28,23 @@ const Company = (company: propsType) => {
     <>
       <section className={styles.company}>
         <Link href={'/' + lang + company.companyUrl}>
-          <div className={styles.company_title}>{companySection.title}</div>
-          <Avatar src={company.logo} sx={{ borderRadius: '5px', margin: '8px 0' }} />
-          <h5 className={styles.company_name}>{company.name}</h5>
-          <div className={styles.company_financingStage}>{industry}</div>
-          <div className={styles.company_financingStage}>
-            {company.companySize} {companySection.employees}
+          {/* <div className={styles.company_title}>{companySection.title}</div> */}
+          <div className={styles.company_info}>
+            <Avatar
+              src={company.logo}
+              sx={{ borderRadius: '5px', width: '60px', height: '60px', margin: '8px 0' }}
+            />
+            <div>
+              <h5 className={styles.company_name}>{company.name}</h5>
+              <div className={styles.company_financingStage}>
+                {company.companySize} <span>|</span> {industry}
+              </div>
+            </div>
           </div>
+
+          {/* <div className={styles.company_financingStage}>
+          
+          </div> */}
         </Link>
 
         <Link href={'/' + lang + company?.companyUrl + '/jobs'}>
@@ -47,7 +57,6 @@ const Company = (company: propsType) => {
               borderRadius: '10px',
               border: '1px solid #136FD3',
               fontStyle: 'normal',
-              fontWeight: 700,
               fontSize: '14px',
               lineHeight: '18px',
               letterSpacing: '0.0075em',
@@ -63,7 +72,7 @@ const Company = (company: propsType) => {
       <Link href={'/' + lang + company?.companyUrl}>
         <section className={styles.company_mobileHead}>
           <Avatar
-            sx={{ width: '32px', height: '32px', borderRadius: '5px', marginRight: '8px' }}
+            sx={{ width: '60px', height: '60px', borderRadius: '5px', marginRight: '8px' }}
             src={company?.logo}
           ></Avatar>
           <div className={styles.company_mobileHead_info}>

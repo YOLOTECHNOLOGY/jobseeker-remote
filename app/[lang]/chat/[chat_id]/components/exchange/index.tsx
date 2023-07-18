@@ -31,7 +31,7 @@ const ExchangeModal = (props: any) => {
         ?.map?.(item => ({
             label: `${item.value} (${item.code})`,
             value: item.code,
-            id:item.id
+            id: item.id
         }))
     )
     const number = useMemo(() => {
@@ -71,14 +71,16 @@ const ExchangeModal = (props: any) => {
             return dic.verify
         }
     }, [step])
+    // const mobile_country_id = find(smsCountryList, { 'value': smsCode })?.id
+    // smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum, mobile_country_id })
     const rightBtnClick = useCallback(() => {
         if (step === 'verified') {
             actionsRef.current.sendNumber?.({ applicationId })
         } else {
-            const mobile_country_id = countryOptions?.find(e=>e.value = countryCode)?.id 
-            actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber,mobile_country_id })
+            const mobile_country_id = countryOptions?.find(e => e.value = countryCode)?.id
+            actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber, mobile_country_id })
         }
-    }, [step, otp, applicationId, mobileNumber]) 
+    }, [step, otp, applicationId, mobileNumber])
     const sendText = useMemo(() => {
         if (step === 'init') {
             return dic?.sendOtp
@@ -178,8 +180,8 @@ const ExchangeModal = (props: any) => {
                         [styles.disabled]: !sendEnable
                     })}
                         onClick={() => {
-                            const mobile_country_id = countryOptions?.find(e=>e.value = countryCode)?.id 
-                            sendEnable && actionsRef.current.sendOTP?.({ params: { phone_num: number,mobile_country_id } })
+                            const mobile_country_id = countryOptions?.find(e => e.value = countryCode)?.id
+                            sendEnable && actionsRef.current.sendOTP?.({ params: { phone_num: number, mobile_country_id } })
                         }}
                     >{sendText}</div>
                 </>}

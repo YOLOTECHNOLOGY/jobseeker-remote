@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import style from './index.module.scss'
 import { Country, JobClasses, JobData, fetchJobsListReq, getIDFromKeyword } from '../../service';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -14,6 +14,8 @@ import className from 'classnames';
 import { InView } from "react-intersection-observer";
 import useMediaQuery  from '@mui/material/useMediaQuery';
 import { languageContext } from 'app/components/providers/languageProvider';
+import Empty from 'app/components/empty/empty';
+import TextField from '@mui/material/TextField';
 
 
 
@@ -53,6 +55,7 @@ const SearchPanel = (props: Props) => {
     const isMobile = useMediaQuery('(max-width:768px)');
     const contextLang = useContext(languageContext);
 	const { overview } = contextLang.companyDetail;
+    const currentLocation = useRef<Country>();
     useEffect(() => {
         if (!props.functions) return;
         // filterTagView.current = [{}].concat(props.functions);
@@ -80,7 +83,7 @@ const SearchPanel = (props: Props) => {
     //     console.log("all.index",all.length);
     //     try {
     //         const previousindex = [...all].findIndex(item => item.getAttribute('data-visible') === 'true');
-    //         const index = findLastIndex([...all], (item, index) => {
+    //         const index = <findLastIn></findLastIn>dex([...all], (item, index) => {
     //             return item.getAttribute('data-visible') === 'true'
     //         });
     //         // if(previousindex < 2){
@@ -160,41 +163,54 @@ const SearchPanel = (props: Props) => {
         }
 
     }
+
+
+    const AutocompleteComponent = useMemo(()=>{
+        return <Autocomplete
+        id='location-autocomplete1'
+        options={formattedLocationList}
+        groupBy={(option: any) => option.region_display_name}
+        getOptionLabel={(option: any) => {
+            return option.value
+        }}
+        
+        size='small'
+        onChange={(e, value) => {
+            // console.log('value',value);
+            currentLocation.current = value;
+            setLocation(value);
+            searchFunc(inputText.current, value, 1);
+        }}
+        
+        key={location?.id}
+        // disablePortal
+        disableClearable={false}
+        // className={className}
+        // disableCloseOnSelect
+        renderInput={(params) => {
+            return (
+                <label {...params.InputProps}  htmlFor={"location-autocomplete"} className={style.location_input_wrapper}>
+                    <input {...params.inputProps} placeholder='Location' className={style.location_input} />
+                    <div className={style.location_arrow}></div>
+                    <div className={style.location_input_border} />
+                </label>
+            )
+        }}
+    // defaultValue={defaultValue}
+    // {...rest}
+    />
+    },[])
     return <div className={style.search_container}>
         <div className={style.search_input_wrapper}>
             <div className={style.search_input_layout}>
                 <div className={style.location_selector_wapper}>
-                    <Autocomplete
-                        id='location-autocomplete'
-                        options={formattedLocationList}
-                        groupBy={(option: any) => option.region_display_name}
-                        getOptionLabel={(option: any) => option.value || ''}
-                        size='small'
-                        onChange={(e, value) => {
-                            setLocation(value);
-                            searchFunc(inputText.current, value, 1);
-                        }}
-                        disableClearable={false}
-                        // className={className}
-                        renderInput={(params) => {
-                            return (
-                                <label htmlFor={"location-autocomplete"} ref={params.InputProps.ref} className={style.location_input_wrapper}>
-                                    <input {...params.inputProps} placeholder='Location' className={style.location_input} />
-                                    <div className={style.location_arrow}></div>
-                                    <div className={style.location_input_border} />
-                                </label>
-                            )
-                        }}
-                    // defaultValue={defaultValue}
-                    // {...rest}
-                    />
-
+                    {AutocompleteComponent}
                 </div>
                 <label htmlFor='input-search' className={style.job_search_container}>
-                    <img className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
+                    <Image width={16} height={16} className={style.job_prefix} src={require('./search.svg').default.src} alt='_' />
                     <input 
                         id={'input-search'} name={'input-search'} 
-                        placeholder='Find keywords'
+                        placeholder={overview.SearchPlaceholder}
                         className={style.job_search_input}
                         onChange={(e) => {
                             inputText.current = e.target.value;
@@ -268,7 +284,7 @@ const SearchPanel = (props: Props) => {
                         </InView>
 
                         {props.functions?.map((item, index) => {
-                            return <InView threshold={1} key={index}>
+                            return <InView threshold={1} key={item.id}>
                                 {({ ref, inView }) => {
                                     if(!isMobile){
                                         if (inView && props.functions.length - 1 === index) {
@@ -322,6 +338,7 @@ const SearchPanel = (props: Props) => {
                 ></div>
             </div>
         }
+        <div className={style.search_content_wrapper}>
         <div className={style.filter_split} ref={firstRef}></div>
         <div className={style.content_layout}>
             {loading ?
@@ -332,11 +349,11 @@ const SearchPanel = (props: Props) => {
                 : !!jobsData.jobs.length ?
 
                     !loading && jobsData.jobs.map((item) => {
-                        return <JobsSearchCard key={item.job_title} {...item} />
+                        return <JobsSearchCard key={item.job_title + item.id} {...item} />
                     })
                     :
                     <div className={style.noData}>
-                        No Data
+                        <Empty lang={contextLang.search} description={null} />
                     </div>
             }
         </div>
@@ -356,15 +373,31 @@ const SearchPanel = (props: Props) => {
                 />
             }
         </div>
+        </div>
+
     </div>
 }
 
+export const getLocation = (region_id: number, location_id: number) =>{
+    const { config } = useCompanyDetail();
+    const location_list = config?.location_lists || [];
+    const region = location_list.find(item => item.id === region_id)?.locations || [];
+    const location = region.find((item) => item.id === location_id)?.value || '';
+    return `${location}`;
+} 
 
 const JobsSearchCard = (props: JobData) => {
-    const { lang } = useCompanyDetail();
+    const { lang , config } = useCompanyDetail();
     const isMobile = useMediaQuery('(max-width: 768px)');
     const contextLang = useContext(languageContext);
-	const { overview } = contextLang.companyDetail;
+	const { overview,  } = contextLang.companyDetail;
+    const degree_list = config?.degrees || [];
+    const xp_lvl_list = config?.xp_lvls || [];
+    const job_type_list = config?.job_types || [];
+    const _tagsData = [...tagsData];
+    _tagsData[0].name = xp_lvl_list.find(item => item.id === props.xp_lvl_id)?.value || '';
+    _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
+    _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
     return <div className={style.search_card}>
         <div className={style.search_title_layout}>
             <Link
@@ -374,30 +407,25 @@ const JobsSearchCard = (props: JobData) => {
                 className={style.title}>
                 <span>{props.job_title}</span>
             </Link>
-            <div className={
-                className({
-                    [style.mobile]: true,
-                })
-            }>
-                <div className={style.salary + ' ' + style.mobile}>
+            <div className={style.jobcard_salary_wrapper}>
+                <div className={style.salary}>
                     {props.local_salary_range_value}
                 </div>
+                <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
+                        {overview.jobs.card.chatNow}
+                </Link>
             </div>
         </div>
 
         <div className={style.content}>
-            {tagsData.map(item => {
+            {_tagsData.map((item,index) => {
                 const value = props[item.field]
                 if (!value) return null;
-                return <span className={style.mobile_tag} key={value}>
-                    {value}
+                return <span className={style.mobile_tag} key={index}>
+                    {item.name}
                 </span>
             }).slice(0,3)}
             {!isMobile && <JobsTag {...props} />}
-            {!isMobile && <div className={style.salary + ' ' + style.desktop}>
-                {props.local_salary_range_value}
-            </div>}
-            
         </div>
         <div className={style.footer}>
             <div className={style.chat_footer}>
@@ -411,13 +439,10 @@ const JobsSearchCard = (props: JobData) => {
                     </span>
                     &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                     <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
-                    <Link className={style.chat_now} href={'/' + lang + props.job_url} target='_blank'>
-                        {overview.jobs.card.chatNow}
-                    </Link>
                 </Link>
             </div>
             <div className={style.location}>
-                {props.job_location}
+                {getLocation(props.job_region_id, props.job_location_id)}
             </div>
         </div>
     </div>
@@ -426,21 +451,29 @@ const JobsSearchCard = (props: JobData) => {
 interface TagProps extends JobData {
     count?: number
     classNames?: any
+    type?: 'background'
 }
 
 export const tagsData = [
-    { name: '', field: 'xp_lvl' },
-    { name: '', field: 'degree' },
-    { name: '', field: 'job_type' },
+    { name: '', field: 'xp_lvl_id' },
+    { name: '', field: 'degree_id' },
+    { name: '', field: 'job_type_id' },
 ]
 export const JobsTag = (props: TagProps) => {
-
+    const {config } = useCompanyDetail();
+    const degree_list = config?.degrees || [];
+    const xp_lvl_list = config?.xp_lvls || [];
+    const job_type_list = config?.job_types || [];
+    const _tagsData = [...tagsData];
+    _tagsData[0].name = xp_lvl_list.find(item => item.id === props.xp_lvl_id)?.value || '';
+    _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
+    _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
     return <div className={style.tags}>
-        {tagsData.map(item => {
+        {_tagsData.map((item,index) => {
             const value = props[item.field]
             if (!value) return null;
-            return <div className={style.tag_item + ' ' + ' tag_flag'} key={value}>
-                {value}
+            return <div className={style.tag_item + ' ' + ' tag_flag'} key={index}>
+                {item.name}
             </div>
         }).slice(0, props.count ?? 3)}
     </div>

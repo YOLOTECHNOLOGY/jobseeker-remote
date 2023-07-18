@@ -5,9 +5,6 @@ import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import {Player, Controls} from '@lottiefiles/react-lottie-player';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
 import useWindowSize from "../../../../../hooks/useWindowSize";
-import json1 from './lottie_1';
-import json2 from './lottie_2';
-import json4 from './lottie_4';
 import {languageContext} from "../../../../components/providers/languageProvider";
 import {useInView} from "react-intersection-observer";
 import classNames from "classnames";
@@ -96,11 +93,12 @@ const Section5 = () => {
 	}
 
 	const {ref, inView} = useInView({
-		triggerOnce: true,
-		threshold: 0.2
+		threshold: 0.1
 	});
+
+	
 	if (isMobile) {
-		return <section className={style.section5}>
+		return <section className={style.section5} ref={ref}>
 				<Swiper
 					modules={[Navigation, Pagination, Scrollbar, A11y, Controller]}
 					spaceBetween={50}
@@ -124,7 +122,7 @@ const Section5 = () => {
 								{
 									item.mobile_img && <img src={isMobile ? item.mobile_img : item.img} alt="img" className={style.section5_carousel_pic}/>
 								}
-								{item?.mobile_lottie && <Player autoplay loop src={item?.mobile_lottie} style={item.mobile_style}></Player>}
+								{item?.mobile_lottie && inView && <Player autoplay loop src={item?.mobile_lottie} style={item.mobile_style}></Player>}
 							</div>
 							{/* <div className={style.section5_des}> */}
 							{/* 	{item.des} */}
@@ -150,7 +148,7 @@ const Section5 = () => {
 			     alt="_"/>
 		</section>
 	}
-	return <section className={style.section5}>
+	return <section className={style.section5} ref={ref}>
 		{!isMobile && <img className={style.section5_bg + ' ' + style.desktop} alt={'-'}
 	                   src={`${process.env.S3_BUCKET_URL}/landing/Web2-min.jpg`}/>}
 		<div className={classNames({
@@ -183,7 +181,7 @@ const Section5 = () => {
 					return <SwiperSlide key={index}>
 						<div className={style.section5_carousel_item}>
 							<img src={item.img} alt="img" className={style.section5_carousel_pic}/>
-							{item.pc_lottie && <Player autoplay loop src={item.pc_lottie} style={item.style}></Player>}
+							{item.pc_lottie && inView && <Player autoplay loop src={item.pc_lottie} style={item.style}></Player>}
 						</div>
 						<div className={style.section5_des}>
 							{item.des}

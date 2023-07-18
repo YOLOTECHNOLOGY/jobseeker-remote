@@ -33,7 +33,7 @@ const SeeMore = ({ jobDetail, text }: propsType) => {
     const result = encode(searchQuery)
     const url = new URLSearchParams(toPairs(result.params)).toString()
     router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
-      forceOptimisticNavigation: true
+      scroll: true
     })
   }
 
@@ -44,10 +44,9 @@ const SeeMore = ({ jobDetail, text }: propsType) => {
         height: '44px',
         width: '100%',
         marginTop: '20px',
-        borderRadius: '10px',
-        border: '2px solid #136FD3',
+        borderRadius: '8px',
+        border: '1px solid #136FD3',
         fontStyle: 'normal',
-        fontWeight: 700,
         fontSize: '14px',
         lineHeight: '18px',
         letterSpacing: '0.0075em',

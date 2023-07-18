@@ -97,11 +97,11 @@ $maxContentWidth: 1136px;
   max-width: $maxContentWidth;
   width: 100%;
   margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
+  // padding-left: 10px;
+  // padding-right: 10px;
   :global {
     .MuiOutlinedInput-notchedOutline {
-      border-width: 0 ;
+      border-width: 0;
     }
     .MuiOutlinedInput-input {
       font-size: 14px;
@@ -117,7 +117,6 @@ $maxContentWidth: 1136px;
   // @include xsm {
   //   max-width: 320px;
   // }
-
 
   @include sm {
     padding: 0px 10px;

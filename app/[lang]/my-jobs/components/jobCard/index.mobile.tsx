@@ -66,7 +66,7 @@ const JobCard = (props: any) => {
           // e.stopPropagation()
           sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
           setCookie('reco_from', reco_from)
-          router.push(job_url, { forceOptimisticNavigation: true })
+          router.push(job_url, { scroll: true })
         }}
       >
         <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
@@ -84,9 +84,8 @@ const JobCard = (props: any) => {
         <div className={styles.recruiterContainer}>
           <div className={styles.info}>
             <div
-              className={`${styles.avator}  ${
-                transTime(recruiter_last_active_at) ? styles.avator2 : ''
-              }`}
+              className={`${styles.avator}  ${transTime(recruiter_last_active_at) ? styles.avator2 : ''
+                }`}
             >
               <Image
                 className={styles.image}

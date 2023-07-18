@@ -9,7 +9,7 @@
   height: 239px;
   box-shadow: 24px;
   border-radius: 15px;
-  overflow: hidden;
+  overflow: visible;
   background-color: white;
 
   &_head {
@@ -24,11 +24,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 
     p {
       font-style: normal;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 18px !important;
       line-height: 27px;
       letter-spacing: 0.02em;
       color: #353535;
@@ -41,6 +43,7 @@
     width: 100%;
     padding: 28px 24px 31px;
     height: 100px;
+
     @include sm {
       height: 150px;
     }
@@ -118,9 +121,10 @@
     }
 
   }
-  :global{
-    *{
-      font-size: 14px !important;
+
+  :global {
+    * {
+      font-size: 16px !important;
     }
   }
 }
