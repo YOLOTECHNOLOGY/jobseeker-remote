@@ -63,10 +63,15 @@
 .settingTabs {
   width: 100%;
   margin-bottom: 24px;
-
-  &Item {
-    margin: 0 12px;
+  padding: 0 19px;
+  border-bottom: 1px solid #e4e4e4;
+  .settingTabsItem {
+    margin-right: 19px;
+    padding: 0 10px;
   }
+  // &Item {
+  //   margin: 0 1px;
+  // }
 
   @include msd {
     position: sticky;
