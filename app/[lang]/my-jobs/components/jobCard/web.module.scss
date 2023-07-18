@@ -506,7 +506,6 @@
 
       .desTitle {
         align-self: flex-start;
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
@@ -517,7 +516,6 @@
 
       .detail {
         align-self: flex-start;
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
@@ -525,8 +523,9 @@
         letter-spacing: 0.02em;
         color: #353535;
         max-height: 213px;
-        overflow: hidden;
+        overflow: auto;
         margin-top: 8px;
+        width: 100%;
       }
     }
   }
