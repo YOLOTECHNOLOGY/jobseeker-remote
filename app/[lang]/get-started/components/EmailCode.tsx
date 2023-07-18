@@ -9,7 +9,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
-const EmailCode = (props: any)=> {
+const EmailCode = (props: any) => {
   const { newGetStarted } = props.lang
   const langKey = getLang()
 
@@ -54,44 +54,45 @@ const EmailCode = (props: any)=> {
   }
 
   const bindUserEmailFun = () => {
-   
     bindUserEmail({
       phone_num: phoneNum,
       email,
       is_two_factor_enabled: 1
-    }).then((res) => {
-      console.log(res.data)
-      if (res.data) {
-        router.push(`/${langKey}/get-started/phone?step=5`)
-        // if(userInfo && Object.keys(userInfo).length){
-        //   const { data } = userInfo;
-        //   defaultLoginCallBack(data)        
-        //  }else{
-        //   router.push('/')
-        //  }
-
-      }
-    }).catch((error) => {
-      setErrorText(error?.response?.data?.message )
-      dispatch(
-        displayNotification({
-          open: true,
-          message: error?.response?.data?.message || 'error' ,
-          severity: 'error'
-        })
-      )
     })
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          router.push(`/${langKey}/get-started/phone?step=5`)
+          // if(userInfo && Object.keys(userInfo).length){
+          //   const { data } = userInfo;
+          //   defaultLoginCallBack(data)
+          //  }else{
+          //   router.push('/')
+          //  }
+        }
+      })
+      .catch((error) => {
+        setErrorText(error?.response?.data?.message)
+        dispatch(
+          displayNotification({
+            open: true,
+            message: error?.response?.data?.message || 'error',
+            severity: 'error'
+          })
+        )
+      })
   }
 
   return (
     <div className={styles.phoneNumber}>
       <div className={styles.optBox}>
         <h2>
-          {newGetStarted.twoFactor} <br /> {newGetStarted.authentication} 🔒
+          {/* {newGetStarted.twoFactor} <br /> {newGetStarted.authentication} 🔒 */}
+          {newGetStarted.verifyEmail}
         </h2>
         <p className={styles.enterTips}>
           {newGetStarted.sendCodeDigit}
-          <span>{email}.</span>
+          {/* <span>{email}.</span> */}
         </p>
         <Captcha
           lang={props.lang}
@@ -101,6 +102,7 @@ const EmailCode = (props: any)=> {
           error={errorText}
           number={number}
         />
+        <p className={styles.checkYourSpam}>{newGetStarted.checkYourSpam}</p>
         <SetUpLater lang={props.lang} />
       </div>
     </div>

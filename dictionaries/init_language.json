@@ -1208,7 +1208,7 @@
     "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   },
   "newGetStarted": {
-    "title": "Log in or sign up to Bossjob",
+    "title": "Welcome to",
     "employer": "Employer",
     "tips": "Looking to hire people? Sign up as ",
     "continueWith": "or continue with",
@@ -1226,7 +1226,7 @@
     "emailLabel": "Email Address",
     "sendCode": "Send verification code",
     "welcomeBack": "Welcome back",
-    "sendCodeDigit": "Please enter the 6-digit code that we sent to",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
     "signUpAnAccount": "Sign up an account",
     "checkSpamEmail": "Check your spam mail if you didn’t receive code",
     "havingTrouble": "Still having trouble? Try to sign up with",
@@ -1236,10 +1236,10 @@
     "resendCode": "Resend code",
     "country": "Country",
     "phoneNumber": "Phone Number",
-    "twoFactor": "Enable two-factor",
+    "twoFactor": "Safety Verification",
     "authentication": "authentication",
     "secure": "Secure your account and receive code on your email",
-    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
     "setUpLater": "Set this up later",
     "enableTwoFactor": "two-factor",
     "authenticationEnabled": "authentication enabled",
@@ -1255,7 +1255,10 @@
     "accounts": "accounts.",
     "thisPhoneNumber": "This phone number is associated with ",
     "youNeedToChooseVerified": "You need to choose a verified email address to associate",
-    "validateErr": "The email has been registered. Please change the binding to another email"
+    "validateErr": "The email has been registered. Please change the binding to another email",
+    "checkYourSpam": "Check your spam mail if you didn’t receive code.",
+    "authenticationSuccessful": "Authentication Successful",
+    "Bossjob": "Bossjob"
   },
   "seo": {
     "ph": "Philippines",
