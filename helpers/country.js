@@ -46,7 +46,7 @@ const countryCounfig = [
       value: "Tokyo To",
     },
     currency: 'jpy',
-    id: 81
+    id: 105
   },
   {
     name: 'Indonesia',
@@ -61,7 +61,7 @@ const countryCounfig = [
       value: "Jakarta Pusat",
     },
     currency: 'idr',
-    id: 62
+    id: 96
   },
 ]
 
