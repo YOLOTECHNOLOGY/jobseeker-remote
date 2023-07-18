@@ -9,6 +9,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 /* Components */
 import Text from 'components/Text'
+import Tooltip from '@mui/material/Tooltip';
+
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Button, TextField } from '@mui/material'
 import Modal from 'components/Modal'
 import UploadUserAvatar from 'components/UploadUserAvatar'
@@ -30,13 +33,14 @@ import { getCountryId } from 'helpers/country'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile-n/service'
+import { useLanguage } from 'app/components/providers/languageProvider';
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
   config: any
   userDetail: any
   handleModal: Function
-  lang: Record<string, any>
+  lang?: any
   fetchProfile?: ()=>void;
 }
 
@@ -102,10 +106,10 @@ const EditProfileModal = ({
   showModal,
   userDetail,
   handleModal,
-  lang,
   fetchProfile,
   config
 }: EditProfileModalProps) => {
+  const lang = useLanguage()
   const mapRef = useRef(null);
   const [value, setLocationValue] = React.useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = React.useState('');
@@ -420,7 +424,7 @@ const EditProfileModal = ({
 
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
-                address
+                {lang.myJobs.address}
               </Text>
             </div>
             <Autocomplete
@@ -488,7 +492,7 @@ const EditProfileModal = ({
                 }}
               />
             </div>
-            <div className={styles.profileFormGroup}>
+            {/* <div className={styles.profileFormGroup}>
               <div className={styles.descriptionField}>
                 <TextField
                   {...register('summary', {
@@ -506,25 +510,35 @@ const EditProfileModal = ({
                 />
                 {errors.summary && errorText(errors.summary.message as any)}
               </div>
-            </div>
+            </div> */}
 
 
 
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
-                Email
+                {lang.accountSetting.email}
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
-              <TextField variant='filled' value={email} className={_styles.hiddenLabel} disabled></TextField>
+              {email}<InfoOutlinedIcon ></InfoOutlinedIcon>
+              {/* <TextField variant='filled' value={email} className={_styles.hiddenLabel} disabled></TextField> */}
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
-                Phone
+                {lang.newGetStarted.phone}
               </Text>
+              <Tooltip title={"如需修改请去详情页"}>
+               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
+
+              </Tooltip>
             </div>
             <div className={styles.profileFormGroup}>
-              <TextField variant='filled' value={phone_num}  className={_styles.hiddenLabel} disabled></TextField>
+            {phone_num}
+              <Tooltip title={"如需修改请去详情页"}>
+               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
+
+              </Tooltip>
+              {/* <TextField variant='filled' value={phone_num}  className={_styles.hiddenLabel} disabled></TextField> */}
             </div>
           </div>
         </div>
