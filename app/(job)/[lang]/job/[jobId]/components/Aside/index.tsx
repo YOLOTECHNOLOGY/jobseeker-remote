@@ -39,8 +39,8 @@ const AsideFC = (props: propsT) => {
             sx={{ width: '29.94px', height: '29px' }}
             src={recruiter?.avatar || DefaultAvatar}
           ></Avatar>
-          <span className={styles.footer_name} title={recruiter.full_name}>
-            {recruiter.full_name} <i style={{ padding: '0 4px' }}>{' · '}</i>
+          <span className={styles.footer_name} title={recruiter?.full_name}>
+            {recruiter?.full_name} <i style={{ padding: '0 4px' }}>{' · '}</i>
             {recruiter?.work_experience?.job_title || ''}
           </span>
         </div>

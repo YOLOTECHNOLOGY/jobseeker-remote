@@ -46,7 +46,7 @@ const countryCounfig = [
       value: "Tokyo To",
     },
     currency: 'jpy',
-    id: 81
+    id: 105
   },
   {
     name: 'Indonesia',
@@ -61,7 +61,7 @@ const countryCounfig = [
       value: "Jakarta Pusat",
     },
     currency: 'idr',
-    id: 62
+    id: 96
   },
 ]
 
@@ -92,9 +92,11 @@ export const getDefaultLocation = key => {
   return countryCounfig.find(item => item.key === key)?.defaultLocation
 }
 
-export const defaultCountryKey = () => nations[0].value
-export const defaultCountryId = () => nations[0].id
-export const defaultCountry = () => nations[0].label
+const defaultNation = nations[2];
+
+export const defaultCountryKey = () => defaultNation.value
+export const defaultCountryId = () => defaultNation.id
+export const defaultCountry = () => defaultNation.label
 export const defaultCurrency = () => countryCounfig[0].currency
 
 export const defaultLanguage = () => languages[0].value
