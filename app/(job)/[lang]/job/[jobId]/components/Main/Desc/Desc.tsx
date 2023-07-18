@@ -46,7 +46,7 @@ const Desc = ({
         ></Avatar>
         <div className={styles.desc_mobileHead_info}>
           <span className={classNames([styles.desc_footer_name, styles.desc_mobileHead_info_name])}>
-            {recruiter.full_name}
+            {recruiter?.full_name || ''}
           </span>
           <span className={classNames([styles.desc_footer_chat, styles.desc_mobileHead_info_rate])}>
             {chatResponseRate}% &nbsp;{content.rate}
