@@ -9,6 +9,8 @@ const fetchConfigService = (defaultLang) => {
     getLanguageCode(defaultLang)
     ||
     getLanguageCode(getLang())]
+  console.log({defaultLang,})
+
   return axios.get(`${countryKey}/list?language_code=${lang}`)
     .then(data => {
       const result = data.data.data
