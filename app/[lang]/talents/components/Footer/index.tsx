@@ -69,9 +69,9 @@ const siteMap = [
   {
     category: 'Popular Jobs',
     items: [
-      { name: 'Jobs in Manila', link: 'https://bossjob.com/jobs/manila' },
-      { name: 'Jobs in Makati', link: 'https://bossjob.com/jobs/makati' },
-      { name: 'Jobs in Cebu', link: 'https://bossjob.com/jobs/cebu' },
+      // { name: 'Jobs in Manila', link: 'https://bossjob.com/jobs/manila' },
+      // { name: 'Jobs in Makati', link: 'https://bossjob.com/jobs/makati' },
+      // { name: 'Jobs in Cebu', link: 'https://bossjob.com/jobs/cebu' },
       { name: 'IT jobs', link: 'https://bossjob.com/jobs/it' },
       { name: 'Finance jobs', link: 'https://bossjob.com/jobs/finance' },
       { name: 'Customer service jobs', link: 'https://bossjob.com/jobs/customer-service' },
@@ -236,7 +236,7 @@ const Footer = () => {
     {
       title: popularJobs,
       links: [
-        ...currentCounties,
+        // ...currentCounties,
         {
           key: `/jobs-hiring/information-technology-jobs?page=1`,
           child: ItJobs

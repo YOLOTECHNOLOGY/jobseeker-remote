@@ -11,50 +11,13 @@ import { flatMap } from 'lodash-es'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 import { getCountryKey } from 'helpers/country'
-export const countryList = {
-    "ph": {
-        "id": 63,
-        "key": "manila",
-        "value": "Manila111",
-        "is_popular": false,
-        "region_display_name": "National Capital Region",
-        "seo_value": "manila"
-    },
-    "sg": {
-        id: 165,
-        is_popular: false,
-        key: "downtown_core",
-        region_display_name: "Central",
-        seo_value: "downtown-core",
-        value: "Downtown Core",
-    }
-};
-
+import { getDefaultLocation } from '../../../helpers/country'
 
 export const LocationContext = createContext()
 const Provider = LocationContext.Provider
 
 // eslint-disable-next-line react/prop-types
-const LocationProvider = ({ children, lang }) => {
-    const { home } = lang ?? {}
-    const countryList = {
-        "ph": [{
-            "id": 63,
-            "key": "manila",
-            "value": home?.defaultLocationPH,
-            "is_popular": false,
-            "region_display_name": "National Capital Region",
-            "seo_value": "manila"
-        }],
-        "sg": [{
-            id: 165,
-            is_popular: false,
-            key: "downtown_core",
-            region_display_name: "Central",
-            seo_value: "downtown-core",
-            value: home?.defaultLocationSG,
-        }]
-    };
+const LocationProvider = ({ children }) => {
 
     const country = getCountryKey();
     const dispatch = useDispatch()
@@ -69,7 +32,13 @@ const LocationProvider = ({ children, lang }) => {
         }
         return flatMap(locations, p => p.locations)
     }, [locations])
-    const defaultLocation = getCookie('location')?.[0] ?? countryList[country]
+    const defaultLocation = getCookie('location')?.[0] ?? getDefaultLocation[country]
+    useEffect(() => {
+        if (flatLocations.length && location?.id === defaultLocation?.id) {
+            const languageLocation = flatLocations.find(item => item?.id === location?.id)
+            setLocation(languageLocation)
+        }
+    }, [flatLocations])
     const [location, setLocation] = useState(defaultLocation)
     const intepreter = useCallback(command => command.cata({
         queryLatLon: () => M(() => new Promise((resolve, reject) => {

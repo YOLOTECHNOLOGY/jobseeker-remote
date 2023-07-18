@@ -1,6 +1,6 @@
 import configuredAxios from 'helpers/configuredAxios'
 import { getPublicSitemapXML } from '../../scripts/getPublicSitemapXML'
-import { getCountryKey, getLang } from 'helpers/country'
+import { getCountryKey, getLang, getLanguage } from 'helpers/country'
 
 const Sitemap = () => {
   return
@@ -8,7 +8,8 @@ const Sitemap = () => {
 
 export const getServerSideProps = async ({ res }) => {
   const country = getCountryKey()
-  const lang = getLang()
+  const lang = getLanguage()
+  
   const axios = configuredAxios('config', 'public')
   const response = await axios.get(`/${country}/list?language_code?${lang}`)
   const publicSiteMap = getPublicSitemapXML(response)
