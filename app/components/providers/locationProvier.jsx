@@ -32,7 +32,8 @@ const LocationProvider = ({ children }) => {
         }
         return flatMap(locations, p => p.locations)
     }, [locations])
-    const defaultLocation = getCookie('location')?.[0] ?? getDefaultLocation[country]
+    const defaultLocation = getCookie('location')?.[0] ?? getDefaultLocation(country)
+    console.log({ defaultLocation })
     useEffect(() => {
         if (flatLocations.length && location?.id === defaultLocation?.id) {
             const languageLocation = flatLocations.find(item => item?.id === location?.id)
