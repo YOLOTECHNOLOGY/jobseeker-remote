@@ -6,6 +6,10 @@
   white-space: nowrap;
 }
 
+.containerWrapper {
+  background-color: #fcfcfc;
+}
+
 .container {
   @extend .GlobalNextAppContainer;
   display: flex;
@@ -304,6 +308,7 @@
               display: flex;
               color: #2378e5;
               margin-left: 10px;
+              white-space: nowrap;
             }
           }
         }
@@ -319,6 +324,7 @@
             border-radius: 5px;
             margin-right: 10px;
             margin-top: 10px;
+            border: 1px solid #e0e0e0;
           }
 
           .companyInfo {
@@ -462,6 +468,10 @@
         font-size: 16px;
         height: 40px;
         color: rgba(0, 0, 0, 0.87);
+      }
+
+      .MuiButtonBase-root:hover {
+        background-color: rgba(0, 0, 0, 0.04);
       }
 
       .MuiButtonBase-root.Mui-selected {
@@ -778,6 +788,7 @@
       display: block;
       min-height: 50vh;
       overflow: hidden;
+      background-color: #F6F6F6;
 
       .headerTop {
         border-radius: 0;

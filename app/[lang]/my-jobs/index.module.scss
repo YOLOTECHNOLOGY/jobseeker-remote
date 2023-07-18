@@ -1,8 +1,11 @@
 @import 'styles/variable.scss';
 @import 'styles/mixins.scss';
 
+.containerWrapper {
+  background-color: #fcfcfc;
+}
+
 .container {
-  background-color: #F6F6F6;
 
   .main {
     @extend .GlobalNextAppContainer;
@@ -12,6 +15,7 @@
 
     @include sm {
       padding: 0px;
+      background-color: #f6f6f6;
     }
 
     .left {
