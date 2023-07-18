@@ -64,7 +64,8 @@ export function middleware(request: NextRequest) {
       'chat-redirect',
       'huawei-jobs',
       'job-sitemap',
-      'jobs.xml'
+      'jobs.xml',
+      'sitemap.xml'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
   ) { return }
