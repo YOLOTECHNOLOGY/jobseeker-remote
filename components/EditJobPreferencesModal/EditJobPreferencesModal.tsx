@@ -193,7 +193,7 @@ const EditJobPreferencesModal = ({
                   required
                   {...fieldState}
                   {...field}
-                  // onChange={(value)=>setValue('jobTitle',value)}
+                // onChange={(value)=>setValue('jobTitle',value)}
                 />
               )
             }}

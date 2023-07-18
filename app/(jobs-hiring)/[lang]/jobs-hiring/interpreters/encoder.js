@@ -171,7 +171,7 @@ export const buildParams = (config, searchValues) => {
     return {
         query: searchValues.query,
         query_fields: queryFields === 'company' ? 'company_name' : queryFields,
-        company_industries: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.value).join(',') ?? null,
+        company_industry_ids: searchValues.industry?.map?.(key => industryList.find(item => item?.['seo-value'] === key)?.id).join(',') ?? null,
         job_location_ids: searchValues.location?.map?.(key => locationLists.find(item => item?.['seo_value'] === key)?.id).join(',') ?? null,
         salary_from: salaryFrom,
         salary_to: salaryTo,
