@@ -1,25 +1,21 @@
 import queryString from 'query-string'
 import slugify from 'slugify'
-import configuredAxios from '../../helpers/configuredAxios'
-
-const AgenciesSitemap = () => {
-  return
-}
-
+import configuredAxios from 'helpers/configuredAxios'
+import { NextResponse } from 'next/server'
+export const revalidate = 60000
 const constructSitemapAgencyXML = ({ id = '', name = '', created_at: createdAt = '' }) => {
   return `
     <url>
       <loc>${`https://bossjob.ph/employer/bosshunt/agency/profile/${slugify(
-        name.toLowerCase()
-      )}-${id}`}</loc>
+    name.toLowerCase()
+  )}-${id}`}</loc>
       <lastmod>${new Date(createdAt).toISOString()}</lastmod>
       <priority>0.80</priority>
       <changefreq>weekly</changefreq>
     </url>
     `
 }
-
-export const getServerSideProps = async ({ res }) => {
+export async function GET() {
   const axios = configuredAxios('bosshunt', 'public')
   const response = await axios.get(`companies?${queryString.stringify({ page: 1, size: 1000 })}`)
   const AgenciesXml = response.data.data.companies
@@ -33,14 +29,14 @@ export const getServerSideProps = async ({ res }) => {
         ${AgenciesXml}
         </urlset>
     `
-
-  res.setHeader('Content-Type', 'text/xml')
-  res.write(xml)
-  res.end()
-
-  return {
-    props: {},
-  }
+  const res = new NextResponse(xml, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': 'GET',
+      'Content-Type': 'text/xml'
+    }
+  })
+  return res
 }
-
-export default AgenciesSitemap
