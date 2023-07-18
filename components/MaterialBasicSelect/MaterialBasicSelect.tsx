@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { FormHelperText } from '@mui/material'
 import styles from 'styles/maintenance.module.scss'
+import classNames from 'classnames'
 
 
 const MaterialBasicSelect = ({
@@ -94,10 +95,12 @@ const MaterialBasicSelect = ({
   })
   return (
     <ThemeProvider theme={theme}>
-      <FormControl className={className} size='small' error={!!error}>
+      <FormControl className={classNames({
+        [className]: true,
+        [styles.hiddenLabel]: hiddenLabel
+      })} size='small' error={!!error}>
         <InputLabel id={`${id}-select-label`} 
-          className={'testInput'}
-          // className={hiddenLabel ? styles.hiddenLabel : ''}
+          // className={'testInput'}
         >
           {
             <span>

@@ -58,6 +58,7 @@ const SearchArea = (props: any) => {
     const result = encode(params)
     const url = new URLSearchParams(toPairs(result.params)).toString()
     router.push('/jobs-hiring/' + result.searchQuery + '?' + url, {
+          // @ts-ignore
       forceOptimisticNavigation: true
     })
   }, [searchValue, location])

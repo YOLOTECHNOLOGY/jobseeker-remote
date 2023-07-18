@@ -21,6 +21,7 @@ import { redirect } from 'next/navigation'
 import { ConfigType } from 'app/types';
 
 import { serveIsMobile } from 'helpers/utilities'
+import { useCallback } from "react";
 
 const configs = getConfigs([
 	['location_lists'],
@@ -79,10 +80,12 @@ async function ManageProfileLayout(props: {
 		const [profile] = await Promise.all([
       fetchUserOwnDetail(token?.value)
 		]);
+
 	return (
 			<MangeProfileProvider
         config={props.configs.config}
         profile={profile.data}
+				token={token?.value}
       >
 				<section style={{
 					width: '100%',

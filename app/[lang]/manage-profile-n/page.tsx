@@ -9,7 +9,7 @@ import EditProfileModal from 'components/EditProfileModal'
 
 const ManageProfilePage = () =>{
   const lang = useLanguage();
-  const {profile : userDetail, config} = useManageProfileData()
+  const {profile : userDetail, config, fetchProfile} = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
 	const tab = searchParams.get('tab');;
   const {
@@ -77,6 +77,7 @@ const ManageProfilePage = () =>{
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
+        fetchProfile={fetchProfile}
       />
      <ProfileLayout
         dic={tabDic}

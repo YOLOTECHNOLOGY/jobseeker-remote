@@ -10,6 +10,7 @@ const Pagination = (props: any) => {
     return <MUIPagination count={count} page={page} onChange={(e, page) => {
         const newSearchParams = new URLSearchParams(searchParams.toString())
         newSearchParams.set(pageQueryKey, '' + page)
+            // @ts-ignore
         router.push(pathname + '?' + newSearchParams.toString(), { forceOptimisticNavigation: true })
     }} />
 }

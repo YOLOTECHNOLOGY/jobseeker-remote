@@ -159,6 +159,7 @@ const SearchArea = (props: any) => {
                 className={styles.icon}
                 onClick={() => {
                   router.push('/manage-profile?tab=job-preferences', {
+                    // @ts-ignore
                     forceOptimisticNavigation: true
                   })
                 }}
@@ -168,6 +169,7 @@ const SearchArea = (props: any) => {
               <div
                 className={styles.icon}
                 onClick={() => {
+                      // @ts-ignore
                   router.push('/jobs-hiring/job-search', { forceOptimisticNavigation: true })
                 }}
               >

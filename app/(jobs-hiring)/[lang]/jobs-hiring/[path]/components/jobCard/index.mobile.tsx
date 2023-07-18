@@ -48,6 +48,7 @@ const JobCard = (props: any) => {
         className={styles.container}
         onClick={(e) => {
           e.stopPropagation()
+          // @ts-ignore
           router.push(job_url, { forceOptimisticNavigation: true })
         }}
       >

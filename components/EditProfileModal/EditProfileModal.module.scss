@@ -68,3 +68,14 @@
   display: flex;
   margin: 8px 0 0 0;
 }
+
+.mapWrapper {
+  width: 100%;
+  margin-top: 20px;
+  :global {
+    .mapWrapper {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

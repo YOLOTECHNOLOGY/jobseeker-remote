@@ -242,6 +242,7 @@ const MainLeft = (props: any) => {
     if (jobData) {
       const newSearchParams = new URLSearchParams(searchParams.toString())
       newSearchParams.set('unsaveId', id)
+      // @ts-ignore
       router.push(pathname + '?' + newSearchParams.toString(), { forceOptimisticNavigation: true })
       data.splice(index, 1)
       setData([...data])

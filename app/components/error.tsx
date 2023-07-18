@@ -23,6 +23,7 @@ export default function Error(props: { error: any; reset: () => void }) {
 
       function redirectToGetStarted() {
         removeUserCookie()
+            // @ts-ignore
         router.push('/get-started', { forceOptimisticNavigation: true })
       }
 

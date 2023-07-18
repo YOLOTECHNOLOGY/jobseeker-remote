@@ -66,6 +66,7 @@ const JobCard = (props: any) => {
           // e.stopPropagation()
           sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
           setCookie('reco_from', reco_from)
+          // @ts-ignore
           router.push(job_url, { forceOptimisticNavigation: true })
         }}
       >

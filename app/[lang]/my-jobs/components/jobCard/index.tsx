@@ -81,6 +81,7 @@ const useSaveJob = (jobId, defaultSaved, accessToken, jobTitleId) => {
       return
     }
     if (!accessToken) {
+      // @ts-ignore
       router.push(`/${langKey}` + '/get-started', { forceOptimisticNavigation: true })
       return
     }
@@ -206,6 +207,7 @@ const JobCard = (props: any) => {
   const handleRouterToPath = (job_url: string) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
+    // @ts-ignore
     router.push(`/${langKey}` + job_url, { forceOptimisticNavigation: true })
   }
 
