@@ -194,16 +194,12 @@ const Companies = (props: IProps) => {
         </div>
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
-          <div className={styles.featuredCompanyWrapper}>
-            <div className={styles.featuredCompanyMain}>
-              <FeaturedCompanied
-                featuredCompany={featuredCompany}
-                langKey={langKey}
-                featureBanners={featureBanners}
-                lang={props.lang}
-              />
-            </div>
-          </div>
+          <FeaturedCompanied
+            featuredCompany={featuredCompany}
+            langKey={langKey}
+            featureBanners={featureBanners}
+            lang={props.lang}
+          />
         ) : null}
       </div>
     </>
