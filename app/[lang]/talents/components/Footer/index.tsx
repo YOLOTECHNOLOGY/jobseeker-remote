@@ -174,7 +174,9 @@ const Footer = () => {
         key: `/jobs-hiring/jurong-east-jobs`,
         child: JobsIn3
       }
-    ]
+    ],
+    jp: [],
+    id: []
   }
   const currentCounties = COUNTRY_MAP[countryKey]
   const colData = [

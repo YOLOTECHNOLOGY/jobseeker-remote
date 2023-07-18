@@ -36,7 +36,9 @@ const CountryList = (props: any) => {
         to: `/${langKey}/jobs-hiring/jurong-east-jobs`,
         title: JobsIn3
       }
-    ]
+    ],
+    jp: [],
+    id: []
   }
   const currentCounties = COUNTRY_MAP[countryKey]
 

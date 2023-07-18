@@ -1,10 +1,11 @@
 import configuredAxios from 'helpers/configuredAxios'
 const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
 import { flatMap } from 'lodash-es'
-import { getCountryKey, getLanguageCode, serverContryCodeMap } from 'helpers/country'
+import { defaultLanguage, getCountryKey, getLanguageCode, serverContryCodeMap } from 'helpers/country'
 const fetchConfigService = (defaultLang) => {
   const axios = configuredAxios('config', 'public')
-  const [countryKey, lang] = [getCountryKey(), serverContryCodeMap[defaultLang] || getLanguageCode()]
+  const [countryKey, lang] = [getCountryKey(), getLanguageCode(defaultLang) || getLanguageCode(defaultLanguage())]
+  console.log({ countryKey, defaultLang, 'serverContryCodeMap[defaultLang]': serverContryCodeMap[defaultLang] })
   return axios.get(`${countryKey}/list?language_code=${lang}`)
     .then(data => {
       const result = data.data.data
