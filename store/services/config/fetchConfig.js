@@ -1,15 +1,12 @@
 import configuredAxios from 'helpers/configuredAxios'
 const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
 import { flatMap } from 'lodash-es'
-import { getCountryKey, getLang } from 'helpers/country'
+import { getCountryKey, getLang, serverContryCodeMap } from 'helpers/country'
 const fetchConfigService = (defaultLang) => {
   const axios = configuredAxios('config', 'public')
-  let [countryKey, lang] = [getCountryKey(), defaultLang || getLang()]
-  // translate en-US to en, the backend don't support en-US as a legal language
-  if (lang?.includes('en')) {
-    lang = 'en'
-  }
-  return axios.get(`${countryKey}/list?language_code=${lang}`)
+  const [countryKey, lang] = [getCountryKey(), defaultLang || getLang()]
+  const langKey = serverContryCodeMap[lang]
+  return axios.get(`${countryKey}/list?language_code=${langKey}`)
     .then(data => {
       const result = data.data.data
       // const jobFunctions = result.job_function_lists
