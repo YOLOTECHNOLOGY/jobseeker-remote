@@ -92,7 +92,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
   }, [workExperiences])
 
 
-  console.log('workExperiences:', userDetail)
+  // console.log('workExperiences:', userDetail)
   // const handleModal = (modalName, showModal, data, callbackFunc) => {
   //   // ======...TODO
   //   setModalState((rest) => ({
