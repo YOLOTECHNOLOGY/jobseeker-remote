@@ -95,10 +95,10 @@ export const getDefaultLocation = key => {
 export const defaultCountryKey = () => nations[0].value
 export const defaultCountryId = () => nations[0].id
 export const defaultCountry = () => nations[0].label
-export const defaultCurrency = () => countryCounfig[3].currency
+export const defaultCurrency = () => countryCounfig[0].currency
 
 export const defaultLanguage = () => languages[0].value
-export const defaultLanguageFullName = () => languages[1].label
+export const defaultLanguageFullName = () => languages[0].label
 export const defaultLanguageId = () => languages[0].id
 
 
@@ -143,9 +143,7 @@ export const getCountryKey = () => {
  */
 export const getCountryId = () => {
   const countryKey = getCountryKey()
-  const country = nations.find(v => v.value === countryKey)
-
-  return country?.id || defaultCountryId()
+  return countryCounfig.find(item => item.key === countryKey)?.id ?? defaultCountryId()
 }
 
 /**
