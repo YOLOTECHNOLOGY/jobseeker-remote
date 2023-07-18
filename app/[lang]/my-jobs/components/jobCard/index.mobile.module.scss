@@ -1,6 +1,6 @@
 .main {
   width: calc(100vw - 20px);
-  margin: 0;
+  margin: 0 auto;
   position: relative;
   margin-bottom: 10px;
   --opacity: 1;
@@ -43,15 +43,13 @@
 
       .title {
         flex-shrink: 1;
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: 700;
-        font-size: 18px;
-        line-height: 23px;
+        font-size: 16px;
+        line-height: 24px;
         align-items: center;
-        letter-spacing: 0.02em;
         color: #353535;
-        height: 48px;
+        max-height: 48px;
         width: 70%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -63,14 +61,13 @@
       }
 
       .salary {
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: 700;
-        font-size: 18px;
-        line-height: 23px;
+        font-size: 16px;
+        line-height: 24px;
         align-items: center;
         letter-spacing: 0.02em;
-        color: #fe574a;
+        color: #2378E5;
         width: 30%;
         text-align: right;
       }
@@ -101,10 +98,6 @@
         display: flex;
         align-items: center;
         padding: 2px 10px;
-        /* General/White 1 */
-        background: #f0f0f0;
-        border-radius: 16px;
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
@@ -112,6 +105,8 @@
         letter-spacing: 0.0075em;
         color: #707070;
         margin: 0 6px 6px 0;
+        border-radius: 6px;
+        background: #F7F8FA;
 
         &:last-child {
           margin-right: 0;
@@ -193,11 +188,11 @@
           white-space: nowrap;
           height: 20px;
           line-height: 20px;
+          color: #353535;
         }
       }
 
       .fullName {
-        font-family: 'Product Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;

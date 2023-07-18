@@ -2,13 +2,17 @@
 @import 'styles/mixins.scss';
 
 .container {
-  background-color: #fcfcfc;
+  background-color: #F6F6F6;
 
   .main {
     @extend .GlobalNextAppContainer;
     padding-top: 20px;
     display: flex;
     flex-direction: row;
+
+    @include sm {
+      padding: 0px;
+    }
 
     .left {
       width: 864px;
@@ -20,7 +24,6 @@
       .searchFormContainer {
         z-index: 20;
         position: relative;
-        background-color: #ffffff;
 
         @include sm {
           position: sticky !important;

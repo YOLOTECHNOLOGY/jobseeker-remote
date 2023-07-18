@@ -4,7 +4,8 @@ import React, { useContext, useEffect } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { CloseIcon } from 'images'
+// import { CloseIcon } from 'images'
+import CloseIcon from '@mui/icons-material/Close';
 import useNotSuitable from './hooks'
 import NotSuitableModal from '../notSuitable'
 import classNames from 'classnames'
@@ -115,7 +116,7 @@ const JobCard = (props: any) => {
             showSelection()
           }}
         >
-          <Image src={CloseIcon} alt='logo' width={13} height={13} />
+          <CloseIcon sx={{fontSize: '16px', color: '#707070'}} />
         </div>
       </div>
       <NotSuitableModal {...modalProps} lang={props.lang} />

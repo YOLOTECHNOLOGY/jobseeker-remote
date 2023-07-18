@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation'
 import { flatMap } from 'lodash-es'
 import { SortContext } from './SortProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
+import Image from 'next/image'
 
 const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
@@ -301,25 +302,27 @@ const SearchArea = (props: any) => {
               onSelect={setCompanySizes}
               defaultValue={companySizes}
             />
-            <button
-              className={styles.clearButton}
-              onClick={() => {
-                setLocation(null)
-                setSearchValue('')
-                setSort('2')
-                setJobtypes([])
-                setSelaries([])
-                setPage('1')
-                setQualification([])
-                setWorkExperience([])
-                setCompanySizes([])
-                setJobtypes([])
-                setIndustry([])
-                setFilterLocation(undefined)
-              }}
-            >
-              {resetFilters}{' '}
-            </button>
+            <div className={styles.clearButtonWrap}>
+              <button
+                className={styles.clearButton}
+                onClick={() => {
+                  setLocation(null)
+                  setSearchValue('')
+                  setSort('2')
+                  setJobtypes([])
+                  setSelaries([])
+                  setPage('1')
+                  setQualification([])
+                  setWorkExperience([])
+                  setCompanySizes([])
+                  setJobtypes([])
+                  setIndustry([])
+                  setFilterLocation(undefined)
+                }}
+              >
+                {resetFilters}{' '}
+              </button>
+            </div>
           </div>
         </div>
       </ThemeProvider>

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { setSourceCookie } from 'helpers/cookies'
 
 import styles from '../index.module.scss'
+import classNames from 'classnames/bind'
 
 interface StyledTabsProps {
   children?: React.ReactNode
@@ -86,7 +87,7 @@ const Header = ({
   return (
     <>
       <div
-        className={styles.headerTop}
+        className={classNames([styles.headerTop, tabChildren?.length ? styles.hasHeaderChild: ''])}
         style={{
           marginBottom: tabValue == 'interested' || tabValue == 'viewedMe' ? '14px' : '10px'
         }}
@@ -115,7 +116,8 @@ const Header = ({
                 color: '#353535',
                 letterSpacing: '1px',
                 padding: '12px 0',
-                marginRight: '36px'
+                marginRight: '30px',
+                minWidth: 'auto'
               }}
             />
           ))}
@@ -141,7 +143,8 @@ const Header = ({
                   color: '#353535',
                   letterSpacing: '1px',
                   padding: '12px 0',
-                  marginRight: '36px'
+                  marginRight: '30px',
+                  minWidth: 'auto'
                 }}
               />
             ))}
