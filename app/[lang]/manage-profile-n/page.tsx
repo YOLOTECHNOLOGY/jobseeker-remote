@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useManageProfileData } from './DataProvider';
 import ProfileLayout from 'components/ProfileLayout'
-import ResumeView from './components/ResumeView';
+import ResumeView from './component/ResumeView';
+import ProfileView from './component/ProfileView';
 
 const ManageProfilePage = () => {
   const lang = useLanguage();
@@ -67,7 +68,10 @@ const ManageProfilePage = () => {
       data: null
     }
   })
-  console.log({ lang, userDetail, config, tab });
+
+  console.log('useManageProfileData:', userDetail)
+
+
   return <>
     <ProfileLayout
       dic={tabDic}
@@ -86,9 +90,18 @@ const ManageProfilePage = () => {
             config={config}
           />
         )} */}
-      {tabValue === 'profile' && <h1>hello profile</h1>}
-      {tabValue === 'job-preferences' && <h1>hello preferences</h1>}
+      {tabValue === 'profile' &&
+        <ProfileView
+          userDetail={userDetail}
+          handleModal={handleModal}
+          config={config}
+          lang={lang}
+          modalState={modalState}
+          setModalState={setModalState}
+        />}
+      {/* {tabValue === 'job-preferences' && <h1>hello preferences</h1>} */}
       {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
+
     </ProfileLayout>
   </>
 

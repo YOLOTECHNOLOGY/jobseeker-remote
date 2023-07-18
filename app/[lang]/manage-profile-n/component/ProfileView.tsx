@@ -48,7 +48,6 @@ import {
   HighlightEducationIcon,
   HighlightSkillIcon,
   HighlightWorkExpIcon,
-  AccountSettingDeleteIconBin
 } from 'images'
 
 /* Styles */
@@ -58,19 +57,15 @@ import { Chip, FormControlLabel, Switch } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
-import { updateUserVisibilityToWorkService } from 'store/services/jobs/updateUserVisibilityToWork'
-import Image from 'next/image'
-import ResumeView from './ResumeSectgion'
-import { getDictionary } from 'get-dictionary'
+
 import { Left } from './icons/left'
 import {
-  changeCompanyIndustry,
-  changeJobPreference,
-  changeUserInfoValue
+  changeCompanyIndustry
 } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
 
-const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
+
+const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any) => {
   const {
     manageProfile: {
       tab: { profile }
@@ -95,6 +90,57 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   useMemo(() => {
     changeCompanyIndustry(workExperiences, config)
   }, [workExperiences])
+
+
+  console.log('workExperiences:', userDetail)
+  // const handleModal = (modalName, showModal, data, callbackFunc) => {
+  //   // ======...TODO
+  //   setModalState((rest) => ({
+  //     ...rest,
+  //     [modalName]: {
+  //       showModal: showModal,
+  //       data: data
+  //     }
+  //   }))
+  //   if (callbackFunc) {
+  //     callbackFunc()
+  //   }
+  // }
+  // const [modalState, setModalState] = useState({
+  //   profile: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   workExperience: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   education: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   skills: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   links: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   license: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   jobPreferencesAvailibility: {
+  //     showModal: false,
+  //     data: null
+  //   },
+  //   createJobPreference: {
+  //     showModal: false,
+  //     data: null
+  //   }
+  // })
+
   const { currency_lists } = config
   const isProfileInformationFilled = !!(
     firstName &&
@@ -115,6 +161,19 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
       profile.description
     )
   }
+
+  const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
+  const jobCategoryList = getJobCategoryList(config).map((category) => {
+    return {
+      label: category.value,
+      value: category.id
+    }
+  })
+  const jobData = useMemo(() => {
+    return [userDetail?.job_preferences || [], Date.now()]
+  }, [userDetail?.job_preferences])
+  const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
+
 
   const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
   const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
@@ -296,7 +355,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
         <div className={styles.sectionContent}>
           {workExperiences.map((workExp) => {
             const { currency_id, function_job_title_id } = workExp
-            const currencySymbol = currency_lists.find(
+            const currencySymbol = currency_lists?.find(
               ({ id }) => currency_id === id
             )?.display_symbol
             const function_job_title = getValueById(
@@ -662,8 +721,9 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
     )
   }
 
+
   return (
-    <React.Fragment>
+    <Fragment>
       {isHighlightSectionVisible && (
         <div className={styles.highlightContainer}>
           <Text textStyle='xl' bold>
@@ -845,7 +905,7 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
           description={profile.exp.noDataTips} // 'Showcase your past contributions and that you can be an asset to potential employer.'
           buttonText={profile.exp.addWorkExp} // 'Add work experience'
           // eslint-disable-next-line
-          onClick={() => handleWorkExpModal()}
+          onClick={handleWorkExpModal}
         />
       )}
 
@@ -896,262 +956,6 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
           onClick={() => handleLinksModal()}
         />
       )}
-    </React.Fragment>
-  )
-}
-
-const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang }: any) => {
-  // const [openToWork, setOpenToWork] = useState(true)
-  const {
-    manageProfile: {
-      tab: { preference: transitions }
-    }
-  } = lang
-  const minSalary = preference?.salary_range_from
-  const maxSalary = preference?.salary_range_to
-  const salaryRange = minSalary + ' - ' + maxSalary
-  const [showModal, setShowModal] = useState(false)
-  const currencyList = getCurrencyList(config)
-  const handleEditClick = () => {
-    setShowModal(true)
-  }
-  const [showDelete, setShowDelete] = useState(false)
-  return (
-    <React.Fragment>
-      <div className={styles.jobPreferencesSectionDetail}>
-        <div style={{ right: 40 }} className={styles.iconWrapperP} onClick={handleEditClick}>
-          <img src={PencilIcon} width='22' height='22' />
-        </div>
-
-        {userDetail?.job_preferences?.length > 1 && (
-          <div
-            style={{ right: 0 }}
-            className={styles.iconWrapperP}
-            onClick={() => setShowDelete(true)}
-          >
-            <img src={AccountSettingDeleteIconBin} width='14' height='14' />
-          </div>
-        )}
-
-        <div className={styles.jobPreferencesSectionDetailList}>
-          {preference?.job_title && (
-            <div
-              className={styles.jobPreferencesSectionDetailListWrapper}
-              style={{ marginTop: '8px' }}
-            >
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {transitions.card.title}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_title}</Text>
-            </div>
-          )}
-          {preference?.job_type && (
-            <div className={styles.jobPreferencesSectionDetailListWrapper}>
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {/* Desired job type: */}
-                {transitions.card.type}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_type}</Text>
-            </div>
-          )}
-          {preference?.country && (
-            <div className={styles.jobPreferencesSectionDetailListWrapper}>
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {/* Desired country: */}
-                {transitions.card.country}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>{preference.country}</Text>
-            </div>
-          )}
-          {preference?.location && (
-            <div className={styles.jobPreferencesSectionDetailListWrapper}>
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {/* Desired city: */}
-                {transitions.card.city}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>{preference.location}</Text>
-            </div>
-          )}
-          {preference?.salary_range_from && (
-            <div className={styles.jobPreferencesSectionDetailListWrapper}>
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {/* Expected salary: */}
-                {transitions.card.salary}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>
-                {formatSalaryRange(
-                  salaryRange,
-                  currencyList?.find((item) => preference.currency_id === item.id)?.display_symbol
-                )}
-              </Text>
-            </div>
-          )}
-          {preference?.industry && (
-            <div className={styles.jobPreferencesSectionDetailListWrapper}>
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                {/* Desired industry: */}
-                {transitions.card.industry}
-              </Text>
-              <Text className={styles.jobPreferencesSectionDetailText}>{preference.industry}</Text>
-            </div>
-          )}
-
-          {/* {workingSetting && (
-                  <div>
-                      <Text textColor='lightgrey'>Desire working setting:</Text>
-                      <Text>{workingSetting}</Text>
-                  </div>
-                )} */}
-          {/* {userDetail?.notice_period_id && (
-                  <div className={styles.jobPreferencesSectionDetailListWrapper}>
-                    <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
-                      Availability:
-                    </Text>
-                    <Text className={styles.jobPreferencesSectionDetailText}>
-                      {getAvailability(userDetail)}
-                    </Text>
-                  </div>
-                )} */}
-        </div>
-
-        <EditJobPreferencesModal
-          lang={lang}
-          modalName={modalName}
-          showModal={showModal}
-          config={config}
-          userDetail={userDetail}
-          preference={preference}
-          handleModal={() => setShowModal(false)}
-        />
-        <EditJobPreferencesDeleteModal
-          lang={lang}
-          modalName={modalName}
-          showModal={showDelete}
-          config={config}
-          userDetail={userDetail}
-          preference={preference}
-          handleModal={() => setShowDelete(false)}
-        />
-      </div>
-    </React.Fragment>
-  )
-}
-
-const ManageProfilePage = ({ lang }: any) => {
-  const router = useRouter()
-  const {
-    query: { tab }
-  } = router
-  const {
-    manageProfile: { tab: tabDic }
-  } = lang
-  const { preference } = tabDic
-  const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
-  const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
-  const config = useSelector((store: any) => store?.config?.config?.response)
-  useMemo(() => {
-    changeUserInfoValue(userDetail, config)
-    changeJobPreference(userDetail.job_preferences || [], config)
-    return userDetail
-  }, [userDetail, config])
-  const [unCompleted, setUnCompleted] = useState({
-    profile: false,
-    'job-preferences': false,
-    resume: false
-  })
-  // const dispatch = useDispatch()
-  // // useEffect(() => {
-  // //   dispatch(fetchConfigRequest())
-  // // }, [])
-
-  useEffect(() => {
-    if (userDetail?.job_preferences) {
-      setUnCompleted((prev) => ({
-        ...prev,
-        'job-preferences': userDetail?.job_preferences?.length == 0
-      }))
-    }
-    if (userDetail?.resumes) {
-      setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resume?.length == 0 }))
-    }
-  }, [userDetail])
-
-  const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
-  const jobCategoryList = getJobCategoryList(config).map((category) => {
-    return {
-      label: category.value,
-      value: category.id
-    }
-  })
-  const jobData = useMemo(() => {
-    return [userDetail?.job_preferences || [], Date.now()]
-  }, [userDetail?.job_preferences])
-  const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
-
-  const [modalState, setModalState] = useState({
-    profile: {
-      showModal: false,
-      data: null
-    },
-    workExperience: {
-      showModal: false,
-      data: null
-    },
-    education: {
-      showModal: false,
-      data: null
-    },
-    skills: {
-      showModal: false,
-      data: null
-    },
-    links: {
-      showModal: false,
-      data: null
-    },
-    license: {
-      showModal: false,
-      data: null
-    },
-    jobPreferencesAvailibility: {
-      showModal: false,
-      data: null
-    },
-    createJobPreference: {
-      showModal: false,
-      data: null
-    }
-  })
-
-  useEffect(() => {
-    // if (disableScrolling){
-    //  disable body from scrolling when modal is open
-    const body = document.querySelector('body')
-    const anyModalIsOpen = Object.values(modalState).filter((state) => state.showModal)
-    body.style.overflow = anyModalIsOpen.length > 0 ? 'hidden' : 'auto'
-  }, [modalState])
-  const handleVisibility = () => {
-    setOpenToWork(!openToWork)
-    updateUserVisibilityToWorkService({
-      is_visible: !openToWork
-    })
-  }
-  const handleModal = (modalName, showModal, data, callbackFunc) => {
-    // ======...TODO
-    setModalState((rest) => ({
-      ...rest,
-      [modalName]: {
-        showModal: showModal,
-        data: data
-      }
-    }))
-    if (callbackFunc) {
-      callbackFunc()
-    }
-  }
-
-  return (
-    <Layout lang={lang}>
       <EditProfileModal
         lang={lang}
         modalName='profile'
@@ -1214,7 +1018,7 @@ const ManageProfilePage = ({ lang }: any) => {
         linkData={modalState.links.data}
         handleModal={handleModal}
       />
-      <ProfileLayout
+      {/* <ProfileLayout
         dic={tabDic}
         userDetail={userDetail}
         tabValue={tabValue}
@@ -1222,113 +1026,9 @@ const ManageProfilePage = ({ lang }: any) => {
         modalName='profile'
         handleModal={handleModal}
         unCompleted={unCompleted}
-      >
-        {tabValue === 'profile' && (
-          <RenderProfileView
-            lang={lang}
-            userDetail={userDetail}
-            handleModal={handleModal}
-            config={config}
-          />
-        )}
-        {tabValue === 'job-preferences' && (
-          <div>
-            <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
-              <div className={styles.sectionHeader}>
-                <Text bold textColor='primaryBlue' textStyle='xl'>
-                  {preference.available}
-                </Text>
-              </div>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <div
-                  className={styles.iconWrapperP}
-                  onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
-                >
-                  <img src={PencilIcon} width='22' height='22' />
-                </div>
-                <Text tagName='p' textStyle='lg'>
-                  {availability}
-                </Text>
-              </div>
-            </div>
-            <div className={styles.sectionContainer}>
-              <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
-                {jobData[0]?.length < 3 && (
-                  <div
-                    className={styles.iconWrapperP}
-                    onClick={() => handleModal('createJobPreference', true, null, null)}
-                  >
-                    <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
-                  </div>
-                )}
-
-                <Text bold textColor='primaryBlue' textStyle='xl'>
-                  {preference.card.header}
-                </Text>
-              </div>
-              <div>
-                <Text tagName='p' textStyle='lg'>
-                  {preference.card.tips}
-                  {/* We will find jobs that are of a good match to you based on your job preferences. */}
-                </Text>
-              </div>{' '}
-              <Fragment key={jobData[1]}>
-                {(jobData[0] ?? []).map((preference) => (
-                  <RenderPreferencesView
-                    lang={lang}
-                    key={preference.id}
-                    modalName='jobPreferences'
-                    config={config}
-                    userDetail={userDetail}
-                    handleModal={handleModal}
-                    preference={preference}
-                  />
-                ))}
-              </Fragment>
-            </div>
-            <div className={styles.sectionContainer}>
-              <Text
-                className={styles.openToWorkSectionTitle}
-                bold
-                textStyle='xl'
-                textColor='primaryBlue'
-              >
-                {preference.openToWork.title}
-              </Text>
-              <FormControlLabel
-                control={<Switch checked={openToWork} onChange={handleVisibility} />}
-                label={<Text textStyle='lg'>{preference.openToWork.explain}</Text>}
-              />
-            </div>
-          </div>
-        )}
-        {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
-      </ProfileLayout>
-    </Layout>
+      ></ProfileLayout> */}
+    </Fragment>
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const accessToken = req.cookies.accessToken
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: '/get-started?redirect=/manage-profile',
-        permanent: false
-      }
-    }
-  }
-  const lang = await getDictionary(query.lang as 'en-US')
-  store.dispatch(fetchConfigRequest(query.lang))
-  store.dispatch(fetchUserOwnDetailRequest({ accessToken }))
-  store.dispatch(END)
-  await (store as any).sagaTask.toPromise()
-  return {
-    props: {
-      accessToken,
-      lang
-    }
-  }
-})
-
-export default ManageProfilePage
+export default ProfileView;

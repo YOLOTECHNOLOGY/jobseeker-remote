@@ -1,0 +1,591 @@
+@import "styles/variable.scss";
+@import "styles/mixins.scss";
+
+.sectionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  padding: 24px;
+  height: max-content;
+  border: 1px solid $lightgrey-2;
+  border-radius: 5px;
+  margin-bottom: 24px;
+
+  @include msd {
+    padding: 0;
+    border: none;
+    margin: 36px 0px;
+  }
+}
+
+.sectionHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &>* {
+    display: flex;
+  }
+}
+
+.sectionContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &>* {
+    display: flex;
+  }
+
+  .titleWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &>* {
+      display: flex;
+    }
+  }
+}
+
+.highlightContainer {
+  background-color: #136fd31a;
+  position: relative;
+  margin-bottom: 24px;
+  padding: 24px;
+  border-radius: 4px;
+
+  .highlightCard {
+    width: 385px;
+    height: 180px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: $white-3;
+    border-radius: 4px;
+    box-shadow: $box-shadow-1;
+
+    @include msd {
+      width: 100%;
+      height: auto;
+      // align-items:stretch;
+    }
+
+    &>* {
+      display: flex;
+    }
+
+    &Header {
+      flex-direction: row;
+      align-items: center;
+
+      &>img {
+        display: flex;
+        margin-right: 8px;
+      }
+    }
+
+    &Content {
+      margin: 8px 0 16px;
+    }
+
+    &Button {
+      width: 200px;
+      // height:44px !important;
+      // text-transform: none !important;
+    }
+  }
+}
+
+.workExpSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .companyInfoWrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    span {
+      // margin-right: 16px;
+      position: relative;
+
+      // &:not(:last-child) {
+      //   &::after {
+      //     position: absolute;
+      //     content: "";
+      //     height: 18px;
+      //     width: 1px;
+      //     background-color: $lightgrey;
+      //     top: 0;
+      //     right: -8px;
+      //   }
+      // }
+    }
+  }
+
+  .companySecondaryInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 18px 0;
+  }
+}
+
+.educationSection {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.licenseCertificationSection {
+  display: flex;
+  flex-direction: column;
+
+  &Link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.linkSection {
+  display: flex;
+  flex-direction: column;
+
+  &Url {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.jobPreferencesSection {
+  &Button {
+    width: 250px;
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  &Detail {
+    display: inline-block;
+    width: 100%;
+
+    &List {
+      list-style: none;
+
+      &>* {
+        margin-top: 16px;
+        display: flex;
+      }
+
+      &Wrapper {
+        display: flex;
+        flex-direction: row;
+
+        @include msd {
+          flex-direction: column;
+        }
+      }
+
+      @include msd {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &Title {
+      display: flex;
+      width: 30%;
+
+      @include msd {
+        width: 100%;
+      }
+    }
+
+    &Text {
+      width: 70%;
+
+      @include msd {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.openToWorkSectionTitle {
+  margin-bottom: 8px;
+}
+
+.buttonCTA {
+  width: auto !important;
+
+  @include msd {
+    width: 100% !important;
+  }
+}
+
+.resumePreview {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.resumeTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resumeTemplateItem {
+  width: 381px;
+  height: auto;
+  // box-shadow: $box-shadow-2;
+
+  @include msd {
+    width: 320px;
+    height: auto;
+  }
+
+  @include xsm {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.jobPreferencesSectionDetail {
+  position: relative;
+
+  .jobPreferencesSectionDetailList {
+    margin-bottom: 30px;
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+
+  &P {
+    @extend .iconWrapper;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+  }
+
+  &>* {
+    display: flex;
+  }
+
+  // &:first-child {
+  //   margin-right: 18px;
+  // }
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #f1f1f1;
+    z-index: -1;
+    opacity: 0;
+    transition: 0.2s ease-out;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &Double {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// Embla
+.embla {
+  position: relative;
+  padding: 20px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+
+  @include sm {
+    padding: 10px;
+  }
+
+  &Highlight {
+    @extend .embla;
+    padding: 24px 0 0;
+  }
+}
+
+.emblaViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.emblaContainer {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+
+  &Double {
+    @extend .emblaContainer;
+    margin: 0 25%;
+  }
+}
+
+.emblaSlide {
+  position: relative;
+  padding-left: 24px;
+  flex: 0 0 50%;
+
+  &Highlight {
+    @extend .emblaSlide;
+    padding-left: 0;
+    display: flex;
+    align-items: stretch;
+
+    &:nth-child(3) {
+      padding: 0 16px 0 24px;
+    }
+  }
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  @include msd {
+    flex: 0 0 100%;
+    padding-left: 1vw;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.emblaSlideInner {
+  position: relative;
+  overflow: hidden;
+  // display: flex;
+  // justify-content: center;
+}
+
+.emblaDots {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  padding-top: 10px;
+
+  @include msd {
+    display: none;
+  }
+}
+
+.emblaDot {
+  background-color: $lightgrey;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 7.5px;
+  display: flex;
+  align-items: center;
+  display: none;
+
+  &:hover {
+    background-color: $primaryBlue;
+    @include transition(0.3s, ease-in-out);
+  }
+
+  &Active {
+    @extend .emblaDot;
+    background-color: $primaryBlue;
+  }
+
+  @include msd {
+    margin: 0 5px;
+    display: block;
+  }
+}
+
+.emblaExplore {
+  color: $primaryBlue;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  img {
+    margin-top: 3px;
+    margin-left: 6px;
+  }
+}
+
+.slidesControl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+
+  &Item {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 50%;
+
+    @include msd {
+      top: 40%;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Right {
+    right: 0;
+  }
+
+  &Left {
+    left: 10px;
+    transform: translate(50%, 50%) rotate(180deg);
+  }
+
+  @include msd {
+    display: block;
+  }
+}
+
+.slidesControlHighlight {
+  display: block !important;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: unset;
+  width: unset;
+
+  &Item {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &Right {
+    right: 0;
+  }
+}
+
+.slidesLeftControlHighlight {
+  display: block !important;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+}
+
+.downloadResumeButton {
+  // display: none;
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &Active {
+    @extend .downloadResumeButton;
+    // display: flex;
+    transition: all ease 0.2s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @include msd {
+    // display:none;
+    display: flex;
+    // position: absolute;
+    // top: unset;
+    // bottom: 25px;
+    // left: 50%;
+
+    // &:hover {
+    //   cursor: pointer;
+    // }
+  }
+
+  &Mobile {
+    display: flex;
+    align-self: center;
+    width: 143px;
+    margin-top: 24px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.downloadIcon {
+  padding-right: 5px;
+}
+
+.downloadText {
+  padding-right: 8px;
+}
+
+.readMoreDescriptionWrapper {
+  margin-bottom: 16px;
+  word-break: break-all;
+}
+
+.skill {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  &Chip {
+    margin-right: 16px;
+    margin-bottom: 16px;
+    background-color: #1976d2 !important;
+  }
+}
+
+.disabledOpacity {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
