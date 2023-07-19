@@ -159,6 +159,7 @@ const Companies = (props: IProps) => {
           <FeaturedCompanied
             featuredCompany={featuredCompany}
             langKey={langKey}
+            config={config}
             featureBanners={featureBanners}
             lang={props.lang}
           />
@@ -183,6 +184,7 @@ const Companies = (props: IProps) => {
                 isLoading={isFeaturedCompaniesFetching}
                 transitions={companies.popularCompany}
                 langKey={langKey}
+                config={config}
                 lang={props.lang}
               />
             </>

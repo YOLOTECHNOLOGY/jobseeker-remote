@@ -86,7 +86,8 @@ const SortFilter = ({ lang }: sortProps) => {
               fontFamily: 'product sans',
               letterSpacing: '1px',
               padding: '12px 0',
-              marginRight: '36px'
+              marginRight: '36px',
+              minWidth: 'auto'
             }}
           />
         ))}
