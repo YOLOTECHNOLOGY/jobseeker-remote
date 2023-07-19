@@ -196,3 +196,11 @@ export const countryForCurrency = key => {
 
   return countryCounfig.find(item => item.key === key)?.currency ?? defaultCurrency()
 }
+
+
+export const countryForPhoneCode = {
+  ph: '+63',
+  sg: '+65',
+  jp: '+81',
+  id: '+62'
+}
