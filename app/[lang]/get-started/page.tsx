@@ -23,7 +23,7 @@ const Page = async (props: any) => {
         <div className={styles.container}>
           <Main dictionary={dictionary} />
         </div>
-        <p className={classNames([styles.tips, styles.hide])}>
+        <p className={styles.tips}>
           {newGetStarted.tips}
           <Link
             href={

@@ -820,12 +820,6 @@
     }
   }
 
-  .hide {
-    @include md {
-      display: none;
-    }
-  }
-
   .login_item {
     cursor: pointer;
     margin-top: 16px;
