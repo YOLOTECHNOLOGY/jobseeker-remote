@@ -136,6 +136,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
           {...mainProps}
           lang={languages}
           jobDetail={data}
+          jobId={jobId}
           isbenefits={!!mainProps?.benefitsProps?.length}
         />
       </div>
