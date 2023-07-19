@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext, useMemo } from 'react'
-import styles from './index.module.scss'
+import styles from './web.module.scss'
 import { HomePageChat } from 'images'
 import useChatNow from 'app/models/hooks/useChatNow'
 import Image from 'next/image'
@@ -15,9 +15,8 @@ import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { useParams, useRouter } from 'next/navigation'
 import useNotSuitable from './hooks'
-import NotSuitableModal from './notSuitable'
+import NotSuitableModal from '../notSuitable'
 import { ChatInfoContext } from 'app/components/chatInfoProvider'
-import { Urgent } from './Urgent'
 import { useSelector } from 'react-redux'
 import { changeJobValue } from 'helpers/config/changeJobValue'
 import { getValueById } from 'helpers/config/getValueById'
@@ -127,9 +126,12 @@ const JobCard = (props: any) => {
 
   const jobBenefits = useMemo(() => {
     const benefits = originJob?.job_benefits || []
-    return benefits.map((benefit) => {
-      return getValueById(config, benefit.id, 'job_benefit_id', 'name')
-    }).filter(Boolean).join(' | ')
+    return benefits
+      .map((benefit) => {
+        return getValueById(config, benefit.id, 'job_benefit_id', 'name')
+      })
+      .filter(Boolean)
+      .join(' | ')
   }, [originJob?.job_benefits, config])
 
   const {
@@ -212,11 +214,10 @@ const JobCard = (props: any) => {
   return (
     <div
       className={classNames({
-        [styles.main]: true,
+        [styles.jobCard]: true,
         [styles.aboutDisappear]: refreshing
       })}
     >
-      <Urgent is_urgent={is_urgent} className={styles.urgent} />
       <>
         <div id={'job_card_container_' + id} className={styles.container}>
           <div className={styles.closeButton} onClick={showSelection}>
@@ -240,15 +241,9 @@ const JobCard = (props: any) => {
                 strokeLinejoin='round'
               />
             </svg>
-
-            {/* <Image src={CloseIcon} alt='logo' width={13} height={13} /> */}
           </div>
           <div className={styles.topContainer}>
-            <div
-              className={styles.left}
-              // onClick={() => router.push(`/${langKey}` + job_url, { scroll: true })}
-              onClick={() => handleRouterToPath(job_url)}
-            >
+            <div className={styles.left} onClick={() => handleRouterToPath(job_url)}>
               <div
                 key={job_title + id}
                 onMouseEnter={() => setTitleHover(true)}
@@ -256,11 +251,12 @@ const JobCard = (props: any) => {
                 className={styles.titleContainer}
                 title={`${job_title}`}
               >
+                {!!is_urgent ? <div className={styles.urgent}>Urgent</div> : null}
                 <div className={styles.title}>{`${job_title}`}</div>
-                <div className={styles.salary}>{salary_range_value}</div>
               </div>
 
               <div className={styles.labelContainer}>
+                <div className={styles.salary}>{salary_range_value}</div>
                 {labels.map((label) => (
                   <div key={label} className={styles.label}>
                     {label}
@@ -291,42 +287,6 @@ const JobCard = (props: any) => {
                         [styles.isHover]: isChatHover
                       })}
                     >
-                      {/* <div style={{ transform: 'scale(0.5,0.5)' }}>
-                        <svg
-                          width='32'
-                          height='32'
-                          viewBox='0 0 32 32'
-                          fill='none'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <path
-                            d='M5.67534 22.127C4.18645 19.6151 3.66565 16.646 4.21072 13.7772C4.75579 10.9085 6.32924 8.33732 8.63569 6.54646C10.9421 4.75559 13.823 3.86819 16.7373 4.05083C19.6517 4.23347 22.3992 5.47361 24.464 7.53842C26.5288 9.60322 27.7689 12.3507 27.9516 15.2651C28.1342 18.1794 27.2468 21.0603 25.4559 23.3667C23.6651 25.6731 21.0939 27.2466 18.2252 27.7917C15.3564 28.3367 12.3873 27.8159 9.87534 26.3271L5.72534 27.5021C5.55531 27.5518 5.37503 27.5549 5.20341 27.511C5.03178 27.4671 4.87513 27.3778 4.74986 27.2525C4.6246 27.1273 4.53534 26.9706 4.49144 26.799C4.44753 26.6274 4.45061 26.4471 4.50034 26.277L5.67534 22.127Z'
-                            fill='#136FD3'
-                            stroke='#136FD3'
-                            strokeWidth='1.5'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                          />
-                          <path
-                            d='M17.4375 16C17.4375 16.7939 16.7939 17.4375 16 17.4375C15.2061 17.4375 14.5625 16.7939 14.5625 16C14.5625 15.2061 15.2061 14.5625 16 14.5625C16.7939 14.5625 17.4375 15.2061 17.4375 16Z'
-                            fill='white'
-                            stroke='white'
-                            strokeWidth='0.125'
-                          />
-                          <path
-                            d='M11.4375 16C11.4375 16.7939 10.7939 17.4375 10 17.4375C9.20609 17.4375 8.5625 16.7939 8.5625 16C8.5625 15.2061 9.20609 14.5625 10 14.5625C10.7939 14.5625 11.4375 15.2061 11.4375 16Z'
-                            fill='white'
-                            stroke='white'
-                            strokeWidth='0.125'
-                          />
-                          <path
-                            d='M23.4375 16C23.4375 16.7939 22.7939 17.4375 22 17.4375C21.2061 17.4375 20.5625 16.7939 20.5625 16C20.5625 15.2061 21.2061 14.5625 22 14.5625C22.7939 14.5625 23.4375 15.2061 23.4375 16Z'
-                            fill='white'
-                            stroke='white'
-                            strokeWidth='0.125'
-                          />
-                        </svg>
-                      </div> */}
                       {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
                     </div>
                     <MaterialButton
@@ -336,15 +296,14 @@ const JobCard = (props: any) => {
                       })}
                       capitalize={true}
                       variant='outlined'
-                      style={{ height: 24, textTransform: 'capitalize' }}
+                      style={{ height: 25, textTransform: 'capitalize' }}
                       isLoading={loading as boolean}
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                          ; (chatNow as any)()
+                        ;(chatNow as any)()
                       }}
                     >
-                      <Image src={HomePageChat} width={16} height={16} alt={''} />
                       <Text textColor='white' bold>
                         {(() => {
                           if (external_apply_url) {
@@ -369,7 +328,6 @@ const JobCard = (props: any) => {
               onClick={(e) => {
                 e.stopPropagation()
                 window.location.href = `/${langKey}` + company_url
-                // router.push(`/${langKey}` + company_url, { scroll: true })
               }}
             >
               <div className={styles.company}>
@@ -426,7 +384,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
@@ -449,20 +407,9 @@ const JobCard = (props: any) => {
                 </Text>
               </MaterialButton>
             </div>
+
             <div className={styles.popTopRight}>
-              <QRCodeSVG
-                value={location?.origin + job_url}
-                size={60}
-                // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
-                className={styles.qrcode}
-              />
-              {/* <Image
-                style={{ margin: '0px 6px' }}
-                src={AppDownQRCode}
-                height={60}
-                width={60}
-                alt={''}
-              /> */}
+              <QRCodeSVG value={location?.origin + job_url} size={60} className={styles.qrcode} />
               Talk to Boss anywhere
             </div>
           </div>

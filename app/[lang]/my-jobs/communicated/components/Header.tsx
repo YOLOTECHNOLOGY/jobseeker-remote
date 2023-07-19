@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { setSourceCookie } from 'helpers/cookies'
 
 import styles from '../index.module.scss'
+import classNames from 'classnames/bind'
 
 interface StyledTabsProps {
   children?: React.ReactNode
@@ -30,8 +31,8 @@ interface headerProps {
   onChange: Function
   tabChildren: Array<any>
   tabValueChildren?: string
-  handleChangeChildren: Function,
-  back:string
+  handleChangeChildren: Function
+  back: string
 }
 
 const Header = ({
@@ -57,7 +58,8 @@ const Header = ({
   const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
     '&.Mui-selected': {
       color: '#136FD3',
-      fontWeight: '700'
+      fontWeight: '700',
+      minWidth: 'auto'
     }
   }))
 
@@ -76,7 +78,6 @@ const Header = ({
       backgroundColor: 'transparent'
     },
     '& .MuiTabs-indicatorSpan': {
-      maxWidth: '87.3px',
       width: '100%',
       backgroundColor: '#136FD3',
       borderRadius: '5px'
@@ -86,7 +87,7 @@ const Header = ({
   return (
     <>
       <div
-        className={styles.headerTop}
+        className={classNames([styles.headerTop, tabChildren?.length ? styles.hasHeaderChild: ''])}
         style={{
           marginBottom: tabValue == 'interested' || tabValue == 'viewedMe' ? '14px' : '10px'
         }}
@@ -112,11 +113,11 @@ const Header = ({
               sx={{
                 fontSize: '16px',
                 textTransform: 'capitalize',
-                color: '#707070',
-                fontFamily: 'product sans',
+                color: '#353535',
                 letterSpacing: '1px',
                 padding: '12px 0',
-                marginRight: '36px'
+                marginRight: '30px',
+                minWidth: 'auto'
               }}
             />
           ))}
@@ -139,11 +140,11 @@ const Header = ({
                 sx={{
                   fontSize: '16px',
                   textTransform: 'capitalize',
-                  color: '#707070',
-                  fontFamily: 'product sans',
+                  color: '#353535',
                   letterSpacing: '1px',
                   padding: '12px 0',
-                  marginRight: '36px'
+                  marginRight: '30px',
+                  minWidth: 'auto'
                 }}
               />
             ))}

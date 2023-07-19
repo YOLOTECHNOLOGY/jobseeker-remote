@@ -11,16 +11,22 @@ interface IProps {
   lang: any
 }
 
+const VIf = props => props.show ? props.children : null
+
 const FeaturedCompanied = (props: IProps) => {
   const { langKey, featuredCompany, featureBanners, lang } = props
   return (
-    <>
-      <h2 className={styles.featuredSectionTitle}>{lang.companies.employer.title}</h2>
-      <div className={styles.featuredEmployer}>
-        <FeaturedCompany featuredCompany={featuredCompany} langKey={langKey} />
-        <BannerCarousel slides={featureBanners} />
+    <VIf show={featuredCompany || featureBanners?.length > 0}>
+      <div className={styles.featuredCompanyWrapper}>
+        <div className={styles.featuredCompanyMain}>
+          <h2 className={styles.featuredSectionTitle}>{lang.companies.employer.title}</h2>
+          <div className={styles.featuredEmployer}>
+            <FeaturedCompany featuredCompany={featuredCompany} langKey={langKey} />
+            <BannerCarousel slides={featureBanners} />
+          </div>
+        </div>
       </div>
-    </>
+    </VIf>
   )
 }
 
