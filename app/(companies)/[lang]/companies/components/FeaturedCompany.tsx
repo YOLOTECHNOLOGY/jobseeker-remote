@@ -4,19 +4,39 @@ import Text from 'components/Text'
 import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
+import { getValueById } from 'helpers/config/getValueById'
 
 interface IProps {
   featuredCompany: any
   langKey: string
+  config: any
+}
+
+const translatedCompany = (config, company) => {
+  if (!config || !company) return company
+  const financingStageValue =
+    getValueById(config, company?.financing_stage_id, 'company_financing_stage_id') ||
+    company?.financing_stage
+
+  const companySizeValue =
+    getValueById(config, company?.company_size_id, 'company_size_id') || company?.company_size
+
+  const industryValue =
+    getValueById(config, company?.industry_id, 'industry_id') || company?.industry
+
+  return { financingStageValue, companySizeValue, industryValue }
 }
 
 const FeaturedCompany = (props: IProps) => {
-  const { featuredCompany, langKey } = props
+  const { featuredCompany, langKey, config } = props
 
   const companyAbout = useMemo(() => {
     if (!featuredCompany) return []
-    const { financing_stage = '', company_size = '', industry = '' } = featuredCompany
-    return [financing_stage, company_size, industry].filter(Boolean)
+    const { financingStageValue, companySizeValue, industryValue } = translatedCompany(
+      config,
+      featuredCompany
+    )
+    return [financingStageValue, companySizeValue, industryValue].filter(Boolean)
   }, [featuredCompany])
 
   return (
