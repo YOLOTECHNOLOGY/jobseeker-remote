@@ -63,7 +63,8 @@
       line-height: 48px;
       // text-overflow: ellipsis;
       // overflow: hidden;
-      word-break: break-all;
+      // word-break: break-all;
+      word-break: break-word;
       padding: 6px 0 2px 0;
       // white-space: nowrap;
       color: #fff;
@@ -194,7 +195,7 @@
   margin: 0 auto;
   display: flex;
   padding-bottom: 24px;
-  padding-top: 10px;
+  padding-top: 16px;
 
   .main {
     width: calc(100% - 275px);
@@ -246,7 +247,7 @@
           display: flex;
           justify-content: space-between;
 
-          p {
+          >div {
             display: none;
             align-items: center;
 
@@ -286,7 +287,7 @@
 
         ul,
         ol {
-          margin-left: 14px;
+          margin-left: 22px;
         }
       }
 
@@ -385,7 +386,7 @@
     .search {
       display: flex;
       width: 100%;
-      margin-top: 10px;
+      margin-top: 16px;
       padding: 14px;
       background: #fff;
       border-radius: 8px;
@@ -424,6 +425,78 @@
       padding-bottom: 40px;
       padding-left: 4px;
     }
+
+    .jobseeker {
+      background: #FFF;
+      padding: 20px 16px;
+      border-bottom: 1px solid #E4E4E4;
+      display: flex;
+      justify-content: space-between;
+
+      >div {
+        display: flex;
+        align-items: center;
+      }
+
+      .footer_name {
+        font-size: 16px;
+        margin-left: 10px;
+        color: #353535;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
+      }
+
+      .chatBox {
+        display: flex;
+        align-items: center;
+
+      }
+
+
+      .chat {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.0075em;
+        color: #707070;
+        padding-left: 10px;
+      }
+
+      .lineStatus {
+        padding: 1px 10px;
+        background: #0ebd5c;
+        border-radius: 15px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.0075em;
+        color: #ffffff;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .lineStatus::before {
+        content: '';
+        background-color: #ffffff;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 8px;
+      }
+
+      .notLine {
+        background: #bcbcbc;
+      }
+
+    }
+
   }
 
   .benefits {
@@ -478,7 +551,7 @@
   }
 
   .aside {
-    margin-left: 10px;
+    margin-left: 16px;
     width: 340px;
 
     .search {
@@ -518,7 +591,7 @@
       background: #ffffff;
       border-radius: 8px;
       padding: 20px 16px;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
 
       &_info {
         display: flex;
@@ -560,79 +633,12 @@
       }
     }
 
-    .jobseeker {
-      border-radius: 8px;
-      background: #FFF;
-      padding: 20px 16px;
-      margin-bottom: 10px;
-
-      >div {
-        display: flex;
-        align-items: center;
-      }
-
-      .footer_name {
-        font-size: 16px;
-        margin-left: 10px;
-        color: #353535;
-
-        overflow: hidden;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        word-break: break-all;
-        white-space: nowrap;
-      }
-
-      .chatBox {
-        margin-top: 10px;
-        justify-content: space-between;
-      }
-
-
-      .chat {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        letter-spacing: 0.0075em;
-        color: #707070;
-      }
-
-      .lineStatus {
-        padding: 1px 10px;
-        background: #0ebd5c;
-        border-radius: 15px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        letter-spacing: 0.0075em;
-        color: #ffffff;
-        padding-left: 20px;
-        position: relative;
-      }
-
-      .lineStatus::before {
-        content: '';
-        background-color: #ffffff;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 8px;
-      }
-
-      .notLine {
-        background: #bcbcbc;
-      }
-
-    }
 
     .upload {
       border-radius: 8px;
       border: 1px solid #92C2FF;
       height: 156px;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       background: linear-gradient(142deg, #EDFBFF 0%, #F3F8FF 100%);
       padding: 20px 16px;
 
@@ -685,7 +691,7 @@
       background: #ffffff;
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 10px;
+      margin-top: 16px;
       padding: 20px 16px 30px 16px;
 
 
@@ -801,8 +807,25 @@
           letter-spacing: 0.0075em;
           color: #353535;
 
+          &_name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            white-space: nowrap;
+            display: inline-block;
+            flex: 1;
+            width: 0;
+          }
+
           &_value {
+            margin-left: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            white-space: nowrap;
+            display: inline-block;
             color: #707070;
+            width: 100px;
           }
         }
       }
@@ -814,11 +837,11 @@
           display: inline-block;
           width: 8px;
           height: 8px;
-          background-color: white;
+          background-color: #ccc;
           border-radius: 50%;
           position: absolute;
           right: 4px;
-          bottom: 0px;
+          top: 8px;
         }
 
         &_lineStatus {
@@ -830,14 +853,14 @@
 
     .ad {
       &_container {
-        width: 250px;
+        width: 340px;
         height: 250px;
         background-color: rosybrown;
         animation: loading 2s ease infinite;
         overflow: hidden;
         border-radius: 8px;
         margin-top: 24px;
-        margin: 24px auto;
+        margin: 10px auto;
       }
     }
 
@@ -1109,8 +1132,12 @@
       .desc {
         padding: 20px 0;
 
+        .jobseeker {
+          display: none;
+        }
+
         h5 {
-          p {
+          >div {
             display: flex;
 
             i {
@@ -1246,7 +1273,6 @@
         }
       }
 
-      .jobseeker,
       .upload {
         display: none;
       }
@@ -1254,7 +1280,7 @@
 
       .ad {
         &_container {
-          margin: 24px auto 45px;
+          margin: 10px auto 45px;
         }
       }
 
@@ -1331,7 +1357,7 @@
             display: inline-block;
             width: 8px;
             height: 8px;
-            background-color: white;
+            background-color: #ccc;
             border-radius: 50%;
             position: absolute;
             right: 4px;
@@ -1362,17 +1388,17 @@
           height: 60px;
           width: 1px;
           background-color: #E4E4E4;
-          margin: 0 12px;
+          margin: 0 2px;
         }
 
         &_location {
-          flex: 0.3;
+          flex: 0.4;
 
         }
 
 
         .inputBox {
-          flex: 0.7;
+          flex: 0.6;
         }
 
         &_field {

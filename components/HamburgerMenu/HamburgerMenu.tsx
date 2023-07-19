@@ -166,8 +166,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  // to={authPathToOldProject(null, '/dashboard/profile/settings')}
-                  to='/dashboard/profile/settings'
+                  // to={authPathToOldProject(null, '/settings')}
+                  to='/settings'
                   title='Account Settings'
                 >
                   <li className={styles.menuList} onClick={handleClick}>

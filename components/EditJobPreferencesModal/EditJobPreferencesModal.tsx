@@ -80,7 +80,7 @@ const EditJobPreferencesModal = ({
       location: location,
       industry: preference?.industry_key,
       country: preference?.country_key,
-      currencyKey: preference?.currency_key ?? countryForCurrency[getCountryKey()]
+      currencyKey: preference?.currency_key ?? countryForCurrency(getCountryKey())
     }
   }, [preference])
   const dispatch = useDispatch()

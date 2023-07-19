@@ -11,6 +11,7 @@ import Image from 'next/image'
 interface IApple {
   isLogin?: boolean
   lang: any
+  showTitle?: boolean
 }
 
 const APPLE_LOGIN_URL =
@@ -18,7 +19,8 @@ const APPLE_LOGIN_URL =
 
 const AppleLogin = (props: IApple) => {
   const {
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    showTitle = true
   } = props
   const searchParams = useSearchParams()
   const [init, setInit] = useState(false)
@@ -116,11 +118,14 @@ const AppleLogin = (props: IApple) => {
       className={classNames([styles.login_item, !init ? styles.login_disabled : ''])}
       onClick={handleAuth}
     >
-      <Image src={AppleIcon} width={24} height={24} alt='apple' />
+      {/* <Image src={AppleIcon} width={24} height={24} alt='apple' /> */}
+      <i className='icon-apple'></i>
       {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
-      <span data-type='sign in' aria-label='Sign in with apple ID'>
-        {newGetStarted.links.apple}
-      </span>
+      {showTitle && (
+        <span data-type='sign in' aria-label='Sign in with apple ID'>
+          {newGetStarted.links.apple}
+        </span>
+      )}
     </div>
   )
 }

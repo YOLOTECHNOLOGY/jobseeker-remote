@@ -1,23 +1,19 @@
 
 // import './flexible';
 import Head from "next/head";
-import {Metadata} from "next"
+import { Metadata } from "next"
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/models/abstractModels/util'
-import {getCountryKey} from "../../../../helpers/country";
-import {formatTemplateString} from "../../../../helpers/formatter";
-import {getDictionary} from "../../../../get-dictionary";
-import {cookies,headers} from "next/headers";
-import {fetchCompanyDetailReq, fetchCompanyHR, fetchConfigReq, fetchJobsListReq, getIDFromKeyword, } from "./service";
+import { getCountryKey } from "../../../../helpers/country";
+import { formatTemplateString } from "../../../../helpers/formatter";
+import { getDictionary } from "../../../../get-dictionary";
+import { cookies, headers } from "next/headers";
+import { fetchCompanyDetailReq, fetchCompanyHR, fetchConfigReq, fetchJobsListReq, getIDFromKeyword, } from "./service";
 import { fetchJobsFunction } from "../../../../store/services/jobs/fetchJobFunction";
-import {configKey} from "../../../../helpers/cookies";
-import {CompanyDetailsProvider} from "./DataProvider";
-import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
+import { CompanyDetailsProvider } from "./DataProvider";
 import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 import Footer from "components/Footer/Footer";
 import getConfigs from 'app/models/interpreters/config'
-import { redirect } from 'next/navigation'
-import { serveIsMobile } from 'helpers/utilities'
 
 const configs = getConfigs([
 	['location_lists'],
@@ -37,7 +33,7 @@ const configs = getConfigs([
  * @doc https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
  */
 export async function generateMetadata(
-	props:{params: { lang: any }}
+	props: { params: { lang: any } }
 ): Promise<Metadata> {
 	// read route params
 	const dictionary = await getDictionary(props.params.lang);
@@ -71,15 +67,17 @@ async function CompanyLayout(props: {
 	// if(isMobile && process.env.ENV === 'production'){
 	// 	return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
 	// }
-	try{
+	try {
 		const [jobs, detail, hr, hotJobs, jobFunctions] = await Promise.all([
-			fetchJobsListReq({companyIds: id,size: 10,page: 1},  token?.value), 
-			fetchCompanyDetailReq(id), 
+			fetchJobsListReq({ companyIds: id, size: 10, page: 1 }, token?.value),
+			fetchCompanyDetailReq(id),
 			fetchCompanyHR(id, token?.value),
-			fetchHotJobsListService({company_id: id}),
+			fetchHotJobsListService({ company_id: id }),
 			fetchJobsFunction(id)
 		]);
-
+		if (detail?.data?.document) {
+			detail.data.document = null
+		}
 		const groupData = jobFunctions.data.data.reduce((result, obj) => {
 			const key = Object.values(obj)[0];
 			const value = Object.keys(obj)[0];
@@ -92,45 +90,45 @@ async function CompanyLayout(props: {
 		}, {});
 		const function_ids = Object.values(groupData).flat();
 		const jobClasses = props.configs.config.job_functions.filter((item) => function_ids.includes(String(item.id)))
-			// const configkey =cookieStore.get(configKey);
-	// console.log('configkey', configkey);
-	// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
-	return (
-		<>
-			<CompanyDetailsProvider 
-				hr={hr.data}
-				detail={detail.data} 
-				jobs={jobs.data} 
-				hotJobs={hotJobs.data.data}
-				lang={props.params.lang}
-				config={props.configs.config}
-				jobFunctions={jobClasses}
-			>
-				<section style={{
-					width: '100%',
-					overflowX: 'hidden',
-					minHeight: '100vh',
-					backgroundColor: '#ffffff',
+		// const configkey =cookieStore.get(configKey);
+		// console.log('configkey', configkey);
+		// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
+		return (
+			<>
+				<CompanyDetailsProvider
+					hr={hr.data}
+					detail={detail.data}
+					jobs={jobs.data}
+					hotJobs={hotJobs.data.data}
+					lang={props.params.lang}
+					config={props.configs.config}
+					jobFunctions={jobClasses}
+				>
+					<section style={{
+						width: '100%',
+						overflowX: 'hidden',
+						minHeight: '100vh',
+						backgroundColor: '#ffffff',
 
-				}}>
-					<main data-string={{}}>
-						{props.children}
-					</main>
-				</section>
-				<Footer/>
-			</CompanyDetailsProvider>
-		</>
-	)
-	}catch(e){
+					}}>
+						<main data-string={{}}>
+							{props.children}
+						</main>
+					</section>
+					<Footer />
+				</CompanyDetailsProvider>
+			</>
+		)
+	} catch (e) {
 		return <div data-error={JSON.stringify(e)}>
 			{/* {e} */}
 		</div>
 	}
 
-	
+
 
 }
 
 export default configs(serverDataScript().chain((configs) =>
-    buildComponentScript({ configs }, CompanyLayout))
+	buildComponentScript({ configs }, CompanyLayout))
 ).run

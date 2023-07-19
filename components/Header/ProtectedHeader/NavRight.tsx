@@ -41,6 +41,20 @@ const NavRight = (props: IProps) => {
     }
   }, [userInfo])
 
+  const manageProfileCss = {
+    height: '40px !important',
+    border: '1px solid #2378E5',
+    borderRadius: '4px',
+    paddingLeft: '23px',
+    paddingRight: '23px',
+    backgroundColor: '#ffffff',
+    boxShadow: 'none',
+    ':hover': {
+      backgroundColor: '#ffffff',
+      boxShadow: 'none'
+    }
+  }
+
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
@@ -75,23 +89,7 @@ const NavRight = (props: IProps) => {
               }}
               style={{ color: '#2378E5' }}
             >
-              <MaterialButton
-                variant='contained'
-                capitalize
-                sx={{
-                  height: '40px !important',
-                  border: '1px solid #2378E5',
-                  borderRadius: '4px',
-                  paddingLeft: '23px',
-                  paddingRight: '23px',
-                  backgroundColor: '#ffffff',
-                  boxShadow: 'none',
-                  ':hover': {
-                    backgroundColor: '#ffffff',
-                    boxShadow: 'none'
-                  }
-                }}
-              >
+              <MaterialButton variant='contained' capitalize sx={manageProfileCss}>
                 <span
                   style={{ color: '#2378E5', whiteSpace: 'nowrap' }}
                   className={showUnCompletedDot ? styles.unCompleted : ''}
@@ -101,21 +99,7 @@ const NavRight = (props: IProps) => {
               </MaterialButton>
             </a>
           ) : (
-            <MaterialButton
-              variant='contained'
-              capitalize
-              sx={{
-                height: '40px !important',
-                border: '1px solid #2378E5',
-                borderRadius: '10px',
-                paddingLeft: '23px',
-                paddingRight: '23px',
-                backgroundColor: '#ffffff',
-                ':hover': {
-                  backgroundColor: '#ffffff'
-                }
-              }}
-            >
+            <MaterialButton variant='contained' capitalize sx={manageProfileCss}>
               <span
                 style={{ color: '#2378E5', whiteSpace: 'nowrap' }}
                 className={showUnCompletedDot ? styles.unCompleted : ''}

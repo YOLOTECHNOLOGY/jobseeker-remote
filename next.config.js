@@ -126,7 +126,7 @@ module.exports = withBundleAnalyzer({
       // include: path.resolve('./'),
       // exclude: path.resolve('./node_modules'),
       use: [
-        'babel-loader',
+        'babel-loader'
         // your expensive loader (e.g babel-loader)
       ]
     })

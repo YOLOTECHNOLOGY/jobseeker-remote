@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
-import { HomePageChat } from 'images'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -23,6 +22,7 @@ import { transState } from 'helpers/utilities'
 import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
+import ScrollText from 'app/components/scrollText'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -196,7 +196,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    ;(chatNow as any)().catch((err) => {
+    ; (chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -224,13 +224,13 @@ const JobCard = (props: any) => {
                 key={job_title + id}
                 onMouseEnter={() => setTitleHover(true)}
                 onMouseLeave={() => setTitleHover(false)}
-                className={styles.titleContainer}
+                className={classNames(styles.titleContainer)}
                 title={`${job_title}`}
               >
                 <VIf show={!!is_urgent}>
                   <div className={styles.urgent}>Urgent</div>
                 </VIf>
-                <div className={styles.title}>{`${job_title}`}</div>
+                <ScrollText className={styles.title}>{`${job_title}`}</ScrollText>
               </div>
 
               <div className={styles.labelContainer}>
@@ -312,7 +312,7 @@ const JobCard = (props: any) => {
                 e.stopPropagation()
                 console.log('pushCompany')
                 window.location.href = `/${langKey}` + company_url
-                // router.push(`/${langKey}` + company_url, { forceOptimisticNavigation: true })
+                // router.push(`/${langKey}` + company_url, { scroll: true })
               }}
             >
               <div className={styles.company}>
@@ -373,7 +373,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg

@@ -141,7 +141,7 @@ const SearchArea = (props: any) => {
   newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
 
   return (
-    <div>
+    <>
       <ThemeProvider theme={newTheme}>
         <div className={styles.container}>
           <div className={styles.top}>
@@ -159,8 +159,7 @@ const SearchArea = (props: any) => {
                 className={styles.icon}
                 onClick={() => {
                   router.push('/manage-profile?tab=job-preferences', {
-                    // @ts-ignore
-                    forceOptimisticNavigation: true
+                    scroll: true
                   })
                 }}
               >
@@ -169,8 +168,7 @@ const SearchArea = (props: any) => {
               <div
                 className={styles.icon}
                 onClick={() => {
-                      // @ts-ignore
-                  router.push('/jobs-hiring/job-search', { forceOptimisticNavigation: true })
+                  router.push('/jobs-hiring/job-search', { scroll: true })
                 }}
               >
                 <Image src={Search} width={18} height={18} alt='' />
@@ -216,7 +214,7 @@ const SearchArea = (props: any) => {
           </div>
         </div>
       </ThemeProvider>
-    </div>
+    </>
   )
 }
 export default SearchArea

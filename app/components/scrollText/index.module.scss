@@ -1,0 +1,26 @@
+@keyframes text-scroll-v {
+    0% {
+        transform: translateX(30%);
+    }
+
+    100% {
+        transform: translateX(-70%);
+    }
+}
+
+.scrollText {
+    p:first-child {
+        width: auto;
+    }
+
+    &:hover {
+        p:first-child {
+            animation-name: text-scroll-v;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-fill-mode: backwards;
+            animation-duration: 3s;
+            width: fit-content;
+        }
+    }
+}

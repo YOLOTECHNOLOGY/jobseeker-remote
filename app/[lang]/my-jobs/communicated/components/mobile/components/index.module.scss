@@ -24,7 +24,7 @@
              display: flex;         
              a{
                  width: 70%;
-                 height: 48px;
+                 max-height: 48px;
                  color: #353535;
                  overflow: hidden;
                  text-overflow: ellipsis;
@@ -57,9 +57,10 @@
              color: #707070;
              padding: 0 10px;
              margin-right: 6px;
-             background: #F0F0F0;
-             border-radius: 16px;
              display: inline-block;
+
+             border-radius: 6px;
+             background: #F7F8FA;
          }
 
          .contact {

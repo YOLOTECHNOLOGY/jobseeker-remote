@@ -33,32 +33,6 @@ const AsideFC = (props: propsT) => {
     <aside className={styles.aside}>
       <Company {...props} />
 
-      <div className={styles.jobseeker}>
-        <div>
-          <Avatar
-            sx={{ width: '29.94px', height: '29px' }}
-            src={recruiter?.avatar || DefaultAvatar}
-          ></Avatar>
-          <span className={styles.footer_name} title={recruiter.full_name}>
-            {recruiter.full_name} <i style={{ padding: '0 4px' }}>{' · '}</i>
-            {recruiter?.work_experience?.job_title || ''}
-          </span>
-        </div>
-        <div className={styles.chatBox}>
-          <span className={styles.chat}>
-            {chatResponseRate}% &nbsp;{content.rate}
-          </span>
-          <span
-            className={classNames([
-              styles.lineStatus,
-              transState(lastActiveAt)?.state !== 1 ? styles.notLine : null
-            ])}
-          >
-            {transState(lastActiveAt, content?.state)?.text}
-          </span>
-        </div>
-      </div>
-
       <div className={styles.upload}>
         <div className={styles.uploadTitle}>
           <span>

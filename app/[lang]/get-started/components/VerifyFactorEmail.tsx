@@ -18,18 +18,24 @@ const VerifyFactorEmail = (props: IProps) => {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId')
   const email = decodeURIComponent(searchParams.get('email'))
- // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const [number, setNumber] = useState<number>(0)
   const dispatch = useDispatch()
-  const { setUserId, setEmail, handleAuthenticationJobseekersLogin, defaultLoginCallBack ,userInfo, error} =
-    useGetStarted()
+  const {
+    setUserId,
+    setEmail,
+    handleAuthenticationJobseekersLogin,
+    defaultLoginCallBack,
+    userInfo,
+    error
+  } = useGetStarted()
   useEffect(() => {
     if (email) {
       setEmail(email)
     }
   }, [email])
 
- // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
+  // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
   useEffect(() => {
     const text = error?.data?.message ?? ''
@@ -39,12 +45,12 @@ const VerifyFactorEmail = (props: IProps) => {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
-  console.log({userInfo},'11')
+  console.log({ userInfo }, '11')
   useEffect(() => {
     if (userInfo?.data && !Object.keys(userInfo).length) {
       return
     }
-    const { data } = userInfo  || {}
+    const { data } = userInfo || {}
     removeItem('quickUpladResume')
     defaultLoginCallBack(data)
   }, [userInfo])
@@ -78,7 +84,8 @@ const VerifyFactorEmail = (props: IProps) => {
           <div className={styles.enterTips}>
             <p className={styles.extra}>{}</p>
             <p>
-              {newGetStarted.sendCodeDigit} <span>{email}.</span>
+              {newGetStarted.sendCodeDigit}
+              {/* <span>{email}.</span> */}
             </p>
           </div>
           <Captcha
