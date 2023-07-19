@@ -93,7 +93,6 @@ const ProfileView = ({ lang }: any) => {
   } = userDetail
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
-    //changeJobPreference(userDetail.job_preferences || [], config)
     return userDetail
   }, [userDetail, config])
 
