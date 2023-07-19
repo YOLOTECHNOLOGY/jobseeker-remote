@@ -342,6 +342,7 @@
     "defaultLocationSG": "Downtown Core",
     "search": {
       "location": "Location",
+      "location2": "Loc.",
       "title": "Job title or company",
       "btn1": "Search",
       "download": "Download APP",

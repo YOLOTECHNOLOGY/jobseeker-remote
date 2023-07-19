@@ -21,7 +21,7 @@ import { openCreateJobAlertModal } from 'store/actions/modals/createJobAlertModa
 
 // styles
 import styles from './index.module.scss'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { changeAlertValue } from 'helpers/config/changeAlertValue'
 import { MemoedFilters } from 'components/ModalJobAlerts/MemoedFilter'

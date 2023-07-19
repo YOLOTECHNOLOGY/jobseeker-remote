@@ -156,6 +156,7 @@ export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
   path = path?.split?.('//')[1]?.split?.('/')?.[1] // https://dev.bossjob.sg/en-US/...
+  console.log({ path, languages })
   return languages.map(item => item.value).includes(path) ? path : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
 }
 
@@ -194,4 +195,12 @@ export const getCountry = () => {
 export const countryForCurrency = key => {
 
   return countryCounfig.find(item => item.key === key)?.currency ?? defaultCurrency()
+}
+
+
+export const countryForPhoneCode = {
+  ph: '+63',
+  sg: '+65',
+  jp: '+81',
+  id: '+62'
 }

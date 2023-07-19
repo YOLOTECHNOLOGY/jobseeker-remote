@@ -342,6 +342,7 @@
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
+      "location2": "Loc.",
       "title": "Job title or company",
       "btn1": "Search",
       "download": "Download APP",
@@ -1208,7 +1209,7 @@
     "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   },
   "newGetStarted": {
-    "title": "Log in or sign up to Bossjob",
+    "title": "Welcome to",
     "employer": "Employer",
     "tips": "Looking to hire people? Sign up as ",
     "continueWith": "or continue with",

@@ -44,47 +44,49 @@ const Main = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
   return (
-    <>
-      <div className={styles.main}>
-        <div className={styles.left}>
-          <MobileHeader lang={dictionary?.myJobs} />
-          <SortProvider>
-            <div
-              className={styles.searchFormContainer}
-              // style={{ position: 'sticky', top: 0, zIndex: 20 }}
-            >
-              <SearchForm
-                searchParams={props.searchParams ?? null}
-                preferenceId={preferenceId}
-                preferences={preferences}
-                config={config}
-                lang={dictionary}
-              />
-            </div>
-            <SortFilter lang={dictionary?.myJobs} />
-
-            <div className={styles.content}>
-              <div className={styles.table}>
-                <Suspense fallback={<Loading />}>
-                  <Table
-                    searchParams={searchParams ?? {}}
-                    preferenceId={preferenceId}
-                    preferences={preferences}
-                    config={props.config}
-                    lang={dictionary?.myJobs}
-                  />
-                </Suspense>
+    <div className={styles.containerWrapper}>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <div className={styles.left}>
+            <MobileHeader lang={dictionary?.myJobs} />
+            <SortProvider>
+              <div
+                className={styles.searchFormContainer}
+                // style={{ position: 'sticky', top: 0, zIndex: 20 }}
+              >
+                <SearchForm
+                  searchParams={props.searchParams ?? null}
+                  preferenceId={preferenceId}
+                  preferences={preferences}
+                  config={config}
+                  lang={dictionary}
+                />
               </div>
-            </div>
-          </SortProvider>
-        </div>
-        <div className={styles.right}>
-          {/* @ts-expect-error Async Server Component */}
-          <MainRight lang={dictionary?.myJobs} config={props.config} />
-        </div>
+              <SortFilter lang={dictionary?.myJobs} />
+
+              <div className={styles.content}>
+                <div className={styles.table}>
+                  <Suspense fallback={<Loading />}>
+                    <Table
+                      searchParams={searchParams ?? {}}
+                      preferenceId={preferenceId}
+                      preferences={preferences}
+                      config={props.config}
+                      lang={dictionary?.myJobs}
+                    />
+                  </Suspense>
+                </div>
+              </div>
+            </SortProvider>
+          </div>
+          <div className={styles.right}>
+            {/* @ts-expect-error Async Server Component */}
+            <MainRight lang={dictionary?.myJobs} config={props.config} />
+          </div>
+        </main>
+        <Footer />
       </div>
-      <Footer />
-    </>
+    </div>
   )
 }
 

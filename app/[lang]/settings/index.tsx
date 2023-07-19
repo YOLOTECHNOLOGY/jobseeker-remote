@@ -1,8 +1,5 @@
+'use client'
 import React, { useState, useEffect } from 'react'
-import { wrapper } from 'store'
-import { END } from 'redux-saga'
-
-import Layout from 'components/Layout'
 import Text from 'components/Text'
 import VerifyMailAndBindEmail from 'components/AccountSettings/VerifyMailAndBindEmail'
 import VerifyPhoneNumber from 'components/AccountSettings/VerifyPhoneNumber'
@@ -23,7 +20,6 @@ import styles from './settings.module.scss'
 
 import { useDispatch, useSelector } from 'react-redux'
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import { getDictionary } from 'get-dictionary'
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -55,10 +51,11 @@ function a11yProps(index: number) {
 const COUNT_DOWN_VERIFY_DEFAULT = 60
 // const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
-const AccountSettings = ({ accessToken, lang }: any) => {
+const AccountSettings = (props: any) => {
+  const { accessToken, lang, config } = props
+  console.log({ props })
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-  const config = useSelector((store: any) => store?.config?.config?.response)
 
   useEffect(() => {
     dispatch(fetchConfigRequest())
@@ -131,7 +128,7 @@ const AccountSettings = ({ accessToken, lang }: any) => {
   })
   const { accountSetting } = lang
   return (
-    <Layout lang={lang}>
+    <>
       <div className={styles.accessSettings}>
         <div className={styles.accessSettingsTabs}>
           {(width ?? 0) > 576 && (
@@ -208,38 +205,7 @@ const AccountSettings = ({ accessToken, lang }: any) => {
           </TabPanel>
         </div>
       </div>
-    </Layout>
+    </>
   )
 }
-
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ req, query }) => {
-  const accessToken = req.cookies?.accessToken ? req.cookies.accessToken : null
-  const lang = await getDictionary(query.lang as 'en-US')
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: '/get-started?redirect=/dashboard/profile/settings',
-        permanent: false,
-        lang
-      }
-    }
-  }
-
-  store.dispatch(fetchUserDetailRequest({ accessToken }))
-  // store.dispatch(fetchConfigRequest())
-
-  store.dispatch(END)
-  await (store as any).sagaTask.toPromise()
-  const storeState = store.getState()
-  // const config = storeState.config.config.response
-  const userDetail = storeState.users.fetchUserDetail.response
-  return {
-    props: {
-      lang,
-      accessToken,
-      userDetail
-    }
-  }
-})
-
 export default AccountSettings

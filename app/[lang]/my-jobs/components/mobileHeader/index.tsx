@@ -51,7 +51,7 @@ const MobileHeader = (props:any) => {
         <div className={styles.avatar}>
             <Image src={userInfo.avatar ?? ''} height={50} width={50} alt='' />
         </div>
-        <div className={styles.useName}>
+        <div className={styles.userName}>
             {[userInfo.first_name, userInfo.last_name].filter(a => a).join(' ')}
         </div>
         <Suspense fallback={null}>
