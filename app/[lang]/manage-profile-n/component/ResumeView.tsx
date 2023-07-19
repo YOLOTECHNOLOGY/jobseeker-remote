@@ -264,7 +264,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
                         >
                           {transitions.bossjob.download}
                         </ColorButton>
-
                     )}
                   </div>
                 </div>
@@ -344,7 +343,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                   className={styles.downloadIcon}
                 />
                 <Text textStyle='lg' textColor='white' className={styles.downloadText}>
-                  Download
+                  {transitions.bossjob.download}
                 </Text>
               </MaterialButton>
             )}

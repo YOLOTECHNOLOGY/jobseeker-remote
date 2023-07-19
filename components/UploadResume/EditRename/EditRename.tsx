@@ -21,6 +21,7 @@ import styles from './EditRename.module.scss'
 import { getCookie } from 'helpers/cookies'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
+import { useManageProfileData } from 'app/[lang]/manage-profile-n/DataProvider'
 
 type propsType = {
   id: number
@@ -41,6 +42,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       }
     }
   } = lang || (useContext(languageContext) as any)
+  const {fetchProfile} = useManageProfileData();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -141,6 +143,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
           handleRefreshResume()
           handleCloseModal()
           handleSnackbarContent('reName', 'success')
+          fetchProfile();
         }
       })
       .catch(({ response: { data } }) => {
@@ -196,6 +199,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
           handleRefreshResume()
           handleSnackbarContent('delete', 'success')
           handleCloseMenu()
+          fetchProfile();
         }
       })
       .catch(({ response: { data } }) => {

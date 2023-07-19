@@ -79,7 +79,7 @@
   // box-shadow: $box-shadow-2;
 
   @include msd {
-    width: 320px;
+    width: 100%;
     height: auto;
   }
 
@@ -380,6 +380,7 @@
     align-self: center;
     width: 143px;
     margin-top: 24px;
+    margin-top: 30px;
   }
 
   &:hover {

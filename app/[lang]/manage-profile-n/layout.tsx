@@ -96,7 +96,7 @@ async function ManageProfileLayout(props: {
 					backgroundColor: '#F5F7FB',
 
 				}}>
-					<main data-string={JSON.stringify(profile)}>
+					<main>
 						{props.children}
 					</main>
 				</section>

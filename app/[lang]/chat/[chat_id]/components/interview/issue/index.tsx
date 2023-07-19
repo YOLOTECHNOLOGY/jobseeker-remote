@@ -32,7 +32,7 @@ const IssueModal = (props: any) => {
         firstButtonIsClose={false}
         secondButtonIsClose={false}
         isSecondButtonDisabled={!value}
-        handleFirstButton={() => actionsRef.current.back?.()}
+        handleFirstButton={() => actionsRef.current?.back?.()}
         handleSecondButton={() => actionsRef.current.send?.({
             applicationId,
             inviteInterviewId: data.id,

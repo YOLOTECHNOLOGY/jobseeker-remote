@@ -20,7 +20,7 @@ import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import GoogleMap from 'components/GoogleMap/GoogleMap'
-import _styles from 'styles/maintenance.module.scss'; 
+import _styles from 'styles/maintenance.module.scss';
 
 /* Helpers */
 import { flat } from 'helpers/formatter'
@@ -41,7 +41,7 @@ type EditProfileModalProps = {
   userDetail: any
   handleModal: Function
   lang?: any
-  fetchProfile?: ()=>void;
+  fetchProfile?: () => void;
 }
 
 const dayList = []
@@ -95,8 +95,8 @@ interface PlaceType {
   structured_formatting: any;
   geometry: {
     location: {
-      lat: ()=>number
-      lng: ()=>number
+      lat: () => number
+      lng: () => number
     }
   }
 }
@@ -109,13 +109,6 @@ const EditProfileModal = ({
   fetchProfile,
   config
 }: EditProfileModalProps) => {
-  const lang = useLanguage()
-  const mapRef = useRef(null);
-  const [value, setLocationValue] = React.useState<PlaceType | null>(null);
-  const [inputValue, setInputValue] = React.useState('');
-  const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-  const [debouncedValue, setDebouncedValue] = useState('');
-
   const {
     avatar,
     first_name,
@@ -126,10 +119,20 @@ const EditProfileModal = ({
     location_id,
     xp_lvl: expLevel,
     phone_num,
-    email
+    email,
+    longitude,
+    latitude,
+    address
   } = userDetail
+  const lang = useLanguage()
+  const mapRef = useRef(null);
+  const [value, setLocationValue] = React.useState<PlaceType | null>(null);
+  const [inputValue, setInputValue] = React.useState(address || '');
+  const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
+  const [debouncedValue, setDebouncedValue] = useState('');
 
-  console.log('userDetail',userDetail);
+
+  console.log('userDetail', userDetail, inputValue);
   const {
     manageProfile: {
       tab: {
@@ -138,7 +141,7 @@ const EditProfileModal = ({
     }
   } = lang
 
-  useEffect(()=>{
+  useEffect(() => {
     const delay = 500; // 设置延迟时间（毫秒）
     const timerId = setTimeout(() => {
       setDebouncedValue(inputValue);
@@ -147,44 +150,40 @@ const EditProfileModal = ({
     return () => {
       clearTimeout(timerId); // 清除计时器
     };
-  },[inputValue]);
+  }, [inputValue]);
 
-  useEffect(()=>{
-    console.log('inputValue',debouncedValue);
-    if(!mapRef.current)return;
+  useEffect(() => {
+    if (!mapRef.current) return;
 
-    
-    mapRef.current.textSearch({query: debouncedValue}, function (results, status) {
+
+    mapRef.current.textSearch({ query: debouncedValue }, function (results, status) {
       // @ts-ignore
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log('results',results);
         setOptions(results);
         // renderSearchPlaceList(results, map)
       }
     })
-  },[mapRef.current, debouncedValue]);
+  }, [mapRef.current, debouncedValue]);
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
-  const [isSecondButtonLoading , setIsSecondButtonLoading] = useState(false); 
+  const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
-  const {xp_lvls :xpLevelList, location_lists: locationList } = config
+  const { xp_lvls: xpLevelList, location_lists: locationList } = config
 
   const formattedXpLevelList = xpLevelList?.map?.((xp) => {
     return { ...xp, label: xp.value, value: xp.key }
   })
 
   const defaultExpLevel = formattedXpLevelList.filter((xp) => expLevel === xp.label)
-  const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item=>item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
+  const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  console.log('formattedLocationList',formattedLocationList);
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
-  console.log('matchedLocation',matchedLocation);
   const [location, setLocation] = useState(matchedLocation)
 
   // Limit user from selecting date more than 16-100 years ago from now.
@@ -200,7 +199,7 @@ const EditProfileModal = ({
     summary: description,
     location: userLocation,
     birthdate: birthdate,
-    yearsOfExperience: xpLevelList.find(item=>item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+    yearsOfExperience: xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
   }
   const {
     register,
@@ -235,14 +234,13 @@ const EditProfileModal = ({
     setLocation(value)
   }
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     const { firstName, lastName, summary, yearsOfExperience, location } = data
     const getIdByValue = (options: any[], value) => {
       const selectedOption = options.find((item) => item.value === value)
       return selectedOption?.id
     }
     const location_id = getIdByValue(formattedLocationList, location)
-    const xp_lvl_id = getIdByValue(formattedXpLevelList, yearsOfExperience)
 
     const payload = {
       country_id: getCountryId(),
@@ -252,22 +250,25 @@ const EditProfileModal = ({
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
       location_key: matchedLocation?.key,
       location_id,
-      xp_lvl_key: yearsOfExperience || '',
-      xp_lvl_id,
-      description: summary?.length > 0 ? summary : ''
+      xp_lvl_id: yearsOfExperience,
+      description: summary?.length > 0 ? summary : '',
+      address: inputValue,
+      latitude: value?.geometry?.location?.lat() || latitude,
+      longitude: value?.geometry?.location?.lng() || longitude
     }
+    console.log('payload', payload);
     setIsSecondButtonLoading(true)
-    try{
+    try {
       await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
-    }catch(e){
+    } catch (e) {
       console.log(e);
-    }finally{
+    } finally {
       setIsSecondButtonLoading(false)
     }
 
     // dispatch(updateUserProfileRequest(removeEmptyOrNullValues(payload)))
-    
+
   }
 
   const handleCloseModal = () => {
@@ -290,7 +291,6 @@ const EditProfileModal = ({
       setBirthdate(value)
     }
   }
-  console.log('value',value);
   return (
     <div>
       <Modal
@@ -306,7 +306,7 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
-        
+
       >
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>
@@ -336,7 +336,7 @@ const EditProfileModal = ({
                   autoComplete='off'
                   error={errors.firstName}
                 />
-                {errors.firstName && errorText(errors.firstName.message as any) }
+                {errors.firstName && errorText(errors.firstName.message as any)}
               </div>
               <div style={{ width: '20px', height: '24px' }}></div>
               <div className={styles.profileFormGroupField}>
@@ -374,9 +374,9 @@ const EditProfileModal = ({
                       validate: () => {
                         const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
                         const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
-                        if(isMaxYear || isMinYear) {
+                        if (isMaxYear || isMinYear) {
                           return aboutMeModal.birthdayError
-                        }else {
+                        } else {
                           return true
                         }
                       }
@@ -435,7 +435,7 @@ const EditProfileModal = ({
               filterOptions={(x) => x}
               getOptionLabel={(option: any) => option.formatted_address || ''}
               size='small'
-              value={value}
+              value={value || {formatted_address: inputValue}}
               includeInputInList
               onChange={(event: any, newValue: PlaceType | null) => {
                 setLocationValue(newValue);
@@ -445,31 +445,33 @@ const EditProfileModal = ({
               }}
               disableClearable={false}
               // className={className}
-              renderInput={(params) => <TextField 
-                {...params}            
-                label="addr" 
-                placeholder='address'
-                autoComplete='off'
-                type='text'
-                className={_styles.hiddenLabel}
-              />
-            }
-
-          // defaultValue={defaultValue}
-          // {...rest}
+              renderInput={(params) => {
+                console.log('params',params,address);
+                return (<TextField
+                  {...params}
+                  // @ts-ignore
+                  // value={address}
+                  label="input address"
+                  placeholder='address'
+                  autoComplete='off'
+                  type='text'
+                  className={_styles.hiddenLabel}
+                />)
+              }}
+            // {...rest}
             />
             <div className={styles.profileFormGroup + " " + styles.mapWrapper}>
-                <GoogleMap
-                  lat={Number(value?.geometry.location.lat())}
-                  lng={Number(value?.geometry.location.lng())}
-                  ref={mapRef}
-                  gestureHandling='auto'
-                  zoomControl={true}
-                  fullscreenControl={false}
-                  streetViewControl={true}
-                  clickable={true}
-                  infoWindow={"true"}
-                />
+              <GoogleMap
+                lat={Number(value?.geometry.location.lat()) || Number(latitude)}
+                lng={Number(value?.geometry.location.lng()) || Number(longitude as String)}
+                ref={mapRef}
+                gestureHandling='auto'
+                zoomControl={true}
+                fullscreenControl={false}
+                streetViewControl={true}
+                clickable={true}
+                infoWindow={value?.formatted_address || address}
+              />
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
@@ -487,8 +489,8 @@ const EditProfileModal = ({
                 value={yearsOfExperience}
                 options={formattedXpLevelList}
                 hiddenLabel
-                onChange={(e) => {
-                  setYearsOfExperience(e.target.value)
+                onChange={(e,v) => {
+                  setYearsOfExperience(v.props.value)
                 }}
               />
             </div>
@@ -511,34 +513,25 @@ const EditProfileModal = ({
                 {errors.summary && errorText(errors.summary.message as any)}
               </div>
             </div> */}
-
-
-
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
                 {lang.accountSetting.email}
               </Text>
+              {/* <Tooltip title={"如需修改请去详情页"}>
+               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
+
+              </Tooltip> */}
             </div>
             <div className={styles.profileFormGroup}>
-              {email}<InfoOutlinedIcon ></InfoOutlinedIcon>
-              {/* <TextField variant='filled' value={email} className={_styles.hiddenLabel} disabled></TextField> */}
+              {email}
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
                 {lang.newGetStarted.phone}
               </Text>
-              <Tooltip title={"如需修改请去详情页"}>
-               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
-
-              </Tooltip>
             </div>
             <div className={styles.profileFormGroup}>
-            {phone_num}
-              <Tooltip title={"如需修改请去详情页"}>
-               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
-
-              </Tooltip>
-              {/* <TextField variant='filled' value={phone_num}  className={_styles.hiddenLabel} disabled></TextField> */}
+              {phone_num}
             </div>
           </div>
         </div>

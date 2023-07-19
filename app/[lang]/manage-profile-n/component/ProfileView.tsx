@@ -884,8 +884,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
             <div className={styles.slidesControlHighlight}>
               <div
                 className={classNames([styles.slidesControlItem, styles.slidesControlHighlight])}
-                onClick={scrollPrev}
-              >
+                onClick={scrollPrev}>
                 <img
                   src={CarouselRightRoundedBlueButton}
                   alt='next'
