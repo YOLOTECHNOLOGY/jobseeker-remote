@@ -27,7 +27,7 @@ const guestLogin = async (token) => {
         device_udid: deviceUdid,
     }).then(res => {
         console.log(res);
-    })
+    }).catch(err => console.log(err))
 }
 
 export default guestLogin

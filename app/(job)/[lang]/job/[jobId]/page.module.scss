@@ -1123,6 +1123,10 @@
       .desc {
         padding: 20px 0;
 
+        .jobseeker {
+          display: none;
+        }
+
         h5 {
           >div {
             display: flex;
@@ -1260,7 +1264,6 @@
         }
       }
 
-      .jobseeker,
       .upload {
         display: none;
       }
