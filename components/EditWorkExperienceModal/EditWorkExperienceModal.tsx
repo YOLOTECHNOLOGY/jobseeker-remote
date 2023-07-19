@@ -461,6 +461,9 @@ const EditWorkExperienceModal = ({
                   }}
                   options={currencyLists}
                 />
+
+              </div>
+              <div className={styles.field}>
                 {currency && (
                   <MaterialTextField
                     className={styles.fullWidth}

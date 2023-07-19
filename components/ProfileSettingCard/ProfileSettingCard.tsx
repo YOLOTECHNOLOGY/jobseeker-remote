@@ -20,7 +20,7 @@ const ProfileSettingCard = ({
 }: ProfileSettingCardProps) => {
   return (
     <div className={styles.cardContainer}>
-      <Text textColor='primaryBlue' textStyle='xl' bold>
+      <Text textColor='primaryBlue' textStyle='xl' bold style={{ fontSize: '24px' }}>
         {title}
       </Text>
       <Text tagName='p' textStyle='lg'>
