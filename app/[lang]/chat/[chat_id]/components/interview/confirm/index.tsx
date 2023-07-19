@@ -27,8 +27,8 @@ const ConfirmModal = (props: any) => {
         secondButtonText={dic.accept}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
-        handleFirstButton={() => actionsRef.current.back?.()}
-        handleSecondButton={() => actionsRef.current.accept?.({
+        handleFirstButton={() => actionsRef.current?.back?.()}
+        handleSecondButton={() => actionsRef.current?.accept?.({
             applicationId,
             inviteInterviewId: data.id,
         })}
