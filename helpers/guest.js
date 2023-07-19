@@ -2,6 +2,7 @@ import { guestLogin as guestServices } from 'store/services/auth/newLogin'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useUserAgent } from 'next-useragent'
 import { getCountryId, getLanguageId } from './country'
+import { getCookie } from 'helpers/cookies'
 const guestLogin = async (token) => {
     let deviceUdid = localStorage.getItem('deviceUdid')
     if (!deviceUdid) {
@@ -13,8 +14,8 @@ const guestLogin = async (token) => {
         console.log({ deviceUdid })
     }
     const browser = useUserAgent?.()?.browser
-    console.log(useUserAgent(), 111)
-
+    const accessToken = getCookie('accessToken')
+    if (accessToken) return
 
     guestServices({
         guest_role: 'jobseeker',
