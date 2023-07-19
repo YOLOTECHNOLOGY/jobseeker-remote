@@ -175,8 +175,8 @@ const ModalVerifyEmail = ({ email, isShowModal, handleModal }: ModalVerifyEmailP
       </div>
       <Text style={{ display: 'block' }}>
         Want to get the code on another email?{' '}
-        {/* <Link to={authPathToOldProject(null, '/dashboard/profile/settings')}> */}
-        <Link to='/dashboard/profile/settings'>
+        {/* <Link to={authPathToOldProject(null, '/settings')}> */}
+        <Link to='/settings'>
           <Text textColor='primaryBlue' underline>
             Change email
           </Text>
