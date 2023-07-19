@@ -1,20 +1,23 @@
 /* Components */
-import Text from 'components/Text'
 import Link from 'components/Link'
-// import { RightArrowIcon } from 'images'
 import Image from 'next/image'
 /* Helpers */
 import { formatTemplateString, truncateWords } from 'helpers/formatter'
 
 // Styles
 import styles from '../Companies.module.scss'
+import { useMemo } from 'react'
+import { getValueById } from 'helpers/config/getValueById'
 interface ICompanyCard {
   company: any
   transitions: Record<string, any>
   langKey: string
+  config: any
 }
 
-const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
+const CompanyCard = (props: ICompanyCard) => {
+  const { company, transitions, langKey, config } = props
+
   const companyUrl = company?.company_url || '/'
 
   const viewJobString = () => {
@@ -22,6 +25,10 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
       totalActiveJobs: `<span>${company.num_of_active_jobs}</span>`
     })
   }
+
+  const industryValue = useMemo(() => {
+    return getValueById(config, company?.industry_id, 'industry_id') || company?.industry
+  }, [company?.industry])
 
   return (
     <div className={styles.companyCard}>
@@ -36,8 +43,8 @@ const CompanyCard = ({ company, transitions, langKey }: ICompanyCard) => {
             {truncateWords(company.name, 60)}
           </Link>
         </div>
-        <p className={styles.companyCardCategory} title={company?.industry}>
-          {company?.industry}
+        <p className={styles.companyCardCategory} title={industryValue}>
+          {industryValue}
         </p>
         <Link
           to={`/${langKey}${companyUrl}/jobs`}

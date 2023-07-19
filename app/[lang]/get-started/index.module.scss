@@ -15,7 +15,14 @@
     height: 768px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(166.11deg, #FFFFFF 18.61%, #9DEDFF 59.16%, #1052FB 100.91%, #1052FB 133%, rgba(16, 82, 251, 0.89) 186.95%);
+    background: linear-gradient(
+      166.11deg,
+      #ffffff 18.61%,
+      #9dedff 59.16%,
+      #1052fb 100.91%,
+      #1052fb 133%,
+      rgba(16, 82, 251, 0.89) 186.95%
+    );
     opacity: 0.6;
     filter: blur(154.5px);
     transform: translateZ(0);
@@ -34,11 +41,11 @@
       cursor: pointer;
 
       span {
-        color: #B3B3B3;
+        color: #b3b3b3;
         font-size: 32px;
 
         &:hover {
-          color: #166AD4;
+          color: #166ad4;
         }
       }
     }
@@ -67,7 +74,7 @@
       position: absolute;
       height: 100%;
       width: 100%;
-      background: rgba(237, 237, 237, .9);
+      background: rgba(237, 237, 237, 0.9);
       left: 0;
       top: 0;
 
@@ -237,7 +244,7 @@
 
   .codeTips {
     font-size: 14px;
-    color: #4E5969;
+    color: #4e5969;
     display: flex;
     justify-content: center;
     margin-top: 25px;
@@ -247,7 +254,7 @@
       align-items: center;
       letter-spacing: 1px;
       font-size: 14px;
-      color: #4E5969;
+      color: #4e5969;
       cursor: pointer;
 
       &:hover {
@@ -266,7 +273,7 @@
       }
 
       &:hover {
-        color: #2378E5;
+        color: #2378e5;
       }
     }
   }
@@ -328,7 +335,6 @@
         border-color: transparent #fff transparent transparent;
       }
     }
-
   }
 
   .container {
@@ -352,7 +358,7 @@
       margin: 0;
 
       span {
-        color: #2378E5;
+        color: #2378e5;
       }
     }
 
@@ -409,7 +415,7 @@
       justify-content: space-around;
       padding-top: 24px;
 
-      >div {
+      > div {
         width: 130px;
 
         i,
@@ -419,7 +425,6 @@
           top: 16px;
           transform: translateX(-50%);
         }
-
       }
 
       .login_itemActive {
@@ -450,7 +455,6 @@
           .name {
             color: #2378e5;
           }
-
         }
 
         img {
@@ -470,17 +474,15 @@
           font-size: 16px;
           line-height: 18px;
           letter-spacing: 1px;
-          color: #1D2129;
+          color: #1d2129;
           padding-top: 3px;
-
         }
 
         .email {
           font-size: 14px;
           line-height: 21px;
           letter-spacing: 1px;
-          color: #86909C;
-
+          color: #86909c;
         }
       }
     }
@@ -513,7 +515,6 @@
       }
     }
 
-
     .captcha {
       .codeBox {
         display: flex;
@@ -526,8 +527,7 @@
           height: 60px;
           margin-right: 12px;
           background: #fff;
-          border-bottom: 2px solid #E4E4E4;
-
+          border-bottom: 2px solid #e4e4e4;
 
           &.itemContentActive::before {
             position: absolute;
@@ -537,7 +537,7 @@
             width: 2px;
             height: 50%;
             margin-left: -1px;
-            border: 1px solid #2378E5;
+            border: 1px solid #2378e5;
             animation: rc-captcha-input-flash steps(2) 1s infinite;
             content: ' ';
           }
@@ -555,24 +555,23 @@
       }
 
       .resendCode {
-        color: #2379EA;
-        ;
+        color: #2379ea;
       }
 
       &.captchaThemeBox {
         .codeBox {
           .itemContent {
-            color: #2378E5;
-            border-bottom: 2px solid #E4E4E4;
+            color: #2378e5;
+            border-bottom: 2px solid #e4e4e4;
             font-size: 32px;
 
             &.itemContentActive {
               position: relative;
-              border-color: #2378E5;
+              border-color: #2378e5;
             }
 
             &.itemContentHit {
-              border-color: #2378E5;
+              border-color: #2378e5;
             }
           }
         }
@@ -596,7 +595,7 @@
       }
 
       h3 {
-        color: #1D2129;
+        color: #1d2129;
         text-align: center;
         font-size: 26px;
         font-style: normal;
@@ -608,7 +607,6 @@
     }
 
     .phoneNumber {
-
       .item {
         margin-top: 16px;
 
@@ -630,7 +628,7 @@
       .btn {
         width: 100%;
         border: 1px solid #2378e5;
-        color: #2378E5;
+        color: #2378e5;
         font-weight: 700;
         font-size: 14px;
         height: 60px;
@@ -649,9 +647,9 @@
 
         &:disabled {
           cursor: not-allowed;
-          color: #B8B8B8;
-          background: #F6F6F6;
-          border: 1px solid #F6F6F6;
+          color: #b8b8b8;
+          background: #f6f6f6;
+          border: 1px solid #f6f6f6;
         }
       }
 
@@ -682,7 +680,7 @@
           font-size: 16px;
           align-items: center;
           letter-spacing: 1px;
-          color: #7D7D7D;
+          color: #7d7d7d;
           padding-bottom: 26px;
           word-break: break-all;
           padding-top: 10px;
@@ -712,8 +710,7 @@
           margin: 27px 0 37px;
 
           .resendCode {
-            color: #2379EA;
-            ;
+            color: #2379ea;
             cursor: pointer;
           }
         }
@@ -731,7 +728,7 @@
         }
 
         .checkYourSpam {
-          color: #1D2129;
+          color: #1d2129;
           font-size: 16px;
           font-style: normal;
           font-weight: 400;
@@ -768,7 +765,6 @@
     .phone_text {
       font-weight: 400;
     }
-
   }
 
   .emailFactor {
@@ -791,10 +787,10 @@
       font-size: 18px;
       line-height: 24px;
       letter-spacing: 1px;
-      color: #1D2129;
+      color: #1d2129;
 
       span {
-        color: #1D2129;
+        color: #1d2129;
       }
     }
   }
@@ -832,7 +828,7 @@
     border-radius: 8px;
     text-align: center;
     height: 60px;
-    border: 1px solid #ECECEC;
+    border: 1px solid #ececec;
     letter-spacing: 0.0075em;
     color: #1d2129;
     line-height: 60px;
@@ -849,17 +845,16 @@
       top: 16px;
       font-style: normal;
       font-size: 24px;
-
     }
   }
 
   .login_itemActive {
     color: #fff;
-    background: #2378E5;
-    box-shadow: 0px 7px 8px 0px #D8E5FF;
+    background: #2378e5;
+    box-shadow: 0px 7px 8px 0px #d8e5ff;
 
     &:hover {
-      background-color: #2378E5;
+      background-color: #2378e5;
     }
   }
 
@@ -885,8 +880,6 @@
     //     margin-bottom: 0
     //   }
     // }
-
-
   }
 }
 
