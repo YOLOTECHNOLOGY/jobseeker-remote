@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { NextPage } from 'next'
 
@@ -17,7 +18,7 @@ import {
 
 const Custom404Page: NextPage = () => {
   return (
-    <Layout>
+    <>
       <div className={styles.container}>
         <img src={NotFound404} />
         <Text textStyle='xxxl' bold className={styles.title}>
@@ -32,7 +33,7 @@ const Custom404Page: NextPage = () => {
           </Link>
         </MaterialButton>
       </div>
-    </Layout>
+    </>
   )
 }
 

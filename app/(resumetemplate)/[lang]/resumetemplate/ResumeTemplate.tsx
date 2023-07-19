@@ -1,7 +1,8 @@
+'use client'
 import { useCallback, useState, useEffect } from 'react'
 
 /* Vendors */
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import classNames from 'classnames/bind'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useSelector } from 'react-redux'
@@ -148,7 +149,7 @@ const ResumeTemplate = ({ lang, query }: any) => {
 
   const { resumetemplate } = lang
   return (
-    <Layout lang={lang}>
+    <>
       {/* <SEO
         title='Free Resume Template to Edit & Download | Bossjob.ph'
         description='Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!'
@@ -355,30 +356,8 @@ const ResumeTemplate = ({ lang, query }: any) => {
           </div>
         )}
       </div>
-    </Layout>
+    </>
   )
-}
-
-export async function getServerSideProps({ req, query }) {
-  const accessToken = req.cookies.accessToken
-
-  if (accessToken) {
-    return {
-      redirect: {
-        destination: `${process.env.OLD_PROJECT_URL}/${query.lang}/dashboard/profile/jobseeker`,
-        permanent: false
-      }
-    }
-  }
-  return {
-    props: {
-      query: query.lang,
-      seoMetaTitle: 'Free Resume Template to Edit & Download | Bossjob.ph',
-      seoMetaDescription:
-        'Free resume template & sample for you to edit and download on Bossjob. Customize your resume and add career objectives, work experiences and job skills!',
-      canonicalUrl: '/resumetemplate'
-    }
-  }
 }
 
 export default ResumeTemplate
