@@ -182,7 +182,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
                 marginRight: isMobile ? 0 : '16px',
                 marginBottom: isMobile ? '16px' : 0
               }}
-              value={nations.find((item) => item.value === nation.country)?.label}
+              value={nations.find((item) => item.value === nation.country)}
             />
           </ThemeProvider>
 
@@ -190,7 +190,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
             <Autocomplete
               disableClearable
               disablePortal
-              value={languages.find((item) => item.value === nation.lang)?.label}
+              value={languages.find((item) => item.value === nation.lang)}
               options={languages}
               onChange={(event, item: typeof languages[0]) => {
                 setNation((preState) => ({ ...preState, lang: item?.value }))

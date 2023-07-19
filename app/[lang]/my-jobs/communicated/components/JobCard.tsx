@@ -97,6 +97,9 @@ const Card = ({
       )
     })
   }
+
+  const VIf = (props) => props.show ? props.children : null
+
   return (
     <>
       {!loadingList ? (
@@ -104,15 +107,17 @@ const Card = ({
           {data?.length ? (
             <>
               {tabValue === 'interview' ? InterviewCard() : normalCard()}
-              <div className={styles.page}>
-                <Pagination
-                  count={total}
-                  page={page}
-                  variant='outlined'
-                  shape='rounded'
-                  onChange={handleChange}
-                />
-              </div>
+              <VIf show={total > 1}>
+                <div className={styles.page}>
+                  <Pagination
+                    count={total}
+                    page={page}
+                    variant='outlined'
+                    shape='rounded'
+                    onChange={handleChange}
+                  />
+                </div>
+              </VIf>
             </>
           ) : (
             <div className={styles.noData}>
