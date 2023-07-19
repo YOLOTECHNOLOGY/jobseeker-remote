@@ -342,6 +342,7 @@
     "defaultLocationSG": "Downtown Core",
     "search": {
       "location": "城市",
+      "location2": "Loc.",
       "title": "职位或者公司名称",
       "btn1": "搜索",
       "download": "下载App",
@@ -1208,7 +1209,7 @@
     "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
   },
   "newGetStarted": {
-    "title": "登录或注册Bossjob",
+    "title": "Welcome to",
     "employer": "招聘端",
     "tips": "寻找人才? 登录",
     "continueWith": "使用其他方式",
@@ -1226,7 +1227,7 @@
     "emailLabel": "邮件地址",
     "sendCode": "发送验证码",
     "welcomeBack": "欢迎回来",
-    "sendCodeDigit": "请输入我们发送的6位验证码",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
     "signUpAnAccount": "注册新帐户",
     "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件",
     "havingTrouble": "还是有问题？ 尝试注册",
@@ -1236,10 +1237,10 @@
     "resendCode": "重新发送验证码",
     "country": "国家",
     "phoneNumber": "电话号码",
-    "twoFactor": "启动双重验证",
+    "twoFactor": "Safety Verification",
     "authentication": "验证",
     "secure": "保护您的帐户并在您的电子邮件中接收代码",
-    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
     "setUpLater": "稍后设置",
     "enableTwoFactor": "双重验证",
     "authenticationEnabled": "验证已启用",
@@ -1255,7 +1256,10 @@
     "accounts": "帐号",
     "thisPhoneNumber": "此电话号码已关联的账号",
     "youNeedToChooseVerified": "您需要选择并验证Email来关联账号",
-    "validateErr": "电子邮件已注册。请更改绑定到另一个email"
+    "validateErr": "电子邮件已注册。请更改绑定到另一个email",
+    "checkYourSpam": "Check your spam mail if you didn’t receive code.",
+    "authenticationSuccessful": "Authentication Successful",
+    "Bossjob": "Bossjob"
   },
   "seo": {
     "ph": "菲律宾",
