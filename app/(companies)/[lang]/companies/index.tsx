@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import Text from 'components/Text'
 import CompanyCardList from './components/CompanyCardList'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
@@ -157,16 +156,12 @@ const Companies = (props: IProps) => {
 
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
-          <div className={styles.featuredCompanyWrapper}>
-            <div className={styles.featuredCompanyMain}>
-              <FeaturedCompanied
-                featuredCompany={featuredCompany}
-                langKey={langKey}
-                featureBanners={featureBanners}
-                lang={props.lang}
-              />
-            </div>
-          </div>
+          <FeaturedCompanied
+            featuredCompany={featuredCompany}
+            langKey={langKey}
+            featureBanners={featureBanners}
+            lang={props.lang}
+          />
         ) : null}
 
         {/* companies list */}

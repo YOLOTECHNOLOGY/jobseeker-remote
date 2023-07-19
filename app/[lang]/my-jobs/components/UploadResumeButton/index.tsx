@@ -1,41 +1,39 @@
-
 import styles from './index.module.scss'
-import { quickCreateResume, ncreaseUserConversionDetailsBackgroundarrowArrow } from 'images'
-import classNames from 'classnames/bind'
+import cx from 'classnames/bind'
 import Link from 'next/link'
+
+import Image from 'next/image'
+
+import { UploadDocIcon } from 'images'
+
 interface PropsType {
-  isShowBtn: Boolean
-  isShowArrowIcon?: Boolean
-  className?: String
+  classNames?: string
+  lang?: any
 }
 
-const UploadResumeButton = ({ isShowBtn, isShowArrowIcon, className }: PropsType) => {
+const UploadResumeButton = (props: PropsType) => {
+  const { classNames, lang } = props
+  console.log('lang', lang)
   return (
     <Link
       href={'/quick-upload-resume'}
       prefetch={true}
+      className={cx([styles.uploadResumeButton, classNames])}
     >
-      {isShowBtn ? (
-        <div
-          className={classNames([
-            styles.uploadResumeButton,
-            isShowArrowIcon ? styles.arrowContainer : '',
-            className
-          ])}
-          style={{ backgroundImage: 'url(' + quickCreateResume + ')' }}
-        >
-          <div
-            className={classNames([styles.uploadResumeButton_button])}
-            style={{
-              backgroundImage: isShowArrowIcon
-                ? 'url(' + ncreaseUserConversionDetailsBackgroundarrowArrow + ')'
-                : ''
-            }}
-          >
-            Upload Resume & Apply Job!
-          </div>
+      <div className={styles.uploadResumeButtonMain}>
+        <Image
+          className={styles.uploadResumeButtonImage}
+          src={UploadDocIcon}
+          width={60}
+          height={60}
+          alt='Upload resume'
+        />
+        <div className={styles.uploadResumeButtonRight}>
+          <span className={styles.uploadResumeButtonText1}>Upload Resume</span>
+          <span className={styles.uploadResumeButtonText2}>Apply Job! </span>
         </div>
-      ) : null}
+      </div>
+      <div className={cx([styles.uploadResumeButtonUpload])}>Login</div>
     </Link>
   )
 }
