@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { ReaderTPromise as M } from './monads'
 import { redirect } from 'next/navigation';
 export default command =>

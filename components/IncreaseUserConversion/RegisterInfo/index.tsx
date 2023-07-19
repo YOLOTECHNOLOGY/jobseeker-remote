@@ -154,12 +154,12 @@ const RegisterInfo = (props: any) => {
 
             <Text className={styles.RegisterAgreement} textStyle='sm'>
               {register.note}{' '}
-              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/'>
+              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/' rel="noreferrer">
                 {register.term}
               </a>
               <br />
               {register.and}{' '}
-              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/'>
+              <a target='_blank' href='https://blog.bossjob.ph/terms-and-conditions/' rel="noreferrer">
                 {register.policy}
               </a>
             </Text>

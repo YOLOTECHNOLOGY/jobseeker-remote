@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 
 import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
 import { fetchConfigService } from "store/services/config/fetchConfig";
