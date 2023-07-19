@@ -19,10 +19,7 @@ import PhoneComponent from './phoneComponent'
 import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-const countryForCountryCode = {
-  ph: '+63',
-  sg: '+65'
-}
+import { countryForPhoneCode } from 'helpers/country'
 
 const LoginForPhone = (props: any) => {
   const [countryValue, setCountry] = useState<string>('')
@@ -40,7 +37,7 @@ const LoginForPhone = (props: any) => {
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const countryList = getSmsCountryList(config)
   const country = getCountryKey()
-  const countryCode = countryForCountryCode[country]
+  const countryCode = countryForPhoneCode[country]
   const langKey = getLang()
   const router = useRouter()
   const dispatch = useDispatch()

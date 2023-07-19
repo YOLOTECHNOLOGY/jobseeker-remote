@@ -33,7 +33,7 @@ const PhoneLogin = (props: IProps) => {
     loginData,
     setLoginType
   } = props
-  console.log(props, 999)
+
   const searchParams = useSearchParams()
   const search = searchParams.get('step')
   const [step, setStep] = useState(1)
