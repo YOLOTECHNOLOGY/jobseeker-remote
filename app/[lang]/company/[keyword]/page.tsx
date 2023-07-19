@@ -18,6 +18,8 @@ import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
 import classNames from 'classnames';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+
 
 
 function a11yProps(index: number) {
@@ -61,7 +63,7 @@ const Page = () => {
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
+
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
 	if(isMobile){

@@ -21,6 +21,8 @@ import { ChatItem } from '../ChatPanel'
 import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 import "swiper/swiper.min.css";
 import { formatTemplateString } from 'helpers/formatter';
+import Lightbox from 'react-image-lightbox';
+
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -31,6 +33,8 @@ const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
 	const { config, detail } = useCompanyDetail();
 	const { width } = useWindowSize();
+	const [isOpenLightbox, setLightbox] = useState(false);
+	const [photoIndex, setPhotoIndex] = useState(0);
 	const isMobile = width < 767;
 	if (!props.company_business_info) {
 		props.company_business_info = {}
@@ -224,18 +228,39 @@ const CompanyInfo = (_props: Props) => {
 				</Section>
 			}
 			if (item.id === 'Company Album' && props.pictures?.length > 0) {
-				return <Section key={index} title={item.title} split={!noSplit}>
-					<div className={style.album_wrapper}>
-						{
-							padArrayToMultiple(props.pictures
-								.sort((a, b) => a.sort_order - b.sort_order))(3)
-								.map((item, index) => {
-									if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
-									return <Image key={index} src={item.url} alt="alt" className={style.album_item}
-										width={238} height={134} style={{ objectFit: "cover" }} />
-								})}
-					</div>
-				</Section>
+				return <>
+					<Section key={index} title={item.title} split={!noSplit}>
+						<div className={style.album_wrapper}>
+							
+							{
+								padArrayToMultiple(props.pictures
+									.sort((a, b) => a.sort_order - b.sort_order))(3)
+									.map((item, index) => {
+										if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
+										return <Image key={index} src={item.url} alt="alt" className={style.album_item}
+											onClick={() => {
+												setPhotoIndex(index)
+												setLightbox(true)
+											}}
+											width={238} height={134} style={{ objectFit: "cover" }} />
+									})}
+						</div>
+					</Section>
+					{isOpenLightbox && (
+          <Lightbox
+            mainSrc={props.pictures[photoIndex].url}
+            nextSrc={props.pictures[(photoIndex + 1) % props.pictures.length].url}
+            prevSrc={props.pictures[(photoIndex + props.pictures.length - 1) % props.pictures.length].url}
+            onCloseRequest={() => setLightbox(false)}
+            onMovePrevRequest={() =>
+              setPhotoIndex((photoIndex)=> (photoIndex + props.pictures.length - 1) % props.pictures.length)
+            }
+            onMoveNextRequest={() =>
+              setPhotoIndex((photoIndex)=> (photoIndex + 1) % props.pictures.length)
+            }
+          />
+        )}
+				</>
 			}
 			if (item.id === 'Overview') {
 				return BusinessInfo(index, item, noSplit, overview_fields, props);
@@ -509,6 +534,8 @@ export function MobileHiBoss() {
 
 function MobileAlbum() {
 	const { detail } = useCompanyDetail();
+	const [isOpenLightbox, setLightbox] = useState(false);
+	const [photoIndex, setPhotoIndex] = useState(0);
 	const res = detail.pictures;
 	if (!res?.length) return null;
 	return <div>
@@ -522,11 +549,34 @@ function MobileAlbum() {
 				res.map((item, index) => {
 					return <SwiperSlide key={index}>
 						<div className={style.mobile_album}>
-							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'></Image>
+							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'
+									onClick={()=>{
+										setPhotoIndex(index);
+										setLightbox(true);
+										
+									}}
+							></Image>
 						</div>
 					</SwiperSlide>
 				})
 			}
 		</Swiper>
+		{
+		isOpenLightbox && (
+			<Lightbox
+				mainSrc={res[photoIndex].url}
+				nextSrc={res[(photoIndex + 1) % res.length].url}
+				prevSrc={res[(photoIndex + res.length - 1) % res.length].url}
+				onCloseRequest={() => setLightbox(false)}
+				onMovePrevRequest={() =>
+					setPhotoIndex((photoIndex)=> (photoIndex + res.length - 1) % res.length)
+				}
+				onMoveNextRequest={() =>
+					setPhotoIndex((photoIndex)=> (photoIndex + 1) % res.length)
+				}
+			/>
+		)
+		}
+
 	</div>
 }

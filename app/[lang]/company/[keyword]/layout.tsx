@@ -18,6 +18,7 @@ import Footer from "components/Footer/Footer";
 import getConfigs from 'app/models/interpreters/config'
 import { redirect } from 'next/navigation'
 import { serveIsMobile } from 'helpers/utilities'
+import {ConfigType} from 'types/config';
 
 const configs = getConfigs([
 	['location_lists'],
@@ -59,7 +60,9 @@ async function CompanyLayout(props: {
 		keyword: string;
 		lang: string;
 	},
-	configs: any
+	configs: {
+		config: Partial<ConfigType>
+	}
 }) {
 	// URL -> /shop/shoes/nike-air-max-97
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
@@ -91,7 +94,14 @@ async function CompanyLayout(props: {
 			return result;
 		}, {});
 		const function_ids = Object.values(groupData).flat();
+		// props.configs.config.job_function_lists.reduce(()=>{
+		// 	return function_ids
+		// },[]);
 		const jobClasses = props.configs.config.job_functions.filter((item) => function_ids.includes(String(item.id)))
+		// props.configs.config.job_function_lists.reduce((pre,curr)=>{
+		// 	return pre.concat(curr)
+		// },[]);
+		
 			// const configkey =cookieStore.get(configKey);
 	// console.log('configkey', configkey);
 	// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
@@ -113,7 +123,7 @@ async function CompanyLayout(props: {
 					backgroundColor: '#ffffff',
 
 				}}>
-					<main data-string={{}}>
+					<main data-string={JSON.stringify({...props.configs.config.job_function_lists.slice(0,2)})}>
 						{props.children}
 					</main>
 				</section>

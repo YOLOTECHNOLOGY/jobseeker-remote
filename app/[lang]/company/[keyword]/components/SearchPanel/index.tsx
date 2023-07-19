@@ -334,8 +334,8 @@ const SearchPanel = (props: Props) => {
                 </div>
                 : !!jobsData.jobs.length ?
 
-                    !loading && jobsData.jobs.map((item) => {
-                        return <JobsSearchCard key={item.job_title + item.id} {...item} />
+                    !loading && jobsData.jobs.map((item,index) => {
+                        return <JobsSearchCard key={item.job_title + item.id + index} {...item} />
                     })
                     :
                     <div className={style.noData}>
