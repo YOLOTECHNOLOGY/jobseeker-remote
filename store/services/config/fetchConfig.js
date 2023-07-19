@@ -2,6 +2,12 @@ import configuredAxios from 'helpers/configuredAxios'
 const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
 import { flatMap } from 'lodash-es'
 import { getCountryKey, getLang, getLanguageCode } from 'helpers/country'
+
+const mainJobfunctions2Jobfunctions = main => {
+  return main.map(item => ({
+    [item.value]: item.sub_function_list
+  }))
+}
 const fetchConfigService = (defaultLang) => {
   const axios = configuredAxios('config', 'public')
   const [countryKey, lang] = [
@@ -9,7 +15,7 @@ const fetchConfigService = (defaultLang) => {
     getLanguageCode(defaultLang)
     ||
     getLanguageCode(getLang())]
-  console.log({defaultLang,})
+  console.log({ defaultLang, })
 
   return axios.get(`${countryKey}/list?language_code=${lang}`)
     .then(data => {
@@ -55,7 +61,7 @@ const fetchConfigService = (defaultLang) => {
           id: item.id
         }
       }) ?? [])
-      console.log(result, 'configOrgin')
+      result.job_function_lists = mainJobfunctions2Jobfunctions(result.main_job_function_lists ?? [])
       return result
     })
 }
