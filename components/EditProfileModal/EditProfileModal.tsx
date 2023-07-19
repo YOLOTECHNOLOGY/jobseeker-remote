@@ -306,6 +306,7 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
+        className={styles.modal}
 
       >
         <div className={styles.profile}>
@@ -393,6 +394,46 @@ const EditProfileModal = ({
                 {errors.birthdate && errorText(errors.birthdate.message as any)}
               </div>
             </div>
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>
+                {aboutMeModal.exp}
+              </Text>
+            </div>
+            <div className={styles.profileFormGroup}>
+              <MaterialBasicSelect
+                fieldRef={{
+                  ...register('yearsOfExperience')
+                }}
+                useID={true}
+                className={styles.profileFormInput}
+                label={aboutMeModal.exp}
+                value={yearsOfExperience}
+                options={formattedXpLevelList}
+                hiddenLabel
+                onChange={(e,v) => {
+                  setYearsOfExperience(v.props.value)
+                }}
+              />
+            </div>
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>
+                {lang.accountSetting.email}
+              </Text>
+            </div>
+            <div className={styles.profileFormGroup + ' '  + styles.info_layout}>
+              <span>{email}</span>
+              <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
+            </div>
+            
+            <div className={styles.profileFormTitle} >
+              <Text className={styles.profileFormTitleText}>
+                {lang.newGetStarted.phone}
+              </Text>
+            </div>
+            <div className={styles.profileFormGroup  + ' ' + styles.info_layout}>
+              <span>{phone_num}</span>
+              <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
+            </div>
 
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
@@ -446,11 +487,8 @@ const EditProfileModal = ({
               disableClearable={false}
               // className={className}
               renderInput={(params) => {
-                console.log('params',params,address);
                 return (<TextField
                   {...params}
-                  // @ts-ignore
-                  // value={address}
                   label="input address"
                   placeholder='address'
                   autoComplete='off'
@@ -462,6 +500,7 @@ const EditProfileModal = ({
             />
             <div className={styles.profileFormGroup + " " + styles.mapWrapper}>
               <GoogleMap
+                height={"500px"}
                 lat={Number(value?.geometry.location.lat()) || Number(latitude)}
                 lng={Number(value?.geometry.location.lng()) || Number(longitude as String)}
                 ref={mapRef}
@@ -473,66 +512,7 @@ const EditProfileModal = ({
                 infoWindow={value?.formatted_address || address}
               />
             </div>
-            <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {aboutMeModal.exp}
-              </Text>
-            </div>
-            <div className={styles.profileFormGroup}>
-              <MaterialBasicSelect
-                fieldRef={{
-                  ...register('yearsOfExperience')
-                }}
-                useID={true}
-                className={styles.profileFormInput}
-                label={aboutMeModal.exp}
-                value={yearsOfExperience}
-                options={formattedXpLevelList}
-                hiddenLabel
-                onChange={(e,v) => {
-                  setYearsOfExperience(v.props.value)
-                }}
-              />
-            </div>
-            {/* <div className={styles.profileFormGroup}>
-              <div className={styles.descriptionField}>
-                <TextField
-                  {...register('summary', {
-                    maxLength: { value: 4000, message: 'Please enter text within 4000' }
-                  })}
-                  className={styles.profileFormInput}
-                  label={aboutMeModal.summary}
-                  placeholder={aboutMeModal.summary}
-                  name='summary'
-                  variant='outlined'
-                  autoComplete='off'
-                  multiline
-                  rows={6}
-                  
-                />
-                {errors.summary && errorText(errors.summary.message as any)}
-              </div>
-            </div> */}
-            <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.accountSetting.email}
-              </Text>
-              {/* <Tooltip title={"如需修改请去详情页"}>
-               <InfoOutlinedIcon style={{fontSize: 12}} fontSize={'small'}></InfoOutlinedIcon>
 
-              </Tooltip> */}
-            </div>
-            <div className={styles.profileFormGroup}>
-              {email}
-            </div>
-            <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.newGetStarted.phone}
-              </Text>
-            </div>
-            <div className={styles.profileFormGroup}>
-              {phone_num}
-            </div>
           </div>
         </div>
       </Modal>
