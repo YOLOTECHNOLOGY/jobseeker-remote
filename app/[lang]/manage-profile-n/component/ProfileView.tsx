@@ -39,7 +39,7 @@ moment.locale('en')
 
 /* Assets */
 import {
-  //CarouselRightRoundedBlueButton,
+  // CarouselRightRoundedBlueButton,
   AddIcon,
   PencilIcon,
   TrashIcon,
