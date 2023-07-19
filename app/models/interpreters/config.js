@@ -26,7 +26,7 @@ export default usedConfigProps => {
         command.cata({
             fetchData: () => M((content) => {
                 const lang = getLang();
-                return cachedConfig(lang).then(data => {
+                return cachedConfig(content?.params?.lang ?? lang).then(data => {
                     return Result.success({
                         config: usedConfigProps
                             .map(valueForKeyPath(data))
