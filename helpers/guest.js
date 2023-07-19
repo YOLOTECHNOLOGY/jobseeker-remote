@@ -17,6 +17,7 @@ const guestLogin = async (token) => {
 
 
     guestServices({
+        guest_role: 'jobseeker',
         //  guest_id: '',
         country_id: getCountryId(),
         language_id: getLanguageId(),

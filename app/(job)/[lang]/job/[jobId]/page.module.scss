@@ -813,10 +813,19 @@
             word-break: break-all;
             white-space: nowrap;
             display: inline-block;
+            flex: 1;
+            width: 0;
           }
 
           &_value {
+            margin-left: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            white-space: nowrap;
+            display: inline-block;
             color: #707070;
+            width: 100px;
           }
         }
       }

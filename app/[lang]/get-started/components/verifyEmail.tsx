@@ -119,7 +119,7 @@ const verifyEmail = function (props) {
         <div className={styles.optBox}>
           {userId ? (
             <>
-              <h2>{newGetStarted.welcomeBack}! 🎉</h2>
+              <h2>{newGetStarted.welcomeBack} 🎉</h2>
 
               <div className={styles.avatar}>
                 <img className={styles.avatar_img} src={avatar} alt='avatar' />
