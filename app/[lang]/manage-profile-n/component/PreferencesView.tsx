@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo, Fragment } from 'react'
 
 /* Vendors */
-//import { useRouter } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
 
@@ -15,6 +14,8 @@ import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 
 /* Helpers */
 import { formatSalaryRange } from 'helpers/formatter'
+import { getCookie } from 'helpers/cookies'
+
 moment.locale('en')
 
 /* Assets */
@@ -36,6 +37,7 @@ import {
   changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 
 const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang }: any) => {
@@ -77,7 +79,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
               className={styles.jobPreferencesSectionDetailListWrapper}
               style={{ marginTop: '8px' }}
             >
-              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
+              <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle} >
                 {transitions.card.title}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.job_title}</Text>
@@ -176,16 +178,15 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
 }
 
 const PreferencesView = ({ lang }: any) => {
-  // const router = useRouter()
-  // const {
-  //   query: { tab }
-  // } = router
   const {
     manageProfile: { tab: tabDic }
   } = lang
   const { preference } = tabDic
+  const dispatch = useDispatch()
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const config = useSelector((store: any) => store?.config?.config?.response)
+  const accessToken = getCookie('accessToken')
+
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
     changeJobPreference(userDetail.job_preferences || [], config)
@@ -268,11 +269,18 @@ const PreferencesView = ({ lang }: any) => {
     const anyModalIsOpen = Object.values(modalState).filter((state) => state.showModal)
     body.style.overflow = anyModalIsOpen.length > 0 ? 'hidden' : 'auto'
   }, [modalState])
-  const handleVisibility = () => {
+
+  const handleVisibility = async () => {
     setOpenToWork(!openToWork)
-    updateUserVisibilityToWorkService({
-      is_visible: !openToWork
-    })
+    try {
+      await updateUserVisibilityToWorkService({
+        is_visible: !openToWork
+      })
+      dispatch(fetchUserOwnDetailRequest({ accessToken }))
+    } catch (err) {
+      Promise.resolve(err)
+    }
+
   }
   const handleModal = (modalName, showModal, data, callbackFunc) => {
     // ======...TODO
@@ -315,10 +323,30 @@ const PreferencesView = ({ lang }: any) => {
         lang={lang}
       />
 
-      <>
-        <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionContainerInner}>
           <div className={styles.sectionHeader}>
-            <Text bold textColor='primaryBlue' textStyle='xl'>
+            <Text
+              className={styles.openToWorkSectionTitle}
+              bold
+              textStyle='xl'
+              textColor='primaryBlue'
+              style={{ marginBottom: '15px', fontSize: '24px' }}
+            >
+              {preference.openToWork.title}
+            </Text>
+          </div>
+
+          <FormControlLabel
+            control={<Switch checked={openToWork} onChange={handleVisibility} />}
+            label={<Text textStyle='lg'>{preference.openToWork.explain}</Text>}
+          />
+        </div>
+      </div>
+      <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
+        <div className={styles.sectionContainerInner}>
+          <div className={styles.sectionHeader}>
+            <Text bold textColor='primaryBlue' textStyle='xl' style={{ marginBottom: '15px', fontSize: '24px' }}>
               {preference.available}
             </Text>
           </div>
@@ -334,56 +362,40 @@ const PreferencesView = ({ lang }: any) => {
             </Text>
           </div>
         </div>
-        <div className={styles.sectionContainer}>
-          <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
-            {jobData[0]?.length < 3 && (
-              <div
-                className={styles.iconWrapperP}
-                onClick={() => handleModal('createJobPreference', true, null, null)}
-              >
-                <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
-              </div>
-            )}
 
-            <Text bold textColor='primaryBlue' textStyle='xl'>
-              {preference.card.header}
-            </Text>
-          </div>
-          <div>
-            <Text tagName='p' textStyle='lg'>
-              {preference.card.tips}
-            </Text>
-          </div>{' '}
-          <Fragment key={jobData[1]}>
-            {(jobData[0] ?? []).map((preference) => (
-              <RenderPreferencesView
-                lang={lang}
-                key={preference.id}
-                modalName='jobPreferences'
-                config={config}
-                userDetail={userDetail}
-                handleModal={handleModal}
-                preference={preference}
-              />
-            ))}
-          </Fragment>
-        </div>
-        <div className={styles.sectionContainer}>
-          <Text
-            className={styles.openToWorkSectionTitle}
-            bold
-            textStyle='xl'
-            textColor='primaryBlue'
-          >
-            {preference.openToWork.title}
+      </div>
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader} style={{ position: 'relative', width: '100%' }}>
+          {jobData[0]?.length < 3 && (
+            <div
+              className={styles.iconWrapperP}
+              onClick={() => handleModal('createJobPreference', true, null, null)}
+            >
+              <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
+            </div>
+          )}
+
+          <Text bold textColor='primaryBlue' textStyle='xl' style={{ marginBottom: '15px', fontSize: '24px' }}>
+            {preference.card.header}
           </Text>
-          <FormControlLabel
-            control={<Switch checked={openToWork} onChange={handleVisibility} />}
-            label={<Text textStyle='lg'>{preference.openToWork.explain}</Text>}
-          />
         </div>
-      </>
-
+        <div>
+          <Text tagName='p' textStyle='lg'>
+            {preference.card.tips}
+          </Text>
+        </div>{' '}
+        {(jobData[0] ?? []).map((preference) => (
+          <RenderPreferencesView
+            lang={lang}
+            key={preference.id}
+            modalName='jobPreferences'
+            config={config}
+            userDetail={userDetail}
+            handleModal={handleModal}
+            preference={preference}
+          />
+        ))}
+      </div>
     </Fragment >
   )
 }
