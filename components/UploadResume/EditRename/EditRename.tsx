@@ -21,7 +21,7 @@ import styles from './EditRename.module.scss'
 import { getCookie } from 'helpers/cookies'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
-import { useManageProfileData } from 'app/[lang]/manage-profile-n/DataProvider'
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
 import { useConfirm } from 'material-ui-confirm'
 type propsType = {
   id: number

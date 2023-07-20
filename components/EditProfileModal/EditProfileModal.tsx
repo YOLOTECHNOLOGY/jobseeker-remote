@@ -32,7 +32,7 @@ import styles from './EditProfileModal.module.scss'
 import { getCountryId } from 'helpers/country'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
-import { updateUserProfile } from 'app/[lang]/manage-profile-n/service'
+import { updateUserProfile } from 'app/[lang]/manage-profile/service'
 import { useLanguage } from 'app/components/providers/languageProvider';
 type EditProfileModalProps = {
   modalName: string
@@ -418,7 +418,7 @@ const EditProfileModal = ({
                 value={yearsOfExperience}
                 options={formattedXpLevelList}
                 hiddenLabel
-                onChange={(e,v) => {
+                onChange={(e, v) => {
                   setYearsOfExperience(v.props.value)
                 }}
               />
@@ -428,17 +428,17 @@ const EditProfileModal = ({
                 {lang.accountSetting.email}
               </Text>
             </div>
-            <div className={styles.profileFormGroup + ' '  + styles.info_layout}>
+            <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{email}</span>
               <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
             </div>
-            
+
             <div className={styles.profileFormTitle} >
               <Text className={styles.profileFormTitleText}>
                 {lang.newGetStarted.phone}
               </Text>
             </div>
-            <div className={styles.profileFormGroup  + ' ' + styles.info_layout}>
+            <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{phone_num}</span>
               <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
             </div>
@@ -484,7 +484,7 @@ const EditProfileModal = ({
               filterOptions={(x) => x}
               getOptionLabel={(option: any) => option.formatted_address || ''}
               size='small'
-              value={value || {formatted_address: inputValue}}
+              value={value || { formatted_address: inputValue }}
               includeInputInList
               onChange={(event: any, newValue: PlaceType | null) => {
                 setLocationValue(newValue);
