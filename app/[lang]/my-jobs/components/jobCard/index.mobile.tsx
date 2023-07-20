@@ -5,7 +5,7 @@ import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 // import { CloseIcon } from 'images'
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from '@mui/icons-material/Close'
 import useNotSuitable from './hooks'
 import NotSuitableModal from '../notSuitable'
 import classNames from 'classnames'
@@ -46,7 +46,7 @@ const JobCard = (props: any) => {
     getValueById(config, degree_id, 'degree_id')
   ].filter((a) => a)
   const router = useRouter()
-  const modalProps = useNotSuitable(preference.id, id)
+  const modalProps = useNotSuitable(preference?.id, id)
   const { showSelection, refreshing } = modalProps
 
   const transTime = (time: string) => {
@@ -116,7 +116,7 @@ const JobCard = (props: any) => {
             showSelection()
           }}
         >
-          <CloseIcon sx={{fontSize: '16px', color: '#707070'}} />
+          <CloseIcon sx={{ fontSize: '16px', color: '#707070' }} />
         </div>
       </div>
       <NotSuitableModal {...modalProps} lang={props.lang} />

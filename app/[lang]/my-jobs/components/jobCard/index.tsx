@@ -128,7 +128,7 @@ const JobCard = (props: any) => {
     const benefits = originJob?.job_benefits || []
     return benefits
       .map((benefit) => {
-        return getValueById(config, benefit.id, 'job_benefit_id', 'name')
+        return getValueById(config, benefit?.id, 'job_benefit_id', 'name')
       })
       .filter(Boolean)
       .join(' | ')
@@ -201,7 +201,7 @@ const JobCard = (props: any) => {
     }
   }, [showPopup, jobDetail, detailLoading])
 
-  const modalProps = useNotSuitable(preference.id, id)
+  const modalProps = useNotSuitable(preference?.id, id)
   const { showSelection, refreshing } = modalProps
   const [isChatHover, setIsChatHover] = useState(false)
 
