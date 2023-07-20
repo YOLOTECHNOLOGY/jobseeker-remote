@@ -1,32 +1,22 @@
 import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
 
 /* Vendors */
-import { END } from 'redux-saga'
-import { wrapper } from 'store'
-import { useRouter } from 'next/router'
+
 import { useDispatch, useSelector } from 'react-redux'
-import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 
 /* Redux actions */
-import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
 import { manageUserLinksRequest } from 'store/actions/users/manageUserLinks'
 
 /* Components */
-import Layout from 'components/Layout'
+// import Layout from 'components/Layout'
 import Text from 'components/Text'
-import ProfileLayout from 'components/ProfileLayout'
 import ProfileSettingCard from 'components/ProfileSettingCard'
-import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
-import SeeMore from 'components/SeeMore'
 import Link from 'components/Link'
-import EditJobPreferencesDeleteModal from 'components/EditJobPreferencesDeleteModal'
-import EditProfileModal from 'components/EditProfileModal'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
@@ -35,37 +25,31 @@ import EditLinkModal from 'components/EditLinkModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import { formatSalary, formatSalaryRange, getYearMonthDiffBetweenDates } from 'helpers/formatter'
+import { formatSalary, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 moment.locale('en')
 
 /* Assets */
 import {
-  CarouselRightRoundedBlueButton,
   AddIcon,
   PencilIcon,
   TrashIcon,
-  HighlightAboutYouIcon,
-  HighlightEducationIcon,
-  HighlightSkillIcon,
-  HighlightWorkExpIcon,
 } from 'images'
 
 /* Styles */
-import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
-import { Chip, FormControlLabel, Switch } from '@mui/material'
+import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 
-import { Left } from './icons/left'
 import {
-  changeCompanyIndustry
+  changeCompanyIndustry,
+  changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
 
 
-const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any) => {
+const ProfileView = ({ lang }: any) => {
   const {
     manageProfile: {
       tab: { profile }
@@ -74,13 +58,16 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
   const dispatch = useDispatch()
   const { width } = useWindowDimensions()
   const isMobile = width < 768 ? true : false
+
+  const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const config = useSelector((store: any) => store?.config?.config?.response)
   const {
-    first_name: firstName,
-    last_name: lastName,
-    birthdate,
-    location,
-    xp_lvl: expLevel,
-    description,
+    // first_name: firstName,
+    // last_name: lastName,
+    // birthdate,
+    // location,
+    // xp_lvl: expLevel,
+    // description,
     work_experiences: workExperiences,
     educations,
     skills,
@@ -88,68 +75,71 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     websites
   } = userDetail
   useMemo(() => {
+    changeUserInfoValue(userDetail, config)
+    return userDetail
+  }, [userDetail, config])
+
+  useMemo(() => {
     changeCompanyIndustry(workExperiences, config)
   }, [workExperiences])
 
-
-  // console.log('workExperiences:', userDetail)
-  // const handleModal = (modalName, showModal, data, callbackFunc) => {
-  //   // ======...TODO
-  //   setModalState((rest) => ({
-  //     ...rest,
-  //     [modalName]: {
-  //       showModal: showModal,
-  //       data: data
-  //     }
-  //   }))
-  //   if (callbackFunc) {
-  //     callbackFunc()
-  //   }
-  // }
-  // const [modalState, setModalState] = useState({
-  //   profile: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   workExperience: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   education: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   skills: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   links: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   license: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   jobPreferencesAvailibility: {
-  //     showModal: false,
-  //     data: null
-  //   },
-  //   createJobPreference: {
-  //     showModal: false,
-  //     data: null
-  //   }
-  // })
+  const handleModal = (modalName, showModal, data, callbackFunc) => {
+    // ======...TODO
+    setModalState((rest) => ({
+      ...rest,
+      [modalName]: {
+        showModal: showModal,
+        data: data
+      }
+    }))
+    if (callbackFunc) {
+      callbackFunc()
+    }
+  }
+  const [modalState, setModalState] = useState({
+    profile: {
+      showModal: false,
+      data: null
+    },
+    workExperience: {
+      showModal: false,
+      data: null
+    },
+    education: {
+      showModal: false,
+      data: null
+    },
+    skills: {
+      showModal: false,
+      data: null
+    },
+    links: {
+      showModal: false,
+      data: null
+    },
+    license: {
+      showModal: false,
+      data: null
+    },
+    jobPreferencesAvailibility: {
+      showModal: false,
+      data: null
+    },
+    createJobPreference: {
+      showModal: false,
+      data: null
+    }
+  })
 
   const { currency_lists } = config
-  const isProfileInformationFilled = !!(
-    firstName &&
-    lastName &&
-    birthdate &&
-    location &&
-    expLevel &&
-    description
-  )
+  // const isProfileInformationFilled = !!(
+  //   firstName &&
+  //   lastName &&
+  //   birthdate &&
+  //   location &&
+  //   expLevel &&
+  //   description
+  // )
 
   const validProfileInformationFilled = (profile) => {
     return !!(
@@ -162,68 +152,14 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     )
   }
 
-  const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
+  // const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   const jobCategoryList = getJobCategoryList(config).map((category) => {
     return {
       label: category.value,
       value: category.id
     }
   })
-  const jobData = useMemo(() => {
-    return [userDetail?.job_preferences || [], Date.now()]
-  }, [userDetail?.job_preferences])
-  const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
 
-
-  const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
-  const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
-
-  // Display button after a few sec to prevent weird MUI bug when it's within caoursel
-  const [isCarouselButtonVisible, setIsCarouselButtonVisible] = useState(false)
-
-  const emblaOptions = {
-    align: 'start',
-    loop: true,
-    skipSnaps: false,
-    inViewThreshold: 0.7,
-    slidesToScroll: width < 799 ? 1 : 2
-  }
-
-  const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions as any)
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollNext()
-    }
-  }, [emblaApi])
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollPrev()
-    }
-  }, [emblaApi])
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-  }, [emblaApi])
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsCarouselButtonVisible(true)
-    }, 300)
-  }, [])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on('select', onSelect)
-    emblaApi.reInit()
-  }, [emblaApi, onSelect])
-
-  const reInitEmbla = () => {
-    if (!emblaApi) return
-    emblaApi.reInit(emblaOptions as any)
-  }
 
   useEffect(() => {
     let count = 0
@@ -240,30 +176,18 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     if (!validProfileInformationFilled(userDetail)) {
       count += 1
     }
-
-    if (!isMobile) {
-      setIsSliderButtonVisible(() => count > 2)
-      reInitEmbla()
-    }
-    if (isMobile) {
-      setIsSliderButtonVisible(() => count > 1)
-      reInitEmbla()
-    }
-    if (count === 0) {
-      setIsHighlightSectionVisible(false)
-    }
   }, [userDetail])
 
   const handleAddData = (type) => {
     switch (type) {
       case 'workExperience':
-        handleModal(type, true)
+        handleModal(type, true, null, null)
       case 'education':
-        handleModal(type, true)
+        handleModal(type, true, null, null)
       case 'license':
-        handleModal(type, true)
+        handleModal(type, true, null, null)
       case 'links':
-        handleModal(type, true)
+        handleModal(type, true, null, null)
       default:
         break
     }
@@ -272,32 +196,32 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
   const handleEditData = (type, data) => {
     switch (type) {
       case 'workExperience':
-        handleModal(type, true, data)
+        handleModal(type, true, data, null)
       case 'education':
-        handleModal(type, true, data)
+        handleModal(type, true, data, null)
       case 'license':
-        handleModal(type, true, data)
+        handleModal(type, true, data, null)
       case 'links':
-        handleModal(type, true, data)
+        handleModal(type, true, data, null)
       default:
         break
     }
   }
 
   const handleWorkExpModal = (workExp = null) => {
-    handleModal('workExperience', true, workExp)
+    handleModal('workExperience', true, workExp, null)
   }
 
   const handleEducationModal = (education = null) => {
-    handleModal('education', true, education)
+    handleModal('education', true, education, null)
   }
 
   const handleLicenseAndCertificationsModal = (license = null) => {
-    handleModal('license', true, license)
+    handleModal('license', true, license, null)
   }
 
   const handleLinksModal = (link = null) => {
-    handleModal('links', true, link)
+    handleModal('links', true, link, null)
   }
 
   const getEducationLang = (eduction: any) => {
@@ -344,7 +268,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
-          <Text textStyle='xl' textColor='primaryBlue' bold>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {/* Work Experience */}
             {profile.exp.title}
           </Text>
@@ -375,7 +299,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
             return (
               <div key={workExp.id} className={styles.workExpSection}>
                 <div className={styles.titleWrapper}>
-                  <Text textStyle='lg' bold>
+                  <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
                     {workExp.job_title}
                   </Text>
                   <div className={styles.iconWrapperDouble}>
@@ -467,7 +391,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
-          <Text textStyle='xl' textColor='primaryBlue' bold>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {profile.edu.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
@@ -490,7 +414,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
             return (
               <div key={education.id} className={styles.educationSection}>
                 <div className={styles.titleWrapper}>
-                  <Text textStyle='lg' bold>
+                  <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
                     {education.school}
                   </Text>
                   <div className={styles.iconWrapperDouble}>
@@ -540,29 +464,40 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
-          <Text textStyle='xl' textColor='primaryBlue' bold>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {profile.skill.title}
           </Text>
-          <div className={styles.iconWrapper} onClick={() => handleModal('skills', true)}>
+          <div className={styles.iconWrapper} onClick={() => handleModal('skills', true, null, null)}>
             <img src={AddIcon} width='14' height='14' />
           </div>
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            <SeeMore
-              count={10}
+            {
+              skills.map((skill, i) => <Chip
+                key={i}
+                className={styles.skillChip}
+                label={skill}
+              // variant='filled'
+              // color='info'
+              // size='small'
+              />)
+            }
+
+            {/* <SeeMore
+              count={null}
               items={skills}
               renderElement={(i, skill) => (
                 <Chip
                   key={i}
                   className={styles.skillChip}
                   label={skill}
-                  variant='filled'
-                  color='info'
-                  size='small'
+                // variant='filled'
+                // color='info'
+                // size='small'
                 />
               )}
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -574,7 +509,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
-          <Text textStyle='xl' textColor='primaryBlue' bold>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {profile.link.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
@@ -593,7 +528,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
                       external
                       title={link.title}
                     >
-                      <Text textStyle='lg' bold>
+                      <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
                         {link.title}
                       </Text>
                     </Link>
@@ -645,7 +580,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
     return (
       <div className={styles.sectionContainer}>
         <div className={styles.sectionHeader}>
-          <Text textStyle='xl' textColor='primaryBlue' bold>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {/* Licenses And Certifications */}
             {profile.licenses.title}
           </Text>
@@ -671,7 +606,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
             return (
               <div key={licenseCertification.id} className={styles.licenseCertificationSection}>
                 <div className={styles.titleWrapper}>
-                  <Text textStyle='lg' bold>
+                  <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
                     {licenseCertification.title}
                   </Text>
                   <div className={styles.iconWrapperDouble}>
@@ -724,177 +659,6 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
 
   return (
     <Fragment>
-      {isHighlightSectionVisible && (
-        <div className={styles.highlightContainer}>
-          <Text textStyle='xl' bold>
-            {profile.findYou}
-            {/* Let employer find you faster! */}
-          </Text>
-          {isSliderButtonVisible && (
-            <div
-              className={classNames([
-                styles.slidesLeftControlHighlight,
-                styles.slidesControlHighlight
-              ])}
-            >
-              <div
-                className={classNames([
-                  styles.slidesControlItem,
-                  styles.slidesLeftControlHighlight,
-                  styles.slidesLeftControlHighlight
-                ])}
-                onClick={scrollNext}
-              >
-                <Left />
-              </div>
-            </div>
-          )}
-          <div className={styles.emblaHighlight}>
-            <div className={styles.emblaViewport} ref={emblaRef}>
-              <div className={styles.emblaContainer}>
-                {workExperiences?.length === 0 && (
-                  <div className={styles.emblaSlideHighlight}>
-                    <div className={styles.highlightCard}>
-                      <div className={styles.highlightCardHeader}>
-                        <img src={HighlightWorkExpIcon} height='35px' />
-                        <Text textStyle='lg' bold>
-                          {profile.exp.addWorkExp}
-                        </Text>
-                      </div>
-                      <Text textStyle='lg' className={styles.highlightCardContent}>
-                        {profile.exp.noExpTips}
-                        {/* Showcase your past contributions and that you can be an asset to potential
-                        employer */}
-                      </Text>
-                      {isCarouselButtonVisible && (
-                        <MaterialButton
-                          variant='contained'
-                          size='medium'
-                          className={styles.highlightCardButton}
-                          onClick={() => handleModal('workExperience', true)}
-                          style={{ height: '44px', textTransform: 'none' }}
-                        >
-                          <Text textStyle='lg' textColor='white'>
-                            {profile.exp.addExp}
-                            {/* Add experience */}
-                          </Text>
-                        </MaterialButton>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {educations?.length === 0 && (
-                  <div className={styles.emblaSlideHighlight}>
-                    <div className={styles.highlightCard}>
-                      <div className={styles.highlightCardHeader}>
-                        <img src={HighlightEducationIcon} height='35px' />
-                        <Text textStyle='lg' bold>
-                          {/* Add education */}
-                          {profile.edu.title}
-                        </Text>
-                      </div>
-                      <Text textStyle='lg' className={styles.highlightCardContent}>
-                        {/* Highlight your academic qualifications and achievements */}
-                        {profile.edu.noDataTips}
-                      </Text>
-                      {isCarouselButtonVisible && (
-                        <MaterialButton
-                          variant='contained'
-                          size='medium'
-                          className={styles.highlightCardButton}
-                          onClick={() => handleModal('education', true)}
-                          style={{ height: '44px', textTransform: 'none' }}
-                        >
-                          <Text textStyle='lg' textColor='white'>
-                            {/* Add education */}
-                            {profile.edu.addEdu}
-                          </Text>
-                        </MaterialButton>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {skills?.length === 0 && (
-                  <div className={styles.emblaSlideHighlight}>
-                    <div className={styles.highlightCard}>
-                      <div className={styles.highlightCardHeader}>
-                        <img src={HighlightSkillIcon} height='35px' />
-                        <Text textStyle='lg' bold>
-                          {/* Add skill */}
-                          {profile.skill.title}
-                        </Text>
-                      </div>
-                      <Text textStyle='lg' className={styles.highlightCardContent}>
-                        {/* Include relevant skill and keywords to boost your chances of getting an
-                        interview. */}
-                        {profile.skill.noDataTips}
-                      </Text>
-                      {isCarouselButtonVisible && (
-                        <MaterialButton
-                          variant='contained'
-                          size='medium'
-                          className={styles.highlightCardButton}
-                          onClick={() => handleModal('skills', true)}
-                          style={{ height: '44px', textTransform: 'none' }}
-                        >
-                          <Text textStyle='lg' textColor='white'>
-                            {/* Add skill */}
-                            {profile.skill.addSkill}
-                          </Text>
-                        </MaterialButton>
-                      )}
-                    </div>
-                  </div>
-                )}
-                {!isProfileInformationFilled && (
-                  <div className={styles.emblaSlideHighlight}>
-                    <div className={styles.highlightCard}>
-                      <div className={styles.highlightCardHeader}>
-                        <img src={HighlightAboutYouIcon} height='35px' />
-                        <Text textStyle='lg' bold>
-                          {profile.informationCard.title}
-                          {/* Complete all information about you */}
-                        </Text>
-                      </div>
-                      <Text textStyle='lg' className={styles.highlightCardContent}>
-                        {/* Help the recruiter to know more about you and connect more easily with you. */}
-                        {profile.informationCard.content}
-                      </Text>
-                      {isCarouselButtonVisible && (
-                        <MaterialButton
-                          variant='contained'
-                          size='medium'
-                          className={styles.highlightCardButton}
-                          onClick={() => handleModal('profile', true)}
-                          style={{ height: '44px', textTransform: 'none' }}
-                        >
-                          <Text textStyle='lg' textColor='white'>
-                            {/* Add information */}
-                            {profile.informationCard.btn}
-                          </Text>
-                        </MaterialButton>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-          {isSliderButtonVisible && (
-            <div className={styles.slidesControlHighlight}>
-              <div
-                className={classNames([styles.slidesControlItem, styles.slidesControlHighlight])}
-                onClick={scrollPrev}>
-                <img
-                  src={CarouselRightRoundedBlueButton}
-                  alt='next'
-                  className={styles.carouselNext}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
 
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
@@ -928,7 +692,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
           description={profile.skill.noDataTips} // 'Include relevant skill and keywords to boost your chances of getting an interview.'
           buttonText={profile.skill.addSkill} // 'Add skills'
           // eslint-disable-next-line
-          onClick={() => handleModal('skills', true)}
+          onClick={() => handleModal('skills', true, null, null)}
         />
       )}
 
@@ -955,14 +719,14 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
           onClick={() => handleLinksModal()}
         />
       )}
-      <EditProfileModal
+      {/* <EditProfileModal
         lang={lang}
         modalName='profile'
         showModal={modalState.profile.showModal}
         config={config}
         userDetail={userDetail}
         handleModal={handleModal}
-      />
+      /> */}
       <EditJobPreferencesModal
         lang={lang}
         modalName='createJobPreference'
@@ -1017,15 +781,7 @@ const ProfileView = ({ userDetail, handleModal, config, lang, modalState }: any)
         linkData={modalState.links.data}
         handleModal={handleModal}
       />
-      {/* <ProfileLayout
-        dic={tabDic}
-        userDetail={userDetail}
-        tabValue={tabValue}
-        setTabValue={setTabValue}
-        modalName='profile'
-        handleModal={handleModal}
-        unCompleted={unCompleted}
-      ></ProfileLayout> */}
+
     </Fragment>
   )
 }

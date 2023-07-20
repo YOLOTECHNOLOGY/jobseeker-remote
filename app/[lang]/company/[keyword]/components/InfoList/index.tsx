@@ -310,7 +310,7 @@ const CompanyInfo = (_props: Props) => {
 export default CompanyInfo
 
 
-const padArrayToMultiple = arr => function <T>(num: number) {
+export const padArrayToMultiple = arr => function <T>(num: number) {
 	const length = arr.length;
 	const remainder = length % num;
 	if (remainder === 0) {

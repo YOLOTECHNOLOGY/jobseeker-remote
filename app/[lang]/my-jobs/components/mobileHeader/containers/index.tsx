@@ -11,8 +11,7 @@ const Item = (props: any) => {
         style={{}}
         onClick={() => {
             if (!disabled) {
-                // @ts-ignore
-                router.push('/my-jobs/communicated?type=' + type, { forceOptimisticNavigation: true })
+                router.push('/my-jobs/communicated?type=' + type, { scroll: true })
             }
         }}
     >

@@ -14,7 +14,7 @@ import { jobseekerTokenValidate } from 'store/services/auth/jobseekersTokenValid
 import Script from 'next/script'
 import * as gtag from 'lib/gtag'
 import Head from 'next/head'
-const MaintenancePage = dynamic(() => import('./[lang]/maintenance'))
+const MaintenancePage = dynamic(() => import('../app/maintenance/page'))
 import * as fbq from 'lib/fpixel'
 import NotificationProvider from 'components/NotificationProvider'
 import IMProvider from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'

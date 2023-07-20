@@ -18,8 +18,9 @@ interface HamburgerProps {
   openState: boolean
   toggleMenu: Function
   disabled?: boolean
+  lang?: any
 }
-const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
+const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) => {
   const router = useRouter()
   const currentUser = getCookie('user')
   const currentToken = getCookie('accessToken')
@@ -51,7 +52,7 @@ const Hamburger = ({ toggleMenu, openState, disabled }: HamburgerProps) => {
     <div className={styles.hamburgerWrapper}>
       {!currentToken && (
         <div className={styles.hamburgerWrapper_getStarted} onClick={handleToGetStarted}>
-          Get Started
+          {lang.getStarted}
         </div>
       )}
 

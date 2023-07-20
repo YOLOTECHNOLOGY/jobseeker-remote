@@ -244,6 +244,7 @@ const EditWorkExperienceModal = ({
       workExperienceId: data ? data.id : null,
       workExperienceData: workExperienceData
     }
+
     dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }
 
@@ -279,7 +280,6 @@ const EditWorkExperienceModal = ({
     handleModal(modalName, false)
     handleResetForm()
   }
-
 
   return (
     <div>

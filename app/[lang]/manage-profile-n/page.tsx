@@ -7,10 +7,11 @@ import ProfileLayout from 'components/ProfileLayout'
 import EditProfileModal from 'components/EditProfileModal'
 import ResumeView from './component/ResumeView';
 import ProfileView from './component/ProfileView';
+import PreferencesView from './component/PreferencesView';
 
 const ManageProfilePage = () => {
   const lang = useLanguage();
-  const {profile : userDetail, config, fetchProfile} = useManageProfileData()
+  const { profile: userDetail, config, fetchProfile } = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
   const tab = searchParams.get('tab');;
   const {
@@ -70,29 +71,18 @@ const ManageProfilePage = () => {
     }
   })
 
-  console.log('useManageProfileData:', userDetail)
 
 
   return <>
-      <EditProfileModal
-        lang={lang}
-        modalName='profile'
-        showModal={modalState.profile.showModal}
-        config={config}
-        userDetail={userDetail}
-        handleModal={handleModal}
-        fetchProfile={fetchProfile}
-      />
-     <ProfileLayout
-        dic={tabDic}
-        userDetail={userDetail}
-        tabValue={tabValue}
-        setTabValue={setTabValue}
-        modalName='profile'
-        handleModal={handleModal}
-        unCompleted={unCompleted}
-      >
-        {/* {tabValue === 'profile' && (
+    <EditProfileModal
+      lang={lang}
+      modalName='profile'
+      showModal={modalState.profile.showModal}
+      config={config}
+      userDetail={userDetail}
+      handleModal={handleModal}
+      fetchProfile={fetchProfile}
+    />
     <ProfileLayout
       dic={tabDic}
       userDetail={userDetail}
@@ -102,24 +92,10 @@ const ManageProfilePage = () => {
       handleModal={handleModal}
       unCompleted={unCompleted}
     >
-      {/* {tabValue === 'profile' && (
-          <RenderProfileView
-            lang={lang}
-            userDetail={userDetail}
-            handleModal={handleModal}
-            config={config}
-          />
-        )} */}
-      {tabValue === 'profile' &&
-        <ProfileView
-          userDetail={userDetail}
-          handleModal={handleModal}
-          config={config}
-          lang={lang}
-          modalState={modalState}
-          setModalState={setModalState}
-        />}
-      {/* {tabValue === 'job-preferences' && <h1>hello preferences</h1>} */}
+
+
+      {tabValue === 'profile' && <ProfileView lang={lang} />}
+      {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
       {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
 
     </ProfileLayout>

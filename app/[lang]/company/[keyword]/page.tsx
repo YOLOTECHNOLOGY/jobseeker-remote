@@ -3,7 +3,7 @@ import * as React from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import CompanyInfo from './components/InfoList';
+import CompanyInfo, { padArrayToMultiple } from './components/InfoList';
 import Section from "./components/Section";
 import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
@@ -82,7 +82,7 @@ const Page = () => {
 					<div className={style.header_title}>
 						{detail.name}
 						{detail.is_verify &&
-							<Image width={16} height={16} className={style.header_title_verified}
+							<Image width={24} height={24} className={style.header_title_verified}
 								src={require('./components/assets/verify.svg').default.src}
 								alt='_'
 							/>}
@@ -138,7 +138,8 @@ const Page = () => {
 							 <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
-							{hotJobs.jobs.slice(0, 3).map((item) => {
+							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item) => {
+								if(!item) return <div className={style.jobs_item} style={{opacity: 0}}></div>;
 								return <div className={style.jobs_item} key={item.job_title}>
 									<Link 
 										href={`/${lang}${item.job_url}`}

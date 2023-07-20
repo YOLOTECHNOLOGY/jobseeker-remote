@@ -27,25 +27,29 @@ const checkBindNumber = (payload) => {
 }
 const getEmailByPhoneNumber = (payload) => {
   const axios = configuredAxios('auth', 'public')
-  return axios.post(`/phone-number`,payload)
+  return axios.post(`/phone-number`, payload)
 }
 const checkIsEmailUse = (payload) => {
-  const axios = configuredAxios('auth', 'protected')
-  return axios.post(`/check/is-email-use`,payload)
+  const axios = configuredAxios('auth', 'public')
+  return axios.post(`/check/is-email-use`, payload)
 }
 
 const getQrcode = (payload) => {
   const axios = configuredAxios('auth', 'protected')
-  return axios.post(`/qrcode/generate`,payload)
+  return axios.post(`/qrcode/generate`, payload)
 }
 
 const qrcodePolling = (payload) => {
   const axios = configuredAxios('auth', 'protected')
-  return axios.post(`/qrcode/polling`,payload)
+  return axios.post(`/qrcode/polling`, payload)
 }
 
+const guestLogin = (payload) => {
+  const axios = configuredAxios('auth', 'protected')
+  return axios.post(`/guest/login`, payload)
+}
 
-export { 
+export {
   phoneOtpenerate,
   verificationOtp,
   bindUserEmail,
@@ -54,5 +58,6 @@ export {
   getEmailByPhoneNumber,
   checkIsEmailUse,
   getQrcode,
-  qrcodePolling
+  qrcodePolling,
+  guestLogin
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo ,useContext} from 'react'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
 import styles from '../index.module.scss'
 import Stepper from './stepper'
 import FootBtn from './footBtn'
@@ -9,7 +9,7 @@ import { getCountryKey } from 'helpers/country'
 import { getCountryId } from 'helpers/country'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { usePathname } from 'next/navigation'
-import { createUserPreferencesService,updateUserPreferencesService } from 'store/services/users/addUserPreferences'
+import { createUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import {
   getSalaryOptions,
@@ -20,21 +20,18 @@ import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
 import { LinkContext } from 'app/components/providers/linkProvider'
-import {generateUserResumeService} from 'store/services/users/generateUserResume'
-import { getCookie,setCookie } from 'helpers/cookies'
-const countryForCurrency = {
-  ph: 'php',
-  sg: 'sgd'
-}
+import { generateUserResumeService } from 'store/services/users/generateUserResume'
+import { getCookie, setCookie } from 'helpers/cookies'
+import { countryForCurrency } from 'helpers/country'
 const EducationExperience = (props: any) => {
 
   const { lang, userDetail, config } = props
-  const {job_preferences,resumes} = userDetail
+  const { job_preferences, resumes } = userDetail
   const pathname = usePathname()
   const { push } = useContext(LinkContext)
   const preference = userDetail?.job_preferences?.[0]
   const [currencyLists] = useMemo(() => {
-    return [ getCurrencyList(config), getCountryList(config), ]
+    return [getCurrencyList(config), getCountryList(config),]
   }, [config])
 
   const minSalaryOptions = getSalaryOptions(config)
@@ -42,11 +39,12 @@ const EducationExperience = (props: any) => {
 
   const { handleSubmit, setValue, getValues, control } = useForm({
     defaultValues: {
-    minSalary: '',
-    maxSalary: '',
-    location:'',
-    currency: countryForCurrency[country]
-  } })
+      minSalary: '',
+      maxSalary: '',
+      location: '',
+      currency: countryForCurrency(country)
+    }
+  })
   const accessToken = getCookie('accessToken')
   // const [isShowCountry, setIsShowCountry] = useState(userDetail?.location === 'Overseas')
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
@@ -61,7 +59,7 @@ const EducationExperience = (props: any) => {
   const getMaxSalaryOptions = (minSalary) => {
     const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
     const maxSalaryOrg = maxSalaryOptions?.length > 0 ? maxSalaryOptions[0].value : null
-    setValue('maxSalary',maxSalaryOrg )
+    setValue('maxSalary', maxSalaryOrg)
     setMaxSalary(maxSalaryOrg)
     setMaxSalaryOptions(maxSalaryOptions)
   }
@@ -69,47 +67,47 @@ const EducationExperience = (props: any) => {
   const formattedLocationList = flatMap(locationList, (l) => l.locations)
 
   const location = useMemo(() => {
-    if(preference?.location_id){
+    if (preference?.location_id) {
       return formattedLocationList.find((l) => l.id === preference?.location_id)
     }
   }, [formattedLocationList, preference?.id])
 
-  useEffect(()=>{
-   if(preference?.id){
-    const  {salary_range_from,salary_range_to,location_id} = preference
-    const salaryFrom =Number(salary_range_from)
-    const maxSalaryOptions = getSalaryOptions(config, salaryFrom, true)
-    setMaxSalaryOptions(maxSalaryOptions)
-    setValue('minSalary', String(salaryFrom))
-    setValue('maxSalary',String(Number(salary_range_to)))
-    setValue('location',location)
-    setJobFunction({
-      id: preference?.function_job_title_id,
-      value: getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
-    })
-    setMaxSalary(salary_range_to)
-    setLocationData({
-      id:location_id
-    })
-   }
-  },[preference])
-  
   useEffect(() => {
-     if(minSalary){
+    if (preference?.id) {
+      const { salary_range_from, salary_range_to, location_id } = preference
+      const salaryFrom = Number(salary_range_from)
+      const maxSalaryOptions = getSalaryOptions(config, salaryFrom, true)
+      setMaxSalaryOptions(maxSalaryOptions)
+      setValue('minSalary', String(salaryFrom))
+      setValue('maxSalary', String(Number(salary_range_to)))
+      setValue('location', location)
+      setJobFunction({
+        id: preference?.function_job_title_id,
+        value: getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
+      })
+      setMaxSalary(salary_range_to)
+      setLocationData({
+        id: location_id
+      })
+    }
+  }, [preference])
+
+  useEffect(() => {
+    if (minSalary) {
       getMaxSalaryOptions(minSalary)
-     }
+    }
   }, [minSalary])
 
-  useEffect(()=>{  
-    if(jobFunction?.id && maxSalary && locationData){
+  useEffect(() => {
+    if (jobFunction?.id && maxSalary && locationData) {
       setIsDisabled(false)
-    }else{
+    } else {
       setIsDisabled(true)
     }
-  },[jobFunction,maxSalary,locationData])
+  }, [jobFunction, maxSalary, locationData])
 
   const handleUpdateProfile = async (data) => {
-    const { currency, location ,maxSalary,minSalary} = data || {}
+    const { currency, location, maxSalary, minSalary } = data || {}
     const params = {
       job_title: jobFunction.value || '',
       function_job_title_id: jobFunction.id,
@@ -120,77 +118,77 @@ const EducationExperience = (props: any) => {
       country_id: getCountryId(),
       location_id: location?.id || '',
     }
-     
+
     setLoading(true)
-    if(!resumes){
-      await generateUserResumeService({accessToken })
+    if (!resumes) {
+      await generateUserResumeService({ accessToken })
     }
-    
-    if(job_preferences?.length){
-       updateUserPreferencesService({
-        preferenceId:preference.id,
+
+    if (job_preferences?.length) {
+      updateUserPreferencesService({
+        preferenceId: preference.id,
         params
-       }).then(res=>{
-        if(res.data){
+      }).then(res => {
+        if (res.data) {
           jumPage();
         }
-       }).finally(()=>setLoading(false))
-     }else{ 
-       createUserPreferencesService({params}).then(res=>{
-        if(res.data){
+      }).finally(() => setLoading(false))
+    } else {
+      createUserPreferencesService({ params }).then(res => {
+        if (res.data) {
           jumPage()
         }
-       }).finally(()=>setLoading(false))
-     }
+      }).finally(() => setLoading(false))
+    }
   }
 
-//  const generateUserResume = ()=>{
-//   if(!resumes){
-//     generateUserResumeService({
-//       accessToken
-//     }).then(()=>{
-//       getUserInfo?.()
-//       jumPage();
-//     })
-//   }else{
-//     jumPage();
-//   }
-//  };
+  //  const generateUserResume = ()=>{
+  //   if(!resumes){
+  //     generateUserResumeService({
+  //       accessToken
+  //     }).then(()=>{
+  //       getUserInfo?.()
+  //       jumPage();
+  //     })
+  //   }else{
+  //     jumPage();
+  //   }
+  //  };
 
- const jumPage = () => {
-  // getUserInfo?.()
-  fetchUserOwnDetailService({accessToken}).then(res=>{
-    const userDetail = res?.data?.data
-    console.log({userDetail})
-    const userCookie = {
-      active_key: userDetail.active_key,
-      id: userDetail.id,
-      first_name: userDetail.first_name,
-      last_name: userDetail.last_name,
-      email: userDetail.email,
-      phone_num: userDetail.phone_num,
-      is_mobile_verified: userDetail.is_mobile_verified,
-      avatar: userDetail.avatar,
-      additional_info: userDetail.additional_info,
-      is_email_verify: userDetail.is_email_verify,
-      notice_period_id: userDetail.notice_period_id,
-      is_profile_completed: userDetail.is_profile_completed
-    }
-    setCookie('user',userCookie)
-    const isChatRedirect = localStorage.getItem('isChatRedirect')
-    const redirectPage  = sessionStorage.getItem('redirectPage')
-    if(isChatRedirect){
-      localStorage.removeItem('isChatRedirect')
-      push(isChatRedirect)
-    }else if (redirectPage) {
-      sessionStorage.removeItem('redirectPage')   
-      push(redirectPage)      
-    }  else{
-      push(`/${langKey}/my-jobs`)
-    }
-  })
- 
- }
+  const jumPage = () => {
+    // getUserInfo?.()
+    fetchUserOwnDetailService({ accessToken }).then(res => {
+      const userDetail = res?.data?.data
+      console.log({ userDetail })
+      const userCookie = {
+        active_key: userDetail.active_key,
+        id: userDetail.id,
+        first_name: userDetail.first_name,
+        last_name: userDetail.last_name,
+        email: userDetail.email,
+        phone_num: userDetail.phone_num,
+        is_mobile_verified: userDetail.is_mobile_verified,
+        avatar: userDetail.avatar,
+        additional_info: userDetail.additional_info,
+        is_email_verify: userDetail.is_email_verify,
+        notice_period_id: userDetail.notice_period_id,
+        is_profile_completed: userDetail.is_profile_completed
+      }
+      setCookie('user', userCookie)
+      const isChatRedirect = localStorage.getItem('isChatRedirect')
+      const redirectPage = sessionStorage.getItem('redirectPage')
+      if (isChatRedirect) {
+        localStorage.removeItem('isChatRedirect')
+        push(isChatRedirect)
+      } else if (redirectPage) {
+        sessionStorage.removeItem('redirectPage')
+        push(redirectPage)
+      } else {
+        push(`/${langKey}/my-jobs`)
+      }
+    })
+
+  }
 
 
   const {
@@ -209,11 +207,11 @@ const EducationExperience = (props: any) => {
   const backClick = () => {
     push(`${pathname}?step=3`)
   }
- 
+
   return (
     <div className={styles.work}>
       <div className={styles.workContainer}>
-        <Stepper step={2} lang={lang}/>
+        <Stepper step={2} lang={lang} />
         <div className={styles.box}>
           <div className={styles.headerInfo}>{desiredJob}</div>
           <div className={styles.body}>
@@ -234,7 +232,7 @@ const EducationExperience = (props: any) => {
             </div>
 
             <p className={styles.title}>
-             {desiredLocation}<span>*</span>
+              {desiredLocation}<span>*</span>
             </p>
             <div className={styles.stepFieldDateItem}>
               <Controller
@@ -307,73 +305,73 @@ const EducationExperience = (props: any) => {
                     }}
                   />
                 </div>
-                <div className={styles.salaryBox}> 
-                <div className={styles.minSalary}>
-                  <Controller
-                    control={control}
-                    name={'minSalary'}
-                    rules={{ validate: (value) => !!value || thisFieldIsRequired }}
-                    render={({ field, fieldState }) => {
-                      const { value, onChange } = field
-                      return (
-                        <MaterialBasicSelect
-                         label={lang?.profile?.minSalary}
-                          options={minSalaryOptions}
-                          required
-                          {...fieldState}
-                          {...field}
-                          value={value}
-                          onChange={(e) => {
-                            setMinSalary(e.target.value)
-                            onChange(e)
-                          }}
-                          ref={undefined}
-                        />
-                      )
-                    }}
-                  />
-                </div>
-                <div className={styles.minSalary}>
-                  <Controller
-                    control={control}
-                    name={'maxSalary'}
-                    rules={{ validate: (value) => !!value || thisFieldIsRequired }}
-                    render={({ field, fieldState }) => {
-                      const { value ,onChange} = field
-                      return (
-                        <MaterialBasicSelect
-                          label={lang?.profile?.maxSalary}
-                          rules={{ required: thisFieldIsRequired }}
-                          required
-                          options={maxSalaryOptions}
-                          {...fieldState}
-                          {...field}
-                          onChange={(e) => {
-                            setMaxSalary(e.target.value)
-                            onChange(e)
-                          }}
-                          value={value}
-                          ref={undefined}
-                        />
-                      )
-                    }}
-                  />
-                </div>
+                <div className={styles.salaryBox}>
+                  <div className={styles.minSalary}>
+                    <Controller
+                      control={control}
+                      name={'minSalary'}
+                      rules={{ validate: (value) => !!value || thisFieldIsRequired }}
+                      render={({ field, fieldState }) => {
+                        const { value, onChange } = field
+                        return (
+                          <MaterialBasicSelect
+                            label={lang?.profile?.minSalary}
+                            options={minSalaryOptions}
+                            required
+                            {...fieldState}
+                            {...field}
+                            value={value}
+                            onChange={(e) => {
+                              setMinSalary(e.target.value)
+                              onChange(e)
+                            }}
+                            ref={undefined}
+                          />
+                        )
+                      }}
+                    />
+                  </div>
+                  <div className={styles.minSalary}>
+                    <Controller
+                      control={control}
+                      name={'maxSalary'}
+                      rules={{ validate: (value) => !!value || thisFieldIsRequired }}
+                      render={({ field, fieldState }) => {
+                        const { value, onChange } = field
+                        return (
+                          <MaterialBasicSelect
+                            label={lang?.profile?.maxSalary}
+                            rules={{ required: thisFieldIsRequired }}
+                            required
+                            options={maxSalaryOptions}
+                            {...fieldState}
+                            {...field}
+                            onChange={(e) => {
+                              setMaxSalary(e.target.value)
+                              onChange(e)
+                            }}
+                            value={value}
+                            ref={undefined}
+                          />
+                        )
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-     
-       <FootBtn
-       loading={loading}
-       rightText={submit}
-       backText={back}
-       backClick={backClick}
-       disabled={isDisabled}
-       skipText={skip}
-       handleClick={handleSubmit(handleUpdateProfile)}
-       />
+
+        <FootBtn
+          loading={loading}
+          rightText={submit}
+          backText={back}
+          backClick={backClick}
+          disabled={isDisabled}
+          skipText={skip}
+          handleClick={handleSubmit(handleUpdateProfile)}
+        />
 
       </div>
     </div>

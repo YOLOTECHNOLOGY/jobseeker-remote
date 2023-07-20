@@ -21,7 +21,7 @@ async function removeServiceCache(token, lang?) {
 
 }
 const isTest = false; // only true when develop at local
-const localAddress = isTest ? ['http://local.dev.bossjob.ph:3005', 'http://local.dev.bossjob.sg:3005'] : []
+const localAddress = isTest ? ['http://local.dev.bossjob.ph:3004', 'http://local.dev.bossjob.sg:3004'] : []
 
 export async function GET(request) {
   const params = new URL(request.url).searchParams

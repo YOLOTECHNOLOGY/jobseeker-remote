@@ -4,9 +4,10 @@ import React, { useContext, useEffect } from 'react'
 import styles from './index.mobile.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { CloseIcon } from 'images'
+// import { CloseIcon } from 'images'
+import CloseIcon from '@mui/icons-material/Close';
 import useNotSuitable from './hooks'
-import NotSuitableModal from './notSuitable'
+import NotSuitableModal from '../notSuitable'
 import classNames from 'classnames'
 import { getValueById } from 'helpers/config/getValueById'
 import { useSelector } from 'react-redux'
@@ -66,8 +67,7 @@ const JobCard = (props: any) => {
           // e.stopPropagation()
           sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
           setCookie('reco_from', reco_from)
-          // @ts-ignore
-          router.push(job_url, { forceOptimisticNavigation: true })
+          router.push(job_url, { scroll: true })
         }}
       >
         <div key={job_title + id} className={styles.titleContainer} title={`${job_title}`}>
@@ -116,7 +116,7 @@ const JobCard = (props: any) => {
             showSelection()
           }}
         >
-          <Image src={CloseIcon} alt='logo' width={13} height={13} />
+          <CloseIcon sx={{fontSize: '16px', color: '#707070'}} />
         </div>
       </div>
       <NotSuitableModal {...modalProps} lang={props.lang} />

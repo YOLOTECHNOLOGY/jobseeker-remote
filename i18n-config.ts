@@ -1,6 +1,8 @@
+import { defaultLanguage, languages } from "helpers/country"
+
 export const i18n = {
-    defaultLocale: 'en-US',
-    locales: ['en-US', 'id-Id','zh-CN'],
-  } as const
-  
-  export type Locale = typeof i18n['locales'][number]
+  defaultLocale: defaultLanguage(),
+  locales: languages.map(item => item.value),
+} as const
+
+export type Locale = typeof i18n['locales'][number]

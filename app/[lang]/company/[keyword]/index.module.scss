@@ -159,7 +159,6 @@
     overflow: visible;
     margin-bottom: 0.32rem;
     padding: 0.36rem 0.2rem;
-    height: 1.2rem;
   }
 }
 
@@ -255,9 +254,11 @@
   font-weight: 700;
   line-height: 30px;
   margin-top: 6.5px;
+
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #ffffff);
     font-size: 0.2rem;
+    width: 3rem;
     font-style: normal;
     font-weight: 700;
     line-height: 0.25rem;

@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import Text from 'components/Text'
 import CompanyCardList from './components/CompanyCardList'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
@@ -155,30 +154,28 @@ const Companies = (props: IProps) => {
           </div>
         </div>
 
+        {/* featured company */}
+        {!isFeaturedCompaniesFetching && reset ? (
+          <FeaturedCompanied
+            featuredCompany={featuredCompany}
+            langKey={langKey}
+            config={config}
+            featureBanners={featureBanners}
+            lang={props.lang}
+          />
+        ) : null}
+
         {/* companies list */}
         <div className={styles.companies}>
-
           {/* fetching loading: true */}
           {isFeaturedCompaniesFetching && <CompaniesLoader />}
 
           {/* fetching loading: false */}
           {!isFeaturedCompaniesFetching && (
             <>
-              {/* featured company */}
-              {reset ? (
-                <FeaturedCompanied
-                  featuredCompany={featuredCompany}
-                  langKey={langKey}
-                  featureBanners={featureBanners}
-                  lang={props.lang}
-                />
-              ) : null}
-
               {/* company card title */}
               {reset ? (
-                <Text textStyle='xxl' tagName='h2' bold className={styles.popularCompanyTitle}>
-                  {companies.popularCompany.title}
-                </Text>
+                <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
               ) : null}
 
               {/* company card list */}
@@ -187,6 +184,7 @@ const Companies = (props: IProps) => {
                 isLoading={isFeaturedCompaniesFetching}
                 transitions={companies.popularCompany}
                 langKey={langKey}
+                config={config}
                 lang={props.lang}
               />
             </>

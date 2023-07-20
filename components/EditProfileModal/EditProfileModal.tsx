@@ -132,7 +132,7 @@ const EditProfileModal = ({
   const [debouncedValue, setDebouncedValue] = useState('');
 
 
-  console.log('userDetail', userDetail, inputValue);
+  console.log('userDetail', userDetail);
   const {
     manageProfile: {
       tab: {
@@ -153,12 +153,14 @@ const EditProfileModal = ({
   }, [inputValue]);
 
   useEffect(() => {
+    console.log('inputValue', debouncedValue);
     if (!mapRef.current) return;
 
 
     mapRef.current.textSearch({ query: debouncedValue }, function (results, status) {
       // @ts-ignore
       if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log('results', results);
         setOptions(results);
         // renderSearchPlaceList(results, map)
       }
@@ -181,9 +183,11 @@ const EditProfileModal = ({
   const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
+  console.log('formattedLocationList', formattedLocationList);
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
+  console.log('matchedLocation', matchedLocation);
   const [location, setLocation] = useState(matchedLocation)
 
   // Limit user from selecting date more than 16-100 years ago from now.
@@ -212,6 +216,10 @@ const EditProfileModal = ({
   } = useForm({
     defaultValues
   })
+  const handleCloseModal = () => {
+    handleModal(modalName, false)
+    reset(defaultValues)
+  }
   useEffect(() => {
     if (userDetail && userDetail.location) {
       if (userDetail.location) {
@@ -269,12 +277,10 @@ const EditProfileModal = ({
 
     // dispatch(updateUserProfileRequest(removeEmptyOrNullValues(payload)))
 
+
   }
 
-  const handleCloseModal = () => {
-    handleModal(modalName, false)
-    reset(defaultValues)
-  }
+
 
   const onDateChange = (value) => {
     const isMinYear = getDiffYear(value) < SIXTEEN_YEAR
@@ -291,6 +297,7 @@ const EditProfileModal = ({
       setBirthdate(value)
     }
   }
+  console.log('value', value);
   return (
     <div>
       <Modal
@@ -306,6 +313,7 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
+
         className={styles.modal}
 
       >

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from '../index.module.scss'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
@@ -24,35 +24,35 @@ function EmailFactor(props: any) {
   const langKey = getLang()
   const { newGetStarted } = props.lang
   const emailRef = useRef(null)
-  const isDisableRef = useRef(null);
+  const isDisableRef = useRef(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     isDisableRef.current = isDisable
-  },[isDisable])
+  }, [isDisable])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
     return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
   }, [])
- 
+
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
       checkIsEmailUseFun()
     }
   }
-  
+
   useEffect(() => {
     if (validateErr) {
       setValidateErr('')
     }
-    if(email){
+    if (email) {
       emailRef.current = email
-     }
+    }
   }, [email])
 
   const checkIsEmailUseFun = () => {
     setLoading(true)
-    checkIsEmailUse({ email:emailRef.current }).then((res) => {
+    checkIsEmailUse({ email: emailRef.current }).then((res) => {
       if (res?.data?.data) {
         setLoading(false)
         setValidateErr(newGetStarted.validateErr)
@@ -63,10 +63,12 @@ function EmailFactor(props: any) {
   }
 
   const sendOTPFun = () => {
-    authenticationSendEmaillOtp({ email:emailRef.current })
+    authenticationSendEmaillOtp({ email: emailRef.current })
       .then((res) => {
         console.log(res?.data?.data, 'res')
-        router.push(`/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`)
+        router.push(
+          `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`
+        )
       })
       .catch((error) => {
         dispatch(
@@ -84,9 +86,9 @@ function EmailFactor(props: any) {
     <div className={styles.emailFactor}>
       <h2>
         {newGetStarted.twoFactor} <br />
-        {newGetStarted.authentication} 🔒
+        {/* {newGetStarted.authentication} 🔒 */}
       </h2>
-      <p className={styles.secure}>{newGetStarted.secure}</p>
+      {/* <p className={styles.secure}>{newGetStarted.secure}</p> */}
       <p className={styles.emailTips}>{newGetStarted.emailTips}</p>
       <div className={styles.phoneNumber}>
         <div className={styles.item}>

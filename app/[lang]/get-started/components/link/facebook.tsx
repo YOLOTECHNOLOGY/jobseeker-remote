@@ -12,6 +12,7 @@ interface IFacebook {
   isLogin?: boolean
   redirect?: string | string[]
   lang: any
+  showTitle?: boolean
 }
 
 const FacebookLogin = (props: IFacebook) => {
@@ -19,7 +20,8 @@ const FacebookLogin = (props: IFacebook) => {
     activeKey,
     isLogin,
     redirect,
-    lang: { newGetStarted }
+    lang: { newGetStarted },
+    showTitle = true
   } = props
   const searchParams = useSearchParams()
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
@@ -93,8 +95,9 @@ const FacebookLogin = (props: IFacebook) => {
 
   return (
     <div className={styles.login_item} onClick={handleAuthClick}>
-      <Image src={FacebookIcon} width={24} height={24} alt='facebook' />
-      <span>{newGetStarted.links.facebook}</span>
+      {/* <Image src={FacebookIcon} width={24} height={24} alt='facebook' /> */}
+      <i className='icon-facebook' style={{ color: '#0062E0' }}></i>
+      {showTitle && <span>{newGetStarted.links.facebook}</span>}
     </div>
   )
 }

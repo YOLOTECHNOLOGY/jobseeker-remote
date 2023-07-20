@@ -7,7 +7,7 @@ const { RequestResult } = utils
 export default command => command.cata({
     error: err => M(context => Promise.resolve().then(() => {
         context.handleError?.(err)
-        return Promise.reject(err)
+        // return Promise.reject(err)
     })),
     end: type => M(context => Promise.resolve().then(() => {
         context.handleFinish(type)

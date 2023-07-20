@@ -181,11 +181,21 @@
     }
   }
 
+  &SocialDate {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  &SocialList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   &SocialLinks {
     @include md {
-      @include flex();
-      float: right;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -230,9 +240,20 @@
   margin-top: 30px;
 }
 
+.footerMobileSocialDate {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.footerMobileSocialList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .footerMobileSocialLinks {
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
 .footerMobileSocialLinksText {
@@ -260,6 +281,13 @@
   font-size: 13px;
   line-height: 20px;
   letter-spacing: 0.098px;
+
+  span {
+    i {
+      font-style: normal;
+      padding: 0 18px;
+    }
+  }
 }
 
 .footerDesktopLogoLink {

@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 const Attend = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId,dic } = props
+    const { contextRef, loading, data, applicationId, dic } = props
     const actionsRef = useRef({} as any)
     const context = {
         showAttend(actions) {
@@ -26,7 +26,7 @@ const Attend = (props: any) => {
         secondButtonText={dic.next}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
-        handleFirstButton={() => actionsRef.current.back?.()}
+        handleFirstButton={() => actionsRef.current?.back?.()}
         handleSecondButton={() => actionsRef.current.send?.({
             applicationId,
             inviteInterviewId: data.id,
@@ -37,7 +37,7 @@ const Attend = (props: any) => {
         isSecondButtonDisabled={!value}
         isSecondButtonLoading={loading}
         isFirstButtonLoading={loading}
-        
+
     >
         <p className={styles.mainText}>{dic.resultText}</p>
         <MaterialBasicSelect
