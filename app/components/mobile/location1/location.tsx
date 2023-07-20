@@ -125,7 +125,7 @@ const MaterialLocationField = ({ className, label, locationList, width, disableC
               variant='outlined'
               size='small'
               {...params}
-              inputProps={{ ...params?.inputProps, value: value?.value ?? '' }}
+              inputProps={{ ...params?.inputProps }}
             />
           )
         }}
