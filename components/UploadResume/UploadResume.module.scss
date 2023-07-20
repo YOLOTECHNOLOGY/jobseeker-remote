@@ -65,7 +65,7 @@
 
       .resumeName {
         white-space: nowrap;
-        overflow: hidden;
+        overflow-x: clip;
         text-overflow: ellipsis;
         line-height: 22px;
         font-size: 18px;

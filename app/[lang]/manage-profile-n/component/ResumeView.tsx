@@ -8,6 +8,7 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { Download } from '@mui/icons-material';
 
+import { useConfirm } from "material-ui-confirm";
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -51,6 +52,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
       tab: { resume: transitions }
     }
   } = lang
+  const confirm = useConfirm();
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
@@ -120,8 +122,11 @@ const ResumeView = ({ userDetail, lang }: any) => {
   }, [emblaApi, setScrollSnaps, onSelect])
 
   const handleDeleteResume = (resumeId: number) => {
-    setDeleteResumeLoading(true)
-    fetchResumeDelete(resumeId)
+    setDeleteResumeLoading(true);
+    alert('1')
+    return;
+    confirm({description: 'Are you sure ?'}).then(()=>{
+      fetchResumeDelete(resumeId)
       .then(({ status }) => {
         if (status === 200) {
           setResume((resumes) => resumes.filter((item) => item.id !== resumeId))
@@ -133,6 +138,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
       .finally(() => {
         setDeleteResumeLoading(false)
       })
+    })
+
   }
 
   const handleUploadResume = (file) => {
@@ -208,7 +215,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
           lang={lang}
           title='resume'
           resumes={resume}
-          handleDelete={handleDeleteResume}
+          // handleDelete={handleDeleteResume}
           handleUpload={handleUploadResume}
           buttonClassname={styles.buttonCTA}
           deleteResumeLoading={deleteResumeLoading}
