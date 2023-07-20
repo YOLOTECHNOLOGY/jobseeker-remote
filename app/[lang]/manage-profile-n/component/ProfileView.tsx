@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
 
 /* Vendors */
-// import { END } from 'redux-saga'
-// import { wrapper } from 'store'
-// import { useRouter } from 'next/router'
+
 import { useDispatch, useSelector } from 'react-redux'
-import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 
 /* Redux actions */
-// import { fetchConfigRequest } from 'store/actions/config/fetchConfig'
-// import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 import { manageUserEducationsRequest } from 'store/actions/users/manageUserEducations'
 import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/manageUserLicensesAndCertifications'
@@ -20,12 +15,8 @@ import { manageUserLinksRequest } from 'store/actions/users/manageUserLinks'
 // import Layout from 'components/Layout'
 import Text from 'components/Text'
 import ProfileSettingCard from 'components/ProfileSettingCard'
-// import MaterialButton from 'components/MaterialButton'
 import ReadMore from 'components/ReadMore'
-// import SeeMore from 'components/SeeMore'
 import Link from 'components/Link'
-// import EditJobPreferencesDeleteModal from 'components/EditJobPreferencesDeleteModal'
-// import EditProfileModal from 'components/EditProfileModal'
 import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
@@ -39,28 +30,20 @@ moment.locale('en')
 
 /* Assets */
 import {
-  // CarouselRightRoundedBlueButton,
   AddIcon,
   PencilIcon,
   TrashIcon,
-  // HighlightAboutYouIcon,
-  // HighlightEducationIcon,
-  // HighlightSkillIcon,
-  // HighlightWorkExpIcon,
 } from 'images'
 
 /* Styles */
-import classNames from 'classnames'
 import styles from './ManageProfile.module.scss'
-import { Chip, FormControlLabel, Switch } from '@mui/material'
+import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 
-// import { Left } from './icons/left'
 import {
   changeCompanyIndustry,
-  // changeJobPreference,
   changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
@@ -79,12 +62,12 @@ const ProfileView = ({ lang }: any) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const config = useSelector((store: any) => store?.config?.config?.response)
   const {
-    first_name: firstName,
-    last_name: lastName,
-    birthdate,
-    location,
-    xp_lvl: expLevel,
-    description,
+    // first_name: firstName,
+    // last_name: lastName,
+    // birthdate,
+    // location,
+    // xp_lvl: expLevel,
+    // description,
     work_experiences: workExperiences,
     educations,
     skills,
@@ -176,45 +159,7 @@ const ProfileView = ({ lang }: any) => {
       value: category.id
     }
   })
-  // const jobData = useMemo(() => {
-  //   return [userDetail?.job_preferences || [], Date.now()]
-  // }, [userDetail?.job_preferences])
-  // const availability = getValueById(config, userDetail?.notice_period_id, 'notice_period_id')
 
-
-  // const [isSliderButtonVisible, setIsSliderButtonVisible] = useState(true)
-  // const [isHighlightSectionVisible, setIsHighlightSectionVisible] = useState(true)
-
-  // // Display button after a few sec to prevent weird MUI bug when it's within caoursel
-  // const [isCarouselButtonVisible, setIsCarouselButtonVisible] = useState(false)
-
-  // const emblaOptions = {
-  //   align: 'start',
-  //   loop: true,
-  //   skipSnaps: false,
-  //   inViewThreshold: 0.7,
-  //   slidesToScroll: width < 799 ? 1 : 2
-  // }
-
-  // const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions as any)
-
-  // const onSelect = useCallback(() => {
-  //   if (!emblaApi) return
-  // }, [emblaApi])
-
-
-
-  // useEffect(() => {
-  //   if (!emblaApi) return
-  //   onSelect()
-  //   emblaApi.on('select', onSelect)
-  //   emblaApi.reInit()
-  // }, [emblaApi, onSelect])
-
-  // const reInitEmbla = () => {
-  //   if (!emblaApi) return
-  //   emblaApi.reInit(emblaOptions as any)
-  // }
 
   useEffect(() => {
     let count = 0
@@ -231,18 +176,6 @@ const ProfileView = ({ lang }: any) => {
     if (!validProfileInformationFilled(userDetail)) {
       count += 1
     }
-
-    // if (!isMobile) {
-    //   setIsSliderButtonVisible(() => count > 2)
-    //   reInitEmbla()
-    // }
-    // if (isMobile) {
-    //   setIsSliderButtonVisible(() => count > 1)
-    //   reInitEmbla()
-    // }
-    // if (count === 0) {
-    //   setIsHighlightSectionVisible(false)
-    // }
   }, [userDetail])
 
   const handleAddData = (type) => {

@@ -7,6 +7,7 @@ import ProfileLayout from 'components/ProfileLayout'
 import EditProfileModal from 'components/EditProfileModal'
 import ResumeView from './component/ResumeView';
 import ProfileView from './component/ProfileView';
+import PreferencesView from './component/PreferencesView';
 
 const ManageProfilePage = () => {
   const lang = useLanguage();
@@ -94,7 +95,7 @@ const ManageProfilePage = () => {
 
 
       {tabValue === 'profile' && <ProfileView lang={lang} />}
-      {tabValue === 'job-preferences' && <h1>hello preferences</h1>}
+      {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
       {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
 
     </ProfileLayout>
