@@ -23,6 +23,7 @@
     .iconWrapper {
       &P {
         right: 0;
+        visibility: hidden;
       }
     }
   }
@@ -39,6 +40,11 @@
     box-sizing: border-box;
     .workExpSection {
       border: 0;
+    }
+    .iconWrapper {
+      &P {
+        visibility: visible;
+      }
     }
   }
 }
@@ -237,9 +243,16 @@
   &Detail {
     display: inline-block;
     width: 100%;
+    .iconWrapper {
+      &P {
+        visibility: hidden;
+      }
+    }
     &:hover {
       .iconWrapper {
-        visibility: visible;
+        &P {
+          visibility: visible;
+        }
       }
     }
 
@@ -280,6 +293,18 @@
 
       @include msd {
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .jobPreferencesSection {
+    &Detail {
+      .iconWrapper {
+        &P {
+          visibility: visible;
+        }
       }
     }
   }
@@ -346,7 +371,6 @@
     position: absolute;
     right: 0;
     top: 0px;
-    visibility: hidden;
   }
 
   & > * {

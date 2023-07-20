@@ -59,19 +59,19 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
   return (
     <React.Fragment>
       <div className={styles.jobPreferencesSectionDetail}>
-        <div style={{ right: 40 }} className={styles.iconWrapperP} onClick={handleEditClick}>
-          <img src={PencilIcon} width='22' height='22' />
-        </div>
 
-        {userDetail?.job_preferences?.length > 1 && (
+        {userDetail?.job_preferences?.length > 1 ? (
           <div
-            style={{ right: 0 }}
+            style={{ right: '10px' }}
             className={styles.iconWrapperP}
-            onClick={() => setShowDelete(true)}
           >
-            <img src={AccountSettingDeleteIconBin} width='14' height='14' />
+            <img src={PencilIcon} width='22' height='22' onClick={handleEditClick} />
+            &nbsp;&nbsp;
+            <img src={AccountSettingDeleteIconBin} width='14' height='14' onClick={() => setShowDelete(true)} />
           </div>
-        )}
+        ) : <div style={{ right: '10px' }} className={styles.iconWrapperP} onClick={handleEditClick}>
+          <img src={PencilIcon} width='22' height='22' />
+        </div>}
 
         <div className={styles.jobPreferencesSectionDetailList}>
           {preference?.job_title && (
