@@ -12,11 +12,15 @@
   align-items: center;
   border-radius: 8px;
   background: #fff;
+  padding-bottom: 20px;
 
   @include msd {
     padding: 0;
     border: none;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    border-radius: 0;
   }
 
   &EditIcon {

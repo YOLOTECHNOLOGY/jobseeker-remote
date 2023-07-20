@@ -660,7 +660,6 @@ const ProfileView = ({ lang }: any) => {
   return (
     <Fragment>
 
-
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (

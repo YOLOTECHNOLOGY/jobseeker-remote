@@ -14,6 +14,7 @@ import { CompanyDetailsProvider } from "./DataProvider";
 import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 import Footer from "components/Footer/Footer";
 import getConfigs from 'app/models/interpreters/config'
+import {ConfigType} from 'types/config';
 
 const configs = getConfigs([
 	['location_lists'],
@@ -55,7 +56,9 @@ async function CompanyLayout(props: {
 		keyword: string;
 		lang: string;
 	},
-	configs: any
+	configs: {
+		config: Partial<ConfigType>
+	}
 }) {
 	// URL -> /shop/shoes/nike-air-max-97
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
@@ -93,22 +96,22 @@ async function CompanyLayout(props: {
 		// const configkey =cookieStore.get(configKey);
 		// console.log('configkey', configkey);
 		// const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
-		return (
-			<>
-				<CompanyDetailsProvider
-					hr={hr.data}
-					detail={detail.data}
-					jobs={jobs.data}
-					hotJobs={hotJobs.data.data}
-					lang={props.params.lang}
-					config={props.configs.config}
-					jobFunctions={jobClasses}
-				>
-					<section style={{
-						width: '100%',
-						overflowX: 'hidden',
-						minHeight: '100vh',
-						backgroundColor: '#ffffff',
+	return (
+		<>
+			<CompanyDetailsProvider 
+				hr={hr.data}
+				detail={detail.data} 
+				jobs={jobs.data} 
+				hotJobs={hotJobs.data.data}
+				lang={props.params.lang}
+				config={props.configs.config}
+				jobFunctions={jobClasses}
+			>
+				<section style={{
+					width: '100%',
+					overflowX: 'hidden',
+					minHeight: '100vh',
+					backgroundColor: '#ffffff',
 
 					}}>
 						<main data-string={{}}>

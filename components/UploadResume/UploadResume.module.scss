@@ -44,13 +44,14 @@
       align-items: center;
       width: 95%;
       margin-bottom: 24px;
-
       @include msd {
         width: 93%;
+        overflow: hidden;
       }
       > .document_info {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
       }
       > .documentDiv {
         width: auto;
@@ -59,6 +60,7 @@
         height: 41px;
         position: relative;
         border-radius: 3px;
+        flex-shrink: 0;
       }
 
       .resumeName {
@@ -71,6 +73,7 @@
         line-height: 22px;
         text-align: center;
         color: #121212;
+        display: block;
       }
       .resumeTime {
         font-weight: 400;

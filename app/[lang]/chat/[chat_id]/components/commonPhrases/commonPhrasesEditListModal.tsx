@@ -41,7 +41,7 @@ const CommonPhrasesEditListModal = (props: any) => {
       headerTitle={dic?.phraseTitle}
       secondButtonText={dic?.done}
       secondButtonIsClose={false}
-      handleSecondButton={() => actionsRef.current.back?.()}
+      handleSecondButton={() => actionsRef.current?.back?.()}
       isSecondButtonLoading={loading}
       isFirstButtonLoading={loading}
     >

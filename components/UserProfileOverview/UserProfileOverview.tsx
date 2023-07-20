@@ -133,14 +133,14 @@ const UserProfileOverview = ({
             <Text textStyle='lg'>{expLevel}</Text>
           </div>
         )}
-        {description && (
+        {/* {description && (
           <div className={styles.userOverviewInfoAbout}>
             <Text textColor='primaryBlue' textStyle='xl' bold>
               {(lang as any).profile.about}
             </Text>
             <ReadMore className={styles.readMore} size={isMobile ? 200 : 160} text={description} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )
