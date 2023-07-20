@@ -5,7 +5,7 @@ import Text from 'components/Text'
 import MaterialButton from 'components/MaterialButton'
 import Link from 'components/Link'
 import EditRename from './EditRename/EditRename'
-
+import Image from 'next/image'
 /* Helpers */
 import { maxFileSize } from 'helpers/handleInput'
 
@@ -21,6 +21,8 @@ import { SnackbarTips } from './SnackbarTips'
 import moment from 'moment'
 import { formatTemplateString } from 'helpers/formatter'
 import { languageContext } from 'app/components/providers/languageProvider'
+import { ConfirmProvider } from "material-ui-confirm";
+
 moment.locale('en')
 type resumeObject = {
   name: string
@@ -32,7 +34,7 @@ type resumeObject = {
 type UploadResumeProps = {
   title: string
   resumes: resumeObject[]
-  handleDelete: Function
+  handleDelete?: Function
   handleUpload: Function
   buttonClassname?: string
   deleteResumeLoading?: boolean
@@ -49,7 +51,7 @@ const Trash = ({
 }: {
   id: number
   deleteResumeLoading: boolean
-  onClick: () => void
+  onClick?: () => void
   name: string
   lang?: Record<string, any>
   displayClear: boolean
@@ -77,7 +79,7 @@ const Trash = ({
         id={id}
         name={name}
         deleteResumeLoading={deleteResumeLoading}
-        handleDeleteResume={onClick}
+        // handleDeleteResume={onClick}
         lang={lang}
         displayClear={displayClear}
       />
@@ -97,7 +99,7 @@ const UploadResume = ({
     manageProfile: {
       tab: { resume: transitions }
     }
-  } = lang || (useContext(languageContext) as any)
+  } = useContext(languageContext) 
   const [isExceedLimit, setIsExceedLimit] = useState(false)
   const handleOnFileChange = (e) => {
     const file = e.target.files[0]
@@ -113,7 +115,7 @@ const UploadResume = ({
   }
   const displayClear = useMemo(() => resumes.length > 1, [resumes])
   return (
-    <>
+    <ConfirmProvider>
       <div className={styles.uploadResumeField}>
         {resumes.length ?
           resumes.map((item, index) => {
@@ -121,11 +123,11 @@ const UploadResume = ({
                 <div key={index+'~'+ item?.id} className={styles.uploadedResume}>
                   <div className={styles.leftResume}>
                     <div className={styles.documentDiv}>
-                      <img src={DocumentIcon} alt='document' width='21' height='21' />
+                      <Image src={require('./document.png').default.src} fill alt='document'/>
                     </div>
-                    <div>
+                    <div className={styles.document_info}>
                       <Link to={item?.url} external>
-                        <Text textStyle='lg' bold className={styles.resumeName}>
+                        <Text className={styles.resumeName}>
                           {item?.name}
                         </Text>
                       </Link>
@@ -142,7 +144,7 @@ const UploadResume = ({
                     id={item.id}
                     name={item.name}
                     deleteResumeLoading={deleteResumeLoading}
-                    onClick={() => handleDeleteResume(item.id)}
+                    // onClick={() => handleDeleteResume(item.id)}
                     lang={lang}
                     displayClear={displayClear}
                   />
@@ -170,7 +172,7 @@ const UploadResume = ({
           </div>
         )}
         <Text textStyle='sm' block className={styles.upToFiles}>
-          {transitions.upload.upTo3files}
+          {formatTemplateString(transitions.upload.upToFiles, 3)}
         </Text>
         <Text textColor='darkgrey' textStyle='sm'>
           {transitions.upload.support}
@@ -184,7 +186,7 @@ const UploadResume = ({
           setIsExceedLimit(false)
         }}
       />
-    </>
+    </ConfirmProvider>
   )
 }
 

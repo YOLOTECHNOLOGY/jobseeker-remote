@@ -3,7 +3,7 @@ import * as React from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import CompanyInfo from './components/InfoList';
+import CompanyInfo, { padArrayToMultiple } from './components/InfoList';
 import Section from "./components/Section";
 import CulturePanel, { SocialMedia } from "./components/Culture";
 import ChatPanel from "./components/ChatPanel";
@@ -18,6 +18,8 @@ import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
 import classNames from 'classnames';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+
 
 
 function a11yProps(index: number) {
@@ -61,7 +63,7 @@ const Page = () => {
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-	console.log('al', { detail, jobs, lang, hr, hotJobs, config,jobFunctions });
+
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
 	if(isMobile){
@@ -80,7 +82,7 @@ const Page = () => {
 					<div className={style.header_title}>
 						{detail.name}
 						{detail.is_verify &&
-							<Image width={16} height={16} className={style.header_title_verified}
+							<Image width={24} height={24} className={style.header_title_verified}
 								src={require('./components/assets/verify.svg').default.src}
 								alt='_'
 							/>}
@@ -97,11 +99,11 @@ const Page = () => {
 
 				<div className={style.header_title_right}>
 					<div className={style.header_title_num_wrapper}>
-						<span className={style.header_title_num}>{jobs.total_num}</span>
+						<span className={style.header_title_num}>{jobs?.total_num}</span>
 						<span className={style.header_title_string}>Jobs</span>
 					</div>
 					<div className={style.header_title_num_wrapper}>
-						<span className={style.header_title_num}>{hr.length}</span>
+						<span className={style.header_title_num}>{hr?.length}</span>
 						<span className={style.header_title_string}>Boss</span>
 					</div>
 				</div>
@@ -136,7 +138,8 @@ const Page = () => {
 							 <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
-							{hotJobs.jobs.slice(0, 3).map((item) => {
+							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item) => {
+								if(!item) return <div className={style.jobs_item} style={{opacity:0}}></div>;
 								return <div className={style.jobs_item} key={item.job_title}>
 									<Link 
 										href={`/${lang}${item.job_url}`}
@@ -146,7 +149,7 @@ const Page = () => {
 										{item.job_title}
 									</Link>
 									<div className={style.jobs_content}>
-										<JobsTag {...item} count={2}/>
+										<JobsTag {...item} count={2} style={{flex:1, overflow: 'hidden'}}/>
 										<div className={style.jobs_chat_now_container}>
 											<div className={style.salary}>{
 												item.local_salary_range_value

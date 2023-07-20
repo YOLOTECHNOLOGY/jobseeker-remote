@@ -1,4 +1,8 @@
+import { getCookie, setCookie } from 'helpers/cookies';
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
+
+import { updateUserProfileService } from 'store/services/users/updateUserProfile'
+import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 
 export async function fetchUserOwnDetail(accessToken) {
 
@@ -12,6 +16,37 @@ export async function fetchUserOwnDetail(accessToken) {
 	}
 }
 
+export async function updateUserProfile(payload) {
+
+  try {
+    if(payload.avatar){
+      await Promise.all([
+        updateUserProfileService(payload),
+        uploadUserAvatar(payload.avatar)
+      ])
+    }else{
+      const response = await updateUserProfileService(payload);
+      if (response.status === 200 || response.status === 201) {
+        return response.data
+      }
+    }
+
+  } catch (error) {
+    return error
+  }
+}
+export async function uploadUserAvatar(payload) {
+
+  try {
+    const {data} = await uploadUserAvatarService(payload);
+
+    const userCookie = getCookie('user')
+    userCookie.avatar = data.data.avatar
+    await setCookie('user', userCookie);
+  } catch (error) {
+    return error
+  }
+}
 
 export interface ManageProfileData {
   id:                             number;
