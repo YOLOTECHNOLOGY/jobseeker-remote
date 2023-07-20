@@ -5,7 +5,6 @@ import { NextPage } from 'next'
 /* Components */
 import Text from 'components/Text'
 import Link from 'components/Link'
-import Layout from 'components/Layout'
 import MaterialButton from 'components/MaterialButton'
 
 /* Styles */

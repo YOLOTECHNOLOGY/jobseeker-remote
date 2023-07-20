@@ -51,7 +51,7 @@
     .headerChild {
       margin-top: 0;
       border-radius: 0px 0px 8px 8px;
-      background: #F6F6F6;
+      background: #f6f6f6;
       border-top: 0;
     }
 
@@ -638,9 +638,10 @@
           list-style: none;
           height: 26px;
           line-height: 26px;
+          justify-content: space-between;
 
           a {
-            flex: 1;
+            // flex: 1;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -788,7 +789,7 @@
       display: block;
       min-height: 50vh;
       overflow: hidden;
-      background-color: #F6F6F6;
+      background-color: #f6f6f6;
 
       .headerTop {
         border-radius: 0;

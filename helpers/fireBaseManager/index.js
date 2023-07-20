@@ -46,6 +46,7 @@ export const initFireBase = () => {
                     sessionStorage.setItem('firebase-messaging-token', token)
                     window.firebaseMessagingToken = token
                     guestLogin(token)
+                        .catch((e) => { console.log(e) })
                     onMessage(messaging, (payload) => {
                         console.log('Message received. ', payload);
                         // ...

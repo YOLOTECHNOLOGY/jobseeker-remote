@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   updateNoticePeriod,
   fetchDeleteResumes,
@@ -22,12 +22,14 @@ import moment from 'moment'
 import { getValueById } from 'helpers/config/getValueById'
 import Image from 'next/image'
 import classNames from 'classnames'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
 
-const Resume = ({ resumes, lang }: any) => {
+const Resume = (props: any) => {
+  const { resumes, lang, dictionary } = props
   const {
     yearsOld,
     availability,
@@ -43,6 +45,7 @@ const Resume = ({ resumes, lang }: any) => {
     uploadedResumes,
     deleteSuccess
   } = lang || {}
+
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const config = useSelector((store: any) => store.config.config.response)
   const notice_period_lists = config.notice_period_lists || []
@@ -59,6 +62,7 @@ const Resume = ({ resumes, lang }: any) => {
   const [open, setOpen] = React.useState(false)
   const [message, setMessgae] = React.useState(availabilityUpdateSuccessfully)
   const [resumeData, setResumeData] = React.useState([])
+  const dispatch = useDispatch()
   const [jobData, setJobTotal] = React.useState({
     no_of_applied_jobs: 0,
     no_of_chats: 0,
@@ -116,14 +120,24 @@ const Resume = ({ resumes, lang }: any) => {
     fetchDeleteResumes({
       id: e.id,
       accessToken
-    }).then((res) => {
-      if (res.data?.data) {
-        resumeData.splice(index, 1)
-        setResumeData([...resumeData])
-        setMessgae(deleteSuccess)
-        setOpen(true)
-      }
     })
+      .then((res) => {
+        if (res.data?.data) {
+          resumeData.splice(index, 1)
+          setResumeData([...resumeData])
+          setMessgae(deleteSuccess)
+          setOpen(true)
+        }
+      })
+      .catch((err) => {
+        dispatch(
+          displayNotification({
+            open: true,
+            severity: 'error',
+            message: dictionary.errorcode[err?.response?.data?.code] || err?.response?.data?.message
+          })
+        )
+      })
   }
 
   const changeNoticePeriod = (id) => {

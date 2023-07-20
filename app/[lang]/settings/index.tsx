@@ -18,7 +18,7 @@ import { fetchUserDetailRequest } from 'store/actions/users/fetchUserDetail'
 // styles
 import styles from './settings.module.scss'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 interface TabPanelProps {
   children?: React.ReactNode
@@ -52,23 +52,11 @@ const COUNT_DOWN_VERIFY_DEFAULT = 60
 // const countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
 
 const AccountSettings = (props: any) => {
-  const { accessToken, lang, config } = props
+  const { accessToken, lang, config, userDetail } = props
   console.log({ props })
-  const dispatch = useDispatch()
   const { width } = useWindowDimensions()
-
-  useEffect(() => {
-    dispatch(fetchConfigRequest())
-  }, [])
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)
-
-  const userDetail = useSelector((store: any) => store.users.fetchUserDetail.response)
-
-  const getInitData = () => {
-    dispatch(fetchUserDetailRequest({ accessToken }))
-  }
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
@@ -172,7 +160,6 @@ const AccountSettings = (props: any) => {
               errorText={errorText}
               emailDefault={userDetail?.email ? userDetail.email : null}
               verify={userDetail.is_email_verify}
-              getInitData={getInitData}
               COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
               lang={lang}
             />
@@ -186,7 +173,6 @@ const AccountSettings = (props: any) => {
               phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
               verify={userDetail.is_mobile_verified}
               config={config}
-              getInitData={getInitData}
               COUNT_DOWN_VERIFY_DEFAULT={COUNT_DOWN_VERIFY_DEFAULT}
               lang={lang}
             />

@@ -33,13 +33,12 @@ const VerifyMailAndBindEmail = ({
   emailDefault,
   verify,
   errorText,
-  getInitData,
   COUNT_DOWN_VERIFY_DEFAULT,
   lang
 }: any) => {
   const { accountSetting } = lang
   const dispatch = useDispatch()
-
+  console.log({ emailDefault })
   let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
@@ -156,8 +155,6 @@ const VerifyMailAndBindEmail = ({
       'Your email has been verified. You will be able to receive job applications update through your email.'
     )
     setIsShowemailVerify(false)
-    // setDone(true)
-    getInitData()
     setOtpError(null)
     setEdit(null)
   }
@@ -303,7 +300,7 @@ const VerifyMailAndBindEmail = ({
                 title='Verified'
                 placement='top'
                 arrow
-                // classes={{ tooltip: styles.formWrapper_tooltip }}
+              // classes={{ tooltip: styles.formWrapper_tooltip }}
               >
                 <img src={BlueTickIcon} alt='icon' width='20' height='20' />
               </Tooltip>
