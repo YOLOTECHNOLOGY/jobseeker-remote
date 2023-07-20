@@ -391,8 +391,14 @@ const JobsSearchCard = (props: JobData) => {
                     <span title={props.recruiter_full_name}>
                         {props.recruiter_full_name}
                     </span>
-                    &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
-                    <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
+                    {
+                        props.recruiter_job_title && 
+                        <>
+                            &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
+                            <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>
+                        </>
+                    }
+
                 </Link>
             </div>
             <div className={style.location}>
@@ -406,6 +412,7 @@ interface TagProps extends JobData {
     count?: number
     classNames?: any
     type?: 'background'
+    style?: React.CSSProperties
 }
 
 export const tagsData = [
@@ -422,7 +429,7 @@ export const JobsTag = (props: TagProps) => {
     _tagsData[0].name = xp_lvl_list.find(item => item.id === props.xp_lvl_id)?.value || '';
     _tagsData[1].name = degree_list.find(item => item.id === props.degree_id)?.value || '';
     _tagsData[2].name = job_type_list.find(item => item.id === props.job_type_id)?.value || '';
-    return <div className={style.tags}>
+    return <div className={style.tags} style={props.style ? props.style : null}>
         {_tagsData.map((item, index) => {
             const value = props[item.field]
             if (!value) return null;

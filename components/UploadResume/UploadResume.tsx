@@ -21,6 +21,8 @@ import { SnackbarTips } from './SnackbarTips'
 import moment from 'moment'
 import { formatTemplateString } from 'helpers/formatter'
 import { languageContext } from 'app/components/providers/languageProvider'
+import { ConfirmProvider } from "material-ui-confirm";
+
 moment.locale('en')
 type resumeObject = {
   name: string
@@ -32,7 +34,7 @@ type resumeObject = {
 type UploadResumeProps = {
   title: string
   resumes: resumeObject[]
-  handleDelete: Function
+  handleDelete?: Function
   handleUpload: Function
   buttonClassname?: string
   deleteResumeLoading?: boolean
@@ -49,7 +51,7 @@ const Trash = ({
 }: {
   id: number
   deleteResumeLoading: boolean
-  onClick: () => void
+  onClick?: () => void
   name: string
   lang?: Record<string, any>
   displayClear: boolean
@@ -77,7 +79,7 @@ const Trash = ({
         id={id}
         name={name}
         deleteResumeLoading={deleteResumeLoading}
-        handleDeleteResume={onClick}
+        // handleDeleteResume={onClick}
         lang={lang}
         displayClear={displayClear}
       />
@@ -113,7 +115,7 @@ const UploadResume = ({
   }
   const displayClear = useMemo(() => resumes.length > 1, [resumes])
   return (
-    <>
+    <ConfirmProvider>
       <div className={styles.uploadResumeField}>
         {resumes.length ?
           resumes.map((item, index) => {
@@ -142,7 +144,7 @@ const UploadResume = ({
                     id={item.id}
                     name={item.name}
                     deleteResumeLoading={deleteResumeLoading}
-                    onClick={() => handleDeleteResume(item.id)}
+                    // onClick={() => handleDeleteResume(item.id)}
                     lang={lang}
                     displayClear={displayClear}
                   />
@@ -184,7 +186,7 @@ const UploadResume = ({
           setIsExceedLimit(false)
         }}
       />
-    </>
+    </ConfirmProvider>
   )
 }
 

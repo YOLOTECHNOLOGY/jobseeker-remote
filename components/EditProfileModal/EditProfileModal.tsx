@@ -179,15 +179,14 @@ const EditProfileModal = ({
     return { ...xp, label: xp.value, value: xp.key }
   })
 
-  const defaultExpLevel = formattedXpLevelList.filter((xp) => expLevel === xp.label)
   const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  console.log('formattedLocationList', formattedLocationList);
+
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
-  console.log('matchedLocation', matchedLocation);
+
   const [location, setLocation] = useState(matchedLocation)
 
   // Limit user from selecting date more than 16-100 years ago from now.
@@ -315,6 +314,7 @@ const EditProfileModal = ({
         fullScreen
 
         className={styles.modal}
+        bodyClass={styles.showScroll}
 
       >
         <div className={styles.profile}>

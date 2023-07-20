@@ -1,5 +1,5 @@
 @use './base';
-
+@import 'styles/mixins';
 .container {
   width: 100%;
   margin: 0 auto;
@@ -64,8 +64,10 @@
   &:hover {
     border: 1px solid var(--brand-color, #2378e5);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    color: #ffffff;
     .chat_now {
       opacity: 1;
+      color: #ffffff;
     }
     .salary {
       opacity: 0;
@@ -363,6 +365,7 @@
 }
 .jobs_chat_now_container {
   position: relative;
+  text-align: right;
 }
 .salary {
   font-family: 'Product Sans';
@@ -376,7 +379,7 @@
 }
 .jobs_content {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   :global {
     .tag_flag {
       border-radius: 6px;
@@ -414,9 +417,10 @@
   color: #ffffff;
   position: absolute;
   right: 0;
-  top: 0;
+  bottom: -3px;
   opacity: 0;
   transition: all 0.3s linear;
+  margin-left: 0.08rem;
 }
 .header_right {
   position: absolute;
