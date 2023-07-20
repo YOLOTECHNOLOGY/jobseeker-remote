@@ -365,7 +365,6 @@
   position: relative;
 }
 .salary {
-  position: absolute;
   font-family: 'Product Sans';
   font-style: normal;
   font-weight: 400;
@@ -402,6 +401,7 @@
   white-space: nowrap;
   padding-left: 10px;
   padding-right: 10px;
+  @include text_overflow;
 }
 
 .footer {
@@ -477,6 +477,7 @@
   font-size: 12px;
   line-height: 18px;
   right: 0;
+  top: 0;
   /* identical to box height, or 150% */
 
   text-align: right;

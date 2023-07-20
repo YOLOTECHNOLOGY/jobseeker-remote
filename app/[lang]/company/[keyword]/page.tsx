@@ -139,7 +139,7 @@ const Page = () => {
 						</div>
 						<div className={style.jobs_item_layout}>
 							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item) => {
-								if(!item) return <div className={style.jobs_item} style={{opacity: 0}}></div>;
+								if(!item) return <div className={style.jobs_item} style={{opacity:0}}></div>;
 								return <div className={style.jobs_item} key={item.job_title}>
 									<Link 
 										href={`/${lang}${item.job_url}`}
@@ -149,7 +149,7 @@ const Page = () => {
 										{item.job_title}
 									</Link>
 									<div className={style.jobs_content}>
-										<JobsTag {...item} count={2}/>
+										<JobsTag {...item} count={2} style={{flex:1, overflow: 'hidden'}}/>
 										<div className={style.jobs_chat_now_container}>
 											<div className={style.salary}>{
 												item.local_salary_range_value
