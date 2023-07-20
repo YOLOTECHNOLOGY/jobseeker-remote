@@ -67,7 +67,7 @@ export function middleware(request: NextRequest) {
       'jobs.xml',
       'sitemap',
       'agencies.xml',
-      // 'handlers'
+      'handlers'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
   ) { return }

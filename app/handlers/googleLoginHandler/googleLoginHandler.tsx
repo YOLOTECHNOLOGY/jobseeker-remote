@@ -64,7 +64,7 @@ const googleLoginHandler = ({
               await socialLoginService(payload).then(async (response) => {
                 console.log({ socialLoginResponse: response })
                 dispatch(socialLoginSuccess({}))
-
+                console.log({ response })
                 if (response.status >= 200 && response.status < 300) {
                   const userCookie = {
                     active_key: response.data.data.active_key,
