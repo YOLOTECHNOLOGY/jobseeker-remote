@@ -92,6 +92,7 @@ const googleLoginHandler = ({
 
               })
             } catch (err) {
+              console.log({ err })
               message.error('Login failed')
               dispatch(socialLoginFailed(err))
               sessionStorage.removeItem('socialLogin')
