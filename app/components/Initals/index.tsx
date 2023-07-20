@@ -152,9 +152,10 @@ const Initial = () => {
               +
               '&redirectUrl=' + window.location.href
             )
-            .catch(e => {
-              console.log({ e })
-            })
+              .then(() => window.location.reload())
+              .catch(e => {
+                console.log({ e })
+              })
           }
         }
       }}
