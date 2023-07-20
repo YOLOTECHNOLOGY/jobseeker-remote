@@ -150,6 +150,7 @@ const Initial = () => {
               activeKey
               +
               '&redirectUrl=' + window.location.href
+              + '&fcmToken=' + sessionStorage.getItem('firebase-messaging-token')
             )
           }
         }
