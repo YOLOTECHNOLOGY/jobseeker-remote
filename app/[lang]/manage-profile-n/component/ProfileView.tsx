@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, useRef, Fragment } from 'react'
 
 /* Vendors */
 
@@ -12,7 +12,7 @@ import { manageUserLicensesAndCertificationsRequest } from 'store/actions/users/
 import { manageUserLinksRequest } from 'store/actions/users/manageUserLinks'
 
 /* Components */
-// import Layout from 'components/Layout'
+import Modal from 'components/Modal'
 import Text from 'components/Text'
 import ProfileSettingCard from 'components/ProfileSettingCard'
 import ReadMore from 'components/ReadMore'
@@ -37,7 +37,7 @@ import {
 
 /* Styles */
 import styles from './ManageProfile.module.scss'
-import { Chip } from '@mui/material'
+import { Chip, fabClasses } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
 import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
@@ -60,6 +60,8 @@ const ProfileView = ({ lang }: any) => {
   const isMobile = width < 768 ? true : false
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
+  const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
+  console.log('isUpdating:', isUpdating)
   const config = useSelector((store: any) => store?.config?.config?.response)
   const {
     // first_name: firstName,
@@ -74,6 +76,9 @@ const ProfileView = ({ lang }: any) => {
     license_certifications: licensesCertifications,
     websites
   } = userDetail
+
+  const deleteModalRef = useRef({} as any)
+
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
     return userDetail
@@ -126,6 +131,10 @@ const ProfileView = ({ lang }: any) => {
       data: null
     },
     createJobPreference: {
+      showModal: false,
+      data: null
+    },
+    deleteConfirm: {
       showModal: false,
       data: null
     }
@@ -207,6 +216,25 @@ const ProfileView = ({ lang }: any) => {
         break
     }
   }
+  const handleDeleteData = (modalType, type, data, id) => {
+    deleteModalRef.current = {
+      type,
+      id
+    }
+    handleModal(modalType, true, data, null)
+    // switch (type) {
+    //   case 'workExperience':
+    //     handleModal(type, true, data, null)
+    //   case 'education':
+    //     handleModal(type, true, data, null)
+    //   case 'license':
+    //     handleModal(type, true, data, null)
+    //   case 'links':
+    //     handleModal(type, true, data, null)
+    //   default:
+    //     break
+    // }
+  }
 
   const handleWorkExpModal = (workExp = null) => {
     handleModal('workExperience', true, workExp, null)
@@ -229,7 +257,10 @@ const ProfileView = ({ lang }: any) => {
     return getValueById(config, eduction.degree_id, 'degree_id')
   }
 
-  const handleDeleteData = async (type, id) => {
+
+  const handleDeleteDataConfirm = () => {
+    const { type, id } = deleteModalRef.current
+
     switch (type) {
       case 'workExperience':
         dispatch(
@@ -238,6 +269,7 @@ const ProfileView = ({ lang }: any) => {
             workExperienceId: id
           })
         )
+        break;
       case 'education':
         dispatch(
           manageUserEducationsRequest({
@@ -245,6 +277,7 @@ const ProfileView = ({ lang }: any) => {
             educationId: id
           })
         )
+        break;
       case 'license':
         dispatch(
           manageUserLicensesAndCertificationsRequest({
@@ -252,6 +285,7 @@ const ProfileView = ({ lang }: any) => {
             licenseId: id
           })
         )
+        break;
       case 'links':
         dispatch(
           manageUserLinksRequest({
@@ -259,10 +293,14 @@ const ProfileView = ({ lang }: any) => {
             linkId: id
           })
         )
+        break;
       default:
         break
     }
   }
+
+
+
 
   const renderWorkExperienceSection = (sectionName) => {
     return (
@@ -317,7 +355,7 @@ const ProfileView = ({ lang }: any) => {
                       }
                       onClick={() => {
                         if (workExperiences?.length > 1) {
-                          handleDeleteData(sectionName, workExp.id)
+                          handleDeleteData('deleteConfirm', sectionName, workExp, workExp.id)
                         }
                       }}
                     >
@@ -432,7 +470,7 @@ const ProfileView = ({ lang }: any) => {
                       }
                       onClick={() => {
                         if (educations?.length > 1) {
-                          handleDeleteData(sectionName, education.id)
+                          handleDeleteData('deleteConfirm', sectionName, education, education.id)
                         }
                       }}
                     >
@@ -553,7 +591,7 @@ const ProfileView = ({ lang }: any) => {
                     </div>
                     <div
                       className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, link.id)}
+                      onClick={() => handleDeleteData('deleteConfirm', sectionName, link, link.id)}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
@@ -618,7 +656,7 @@ const ProfileView = ({ lang }: any) => {
                     </div>
                     <div
                       className={styles.iconWrapper}
-                      onClick={() => handleDeleteData(sectionName, licenseCertification.id)}
+                      onClick={() => handleDeleteData('deleteConfirm', sectionName, licenseCertification, licenseCertification.id)}
                     >
                       <img src={TrashIcon} width='14' height='14' />
                     </div>
@@ -655,6 +693,12 @@ const ProfileView = ({ lang }: any) => {
       </div>
     )
   }
+
+  useEffect(() => {
+    if (!isUpdating) {
+      handleModal('deleteConfirm', false, null, null)
+    }
+  }, [isUpdating])
 
 
   return (
@@ -727,14 +771,7 @@ const ProfileView = ({ lang }: any) => {
         userDetail={userDetail}
         handleModal={handleModal}
       /> */}
-      <EditJobPreferencesModal
-        lang={lang}
-        modalName='createJobPreference'
-        showModal={modalState.createJobPreference.showModal}
-        config={config}
-        userDetail={userDetail}
-        handleModal={handleModal}
-      />
+
       <EditWorkExperienceModal
         lang={lang}
         modalName='workExperience'
@@ -781,8 +818,40 @@ const ProfileView = ({ lang }: any) => {
         linkData={modalState.links.data}
         handleModal={handleModal}
       />
+      <Modal
+        showModal={modalState.deleteConfirm.showModal}
+        handleModal={() => {
+          deleteModalRef.current = {}
+          setModalState(state => ({
+            ...state,
+            deleteConfirm: {
+              showModal: false,
+              data: null
+            }
+          }))
+        }}
+        headerTitle={profile.deleteModal.title}
+        firstButtonText={profile.deleteModal.btn1}
+        secondButtonText={profile.deleteModal.btn2}
+        isSecondButtonLoading={isUpdating}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          deleteModalRef.current = {}
+          setModalState(state => ({
+            ...state,
+            deleteConfirm: {
+              showModal: false,
+              data: null
+            }
+          }))
+        }}
+        handleSecondButton={handleDeleteDataConfirm}
+        fullScreen
+      >
+        {profile.deleteModal.tips}
+      </Modal>
 
-    </Fragment>
+    </Fragment >
   )
 }
 

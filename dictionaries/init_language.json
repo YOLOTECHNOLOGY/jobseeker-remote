@@ -745,6 +745,12 @@
           "urlErrorMsg": "Please enter a valid URL.",
           "linkTitle": "Title of link",
           "linkDesc": "Type here..."
+        },
+        "deleteModal": {
+          "title": "删除xxx",
+          "tips": "确定要删除吗？",
+          "btn1": "取消",
+          "btn2": "删除"
         }
       },
       "preference": {

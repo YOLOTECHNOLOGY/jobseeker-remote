@@ -745,6 +745,12 @@
           "urlErrorMsg": "请输入一个有效的地址",
           "linkTitle": "链接名称",
           "linkDesc": "输入描述信息..."
+        },
+        "deleteModal": {
+          "title": "删除xxx",
+          "tips": "你即将删除工作偏好，这个操作无法撤销。",
+          "btn1": "取消",
+          "btn2": "删除"
         }
       },
       "preference": {
@@ -797,8 +803,8 @@
           "tips": "Boss会向你索要简历附件，建议你至少上传一个！",
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
-          "upToFiles": "最多上传{{number}}个文件",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"

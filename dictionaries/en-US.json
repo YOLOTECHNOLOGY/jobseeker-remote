@@ -745,6 +745,12 @@
           "urlErrorMsg": "Please enter a valid URL.",
           "linkTitle": "Title of link",
           "linkDesc": "Type here..."
+        },
+        "deleteModal": {
+          "title": "删除xxx",
+          "tips": "你即将删除工作偏好，这个操作无法撤销。",
+          "btn1": "取消",
+          "btn2": "删除"
         }
       },
       "preference": {
@@ -798,6 +804,7 @@
           "time": "Uploaded on {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "File exceeded limit",
             "tips": "Please upload file size lesser than 5MB."
