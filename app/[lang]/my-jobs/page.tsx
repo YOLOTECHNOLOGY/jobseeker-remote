@@ -81,7 +81,7 @@ const Main = async (props: any) => {
           </div>
           <div className={styles.right}>
             {/* @ts-expect-error Async Server Component */}
-            <MainRight lang={dictionary?.myJobs} config={props.config} />
+            <MainRight lang={dictionary?.myJobs} dictionary={dictionary} config={props.config} />
           </div>
         </main>
         <Footer />
