@@ -7,7 +7,6 @@ import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
 import { getCookie } from 'helpers/cookies';
-import axios from 'axios';
 
 const tiktokfunc = () => {
   const w = window as any
@@ -144,7 +143,7 @@ const Initial = () => {
             if (window.location.pathname.includes('/employer')) {
               activeKey = 2
             }
-            axios.get(
+            window.location.replace(
               '/handlers/googleLoginHandler?access_token=' +
               accessTokenGoogle +
               '&active_key=' +
@@ -152,10 +151,6 @@ const Initial = () => {
               +
               '&redirectUrl=' + window.location.href
             )
-              .then(() => window.location.reload())
-              .catch(e => {
-                console.log({ e })
-              })
           }
         }
       }}
