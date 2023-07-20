@@ -32,6 +32,16 @@
     margin: 36px 0px;
   }
 }
+@media screen and (max-width: 576px) {
+  .sectionContainer {
+    padding: 0 15px;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    .workExpSection {
+      border: 0;
+    }
+  }
+}
 
 .sectionHeader {
   width: 100%;
@@ -63,6 +73,16 @@
     }
     & > * {
       display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sectionContent {
+    .titleWrapper {
+      .iconWrapperDouble {
+        visibility: visible;
+      }
     }
   }
 }
@@ -362,6 +382,14 @@
   &Double {
     display: flex;
     align-items: center;
+  }
+}
+@media screen and (max-width: 576px) {
+  .iconWrapper {
+    justify-content: flex-end;
+    &P {
+      visibility: visible;
+    }
   }
 }
 
