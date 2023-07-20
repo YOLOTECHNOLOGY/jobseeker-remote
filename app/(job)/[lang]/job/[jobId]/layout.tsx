@@ -7,6 +7,7 @@ import PublicLayout from 'app/components/publicLayout'
 import { handleFetchJobDetail } from './service'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
+import { redirect } from 'next/navigation'
 export const revalidate = 3600
 const handleShareInfo = async (params: any): Promise<any> => {
   const shareId = params.jobId?.split('-').shift()
@@ -15,10 +16,16 @@ const handleShareInfo = async (params: any): Promise<any> => {
 }
 
 async function generateSEO({ params, searchParams }) {
-  const { data: jobDetail } = await handleFetchJobDetail(params)
   const { lang } = params
+  const { data: jobDetail } = await handleFetchJobDetail(params)
+  if (jobDetail?.status_key === 'deleted') {
+    redirect(`/${lang}/404`)
+  }
+
   const dictionary = await getDictionary(lang)
-  const { seo: { job } } = dictionary
+  const {
+    seo: { job }
+  } = dictionary
   let shareInfo = null
   if (searchParams?.share) {
     shareInfo = await handleShareInfo(params)
@@ -42,28 +49,27 @@ async function generateSEO({ params, searchParams }) {
       jobId
     })
     const seoMetaDescription = formatTemplateString(job.description, {
-      jobTitle, jobId, name,
+      jobTitle,
+      jobId,
+      name,
       location: location.value,
       address: fullAddress.split(',').pop()
-     
     })
     // `Apply for ${jobTitle} (${jobId}) at ${name}. Discover more 'jobs' in ${location.value
     //   }, ${fullAddress.split(',').pop()} on Bossjob now!`
     const seoParams = !shareInfo
       ? {
-        title: seoMetaTitle,
-        description: seoMetaDescription,
-        imageUrl: jobDetail?.company?.logo,
-        canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
-
-      }
+          title: seoMetaTitle,
+          description: seoMetaDescription,
+          imageUrl: jobDetail?.company?.logo,
+          canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
+        }
       : {
-        title: seoMetaTitle,
-        description: seoMetaDescription,
-        imageUrl: cardUrl,
-        canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
-
-      }
+          title: seoMetaTitle,
+          description: seoMetaDescription,
+          imageUrl: cardUrl,
+          canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
+        }
     return seoParams
   }
   return {}
@@ -73,7 +79,7 @@ export default async function Layout(props: any) {
   const seo = await generateSEO(props)
   return (
     /* @ts-expect-error Async Server Component */
-    <PublicLayout {...props} seo={seo} >
+    <PublicLayout {...props} seo={seo}>
       {children}
       <Footer />
     </PublicLayout>

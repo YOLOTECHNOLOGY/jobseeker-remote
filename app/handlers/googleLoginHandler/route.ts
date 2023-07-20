@@ -9,6 +9,8 @@ export async function GET(request: NextRequest) {
     const activeKey = searchParams.get('active_key')
     const redirectUrl = searchParams.get('redirectUrl')
     const userAgent = parse(request.headers.get('user-agent'))
+    const fcmToken = searchParams.get('fcmToken')
+    console.log({ fcmToken })
     return axios
         .get('https://oauth2.googleapis.com/tokeninfo?id_token=' + accessToken)
         .then(async ({ data }) => {
@@ -23,7 +25,8 @@ export async function GET(request: NextRequest) {
                 source: userAgent.isMobile ? 'mobile_web' : 'web',
                 social_user_token: accessToken,
                 social_user_id: data.sub,
-                active_key: activeKey
+                active_key: activeKey,
+                fcm_token_web_jobseeker: fcmToken
             }
             return socialLoginService(payload)
         })
@@ -74,7 +77,7 @@ export async function GET(request: NextRequest) {
                     }
                 })
             } else {
-                return new NextResponse(e.response.data, {
+                return new NextResponse(e?.response?.data, {
                     status: 500,
                     headers: {
                         'Access-Control-Allow-Origin': '*',
