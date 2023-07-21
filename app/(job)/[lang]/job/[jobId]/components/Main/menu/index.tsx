@@ -8,7 +8,8 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
-const Menu = ({ shareParams, lang, isbenefits, jobId }: any) => {
+const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
+  console.log({ jobDetail })
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
