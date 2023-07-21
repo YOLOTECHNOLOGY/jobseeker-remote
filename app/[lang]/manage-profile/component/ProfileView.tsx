@@ -17,11 +17,11 @@ import Text from 'components/Text'
 import ProfileSettingCard from 'components/ProfileSettingCard'
 import ReadMore from 'components/ReadMore'
 import Link from 'components/Link'
-import EditJobPreferencesModal from 'components/EditJobPreferencesModal'
 import EditWorkExperienceModal from 'components/EditWorkExperienceModal'
 import EditEducationModal from 'components/EditEducationModal'
 import EditLicensesAndCertificationsModal from 'components/EditLicenseAndCertificationsModal'
 import EditLinkModal from 'components/EditLinkModal'
+import EditIntroductionModal from 'components/EditIntroductionModal/EditIntroductionModal'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
@@ -37,10 +37,9 @@ import {
 
 /* Styles */
 import styles from './ManageProfile.module.scss'
-import { Chip, fabClasses } from '@mui/material'
+import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
-import EditJobPreferencesAvailabilityModal from 'components/EditJobPreferencesAvailabilityModal/EditJobPreferencesAvailabilityModal'
 
 import {
   changeCompanyIndustry,
@@ -61,7 +60,7 @@ const ProfileView = ({ lang }: any) => {
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
-  console.log('isUpdating:', isUpdating)
+  console.log('isUpdating:', userDetail)
   const config = useSelector((store: any) => store?.config?.config?.response)
   const {
     // first_name: firstName,
@@ -74,7 +73,9 @@ const ProfileView = ({ lang }: any) => {
     educations,
     skills,
     license_certifications: licensesCertifications,
-    websites
+    websites,
+    description
+
   } = userDetail
 
   const deleteModalRef = useRef({} as any)
@@ -135,6 +136,10 @@ const ProfileView = ({ lang }: any) => {
       data: null
     },
     deleteConfirm: {
+      showModal: false,
+      data: null
+    },
+    introduction: {
       showModal: false,
       data: null
     }
@@ -212,6 +217,8 @@ const ProfileView = ({ lang }: any) => {
         handleModal(type, true, data, null)
       case 'links':
         handleModal(type, true, data, null)
+      case 'introduction':
+        handleModal(type, true, data, null)
       default:
         break
     }
@@ -222,18 +229,6 @@ const ProfileView = ({ lang }: any) => {
       id
     }
     handleModal(modalType, true, data, null)
-    // switch (type) {
-    //   case 'workExperience':
-    //     handleModal(type, true, data, null)
-    //   case 'education':
-    //     handleModal(type, true, data, null)
-    //   case 'license':
-    //     handleModal(type, true, data, null)
-    //   case 'links':
-    //     handleModal(type, true, data, null)
-    //   default:
-    //     break
-    // }
   }
 
   const handleWorkExpModal = (workExp = null) => {
@@ -299,7 +294,48 @@ const ProfileView = ({ lang }: any) => {
     }
   }
 
+  const renderIntroduction = () => {
+    return (
+      <div className={styles.sectionContainer}>
+        <div className={styles.sectionHeader}>
+          <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
+            {profile.introduction}
+          </Text>
+          {/* <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
+            <img src={AddIcon} width='14' height='14' />
+          </div> */}
+        </div>
+        <div className={styles.sectionContent}>
+          <div className={styles.educationSection}>
+            <div className={styles.titleWrapper}>
+              <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
+                {description ?
+                  <ReadMore
+                    expandText={profile.readMore}
+                    shirkText={profile.readLess}
+                    size={isMobile ? 210 : 300}
+                    text={description}
+                    className={styles.readMoreDescriptionWrapper}
+                  /> :
+                  <ReadMore className={styles.readMoreDescriptionWrapper} text={profile.introductionEmpty} />}
+              </Text>
+              <div className={styles.iconWrapperDouble}>
+                <div
+                  className={styles.iconWrapper}
+                  onClick={() => handleModal('introduction', true, null, null)}
+                >
+                  <img src={PencilIcon} width='22' height='22' />
+                </div>
 
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    )
+  }
 
 
   const renderWorkExperienceSection = (sectionName) => {
@@ -703,14 +739,14 @@ const ProfileView = ({ lang }: any) => {
 
   return (
     <Fragment>
-
+      {renderIntroduction()}
       {workExperiences?.length > 0 ? (
         renderWorkExperienceSection('workExperience')
       ) : (
         <ProfileSettingCard
           title={profile.exp.title} // 'Work Experience'
           description={profile.exp.noDataTips} // 'Showcase your past contributions and that you can be an asset to potential employer.'
-          buttonText={profile.exp.addWorkExp} // 'Add work experience'
+          // buttonText={profile.exp.addWorkExp} // 'Add work experience'
           // eslint-disable-next-line
           onClick={handleWorkExpModal}
         />
@@ -722,7 +758,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.edu.title} // 'Education'
           description={profile.edu.noDataTips} // 'Highlight your academic qualifications and achievements.'
-          buttonText={profile.edu.addEdu} // 'Add education'
+          //buttonText={profile.edu.addEdu} // 'Add education'
           // eslint-disable-next-line
           onClick={() => handleEducationModal()}
         />
@@ -734,7 +770,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.skill.title} // 'Skills'
           description={profile.skill.noDataTips} // 'Include relevant skill and keywords to boost your chances of getting an interview.'
-          buttonText={profile.skill.addSkill} // 'Add skills'
+          //buttonText={profile.skill.addSkill} // 'Add skills'
           // eslint-disable-next-line
           onClick={() => handleModal('skills', true, null, null)}
         />
@@ -746,7 +782,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.licenses.title} // 'Licenses And Certifications'
           description={profile.licenses.noDataTips} // 'Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
-          buttonText={profile.licenses.addLicense} // 'Add licenses & cert'
+          //buttonText={profile.licenses.addLicense} // 'Add licenses & cert'
           // eslint-disable-next-line
           onClick={() => handleLicenseAndCertificationsModal()}
         />
@@ -758,7 +794,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.link.title} // 'Links'
           description={profile.link.noDataTips} // 'Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
-          buttonText={profile.link.addLink} // 'Add links'
+          //buttonText={profile.link.addLink} // 'Add links'
           // eslint-disable-next-line
           onClick={() => handleLinksModal()}
         />
@@ -788,14 +824,7 @@ const ProfileView = ({ lang }: any) => {
         config={config}
         handleModal={handleModal}
       />
-      <EditJobPreferencesAvailabilityModal
-        modalName='jobPreferencesAvailibility'
-        showModal={modalState.jobPreferencesAvailibility.showModal}
-        config={config}
-        userDetail={userDetail}
-        handleModal={handleModal}
-        lang={lang}
-      />
+
       <EditSkillModal
         lang={lang}
         modalName='skills'
@@ -817,6 +846,14 @@ const ProfileView = ({ lang }: any) => {
         showModal={modalState.links.showModal}
         linkData={modalState.links.data}
         handleModal={handleModal}
+      />
+      <EditIntroductionModal
+        modalName='introduction'
+        showModal={modalState.introduction.showModal}
+        config={config}
+        userDetail={userDetail}
+        handleModal={handleModal}
+        lang={lang}
       />
       <Modal
         showModal={modalState.deleteConfirm.showModal}

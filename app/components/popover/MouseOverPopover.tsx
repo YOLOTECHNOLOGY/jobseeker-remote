@@ -3,6 +3,7 @@ import style from '../../[lang]/company/[keyword]/components/InfoList/index.modu
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
+import classNames from 'classnames';
 import { isURL } from '../../[lang]/company/[keyword]/components/InfoList';
 
 
@@ -39,7 +40,9 @@ export function MouseOverPopover(props: {
 	return (
 		<>
 			<div
-				className={props.className ? props.className : style.overview_item_value}
+				className={classNames(style.overview_item_value, {
+					[props.className]: !!props.className
+				})}
 				aria-owns={open ? 'mouse-over-popover' : undefined}
 				aria-haspopup="true"
 				onMouseEnter={handlePopoverOpen}
