@@ -9,6 +9,7 @@ import Image from 'next/image';
 
 /* Styles */
 import styles from './ProfileLayout.module.scss'
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider';
 
 const theme = createTheme({
   components: {
@@ -69,7 +70,8 @@ const ProfileLayout = ({
     xp_lvl: expLevel,
     birthdate,
     working_since,
-    address
+    address,
+    location_id
   } = userDetail
 
   const handleShowModal = () => {
@@ -101,6 +103,7 @@ const ProfileLayout = ({
           <UserProfileOverview
             name={`${firstName} ${lastName}`}
             location={userLocation}
+            location_id={location_id}
             email={email}
             avatarUrl={avatar}
             contactNumber={contactNum}

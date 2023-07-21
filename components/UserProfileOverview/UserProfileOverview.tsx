@@ -23,8 +23,12 @@ import Image from 'next/image';
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
-import { formatTemplateString } from 'helpers/formatter'
+import { flat, formatTemplateString } from 'helpers/formatter'
 import { MouseOverPopover } from '../../app/components/popover/MouseOverPopover';
+import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
+import { config } from '../../middleware';
+import configs from '../../app/(companies)/[lang]/companies/page';
 
 type UserProfileOverviewProps = {
   name: string
@@ -38,6 +42,7 @@ type UserProfileOverviewProps = {
   lang?: object
   address?: string;
   working_since?: string;
+  location_id?: number;
   handleEditClick: () => void
 }
 
@@ -58,6 +63,7 @@ const UserProfileOverview = ({
   birthdate,
   expLevel,
   lang,
+  location_id,
   address,
   working_since,
   handleEditClick
@@ -68,7 +74,15 @@ const UserProfileOverview = ({
   if (birthdate) {
     age = getAge(birthdate)
   }
+  const { config } = useManageProfileData();
+  const {location_lists } = config
 
+
+  const formattedLocationList = location_lists.map(item=>item.locations).flat();
+
+  const matchedLocation = formattedLocationList.find((loc) => {
+    return loc?.id == location_id
+  })
   const getYearString = (age: number) => {
     if (age > 1) {
       return formatTemplateString((lang as any).profile.year_other, { age })
@@ -96,7 +110,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-            <MouseOverPopover className={styles.profileText}  value={location || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText}  value={matchedLocation?.value || '-'}></MouseOverPopover>
             {/* <Text textStyle='lg'>{location}</Text> */}
           </div>
           <div className={styles.userOverviewInfoDetail}>
@@ -110,7 +124,7 @@ const UserProfileOverview = ({
                  
           <div className={styles.userOverviewInfoDetail}>
             <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
-            <MouseOverPopover className={styles.profileText} value={getYearString(age) || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText} value={ age ? getYearString(age) : '-'}></MouseOverPopover>
           </div>
 
           {/* work since */}
@@ -120,7 +134,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-              <MouseOverPopover className={styles.profileText} value={working_since || '-'}></MouseOverPopover>
+              <MouseOverPopover className={styles.profileText} value={String(working_since)?.split('-').slice(0,2).join('-') || '-'}></MouseOverPopover>
 
           </div>
 

@@ -185,9 +185,8 @@ const EditProfileModal = ({
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
-
   const [location, setLocation] = useState(matchedLocation)
-
+  console.log('location',location);
   // Limit user from selecting date more than 16-100 years ago from now.
   // const today = new Date()
   // const sixteenYearsAgo = today.getFullYear() - 16
@@ -242,27 +241,21 @@ const EditProfileModal = ({
   }
 
   const onSubmit = async (data) => {
-    const { firstName, lastName, summary, yearsOfExperience, location } = data
-    const getIdByValue = (options: any[], value) => {
-      const selectedOption = options.find((item) => item.value === value)
-      return selectedOption?.id
-    }
-    const location_id = getIdByValue(formattedLocationList, location)
-
+    const { firstName, lastName, summary, yearsOfExperience } = data
+    
     const payload = {
-      country_id: getCountryId(),
+      // country_id: getCountryId(),
       avatar: selectedAvatar,
       first_name: firstName,
       last_name: lastName,
       birthdate: birthdate && moment(new Date(birthdate)).format('yyyy-MM-DD'),
-      location_key: matchedLocation?.key,
-      location_id,
-      xp_lvl_id: yearsOfExperience,
+      location: location.value,
+      location_id: location.id,
       description: summary?.length > 0 ? summary : '',
       address: inputValue,
       latitude: value?.geometry?.location?.lat() || latitude,
       longitude: value?.geometry?.location?.lng() || longitude,
-      working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM')
+      working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM-DD')
     }
     console.log('payload', payload);
     setIsSecondButtonLoading(true)
@@ -405,6 +398,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
                 {
+                  
                   // @ts-ingore
                 manageProfile.tab.profile.aboutMeModal.workingSince
                 }

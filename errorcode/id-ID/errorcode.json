@@ -218,6 +218,7 @@
     "41235": "Invalid link",
     "41236": "You have entered an incorrect phone or area code",
     "41237": "Your phone number verification failed or timed out",
+    "41238": "Work experience start time must be less than end time",
     "48905": "The email has been registered",
     "50001": "Kesalahan server dari dalam",
     "50002": "Gagal mengunggah resume",
@@ -231,5 +232,6 @@
     "50010": "Parameter ids is required",
     "50011": "The talent has been unlocked",
     "50012": "Parameter resume last updated name is invalid value",
-    "50013": "No result found at the moment Please try again"
+    "50013": "No result found at the moment Please try again",
+    "50014": "Search salary is fail"
 }
