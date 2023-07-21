@@ -79,7 +79,7 @@ const ExchangeModal = (props: any) => {
     if (step === 'verified') {
       actionsRef.current.sendNumber?.({ applicationId })
     } else {
-      const mobile_country_id = countryOptions?.find((e) => (e.value = countryCode))?.id
+      const mobile_country_id = countryOptions?.find((e) => e.value === countryCode)?.id
       actionsRef.current.verify?.({ otp, phone_num: countryCode + mobileNumber, mobile_country_id })
     }
   }, [step, otp, applicationId, mobileNumber])

@@ -18,7 +18,8 @@ const handleShareInfo = async (params: any): Promise<any> => {
 async function generateSEO({ params, searchParams }) {
   const { lang } = params
   const { data: jobDetail } = await handleFetchJobDetail(params)
-  if (jobDetail?.status_key === 'deleted') {
+  const status = jobDetail?.status_key
+  if (status === 'deleted' || status === 'closed') {
     redirect(`/${lang}/404`)
   }
 

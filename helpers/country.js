@@ -92,7 +92,7 @@ export const getDefaultLocation = key => {
   return countryCounfig.find(item => item.key === key)?.defaultLocation
 }
 
-const defaultNation = nations[2];
+const defaultNation = nations[0];
 
 export const defaultCountryKey = () => defaultNation.value
 export const defaultCountryId = () => defaultNation.id

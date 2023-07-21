@@ -165,7 +165,11 @@ const LoginForPhone = (props: any) => {
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
 
-        <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
+        <p
+          className={styles.msg}
+          style={{ paddingBottom: '0px' }}
+          dangerouslySetInnerHTML={{ __html: agreementWord }}
+        ></p>
         {!isModal && (
           <p className={styles.tips}>
             {newGetStarted.tips}{' '}
@@ -182,7 +186,7 @@ const LoginForPhone = (props: any) => {
           </p>
         )}
       </div>
-      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '16px' }}>
+      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '0px' }}>
         <GoogleLogin lang={props.lang} showTitle={false} />
         <FacebookLogin lang={props.lang} showTitle={false} />
         <AppleLogin lang={props.lang} showTitle={false} />
