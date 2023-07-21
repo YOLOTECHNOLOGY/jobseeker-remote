@@ -67,7 +67,9 @@ const ProfileLayout = ({
     location: userLocation,
     description,
     xp_lvl: expLevel,
-    birthdate
+    birthdate,
+    working_since,
+    address
   } = userDetail
 
   const handleShowModal = () => {
@@ -105,6 +107,8 @@ const ProfileLayout = ({
             description={description}
             expLevel={expLevel}
             birthdate={birthdate}
+            working_since={working_since}
+            address={address}
             handleEditClick={handleEditClick}
             lang={dic}
           />
