@@ -110,7 +110,7 @@ const EditSkillModal = ({
 
   const handleAddSkill = (skill) => {
     setChoosed((prevState) => {
-      if (!prevState.includes(skill)) {
+      if (!prevState?.includes(skill)) {
         return [...prevState, skill]
       } else {
         return [...prevState]
