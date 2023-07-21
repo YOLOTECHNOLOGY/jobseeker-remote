@@ -139,7 +139,7 @@ const LoginForPhone = (props: any) => {
 
   return (
     <>
-      <h2 style={{ padding: '10px 0 20px 0' }}>
+      <h2 style={{ padding: '10px 0 14px 0' }}>
         {newGetStarted.title} <span>Bossjob</span>
       </h2>
       <div className={styles.phoneNumber}>

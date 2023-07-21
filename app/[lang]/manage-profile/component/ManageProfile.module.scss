@@ -74,6 +74,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    > span {
+      display: block;
+      overflow: hidden;
+      width: 83%;
+      text-overflow: ellipsis;
+    }
     .iconWrapperDouble {
       visibility: hidden;
     }
@@ -159,7 +165,12 @@
   .companyInfoWrapper {
     display: flex;
     flex-wrap: wrap;
-
+    // > span:nth-child(1) {
+    //   width: 30%;
+    //   display: inline-block;
+    //   text-overflow: ellipsis;
+    //   overflow: hidden;
+    // }
     span {
       // margin-right: 16px;
       position: relative;
@@ -666,7 +677,7 @@
 }
 
 .readMoreDescriptionWrapper {
-  //margin-bottom: 16px;
+  padding-bottom: 15px;
   word-break: break-all;
   //padding-bottom: 18px;
   .ReadMore {
