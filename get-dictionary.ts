@@ -38,13 +38,13 @@ const findMatch = (langKeys, key) => {
   if (fullMatch) {
     return fullMatch
   }
-  if (key.includes('-')) {
-    const partMatch = langKeys.find(item => item.includes(key.split('-')?.[0]))
+  if (key?.includes('-')) {
+    const partMatch = langKeys.find(item => item?.includes(key.split('-')?.[0]))
     if (partMatch) {
       return partMatch
     }
   } else {
-    const partMatch2 = langKeys.map(item => key.includes(item.split('-')?.[0]))
+    const partMatch2 = langKeys.map(item => key?.includes(item.split('-')?.[0]))
     if (partMatch2) {
       return partMatch2
     }
