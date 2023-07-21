@@ -45,6 +45,7 @@ import styles from './index.module.scss'
 import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
+import Image from 'next/image'
 
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
@@ -194,7 +195,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
           </Text>
           {resume.length < 3 && (
             <label className={styles.add}>
-              <img style={{ cursor: 'pointer' }} src={AddIcon} width={14} height={14} />
+              {/* <img style={{ cursor: 'pointer' }} src={AddIcon} width={14} height={14} /> */}
+              <Image src={require('./add.svg').default.src} width={26} height={26} alt="add"></Image>
               <Upload
                 onChange={(event) => {
                   const file = event.target.files[0]

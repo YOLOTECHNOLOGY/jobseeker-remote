@@ -9,8 +9,6 @@ import JobCard from '../JobsCard/index'
 import { languageContext } from "../../../../../components/providers/languageProvider";
 import { useCompanyDetail } from '../../DataProvider';
 import Image from 'next/image';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import Link from 'next/link';
 import useWindowSize from 'hooks/useWindowSize';
@@ -22,6 +20,7 @@ import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 import "swiper/swiper.min.css";
 import { formatTemplateString } from 'helpers/formatter';
 import Lightbox from 'react-image-lightbox';
+import { MouseOverPopover } from 'app/components/popover/MouseOverPopover';
 
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
@@ -424,7 +423,7 @@ export function filterScriptContent(str: string): string {
 }
 
 
-function isURL(str) {
+export function isURL(str) {
 	// Regular expression pattern to match a URL
 	const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
 
@@ -434,73 +433,6 @@ function isURL(str) {
 
 function isContentOverflowing(element) {
 	return element?.scrollWidth > element?.clientWidth || element?.scrollHeight > element?.clientHeight;
-}
-
-export function MouseOverPopover(props: {
-	value: string
-	className?: string
-}) {
-	const ref = useRef(null);
-	const [showPop, setShow] = useState(false);
-
-	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-	const is_url = isURL(props.value);
-	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if (!showPop) return;
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handlePopoverClose = () => {
-		setAnchorEl(null);
-	};
-
-	const open = Boolean(anchorEl);
-
-	function isContentOverflowing(element) {
-		return element?.scrollWidth > element?.clientWidth;
-	}
-
-	useLayoutEffect(() => {
-		if (isContentOverflowing(ref.current)) {
-			setShow(true);
-		}
-	});
-	return (
-		<>
-			<div
-				className={props.className ? props.className : style.overview_item_value}
-				aria-owns={open ? 'mouse-over-popover' : undefined}
-				aria-haspopup="true"
-				onMouseEnter={handlePopoverOpen}
-				onMouseLeave={handlePopoverClose}
-				ref={ref}
-			>
-				{is_url ?
-					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
-					<span>{props.value}</span>}
-			</div>
-			<Popover
-				id="mouse-over-popover"
-				sx={{
-					pointerEvents: 'none',
-				}}
-				open={open}
-				anchorEl={anchorEl}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'left',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'left',
-				}}
-				onClose={handlePopoverClose}
-				disableRestoreFocus
-			>
-				<Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>{props.value}</Typography>
-			</Popover>
-		</>
-	);
 }
 
 export function MobileHiBoss() {

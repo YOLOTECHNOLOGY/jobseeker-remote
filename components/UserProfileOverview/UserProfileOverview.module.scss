@@ -76,6 +76,13 @@
     line-height: normal;
     text-transform: capitalize;
     margin-bottom: 58px;
+    padding: 0 20px;
+    text-align: center;
+    @include text_overflow;
+  }
+  .userOverviewNameLayout {
+    @include text_overflow;
+    width: 100%;
   }
 
   &Info {
@@ -122,5 +129,12 @@
         word-break: break-word;
       }
     }
+  }
+}
+
+.profileText {
+  font-size: 17px;
+  @include respond-to(phone) {
+    font-size: 17px;
   }
 }
