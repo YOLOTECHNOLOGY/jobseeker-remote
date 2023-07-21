@@ -1,9 +1,9 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
-import { EmailIcon } from 'images'
-import Image from 'next/image'
-
+// import { EmailIcon } from 'images'
+// import Image from 'next/image'
+import styles from '../../index.module.scss'
 interface IProps {
   lang: any
   isModal: boolean
@@ -24,8 +24,8 @@ const EmailLink = (props: IProps) => {
   }
   return (
     <li>
-      <div onClick={() => loginEmail()}>
-        <Image src={EmailIcon} width={24} height={24} alt='email' />
+      <div className={styles.phoneBox} onClick={() => loginEmail()}>
+        <i className='icon-email'></i>
         {newGetStarted.email}
       </div>
     </li>

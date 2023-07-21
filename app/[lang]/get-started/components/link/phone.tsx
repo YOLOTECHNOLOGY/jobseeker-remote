@@ -1,9 +1,9 @@
 import React from 'react'
 import { getLang } from 'helpers/country'
-import { PhoneIcon } from 'images'
+// import { PhoneIcon } from 'images'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-
+// import Image from 'next/image'
+import styles from '../../index.module.scss'
 interface IProps {
   lang: any
   isModal: boolean
@@ -23,8 +23,8 @@ const PhoneLink = (props: IProps) => {
   }
   return (
     <li>
-      <div onClick={() => loginPhone()}>
-        <Image src={PhoneIcon} alt='phone' width={24} height={24} />
+      <div className={styles.phoneBox} onClick={() => loginPhone()}>
+        <i className='icon-phone'></i>
         {newGetStarted.phone}
       </div>
     </li>
