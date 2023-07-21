@@ -131,3 +131,10 @@
     }
   }
 }
+
+.profileText {
+  font-size: 17px;
+  @include respond-to(phone) {
+    font-size: 17px;
+  }
+}

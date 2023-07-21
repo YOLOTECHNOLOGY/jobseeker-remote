@@ -96,7 +96,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-            <MouseOverPopover value={location || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText}  value={location || '-'}></MouseOverPopover>
             {/* <Text textStyle='lg'>{location}</Text> */}
           </div>
           <div className={styles.userOverviewInfoDetail}>
@@ -105,12 +105,12 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'address'}
             />
-            <MouseOverPopover value={address || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText} value={address || '-'}></MouseOverPopover>
           </div>
                  
           <div className={styles.userOverviewInfoDetail}>
             <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
-            <MouseOverPopover value={getYearString(age) || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText} value={getYearString(age) || '-'}></MouseOverPopover>
           </div>
 
           {/* work since */}
@@ -120,7 +120,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-              <MouseOverPopover value={working_since || '-'}></MouseOverPopover>
+              <MouseOverPopover className={styles.profileText} value={working_since || '-'}></MouseOverPopover>
 
           </div>
 
@@ -130,7 +130,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'email'}
             />
-            <MouseOverPopover value={email || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText} value={email || '-'}></MouseOverPopover>
           </div>
 
           <div className={styles.userOverviewInfoDetail}>
@@ -139,7 +139,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'tel'}
             />
-            <MouseOverPopover value={contactNumber || '-'}></MouseOverPopover>
+            <MouseOverPopover className={styles.profileText} value={contactNumber || '-'}></MouseOverPopover>
           </div>
 
         {/* {description && (
