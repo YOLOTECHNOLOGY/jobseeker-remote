@@ -1,4 +1,5 @@
 // import 'server-only'
+import { getLang } from 'helpers/country';
 import type { Locale } from './i18n-config'
 import otaClient from '@crowdin/ota-client';
 // import enPageLanguage from './dictionaries/en-US.json'
@@ -30,8 +31,10 @@ const client = new otaClient('7ebf57665448382c18ccd49ef5z', {
   disableStringsCache: false,
   disableLanguagesCache: false
 })
-
+client.setCurrentLocale(getLang())
 export const getDictionary = async (locale: Locale) => {
+
+
   return client.getStringsByLocale(locale)
   // return dictionaries[locale]?.() || dictionaries['en-US']()
 }
