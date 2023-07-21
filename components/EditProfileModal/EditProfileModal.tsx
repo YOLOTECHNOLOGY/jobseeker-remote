@@ -297,7 +297,6 @@ const EditProfileModal = ({
       setBirthdate(value)
     }
   }
-  console.log('inputValue', inputValue);
   return (
     <div>
       <Modal
@@ -335,7 +334,7 @@ const EditProfileModal = ({
                     ...register('firstName', {
                       required: {
                         value: true,
-                        message: 'Please enter your first name.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -355,7 +354,7 @@ const EditProfileModal = ({
                     ...register('lastName', {
                       required: {
                         value: true,
-                        message: 'Please enter your last name.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -481,7 +480,7 @@ const EditProfileModal = ({
                     ...register('location', {
                       required: {
                         value: true,
-                        message: 'This field is required.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -503,7 +502,7 @@ const EditProfileModal = ({
               </Text>
             </div>
             <Autocomplete
-              noOptionsText="No locations"
+              noOptionsText={aboutMeModal.noLocation}
               options={options}
               autoComplete
               className={styles.hiddenLabel}
@@ -523,8 +522,8 @@ const EditProfileModal = ({
               renderInput={(params) => {
                 return (<TextField
                   {...params}
-                  label="input address"
-                  placeholder='address'
+                  label={aboutMeModal.address}
+                  placeholder={aboutMeModal.address}
                   autoComplete='off'
                   type='text'
                   className={_styles.hiddenLabel}
