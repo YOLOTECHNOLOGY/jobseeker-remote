@@ -76,31 +76,31 @@ const ManageProfilePage = () => {
 
   return <>
 
-      <EditProfileModal
-        lang={lang}
-        modalName='profile'
-        showModal={modalState.profile.showModal}
-        config={config}
-        userDetail={userDetail}
-        handleModal={handleModal}
-        fetchProfile={fetchProfile}
-      />
-      <ProfileLayout
-        dic={tabDic}
-        userDetail={userDetail}
-        tabValue={tabValue}
-        setTabValue={setTabValue}
-        modalName='profile'
-        handleModal={handleModal}
-        unCompleted={unCompleted}
-      >
+    <EditProfileModal
+      lang={lang}
+      modalName='profile'
+      showModal={modalState.profile.showModal}
+      config={config}
+      userDetail={userDetail}
+      handleModal={handleModal}
+      fetchProfile={fetchProfile}
+    />
+    <ProfileLayout
+      dic={tabDic}
+      userDetail={userDetail}
+      tabValue={tabValue}
+      setTabValue={setTabValue}
+      modalName='profile'
+      handleModal={handleModal}
+      unCompleted={unCompleted}
+    >
 
 
-        {tabValue === 'profile' && <ProfileView lang={lang} />}
-        {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
-        {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
+      {tabValue === 'profile' && <ProfileView lang={lang} />}
+      {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
+      {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
 
-      </ProfileLayout>
+    </ProfileLayout>
 
   </>
 

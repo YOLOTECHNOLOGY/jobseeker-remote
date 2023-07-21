@@ -53,7 +53,7 @@ const EditSkillModal = ({
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
 
-  const [choosed, setChoosed] = useState(skills)
+  const [choosed, setChoosed] = useState(skills || [])
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
   const [suggestList, setSuggestList] = useState([])
@@ -175,7 +175,7 @@ const EditSkillModal = ({
               InputProps={{
                 endAdornment: searchValue ? <ClearIcon style={{ cursor: 'pointer' }} onClick={handleClearIcon} /> : null
               }}
-              onKeyDown={(e: any) => {
+              onKeyUp={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   if (e.target.value !== '') {
                     handleAddSkill(e.target.value)
