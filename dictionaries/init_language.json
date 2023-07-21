@@ -645,7 +645,10 @@
           "location": "Current Location",
           "exp": "Years of Experience",
           "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
-          "birthdayError": "You need to be at least 16 years old to use Bossjob."
+          "birthdayError": "You need to be at least 16 years old to use Bossjob.",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "Work Experience",

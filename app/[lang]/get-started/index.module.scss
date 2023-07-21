@@ -8,6 +8,9 @@
   position: relative;
   z-index: 1;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .bg {
     position: absolute;
@@ -352,8 +355,14 @@
       letter-spacing: 0.0075em;
       color: #121212;
       line-height: 44px;
-      padding: 20px 0 34px 0;
+      padding: 20px 0;
       margin: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-all;
+      white-space: nowrap;
+      display: inline-block;
+      width: 100%;
 
       span {
         color: #2378e5;
@@ -394,12 +403,7 @@
         }
 
         &:hover {
-          color: #fff;
-          background-color: #2378e5;
-
-          i {
-            color: #fff !important;
-          }
+          border: 1px solid #2378e5;
         }
 
         .phoneBox {
@@ -438,9 +442,7 @@
         background: #fff;
         box-shadow: unset;
 
-        &:hover {
-          background-color: #e5f4ff;
-        }
+
       }
     }
 
@@ -614,7 +616,7 @@
 
     .phoneNumber {
       .item {
-        margin-top: 22px;
+        margin-top: 4px;
 
         &:first-child {
           margin-top: 0;
@@ -629,7 +631,11 @@
             }
 
             .MuiInputLabel-root {
-              left: -12px;
+              display: none;
+            }
+
+            .MuiInput-underline {
+              padding-bottom: 10px;
             }
 
             .MuiInput-underline::before {
@@ -822,12 +828,12 @@
     line-height: 24px;
     letter-spacing: 0.0075em;
     color: #4e5969;
-    position: fixed;
+    // position: fixed;
     width: 100%;
     text-align: center;
-    bottom: 30px;
-    margin: 0;
-    left: 0;
+    // bottom: 30px;
+    // margin: 0;
+    // left: 0;
 
     a {
       color: rgba(19, 111, 211, 1);
@@ -848,12 +854,7 @@
     line-height: 60px;
 
     &:hover {
-      color: #fff;
-      background-color: #2378e5;
-
-      i {
-        color: #fff !important;
-      }
+      border: 1px solid #2378e5;
     }
 
 
@@ -874,7 +875,7 @@
     box-shadow: 0px 7px 8px 0px #d8e5ff;
 
     &:hover {
-      background-color: #2378e5;
+      // background-color: #2378e5;
     }
   }
 

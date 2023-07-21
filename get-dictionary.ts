@@ -1,4 +1,5 @@
 // import 'server-only'
+import { defaultLanguage, getLang } from 'helpers/country';
 import type { Locale } from './i18n-config'
 import otaClient from '@crowdin/ota-client';
 // import enPageLanguage from './dictionaries/en-US.json'
@@ -28,10 +29,34 @@ import otaClient from '@crowdin/ota-client';
 // }
 const client = new otaClient('7ebf57665448382c18ccd49ef5z', {
   disableStringsCache: false,
-  disableLanguagesCache: true
+  disableLanguagesCache: false
 })
+client.setCurrentLocale(defaultLanguage())
+// client.setCurrentLocale(getLang())
+const findMatch = (langKeys, key) => {
+  const fullMatch = langKeys.find(item => item === key)
+  if (fullMatch) {
+    return fullMatch
+  }
+  if (key?.includes('-')) {
+    const partMatch = langKeys.find(item => item?.includes(key.split('-')?.[0]))
+    if (partMatch) {
+      return partMatch
+    }
+  } else {
+    const partMatch2 = langKeys.map(item => key?.includes(item.split('-')?.[0]))
+    if (partMatch2) {
+      return partMatch2
+    }
+  }
+}
 
 export const getDictionary = async (locale: Locale) => {
-  return client.getStringsByLocale(locale)
+
+  const languages = await client.getStrings()
+  console.log({ languages })
+  const langKeys = Object.keys(languages)
+  const match = findMatch(langKeys, locale)
+  return client.getStringsByLocale(match)
   // return dictionaries[locale]?.() || dictionaries['en-US']()
 }

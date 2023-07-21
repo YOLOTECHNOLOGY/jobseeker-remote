@@ -24,9 +24,6 @@ import _styles from 'styles/maintenance.module.scss';
 
 /* Helpers */
 import { flat } from 'helpers/formatter'
-
-import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
-
 /* Styles */
 import styles from './EditProfileModal.module.scss'
 import { getCountryId } from 'helpers/country'
@@ -122,7 +119,9 @@ const EditProfileModal = ({
     email,
     longitude,
     latitude,
-    address
+    address,
+    working_since
+
   } = userDetail
   const lang = useLanguage()
   const mapRef = useRef(null);
@@ -132,7 +131,7 @@ const EditProfileModal = ({
   const [debouncedValue, setDebouncedValue] = useState('');
 
 
-  console.log('userDetail', userDetail);
+  console.log('userDetail', userDetail, address);
   const {
     manageProfile: {
       tab: {
@@ -140,7 +139,7 @@ const EditProfileModal = ({
       }
     }
   } = lang
-
+  const {manageProfile, profile} = useLanguage();
   useEffect(() => {
     const delay = 500; // 设置延迟时间（毫秒）
     const timerId = setTimeout(() => {
@@ -153,7 +152,6 @@ const EditProfileModal = ({
   }, [inputValue]);
 
   useEffect(() => {
-    console.log('inputValue', debouncedValue);
     if (!mapRef.current) return;
 
 
@@ -170,6 +168,7 @@ const EditProfileModal = ({
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
   const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
+  const [workingSince, setWorkingSince] = useState(working_since || '');
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
@@ -202,6 +201,7 @@ const EditProfileModal = ({
     summary: description,
     location: userLocation,
     birthdate: birthdate,
+    working_since: working_since,
     yearsOfExperience: xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
   }
   const {
@@ -261,7 +261,8 @@ const EditProfileModal = ({
       description: summary?.length > 0 ? summary : '',
       address: inputValue,
       latitude: value?.geometry?.location?.lat() || latitude,
-      longitude: value?.geometry?.location?.lng() || longitude
+      longitude: value?.geometry?.location?.lng() || longitude,
+      working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM')
     }
     console.log('payload', payload);
     setIsSecondButtonLoading(true)
@@ -296,7 +297,6 @@ const EditProfileModal = ({
       setBirthdate(value)
     }
   }
-  console.log('value', value);
   return (
     <div>
       <Modal
@@ -334,7 +334,7 @@ const EditProfileModal = ({
                     ...register('firstName', {
                       required: {
                         value: true,
-                        message: 'Please enter your first name.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -354,7 +354,7 @@ const EditProfileModal = ({
                     ...register('lastName', {
                       required: {
                         value: true,
-                        message: 'Please enter your last name.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -404,11 +404,36 @@ const EditProfileModal = ({
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
-                {aboutMeModal.exp}
+                {
+                  // @ts-ingore
+                manageProfile.tab.profile.aboutMeModal.workingSince
+                }
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
-              <MaterialBasicSelect
+            <MaterialDatePicker
+                  refs={{
+                    ...register('working_since', {
+                      // validate: () => {
+                      //   const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
+                      //   const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
+                      //   if (isMaxYear || isMinYear) {
+                      //     return aboutMeModal.birthdayError
+                      //   } else {
+                      //     return true
+                      //   }
+                      // }
+                    })
+                  }}
+                  label={profile.startedWorkingSince}
+                  hiddenLabel
+                  views={['year', 'month']}
+                  inputFormat='yyyy-MM'
+                  value={workingSince}
+                  onDateChange={setWorkingSince}
+                  fullWidth={true}
+                />
+              {/* <MaterialBasicSelect
                 fieldRef={{
                   ...register('yearsOfExperience')
                 }}
@@ -421,7 +446,7 @@ const EditProfileModal = ({
                 onChange={(e, v) => {
                   setYearsOfExperience(v.props.value)
                 }}
-              />
+              /> */}
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
@@ -455,7 +480,7 @@ const EditProfileModal = ({
                     ...register('location', {
                       required: {
                         value: true,
-                        message: 'This field is required.'
+                        message: profile.thisFieldIsRequired
                       }
                     })
                   }}
@@ -477,7 +502,7 @@ const EditProfileModal = ({
               </Text>
             </div>
             <Autocomplete
-              noOptionsText="No locations"
+              noOptionsText={aboutMeModal.noLocation}
               options={options}
               autoComplete
               className={styles.hiddenLabel}
@@ -497,8 +522,8 @@ const EditProfileModal = ({
               renderInput={(params) => {
                 return (<TextField
                   {...params}
-                  label="input address"
-                  placeholder='address'
+                  label={aboutMeModal.address}
+                  placeholder={aboutMeModal.address}
                   autoComplete='off'
                   type='text'
                   className={_styles.hiddenLabel}

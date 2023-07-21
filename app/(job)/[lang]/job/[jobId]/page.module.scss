@@ -397,6 +397,12 @@
         //  margin-right: 12px;
       }
 
+      :global {
+        .MuiAutocomplete-input {
+          padding: 2.5px 30px 2.5px 6px !important;
+        }
+      }
+
       .line {
         height: 60px;
         width: 1px;

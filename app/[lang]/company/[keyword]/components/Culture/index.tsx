@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { CompanyDetailsType } from '../../service';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { MouseOverPopover } from '../InfoList';
+import { MouseOverPopover } from "../../../../../components/popover/MouseOverPopover";
 import { languageContext } from 'app/components/providers/languageProvider';
 import { useCompanyDetail } from '../../DataProvider';
 
