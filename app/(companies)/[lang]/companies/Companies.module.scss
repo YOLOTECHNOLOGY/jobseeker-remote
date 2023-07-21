@@ -82,6 +82,12 @@
           width: 300px;
         }
       }
+      .MuiSelect-select div {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: calc(100% - 13px);
+      }
       .MuiOutlinedInput-root {
         background-color: #fff !important;
         border-radius: 4px !important;
