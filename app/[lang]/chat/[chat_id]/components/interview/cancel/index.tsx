@@ -36,7 +36,7 @@ const CancelModal = (props: any) => {
         secondButtonText={dic.send}
         firstButtonIsClose={false}
         secondButtonIsClose={false}
-        handleFirstButton={() => actionsRef.current.back?.()}
+        handleFirstButton={() => actionsRef.current?.back?.()}
         handleSecondButton={() => actionsRef.current.send?.({
             applicationId,
             inviteInterviewId: data.id,

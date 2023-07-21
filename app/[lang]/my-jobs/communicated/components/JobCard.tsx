@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 'use client'
 import React, { useEffect } from 'react'
 import styles from '../index.module.scss'
@@ -98,7 +99,7 @@ const Card = ({
     })
   }
 
-  const VIf = (props) => props.show ? props.children : null
+  const VIf = (props: any) => props?.show ? props.children : null
 
   return (
     <>

@@ -81,7 +81,11 @@ const interpreter = registInterpreter((command) =>
       }),
     modalCompleteFile: () =>
       M.do((context) => {
-        const { showCompleteModal, jobDetail: { id }, router } = context
+        const {
+          showCompleteModal,
+          jobDetail: { id },
+          router
+        } = context
         const source = getSourceCookie()
         showCompleteModal(() => {
           localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
@@ -93,8 +97,8 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = getSourceCookie()
-        return createChat(id, { source, device: isMobile ? 'mobile_web' : 'web' })
-          .then((result) => {
+        return createChat(id, { source, device: isMobile ? 'mobile_web' : 'web' }).then(
+          (result) => {
             const chatId = result.data.data.id
             const newData = {
               ...result.data?.data?.job_application,
@@ -109,7 +113,9 @@ const interpreter = registInterpreter((command) =>
             if (
               process.env.ENV === 'production' &&
               typeof window !== 'undefined' &&
-              userInfo && jobDetail && !jobDetail.chat?.is_exists
+              userInfo &&
+              jobDetail &&
+              !jobDetail.chat?.is_exists
             ) {
               if (window.gtag) {
                 window.gtag('event', 'new_chat', {
@@ -131,11 +137,12 @@ const interpreter = registInterpreter((command) =>
                   user_id: userInfo.id,
                   email: userInfo.email,
                   job_id: jobDetail.id
-                });
+                })
               }
             }
             return chatId
-          })
+          }
+        )
       })
   })
 )

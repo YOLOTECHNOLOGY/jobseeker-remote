@@ -69,6 +69,7 @@ import {
   changeUserInfoValue
 } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
+
 const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
   const {
     manageProfile: {
@@ -362,10 +363,10 @@ const RenderProfileView = ({ userDetail, handleModal, config, lang }: any) => {
                     : workingPeriodTo.format('MMMM yyyy')}{' '}
                   {dateDiff
                     ? `(${dateDiff
-                        .replace('years', profile.exp.year)
-                        .replace('year', profile.exp.year)
-                        .replace('months', profile.exp.months)
-                        .replace('month', profile.exp.month)})`
+                      .replace('years', profile.exp.year)
+                      .replace('year', profile.exp.year)
+                      .replace('months', profile.exp.months)
+                      .replace('month', profile.exp.month)})`
                     : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>

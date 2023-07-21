@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 /* Actions */
+import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 
 /* Components */
 import { Chip } from '@mui/material'
@@ -16,10 +17,14 @@ import MaterialTextField from 'components/MaterialTextField'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+
 import { keys, flatMap } from 'lodash-es'
 /* Styles */
 import styles from './EditSkillModal.module.scss'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import { getCookie } from 'helpers/cookies'
+
 
 type EditSkillModalProps = {
   modalName: string
@@ -47,7 +52,7 @@ const EditSkillModal = ({
   } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
-  
+
   const [choosed, setChoosed] = useState(skills)
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
@@ -57,6 +62,8 @@ const EditSkillModal = ({
   const jobFunctionLists = useSelector(
     (store: any) => store.config?.config?.response?.inputs?.job_function_lists ?? []
   )
+
+  const accessToken = getCookie('accessToken')
 
   const skillList = useMemo(() => {
     const jobFunction = flatMap(jobFunctionLists, (item) => {
@@ -93,8 +100,8 @@ const EditSkillModal = ({
     const payload = {
       skills: choosed.join(',')
     }
-
     dispatch(updateUserProfileRequest(payload))
+
   }
 
   const handleDeleteSkill = (skill) => {
@@ -113,11 +120,18 @@ const EditSkillModal = ({
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
+    handleResetForm()
   }
 
   const handleClearIcon = () => {
     setSearchValue('')
   }
+  const handleResetForm = () => {
+    setFunctionTitle({ value: '', id: undefined })
+    setSearchValue('')
+  }
+
+  console.log('choosed:', functionTitle)
 
   return (
     <div>
@@ -143,7 +157,10 @@ const EditSkillModal = ({
               isTouched={true}
               title={lang.profile.jobFunction}
               value={functionTitle}
-              onChange={setFunctionTitle}
+              onChange={(item) => setFunctionTitle({
+                id: item.id,
+                value: item.value
+              })}
             />
           </div>
           <div className={styles.form}>
@@ -156,9 +173,9 @@ const EditSkillModal = ({
               className={styles.searchField}
               onChange={e => setSearchValue(e.target.value)}
               InputProps={{
-                endAdornment: searchValue ? <ClearIcon style={{cursor: 'pointer'}} onClick={handleClearIcon} /> : null
+                endAdornment: searchValue ? <ClearIcon style={{ cursor: 'pointer' }} onClick={handleClearIcon} /> : null
               }}
-              onKeyPress={(e: any) => {
+              onKeyDown={(e: any) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   if (e.target.value !== '') {
                     handleAddSkill(e.target.value)
@@ -176,7 +193,7 @@ const EditSkillModal = ({
                   className={styles.skillChip}
                   label={skill}
                   variant='filled'
-                  color='info'
+                  color='primary'
                   size='small'
                   onClick={() => {
                     handleDeleteSkill(skill)

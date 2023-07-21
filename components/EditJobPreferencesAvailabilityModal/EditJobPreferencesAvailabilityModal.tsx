@@ -52,12 +52,13 @@ const EditJobPreferencesAvailabilityModal = ({
   }, [userDetail])
   const onSubmit = (data) => {
     const { noticePeriod } = data // jobType is a key
-    
+
     const payload = {
       profile: {
         notice_period_id: noticePeriod
       }
     }
+
     dispatch(updateUserPreferencesRequest(payload))
   }
   useEffect(() => {

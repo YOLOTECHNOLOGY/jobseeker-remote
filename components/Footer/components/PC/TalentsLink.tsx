@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '../../Footer.module.scss'
 import TalentsList from '../common/TalentsList'
 
-const TalentsLink = (props) => {
+const TalentsLink = (props:any) => {
   const { data } = props
 
   const {

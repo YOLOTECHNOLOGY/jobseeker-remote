@@ -56,8 +56,13 @@ function* updateUserPreferencesReq({ payload }) {
             userUpdateProfileResponse = yield call(updateUserProfileService, profile)
             yield put(updateUserProfileSuccess(userUpdateProfileResponse.data.data))
             yield put(fetchUserOwnDetailSuccess(userUpdateProfileResponse.data.data))
+
             yield put(updateUserPreferencesSuccess(userUpdateProfileResponse.data.data))
         }
+
+        yield put(fetchUserOwnDetailRequest({ accessToken }))
+
+
         // [preferenceResponse, userUpdateProfileResponse] = yield all([
         //     call(addUserPreferencesService, preferencesPayload),
         //     call(updateUserProfileService, profile)

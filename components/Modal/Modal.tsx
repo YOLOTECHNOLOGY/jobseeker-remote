@@ -64,7 +64,6 @@ const Modal = ({
   footerClass,
   ...rest
 }: ModalProps) => {
-  if (!showModal) return null
   const ref = useRef(null)
   const scrollY = useRef(0)
   const hasFirstButton = handleFirstButton && firstButtonText
@@ -120,6 +119,7 @@ const Modal = ({
       // modal.removeEventListener('pointermove', preventDefault)
     }
   }, [])
+  if (!showModal) return null
 
   return ReactDOM.createPortal(
     <React.Fragment>
