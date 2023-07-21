@@ -15,14 +15,12 @@
     height: 768px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(
-      166.11deg,
-      #ffffff 18.61%,
-      #9dedff 59.16%,
-      #1052fb 100.91%,
-      #1052fb 133%,
-      rgba(16, 82, 251, 0.89) 186.95%
-    );
+    background: linear-gradient(166.11deg,
+        #ffffff 18.61%,
+        #9dedff 59.16%,
+        #1052fb 100.91%,
+        #1052fb 133%,
+        rgba(16, 82, 251, 0.89) 186.95%);
     opacity: 0.6;
     filter: blur(154.5px);
     transform: translateZ(0);
@@ -384,12 +382,11 @@
         font-size: 14px;
         border-radius: 8px;
         text-align: center;
-        height: 44px;
-        border: 1px solid #c9cdd4;
+        height: 60px;
+        border: 1px solid #ececec;
         letter-spacing: 0.0075em;
-        color: #1d2129;
-        font-weight: 700;
-        line-height: 44px;
+        color: #121212;
+        line-height: 60px;
 
         a {
           display: block;
@@ -397,15 +394,24 @@
         }
 
         &:hover {
-          background-color: #e5f4ff;
+          color: #fff;
+          background-color: #2378e5;
+
+          i {
+            color: #fff !important;
+          }
         }
 
-        img {
-          position: absolute;
-          width: 24px;
-          height: 24px;
-          left: 17px;
-          top: 10px;
+        .phoneBox {
+          i {
+            font-size: 24px;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            left: 17px;
+            top: 18px;
+          }
+
         }
       }
     }
@@ -415,7 +421,7 @@
       justify-content: space-around;
       padding-top: 24px;
 
-      > div {
+      >div {
         width: 130px;
 
         i,
@@ -506,8 +512,8 @@
       line-height: 19px;
       text-align: center;
       letter-spacing: 0.02em;
-      color: #86909c;
-      padding: 90px 0 24px;
+      color: #7d7d7d;
+      padding: 80px 0 24px;
 
       &.divider_none {
         margin: 0;
@@ -608,7 +614,7 @@
 
     .phoneNumber {
       .item {
-        margin-top: 16px;
+        margin-top: 22px;
 
         &:first-child {
           margin-top: 0;
@@ -620,6 +626,14 @@
           :global {
             .MuiOutlinedInput-root {
               border-radius: 8px;
+            }
+
+            .MuiInputLabel-root {
+              left: -12px;
+            }
+
+            .MuiInput-underline::before {
+              border-bottom: 1px solid #e4e4e4;
             }
           }
         }
@@ -635,7 +649,7 @@
         border-radius: 8px;
         outline: none;
         background-color: #fff;
-        margin-top: 16px;
+        margin-top: 20px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -659,7 +673,7 @@
       }
 
       .msg {
-        padding: 16px 0;
+        padding: 20px 0;
         font-weight: 400;
         font-size: 14px;
         letter-spacing: 0.0075em;
@@ -834,8 +848,14 @@
     line-height: 60px;
 
     &:hover {
-      background-color: #e5f4ff;
+      color: #fff;
+      background-color: #2378e5;
+
+      i {
+        color: #fff !important;
+      }
     }
+
 
     i {
       position: absolute;
