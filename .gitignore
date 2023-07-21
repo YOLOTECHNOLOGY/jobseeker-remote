@@ -41,3 +41,4 @@ tsconfig.tsbuildinfo
 jsconfig.json
 
 .idea
+next-env.d.ts
