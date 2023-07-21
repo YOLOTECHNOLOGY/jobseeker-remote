@@ -758,7 +758,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.edu.title} // 'Education'
           description={profile.edu.noDataTips} // 'Highlight your academic qualifications and achievements.'
-          //buttonText={profile.edu.addEdu} // 'Add education'
+          // buttonText={profile.edu.addEdu} // 'Add education'
           // eslint-disable-next-line
           onClick={() => handleEducationModal()}
         />
@@ -770,7 +770,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.skill.title} // 'Skills'
           description={profile.skill.noDataTips} // 'Include relevant skill and keywords to boost your chances of getting an interview.'
-          //buttonText={profile.skill.addSkill} // 'Add skills'
+          // buttonText={profile.skill.addSkill} // 'Add skills'
           // eslint-disable-next-line
           onClick={() => handleModal('skills', true, null, null)}
         />
@@ -782,7 +782,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.licenses.title} // 'Licenses And Certifications'
           description={profile.licenses.noDataTips} // 'Stand out among the rest by sharing that expertise that you have earned to show your passion for the job.'
-          //buttonText={profile.licenses.addLicense} // 'Add licenses & cert'
+          // buttonText={profile.licenses.addLicense} // 'Add licenses & cert'
           // eslint-disable-next-line
           onClick={() => handleLicenseAndCertificationsModal()}
         />
@@ -794,7 +794,7 @@ const ProfileView = ({ lang }: any) => {
         <ProfileSettingCard
           title={profile.link.title} // 'Links'
           description={profile.link.noDataTips} // 'Show recruiters your work by sharing your websites, portfolio, articles, or any relevant links.'
-          //buttonText={profile.link.addLink} // 'Add links'
+          // buttonText={profile.link.addLink} // 'Add links'
           // eslint-disable-next-line
           onClick={() => handleLinksModal()}
         />

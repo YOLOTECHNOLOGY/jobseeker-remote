@@ -11,7 +11,7 @@ import {
 type ProfileSettingCardProps = {
   title: string
   description: string
-  //buttonText: string
+  // buttonText: string
   onClick: () => void
 }
 
