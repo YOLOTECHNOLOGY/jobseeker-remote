@@ -94,7 +94,7 @@ const ProfileLayout = ({
   return (
     <div className={styles.pageContainer}>
       <div className={styles.pageBanner}>
-        <Image src={require('./banner2.png').default.src} style={{objectFit: 'cover'}} fill alt='banner'></Image>
+        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{objectFit: 'cover'}} fill alt='banner'></Image>
       </div>
       <div className={styles.profileLayout}>
         <div className={styles.profileLayoutUserOverview}>
