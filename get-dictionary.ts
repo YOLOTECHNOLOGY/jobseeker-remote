@@ -28,7 +28,7 @@ import otaClient from '@crowdin/ota-client';
 // }
 const client = new otaClient('7ebf57665448382c18ccd49ef5z', {
   disableStringsCache: false,
-  disableLanguagesCache: true
+  disableLanguagesCache: false
 })
 
 export const getDictionary = async (locale: Locale) => {
