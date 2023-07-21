@@ -85,7 +85,7 @@ const VerifyFactorEmail = (props: IProps) => {
             <p className={styles.extra}>{}</p>
             <p>
               {newGetStarted.sendCodeDigit}
-              {/* <span>{email}.</span> */}
+              <span>{email}.</span>
             </p>
           </div>
           <Captcha
