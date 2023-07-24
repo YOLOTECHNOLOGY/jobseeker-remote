@@ -14,7 +14,8 @@ const ManageProfilePage = () => {
   const lang = useLanguage();
   const { profile: userDetail, config, fetchProfile } = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
-  const tab = searchParams.get('tab');;
+  const tab = searchParams.get('tab');
+  console.log('tab',tab);
   const {
     manageProfile: { tab: tabDic }
   } = lang
