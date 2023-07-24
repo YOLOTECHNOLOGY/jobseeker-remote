@@ -63,7 +63,7 @@ const Page = () => {
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-
+	console.log('detail', detail);
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
 	if(isMobile){
@@ -126,7 +126,8 @@ const Page = () => {
 
 			</div>
 			<TabPanel value={value} index={0}>
-			{!!hotJobs.jobs.length ? <div className={style.hot_jobs_wrapper}>
+			{!!hotJobs.jobs.length ? 
+				<div className={style.hot_jobs_wrapper}>
 						<Section title={overview.HotJobs} hot>
 						<div
 							className={style.header_right}
@@ -138,9 +139,9 @@ const Page = () => {
 							 <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
-							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item) => {
-								if(!item) return <div className={style.jobs_item} style={{opacity:0}}></div>;
-								return <div className={style.jobs_item} key={item.job_title}>
+							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item,index) => {
+								if(!item) return <div key={index} className={style.jobs_item} style={{opacity:0}}></div>;
+								return <div className={style.jobs_item} key={index}>
 									<Link 
 										href={`/${lang}${item.job_url}`}
 										target={'_blank'}

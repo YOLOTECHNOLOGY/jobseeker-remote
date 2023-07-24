@@ -10,7 +10,6 @@ import styles from './EditIntroductionModal.module.scss'
 type EditIntroductionModalProps = {
   modalName: string
   showModal: boolean
-  config: any
   userDetail: any
   lang: any
   handleModal: Function
@@ -19,7 +18,6 @@ type EditIntroductionModalProps = {
 const EditIntroductionModal = ({
   modalName,
   showModal,
-  config,
   userDetail,
   handleModal,
   lang
@@ -87,9 +85,9 @@ const EditIntroductionModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleCloseModal}
-      headerTitle={langProfile?.introductionModal?.title}
-      firstButtonText={langProfile?.introductionModal?.btn1}
-      secondButtonText={langProfile?.introductionModal?.btn2}
+      headerTitle={langProfile?.introdutionModal?.title}
+      firstButtonText={langProfile?.introdutionModal?.btn1}
+      secondButtonText={langProfile?.introdutionModal?.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleCloseModal}
