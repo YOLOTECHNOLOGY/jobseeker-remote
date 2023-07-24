@@ -371,7 +371,7 @@ const PreferencesView = ({ lang }: any) => {
               className={styles.iconWrapperP}
               onClick={() => handleModal('createJobPreference', true, null, null)}
             >
-              <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
+              <Image src={AddIcon} width='26' height='26' color='#337f43' alt={''} />
             </div>
           )}
 

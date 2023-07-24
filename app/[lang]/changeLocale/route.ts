@@ -3,7 +3,7 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
-import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey } from 'helpers/cookies'
+import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey, redirectUrl } from 'helpers/cookies'
 
 async function removeServiceCache(token, lang?) {
   try {
@@ -27,6 +27,7 @@ export async function GET(request) {
   const params = new URL(request.url).searchParams
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
+  const pathname = params.get(redirectUrl)
   const country = params.get('country')
   const user = params.get(userKey)
   const { url } = request
@@ -40,7 +41,7 @@ export async function GET(request) {
     status: 301,
     headers: {
       "Access-Control-Allow-Headers": "Set-Cookie",
-      Location: `${newUrl}/${lang}`,
+      Location: `${newUrl}/${lang}/${pathname}`,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
