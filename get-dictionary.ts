@@ -2,6 +2,8 @@
 import { defaultLanguage, getLang } from 'helpers/country';
 import type { Locale } from './i18n-config'
 import otaClient from '@crowdin/ota-client';
+import { recordTime } from 'helpers/analizeTools';
+
 // import enPageLanguage from './dictionaries/en-US.json'
 // import enErrorcode from './errorcode/en-US/errorcode.json'
 
@@ -57,7 +59,13 @@ export const getDictionary = async (locale: Locale) => {
   console.log({ languages })
   const langKeys = Object.keys(languages)
   const match = findMatch(langKeys, locale)
+  const stop = recordTime('get dictionay api cost')
   const dic = await client.getStringsByLocale(match ?? defaultLanguage())
-  return dic
+  stop()
+  const errorcode = Object.keys(dic)
+    .filter(key => !isNaN(Number(key)))
+    .map(key => ({ [key]: dic[key] }))
+    .reduce((a, b) => ({ ...a, ...b }), {})
+  return { ...dic, errorcode }
   // return dictionaries[locale]?.() || dictionaries['en-US']()
 }
