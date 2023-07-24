@@ -4,7 +4,7 @@ import AdSlot from 'app/components/AdSlot/index'
 
 import styles from '../../../index.module.scss'
 
-const Ad = ({children}:any) => {
+const Ad = ({ children }: any) => {
   return (
     <div className={styles.recommendContainer}>
       <div className={styles.mainFunction}>{children}</div>

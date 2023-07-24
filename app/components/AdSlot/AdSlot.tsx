@@ -4,6 +4,7 @@ import Script from 'next/script'
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'app/components/AdSlot/useTransitionState'
 import ads from 'lib/config/adConfig'
+import { getCountryKey } from 'helpers/country'
 
 interface adSlotProps {
   adSlot: string
@@ -11,7 +12,9 @@ interface adSlotProps {
 
 const AdSlot = ({ adSlot }: adSlotProps) => {
   const isTransitioning = useTransitionState()
-  const ad = ads[adSlot]
+  const countryKey = 'jp' // getCountryKey()
+  console.log({ countryKey }, ads[countryKey][adSlot])
+  const ad = ads[countryKey][adSlot]
   // if (process.env.ENV === 'production') {
   // if (process.env.ENV === 'development') {
   useAdSlot({

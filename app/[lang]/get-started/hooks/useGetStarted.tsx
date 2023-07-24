@@ -112,7 +112,9 @@ const useGetStarted = () => {
       is_bosshunt_talent: loginData.is_bosshunt_talent,
       is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
       bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-      is_profile_completed: loginData.is_profile_completed
+      is_profile_completed: loginData.is_profile_completed,
+      longitude: loginData?.longitude,
+      latitude: loginData?.latitude
     }
     setCookie('refreshToken', refresh_token)
     setCookie('user', userCookie)
