@@ -10,7 +10,6 @@ import styles from './EditIntroductionModal.module.scss'
 type EditIntroductionModalProps = {
   modalName: string
   showModal: boolean
-  config: any
   userDetail: any
   lang: any
   handleModal: Function
@@ -19,7 +18,6 @@ type EditIntroductionModalProps = {
 const EditIntroductionModal = ({
   modalName,
   showModal,
-  config,
   userDetail,
   handleModal,
   lang
@@ -40,13 +38,7 @@ const EditIntroductionModal = ({
   // translate maps
   const langProfile = lang.manageProfile.tab.profile
   console.log('langProfile:', langProfile)
-  useEffect(() => {
-    if (userDetail && userDetail.description) {
-      // setAvailability(userDetail.notice_period_id)
-      // setValue('noticePeriod', userDetail.notice_period_id)
-      setDescription(userDetail.description)
-    }
-  }, [userDetail])
+
   const onSubmit = (data) => {
     const { noticePeriod } = data // jobType is a key
 
@@ -58,15 +50,25 @@ const EditIntroductionModal = ({
 
     dispatch(updateUserPreferencesRequest(payload))
   }
+  const handleCloseModal = () => {
+    handleModal(modalName, null, false)
+    reset()
+    //setDescription('')
+  }
 
   useEffect(() => {
     handleCloseModal()
-
-  }, [userDetail])
-  const handleCloseModal = () => {
-    handleModal(modalName, false)
     reset()
-  }
+  }, [userDetail])
+
+  useEffect(() => {
+    if (userDetail && userDetail.description) {
+      // setAvailability(userDetail.notice_period_id)
+      // setValue('noticePeriod', userDetail.notice_period_id)
+      setDescription(userDetail.description)
+    }
+  }, [userDetail])
+
   const modalJobPreferenceContent = (
     <div className={styles.jobPreferences}>
       <div className={styles.jobPreferencesForm}>

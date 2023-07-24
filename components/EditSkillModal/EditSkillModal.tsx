@@ -14,6 +14,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
+import { Button } from '@mui/material'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
@@ -164,26 +165,46 @@ const EditSkillModal = ({
             />
           </div>
           <div className={styles.form}>
-            <MaterialTextField
-              id='search'
-              label={skillModal.skill}
-              variant='outlined'
-              size='small'
-              value={searchValue}
-              className={styles.searchField}
-              onChange={e => setSearchValue(e.target.value)}
-              InputProps={{
-                endAdornment: searchValue ? <ClearIcon style={{ cursor: 'pointer' }} onClick={handleClearIcon} /> : null
-              }}
-              onKeyUp={(e: any) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  if (e.target.value !== '') {
-                    handleAddSkill(e.target.value)
+            <div className={styles.specilField}>
+              <MaterialTextField
+                id='search'
+                label={skillModal.skill}
+                variant='outlined'
+                size='small'
+                value={searchValue}
+                className={styles.searchField}
+                onChange={e => setSearchValue(e.target.value)}
+                InputProps={{
+                  endAdornment: searchValue ? <ClearIcon style={{ cursor: 'pointer' }} onClick={handleClearIcon} /> : null
+                }}
+                onKeyUp={(e: any) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    if (e.target.value !== '') {
+                      handleAddSkill(e.target.value)
+                      setSearchValue('')
+                    }
+                  }
+                }}
+                style={{ flex: 1 }}
+              />
+              <Button
+                variant="contained"
+                sx={{ marginLeft: '20px' }}
+                onClick={() => {
+                  if (searchValue !== '') {
+                    handleAddSkill(searchValue)
                     setSearchValue('')
                   }
-                }
-              }}
-            />
+
+
+                }}
+              >
+                {skillModal.addBtn}
+              </Button>
+
+            </div>
+
+
           </div>
           <div className={styles.skillList}>
             {(choosed ?? []).map((skill, i) => {

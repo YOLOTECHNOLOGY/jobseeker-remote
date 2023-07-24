@@ -235,6 +235,10 @@
   @extend .GlobalNextAppContainer;
 
   :global {
+    .MuiTabs-root {
+      border-bottom: 0;
+    }
+
     .MuiTabs-root .MuiTabs-indicatorSpan {
       background-color: #1d2129;
     }
@@ -1374,7 +1378,7 @@
       top: 4px;
     }
 
-    >p {
+    > p {
       padding-left: 24px;
       line-height: 20px;
     }

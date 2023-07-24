@@ -1,7 +1,7 @@
 {
   "header": {
     "home": "首页",
-    "findJobs": "职位",
+    "findJobs": "职位123",
     "companies": "公司",
     "courses": "课程",
     "careerGuide": "职业指南",
@@ -645,7 +645,10 @@
           "location": "当前城市",
           "exp": "工作经验",
           "summary": "我的优势 （写写你的相关经验和个人成就等，更能赢得Boss赏识）",
-          "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。"
+          "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "工作经验",
@@ -711,7 +714,8 @@
           "btn2": "保存",
           "suggestions": "我们会根据您最近的职位类型为您推荐技能：",
           "jobFunction": "职位类型",
-          "skill": "搜索或者添加一个技能"
+          "skill": "搜索或者添加一个技能",
+          "addBtn": "Add"
         },
         "licenses": {
           "title": "资格证书",
@@ -754,8 +758,8 @@
           "btn1": "Cancel",
           "btn2": "Delete"
         },
-        "introdutionModal": {
-          "title": "Introdution",
+        "introductionModal": {
+          "title": "Introduction",
           "btn1": "Cancel",
           "btn2": "Edit"
         }
@@ -954,7 +958,8 @@
     "skip": "跳过职位设置",
     "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
-    "skipAnyway": "任性跳过"
+    "skipAnyway": "任性跳过",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "聊天",

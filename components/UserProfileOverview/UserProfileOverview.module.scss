@@ -135,6 +135,6 @@
 .profileText {
   font-size: 17px;
   @include respond-to(phone) {
-    font-size: 17px;
+    font-size: 17px !important;
   }
 }

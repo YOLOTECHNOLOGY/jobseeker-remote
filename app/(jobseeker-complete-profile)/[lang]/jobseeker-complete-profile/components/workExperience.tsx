@@ -139,7 +139,8 @@ const WorkExperience = (props: any) => {
     from,
     to,
     placeholder,
-    skip
+    skip,
+    uploadSeccess
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
@@ -153,7 +154,7 @@ const WorkExperience = (props: any) => {
             dispatch(
               displayNotification({
                 open: true,
-                message: 'uplod seccess',
+                message: uploadSeccess,
                 severity: 'success'
               })
             )

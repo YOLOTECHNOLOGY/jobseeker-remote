@@ -12,7 +12,7 @@ import PhoneChooseEmail from '../components/PhoneChooseEmail'
 import LeftBanner from '../components/leftBanner'
 import CodePopver from '../components/codePopver'
 import QrCodeComponent from '../components/QrCode'
-
+import FooterTip from '../components/FooterTip'
 interface IProps {
   lang: any
   isModal?: boolean
@@ -96,6 +96,7 @@ const PhoneLogin = (props: IProps) => {
         <div className={styles.main}>
           <div className={styles.bg}></div>
           {main}
+          <FooterTip lang={lang} />
         </div>
       )}
     </>

@@ -645,7 +645,10 @@
           "location": "Current Location",
           "exp": "Years of Experience",
           "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
-          "birthdayError": "You need to be at least 16 years old to use Bossjob."
+          "birthdayError": "You need to be at least 16 years old to use Bossjob.",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "Work Experience",
@@ -711,7 +714,8 @@
           "btn2": "Save",
           "suggestions": "We will suggest skill for you according to your latest job function:",
           "jobFunction": "Job Function",
-          "skill": "Search or add a skill"
+          "skill": "Search or add a skill",
+          "addBtn": "Add"
         },
         "licenses": {
           "title": "Licenses And Certifications",
@@ -754,8 +758,8 @@
           "btn1": "Cancel",
           "btn2": "Delete"
         },
-        "introdutionModal": {
-          "title": "Introdution",
+        "introductionModal": {
+          "title": "Introduction",
           "btn1": "Cancel",
           "btn2": "Edit"
         }
@@ -954,7 +958,8 @@
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "skipAnyway"
+    "skipAnyway": "skipAnyway",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "Chat",
