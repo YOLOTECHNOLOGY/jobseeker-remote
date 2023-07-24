@@ -395,7 +395,7 @@ const ProfileView = ({ lang }: any) => {
                         }
                       }}
                     >
-                      <img src={TrashIcon} width='26' height='26' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>
@@ -510,7 +510,7 @@ const ProfileView = ({ lang }: any) => {
                         }
                       }}
                     >
-                      <img src={TrashIcon} width='26' height='26' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>
@@ -629,7 +629,7 @@ const ProfileView = ({ lang }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData('deleteConfirm', sectionName, link, link.id)}
                     >
-                      <img src={TrashIcon} width='26' height='26' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>
@@ -694,7 +694,7 @@ const ProfileView = ({ lang }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData('deleteConfirm', sectionName, licenseCertification, licenseCertification.id)}
                     >
-                      <img src={TrashIcon} width='26' height='26' />
+                      <img src={TrashIcon} width='14' height='14' />
                     </div>
                   </div>
                 </div>
