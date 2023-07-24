@@ -259,7 +259,6 @@ const EditProfileModal = ({
       longitude: value?.geometry?.location?.lng() || longitude,
       working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM-DD')
     }
-    console.log('payload', payload);
     setIsSecondButtonLoading(true)
     try {
       // @ts-ignore

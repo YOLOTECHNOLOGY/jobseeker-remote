@@ -56,7 +56,6 @@ const NavRight = (props: IProps) => {
       boxShadow: 'none'
     }
   }
-  console.log('profile',profile);
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
