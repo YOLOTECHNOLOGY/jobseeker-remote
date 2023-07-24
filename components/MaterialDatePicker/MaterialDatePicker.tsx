@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { DatePicker, LocalizationProvider } from '@mui/lab'
+import { DatePicker, LocalizationProvider, MobileDatePicker } from '@mui/lab'
+// import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { TextField } from '@mui/material'
@@ -27,6 +28,8 @@ const MaterialDatePicker = ({
   refs,
   hiddenLabel
 }: MaterialDatePickerProps) => {
+
+  const [focus, setFocus] = useState(false);
   const theme = createTheme({
     components: {
       MuiInputLabel: {
@@ -69,7 +72,7 @@ const MaterialDatePicker = ({
         <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1' />
       </head> */}
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
+        <MobileDatePicker
           {...refs}
           disableMaskedInput={true}
           views={views}
