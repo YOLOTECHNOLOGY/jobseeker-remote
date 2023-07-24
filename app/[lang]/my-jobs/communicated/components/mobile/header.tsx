@@ -32,8 +32,8 @@ interface headerProps {
   tabChildren: Array<any>
   tabValueChildren?: string
   handleChangeChildren: Function
-  loadingList: boolean,
-  back:string
+  loadingList: boolean
+  back: string
 }
 
 const Header = ({
@@ -44,7 +44,7 @@ const Header = ({
   tabValueChildren,
   handleChangeChildren,
   loadingList,
-  back,
+  back
 }: headerProps) => {
   const [open, setOpen] = React.useState(false)
 
@@ -57,7 +57,8 @@ const Header = ({
   const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
     '&.Mui-selected': {
       color: '#136FD3',
-      fontWeight: '700'
+      fontWeight: '700',
+      minWidth: 'auto'
     }
   }))
 
@@ -76,7 +77,6 @@ const Header = ({
       backgroundColor: 'transparent'
     },
     '& .MuiTabs-indicatorSpan': {
-      maxWidth: '87.3px',
       width: '100%',
       backgroundColor: '#136FD3',
       borderRadius: '5px'
@@ -96,10 +96,7 @@ const Header = ({
           <span className={styles.bactText}>{back}</span>
         </Link>
         <span className={styles.line}>|</span>
-        <Box sx={{ width: 'calc(100vw - 114px)', bgcolor: 'background.paper' }}>
-          {/* <ul className={styles.headerBox} id="headerBox" >
-                    {tabList.map((item) => <li  onClick={(e)=>handleChange(e,item.value)}  className={ `${item.value === tabValue ? styles.active : '' }`} key={item.value}>{item.tab}</li>)}
-                    </ul>   */}
+        <Box className={styles.mobileHeaderBox}>
           <StyledTabs
             value={tabValue}
             variant='scrollable'
@@ -119,12 +116,14 @@ const Header = ({
                   fontFamily: 'product sans',
                   letterSpacing: '1px',
                   padding: '12px 0',
-                  marginRight: '30px'
+                  marginRight: '20px',
+                  minWidth: 'auto'
                 }}
               />
             ))}
           </StyledTabs>
         </Box>
+        <div className={styles.mobileHeaderMask}></div>
 
         <ModalDialog headerTitle={'Please Select'} open={open} onClose={() => setOpen(false)}>
           <>

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '../../Footer.module.scss'
 import PopularList from '../common/PopularList'
 
-const PopularJobsLink = (props) => {
+const PopularJobsLink = (props: any) => {
   const { data, langKey } = props
   const {
     popularJobs,

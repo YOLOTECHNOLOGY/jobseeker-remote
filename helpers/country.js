@@ -46,7 +46,7 @@ const countryCounfig = [
       value: "Tokyo To",
     },
     currency: 'jpy',
-    id: 81
+    id: 105
   },
   {
     name: 'Indonesia',
@@ -61,7 +61,7 @@ const countryCounfig = [
       value: "Jakarta Pusat",
     },
     currency: 'idr',
-    id: 62
+    id: 96
   },
 ]
 
@@ -69,7 +69,7 @@ export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
-  // { value: 'ja-JP', id: 4, label: '日本語' }
+  { value: 'ja-JP', id: 4, label: '日本語' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
@@ -92,14 +92,16 @@ export const getDefaultLocation = key => {
   return countryCounfig.find(item => item.key === key)?.defaultLocation
 }
 
-export const defaultCountryKey = () => nations[2].value
-export const defaultCountryId = () => nations[2].id
-export const defaultCountry = () => nations[2].label
-export const defaultCurrency = () => countryCounfig[3].currency
+const defaultNation = nations[0];
 
-export const defaultLanguage = () => languages[1].value
-export const defaultLanguageFullName = () => languages[1].label
-export const defaultLanguageId = () => languages[1].id
+export const defaultCountryKey = () => defaultNation.value
+export const defaultCountryId = () => defaultNation.id
+export const defaultCountry = () => defaultNation.label
+export const defaultCurrency = () => countryCounfig[0].currency
+
+export const defaultLanguage = () => languages[0].value
+export const defaultLanguageFullName = () => languages[0].label
+export const defaultLanguageId = () => languages[0].id
 
 
 /**
@@ -143,9 +145,7 @@ export const getCountryKey = () => {
  */
 export const getCountryId = () => {
   const countryKey = getCountryKey()
-  const country = nations.find(v => v.value === countryKey)
-
-  return country?.id || defaultCountryId()
+  return countryCounfig.find(item => item.key === countryKey)?.id ?? defaultCountryId()
 }
 
 /**
@@ -156,6 +156,7 @@ export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
   path = path?.split?.('//')[1]?.split?.('/')?.[1] // https://dev.bossjob.sg/en-US/...
+  console.log({ path, languages })
   return languages.map(item => item.value).includes(path) ? path : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
 }
 
@@ -194,4 +195,12 @@ export const getCountry = () => {
 export const countryForCurrency = key => {
 
   return countryCounfig.find(item => item.key === key)?.currency ?? defaultCurrency()
+}
+
+
+export const countryForPhoneCode = {
+  ph: '+63',
+  sg: '+65',
+  jp: '+81',
+  id: '+62'
 }

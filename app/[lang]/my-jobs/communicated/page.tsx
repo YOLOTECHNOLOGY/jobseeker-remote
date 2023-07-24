@@ -1,25 +1,26 @@
-import React from "react"
+import React from 'react'
 import styles from './index.module.scss'
-import MainLeft from "./components/MainLeft"
-import MainRight from "./components/MainRight"
+import MainLeft from './components/MainLeft'
+import MainRight from './components/MainRight'
 import { getDictionary } from 'get-dictionary'
-import interpreter from "./intepreter"
-import { serverDataScript } from "app/models/abstractModels/FetchServierComponents"
-import { buildComponentScript } from "app/models/abstractModels/util"
-const Page = async (props:any) => {
-  const {lang} = props.params
-  const dictionary:any = await getDictionary(lang);
-  const newProps = {...props,lang:dictionary?.myJobs,langKey:lang}
+import interpreter from './intepreter'
+import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
+import { buildComponentScript } from 'app/models/abstractModels/util'
+const Page = async (props: any) => {
+  const { lang } = props.params
+  const dictionary: any = await getDictionary(lang)
+  const newProps = { ...props, lang: dictionary?.myJobs, langKey: lang }
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <MainLeft {...newProps}/>
+        <MainLeft {...newProps} />
       </div>
-        {/* @ts-expect-error Async Server Component */}
-        <MainRight lang={dictionary?.myJobs} config={props.config}/>
+      {/* @ts-expect-error Async Server Component */}
+      <MainRight lang={dictionary?.myJobs} dictionary={dictionary} config={props.config} />
     </div>
   )
 }
 
 // export default Page
-export default interpreter(serverDataScript().chain(props => buildComponentScript(props, Page))).run
+export default interpreter(serverDataScript().chain((props) => buildComponentScript(props, Page)))
+  .run

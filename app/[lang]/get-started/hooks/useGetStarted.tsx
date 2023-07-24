@@ -12,9 +12,10 @@ import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/se
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
+import { routes } from 'helpers/utilities'
 
 const useGetStarted = () => {
-  const routes = useRouter()
+  // const routes = useRouter()
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -191,23 +192,23 @@ const useGetStarted = () => {
         sessionStorage.removeItem('fromPhoneLogin')
       }
 
-      routes.push(`/${langKey}/jobseeker-complete-profile`)
+      routes(`/${langKey}/jobseeker-complete-profile`)
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
       location.href = isChatRedirect
       // routes.push(isChatRedirect)
     } else if (defaultRedirectPage) {
-      routes.push(defaultRedirectPage)
+      routes(defaultRedirectPage)
     } else if (redirectPage) {
       sessionStorage.removeItem('redirectPage')
       const url = window?.location?.pathname
       if (url === redirectPage) {
         return window.location.reload()
       }
-      routes.push(redirectPage)
+      routes(redirectPage)
     } else {
       if (pathname.indexOf('/get-started') > -1) {
-        routes.push('/')
+        routes('/')
       } else {
         window.location.reload()
       }

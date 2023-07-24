@@ -82,3 +82,7 @@ export const getDistance = (lat1, lng1, lat2, lng2)=> {
   console.info(distance, distance_str);
   return distance_str;
 }
+
+export const routes =(url:string)=>{
+  window.location.replace(url)
+}

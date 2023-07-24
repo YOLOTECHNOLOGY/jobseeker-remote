@@ -6,7 +6,10 @@ import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
-const Menu = ({ shareParams, lang, isbenefits }: any) => {
+import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
+import { isMobile } from 'react-device-detect'
+const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
+  console.log({ jobDetail })
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
@@ -39,6 +42,17 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
 
   useEffect(() => {
     window.document.addEventListener('scroll', throttle(handleScroll, 200))
+    if (!token) {
+      const recoFrom = getCookie('reco_from') ?? null
+      fetchAddJobViewService({
+        jobId,
+        status: 'public',
+        source: 'job_search',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: recoFrom,
+        device_udid: localStorage.getItem('deviceUdid')
+      })
+    }
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

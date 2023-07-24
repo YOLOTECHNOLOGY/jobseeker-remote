@@ -31,7 +31,7 @@ const codePopver = (props: any) => {
           {mainCom}
         </>
       )}
-      {!isModal && (
+      {/* {!isModal && (
         <p className={styles.tips}>
           {newGetStarted.tips}{' '}
           <Link
@@ -45,7 +45,7 @@ const codePopver = (props: any) => {
             {newGetStarted.employer}
           </Link>
         </p>
-      )}
+      )} */}
     </div>
   )
 }

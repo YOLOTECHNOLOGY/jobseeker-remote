@@ -342,6 +342,7 @@
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
+      "location2": "Loc.",
       "title": "Job title or company",
       "btn1": "Search",
       "download": "Download APP",
@@ -631,6 +632,8 @@
           "content": "Help the recruiter to know more about you and connect more easily with you.",
           "btn": "Add information"
         },
+        "introduction": "Introduction",
+        "introductionEmpty": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
         "aboutMeModal": {
           "title": "About me",
           "btn1": "Cancel",
@@ -642,7 +645,10 @@
           "location": "Current Location",
           "exp": "Years of Experience",
           "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
-          "birthdayError": "You need to be at least 16 years old to use Bossjob."
+          "birthdayError": "You need to be at least 16 years old to use Bossjob.",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "Work Experience",
@@ -744,6 +750,17 @@
           "urlErrorMsg": "Please enter a valid URL.",
           "linkTitle": "Title of link",
           "linkDesc": "Type here..."
+        },
+        "deleteModal": {
+          "title": "Delete",
+          "tips": "You sure you want to delete it?",
+          "btn1": "Cancel",
+          "btn2": "Delete"
+        },
+        "introdutionModal": {
+          "title": "Introdution",
+          "btn1": "Cancel",
+          "btn2": "Edit"
         }
       },
       "preference": {
@@ -797,6 +814,7 @@
           "time": "Uploaded On {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "File exceed limit",
             "tips": "Please upload file size lesser than 5MB."
@@ -939,7 +957,8 @@
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "skipAnyway"
+    "skipAnyway": "skipAnyway",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "Chat",

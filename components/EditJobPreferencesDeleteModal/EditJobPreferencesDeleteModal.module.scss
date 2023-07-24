@@ -2,33 +2,33 @@
 @import 'styles/mixins.scss';
 
 .jobPreferences {
-    &Form {
-        margin-top: 24px;
+  &Form {
+    margin-top: 24px;
 
-        &Group {
-            display: flex;
-            margin-bottom: 24px;
+    &Group {
+      display: flex;
+      margin-bottom: 24px;
 
-            @include msd {
-                flex-direction: column;
-                margin-bottom: 24px;
-            }
-        }
-
-        &Input {
-            flex-grow: 1;
-
-            @include msd {
-                margin-bottom: 24px;
-            }
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
+      @include msd {
+        flex-direction: column;
+        margin-bottom: 24px;
+      }
     }
+
+    &Input {
+      flex-grow: 1;
+
+      @include msd {
+        margin-bottom: 24px;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .fieldError {
-    display: flex;
+  display: flex;
 }

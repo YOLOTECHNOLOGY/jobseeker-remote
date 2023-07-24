@@ -53,7 +53,7 @@
     "followUs": "关注我们",
     "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有权利",
     "corporation": "菲律宾：Etos Adtech Corporation",
-    "companyDesc": "Bossjob是亚洲首发，专注于AI和直聊的在线找工作平台。品牌由2018年创始以来，为求职者和Boss们提供精准岗位和人才匹配，在线直聊功能减少沟通成本提高招聘效率！",
+    "companyDesc": "Bossjob是专注于AI和直聊的在线找工作平台。品牌创始以来，为求职者和Boss们提供精准岗位和人才匹配，在线直聊功能减少沟通成本提高招聘效率！",
     "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
     "JapanYolo": "Japan: Yolo Technology 株式会社",
     "JapanAddress": "東京都港区浜松町2-4-1 世界貿易センタービルディング南館17階",
@@ -342,6 +342,7 @@
     "defaultLocationSG": "Downtown Core",
     "search": {
       "location": "城市",
+      "location2": "Loc.",
       "title": "职位或者公司名称",
       "btn1": "搜索",
       "download": "下载App",
@@ -631,6 +632,8 @@
           "content": "帮助招聘者了解和联系您",
           "btn": "完善信息"
         },
+        "introduction": "Introduction",
+        "introductionEmpty": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
         "aboutMeModal": {
           "title": "个人信息",
           "btn1": "取消",
@@ -744,6 +747,17 @@
           "urlErrorMsg": "请输入一个有效的地址",
           "linkTitle": "链接名称",
           "linkDesc": "输入描述信息..."
+        },
+        "deleteModal": {
+          "title": "Delete",
+          "tips": "You sure you want to delete it?",
+          "btn1": "Cancel",
+          "btn2": "Delete"
+        },
+        "introdutionModal": {
+          "title": "Introdution",
+          "btn1": "Cancel",
+          "btn2": "Edit"
         }
       },
       "preference": {
@@ -797,6 +811,7 @@
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"
@@ -1208,7 +1223,7 @@
     "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
   },
   "newGetStarted": {
-    "title": "欢迎登录",
+    "title": "Welcome to",
     "employer": "招聘端",
     "tips": "寻找人才? 登录",
     "continueWith": "使用其他方式",
@@ -1226,7 +1241,7 @@
     "emailLabel": "邮件地址",
     "sendCode": "发送验证码",
     "welcomeBack": "欢迎回来",
-    "sendCodeDigit": "请输入我们发送的6位验证码",
+    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
     "signUpAnAccount": "注册新帐户",
     "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件",
     "havingTrouble": "还是有问题？ 尝试注册",
@@ -1236,10 +1251,10 @@
     "resendCode": "重新发送验证码",
     "country": "国家",
     "phoneNumber": "电话号码",
-    "twoFactor": "启动双重验证",
+    "twoFactor": "Safety Verification",
     "authentication": "验证",
     "secure": "保护您的帐户并在您的电子邮件中接收代码",
-    "emailTips": "We will ask you for additional code when you log in on a device or browser that we don’t recognise. Please enter the email address to receive the code.",
+    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
     "setUpLater": "稍后设置",
     "enableTwoFactor": "双重验证",
     "authenticationEnabled": "验证已启用",

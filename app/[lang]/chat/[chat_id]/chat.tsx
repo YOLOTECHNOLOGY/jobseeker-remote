@@ -74,6 +74,7 @@ const Chat = (props: any) => {
     return <div style={{ marginTop: mobile ? 0 : 24 }}>
         <JobseekerChat
             key='jobchat'
+            lang={langKey}
             loading={loading}
             imState={imState}
             chatId={chatId || (chat_id === 'list' ? undefined : chat_id)}

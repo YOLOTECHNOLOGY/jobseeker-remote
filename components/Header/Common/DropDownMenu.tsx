@@ -40,7 +40,7 @@ const DropDownMenu = (props: IProps, ref: React.LegacyRef<HTMLDivElement>) => {
           </Link>
         </li>
         <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSet}`}>
-          <Link to='/dashboard/profile/settings' className={styles.headerMenuLink}>
+          <Link to='/settings' className={styles.headerMenuLink}>
             <Text textStyle='base'>{accountSettings}</Text>
           </Link>
         </li>

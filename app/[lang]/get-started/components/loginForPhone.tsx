@@ -19,10 +19,7 @@ import PhoneComponent from './phoneComponent'
 import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-const countryForCountryCode = {
-  ph: '+63',
-  sg: '+65'
-}
+import { countryForPhoneCode } from 'helpers/country'
 
 const LoginForPhone = (props: any) => {
   const [countryValue, setCountry] = useState<string>('')
@@ -40,7 +37,7 @@ const LoginForPhone = (props: any) => {
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const countryList = getSmsCountryList(config)
   const country = getCountryKey()
-  const countryCode = countryForCountryCode[country]
+  const countryCode = countryForPhoneCode[country]
   const langKey = getLang()
   const router = useRouter()
   const dispatch = useDispatch()
@@ -142,7 +139,7 @@ const LoginForPhone = (props: any) => {
 
   return (
     <>
-      <h2 style={{ padding: '10px 0 20px 0' }}>
+      <h2 style={{ padding: '10px 0 14px 0' }}>
         {newGetStarted.title} <span>Bossjob</span>
       </h2>
       <div className={styles.phoneNumber}>
@@ -168,7 +165,11 @@ const LoginForPhone = (props: any) => {
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
 
-        <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>
+        <p
+          className={styles.msg}
+          style={{ paddingBottom: '0px' }}
+          dangerouslySetInnerHTML={{ __html: agreementWord }}
+        ></p>
         {!isModal && (
           <p className={styles.tips}>
             {newGetStarted.tips}{' '}
@@ -185,7 +186,7 @@ const LoginForPhone = (props: any) => {
           </p>
         )}
       </div>
-      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '16px' }}>
+      <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '0px' }}>
         <GoogleLogin lang={props.lang} showTitle={false} />
         <FacebookLogin lang={props.lang} showTitle={false} />
         <AppleLogin lang={props.lang} showTitle={false} />

@@ -21,7 +21,7 @@ const CommonPhrasesDeleteModal = (props: any) => {
 
     return <Modal
         showModal={show}
-        handleModal={() => actionsRef.current.back?.()}
+        handleModal={() => actionsRef.current?.back?.()}
         headerTitle={dic?.phraseTitle}
         firstButtonText={dic?.back}
         secondButtonText={dic?.delete}

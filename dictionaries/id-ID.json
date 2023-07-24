@@ -342,6 +342,7 @@
     "defaultLocationSG": "downtown core",
     "search": {
       "location": "Location",
+      "location2": "Loc.",
       "title": "Job title or company",
       "btn1": "Search",
       "download": "Download APP",
@@ -631,6 +632,8 @@
           "content": "Help the recruiter to know more about you and connect more easily with you.",
           "btn": "Add information"
         },
+        "introduction": "Introduction",
+        "introductionEmpty": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
         "aboutMeModal": {
           "title": "About me",
           "btn1": "Cancel",
@@ -744,6 +747,17 @@
           "urlErrorMsg": "Please enter a valid URL.",
           "linkTitle": "Title of link",
           "linkDesc": "Type here..."
+        },
+        "deleteModal": {
+          "title": "Delete",
+          "tips": "You sure you want to delete it?",
+          "btn1": "Cancel",
+          "btn2": "Delete"
+        },
+        "introdutionModal": {
+          "title": "Introdution",
+          "btn1": "Cancel",
+          "btn2": "Edit"
         }
       },
       "preference": {
@@ -797,6 +811,7 @@
           "time": "Uploaded On {{time}}",
           "uploadBtn": "Upload your resume",
           "support": "Supported file type: PDF, DOC, DOCX. Max. file size: 5MB",
+          "upToFiles": "Up to {{number}} files",
           "error": {
             "title": "File exceed limit",
             "tips": "Please upload file size lesser than 5MB."
@@ -1208,7 +1223,7 @@
     "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   },
   "newGetStarted": {
-    "title": "Log in or sign up to Bossjob",
+    "title": "Welcome to",
     "employer": "Employer",
     "tips": "Looking to hire people? Sign up as ",
     "continueWith": "or continue with",

@@ -147,6 +147,7 @@ const GoogleLogin = (props: IGoogle) => {
       ) : (
         <Image src={GoogleLogo} alt='google' width={24} height={24} />
       )}
+
       {showTitle && <span>{newGetStarted.links.google}</span>}
     </div>
   )
