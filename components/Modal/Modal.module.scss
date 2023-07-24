@@ -73,7 +73,7 @@
 
     // If fullscreen is indicated, modal covers entire view port in mobile
     @include sm {
-      height: 85vh !important;
+      //height: 85vh !important;
       width: 100%;
       /* center-bottom Modal content relative to viewport*/
       top: unset;
@@ -98,11 +98,11 @@
 
   &Body {
     padding: 16px 24px;
-    flex-grow: 1;
+    flex-grow: auto;
     overflow-y: auto;
 
     @include sm {
-      padding: 16px 20px;
+      padding: 16px 20px 30px;
     }
   }
   &Footer {
