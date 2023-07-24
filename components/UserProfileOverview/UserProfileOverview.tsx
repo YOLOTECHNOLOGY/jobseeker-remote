@@ -134,7 +134,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-              <MouseOverPopover className={styles.profileText} value={String(working_since)?.split('-').slice(0,2).join('-') || '-'}></MouseOverPopover>
+              <MouseOverPopover className={styles.profileText} value={ working_since ? String(working_since)?.split('-').slice(0,2).join('-') : '-'}></MouseOverPopover>
 
           </div>
 
