@@ -86,19 +86,15 @@ const MultipleSelect = ({
           }
         }}
       >
-        {options && (
-          <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
-            {options.map((option: any) => (
-              <MenuItem key={option.value} value={option.value}>
-                <Checkbox
-                  checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
-                  size='small'
-                />
-                <ListItemText primary={option.label} />
-              </MenuItem>
-            ))}
-          </div>
-        )}
+        {options && options.map((option: any) => (
+          <MenuItem key={option.value} value={option.value}>
+            <Checkbox
+              checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
+              size='small'
+            />
+            <ListItemText primary={option.label} />
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   )
