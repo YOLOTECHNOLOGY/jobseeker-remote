@@ -474,7 +474,10 @@ const EditWorkExperienceModal = ({
                     )}
                     size='small'
                     value={salary}
+                    min="0"
                     type="number"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     onChange={(e) => setSalary(handleNumericInput(e.target.value))}
                   />
                 )}
