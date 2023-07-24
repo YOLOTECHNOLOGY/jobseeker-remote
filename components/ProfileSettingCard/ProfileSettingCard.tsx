@@ -32,7 +32,7 @@ const ProfileSettingCard = ({
         <Text textColor='primaryBlue' textStyle='xl' bold style={{ fontSize: '24px' }}>
           {title}
         </Text>
-        <img src={AddIcon} width='14' height='14' style={{ cursor: 'pointer', marginRight: '15px' }} onClick={onClick} />
+        <img src={AddIcon} width='26' height='26' style={{ cursor: 'pointer', marginRight: '15px' }} onClick={onClick} />
       </div>
 
       <Text tagName='p' textStyle='lg'>
