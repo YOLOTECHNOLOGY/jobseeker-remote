@@ -758,8 +758,8 @@
           "btn1": "Cancel",
           "btn2": "Delete"
         },
-        "introdutionModal": {
-          "title": "Introdution",
+        "introductionModal": {
+          "title": "Introduction",
           "btn1": "Cancel",
           "btn2": "Edit"
         }

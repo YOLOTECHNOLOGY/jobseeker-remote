@@ -38,13 +38,7 @@ const EditIntroductionModal = ({
   // translate maps
   const langProfile = lang.manageProfile.tab.profile
   console.log('langProfile:', langProfile)
-  useEffect(() => {
-    if (userDetail && userDetail.description) {
-      // setAvailability(userDetail.notice_period_id)
-      // setValue('noticePeriod', userDetail.notice_period_id)
-      setDescription(userDetail.description)
-    }
-  }, [userDetail])
+
   const onSubmit = (data) => {
     const { noticePeriod } = data // jobType is a key
 
@@ -56,15 +50,25 @@ const EditIntroductionModal = ({
 
     dispatch(updateUserPreferencesRequest(payload))
   }
+  const handleCloseModal = () => {
+    handleModal(modalName, null, false)
+    reset()
+    //setDescription('')
+  }
 
   useEffect(() => {
     handleCloseModal()
-
-  }, [userDetail])
-  const handleCloseModal = () => {
-    handleModal(modalName, false)
     reset()
-  }
+  }, [userDetail])
+
+  useEffect(() => {
+    if (userDetail && userDetail.description) {
+      // setAvailability(userDetail.notice_period_id)
+      // setValue('noticePeriod', userDetail.notice_period_id)
+      setDescription(userDetail.description)
+    }
+  }, [userDetail])
+
   const modalJobPreferenceContent = (
     <div className={styles.jobPreferences}>
       <div className={styles.jobPreferencesForm}>
@@ -85,9 +89,9 @@ const EditIntroductionModal = ({
     <Modal
       showModal={showModal}
       handleModal={handleCloseModal}
-      headerTitle={langProfile?.introdutionModal?.title}
-      firstButtonText={langProfile?.introdutionModal?.btn1}
-      secondButtonText={langProfile?.introdutionModal?.btn2}
+      headerTitle={langProfile?.introductionModal?.title}
+      firstButtonText={langProfile?.introductionModal?.btn1}
+      secondButtonText={langProfile?.introductionModal?.btn2}
       isSecondButtonLoading={isUpdating}
       firstButtonIsClose
       handleFirstButton={handleCloseModal}

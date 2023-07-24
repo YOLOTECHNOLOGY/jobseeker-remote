@@ -175,8 +175,8 @@ const EditWorkExperienceModal = ({
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && workPeriodFrom
-    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom)
-    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate].every(Boolean) && !hasErrorOnToPeriod
+    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom && !hasErrorOnToPeriod)
+    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate].every(Boolean)
     setDisabledButton(!!hasValue)
     if (requireFields) setShowErrorToComplete(false)
   }, [
