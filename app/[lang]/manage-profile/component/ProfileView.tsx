@@ -850,7 +850,6 @@ const ProfileView = ({ lang }: any) => {
       <EditIntroductionModal
         modalName='introduction'
         showModal={modalState.introduction.showModal}
-        config={config}
         userDetail={userDetail}
         handleModal={handleModal}
         lang={lang}
