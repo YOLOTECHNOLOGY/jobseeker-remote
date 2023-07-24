@@ -12,7 +12,7 @@ interface adSlotProps {
 
 const AdSlot = ({ adSlot }: adSlotProps) => {
   const isTransitioning = useTransitionState()
-  const countryKey = 'jp' // getCountryKey()
+  const countryKey = getCountryKey()
   console.log({ countryKey }, ads[countryKey][adSlot])
   const ad = ads[countryKey][adSlot]
   // if (process.env.ENV === 'production') {
