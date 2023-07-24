@@ -44,7 +44,7 @@ const findMatch = (langKeys, key) => {
       return partMatch
     }
   } else {
-    const partMatch2 = langKeys.map(item => key?.includes(item.split('-')?.[0]))
+    const partMatch2 = langKeys.map(item => key?.includes(item.split('-')?.[0])).find(a => a)
     if (partMatch2) {
       return partMatch2
     }
@@ -57,6 +57,7 @@ export const getDictionary = async (locale: Locale) => {
   console.log({ languages })
   const langKeys = Object.keys(languages)
   const match = findMatch(langKeys, locale)
-  return client.getStringsByLocale(match)
+  const dic = await client.getStringsByLocale(match ?? defaultLanguage())
+  return dic
   // return dictionaries[locale]?.() || dictionaries['en-US']()
 }

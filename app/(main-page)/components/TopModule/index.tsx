@@ -22,7 +22,7 @@ const TopModule = ({ params, lang, config }) => {
         <div className={styles.searchMainContainer}>
           <HomeBanner />
           <div className={styles.title}>
-            <p className={styles.titleText}>{home.slog}</p>
+            <p className={styles.titleText}>{home?.slog ?? ''}</p>
           </div>
           <SearchArea config={config} langKey={langKey} />
         </div>

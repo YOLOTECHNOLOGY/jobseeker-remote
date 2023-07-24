@@ -43,7 +43,7 @@ const EditIntroductionModal = ({
   useEffect(() => {
     if (userDetail && userDetail.description) {
       // setAvailability(userDetail.notice_period_id)
-      //setValue('noticePeriod', userDetail.notice_period_id)
+      // setValue('noticePeriod', userDetail.notice_period_id)
       setDescription(userDetail.description)
     }
   }, [userDetail])

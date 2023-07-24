@@ -957,7 +957,8 @@
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "skipAnyway"
+    "skipAnyway": "skipAnyway",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "Chat",
