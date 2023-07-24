@@ -53,7 +53,7 @@ const EditIntroductionModal = ({
   const handleCloseModal = () => {
     handleModal(modalName, null, false)
     reset()
-    //setDescription('')
+    // setDescription('')
   }
 
   useEffect(() => {
