@@ -22,7 +22,7 @@ export default async function PublicLayout(props: any) {
   lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
   return (
-    <html lang={lang}>
+    <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
         <meta name='description' content={decodeURI(description)} />

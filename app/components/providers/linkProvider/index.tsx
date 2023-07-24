@@ -8,7 +8,6 @@ const Provider = LinkContext.Provider
 const LinkProvider = ({ children }: any) => {
     const router = useRouter()
     const [loading, startTransition] = useTransition()
-    console.log({ linkLoading: loading })
     const push = useCallback((url) => {
         startTransition(() => {
             router.push(url, { scroll: false })

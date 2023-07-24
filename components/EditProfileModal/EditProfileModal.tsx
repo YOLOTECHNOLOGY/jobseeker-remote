@@ -31,6 +31,7 @@ import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile/service'
 import { useLanguage } from 'app/components/providers/languageProvider';
+import { useProfileData } from 'app/components/providers/profileProvider';
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
@@ -123,6 +124,7 @@ const EditProfileModal = ({
     working_since
 
   } = userDetail
+  const {fetchProfile: providerFetchProfile} = useProfileData();
   const lang = useLanguage()
   const mapRef = useRef(null);
   const [value, setLocationValue] = React.useState<PlaceType | null>(null);
@@ -260,8 +262,10 @@ const EditProfileModal = ({
     console.log('payload', payload);
     setIsSecondButtonLoading(true)
     try {
+      // @ts-ignore
       await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
+      await providerFetchProfile()
     } catch (e) {
       console.log(e);
     } finally {
