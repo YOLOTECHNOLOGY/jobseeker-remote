@@ -26,6 +26,12 @@
 
   div[class*='TextEditor_textEditor'] {
     padding: 0;
+    &.introductionEditor {
+      background: pink;
+      &.ql-snow.ql-toolbar button {
+        display: none;
+      }
+    }
   }
 
   & > * {
