@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { getLang } from 'helpers/country'
 const NoPreference = (props:any) => {
     const langKey = getLang();
-    console.log(langKey,'langKey')
     return <div className={styles.container}>
         <Image src={JoinUs} width={362} height={247} alt='' />
         <Link

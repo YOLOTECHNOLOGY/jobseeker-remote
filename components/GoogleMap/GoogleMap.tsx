@@ -335,8 +335,6 @@ const GoogleMap = forwardRef(({
   }
 
   const handelSelectPlacel = (placel, map) => {
-
-    console.log('placel map', placel, map);
     
     placeMarkerAndPanTo(placel.geometry?.location, map)
 

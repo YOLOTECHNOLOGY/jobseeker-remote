@@ -16,6 +16,7 @@ import MaterialButton from 'components/MaterialButton'
 
 /* Images */
 import { DefaultAvatar } from 'images'
+import { useProfileData } from 'app/components/providers/profileProvider'
 
 interface IProps {
   langKey: string
@@ -26,6 +27,7 @@ interface IProps {
 
 const NavRight = (props: IProps) => {
   const { langKey, lang, totalUnread, handleShowMenu } = props
+  const {profile} = useProfileData();
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
@@ -54,7 +56,6 @@ const NavRight = (props: IProps) => {
       boxShadow: 'none'
     }
   }
-
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
@@ -112,7 +113,7 @@ const NavRight = (props: IProps) => {
         <li className={styles.headerLink}>
           <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
             <Image
-              src={currentUser?.avatar || DefaultAvatar}
+              src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
               className={styles.profilePlaceHolder}
               width={35}
               height={35}

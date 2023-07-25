@@ -2,6 +2,7 @@
 import { defaultLanguage, getLang } from 'helpers/country';
 import type { Locale } from './i18n-config'
 import otaClient from '@crowdin/ota-client';
+
 // import enPageLanguage from './dictionaries/en-US.json'
 // import enErrorcode from './errorcode/en-US/errorcode.json'
 
@@ -35,6 +36,9 @@ client.setCurrentLocale(defaultLanguage())
 // client.setCurrentLocale(getLang())
 const findMatch = (langKeys, key) => {
   const fullMatch = langKeys.find(item => item === key)
+  if (key?.includes('en')) {
+    return 'en-US'
+  }
   if (fullMatch) {
     return fullMatch
   }
@@ -54,10 +58,13 @@ const findMatch = (langKeys, key) => {
 export const getDictionary = async (locale: Locale) => {
 
   const languages = await client.getStrings()
-  console.log({ languages })
   const langKeys = Object.keys(languages)
   const match = findMatch(langKeys, locale)
   const dic = await client.getStringsByLocale(match ?? defaultLanguage())
-  return dic
+  const errorcode = Object.keys(dic)
+    .filter(key => !isNaN(Number(key)))
+    .map(key => ({ [key]: dic[key] }))
+    .reduce((a, b) => ({ ...a, ...b }), {})
+  return { ...dic, errorcode }
   // return dictionaries[locale]?.() || dictionaries['en-US']()
 }

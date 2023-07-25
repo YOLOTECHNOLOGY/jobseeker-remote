@@ -36,7 +36,6 @@ const ExchangeModal = (props: any) => {
       }))
   )
 
-  console.log(countryOptions, 99999)
   const number = useMemo(() => {
     if (countryCode && mobileNumber) {
       return [countryCode, mobileNumber].join('')

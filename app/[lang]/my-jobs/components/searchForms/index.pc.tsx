@@ -32,6 +32,7 @@ const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
   let { config, preferences, preferenceId, lang } = props
   const allLang = lang
+  const locationRef = useRef();
   lang = lang?.myJobs
   const { searchForJobTitleOrCompanyName, salary, experience, Industry, JobType, resetFilters } =
     lang || {}
@@ -242,13 +243,16 @@ const SearchArea = (props: any) => {
               height={'30px'}
               locationList={config.location_lists}
               value={filterLocation}
+              inputValue={filterLocation?.value ? filterLocation.value : ''}
               width='100%'
               // isClear={true}
               label={lang.location}
+              ref={locationRef}
               // defaultValue={filterLocation}
               onChange={(e, value) => {
                 setFilterLocation(value)
               }}
+              // ref
               sx={{
                 '.MuiPaper-root': {
                   width: '300px',

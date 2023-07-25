@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
     const redirectUrl = searchParams.get('redirectUrl')
     const userAgent = parse(request.headers.get('user-agent'))
     const fcmToken = searchParams.get('fcmToken')
-    console.log({ fcmToken })
     return axios
         .get('https://oauth2.googleapis.com/tokeninfo?id_token=' + accessToken)
         .then(async ({ data }) => {
@@ -31,8 +30,6 @@ export async function GET(request: NextRequest) {
             return socialLoginService(payload)
         })
         .then(response => {
-            console.log({ socialLoginResponse: response })
-            console.log({ response })
             if (response.status >= 200 && response.status < 300) {
                 const userCookie = {
                     active_key: response.data.data.active_key,
@@ -61,7 +58,6 @@ export async function GET(request: NextRequest) {
                 }
                 setCookie('accessToken', response.data.data?.token)
                 setCookie('user', userCookie)
-                console.log({ redirectUrl })
                 res.headers.set('Location', redirectUrl ?? '/')
                 return res
             }

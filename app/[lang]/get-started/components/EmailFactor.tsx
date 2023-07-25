@@ -65,7 +65,6 @@ function EmailFactor(props: any) {
   const sendOTPFun = () => {
     authenticationSendEmaillOtp({ email: emailRef.current })
       .then((res) => {
-        console.log(res?.data?.data, 'res')
         router.push(
           `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`
         )

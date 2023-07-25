@@ -62,9 +62,7 @@ const googleLoginHandler = ({
 
             try {
               await socialLoginService(payload).then(async (response) => {
-                console.log({ socialLoginResponse: response })
                 dispatch(socialLoginSuccess({}))
-                console.log({ response })
                 if (response.status >= 200 && response.status < 300) {
                   const userCookie = {
                     active_key: response.data.data.active_key,
@@ -83,7 +81,6 @@ const googleLoginHandler = ({
 
                   setCookie('accessToken', response.data.data?.token)
                   setCookie('user', userCookie)
-                  console.log({ redirectUrl })
                   if (typeof window !== 'undefined') {
                     sessionStorage.removeItem('socialLogin')
                     window.location.href = redirectUrl ?? '/'
@@ -92,7 +89,6 @@ const googleLoginHandler = ({
 
               })
             } catch (err) {
-              console.log({ err })
               message.error('Login failed')
               dispatch(socialLoginFailed(err))
               sessionStorage.removeItem('socialLogin')

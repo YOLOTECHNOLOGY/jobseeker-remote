@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, Fragment } from 'react'
+import React, { useState, useEffect, useMemo, useRef, Fragment } from 'react'
 
 /* Vendors */
 
@@ -39,7 +39,7 @@ import {
 import styles from './ManageProfile.module.scss'
 import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
-import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
+import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
 import {
   changeCompanyIndustry,
@@ -60,7 +60,6 @@ const ProfileView = ({ lang }: any) => {
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
-  console.log('isUpdating:', userDetail)
   const config = useSelector((store: any) => store?.config?.config?.response)
   const {
     // first_name: firstName,
@@ -79,6 +78,7 @@ const ProfileView = ({ lang }: any) => {
   } = userDetail
 
   const deleteModalRef = useRef({} as any)
+
 
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
@@ -302,7 +302,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.introduction}
           </Text>
           {/* <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div> */}
         </div>
         <div className={styles.sectionContent}>
@@ -347,7 +347,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.exp.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -469,7 +469,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.edu.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -542,7 +542,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.skill.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleModal('skills', true, null, null)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -587,7 +587,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.link.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -659,7 +659,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.licenses.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleAddData(sectionName)}>
-            <img src={AddIcon} width='14' height='14' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -850,7 +850,6 @@ const ProfileView = ({ lang }: any) => {
       <EditIntroductionModal
         modalName='introduction'
         showModal={modalState.introduction.showModal}
-        config={config}
         userDetail={userDetail}
         handleModal={handleModal}
         lang={lang}

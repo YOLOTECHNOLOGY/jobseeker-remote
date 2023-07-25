@@ -78,6 +78,7 @@
     margin-bottom: 58px;
     padding: 0 20px;
     text-align: center;
+    font-size: 17px !important;
     @include text_overflow;
   }
   .userOverviewNameLayout {
@@ -135,6 +136,6 @@
 .profileText {
   font-size: 17px;
   @include respond-to(phone) {
-    font-size: 17px;
+    font-size: 17px !important;
   }
 }

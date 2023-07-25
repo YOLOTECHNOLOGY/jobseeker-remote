@@ -2,21 +2,18 @@
 import { useEffect, useRef, useState } from 'react'
 
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
 import Autocomplete from '@mui/material/Autocomplete';
 
 /* Components */
 import Text from 'components/Text'
-import Tooltip from '@mui/material/Tooltip';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Button, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import Modal from 'components/Modal'
 import UploadUserAvatar from 'components/UploadUserAvatar'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import GoogleMap from 'components/GoogleMap/GoogleMap'
@@ -26,11 +23,11 @@ import _styles from 'styles/maintenance.module.scss';
 import { flat } from 'helpers/formatter'
 /* Styles */
 import styles from './EditProfileModal.module.scss'
-import { getCountryId } from 'helpers/country'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile/service'
 import { useLanguage } from 'app/components/providers/languageProvider';
+import { useProfileData } from 'app/components/providers/profileProvider';
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
@@ -114,7 +111,6 @@ const EditProfileModal = ({
     location: userLocation,
     description,
     location_id,
-    xp_lvl: expLevel,
     phone_num,
     email,
     longitude,
@@ -123,15 +119,13 @@ const EditProfileModal = ({
     working_since
 
   } = userDetail
+  const {fetchProfile: providerFetchProfile} = useProfileData();
   const lang = useLanguage()
   const mapRef = useRef(null);
   const [value, setLocationValue] = React.useState<PlaceType | null>(null);
   const [inputValue, setInputValue] = React.useState(address || '');
   const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
   const [debouncedValue, setDebouncedValue] = useState('');
-
-
-  console.log('userDetail', userDetail, address);
   const {
     manageProfile: {
       tab: {
@@ -168,29 +162,17 @@ const EditProfileModal = ({
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
   const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
-  const [workingSince, setWorkingSince] = useState(working_since || '');
+  const [workingSince, setWorkingSince] = useState('');
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
   const { xp_lvls: xpLevelList, location_lists: locationList } = config
-
-  const formattedXpLevelList = xpLevelList?.map?.((xp) => {
-    return { ...xp, label: xp.value, value: xp.key }
-  })
-
   const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
-
   const formattedLocationList = flat(formatLocationConfig(locationList))
-
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
   const [location, setLocation] = useState(matchedLocation)
-  console.log('location',location);
-  // Limit user from selecting date more than 16-100 years ago from now.
-  // const today = new Date()
-  // const sixteenYearsAgo = today.getFullYear() - 16
-  // const hundredYearsAgo = today.getFullYear() - 100
   const SIXTEEN_YEAR = 16
   const HUNDRED_YEAR = 100
 
@@ -241,7 +223,7 @@ const EditProfileModal = ({
   }
 
   const onSubmit = async (data) => {
-    const { firstName, lastName, summary, yearsOfExperience } = data
+    const { firstName, lastName, summary } = data
     
     const payload = {
       // country_id: getCountryId(),
@@ -257,11 +239,12 @@ const EditProfileModal = ({
       longitude: value?.geometry?.location?.lng() || longitude,
       working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM-DD')
     }
-    console.log('payload', payload);
     setIsSecondButtonLoading(true)
     try {
+      // @ts-ignore
       await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
+      await providerFetchProfile()
     } catch (e) {
       console.log(e);
     } finally {
@@ -407,17 +390,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
             <MaterialDatePicker
                   refs={{
-                    ...register('working_since', {
-                      // validate: () => {
-                      //   const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
-                      //   const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
-                      //   if (isMaxYear || isMinYear) {
-                      //     return aboutMeModal.birthdayError
-                      //   } else {
-                      //     return true
-                      //   }
-                      // }
-                    })
+                    ...register('working_since')
                   }}
                   label={profile.startedWorkingSince}
                   hiddenLabel
@@ -427,20 +400,7 @@ const EditProfileModal = ({
                   onDateChange={setWorkingSince}
                   fullWidth={true}
                 />
-              {/* <MaterialBasicSelect
-                fieldRef={{
-                  ...register('yearsOfExperience')
-                }}
-                useID={true}
-                className={styles.profileFormInput}
-                label={aboutMeModal.exp}
-                value={yearsOfExperience}
-                options={formattedXpLevelList}
-                hiddenLabel
-                onChange={(e, v) => {
-                  setYearsOfExperience(v.props.value)
-                }}
-              /> */}
+
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>

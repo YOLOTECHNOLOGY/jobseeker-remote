@@ -24,7 +24,7 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
   const router = useRouter()
   const currentUser = getCookie('user')
   const currentToken = getCookie('accessToken')
-
+  console.log({ lang })
   const handleShowMenu = () => {
     if (!openState) {
       // opening menu, disable scrolling of body

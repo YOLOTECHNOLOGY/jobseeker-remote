@@ -7,7 +7,6 @@ function FactorEnable(props: any) {
   const { newGetStarted } = props.lang
   const { defaultLoginCallBack, userInfo } = useGetStarted()
   const containerIMg = useRef(null)
-  console.log({ userInfo })
   useEffect(() => {
     setTimeout(() => {
       defaultLoginCallBack(userInfo)

@@ -22,14 +22,12 @@ const EmailCode = (props: any) => {
 
   const dispatch = useDispatch()
   const onChange = (otp) => {
-    console.log(otp)
     if (otp?.length === 6) {
       setErrorText('')
       verificationOtp({
         otp,
         email
       }).then((res) => {
-        console.log(res)
         if (res.data?.data) {
           bindUserEmailFun()
         } else {
@@ -60,7 +58,6 @@ const EmailCode = (props: any) => {
       is_two_factor_enabled: 1
     })
       .then((res) => {
-        console.log(res.data)
         if (res.data) {
           router.push(`/${langKey}/get-started/phone?step=5`)
           // if(userInfo && Object.keys(userInfo).length){

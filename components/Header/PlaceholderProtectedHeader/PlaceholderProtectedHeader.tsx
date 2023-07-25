@@ -205,7 +205,7 @@ const PlaceholderProtectedHeader = ({
               </>
             </li>
             <div className={styles.icon}>
-              <Hamburger disabled={true} />
+              <Hamburger disabled={true} lang={lang}/>
             </div>
           </div>
         </nav>

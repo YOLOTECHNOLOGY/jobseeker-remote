@@ -11,7 +11,6 @@ const guestLogin = async (token) => {
         const result = await fp.get()
         deviceUdid = result.visitorId
         localStorage.setItem('deviceUdid', deviceUdid)
-        console.log({ deviceUdid })
     }
     const browser = useUserAgent?.()?.browser
     const accessToken = getCookie('accessToken')

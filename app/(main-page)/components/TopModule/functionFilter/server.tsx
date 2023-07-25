@@ -9,6 +9,7 @@ import { fetchJobsPreferences } from "store/services/jobs/fetchJobsForYouLogin"
 import { cookies } from "next/headers"
 import { ReaderTPromise as M } from "app/models/abstractModels/monads"
 import { dropLast } from 'ramda'
+import { recordTime } from 'helpers/analizeTools'
 // eslint-disable-next-line react/display-name
 const LiftClient = Client => props => <Client {...props} />
 
@@ -69,7 +70,9 @@ const ServerFunctionFilter = async (props: { config: any, langKey: any }) => {
   let popularList = []
   const accessToken = cookies().get('accessToken')?.value
   if (accessToken) {
+    const stop = recordTime('main-page job-preferences')
     const result = await fetchJobsPreferences({}, accessToken)
+    stop()
     popularList = result?.data?.data?.map(item => item.function_job_title_id) ?? []
 
   }

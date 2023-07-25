@@ -108,7 +108,7 @@ const ProtectedHeader = ({ lang }: any) => {
             </li>
           ) : null}
           <div className={styles.icon} onClick={() => setOpenSwitchNationModal(false)}>
-            <Hamburger />
+            <Hamburger lang={lang} />
           </div>
         </div>
 
@@ -116,8 +116,8 @@ const ProtectedHeader = ({ lang }: any) => {
         {isShowHeaderMenu && (
           <DropDownMenu
             ref={ref}
-            langKey={langKey} 
-            lang={lang} 
+            langKey={langKey}
+            lang={lang}
             pathname={pathname}
             config={config}
             handleChangeNation={handleChangeNation}

@@ -2,11 +2,12 @@ import moment from 'moment'
 import Cookies from 'universal-cookie'
 import { toLower } from 'lodash-es'
 
-export const userKey = 'user';
-export const refreshToken = 'refreshToken';
-export const accessToken = 'accessToken';
-export const sourceKey = 'source'; // track source
-export const configKey = 'geoConfiguration';
+export const userKey = 'user'
+export const refreshToken = 'refreshToken'
+export const accessToken = 'accessToken'
+export const redirectUrl = 'redirectUrl'
+export const sourceKey = 'source' // track source
+export const configKey = 'geoConfiguration'
 
 const cookies = new Cookies()
 

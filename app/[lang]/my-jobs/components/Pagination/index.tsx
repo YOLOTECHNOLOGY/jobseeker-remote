@@ -18,6 +18,10 @@ const Pagination = (props: any) => {
                     const newSearchParams = new URLSearchParams(searchParams.toString())
                     newSearchParams.set(pageQueryKey, '' + page)
                     push(pathname + '?' + newSearchParams.toString())
+                    window.scrollTo({
+                        top: 300,
+                        behavior: "smooth",
+                      });
                 }}
             />
         </div>

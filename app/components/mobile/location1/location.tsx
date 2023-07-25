@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField'
 /* Helpers */
 // import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
 import { flat } from 'helpers/formatter'
+import { Button } from '@mui/material'
 
 const textFieldTheme = (value, height = '44px', width = '90vw') => createTheme({
   components: {
@@ -99,6 +100,7 @@ const formatLocationConfig = (locationList) => {
 const MaterialLocationField = ({ className, label, locationList, width, disableClearable = false, defaultValue, required, fieldRef, error, value, height, ...rest }: any) => {
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
+  const locationRef = React.useRef(null)
   return (
     <ThemeProvider theme={textFieldTheme(value, height, width)}>
       <Autocomplete

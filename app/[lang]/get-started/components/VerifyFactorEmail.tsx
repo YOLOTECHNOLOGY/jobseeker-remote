@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Captcha from './captcha/index'
 import styles from '../index.module.scss'
 import useGetStarted from '../hooks/useGetStarted'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
@@ -45,7 +45,6 @@ const VerifyFactorEmail = (props: IProps) => {
   useEffect(() => {
     setUserId(userId)
   }, [userId])
-  console.log({ userInfo }, '11')
   useEffect(() => {
     if (userInfo?.data && !Object.keys(userInfo).length) {
       return

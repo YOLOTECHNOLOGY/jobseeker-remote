@@ -3,32 +3,19 @@ import moment from 'moment'
 
 /* Components */
 import { Avatar } from '@mui/material'
-import Text from 'components/Text'
-import ReadMore from 'components/ReadMore'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 /* Images */
 import {
-  DefaultAvatar,
-  LocationIcon,
-  MailIcon,
-  BriefcaseIcon,
-  MobileIcon,
-  PencilIcon,
-  BodyIcon
-} from '../../images'
+  DefaultAvatar} from '../../images'
 import Image from 'next/image';
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
-import { flat, formatTemplateString } from 'helpers/formatter'
+import { formatTemplateString } from 'helpers/formatter'
 import { MouseOverPopover } from '../../app/components/popover/MouseOverPopover';
-import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
 import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
-import { config } from '../../middleware';
-import configs from '../../app/(companies)/[lang]/companies/page';
 
 type UserProfileOverviewProps = {
   name: string
@@ -134,7 +121,7 @@ const UserProfileOverview = ({
               style={{ marginRight: '6px' }}
               alt={'location'}
             />
-              <MouseOverPopover className={styles.profileText} value={String(working_since)?.split('-').slice(0,2).join('-') || '-'}></MouseOverPopover>
+              <MouseOverPopover className={styles.profileText} value={ working_since ? String(working_since)?.split('-').slice(0,2).join('-') : '-'}></MouseOverPopover>
 
           </div>
 

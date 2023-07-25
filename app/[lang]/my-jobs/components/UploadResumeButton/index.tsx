@@ -13,7 +13,6 @@ interface PropsType {
 
 const UploadResumeButton = (props: PropsType) => {
   const { classNames, lang } = props
-  console.log('lang', lang)
   return (
     <Link
       href={'/quick-upload-resume'}

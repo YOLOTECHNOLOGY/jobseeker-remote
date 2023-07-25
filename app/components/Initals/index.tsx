@@ -46,9 +46,7 @@ const invokeGAAdsEvent = (searchParams) => {
   }
 }
 const accessToken = getCookie('accessToken')
-// window.onhashchange = e => {
-//   console.log('windowChange', e)
-// }
+
 const Initial = () => {
   const firstRender = useFirstRender()
   const searchParams = useSearchParams()
@@ -134,7 +132,6 @@ const Initial = () => {
           })
           google.accounts.id.prompt((notification) => {
             if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-              console.log(notification.getNotDisplayedReason())
             }
           })
           function handleGoogleOneTapLoginResponse(CredentialResponse) {

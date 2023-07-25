@@ -10,7 +10,6 @@ import Loader from './loader'
 import Empty from 'app/components/empty/empty'
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
-    console.log(props,'jobs')
     return (
         <Loader>
             {jobs?.length ? (

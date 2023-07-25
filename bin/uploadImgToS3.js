@@ -40,11 +40,8 @@ function uploadImageToS3(filePath) {
     if (err) {
       console.error(`Error uploading ${filePath} to S3:`, err)
     } else {
-      console.log(`Image ${filePath} uploaded successfully:`, data.Location)
       // Remove the local file after uploading it
       uploadedFiles++
-      console.log('totalFiles', totalFiles)
-      console.log('uploadedFiles', uploadedFiles)
       if (uploadedFiles === totalFiles) {
         traverseFolder(directoryPath, file_namespace)
       }
@@ -77,7 +74,6 @@ function readFilesRecursively(directoryPath) {
     } else {
       const extension = path.extname(file).toLowerCase()
       if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg'].includes(extension)) {
-        console.log('filePath', filePath)
         totalFiles++
         uploadImageToS3(filePath)
       }

@@ -170,21 +170,6 @@ const LoginForPhone = (props: any) => {
           style={{ paddingBottom: '0px' }}
           dangerouslySetInnerHTML={{ __html: agreementWord }}
         ></p>
-        {!isModal && (
-          <p className={styles.tips}>
-            {newGetStarted.tips}{' '}
-            <Link
-              href={
-                process.env.ENV === 'development'
-                  ? 'https://dev.employer.bossjob.com'
-                  : 'https://employer.bossjob.com'
-              }
-              className={styles.AuthCTALink}
-            >
-              {newGetStarted.employer}
-            </Link>
-          </p>
-        )}
       </div>
       <div className={`${styles.list} ${styles.list2}`} style={{ paddingTop: '0px' }}>
         <GoogleLogin lang={props.lang} showTitle={false} />

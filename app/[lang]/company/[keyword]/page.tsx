@@ -11,13 +11,11 @@ import { useCompanyDetail } from "./DataProvider";
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
-import { isMobile } from 'react-device-detect';
 import MobilePage from './page_mobile';
 import useWindowSize from 'hooks/useWindowSize';
 import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
-import classNames from 'classnames';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 
 
@@ -59,11 +57,10 @@ const Page = () => {
 		setValue(newValue);
 	};
 	const contextLang = useContext(languageContext);
-	const {tab, overview ,life} = contextLang.companyDetail
+	const {tab, overview } = contextLang.companyDetail
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
 	if(isMobile){
@@ -126,7 +123,8 @@ const Page = () => {
 
 			</div>
 			<TabPanel value={value} index={0}>
-			{!!hotJobs.jobs.length ? <div className={style.hot_jobs_wrapper}>
+			{!!hotJobs.jobs.length ? 
+				<div className={style.hot_jobs_wrapper}>
 						<Section title={overview.HotJobs} hot>
 						<div
 							className={style.header_right}
@@ -138,9 +136,9 @@ const Page = () => {
 							 <div className={style.arrow}></div>
 						</div>
 						<div className={style.jobs_item_layout}>
-							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item) => {
-								if(!item) return <div className={style.jobs_item} style={{opacity:0}}></div>;
-								return <div className={style.jobs_item} key={item.job_title}>
+							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item,index) => {
+								if(!item) return <div key={index} className={style.jobs_item} style={{opacity:0}}></div>;
+								return <div className={style.jobs_item} key={index}>
 									<Link 
 										href={`/${lang}${item.job_url}`}
 										target={'_blank'}
@@ -179,7 +177,7 @@ const Page = () => {
 						<div className={style.company_culture}>
 							<CulturePanel {...detail} />
 							{
-								hr?.length && <>
+								!!hr?.length && <>
 									<div style={{ height: 40 }}></div>
 									<ChatPanel list={hr} />
 								</>

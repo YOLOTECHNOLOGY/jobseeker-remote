@@ -715,7 +715,8 @@
           "btn2": "Save",
           "suggestions": "We will suggest skill for you according to your latest job function:",
           "jobFunction": "Job Function",
-          "skill": "Search or add a skill"
+          "skill": "Search or add a skill",
+          "addBtn": "Add"
         },
         "licenses": {
           "title": "Licenses And Certifications",
@@ -758,10 +759,10 @@
           "btn1": "Cancel",
           "btn2": "Delete"
         },
-        "introdutionModal": {
-          "title": "Introdution",
+        "introductionModal": {
+          "title": "Introduction",
           "btn1": "Cancel",
-          "btn2": "Edit"
+          "btn2": "Save"
         }
       },
       "preference": {
