@@ -102,7 +102,9 @@ const EditSkillModal = ({
       handleCloseModal()
     }
   }, [updateProfileSuccess])
-
+  useEffect(()=>{
+    setChoosed(skills);
+  },[skills])
   const onSubmit = () => {
     const payload = {
       skills: choosed.join(',')
@@ -137,10 +139,6 @@ const EditSkillModal = ({
   const handleResetForm = () => {
     setFunctionTitle({ value: '', id: undefined })
     setSearchValue('')
-  }
-  const addSecected = (item) => {
-    if (selectedSkills?.length >= 5) return
-    setSelectedSkills([...selectedSkills, item])
   }
   console.log('allSkills, choosed',allSkills, choosed)
   return (
@@ -220,16 +218,11 @@ const EditSkillModal = ({
                     handleAddSkill(searchValue)
                     setSearchValue('')
                   }
-
-
                 }}
               >
                 {skillModal.addBtn}
               </Button>
-
             </div>
-
-
           </div>
           <div className={styles.skillList}>
             {(choosed ?? []).map((skill, i) => {
