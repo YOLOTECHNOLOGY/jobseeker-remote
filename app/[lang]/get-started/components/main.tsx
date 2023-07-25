@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../index.module.scss'
 import Divider from '@mui/material/Divider'
 import PhoneLink from './link/phone'

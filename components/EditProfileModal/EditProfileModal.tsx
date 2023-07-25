@@ -2,21 +2,18 @@
 import { useEffect, useRef, useState } from 'react'
 
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
 import Autocomplete from '@mui/material/Autocomplete';
 
 /* Components */
 import Text from 'components/Text'
-import Tooltip from '@mui/material/Tooltip';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Button, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import Modal from 'components/Modal'
 import UploadUserAvatar from 'components/UploadUserAvatar'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import GoogleMap from 'components/GoogleMap/GoogleMap'
@@ -26,7 +23,6 @@ import _styles from 'styles/maintenance.module.scss';
 import { flat } from 'helpers/formatter'
 /* Styles */
 import styles from './EditProfileModal.module.scss'
-import { getCountryId } from 'helpers/country'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile/service'

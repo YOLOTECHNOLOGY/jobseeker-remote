@@ -11,13 +11,11 @@ import { useCompanyDetail } from "./DataProvider";
 import SearchPanel, { JobsTag } from './components/SearchPanel';
 import Link from 'next/link';
 import Image from 'next/image';
-import { isMobile } from 'react-device-detect';
 import MobilePage from './page_mobile';
 import useWindowSize from 'hooks/useWindowSize';
 import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
-import classNames from 'classnames';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 
 
@@ -59,7 +57,7 @@ const Page = () => {
 		setValue(newValue);
 	};
 	const contextLang = useContext(languageContext);
-	const {tab, overview ,life} = contextLang.companyDetail
+	const {tab, overview } = contextLang.companyDetail
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];

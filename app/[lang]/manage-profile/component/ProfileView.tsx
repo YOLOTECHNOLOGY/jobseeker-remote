@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef, Fragment } from 'react'
+import React, { useState, useEffect, useMemo, useRef, Fragment } from 'react'
 
 /* Vendors */
 
@@ -39,7 +39,7 @@ import {
 import styles from './ManageProfile.module.scss'
 import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
-import { getCurrencyList, getJobCategoryList } from 'helpers/jobPayloadFormatter'
+import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
 import {
   changeCompanyIndustry,

@@ -10,7 +10,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import Link from 'next/link'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { useSearchParams } from 'next/navigation'
-import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { getEmailByPhoneNumber, checkBindNumber } from 'store/services/auth/newLogin'

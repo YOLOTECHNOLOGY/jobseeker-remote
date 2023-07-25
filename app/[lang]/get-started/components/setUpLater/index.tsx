@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from '../../index.module.scss'
 import useGetStarted from '../../hooks/useGetStarted'
-import { useRouter } from 'next/navigation'
 const SetUpLater = (props: any) => {
   const { defaultLoginCallBack, userInfo } = useGetStarted()
   // const userInfo =   useSelector((store: any) => store.auth.jobseekersLogin.response)

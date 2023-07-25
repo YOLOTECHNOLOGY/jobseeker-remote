@@ -1,16 +1,13 @@
 // import './flexible';
-import Head from 'next/head'
 import { Metadata } from 'next'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/models/abstractModels/util'
 import { getCountryKey } from '../../../../helpers/country'
-import { formatTemplateString } from '../../../../helpers/formatter'
 import { getDictionary } from '../../../../get-dictionary'
 import { cookies, headers } from 'next/headers'
 import {
   fetchCompanyDetailReq,
   fetchCompanyHR,
-  fetchConfigReq,
   fetchJobsListReq,
   getIDFromKeyword
 } from './service'

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 /* Actions */
-import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
 
 /* Components */
 import { Chip } from '@mui/material'
@@ -18,7 +17,6 @@ import { Button } from '@mui/material'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 import { keys, flatMap } from 'lodash-es'
 /* Styles */
