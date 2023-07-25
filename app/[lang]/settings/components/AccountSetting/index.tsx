@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import VerifyMailAndBindEmail from '../VerifyMailAndBindEmail'
-import VerifyPhoneNumber from '../VerifyPhoneNumber'
+import VerifyMailAndBindEmail from '../VerifyMailAndBindEmail/email'
+import VerifyPhoneNumber from '../VerifyPhoneNumber/phone'
 import Text from 'components/Text'
-import styles from '../../settings.module.scss'
+import styles from './index.module.scss'
 
 const errorText = (errorMessage: string) => {
   return (

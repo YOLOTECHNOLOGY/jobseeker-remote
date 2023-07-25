@@ -5,6 +5,7 @@ import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
+import Captcha from '../captcha/index'
 
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
@@ -12,6 +13,9 @@ import { handleNumericInput } from 'helpers/handleInput'
 // ui
 import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
+import ModalDialog from '../Modal/index'
+import InputAdornment from '@mui/material/InputAdornment'
+import CloseIcon from '@mui/icons-material/Close'
 
 // api
 import { changeEmail } from 'store/services/auth/changeEmail'
@@ -22,9 +26,11 @@ import { emailOTPChangeEmailGenerate } from 'store/services/auth/emailOTPChangeE
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 // styles
-import styles from './index.module.scss'
+import styles from './email.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
+import Image from 'next/image'
+import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 
 const VerifyMailAndBindEmail = ({
   label,
@@ -50,6 +56,7 @@ const VerifyMailAndBindEmail = ({
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
+  const [open, setOpen] = useState(false)
 
   const [isShowemailVerify, setIsShowemailVerify] = useState(false)
   const [otp, setOtp] = useState('')
@@ -57,6 +64,7 @@ const VerifyMailAndBindEmail = ({
   const [emailTip, setEmailTip] = useState(
     verify ? accountSetting.editEmailExplanation : accountSetting.notVerifyTips
   )
+  const [number, setNumber] = useState<number>(0)
 
   useEffect(() => {
     if (isShowCountDownSwitch) {
@@ -208,103 +216,116 @@ const VerifyMailAndBindEmail = ({
     )
   }
 
+  const handleOpen = () => {
+    console.log('handle open!!!')
+    setOpen(true)
+  }
+
+  const handleSave = () => {
+    console.log('save')
+    // setOpen(false)
+  }
+
+  const handleClose = () => {
+    console.log('close')
+    setOpen(false)
+  }
+
+  const sendOpt = () => {
+    console.log('send opt')
+  }
+
+  const onChange = (opt) => {
+    console.log('on change opt', opt)
+  }
+
   return (
-    <div className={styles.VerifyMailAndBindEmail}>
-      <FieldFormWrapper
-        label={label}
-        setEdit={setEdit}
-        edit={edit}
-        isEdit
-        titleTips={accountSetting.emailTip}
-      >
-        {edit === label ? (
-          <div className={styles.accessSettingsContainer_fromWrapper}>
-            {emailTip}
-            <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-              <MaterialTextField
-                className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                id='email'
-                label={requiredLabel(accountSetting.emailLabel)}
-                variant='outlined'
-                size='small'
-                value={email}
-                autoComplete='off'
-                error={emailError ? true : false}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isShowemailVerify}
-              />
-              {emailError && errorText(emailError)}
-            </div>
-
-            <div className={styles.VerifyMailAndBindEmail_button}>
-              <Button variant='contained' disabled={isBtnDisabled} onClick={sendEmailOTPS}>
-                {accountSetting.sendOpt} {isShowCountDownSwitch && `(${countDown}s)`}
-              </Button>
-              {!isShowemailVerify && (
-                <Button
-                  variant='outlined'
-                  onClick={() => {
-                    reductionEmail()
-                    setEdit(null)
-                  }}
-                >
-                  {accountSetting.cancel}
-                </Button>
-              )}
-            </div>
-
-            {isShowemailVerify && (
-              <div className={styles.accessSettingsContainer_fromWrapper_verifyContainer}>
-                <Text>{formatTemplateString(accountSetting.enterCode, email)}</Text>
-                <div className={styles.accessSettingsContainer_fromWrapper_edit}>
-                  <MaterialTextField
-                    className={styles.accessSettingsContainer_fromWrapper_edit_input}
-                    id='email'
-                    label={accountSetting.optLabel}
-                    variant='outlined'
-                    size='small'
-                    value={otp}
-                    autoComplete='off'
-                    error={otpError ? true : false}
-                    onChange={(e) => setOtp(handleNumericInput(e.target.value))}
-                  />
-                  {otpError && errorText(otpError)}
-                </div>
-
-                <div className={styles.VerifyMailAndBindEmail_button}>
-                  <Button
-                    variant='contained'
-                    disabled={isBtnDisabledVerify}
-                    onClick={verifyEmailOrChangeEmail}
-                  >
-                    {accountSetting.verify}
-                  </Button>
-
-                  <Button
-                    variant='outlined'
-                    onClick={() => {
-                      reductionEmail()
-                      setEdit(null)
-                    }}
-                  >
-                    {accountSetting.cancel}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className={styles.formWrapper}>
-            <Text className={styles.bottomSpacing}>{email}</Text>
+    <>
+      <div className={styles.main}>
+        <div className={styles.title}>
+          <span>{label}</span>
+          <Tooltip
+            title={accountSetting.emailTip}
+            placement='top'
+            arrow
+            classes={{ tooltip: styles.toolTip }}
+          >
+            <Image className={styles.image} src={TooltipIcon} alt='icon' width={20} height={20} />
+          </Tooltip>
+        </div>
+        <div className={styles.tip}>Receive job applications updates through your email.</div>
+        <div className={styles.content}>
+          <div className={styles.info}>
+            <span>{email ? email : 'Not provided'}</span>
             {verify && (
-              <Tooltip title='Verified' placement='top' arrow>
-                <img src={BlueTickIcon} alt='icon' width='20' height='20' />
+              <Tooltip title='Verified' placement='top' arrow classes={{ tooltip: styles.toolTip }}>
+                <Image
+                  className={styles.image}
+                  src={BlueTickIcon}
+                  alt='icon'
+                  width={20}
+                  height={20}
+                />
               </Tooltip>
             )}
           </div>
-        )}
-      </FieldFormWrapper>
-    </div>
+          <div className={styles.action} onClick={handleOpen}>
+            <Image src={AccountSettingEditIconPen} width={14} height={16} alt='edit'></Image>
+          </div>
+        </div>
+      </div>
+
+      <ModalDialog
+        key={'verify-email'}
+        open={open}
+        cancel='Cancel'
+        confirm='Verify'
+        handleSave={handleSave}
+        handleClose={handleClose}
+        lang={lang}
+      >
+        <div className={styles.modalContent}>
+          <div className={styles.title}>
+            <span>Change email address verify</span>
+            <CloseIcon onClick={handleClose} sx={{ color: '#BCBCBC', cursor: 'pointer' }} />
+          </div>
+          <div className={styles.content}>
+            <div className={styles.emailInput}>
+              <MaterialTextField
+                className={styles.fullWidth}
+                label={'email'}
+                size='medium'
+                type='text'
+                name='email'
+                onChange={(e) => setEmail(e.target.value)}
+                error={emailError ? true : false}
+                autoComplete='true'
+                variant='standard'
+                autoFocus={true}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <i className='icon-email' style={{ fontSize: '18px' }}></i>
+                    </InputAdornment>
+                  )
+                }}
+              />
+              <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
+              <button className={styles.sendOTP}>Send OTP</button>
+            </div>
+            <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
+            <Captcha
+              lang={lang}
+              autoFocus={true}
+              onChange={onChange}
+              sendOpt={sendOpt}
+              error={errorText}
+              number={number}
+            />
+          </div>
+        </div>
+      </ModalDialog>
+    </>
   )
 }
 

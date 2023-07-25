@@ -1,0 +1,57 @@
+import React from 'react'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import styles from './index.module.scss'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from './config'
+import classNames from 'classnames/bind'
+
+interface ModalJobAlertsProps {
+  open: boolean
+  lang: any
+  handleClose: () => void
+  handleSave: Function
+  children: React.ReactElement
+  cancel: string
+  confirm: string
+}
+
+export default function FormDialog(props: ModalJobAlertsProps) {
+  const { open, lang, handleClose, handleSave, cancel, confirm } = props
+
+  const handleCloseMethod = () => {
+    handleClose()
+  }
+
+  const handleSaveMethod = () => {
+    handleSave()
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Dialog open={open} onClose={handleCloseMethod}>
+        <div className={styles.wrapper}>
+          <DialogContent>{props.children}</DialogContent>
+
+          <DialogActions>
+            <div className={styles.actions}>
+              <div
+                className={classNames([styles.cancel, styles.actionsItem])}
+                onClick={handleCloseMethod}
+              >
+                {cancel}
+              </div>
+              <div
+                className={classNames([styles.save, styles.actionsItem])}
+                onClick={handleSaveMethod}
+              >
+                {confirm}
+              </div>
+            </div>
+          </DialogActions>
+        </div>
+      </Dialog>
+    </ThemeProvider>
+  )
+}

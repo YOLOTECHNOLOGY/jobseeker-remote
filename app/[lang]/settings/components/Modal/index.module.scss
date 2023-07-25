@@ -1,0 +1,63 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.wrapper {
+  width: 740px;
+
+  @include sm {
+    width: 100%;
+  }
+
+  .title {
+    color: #121212;
+
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0.36px;
+
+    background: #f9f9f9;
+    padding: 16px 20px;
+  }
+
+  .content {
+    padding: 0 40px;
+  }
+
+  .actions {
+    display: flex;
+    padding: 20px;
+  }
+
+  .actionsItem {
+    display: flex;
+    height: 60px;
+    padding: 0 50px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .cancel {
+    border: 1px solid#136fd3;
+    color: #136fd3;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .save {
+    background: #136fd3;
+    color: #fff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+
+    margin-left: 14px;
+  }
+}
