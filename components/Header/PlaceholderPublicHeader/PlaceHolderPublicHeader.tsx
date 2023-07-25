@@ -13,8 +13,8 @@ import MaterialButton from 'components/MaterialButton'
 import { BossjobLogo } from 'images'
 
 // this Header will be used when user is not logged in
-const PlaceHolderPublicHeader = (props:any) => {
-  const {lang = {}} =  props
+const PlaceHolderPublicHeader = (props: any) => {
+  const { lang = {} } = props
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
@@ -33,7 +33,7 @@ const PlaceHolderPublicHeader = (props:any) => {
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   {lang.home}
                 </Text>
-              </li>        
+              </li>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
                   {lang.findJobs}
@@ -46,7 +46,7 @@ const PlaceHolderPublicHeader = (props:any) => {
               </li> */}
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                {lang.companies}
+                  {lang.companies}
                 </Text>
               </li>
               {/* <li className={styles.headerLink}>
@@ -61,7 +61,7 @@ const PlaceHolderPublicHeader = (props:any) => {
               </li>
               <li className={styles.headerLink}>
                 <Text textStyle='base' textColor='darkGrey' className={styles.headerLinkText}>
-                {lang.careerGuide}
+                  {lang.careerGuide}
                 </Text>
               </li>
               {/* <li className={styles.headerLink} style={{ position:'relative' }}>
@@ -79,7 +79,7 @@ const PlaceHolderPublicHeader = (props:any) => {
           <React.Fragment>
             <li className={styles.headerLink}>
               <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
-              {lang.hiring} 
+                {lang.hiring}
               </Text>
             </li>
             {/* <li className={classNames([styles.headerLink, styles.headerLinkLogin])}>
@@ -120,7 +120,7 @@ const PlaceHolderPublicHeader = (props:any) => {
         </ul>
         <div className={styles.mobileIconWrapper}>
           <div className={styles.icon}>
-            <Hamburger disabled={true} />
+            <Hamburger disabled={true} lang={lang} />
           </div>
         </div>
       </nav>
