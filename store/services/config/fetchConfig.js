@@ -22,7 +22,10 @@ const getConfig = memoizeWithTime(
         return result
       })
   },
-  (countryKey, lang) => countryKey + lang,
+  (countryKey, lang) => {
+    console.log({ countryKey, lang })
+    return countryKey + lang
+  },
   36000
 )
 const fetchConfigService = (defaultLang) => {
