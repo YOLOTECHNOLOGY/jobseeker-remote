@@ -141,7 +141,10 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
+    }else{
+      query +=  '/' +pathname.split('/').slice(2).join('/')
     }
+    console.log('query',query);
     window.location.href = newOrigin + query
   }
 
