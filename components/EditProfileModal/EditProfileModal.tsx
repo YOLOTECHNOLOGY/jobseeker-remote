@@ -162,7 +162,7 @@ const EditProfileModal = ({
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
   const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
-  const [workingSince, setWorkingSince] = useState(working_since || '');
+  const [workingSince, setWorkingSince] = useState('');
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
@@ -390,17 +390,7 @@ const EditProfileModal = ({
             <div className={styles.profileFormGroup}>
             <MaterialDatePicker
                   refs={{
-                    ...register('working_since', {
-                      // validate: () => {
-                      //   const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
-                      //   const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
-                      //   if (isMaxYear || isMinYear) {
-                      //     return aboutMeModal.birthdayError
-                      //   } else {
-                      //     return true
-                      //   }
-                      // }
-                    })
+                    ...register('working_since')
                   }}
                   label={profile.startedWorkingSince}
                   hiddenLabel
@@ -410,20 +400,7 @@ const EditProfileModal = ({
                   onDateChange={setWorkingSince}
                   fullWidth={true}
                 />
-              {/* <MaterialBasicSelect
-                fieldRef={{
-                  ...register('yearsOfExperience')
-                }}
-                useID={true}
-                className={styles.profileFormInput}
-                label={aboutMeModal.exp}
-                value={yearsOfExperience}
-                options={formattedXpLevelList}
-                hiddenLabel
-                onChange={(e, v) => {
-                  setYearsOfExperience(v.props.value)
-                }}
-              /> */}
+
             </div>
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>

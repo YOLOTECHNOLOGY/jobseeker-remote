@@ -88,11 +88,10 @@ const MaterialDatePicker = ({
           }}
           renderInput={(params) => (
             <TextField
-              error={true}
               aria-readonly
               {...params}
+              error={false}
               fullWidth={fullWidth}
-              helperText={null}
               className={hiddenLabel ? styles.hiddenLabel : ''}
             />
           )}
