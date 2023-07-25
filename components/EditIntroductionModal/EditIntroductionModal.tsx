@@ -36,8 +36,6 @@ const EditIntroductionModal = ({
   })
   // translate maps
   const langProfile = lang.manageProfile.tab.profile
-  console.log('langProfile:', langProfile)
-
   const onSubmit = () => {
     const payload = {
       description

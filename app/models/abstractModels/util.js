@@ -62,6 +62,5 @@ export const registInterpreter = interpreter => {
 
       return Promise.reject(error)
     })
-    // .catch(e => console.log('monad error', e))
 
 }

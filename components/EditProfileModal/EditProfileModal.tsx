@@ -111,7 +111,6 @@ const EditProfileModal = ({
     location: userLocation,
     description,
     location_id,
-    xp_lvl: expLevel,
     phone_num,
     email,
     longitude,
@@ -127,9 +126,6 @@ const EditProfileModal = ({
   const [inputValue, setInputValue] = React.useState(address || '');
   const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
   const [debouncedValue, setDebouncedValue] = useState('');
-
-
-  console.log('userDetail', userDetail, address);
   const {
     manageProfile: {
       tab: {
@@ -171,24 +167,12 @@ const EditProfileModal = ({
     (store: any) => store.users.updateUserProfile.response
   )
   const { xp_lvls: xpLevelList, location_lists: locationList } = config
-
-  const formattedXpLevelList = xpLevelList?.map?.((xp) => {
-    return { ...xp, label: xp.value, value: xp.key }
-  })
-
   const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
-
   const formattedLocationList = flat(formatLocationConfig(locationList))
-
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
   const [location, setLocation] = useState(matchedLocation)
-  console.log('location',location);
-  // Limit user from selecting date more than 16-100 years ago from now.
-  // const today = new Date()
-  // const sixteenYearsAgo = today.getFullYear() - 16
-  // const hundredYearsAgo = today.getFullYear() - 100
   const SIXTEEN_YEAR = 16
   const HUNDRED_YEAR = 100
 
@@ -239,7 +223,7 @@ const EditProfileModal = ({
   }
 
   const onSubmit = async (data) => {
-    const { firstName, lastName, summary, yearsOfExperience } = data
+    const { firstName, lastName, summary } = data
     
     const payload = {
       // country_id: getCountryId(),

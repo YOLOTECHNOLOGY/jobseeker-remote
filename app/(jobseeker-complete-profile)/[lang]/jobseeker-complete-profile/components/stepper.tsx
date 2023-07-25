@@ -24,7 +24,6 @@ export default function HorizontalLabelPositionBelowStepper({step,lang}: PropsTy
     education,
     desiredJob,
       ];
-    console.log({step})  
   return (
     <Box sx={{ width: '100%' }}>
       {

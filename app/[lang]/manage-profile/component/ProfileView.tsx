@@ -60,7 +60,6 @@ const ProfileView = ({ lang }: any) => {
 
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
-  console.log('isUpdating:', userDetail)
   const config = useSelector((store: any) => store?.config?.config?.response)
   const {
     // first_name: firstName,

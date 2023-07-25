@@ -53,7 +53,6 @@ const COUNT_DOWN_VERIFY_DEFAULT = 60
 
 const AccountSettings = (props: any) => {
   const { accessToken, lang, config, userDetail } = props
-  console.log({ props })
   const { width } = useWindowDimensions()
   const [value, setValue] = useState(0)
   const [edit, setEdit] = useState(null)

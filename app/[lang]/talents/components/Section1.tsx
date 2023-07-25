@@ -122,12 +122,7 @@ const Pop = (props: { type: 'left' | 'right', text: string }) => {
 		rootMargin: '0px 0px 50px 0px',
 		triggerOnce: true
 	});
-	// useEffect(()=>{
-	// 	entry?.target?.addEventListener('scroll', function() {
-	// 		// 输出元素当前的滚动位置
-	// 		console.log('Element has been scrolled to: ',entry.target, + entry.boundingClientRect.top);
-	// 	});
-	// },[entry]);
+	
 	if (type === 'left') {
 		return <div className={classNames({
 			[style.content]: true,

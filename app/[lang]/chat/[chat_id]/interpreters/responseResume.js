@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
 import { sendResume, decline, askSendResume, sendResumeDetail } from './services/resume'
@@ -32,7 +33,6 @@ export default command => command.cata({
     }),
     requestAskSendResume: payload => M(context => {
         context.setLoading(true)
-        console.log({ payload })
         return askSendResume(payload.applicationId, { resume_id: payload.resume_id })
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))

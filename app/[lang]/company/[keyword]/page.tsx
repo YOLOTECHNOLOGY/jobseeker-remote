@@ -61,7 +61,6 @@ const Page = () => {
 	
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-	console.log('detail', detail);
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
 	if(isMobile){

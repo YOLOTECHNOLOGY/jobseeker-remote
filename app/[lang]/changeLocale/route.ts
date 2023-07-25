@@ -12,7 +12,6 @@ async function removeServiceCache(token, lang?) {
     if (token) {
       // should fetch config here
       await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
-        // .then((response) => console.log(response))
         .catch(({ response, request }) => console.log(response, request))
     }
   } catch (error) {

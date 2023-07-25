@@ -32,7 +32,6 @@ const verifyEmail = function (props) {
     avatar = searchParams.get('avatar')
   }
 
-  console.log({ loginData })
   const langKey = getLang()
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -46,9 +45,6 @@ const verifyEmail = function (props) {
     error
   } = useGetStarted()
 
-  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
-  // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
-  console.log({ error })
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
@@ -110,8 +106,6 @@ const verifyEmail = function (props) {
         )
       })
   }
-  console.log({ isModal })
-
   return (
     <>
       <div className={styles.phoneNumber}>

@@ -129,9 +129,6 @@ const EditSkillModal = ({
     setFunctionTitle({ value: '', id: undefined })
     setSearchValue('')
   }
-
-  console.log('choosed:', functionTitle)
-
   return (
     <div>
       <Modal

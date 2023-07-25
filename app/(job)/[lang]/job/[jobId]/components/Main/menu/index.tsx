@@ -9,7 +9,6 @@ import { throttle } from 'lodash-es'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
 const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
-  console.log({ jobDetail })
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
@@ -57,8 +56,6 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   }, [])
 
   const handleScroll = () => {
-    // scrollRef.current = new Date().getTime() // window.document.body.scrollTop
-    // console.log(scrollRef.current, 999)
     setTimeStamp(new Date().getTime())
   }
 
@@ -82,7 +79,6 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       if (!isbenefits) {
         arr.splice(3, 1)
       }
-      console.log(arr)
       arr.map((e, index) => {
         if (Math.abs(e) < 100) {
           scrollRef.current = true
@@ -121,7 +117,6 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
       const position = domTop - headerHeight - 100
-      console.log(position, domTop, headerHeight)
       position && scrollSmoothTo(position)
     }
   }, [current])

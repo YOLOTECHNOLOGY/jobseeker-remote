@@ -56,7 +56,6 @@ function PhoneCode(props: any) {
   const router = useRouter()
 
   const dispatch = useDispatch()
-  console.log({ uuid })
   useEffect(() => {
     dispatch(jobbseekersLoginFailed({}))
   }, [])
@@ -70,7 +69,6 @@ function PhoneCode(props: any) {
         // This is the visitor identifier:
         uuid = result.visitorId
         localStorage.setItem('uuid', uuid)
-        console.log({ newUUid: uuid })
       })()
     }
   }, [])
@@ -92,10 +90,7 @@ function PhoneCode(props: any) {
     if (error?.data?.message) {
       dispatch(jobbseekersLoginFailed({}))
     }
-    console.log({ otp }, otp?.length)
     if (otp?.length === 6) {
-      console.log(otp, uuid, browserId)
-
       if (isMultiplePhonesNum === 'true') {
         router.push(`/${langKey}/get-started/phone?step=7&phone=${phoneNum}`)
         return
@@ -115,7 +110,6 @@ function PhoneCode(props: any) {
   }, [error])
 
   const verifyPhoneFun = (otp) => {
-    console.log(otp)
     verificationPhoneOtp({
       otp,
       phone_num: phoneNum
@@ -132,7 +126,6 @@ function PhoneCode(props: any) {
   const sendOptPhone = () => {
     dispatch(jobbseekersLoginFailed({}))
     phoneOtpenerate({ phone_num: phoneNum }).then((res) => {
-      console.log(res?.data?.data, 'res')
       dispatch(
         displayNotification({
           open: true,
@@ -146,13 +139,11 @@ function PhoneCode(props: any) {
 
   const sendOpt = (email) => {
     authenticationSendEmaillOtp({ email }).then((res) => {
-      console.log(res?.data?.data, 'res')
       router.push(
         `/${langKey}/get-started/phone?step=6&email=${encodeURIComponent(email)}&userId=${userId}`
       )
     })
   }
-  console.log({ userInfo }, error?.data, 7777)
   useEffect(() => {
     if (userInfo && Object.keys(userInfo).length) {
       const { data } = userInfo

@@ -100,9 +100,6 @@ async function CompanyLayout(props: {
     const jobClasses = props.configs.config.job_functions.filter((item) =>
       function_ids.includes(String(item.id))
     )
-    // const configkey =cookieStore.get(configKey);
-    // console.log('configkey', configkey);
-    // const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
     return (
       <>
         <CompanyDetailsProvider

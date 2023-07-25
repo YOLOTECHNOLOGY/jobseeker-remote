@@ -38,7 +38,6 @@ const PreferenceSelector = (props: any) => {
   useEffect(() => {
     setShowPreferenceId(preferenceId)
   }, [preferenceId])
-  console.log(preferences,'preferenceId')
   const { push, loading: pushing } = useContext(LoadingContext)
   const busy = useMemo(() => {
     return loading // || pushing

@@ -40,7 +40,6 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
   }, [step, loginData])
 
   const initLogin = () => {
-    console.log(11111)
     setStep(1)
     setLoginData({})
     setLoginType('home')

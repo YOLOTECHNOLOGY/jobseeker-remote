@@ -56,7 +56,6 @@ function EmailFactor(props: any) {
       email: emailRef.current,
       phone_number: phoneNum
     }).then((res) => {
-      console.log(res.data)
       defaultLoginCallBack(data)
     })
   }, [userInfo])

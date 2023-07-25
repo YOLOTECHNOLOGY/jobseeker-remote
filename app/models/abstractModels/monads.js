@@ -43,12 +43,7 @@ ReaderTPromise.prototype.ap = function (a) {
 ReaderTPromise.prototype.catch = function (f) {
   return ReaderTPromise(context => this.run(context).catch(f))
 }
-// const commandLogger = command => {
-//   if (process.env.NODE_ENV === 'development') {
-//     console.log(`%c${command?.['@@tag']}`, 'color: orange', command?.['@@values'] ?? '')
-//   }
-//   return command
-// }
+
 ReaderTPromise.prototype.log = function (command) {
   if (process.env.NODE_ENV === 'development') {
     return ReaderTPromise(context => {

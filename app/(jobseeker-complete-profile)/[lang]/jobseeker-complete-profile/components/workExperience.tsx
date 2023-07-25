@@ -182,7 +182,6 @@ const WorkExperience = (props: any) => {
   const backClick = () => {
     push(`${pathname}?step=1`)
   }
-  console.log({ selectedSkills })
   const handleSubmit = () => {
     const paramsProfile = {
       working_since: moment(new Date(workingSince)).format('yyyy-MM-DD'),

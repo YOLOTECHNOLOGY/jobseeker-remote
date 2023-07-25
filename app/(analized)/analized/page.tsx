@@ -4,8 +4,6 @@
 // const style = { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
 const Analize = async () => {
     const cache = globalThis.recordCache ?? {}
-
-    console.log({ cache })
     return <div
         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
     >

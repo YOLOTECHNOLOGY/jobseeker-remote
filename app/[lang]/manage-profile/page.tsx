@@ -73,7 +73,6 @@ const ManageProfilePage = () => {
   })
 
   useLayoutEffect(()=>{
-    console.log('tabValue,tab',tabValue,tab);
     if(tab !== tabValue){
       setTabValue(tab);
     }
