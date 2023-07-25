@@ -80,6 +80,7 @@ const ProfileView = ({ lang }: any) => {
 
   const deleteModalRef = useRef({} as any)
 
+
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
     return userDetail

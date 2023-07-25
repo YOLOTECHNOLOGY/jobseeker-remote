@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import Modal from 'components/Modal'
 import TextEditor from 'components/TextEditor/TextEditor'
-import { updateUserPreferencesRequest } from 'store/actions/users/updateUserPreferences'
+import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 import styles from './EditIntroductionModal.module.scss'
 
 type EditIntroductionModalProps = {
@@ -23,7 +23,7 @@ const EditIntroductionModal = ({
   lang
 }: EditIntroductionModalProps) => {
   const dispatch = useDispatch()
-  const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
+  const isUpdating = useSelector((store: any) => store.users.updateUserProfile.fetching)
   const [description, setDescription] = useState('')
 
   const {
@@ -43,12 +43,12 @@ const EditIntroductionModal = ({
     const { noticePeriod } = data // jobType is a key
 
     const payload = {
-      profile: {
-        description
-      }
+      // profile: {
+      description
+      //}
     }
 
-    dispatch(updateUserPreferencesRequest(payload))
+    dispatch(updateUserProfileRequest(payload))
   }
   const handleCloseModal = () => {
     handleModal(modalName, null, false)
@@ -74,11 +74,17 @@ const EditIntroductionModal = ({
       <div className={styles.jobPreferencesForm}>
         <div className={styles.jobPreferencesFormGroup}>
           <div className={styles.editor}>
-            <TextEditor
+            {/* <TextEditor
               placeholder="请输入"
               value={description}
               setValue={setDescription}
-            />
+              className={styles.introductionEditor}
+            /> */}
+            <textarea
+              className={styles.textarea}
+              value={description}
+              onChange={({ target }) => setDescription(target.value)}
+            ></textarea>
           </div>
         </div>
 
