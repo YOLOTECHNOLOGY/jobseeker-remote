@@ -74,12 +74,17 @@ const EditIntroductionModal = ({
       <div className={styles.jobPreferencesForm}>
         <div className={styles.jobPreferencesFormGroup}>
           <div className={styles.editor}>
-            <TextEditor
+            {/* <TextEditor
               placeholder="请输入"
               value={description}
               setValue={setDescription}
               className={styles.introductionEditor}
-            />
+            /> */}
+            <textarea
+              className={styles.textarea}
+              value={description}
+              onChange={({ target }) => setDescription(target.value)}
+            ></textarea>
           </div>
         </div>
 
