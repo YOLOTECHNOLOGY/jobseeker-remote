@@ -159,7 +159,6 @@ const EducationExperience = (props: any) => {
     // getUserInfo?.()
     fetchUserOwnDetailService({ accessToken }).then(res => {
       const userDetail = res?.data?.data
-      console.log({ userDetail })
       const userCookie = {
         active_key: userDetail.active_key,
         id: userDetail.id,

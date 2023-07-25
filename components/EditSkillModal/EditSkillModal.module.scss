@@ -7,13 +7,26 @@
   & > * {
     width: 100%;
   }
+  .specilField {
+    display: flex;
+    justify-content: space-between;
+    &.btn {
+      //margin-left: 10px;
+      background-color: #136fd3;
+      color: #fff;
+
+      &:hover {
+        box-shadow: $box-shadow-1;
+      }
+    }
+  }
 }
 
 .skillList {
   margin-top: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 
   .skillChip {
     margin-right: 16px;

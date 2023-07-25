@@ -3,7 +3,7 @@ import { getCountryId, getLanguageId } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
-import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey } from 'helpers/cookies'
+import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey, redirectUrl } from 'helpers/cookies'
 
 async function removeServiceCache(token, lang?) {
   try {
@@ -12,7 +12,6 @@ async function removeServiceCache(token, lang?) {
     if (token) {
       // should fetch config here
       await fetchUserSetting({ country_id: countryId, language_id: languageId }, token)
-        // .then((response) => console.log(response))
         .catch(({ response, request }) => console.log(response, request))
     }
   } catch (error) {
@@ -21,12 +20,13 @@ async function removeServiceCache(token, lang?) {
 
 }
 const isTest = false; // only true when develop at local
-const localAddress = isTest ? ['http://local.dev.bossjob.ph:3005', 'http://local.dev.bossjob.sg:3005'] : []
+const localAddress = isTest ? ['http://local.dev.bossjob.ph:3004', 'http://local.dev.bossjob.sg:3004'] : []
 
 export async function GET(request) {
   const params = new URL(request.url).searchParams
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
+  const pathname = params.get(redirectUrl)
   const country = params.get('country')
   const user = params.get(userKey)
   const { url } = request
@@ -40,7 +40,7 @@ export async function GET(request) {
     status: 301,
     headers: {
       "Access-Control-Allow-Headers": "Set-Cookie",
-      Location: `${newUrl}/${lang}`,
+      Location: `${newUrl}/${lang}/${pathname}`,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',

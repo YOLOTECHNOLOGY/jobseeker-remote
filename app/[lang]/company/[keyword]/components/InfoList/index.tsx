@@ -9,8 +9,6 @@ import JobCard from '../JobsCard/index'
 import { languageContext } from "../../../../../components/providers/languageProvider";
 import { useCompanyDetail } from '../../DataProvider';
 import Image from 'next/image';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import Link from 'next/link';
 import useWindowSize from 'hooks/useWindowSize';
@@ -21,6 +19,9 @@ import { ChatItem } from '../ChatPanel'
 import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 import "swiper/swiper.min.css";
 import { formatTemplateString } from 'helpers/formatter';
+import Lightbox from 'react-image-lightbox';
+import { MouseOverPopover } from 'app/components/popover/MouseOverPopover';
+
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
 	jobs: JobData[]
@@ -31,6 +32,8 @@ const CompanyInfo = (_props: Props) => {
 	const props = { ..._props };
 	const { config, detail } = useCompanyDetail();
 	const { width } = useWindowSize();
+	const [isOpenLightbox, setLightbox] = useState(false);
+	const [photoIndex, setPhotoIndex] = useState(0);
 	const isMobile = width < 767;
 	if (!props.company_business_info) {
 		props.company_business_info = {}
@@ -40,7 +43,6 @@ const CompanyInfo = (_props: Props) => {
 		props.company_business_info.name = _props.legal_name;
 		// @ts-ignore
 		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
-		console.log('config.company_types',config.company_types,props.company_business_info);
 		props.company_business_info.company_type = config.company_types.find(_=> _.id === props.company_business_info.type_of_enterprise_id)?.value
 		// props.company_business_info.industry = _props.industry;
 	}
@@ -224,18 +226,39 @@ const CompanyInfo = (_props: Props) => {
 				</Section>
 			}
 			if (item.id === 'Company Album' && props.pictures?.length > 0) {
-				return <Section key={index} title={item.title} split={!noSplit}>
-					<div className={style.album_wrapper}>
-						{
-							padArrayToMultiple(props.pictures
-								.sort((a, b) => a.sort_order - b.sort_order))(3)
-								.map((item, index) => {
-									if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
-									return <Image key={index} src={item.url} alt="alt" className={style.album_item}
-										width={238} height={134} style={{ objectFit: "cover" }} />
-								})}
-					</div>
-				</Section>
+				return <>
+					<Section key={index} title={item.title} split={!noSplit}>
+						<div className={style.album_wrapper}>
+							
+							{
+								padArrayToMultiple(props.pictures
+									.sort((a, b) => a.sort_order - b.sort_order))(3)
+									.map((item, index) => {
+										if (!item) return <div className={style.album_item} style={{ width: 226, height: 150 }}></div>
+										return <Image key={index} src={item.url} alt="alt" className={style.album_item}
+											onClick={() => {
+												setPhotoIndex(index)
+												setLightbox(true)
+											}}
+											width={238} height={134} style={{ objectFit: "cover" }} />
+									})}
+						</div>
+					</Section>
+					{isOpenLightbox && (
+          <Lightbox
+            mainSrc={props.pictures[photoIndex].url}
+            nextSrc={props.pictures[(photoIndex + 1) % props.pictures.length].url}
+            prevSrc={props.pictures[(photoIndex + props.pictures.length - 1) % props.pictures.length].url}
+            onCloseRequest={() => setLightbox(false)}
+            onMovePrevRequest={() =>
+              setPhotoIndex((photoIndex)=> (photoIndex + props.pictures.length - 1) % props.pictures.length)
+            }
+            onMoveNextRequest={() =>
+              setPhotoIndex((photoIndex)=> (photoIndex + 1) % props.pictures.length)
+            }
+          />
+        )}
+				</>
 			}
 			if (item.id === 'Overview') {
 				return BusinessInfo(index, item, noSplit, overview_fields, props);
@@ -285,7 +308,7 @@ const CompanyInfo = (_props: Props) => {
 export default CompanyInfo
 
 
-const padArrayToMultiple = arr => function <T>(num: number) {
+export const padArrayToMultiple = arr => function <T>(num: number) {
 	const length = arr.length;
 	const remainder = length % num;
 	if (remainder === 0) {
@@ -399,7 +422,7 @@ export function filterScriptContent(str: string): string {
 }
 
 
-function isURL(str) {
+export function isURL(str) {
 	// Regular expression pattern to match a URL
 	const urlPattern = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
 
@@ -409,73 +432,6 @@ function isURL(str) {
 
 function isContentOverflowing(element) {
 	return element?.scrollWidth > element?.clientWidth || element?.scrollHeight > element?.clientHeight;
-}
-
-export function MouseOverPopover(props: {
-	value: string
-	className?: string
-}) {
-	const ref = useRef(null);
-	const [showPop, setShow] = useState(false);
-
-	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-	const is_url = isURL(props.value);
-	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if (!showPop) return;
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handlePopoverClose = () => {
-		setAnchorEl(null);
-	};
-
-	const open = Boolean(anchorEl);
-
-	function isContentOverflowing(element) {
-		return element?.scrollWidth > element?.clientWidth;
-	}
-
-	useLayoutEffect(() => {
-		if (isContentOverflowing(ref.current)) {
-			setShow(true);
-		}
-	});
-	return (
-		<>
-			<div
-				className={props.className ? props.className : style.overview_item_value}
-				aria-owns={open ? 'mouse-over-popover' : undefined}
-				aria-haspopup="true"
-				onMouseEnter={handlePopoverOpen}
-				onMouseLeave={handlePopoverClose}
-				ref={ref}
-			>
-				{is_url ?
-					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
-					<span>{props.value}</span>}
-			</div>
-			<Popover
-				id="mouse-over-popover"
-				sx={{
-					pointerEvents: 'none',
-				}}
-				open={open}
-				anchorEl={anchorEl}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'left',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'left',
-				}}
-				onClose={handlePopoverClose}
-				disableRestoreFocus
-			>
-				<Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>{props.value}</Typography>
-			</Popover>
-		</>
-	);
 }
 
 export function MobileHiBoss() {
@@ -509,6 +465,8 @@ export function MobileHiBoss() {
 
 function MobileAlbum() {
 	const { detail } = useCompanyDetail();
+	const [isOpenLightbox, setLightbox] = useState(false);
+	const [photoIndex, setPhotoIndex] = useState(0);
 	const res = detail.pictures;
 	if (!res?.length) return null;
 	return <div>
@@ -522,11 +480,34 @@ function MobileAlbum() {
 				res.map((item, index) => {
 					return <SwiperSlide key={index}>
 						<div className={style.mobile_album}>
-							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'></Image>
+							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'
+									onClick={()=>{
+										setPhotoIndex(index);
+										setLightbox(true);
+										
+									}}
+							></Image>
 						</div>
 					</SwiperSlide>
 				})
 			}
 		</Swiper>
+		{
+		isOpenLightbox && (
+			<Lightbox
+				mainSrc={res[photoIndex].url}
+				nextSrc={res[(photoIndex + 1) % res.length].url}
+				prevSrc={res[(photoIndex + res.length - 1) % res.length].url}
+				onCloseRequest={() => setLightbox(false)}
+				onMovePrevRequest={() =>
+					setPhotoIndex((photoIndex)=> (photoIndex + res.length - 1) % res.length)
+				}
+				onMoveNextRequest={() =>
+					setPhotoIndex((photoIndex)=> (photoIndex + 1) % res.length)
+				}
+			/>
+		)
+		}
+
 	</div>
 }

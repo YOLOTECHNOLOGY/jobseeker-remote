@@ -4,7 +4,7 @@ import { authenticationSendEmailMagicLink } from 'store/services/auth/authentica
 // import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 // import { getCountryId, getLanguageId } from 'helpers/country'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
@@ -12,9 +12,10 @@ import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/se
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
+import { routes } from 'helpers/utilities'
 
 const useGetStarted = () => {
-  const routes = useRouter()
+  // const routes = useRouter()
   const dispatch = useDispatch()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -153,7 +154,6 @@ const useGetStarted = () => {
   const loginRequest = (data) => {
     authenticationJobseekersLogin(data)
       .then((res) => {
-        console.log(res.data, 999999)
         if (res.data) {
           setUserInfo(res.data)
           setCookiesWithLoginData(res.data.data)
@@ -161,7 +161,6 @@ const useGetStarted = () => {
         }
       })
       .catch((err) => {
-        console.log(err.response, '8888')
         setError(err?.response)
       })
   }
@@ -189,23 +188,23 @@ const useGetStarted = () => {
         sessionStorage.removeItem('fromPhoneLogin')
       }
 
-      routes.push(`/${langKey}/jobseeker-complete-profile`)
+      routes(`/${langKey}/jobseeker-complete-profile`)
     } else if (isChatRedirect) {
       localStorage.removeItem('isChatRedirect')
       location.href = isChatRedirect
       // routes.push(isChatRedirect)
     } else if (defaultRedirectPage) {
-      routes.push(defaultRedirectPage)
+      routes(defaultRedirectPage)
     } else if (redirectPage) {
       sessionStorage.removeItem('redirectPage')
       const url = window?.location?.pathname
       if (url === redirectPage) {
         return window.location.reload()
       }
-      routes.push(redirectPage)
+      routes(redirectPage)
     } else {
       if (pathname.indexOf('/get-started') > -1) {
-        routes.push('/')
+        routes('/')
       } else {
         window.location.reload()
       }
@@ -264,7 +263,6 @@ const useGetStarted = () => {
     params = { email, source: 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
-        console.log(data)
         dispatch(
           displayNotification({
             open: true,

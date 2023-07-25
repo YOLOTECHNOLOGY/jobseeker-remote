@@ -55,7 +55,6 @@ const qrCode = ({ lang }: any) => {
 
   useEffect(() => {
     if (userInfo?.status) {
-      console.log({ userInfo })
       userInfo.token = userInfo.access_token
       getInfo(userInfo)
     }
@@ -64,7 +63,6 @@ const qrCode = ({ lang }: any) => {
   const getInfo = (userInfo) => {
     fetchUserOwnDetailService({ accessToken: userInfo.access_token }).then((res) => {
       const userDetail = { ...(res?.data?.data || {}), ...userInfo }
-      console.log({ userDetail })
       setCookiesWithLoginData(userDetail)
       sendEventWithLoginData(userDetail)
       setTimeout(() => {

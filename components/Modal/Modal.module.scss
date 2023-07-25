@@ -39,7 +39,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 581px;
+    width: 740px;
     max-height: 680px;
     border-radius: 5px;
 
@@ -67,13 +67,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 581px;
+    width: 740px;
     max-height: 680px;
     border-radius: 5px;
 
     // If fullscreen is indicated, modal covers entire view port in mobile
     @include sm {
-      height: 85vh !important;
+      //height: 85vh !important;
       width: 100%;
       /* center-bottom Modal content relative to viewport*/
       top: unset;
@@ -84,7 +84,6 @@
     }
   }
 
- 
   &Header {
     display: flex;
     padding: 16px 24px;
@@ -99,11 +98,11 @@
 
   &Body {
     padding: 16px 24px;
-    flex-grow: 1;
+    flex-grow: auto;
     overflow-y: auto;
 
     @include sm {
-      padding: 16px 20px;
+      padding: 16px 20px 30px;
     }
   }
   &Footer {

@@ -5,15 +5,17 @@ import { buildComponentScript } from 'app/models/abstractModels/util'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import styles from './index.module.scss'
 import Main from './components/main'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { getDictionary } from 'get-dictionary'
+// import classNames from 'classnames'
+import FooterTip from './components/FooterTip'
 
 const configs = getConfigs([['location_lists']])
 
 const Page = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
-  const { newGetStarted } = dictionary
+  // const { newGetStarted } = dictionary
 
   return (
     <>
@@ -22,19 +24,7 @@ const Page = async (props: any) => {
         <div className={styles.container}>
           <Main dictionary={dictionary} />
         </div>
-        <p className={styles.tips}>
-          {newGetStarted.tips}
-          <Link
-            href={
-              process.env.ENV === 'development'
-                ? 'https://dev.employer.bossjob.com'
-                : 'https://employer.bossjob.com'
-            }
-            className={styles.AuthCTALink}
-          >
-            {newGetStarted.employer}
-          </Link>
-        </p>
+        <FooterTip lang={dictionary} />
       </div>
     </>
   )

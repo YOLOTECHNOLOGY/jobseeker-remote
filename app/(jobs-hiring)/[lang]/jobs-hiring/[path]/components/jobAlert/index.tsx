@@ -60,8 +60,6 @@ const JobAlert = (props: any) => {
     company_verified_values: companyVerifiedValues
   })
 
-  // console.log('params123', {config, searchValues,  data, viewSearchFilterString})
-
   const createJobAlert = async (jobAlertData) => {
     try {
       const createJobAlertPayload = { jobAlertData, accessToken }
@@ -103,7 +101,6 @@ const JobAlert = (props: any) => {
   }, [])
 
   const handleSaveJobAlert = (settings: any) => {
-    // console.log('save job alert', {settings})
     const data = getAlertData(searchValues, config)
     const newData = getSearchFiltersIds(data)
 
@@ -113,7 +110,6 @@ const JobAlert = (props: any) => {
       is_company_verified: (params.is_company_verified ? '1' : undefined) ?? 'all',
       ...newData
     }
-    // console.log('createJobAlertPayload', createJobAlertPayload)
     createJobAlert(createJobAlertPayload)
   }
 

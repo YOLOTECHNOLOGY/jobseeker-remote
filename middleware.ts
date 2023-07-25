@@ -61,7 +61,14 @@ export function middleware(request: NextRequest) {
       'getLog',
       'maintenance',
       'images',
-      'chat-redirect'
+      'chat-redirect',
+      'analized',
+      // 'huawei-jobs',
+      // 'job-sitemap',
+      // 'jobs.xml',
+      // 'sitemap',
+      // 'agencies.xml',
+      'handlers'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
   ) { return }
@@ -70,7 +77,6 @@ export function middleware(request: NextRequest) {
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
-  console.log({ pathnameIsMissingLocale })
   // Redirect if there is no locale
   if (pathnameIsMissingLocale && pathname !== '/') {
     // the a link will not take any geo data on url, but we can get those data by cookies

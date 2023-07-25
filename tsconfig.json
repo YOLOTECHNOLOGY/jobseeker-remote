@@ -2,11 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "checkJs": false,
     "skipLibCheck": true,
@@ -19,10 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": [
-      "gapi",
-      "gapi.auth2"
-    ],
+    "types": ["gapi", "gapi.auth2"],
     "incremental": true,
     "plugins": [
       {
@@ -31,14 +24,12 @@
     ],
     "strictNullChecks": false,
     "paths": {
-      "helpers": [
-        "src/helpers"
-      ]
-    },
+      "helpers": ["src/helpers"]
+    }
   },
   "include": [
     "next.config.js",
-    "lint-staged.config.js",
+    // "lint-staged.config.js",
     "next-env.d.ts",
     "**/*.js",
     "**/*.ts",
@@ -46,8 +37,5 @@
     "**/*.jsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "node_modules/buzzmsg/dist/index.js"
-  ]
+  "exclude": ["node_modules", "node_modules/buzzmsg/dist/index.js"]
 }

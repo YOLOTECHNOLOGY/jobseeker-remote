@@ -12,7 +12,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import * as fbq from 'lib/fpixel'
 
 function* loginReq(actions) {
-  console.log(actions)
   try {
     const response = yield call(authenticationJobseekersLogin, actions.payload)
 
@@ -103,10 +102,7 @@ function* loginReq(actions) {
 
 export default function* jobseekersLoginSaga() {
   while (true) {
-    console.log('jobseekersLoginSaga1')
     const action = yield take(JOBBSEEKERS_LOGIN_REQUEST)
-    console.log({ action })
     yield loginReq(action)
-    console.log('jobseekersLoginSaga2')
   }
 }

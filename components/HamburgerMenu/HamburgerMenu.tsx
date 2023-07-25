@@ -58,7 +58,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
 
   useEffect(() => {
-    if(userDetail?.id){
+    if (userDetail?.id) {
       const hasJobPreferences = userDetail?.job_preferences.length > 0
       setShowUnCompletedDot(!userDetail?.is_profile_completed || !hasJobPreferences)
     }
@@ -166,8 +166,8 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                 </Link>
                 <Link
                   className={styles.defaultLink}
-                  // to={authPathToOldProject(null, '/dashboard/profile/settings')}
-                  to='/dashboard/profile/settings'
+                  // to={authPathToOldProject(null, '/settings')}
+                  to='/settings'
                   title='Account Settings'
                 >
                   <li className={styles.menuList} onClick={handleClick}>
@@ -290,7 +290,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
 
                 <Divider />
 
-                <Link to={process.env.BOSSHUNT_URL+'/boss'} aTag className={styles.defaultLink}>
+                <Link to={process.env.BOSSHUNT_URL + '/boss'} aTag className={styles.defaultLink}>
                   <li className={styles.menuList}>
                     <Text textStyle='base'>{hiring}</Text>
                   </li>

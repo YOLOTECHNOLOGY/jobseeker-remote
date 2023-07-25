@@ -1,0 +1,63 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.container {
+  width: 100%;
+}
+
+.form {
+  .field:not(:first-child) {
+    margin-top: 24px;
+  }
+
+  .field {
+    &Required {
+      color: $red;
+    }
+  }
+}
+
+.fullWidth {
+  width: 100% !important;
+}
+
+.editor {
+  margin-top: 15px;
+  .textarea {
+    outline: none;
+    resize: none;
+    width: 100%;
+    border-radius: 10px;
+    height: 120px;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    &:hover {
+      border: 1px solid #000;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  div[class*='TextEditor_textEditor'] {
+    padding: 0;
+
+    // &.introductionEditor {
+    //   background: pink;
+    //   &.ql-snow.ql-toolbar button {
+    //     display: none;
+    //   }
+    // }
+  }
+
+  & > * {
+    padding: 0;
+
+    @include msd {
+      width: 100%;
+    }
+  }
+
+  p {
+    font-size: 14px;
+  }
+}

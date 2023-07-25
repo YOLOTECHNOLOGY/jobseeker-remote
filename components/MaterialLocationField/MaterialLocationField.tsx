@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
+import styles from 'styles/maintenance.module.scss';
 
 /* Helpers */
 // import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
@@ -78,6 +79,7 @@ const MaterialLocationField = ({
   required,
   fieldRef,
   error,
+  hiddenLabel,
   ...rest
 }: any) => {
   // const [selectedLocation, setSelectedLocation] = useState(defValue.value)
@@ -108,10 +110,11 @@ const MaterialLocationField = ({
                 <span>
                   {label ? label : 'Location'}{' '}
                   {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
-                </span>
+                </span> 
               }
               variant='outlined'
               size='small'
+              className={hiddenLabel ? styles.hiddenLabel : ''}
               {...params}
             />
           </ThemeProvider>

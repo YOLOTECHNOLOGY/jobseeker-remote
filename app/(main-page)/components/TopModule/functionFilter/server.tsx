@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React from 'react'
 import FunctionFilter from "."
 import interpreter from "app/(main-page)/intepreter"
@@ -47,7 +48,7 @@ const fillTo3 = popularList => filledList => sourceList => {
   }
 }
 
-const ServerFunctionFilter = async (props: { config: any }) => {
+const ServerFunctionFilter = async (props: { config: any, langKey: any }) => {
   const config = props?.config
   const list = config?.main_job_function_lists?.map?.(item => {
     return {
@@ -99,8 +100,8 @@ const ServerFunctionFilter = async (props: { config: any }) => {
 }
 
 
-export default interpreter(serverDataScript())
+export default (props: any) => interpreter(serverDataScript())
   .chain(props => M.do(() => ServerFunctionFilter(props)))
   .chain(props => interpreter(buildComponentScript(props, LiftClient(FunctionFilter))))
-  .run
+  .run(props)
 // export default ServerFunctionFilter as any

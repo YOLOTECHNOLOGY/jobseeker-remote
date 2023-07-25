@@ -8,13 +8,13 @@ const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
 import styles from '../../../index.module.scss'
 import HomeBanner from './HomeBanner'
 
-const TopModule = (props: any) => {
+const TopModule = ({ params, lang, config }) => {
   const langKey =
-    props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
+    params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
 
   const {
-    lang: { home }
-  } = props || {}
+    home
+  } = lang || {}
 
   return (
     <>
@@ -22,14 +22,14 @@ const TopModule = (props: any) => {
         <div className={styles.searchMainContainer}>
           <HomeBanner />
           <div className={styles.title}>
-            <p className={styles.titleText}>{home.slog}</p>
+            <p className={styles.titleText}>{home?.slog ?? ''}</p>
           </div>
-          <SearchArea {...props} langKey={langKey} />
+          <SearchArea config={config} langKey={langKey} />
         </div>
       </div>
       <PopularJob langKey={langKey} />
       <Ad>
-        <ServerFunctionFilter langKey={langKey} {...props} />
+        <ServerFunctionFilter langKey={langKey} config={config} />
       </Ad>
     </>
   )

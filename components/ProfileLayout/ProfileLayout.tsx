@@ -5,9 +5,11 @@ import { ThemeProvider } from '@emotion/react'
 import { Tabs, Tab, createTheme } from '@mui/material'
 import UserProfileOverview from 'components/UserProfileOverview'
 import Text from 'components/Text'
+import Image from 'next/image';
 
 /* Styles */
 import styles from './ProfileLayout.module.scss'
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider';
 
 const theme = createTheme({
   components: {
@@ -66,14 +68,17 @@ const ProfileLayout = ({
     location: userLocation,
     description,
     xp_lvl: expLevel,
-    birthdate
+    birthdate,
+    working_since,
+    address,
+    location_id
   } = userDetail
 
   const handleShowModal = () => {
     handleModal(modalName, true)
   }
 
-  const handleTabChange = (e,target) => {
+  const handleTabChange = (e, target) => {
     setTabValue(target)
     /*
      * Set the tab with param: e.g: ?tab=profile.
@@ -89,78 +94,87 @@ const ProfileLayout = ({
     handleShowModal()
   }
   return (
-    <div className={styles.profileLayout}>
-      <div className={styles.profileLayoutUserOverview}>
-        <UserProfileOverview
-          name={`${firstName} ${lastName}`}
-          location={userLocation}
-          email={email}
-          avatarUrl={avatar}
-          contactNumber={contactNum}
-          description={description}
-          expLevel={expLevel}
-          birthdate={birthdate}
-          handleEditClick={handleEditClick}
-          lang={dic}
-        />
+    <div className={styles.pageContainer}>
+      <div className={styles.pageBanner}>
+        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{objectFit: 'cover'}} fill alt='banner'></Image>
       </div>
-      <div className={styles.profileLayoutSettings}>
-        <div className={styles.settingTabs}>
-          <ThemeProvider theme={theme}>
-            <Tabs
-              value={tabValue}
-              variant='scrollable'
-              scrollButtons='auto'
-              onChange={handleTabChange}
-            >
-              <Tab
-                className={styles.settingTabsItem}
-                value='profile'
-                label={
-                  <Text
-                    bold
-                    textStyle='xl'
-                    textColor={tabValue === 'profile' ? 'primaryBlue' : 'black'}
-                    className={unCompleted['profile'] ? styles.unCompleted: ''}
-                  >
-                    {dic.profile.tabTitle}
-                  </Text>
-                }
-              />
-              <Tab
-                className={styles.settingTabsItem}
-                value='job-preferences'
-                label={
-                  <Text
-                    bold
-                    textStyle='xl'
-                    textColor={tabValue === 'job-preferences' ? 'primaryBlue' : 'black'}
-                    className={unCompleted['job-preferences'] ? styles.unCompleted: ''}
-                  >
-                    {dic.preference.tabTitle}
-                  </Text>
-                }
-              />
-              <Tab
-                className={styles.settingTabsItem}
-                value='resume'
-                label={
-                  <Text
-                    bold
-                    textStyle='xl'
-                    textColor={tabValue === 'resume' ? 'primaryBlue' : 'black'}
-                    className={unCompleted['resume'] ? styles.unCompleted: ''}
-                  >
-                    {dic.resume.tabTitle}
-                  </Text>
-                }
-              />
-            </Tabs>
-          </ThemeProvider>
+      <div className={styles.profileLayout}>
+        <div className={styles.profileLayoutUserOverview}>
+          <UserProfileOverview
+            name={`${firstName} ${lastName}`}
+            location={userLocation}
+            location_id={location_id}
+            email={email}
+            avatarUrl={avatar}
+            contactNumber={contactNum}
+            description={description}
+            expLevel={expLevel}
+            birthdate={birthdate}
+            working_since={working_since}
+            address={address}
+            handleEditClick={handleEditClick}
+            lang={dic}
+          />
         </div>
-        {children}
+        <div className={styles.profileLayoutSettings}>
+          <div className={styles.settingTabs}>
+            <ThemeProvider theme={theme}>
+              <Tabs
+                value={tabValue}
+                variant='scrollable'
+                scrollButtons='auto'
+                onChange={handleTabChange}
+              >
+                <Tab
+                  className={styles.settingTabsItem}
+                  value='profile'
+                  label={
+                    <Text
+                      bold
+                      textStyle='xl'
+                      textColor={tabValue === 'profile' ? 'primaryBlue' : 'black'}
+                      className={unCompleted['profile'] ? styles.unCompleted : ''}
+                    >
+                      {dic.profile.tabTitle}
+                    </Text>
+                  }
+                />
+                <Tab
+                  className={styles.settingTabsItem}
+                  value='job-preferences'
+                  label={
+                    <Text
+                      bold
+                      textStyle='xl'
+                      textColor={tabValue === 'job-preferences' ? 'primaryBlue' : 'black'}
+                      className={unCompleted['job-preferences'] ? styles.unCompleted : ''}
+                    >
+                      {dic.preference.tabTitle}
+                    </Text>
+                  }
+                />
+                <Tab
+                  className={styles.settingTabsItem}
+                  value='resume'
+                  label={
+                    <Text
+                      bold
+                      textStyle='xl'
+                      textColor={tabValue === 'resume' ? 'primaryBlue' : 'black'}
+                      className={unCompleted['resume'] ? styles.unCompleted : ''}
+                    >
+                      {dic.resume.tabTitle}
+                    </Text>
+                  }
+                />
+              </Tabs>
+            </ThemeProvider>
+          </div>
+          {children}
+        </div>
       </div>
     </div>
+
   )
 }
 

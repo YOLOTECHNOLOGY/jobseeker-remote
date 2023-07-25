@@ -14,7 +14,7 @@ import TextEditor from 'components/TextEditor/TextEditor'
 import FootBtn from './footBtn'
 import { usePathname } from 'next/navigation'
 import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
-import { differenceBy} from 'lodash-es'
+import { differenceBy } from 'lodash-es'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { addUserWorkExperienceService } from 'store/services/users/addUserWorkExperience'
@@ -24,7 +24,6 @@ import moment from 'moment'
 import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/components/providers/linkProvider'
-
 
 const WorkExperience = (props: any) => {
   const { lang, userDetail, getUserInfo } = props
@@ -73,16 +72,16 @@ const WorkExperience = (props: any) => {
   useEffect(() => {
     if (dataSkills?.length && skills?.length) {
       const arr = []
-      dataSkills.map(e=>{
-        const findItem = skills.find(k=>String(k.id) === e)  
-         if(findItem){
+      dataSkills.map((e) => {
+        const findItem = skills.find((k) => k.value === e)
+        if (findItem) {
           arr.push(findItem)
-         }else{
+        } else {
           arr.push({
-            id:e,
-            value:e
+            id: e,
+            value: e
           })
-         }
+        }
       })
       setSelectedSkills(arr)
     }
@@ -140,7 +139,8 @@ const WorkExperience = (props: any) => {
     from,
     to,
     placeholder,
-    skip
+    skip,
+    uploadSeccess
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
@@ -154,7 +154,7 @@ const WorkExperience = (props: any) => {
             dispatch(
               displayNotification({
                 open: true,
-                message: 'uplod seccess',
+                message: uploadSeccess,
                 severity: 'success'
               })
             )
@@ -173,7 +173,7 @@ const WorkExperience = (props: any) => {
       </>
     )
   }
-  const handleDelete = (e,index) => {
+  const handleDelete = (e, index) => {
     e.preventDefault()
     selectedSkills.splice(index, 1)
     setSelectedSkills([...selectedSkills])
@@ -182,11 +182,10 @@ const WorkExperience = (props: any) => {
   const backClick = () => {
     push(`${pathname}?step=1`)
   }
-   console.log({selectedSkills})
   const handleSubmit = () => {
     const paramsProfile = {
       working_since: moment(new Date(workingSince)).format('yyyy-MM-DD'),
-      skills: selectedSkills.map((e) => e.id)?.join(',')
+      skills: selectedSkills.map((e) => e.value)?.join(',')
     }
 
     const p1 = updateUserCompleteProfileService(paramsProfile)
@@ -197,7 +196,9 @@ const WorkExperience = (props: any) => {
       function_job_title_id: jobFunction?.id,
       company: companyName,
       working_period_from: `${moment(new Date(workPeriodFrom)).format('yyyy-MM')}-01`,
-      working_period_to: isCurrentJob ? null : `${moment(new Date(workPeriodTo)).format('yyyy-MM')}-01`,
+      working_period_to: isCurrentJob
+        ? null
+        : `${moment(new Date(workPeriodTo)).format('yyyy-MM')}-01`,
       is_currently_work_here: isCurrentJob,
       description,
       description_html: description
@@ -430,7 +431,7 @@ const WorkExperience = (props: any) => {
                         }}
                         color='primary'
                         label={item.value}
-                        onDelete={(e) => handleDelete(e,index)}
+                        onDelete={(e) => handleDelete(e, index)}
                       />
                     ))}
                   </div>
@@ -439,7 +440,7 @@ const WorkExperience = (props: any) => {
                     name={'job_skills'}
                     ref={inputNode}
                     type='text'
-                    disabled={selectedSkills?.length >=5 }
+                    disabled={selectedSkills?.length >= 5}
                     onKeyUp={handleKeyUp}
                     onKeyDown={handleKeyDown}
                     autoComplete='off'
@@ -463,7 +464,7 @@ const WorkExperience = (props: any) => {
           backText={back}
           skip={skip}
           disabled={isDisabled}
-          skipText = {skip}
+          skipText={skip}
           handleClick={handleSubmit}
         />
       </div>

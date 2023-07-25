@@ -16,7 +16,6 @@ const PublicHeader = ({ lang }: any) => {
   return (
     <div className={styles.header}>
       <nav className={styles.headerContainer}>
-
         {/* Logo */}
         <NavLogo langKey={langKey} />
 
@@ -31,7 +30,7 @@ const PublicHeader = ({ lang }: any) => {
         {/* mobile */}
         <div className={styles.mobileIconWrapper}>
           <div className={styles.icon}>
-            <Hamburger />
+            <Hamburger lang={lang} />
           </div>
         </div>
       </nav>

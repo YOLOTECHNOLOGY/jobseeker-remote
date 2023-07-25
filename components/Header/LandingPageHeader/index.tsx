@@ -10,7 +10,7 @@ import Hamburger from 'components/Hamburger'
 import MaterialButton from 'components/MaterialButton'
 
 /* Images */
-import { BossjobLogoWhite as BossjobLogo, BossjobLogoWhite, ChevronDownIcon } from 'images'
+import { ChevronDownIcon } from 'images'
 import Link from '../../Link'
 import classNames from 'classnames/bind'
 import { getCountryKey, getLang } from '../../../helpers/country'

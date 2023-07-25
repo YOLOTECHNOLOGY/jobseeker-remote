@@ -46,7 +46,7 @@ module.exports = withBundleAnalyzer({
     // appDocumentPreloading:true,
     // newNextLinkBehavior:true,
     // cpus: 2,
-    esmExternals: 'loose'
+    // esmExternals: 'loose'
   },
   env: {
     ENV: process.env.ENV,
@@ -112,21 +112,21 @@ module.exports = withBundleAnalyzer({
     if (isServer) {
       generateRobotsTxt()
     }
-    config.module.rules.push({
-      test: /\.js|.ts|.jsx|.tsx$/,
-      include: path.resolve('./'),
-      exclude: path.resolve('./node_modules'),
-      use: [
-        'thread-loader'
-        // your expensive loader (e.g babel-loader)
-      ]
-    })
+    // config.module.rules.push({
+    //   test: /\.js|.ts|.jsx|.tsx$/,
+    //   include: path.resolve('./'),
+    //   exclude: path.resolve('./node_modules'),
+    //   use: [
+    //     'thread-loader'
+    //     // your expensive loader (e.g babel-loader)
+    //   ]
+    // })
     config.module.rules.push({
       test: /node_modules\/buzzmsg\/dist\/index.js/,
       // include: path.resolve('./'),
       // exclude: path.resolve('./node_modules'),
       use: [
-        './any-loader.js'
+        'babel-loader'
         // your expensive loader (e.g babel-loader)
       ]
     })

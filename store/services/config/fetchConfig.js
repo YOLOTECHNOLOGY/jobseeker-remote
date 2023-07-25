@@ -1,28 +1,43 @@
 import configuredAxios from 'helpers/configuredAxios'
 const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCase()
 import { flatMap } from 'lodash-es'
-import { defaultLanguage, getCountryKey, getLanguageCode, serverContryCodeMap } from 'helpers/country'
+import { getCountryKey, getLang, getLanguageCode } from 'helpers/country'
+import { memoizeWithTime } from 'helpers/cache'
+import { recordTime } from 'helpers/analizeTools'
+
+const mainJobfunctions2Jobfunctions = main => {
+  return main.map(item => ({
+    [item.value]: item.sub_function_list
+  }))
+}
+
+const getConfig = memoizeWithTime(
+  (countryKey, lang) => {
+    const axios = configuredAxios('config', 'public')
+    const stop = recordTime('config request')
+
+    return axios.get(`${countryKey}/list?language_code=${lang}`)
+      .then(result => {
+        stop()
+        return result
+      })
+  },
+  (countryKey, lang) => countryKey + lang,
+  36000
+)
 const fetchConfigService = (defaultLang) => {
-  const axios = configuredAxios('config', 'public')
-  const [countryKey, lang] = [getCountryKey(), getLanguageCode(defaultLang) || getLanguageCode(defaultLanguage())]
-  console.log({ countryKey, defaultLang, 'serverContryCodeMap[defaultLang]': serverContryCodeMap[defaultLang] })
-  return axios.get(`${countryKey}/list?language_code=${lang}`)
+  const [countryKey, lang] = [
+    getCountryKey(),
+    getLanguageCode(defaultLang)
+    ||
+    getLanguageCode(getLang())]
+
+  return getConfig(countryKey, lang)
     .then(data => {
       const result = data.data.data
       // const jobFunctions = result.job_function_lists
       const jobFunctions = result.main_job_function_lists
 
-      // result.main_functions = jobFunctions.map((item, index) => {
-      //   const key = Object.keys(item)?.[0]
-      //   const value = item[key]
-      //   return {
-      //     value: key,
-      //     key: toSeo(key),
-      //     seo_value: toSeo(key),
-      //     id: index,
-      //     children: value
-      //   }
-      // })
       result.main_functions = jobFunctions.map((item) => {
         return {
           value: item.value,
@@ -50,7 +65,7 @@ const fetchConfigService = (defaultLang) => {
           id: item.id
         }
       }) ?? [])
-      console.log(result, 'configOrgin')
+      result.job_function_lists = mainJobfunctions2Jobfunctions(result.main_job_function_lists ?? [])
       return result
     })
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, forwardRef } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
 
 import './GoogleMap.css'
@@ -55,7 +55,7 @@ interface Props {
  *
  * @returns
  */
-const GoogleMap = ({
+const GoogleMap = forwardRef(({
   width,
   height,
   defaultAddress,
@@ -75,11 +75,12 @@ const GoogleMap = ({
   openMarkerSearch = false,
   callBackFunction,
   children
-}: Props) => {
+}: Props, ref) => {
   let maerker
   const search = useRef<any>()
   const searchCart = useRef<HTMLElement>()
   const mapInput = useRef<HTMLInputElement>()
+  const mapRef = useRef<any>();
 
   // eslint-disable-next-line
   const [address, setAddress] = useState<object | null>(null)
@@ -123,6 +124,8 @@ const GoogleMap = ({
         initInput(map)
         initSearchCart(map)
       }
+      mapRef.current = map;
+      
 
       // const input = inputDom as HTMLInputElement
 
@@ -142,7 +145,8 @@ const GoogleMap = ({
 
       // @ts-ignore
       search.current = new google.maps.places.PlacesService(map)
-
+      // @ts-ignore
+      ref.current =  new google.maps.places.PlacesService(map)
       if (openMarker) {
         map.addListener('click', (ev) => {
           placeMarkerAndPanTo(ev.latLng, map)
@@ -156,6 +160,11 @@ const GoogleMap = ({
     })
   }, [])
 
+  useEffect(()=>{
+    if(typeof lat === 'number' && typeof lng === 'number' && mapRef.current){
+      placeMarkerAndPanTo({ lat, lng }, mapRef.current, infoWindow)
+    }
+  },[lat,lng])
   const placeMarkerAndPanTo = useCallback(
     // @ts-ignore
     (latLng: google.maps.LatLng, map: google.maps.Map, infoWindow?) => {
@@ -185,7 +194,7 @@ const GoogleMap = ({
     []
   )
 
-  const searchPlace = (ev: any, map: any) => {
+  const searchPlace = (ev: any, map: any = mapRef.current ) => {
     if (ev.target?.value) {
       // var request = {
       //   query: ev.target?.value,
@@ -229,6 +238,7 @@ const GoogleMap = ({
 
   // eslint-disable-next-line
   const searchPlaceList = (latLng, map) => {
+    console.log('searchPlaceList',latLng ,);
     // @ts-ignore
     const pyrmont = new google.maps.LatLng(latLng.lat(), latLng.lng())
     const request = {
@@ -325,6 +335,7 @@ const GoogleMap = ({
   }
 
   const handelSelectPlacel = (placel, map) => {
+    
     placeMarkerAndPanTo(placel.geometry?.location, map)
 
     if (placel.place_id) {
@@ -345,6 +356,6 @@ const GoogleMap = ({
       {children}
     </div>
   )
-}
+})
 
 export default GoogleMap

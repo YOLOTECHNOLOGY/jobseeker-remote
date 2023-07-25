@@ -61,9 +61,9 @@ const SearchArea = (props: any) => {
       })
       const url = new URLSearchParams(toPairs(result.params)).toString()
       router.push('/' + langKey + '/jobs-hiring/' + result.searchQuery + '?' + url, {
-        forceOptimisticNavigation: true
+        scroll: true
       })
-      // router.push('/' + langKey + query, { forceOptimisticNavigation: true })
+      // router.push('/' + langKey + query, { scroll: true })
     },
     [location, router]
   )
@@ -78,6 +78,7 @@ const SearchArea = (props: any) => {
   const [searchValue, setSearchValue] = useState('')
   const [searchHistories, addSearchHistory] = useSearchHistory()
   const [, transitionStart] = useTransition()
+  const isPC = document.body.clientWidth > 751
 
   const handleSuggestionSearch = useCallback(
     (val) => {
@@ -118,8 +119,7 @@ const SearchArea = (props: any) => {
   }
 
   const isTouchBottom = () => {
-    const width = document.body.clientWidth
-    if (width > 751) {
+    if (isPC) {
       const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
       if (scrollTopHeight > 180) {
         return setIsShow(true)
@@ -142,7 +142,6 @@ const SearchArea = (props: any) => {
     fontSize: '15px'
   }
 
-  console.log({ location })
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
       <ThemeProvider theme={theme}>
@@ -152,7 +151,7 @@ const SearchArea = (props: any) => {
               className={styles.location}
               // locationList={config.location_lists}
               value={location}
-              label={home.search.location}
+              label={isPC ? home.search.location : home.search.location2}
               onChange={setLocation}
               lang={home.search}
               sx={{

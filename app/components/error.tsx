@@ -23,12 +23,12 @@ export default function Error(props: { error: any; reset: () => void }) {
 
       function redirectToGetStarted() {
         removeUserCookie()
-        router.push('/get-started', { forceOptimisticNavigation: true })
+        router.push('/get-started', { scroll: true })
       }
 
       if (!refresh) {
         // setTimeout(() => {
-          redirectToGetStarted()
+        redirectToGetStarted()
         // }, 3000)
         // redirect to login after 3s, so
         return <Loading />

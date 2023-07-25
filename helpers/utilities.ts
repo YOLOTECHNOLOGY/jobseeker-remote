@@ -51,3 +51,8 @@ export const transDate = (date, allTime = null) => {
 export const serveIsMobile = (userAgent: string) => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
 }
+
+
+export const routes =(url:string)=>{
+  window.location.replace(url)
+}

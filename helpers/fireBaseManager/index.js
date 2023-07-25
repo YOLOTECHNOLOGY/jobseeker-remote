@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, onMessage, getToken, isSupported } from "firebase/messaging";
+import guestLogin from "helpers/guest";
 const vapidKey = 'BPSNbeeP647k3y02pPIWBgh8qiEUywYXa0aY9WbZ_yGO6beOY8oah_CyL9Q1mojbtzdX4NJpVI83w149n0yyh7Y'
 export const initFireBase = () => {
     isSupported().then(async supported => {
@@ -44,6 +45,8 @@ export const initFireBase = () => {
                 .then(token => {
                     sessionStorage.setItem('firebase-messaging-token', token)
                     window.firebaseMessagingToken = token
+                    guestLogin(token)
+                        .catch((e) => { console.log(e) })
                     onMessage(messaging, (payload) => {
                         console.log('Message received. ', payload);
                         // ...

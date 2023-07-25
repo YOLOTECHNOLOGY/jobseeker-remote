@@ -1,8 +1,9 @@
-import React, { useState, useEffect ,memo, useRef} from 'react'
+import React, { useState, useEffect, memo, useRef } from 'react'
 import MaterialTextField from 'components/MaterialTextField'
 import { useFirstRender } from 'helpers/useFirstRender'
 import styles from '../../index.module.scss'
 import errorText from '../errorText'
+import InputAdornment from '@mui/material/InputAdornment'
 
 interface initProps {
   setEmail?: Function
@@ -29,17 +30,16 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
     } else {
       errorText = null
     }
-  
+
     setEmailError(errorText)
   }, [email])
 
-  
- useEffect(()=>{
-  setEmailError(validateErr)
- },[validateErr])
+  useEffect(() => {
+    setEmailError(validateErr)
+  }, [validateErr])
 
   useEffect(() => {
-    if(email){
+    if (email) {
       setDisable(!!emailError)
     }
   }, [emailError])
@@ -49,14 +49,22 @@ const EmailComponent = ({ setEmail, email, setDisable, lang, validateErr }: init
       <MaterialTextField
         className={styles.fullwidth}
         label={newGetStarted.emailLabel}
-        size='small'
+        size='medium'
         type='text'
-        name="email"
+        name='email'
         onChange={(e) => setEmail(e.target.value)}
         error={emailError ? true : false}
-        autoComplete="true"
+        autoComplete='true'
+        variant='standard'
         autoFocus={true}
         ref={inputRef}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position='start'>
+              <i className='icon-email' style={{ fontSize: '18px' }}></i>
+            </InputAdornment>
+          )
+        }}
       />
       {emailError && errorText(emailError)}
     </>

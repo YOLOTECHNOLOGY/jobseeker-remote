@@ -46,7 +46,7 @@ const Desc = ({
         ></Avatar>
         <div className={styles.desc_mobileHead_info}>
           <span className={classNames([styles.desc_footer_name, styles.desc_mobileHead_info_name])}>
-            {recruiter.full_name}
+            {recruiter?.full_name || ''}
           </span>
           <span className={classNames([styles.desc_footer_chat, styles.desc_mobileHead_info_rate])}>
             {chatResponseRate}% &nbsp;{content.rate}
@@ -94,6 +94,32 @@ const Desc = ({
       </div>
 
       <div className={styles.desc_mobileLine}></div>
+
+      <div className={styles.jobseeker}>
+        <div>
+          <Avatar
+            sx={{ width: '29.94px', height: '29px' }}
+            src={recruiter?.avatar || DefaultAvatar}
+          ></Avatar>
+          <span className={styles.footer_name} title={recruiter?.full_name}>
+            {recruiter?.full_name} <i style={{ padding: '0 4px' }}>{' · '}</i>
+            {recruiter?.work_experience?.job_title || ''}
+          </span>
+          <span className={styles.chat}>
+            {chatResponseRate}% &nbsp;{content.rate}
+          </span>
+        </div>
+        <div className={styles.chatBox}>
+          <span
+            className={classNames([
+              styles.lineStatus,
+              transState(lastActiveAt)?.state !== 1 ? styles.notLine : null
+            ])}
+          >
+            {transState(lastActiveAt, content?.state)?.text}
+          </span>
+        </div>
+      </div>
 
       <div
         className={classNames([styles.desc_jobDescWrapper, styles.desc_jobRequireWrapper])}

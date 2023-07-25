@@ -7,12 +7,15 @@ import SocialList from '../common/SocialList'
 const SocialLink = (props: any) => {
   const { data } = props
 
-  const { followUs } = data?.foot || {}
+  const { followUs, workingDate, workTitle } = data?.foot || {}
 
   return (
     <div className={styles.footerDesktopSocialLinks}>
-      <div className={styles.footerDesktopSocialLinkFollow}>{followUs}</div>
-      <SocialList />
+      <div className={styles.footerDesktopSocialDate}>{`${workTitle}: ${workingDate}`}</div>
+      <div className={styles.footerDesktopSocialList}>
+        <div className={styles.footerDesktopSocialLinkFollow}>{followUs}</div>
+        <SocialList />
+      </div>
     </div>
   )
 }

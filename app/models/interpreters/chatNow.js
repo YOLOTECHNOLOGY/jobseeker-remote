@@ -52,12 +52,12 @@ const interpreter = registInterpreter((command) =>
         const source = jobSource()
         localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
         showLogin()
-        // router.push('/get-started', { forceOptimisticNavigation: true })
+        // router.push('/get-started', { scroll: true })
       }),
     redirectToExternal: (link) =>
       M.do((context) => {
         const { router } = context
-        router.push(link, { forceOptimisticNavigation: true })
+        router.push(link, { scroll: true })
       }),
     modalChangeChattingJob: (chatDetail) =>
       M.do((context) => {
@@ -77,11 +77,15 @@ const interpreter = registInterpreter((command) =>
     redirectToChat: (chatId) =>
       M.do((context) => {
         const { router } = context
-        router.push('/chat/' + chatId, { forceOptimisticNavigation: true })
+        router.push('/chat/' + chatId, { scroll: true })
       }),
     modalCompleteFile: () =>
       M.do((context) => {
-        const { showCompleteModal, jobDetail: { id }, router } = context
+        const {
+          showCompleteModal,
+          jobDetail: { id },
+          router
+        } = context
         const source = getSourceCookie()
         showCompleteModal(() => {
           localStorage.setItem('isChatRedirect', `/chat-redirect/${id}?source=${source}`)
@@ -93,8 +97,8 @@ const interpreter = registInterpreter((command) =>
         const { jobDetail, dispatch } = context
         const { id } = jobDetail
         const source = getSourceCookie()
-        return createChat(id, { source, device: isMobile ? 'mobile_web' : 'web' })
-          .then((result) => {
+        return createChat(id, { source, device: isMobile ? 'mobile_web' : 'web' }).then(
+          (result) => {
             const chatId = result.data.data.id
             const newData = {
               ...result.data?.data?.job_application,
@@ -109,7 +113,9 @@ const interpreter = registInterpreter((command) =>
             if (
               process.env.ENV === 'production' &&
               typeof window !== 'undefined' &&
-              userInfo && jobDetail && !jobDetail.chat?.is_exists
+              userInfo &&
+              jobDetail &&
+              !jobDetail.chat?.is_exists
             ) {
               if (window.gtag) {
                 window.gtag('event', 'new_chat', {
@@ -131,11 +137,12 @@ const interpreter = registInterpreter((command) =>
                   user_id: userInfo.id,
                   email: userInfo.email,
                   job_id: jobDetail.id
-                });
+                })
               }
             }
             return chatId
-          })
+          }
+        )
       })
   })
 )

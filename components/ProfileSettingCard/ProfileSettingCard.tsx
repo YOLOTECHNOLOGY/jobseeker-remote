@@ -4,29 +4,41 @@ import MaterialButton from '../MaterialButton'
 
 /* Styles */
 import styles from './ProfileSettingCard.module.scss'
-
+/* Assets */
+import {
+  AddIcon
+} from 'images'
 type ProfileSettingCardProps = {
   title: string
   description: string
-  buttonText: string
+  // buttonText: string
   onClick: () => void
 }
 
 const ProfileSettingCard = ({
   title,
   description,
-  buttonText,
+  // buttonText,
   onClick,
 }: ProfileSettingCardProps) => {
   return (
     <div className={styles.cardContainer}>
-      <Text textColor='primaryBlue' textStyle='xl' bold>
-        {title}
-      </Text>
+      <div style={{
+        display: 'flex',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+        <Text textColor='primaryBlue' textStyle='xl' bold style={{ fontSize: '24px' }}>
+          {title}
+        </Text>
+        <img src={AddIcon} width='26' height='26' style={{ cursor: 'pointer', marginRight: '15px' }} onClick={onClick} />
+      </div>
+
       <Text tagName='p' textStyle='lg'>
         {description}
       </Text>
-      <MaterialButton
+      {/* <MaterialButton
         className={styles.cardButton}
         variant='outlined'
         capitalize={false}
@@ -35,7 +47,7 @@ const ProfileSettingCard = ({
         style={{ textTransform: 'none', fontSize: '16px', height: '44px' }}
       >
         {buttonText}
-      </MaterialButton>
+      </MaterialButton> */}
     </div>
   )
 }

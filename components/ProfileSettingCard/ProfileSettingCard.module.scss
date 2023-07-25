@@ -9,8 +9,8 @@
   width: 100%;
   padding: 24px;
   height: max-content;
-  border: 1px solid $lightgrey-2;
-  border-radius: 5px;
+  //border: 1px solid $lightgrey-2;
+  //border-radius: 5px;
   margin-bottom: 24px;
 
   @include msd {
@@ -24,5 +24,13 @@
   width: 250px;
   @include msd {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .cardContainer {
+    box-sizing: border-box;
+    padding: 0 15px;
+    margin-bottom: 0;
   }
 }

@@ -6,7 +6,9 @@ import { getCookie } from 'helpers/cookies'
 import { accessToken } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
-const Menu = ({ shareParams, lang, isbenefits }: any) => {
+import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
+import { isMobile } from 'react-device-detect'
+const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
@@ -39,12 +41,21 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
 
   useEffect(() => {
     window.document.addEventListener('scroll', throttle(handleScroll, 200))
+    if (!token) {
+      const recoFrom = getCookie('reco_from') ?? null
+      fetchAddJobViewService({
+        jobId,
+        status: 'public',
+        source: 'job_search',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: recoFrom,
+        device_udid: localStorage.getItem('deviceUdid')
+      })
+    }
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const handleScroll = () => {
-    // scrollRef.current = new Date().getTime() // window.document.body.scrollTop
-    // console.log(scrollRef.current, 999)
     setTimeStamp(new Date().getTime())
   }
 
@@ -68,7 +79,6 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
       if (!isbenefits) {
         arr.splice(3, 1)
       }
-      console.log(arr)
       arr.map((e, index) => {
         if (Math.abs(e) < 100) {
           scrollRef.current = true
@@ -107,7 +117,6 @@ const Menu = ({ shareParams, lang, isbenefits }: any) => {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
       const position = domTop - headerHeight - 100
-      console.log(position, domTop, headerHeight)
       position && scrollSmoothTo(position)
     }
   }, [current])

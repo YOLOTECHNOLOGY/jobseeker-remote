@@ -10,7 +10,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import Link from 'next/link'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { useSearchParams } from 'next/navigation'
-import { useSelector } from 'react-redux'
 import useGetStarted from '../hooks/useGetStarted'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { getEmailByPhoneNumber, checkBindNumber } from 'store/services/auth/newLogin'
@@ -19,7 +18,8 @@ function EmailFactor(props: any) {
   const firstRender = useFirstRender()
   // const [email, setEmail] = useState<string>('')
   const [emailList, setEmailList] = useState<any>([])
-  const { setEmail, defaultLoginCallBack, handleAuthenticationJobseekersLogin,userInfo } = useGetStarted()
+  const { setEmail, defaultLoginCallBack, handleAuthenticationJobseekersLogin, userInfo } =
+    useGetStarted()
   const [step, setStep] = useState<number>(1)
   const [errorText, setErrorText] = useState<string>('')
   const [number, setNumber] = useState<number>(0)
@@ -28,7 +28,7 @@ function EmailFactor(props: any) {
   const dispatch = useDispatch()
   const langKey = getLang()
   const { newGetStarted } = props.lang
- // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
+  // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const emailRef = useRef(null)
   useEffect(() => {
     if (phoneNum) {
@@ -56,7 +56,6 @@ function EmailFactor(props: any) {
       email: emailRef.current,
       phone_number: phoneNum
     }).then((res) => {
-      console.log(res.data)
       defaultLoginCallBack(data)
     })
   }, [userInfo])
@@ -113,11 +112,11 @@ function EmailFactor(props: any) {
     <div className={styles.emailFactor}>
       {step === 1 ? (
         <>
-          <h2>
-            {newGetStarted.thisPhoneNumberAssociated}
-          </h2>
-          <p className={styles.emailTips}> 
-          {newGetStarted.thisPhoneNumber} <span>{emailList?.length}</span>  {newGetStarted.accounts} {newGetStarted.youNeedToChooseVerified}</p>
+          <h2>{newGetStarted.thisPhoneNumberAssociated}</h2>
+          <p className={styles.emailTips} style={{ marginBottom: '20px' }}>
+            {newGetStarted.thisPhoneNumber} <span>{emailList?.length}</span>{' '}
+            {newGetStarted.accounts} {newGetStarted.youNeedToChooseVerified}
+          </p>
           <div className={styles.phoneNumber}>
             <ul className={styles.account}>
               {emailList.map((e) => (

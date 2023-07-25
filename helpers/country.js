@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 import { configKey, getCookie } from './cookies'
 
 // Warning: the English language's value must be en-US,
@@ -68,7 +69,7 @@ export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
-  // { value: 'ja-JP', id: 4, label: '日本語' }
+  { value: 'ja-JP', id: 4, label: '日本語' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
@@ -91,9 +92,11 @@ export const getDefaultLocation = key => {
   return countryCounfig.find(item => item.key === key)?.defaultLocation
 }
 
-export const defaultCountryKey = () => nations[0].value
-export const defaultCountryId = () => nations[0].id
-export const defaultCountry = () => nations[0].label
+const defaultNation = nations[0];
+
+export const defaultCountryKey = () => defaultNation.value
+export const defaultCountryId = () => defaultNation.id
+export const defaultCountry = () => defaultNation.label
 export const defaultCurrency = () => countryCounfig[0].currency
 
 export const defaultLanguage = () => languages[0].value
@@ -136,11 +139,19 @@ export const getCountryKey = () => {
   // return (process.env.COUNTRY_KEY) || (process.env.HOST_PATH).split('.').pop()
 }
 
+/**
+ * get countryId by URL and supported countries
+ * @returns 
+ */
 export const getCountryId = () => {
   const countryKey = getCountryKey()
   return countryCounfig.find(item => item.key === countryKey)?.id ?? defaultCountryId()
 }
 
+/**
+ * get language code by URL or geoConfiguration in cookies
+ * @returns 
+ */
 export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
@@ -148,31 +159,47 @@ export const getLang = () => {
   return languages.map(item => item.value).includes(path) ? path : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
 }
 
+/**
+ * get language's full name from url or geoConfiguration in cookies
+ * @returns 
+ */
 export const getLanguage = () => {
   const langCode = getLang()
   const currentLang = languages.find((item) => item.value === langCode)
 
-  return currentLang?.label || 'English'
+  return currentLang?.label || defaultLanguageFullName()
 }
 
+/**
+ * get language's id from url or geoConfiguration in cookies
+ * @returns 
+ */
 export const getLanguageId = () => {
   const langCode = getLang()
   const currentLang = languages.find((item) => item.value === langCode)
-  return currentLang?.id || 1
-}
 
+  return currentLang?.id || defaultLanguageId()
+}
+/**
+ * get country's full name from url, e.g. ph => Philippines
+ * @returns 
+ */
 export const getCountry = () => {
-  const path =
-    typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
-  if (path?.includes?.('.sg')) {
-    return 'Singapore'
-  } else {
-    return 'Philippines'
-  }
-  // return (process.env.COUNTRY_KEY) || (process.env.HOST_PATH).split('.').pop()
+  const countryKey = getCountryKey();
+  const country = nations.find(v => v.value === countryKey)
+
+  return country?.label || defaultCountry()
 }
 
 export const countryForCurrency = key => {
 
   return countryCounfig.find(item => item.key === key)?.currency ?? defaultCurrency()
+}
+
+
+export const countryForPhoneCode = {
+  ph: '+63',
+  sg: '+65',
+  jp: '+81',
+  id: '+62'
 }

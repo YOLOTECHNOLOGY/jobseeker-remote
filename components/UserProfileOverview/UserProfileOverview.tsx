@@ -3,26 +3,19 @@ import moment from 'moment'
 
 /* Components */
 import { Avatar } from '@mui/material'
-import Text from 'components/Text'
-import ReadMore from 'components/ReadMore'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 /* Images */
 import {
-  DefaultAvatar,
-  LocationIcon,
-  MailIcon,
-  BriefcaseIcon,
-  MobileIcon,
-  PencilIcon,
-  BodyIcon
-} from '../../images'
+  DefaultAvatar} from '../../images'
+import Image from 'next/image';
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
+import { MouseOverPopover } from '../../app/components/popover/MouseOverPopover';
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
 
 type UserProfileOverviewProps = {
   name: string
@@ -34,6 +27,9 @@ type UserProfileOverviewProps = {
   birthdate?: string
   expLevel?: string
   lang?: object
+  address?: string;
+  working_since?: string;
+  location_id?: number;
   handleEditClick: () => void
 }
 
@@ -54,6 +50,9 @@ const UserProfileOverview = ({
   birthdate,
   expLevel,
   lang,
+  location_id,
+  address,
+  working_since,
   handleEditClick
 }: UserProfileOverviewProps) => {
   const { width } = useWindowDimensions()
@@ -62,7 +61,15 @@ const UserProfileOverview = ({
   if (birthdate) {
     age = getAge(birthdate)
   }
+  const { config } = useManageProfileData();
+  const {location_lists } = config
 
+
+  const formattedLocationList = location_lists.map(item=>item.locations).flat();
+
+  const matchedLocation = formattedLocationList.find((loc) => {
+    return loc?.id == location_id
+  })
   const getYearString = (age: number) => {
     if (age > 1) {
       return formatTemplateString((lang as any).profile.year_other, { age })
@@ -74,57 +81,76 @@ const UserProfileOverview = ({
   return (
     <div className={styles.userOverview}>
       <div className={styles.userOverviewEditIcon} onClick={() => handleEditClick()}>
-        <img src={PencilIcon} width='24' height='24' />
+        <Image src={require('./edit.svg').default.src} width={24} height={24} alt={'edit_icon'} />
       </div>
       <div className={styles.userOverviewAvatar}>
-        <Avatar sx={{ width: '80px', height: '80px' }} src={avatarUrl || DefaultAvatar} />
+        <Avatar sx={{ width: '110px', height: '110px', margin: 0 }} src={avatarUrl || DefaultAvatar} />
       </div>
-      <div className={styles.userOverviewName}>
-        <Text bold={true} textColor='primaryBlue' textStyle='xl'>
-          {name}
-        </Text>
+      <div className={styles.userOverviewNameLayout}>
+        <MouseOverPopover className={styles.userOverviewName} value={name || '-'}></MouseOverPopover>
       </div>
       <div className={styles.userOverviewInfo}>
-        {birthdate && age >= 16 && (
-          <div className={styles.userOverviewInfoDetail}>
-            <img src={BodyIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-            <Text textStyle='lg'>{getYearString(age)}</Text>
-          </div>
-        )}
-        {location && (
-          <div className={styles.userOverviewInfoDetail}>
-            <img src={LocationIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-            <Text textStyle='lg'>{location}</Text>
-          </div>
-        )}
-        {email && (
-          <div className={styles.userOverviewInfoDetail}>
-            {/* <img src={MailIcon} style={{ marginRight: '6px' }} /> */}
-            <EmailOutlinedIcon style={{ fontSize: '15px', color: '#2379ea', marginRight: '6px' }} />
-            <Text textStyle='lg'>{email}</Text>
-          </div>
-        )}
 
-        {contactNumber && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={MobileIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-            <Text textStyle='lg'>{contactNumber}</Text>
+            <Image src={require('./location1.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
+            <MouseOverPopover className={styles.profileText}  value={matchedLocation?.value || '-'}></MouseOverPopover>
+            {/* <Text textStyle='lg'>{location}</Text> */}
           </div>
-        )}
-        {expLevel && (
           <div className={styles.userOverviewInfoDetail}>
-            <img src={BriefcaseIcon} width='14' height='14' style={{ marginRight: '6px' }} />
-            <Text textStyle='lg'>{expLevel}</Text>
+            <Image src={require('./location.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'address'}
+            />
+            <MouseOverPopover className={styles.profileText} value={address || '-'}></MouseOverPopover>
           </div>
-        )}
-        {description && (
+                 
+          <div className={styles.userOverviewInfoDetail}>
+            <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
+            <MouseOverPopover className={styles.profileText} value={ age ? getYearString(age) : '-'}></MouseOverPopover>
+          </div>
+
+          {/* work since */}
+          <div className={styles.userOverviewInfoDetail}>
+            <Image src={require('./exp.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'location'}
+            />
+              <MouseOverPopover className={styles.profileText} value={ working_since ? String(working_since)?.split('-').slice(0,2).join('-') : '-'}></MouseOverPopover>
+
+          </div>
+
+          <div className={styles.userOverviewInfoDetail}>
+            <Image src={require('./email.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'email'}
+            />
+            <MouseOverPopover className={styles.profileText} value={email || '-'}></MouseOverPopover>
+          </div>
+
+          <div className={styles.userOverviewInfoDetail}>
+            <Image src={require('./tel.svg').default.src}
+              width={24} height={24}
+              style={{ marginRight: '6px' }}
+              alt={'tel'}
+            />
+            <MouseOverPopover className={styles.profileText} value={contactNumber || '-'}></MouseOverPopover>
+          </div>
+
+        {/* {description && (
           <div className={styles.userOverviewInfoAbout}>
             <Text textColor='primaryBlue' textStyle='xl' bold>
               {(lang as any).profile.about}
             </Text>
             <ReadMore className={styles.readMore} size={isMobile ? 200 : 160} text={description} />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )

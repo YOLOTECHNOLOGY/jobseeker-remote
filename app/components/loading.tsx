@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 // import styles from './index.module.scss'
 // import { BossjobLogo } from 'images'

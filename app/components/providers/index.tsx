@@ -6,12 +6,13 @@ import { PersistGate } from 'redux-persist/integration/react'
 import IMProvider from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import NotificationProvider from 'components/NotificationProvider'
 import { persistor, wrapper } from '../../models/store'
-import MaintenancePage from 'pages/[lang]/maintenance'
+import MaintenancePage from 'app/maintenance/page'
 import LocationProvider from './locationProvier'
 import CountryProvider from './countryProvider'
 import LoadingProvider from './loadingProvider'
 import LanguageProvider from './languageProvider'
 import LoginModalProvider from './loginModalProvider'
+import {ProfileProvider} from './profileProvider'
 const ClientProviders = (props: any) => {
     const { children }: React.PropsWithChildren = props
     const { LG, lang }: any = props
@@ -22,20 +23,22 @@ const ClientProviders = (props: any) => {
                 <LocationProvider >
                     <PersistGate loading={null} persistor={persistor}>
                         <LanguageProvider store={LG}>
-                            <IMProvider lang={lang}>
-                                {process.env.MAINTENANCE === 'true' ? (
-                                    <MaintenancePage />
-                                )
-                                    : (
-                                        <NotificationProvider>
-                                            <LoadingProvider lang={lang}>
-                                                <LoginModalProvider>
-                                                    {children}
-                                                </LoginModalProvider>
-                                            </LoadingProvider>
-                                        </NotificationProvider>
-                                    )}
-                            </IMProvider>
+                            <ProfileProvider>
+                                <IMProvider lang={lang}>
+                                    {process.env.MAINTENANCE === 'true' ? (
+                                        <MaintenancePage />
+                                    )
+                                        : (
+                                            <NotificationProvider>
+                                                <LoadingProvider lang={lang}>
+                                                    <LoginModalProvider>
+                                                        {children}
+                                                    </LoginModalProvider>
+                                                </LoadingProvider>
+                                            </NotificationProvider>
+                                        )}
+                                </IMProvider>
+                            </ProfileProvider>
                         </LanguageProvider>
                     </PersistGate>
                 </LocationProvider>

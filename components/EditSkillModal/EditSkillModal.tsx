@@ -13,13 +13,17 @@ import ClearIcon from '@mui/icons-material/Clear'
 import Text from 'components/Text'
 import Modal from 'components/Modal'
 import MaterialTextField from 'components/MaterialTextField'
+import { Button } from '@mui/material'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
+
 import { keys, flatMap } from 'lodash-es'
 /* Styles */
 import styles from './EditSkillModal.module.scss'
 import JobFunctionSelector from 'components/JobFunctionSelector'
+import { getCookie } from 'helpers/cookies'
+
 
 type EditSkillModalProps = {
   modalName: string
@@ -47,8 +51,8 @@ const EditSkillModal = ({
   } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
-  
-  const [choosed, setChoosed] = useState(skills)
+
+  const [choosed, setChoosed] = useState(skills || [])
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
   const [suggestList, setSuggestList] = useState([])
@@ -57,6 +61,8 @@ const EditSkillModal = ({
   const jobFunctionLists = useSelector(
     (store: any) => store.config?.config?.response?.inputs?.job_function_lists ?? []
   )
+
+  const accessToken = getCookie('accessToken')
 
   const skillList = useMemo(() => {
     const jobFunction = flatMap(jobFunctionLists, (item) => {
@@ -93,8 +99,8 @@ const EditSkillModal = ({
     const payload = {
       skills: choosed.join(',')
     }
-
     dispatch(updateUserProfileRequest(payload))
+
   }
 
   const handleDeleteSkill = (skill) => {
@@ -103,7 +109,7 @@ const EditSkillModal = ({
 
   const handleAddSkill = (skill) => {
     setChoosed((prevState) => {
-      if (!prevState.includes(skill)) {
+      if (!prevState?.includes?.(skill)) {
         return [...prevState, skill]
       } else {
         return [...prevState]
@@ -113,12 +119,16 @@ const EditSkillModal = ({
 
   const handleCloseModal = () => {
     handleModal(modalName, false)
+    handleResetForm()
   }
 
   const handleClearIcon = () => {
     setSearchValue('')
   }
-
+  const handleResetForm = () => {
+    setFunctionTitle({ value: '', id: undefined })
+    setSearchValue('')
+  }
   return (
     <div>
       <Modal
@@ -143,30 +153,53 @@ const EditSkillModal = ({
               isTouched={true}
               title={lang.profile.jobFunction}
               value={functionTitle}
-              onChange={setFunctionTitle}
+              onChange={(item) => setFunctionTitle({
+                id: item.id,
+                value: item.value
+              })}
             />
           </div>
           <div className={styles.form}>
-            <MaterialTextField
-              id='search'
-              label={skillModal.skill}
-              variant='outlined'
-              size='small'
-              value={searchValue}
-              className={styles.searchField}
-              onChange={e => setSearchValue(e.target.value)}
-              InputProps={{
-                endAdornment: searchValue ? <ClearIcon style={{cursor: 'pointer'}} onClick={handleClearIcon} /> : null
-              }}
-              onKeyPress={(e: any) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  if (e.target.value !== '') {
-                    handleAddSkill(e.target.value)
+            <div className={styles.specilField}>
+              <MaterialTextField
+                id='search'
+                label={skillModal.skill}
+                variant='outlined'
+                size='small'
+                value={searchValue}
+                className={styles.searchField}
+                onChange={e => setSearchValue(e.target.value)}
+                InputProps={{
+                  endAdornment: searchValue ? <ClearIcon style={{ cursor: 'pointer' }} onClick={handleClearIcon} /> : null
+                }}
+                onKeyUp={(e: any) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    if (e.target.value !== '') {
+                      handleAddSkill(e.target.value)
+                      setSearchValue('')
+                    }
+                  }
+                }}
+                style={{ flex: 1 }}
+              />
+              <Button
+                variant="contained"
+                sx={{ marginLeft: '20px' }}
+                onClick={() => {
+                  if (searchValue !== '') {
+                    handleAddSkill(searchValue)
                     setSearchValue('')
                   }
-                }
-              }}
-            />
+
+
+                }}
+              >
+                {skillModal.addBtn}
+              </Button>
+
+            </div>
+
+
           </div>
           <div className={styles.skillList}>
             {(choosed ?? []).map((skill, i) => {
@@ -176,7 +209,7 @@ const EditSkillModal = ({
                   className={styles.skillChip}
                   label={skill}
                   variant='filled'
-                  color='info'
+                  color='primary'
                   size='small'
                   onClick={() => {
                     handleDeleteSkill(skill)

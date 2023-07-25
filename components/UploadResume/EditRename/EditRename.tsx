@@ -21,18 +21,20 @@ import styles from './EditRename.module.scss'
 import { getCookie } from 'helpers/cookies'
 import { Alert, AlertColor, Snackbar } from '@mui/material'
 import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
-
+import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
+import { useConfirm } from 'material-ui-confirm'
 type propsType = {
   id: number
   name: string
   deleteResumeLoading: boolean
-  handleDeleteResume: () => void
+  handleDeleteResume?: () => void
   lang?: Record<string, any>
   displayClear: boolean
 }
 
 const EditRename = ({ id, name, lang, displayClear }: propsType) => {
   const dispatch = useDispatch()
+  const confirm = useConfirm();
   const {
     errorcode,
     manageProfile: {
@@ -41,6 +43,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
       }
     }
   } = lang || (useContext(languageContext) as any)
+  const { fetchProfile } = useManageProfileData();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -141,6 +144,7 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
           handleRefreshResume()
           handleCloseModal()
           handleSnackbarContent('reName', 'success')
+          fetchProfile();
         }
       })
       .catch(({ response: { data } }) => {
@@ -189,24 +193,32 @@ const EditRename = ({ id, name, lang, displayClear }: propsType) => {
   }
 
   const handleFetchDeleteResume = () => {
-    setIsDisabled(true)
-    fetchResumeDelete(id)
-      .then(({ status }) => {
-        if (status === 200) {
-          handleRefreshResume()
-          handleSnackbarContent('delete', 'success')
-          handleCloseMenu()
-        }
-      })
-      .catch(({ response: { data } }) => {
-        if (data.code) {
-          handleSnackbarContent('delete', 'warning', data.code, data.message)
-        }
-      })
-      .finally(() => {
-        setIsDisabled(false)
-        // setDeleteResumeLoading(false)
-      })
+
+    confirm({
+      title: 'Are you sure',
+      description: 'Do you want to delete this resume?'
+    }).then(() => {
+      setIsDisabled(true)
+      fetchResumeDelete(id)
+        .then(({ status }) => {
+          if (status === 200) {
+            handleRefreshResume()
+            handleSnackbarContent('delete', 'success')
+            handleCloseMenu()
+            fetchProfile();
+          }
+        })
+        .catch(({ response: { data } }) => {
+          if (data.code) {
+            handleSnackbarContent('delete', 'warning', data.code, data.message)
+          }
+        })
+        .finally(() => {
+          setIsDisabled(false)
+          // setDeleteResumeLoading(false)
+        })
+    })
+
   }
 
   const handleCloseMobileMenuModal = () => {

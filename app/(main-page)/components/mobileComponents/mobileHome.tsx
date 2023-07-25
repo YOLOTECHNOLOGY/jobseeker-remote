@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowForwardIosIcon } from 'app/components/MuiIcons'
 import { getValueById } from 'helpers/config/getValueById'
+import { recordTime } from 'helpers/analizeTools'
 
 async function getCompanyData(location) {
   const res = await fetchCompanyTopService(location).catch((e) =>
@@ -15,7 +16,9 @@ async function getCompanyData(location) {
 }
 
 const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
+  const stop = recordTime('main-page featured-companies mobile')
   const data = await getCompanyData(location_id)
+  stop()
   const comapny = data?.data?.featured_companies || []
   const { companyHiring, jobCard, jobs, companyCard, seeMoreBtn } = lang.home
   return (
@@ -71,16 +74,16 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
                       </p>
                       <p className={styles.num}>
                         {num_of_active_jobs} {jobs}{' '}
-                       
+
                       </p>
                       <span className={styles.arowForward}>
-                      <ArrowForwardIosIcon
+                        <ArrowForwardIosIcon
                           sx={{
                             transform: 'translateY(1px)',
                             marginLeft: '6px',
                             color: '#86909C',
                             fontSize: '18px'
-                          }}  
+                          }}
                         />
                       </span>
                     </div>

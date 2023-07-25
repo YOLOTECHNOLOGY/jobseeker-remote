@@ -175,8 +175,8 @@ const EditWorkExperienceModal = ({
 
   useEffect(() => {
     const requireFields = jobTitle && companyName && workPeriodFrom
-    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom)
-    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate ].every(Boolean)
+    const hasDate = isCurrentJob ? !!workPeriodFrom : (!!workPeriodTo && !!workPeriodFrom && !hasErrorOnToPeriod)
+    const hasValue = [currency, salary, jobFunction.id, industry, requireFields, hasDate].every(Boolean)
     setDisabledButton(!!hasValue)
     if (requireFields) setShowErrorToComplete(false)
   }, [
@@ -219,8 +219,8 @@ const EditWorkExperienceModal = ({
     const working_period_to = isCurrentJob
       ? moment(new Date()).format('yyyy-MM-DD')
       : workPeriodTo
-      ? moment(new Date(workPeriodTo)).format('yyyy-MM-DD')
-      : ''
+        ? moment(new Date(workPeriodTo)).format('yyyy-MM-DD')
+        : ''
 
     const workExperienceData = {
       job_title: jobTitle,
@@ -433,7 +433,7 @@ const EditWorkExperienceModal = ({
                   value={jobFunction}
                   onChange={setJobFunction}
                   lang={lang}
-                  // options={jobCategoryList}
+                // options={jobCategoryList}
                 />
               </div>
 
@@ -461,6 +461,9 @@ const EditWorkExperienceModal = ({
                   }}
                   options={currencyLists}
                 />
+
+              </div>
+              <div className={styles.field}>
                 {currency && (
                   <MaterialTextField
                     className={styles.fullWidth}
@@ -471,6 +474,10 @@ const EditWorkExperienceModal = ({
                     )}
                     size='small'
                     value={salary}
+                    min="0"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     onChange={(e) => setSalary(handleNumericInput(e.target.value))}
                   />
                 )}

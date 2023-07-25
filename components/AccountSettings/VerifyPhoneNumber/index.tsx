@@ -36,7 +36,6 @@ const VerifyPhoneNumber = ({
   verify,
   errorText,
   config,
-  getInitData,
   COUNT_DOWN_VERIFY_DEFAULT,
   lang
 }: any) => {
@@ -188,7 +187,6 @@ const VerifyPhoneNumber = ({
     )
     setDefaultPhone(smsCode + phoneNum)
     setIsShowPhoneVerify(false)
-    getInitData()
     setOtpError(null)
     setEdit(null)
   }

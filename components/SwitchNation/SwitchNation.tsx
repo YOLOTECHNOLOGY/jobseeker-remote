@@ -17,7 +17,8 @@ import {
   setCookie,
   removeCookie,
   refreshToken as refreshTokenKey,
-  userKey
+  userKey,
+  redirectUrl
 } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
@@ -138,9 +139,10 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         accessToken +
         `&country=${country}` +
         `&${refreshTokenKey}=${refreshToken}` +
-        `&${userKey}=${JSON.stringify(user)}`
+        `&${userKey}=${JSON.stringify(user)}` +
+        `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
     }
-    window.location.href = newOrigin + query + location.search
+    window.location.href = newOrigin + query
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {
@@ -182,7 +184,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
                 marginRight: isMobile ? 0 : '16px',
                 marginBottom: isMobile ? '16px' : 0
               }}
-              value={nations.find((item) => item.value === nation.country)?.label}
+              value={nations.find((item) => item.value === nation.country)}
             />
           </ThemeProvider>
 
@@ -190,7 +192,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
             <Autocomplete
               disableClearable
               disablePortal
-              value={languages.find((item) => item.value === nation.lang)?.label}
+              value={languages.find((item) => item.value === nation.lang)}
               options={languages}
               onChange={(event, item: typeof languages[0]) => {
                 setNation((preState) => ({ ...preState, lang: item?.value }))
