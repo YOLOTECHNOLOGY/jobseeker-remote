@@ -36,8 +36,8 @@ function makeQrcodeSvgStr({
       dots.push(`<rect
         fill="${i % 2 !== 0 ? 'white' : 'black'}"
         height="${cellSize * (7 - i * 2)}"
-        rx="${(i - 3) * -6 + (i === 0 ? 2 : 0)}"
-        ry="${(i - 3) * -6 + (i === 0 ? 2 : 0)}"
+        rx="${(i - 0.5) * -6 + (i === 0 ? 2 : 0)}"
+        ry="${(i - 0.5) * -6 + (i === 0 ? 2 : 0)}"
         width="${cellSize * (7 - i * 2)}"
         x="${x1 + cellSize * i}"
         y="${y1 + cellSize * i}"
@@ -68,8 +68,8 @@ function makeQrcodeSvgStr({
             )
           ) {
             dots.push(`<circle
-              cx="${i * cellSize + cellSize / 2}"
-              cy="${j * cellSize + cellSize / 2}"
+              cx="${i * cellSize + cellSize / 3}"
+              cy="${j * cellSize + cellSize / 3}"
               fill="black"
               r="${cellSize / 3}"
             />`)
