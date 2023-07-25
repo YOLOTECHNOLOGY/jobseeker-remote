@@ -200,7 +200,7 @@ const LandingHeader = (props: any) => {
             </ul>
             <div className={styles.mobileIconWrapper}>
               <div className={styles.icon}>
-                <Hamburger />
+                <Hamburger lang={lang}/>
               </div>
             </div>
           </nav>
