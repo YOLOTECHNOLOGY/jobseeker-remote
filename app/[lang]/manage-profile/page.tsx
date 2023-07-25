@@ -1,6 +1,6 @@
 'use client';
 import { useLanguage } from 'app/components/providers/languageProvider';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useManageProfileData } from './DataProvider';
 import ProfileLayout from 'components/ProfileLayout'
@@ -14,7 +14,7 @@ const ManageProfilePage = () => {
   const lang = useLanguage();
   const { profile: userDetail, config, fetchProfile } = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
-  const tab = searchParams.get('tab');;
+  const tab = searchParams.get('tab');
   const {
     manageProfile: { tab: tabDic }
   } = lang
@@ -72,7 +72,12 @@ const ManageProfilePage = () => {
     }
   })
 
-
+  useLayoutEffect(()=>{
+    console.log('tabValue,tab',tabValue,tab);
+    if(tab !== tabValue){
+      setTabValue(tab);
+    }
+  },[tabValue,tab]);
 
   return <>
 

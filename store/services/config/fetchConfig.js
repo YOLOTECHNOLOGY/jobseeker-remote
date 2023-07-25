@@ -3,6 +3,7 @@ const toSeo = value => value.replaceAll('/', '-').replaceAll(' ', '-').toLowerCa
 import { flatMap } from 'lodash-es'
 import { getCountryKey, getLang, getLanguageCode } from 'helpers/country'
 import { memoizeWithTime } from 'helpers/cache'
+import { recordTime } from 'helpers/analizeTools'
 
 const mainJobfunctions2Jobfunctions = main => {
   return main.map(item => ({
@@ -13,7 +14,13 @@ const mainJobfunctions2Jobfunctions = main => {
 const getConfig = memoizeWithTime(
   (countryKey, lang) => {
     const axios = configuredAxios('config', 'public')
+    const stop = recordTime('config request')
+
     return axios.get(`${countryKey}/list?language_code=${lang}`)
+      .then(result => {
+        stop()
+        return result
+      })
   },
   (countryKey, lang) => countryKey + lang,
   36000
