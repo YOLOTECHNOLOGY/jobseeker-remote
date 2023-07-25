@@ -6,6 +6,8 @@ import { registInterpreter, Result } from 'app/models/abstractModels/util';
 import { mergeDeepLeft } from 'ramda'
 import { getLang } from 'helpers/country';
 
+const isString = a => typeof a === 'string' && a
+
 export default usedConfigProps => {
     const valueForKeyPath = data => keypath => {
         if (!keypath.length) {
@@ -22,8 +24,13 @@ export default usedConfigProps => {
         command.cata({
             fetchData: () => M((content) => {
                 const lang = getLang();
-                return fetchConfigService(content?.params?.lang ?? lang).then(data => {
-                   
+                return fetchConfigService(
+                    isString(content?.langKey) ??
+                    isString(content?.params?.langKey) ??
+                    isString(content?.params?.lang) ??
+                    isString(content?.lang) ?? lang
+                ).then(data => {
+
                     return Result.success({
                         config: usedConfigProps
                             .map(valueForKeyPath(data))

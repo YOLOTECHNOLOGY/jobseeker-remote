@@ -36,6 +36,9 @@ client.setCurrentLocale(defaultLanguage())
 // client.setCurrentLocale(getLang())
 const findMatch = (langKeys, key) => {
   const fullMatch = langKeys.find(item => item === key)
+  if (key.includes('en')) {
+    return 'en-US'
+  }
   if (fullMatch) {
     return fullMatch
   }

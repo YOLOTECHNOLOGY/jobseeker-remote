@@ -17,7 +17,7 @@ import { fetchHotJobsListService } from 'store/services/jobs/fetchHotJobs'
 import Footer from 'components/Footer/Footer'
 import getConfigs from 'app/models/interpreters/config'
 import { redirect } from 'next/navigation'
-import {ConfigType} from 'types/config';
+import { ConfigType } from 'types/config';
 
 const configs = getConfigs([
   ['location_lists'],
@@ -52,21 +52,20 @@ export async function generateMetadata(props: { params: { lang: any } }): Promis
 }
 
 async function CompanyLayout(props: {
-	children: React.ReactNode;
-	params: {
-		keyword: string;
-		lang: string;
-	},
-	configs: {
-		config: Partial<ConfigType>
-	}
+  children: React.ReactNode;
+  params: {
+    keyword: string;
+    lang: string;
+  },
+  configs: {
+    config: Partial<ConfigType>
+  }
 }) {
-	// URL -> /shop/shoes/nike-air-max-97
-	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-	const cookieStore = cookies()
-	const headeStore = headers()
-	const token = cookieStore.get('accessToken')
-	const id = getIDFromKeyword(props.params.keyword);
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  const cookieStore = cookies()
+  const token = cookieStore.get('accessToken')
+  const id = getIDFromKeyword(props.params.keyword);
 
   // if(isMobile && process.env.ENV === 'production'){
   // 	return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)

@@ -761,7 +761,7 @@
         "introductionModal": {
           "title": "Introduction",
           "btn1": "Cancel",
-          "btn2": "Edit"
+          "btn2": "Save"
         }
       },
       "preference": {
