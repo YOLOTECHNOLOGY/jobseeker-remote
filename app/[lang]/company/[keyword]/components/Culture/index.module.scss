@@ -120,8 +120,8 @@
   :global {
     span {
       line-height: 37px;
-      display: block;
       @include text_overflow;
+      font-size: 14px;
     }
   }
   @include base.respond-to(phone) {
