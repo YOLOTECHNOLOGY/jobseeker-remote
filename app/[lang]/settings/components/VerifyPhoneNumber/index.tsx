@@ -68,7 +68,7 @@ const VerifyPhoneNumber = ({
     phoneDefault = phoneDefault.substring(smsCode.length, phoneDefault.length)
   }
   const countryId = useMemo(() => {
-    return smsCountryList.find(item => item.value === smsCode)?.id
+    return smsCountryList.find((item) => item.value === smsCode)?.id
   }, [smsCode, smsCountryList])
 
   const [isBtnDisabled, setBtnDisabled] = useState(verify)
@@ -160,7 +160,7 @@ const VerifyPhoneNumber = ({
     setIsShowCountDownSwitch(true)
     setIsShowPhoneVerify(true)
     setPhoneNum(phoneNum)
-    const mobile_country_id = find(smsCountryList, { 'value': smsCode })?.id
+    const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
     smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum, mobile_country_id })
       .then()
       .catch((exceptionHandler) => {
@@ -202,7 +202,7 @@ const VerifyPhoneNumber = ({
     const phone = smsCode + phoneNum
     if (defaultPhone === phone) {
       // verify
-      verifyPhoneNumber({ otp: Number(otp) })
+      verifyPhoneNumber({ otp: otp })
         .then(({ data }) => {
           if (data.data?.message == 'success') {
             dispatch(
@@ -222,7 +222,11 @@ const VerifyPhoneNumber = ({
         })
     } else {
       // change
-      changePhoneNumber({ otp: Number(otp), mobile_country_id: countryId, phone_num: smsCode + Number(phoneNum) })
+      changePhoneNumber({
+        otp: otp,
+        mobile_country_id: countryId,
+        phone_num: smsCode + Number(phoneNum)
+      })
         .then(({ data }) => {
           if (data.data?.message == 'success') {
             dispatch(

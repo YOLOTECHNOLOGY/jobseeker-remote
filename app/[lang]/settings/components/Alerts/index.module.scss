@@ -2,7 +2,6 @@
 @import 'styles/mixins.scss';
 
 .JobAlertContainer {
-  border: 0.5px solid #bcbcbc;
   border-radius: 4px;
   padding-bottom: 25px;
 
@@ -26,11 +25,14 @@
   }
 
   .JobAlertTitle {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
+
+    color: #121212;
+    font-size: 24px;
+    font-style: normal;
     font-weight: 700;
-    font-size: 18px;
-    line-height: 23px;
-    padding-left: 22px;
-    padding-top: 25px;
+    line-height: normal;
   }
 
   .fieldWrapperTitle {
@@ -42,6 +44,8 @@
     border: none;
     margin-bottom: 0;
     padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
 
     .fieldFromWrapper_title_context {
       font-size: 12px;
@@ -93,38 +97,6 @@
     margin: 0 auto;
     margin-top: 100px;
   }
-
-  &Loading {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-    text-align: center;
-
-    .loadingLogo,
-    .loadingIndicator {
-      width: 180px;
-    }
-
-    .loadingLogo {
-      margin-bottom: 20px;
-      img {
-        width: 100%;
-      }
-    }
-
-    .loadingIndicator {
-      margin-bottom: 48px;
-    }
-  }
   &_noJobAlert {
     padding: 0 22px;
     padding-top: 25px;
@@ -138,4 +110,9 @@
       }
     }
   }
+}
+
+.loading {
+  position: relative;
+  height: 50vh;
 }

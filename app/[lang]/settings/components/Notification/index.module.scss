@@ -32,11 +32,15 @@
     }
   }
 
-  .accessSettingsContainer_swtich {
-    color: blue;
+  .accessSettingsContainerItem {
     justify-content: space-between;
     display: flex;
     align-items: self-start;
+    color: blue;
+
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
   }
 
   .accessSettingsContainer {
@@ -46,7 +50,7 @@
       span {
         font-style: normal;
         font-weight: 400;
-        font-size: 16px;
+        font-size: 18px;
         line-height: 24px;
         color: #000000;
       }
@@ -54,17 +58,23 @@
       p {
         font-style: normal;
         font-weight: 400;
-        font-size: 14px;
-        line-height: 18px;
-        margin-bottom: 25px;
-        /* or 129% */
-
-        letter-spacing: 0.0075em;
-
-        /* General/Dark Grey */
-
-        color: #707070;
+        font-size: 16px;
+        line-height: 24px;
+        margin: 0;
+        color: #515151;
       }
     }
+  }
+
+  .navTitle {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 40px;
+
+    color: #121212;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 }

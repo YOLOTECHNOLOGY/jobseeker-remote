@@ -300,7 +300,7 @@ const VerifyMailAndBindEmail = ({
                 title='Verified'
                 placement='top'
                 arrow
-              // classes={{ tooltip: styles.formWrapper_tooltip }}
+                // classes={{ tooltip: styles.formWrapper_tooltip }}
               >
                 <img src={BlueTickIcon} alt='icon' width='20' height='20' />
               </Tooltip>
