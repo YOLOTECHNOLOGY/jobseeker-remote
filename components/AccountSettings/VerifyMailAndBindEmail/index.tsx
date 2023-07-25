@@ -38,7 +38,6 @@ const VerifyMailAndBindEmail = ({
 }: any) => {
   const { accountSetting } = lang
   const dispatch = useDispatch()
-  console.log({ emailDefault })
   let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
   const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
   const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)

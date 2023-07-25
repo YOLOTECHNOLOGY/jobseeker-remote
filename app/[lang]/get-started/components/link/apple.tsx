@@ -4,9 +4,7 @@ import * as jose from 'jose'
 import classNames from 'classnames'
 import useGetStarted from '../../hooks/useGetStarted'
 import { removeItem } from 'helpers/localStorage'
-import { AppleIcon } from 'images'
 import styles from '../../index.module.scss'
-import Image from 'next/image'
 
 interface IApple {
   isLogin?: boolean

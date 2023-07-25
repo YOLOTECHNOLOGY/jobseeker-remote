@@ -1,8 +1,8 @@
 import style from '../../index.module.scss';
-import React, {useRef, useState, CSSProperties, useContext, memo} from 'react';
+import React, {useRef, useState, CSSProperties, useContext} from 'react';
 import AnimatedNumbers from "react-animated-numbers";
-import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
-import {Player, Controls} from '@lottiefiles/react-lottie-player';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Player} from '@lottiefiles/react-lottie-player';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import {languageContext} from "../../../../components/providers/languageProvider";

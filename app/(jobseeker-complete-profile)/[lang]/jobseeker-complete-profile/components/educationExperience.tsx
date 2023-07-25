@@ -86,7 +86,6 @@ const EducationExperience = (props: any) => {
       degree_id: selectedDegrees
     }
     setLoading(true)
-    console.log({educationData})
    if(educations?.length){
     const id = educations[0].id
     const educationPayload= {

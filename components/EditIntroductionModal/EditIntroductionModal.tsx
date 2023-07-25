@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import Modal from 'components/Modal'
-import TextEditor from 'components/TextEditor/TextEditor'
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
 import styles from './EditIntroductionModal.module.scss'
 
@@ -37,17 +36,10 @@ const EditIntroductionModal = ({
   })
   // translate maps
   const langProfile = lang.manageProfile.tab.profile
-  console.log('langProfile:', langProfile)
-
-  const onSubmit = (data) => {
-    const { noticePeriod } = data // jobType is a key
-
+  const onSubmit = () => {
     const payload = {
-      // profile: {
       description
-      //}
     }
-
     dispatch(updateUserProfileRequest(payload))
   }
   const handleCloseModal = () => {

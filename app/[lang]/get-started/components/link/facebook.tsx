@@ -1,10 +1,8 @@
 import React from 'react'
-import { FacebookIcon } from 'images'
 import styles from '../../index.module.scss'
 import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
 import useGetStarted from '../../hooks/useGetStarted'
-import Image from 'next/image'
 
 interface IFacebook {
   className?: string

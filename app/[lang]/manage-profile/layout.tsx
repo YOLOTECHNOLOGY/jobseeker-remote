@@ -1,26 +1,19 @@
 
 // import './flexible';
-import Head from "next/head";
 import { Metadata } from "next"
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/models/abstractModels/util'
 import { getCountryKey } from "../../../helpers/country";
-import { formatTemplateString } from "../../../helpers/formatter";
 import { getDictionary } from "../../../get-dictionary";
 import { cookies, headers } from "next/headers";
 import { fetchUserOwnDetail } from "./service";
-import { fetchJobsFunction } from "../../../store/services/jobs/fetchJobFunction";
 
-import { configKey } from "../../../helpers/cookies";
 import { MangeProfileProvider } from "./DataProvider";
-import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
-import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 import Footer from "components/Footer/Footer";
 import getConfigs from 'app/models/interpreters/config'
 import { redirect } from 'next/navigation'
 import { ConfigType } from 'app/types';
 
-import { serveIsMobile } from 'helpers/utilities'
 
 const configs = getConfigs([
 	['location_lists'],
@@ -69,7 +62,6 @@ async function ManageProfileLayout(props: {
 	// URL -> /shop/shoes/nike-air-max-97
 	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
 	const cookieStore = cookies()
-	const headeStore = headers()
 	const token = cookieStore.get('accessToken')
 	if (!token?.value) {
 		return redirect('/get-started?redirect=/manage-profile')

@@ -142,7 +142,6 @@ const SearchArea = (props: any) => {
     fontSize: '15px'
   }
 
-  console.log({ location })
   return (
     <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
       <ThemeProvider theme={theme}>

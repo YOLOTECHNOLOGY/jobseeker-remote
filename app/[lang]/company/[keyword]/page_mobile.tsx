@@ -1,8 +1,7 @@
 'use client';
 import * as React from 'react';
 import style from './index.module.scss';
-import SearchPanel, { JobsTag } from './components/SearchPanel';
-import Link from 'next/link';
+import SearchPanel from './components/SearchPanel';
 import Image from 'next/image';
 import { useCompanyDetail } from "./DataProvider";
 import useResponsiveFont from 'app/[lang]/talents/components/responseHook';

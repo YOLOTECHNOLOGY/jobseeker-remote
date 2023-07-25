@@ -4,7 +4,7 @@ import { authenticationSendEmailMagicLink } from 'store/services/auth/authentica
 // import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 // import { getCountryId, getLanguageId } from 'helpers/country'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
@@ -154,7 +154,6 @@ const useGetStarted = () => {
   const loginRequest = (data) => {
     authenticationJobseekersLogin(data)
       .then((res) => {
-        console.log(res.data, 999999)
         if (res.data) {
           setUserInfo(res.data)
           setCookiesWithLoginData(res.data.data)
@@ -162,7 +161,6 @@ const useGetStarted = () => {
         }
       })
       .catch((err) => {
-        console.log(err.response, '8888')
         setError(err?.response)
       })
   }
@@ -265,7 +263,6 @@ const useGetStarted = () => {
     params = { email, source: 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
-        console.log(data)
         dispatch(
           displayNotification({
             open: true,

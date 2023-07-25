@@ -4,7 +4,6 @@ import { BossjobLogoWhite } from 'images'
 import Link from 'next/link'
 const Header = (props: any) => {
   const { lang, step } = props
-  console.log({ step })
   return (
     <div className={styles.header}>
       <div className={styles.headerMain}>

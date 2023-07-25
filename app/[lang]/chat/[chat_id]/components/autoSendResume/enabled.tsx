@@ -132,7 +132,6 @@ const EnableAutoSendResumeModal = (props: any) => {
       getResumes()
     }
   }, [location.pathname])
-  console.log({ resumeList })
   return (
     <Modal
       showModal={show}

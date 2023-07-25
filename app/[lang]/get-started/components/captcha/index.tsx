@@ -55,7 +55,6 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   // 验证码数组
   const codeArray = useMemo(() => {
     setCurrentIndex(inputValue?.length)
-    console.log({ inputValue })
     onChange?.(inputValue)
     return new Array(length).fill('').map((item, index) => inputValue[index] || '')
   }, [inputValue, length])

@@ -70,7 +70,6 @@ const CompanyProfileLayout = ({
   accessToken,
   lang
 }: ICompanyProfileLayout) => {
-  console.log('company',company.company_url);
   const dispatch = useDispatch()
   const router = useRouter()
   const imgPlaceholder =

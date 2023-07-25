@@ -1,16 +1,13 @@
 // import './flexible';
-import Head from 'next/head'
 import { Metadata } from 'next'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/models/abstractModels/util'
 import { getCountryKey } from '../../../../helpers/country'
-import { formatTemplateString } from '../../../../helpers/formatter'
 import { getDictionary } from '../../../../get-dictionary'
 import { cookies, headers } from 'next/headers'
 import {
   fetchCompanyDetailReq,
   fetchCompanyHR,
-  fetchConfigReq,
   fetchJobsListReq,
   getIDFromKeyword
 } from './service'
@@ -103,9 +100,6 @@ async function CompanyLayout(props: {
     const jobClasses = props.configs.config.job_functions.filter((item) =>
       function_ids.includes(String(item.id))
     )
-    // const configkey =cookieStore.get(configKey);
-    // console.log('configkey', configkey);
-    // const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
     return (
       <>
         <CompanyDetailsProvider
