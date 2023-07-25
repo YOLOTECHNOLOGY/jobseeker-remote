@@ -1,17 +1,23 @@
 
-import { keys } from 'lodash-es'
-const style = { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
-const Analize = () => {
-    const cache = globalThis.recordCache
+// import { keys } from 'lodash-es'
+// 'use server'
+// const style = { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
+const Analize = async () => {
+    const cache = globalThis.recordCache ?? {}
 
-    return <div style={style as any}>
+    console.log({ cache })
+    return <div
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+    >
         <h2>requests time cost.  unit : ms</h2>
         <br />
         <br />
         {
-            keys(cache).map(key => {
+            Object.keys(cache).map(key => {
                 const list = cache[key].array().map(item => item.duration)
-                return <div key={key} style={style as any}>
+                return <div key={key}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                >
                     {key}
                     <table border={1}>
                         <tr>
