@@ -47,6 +47,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
       tab: { preference: transitions }
     }
   } = lang
+
   const minSalary = preference?.salary_range_from
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
@@ -217,10 +218,10 @@ const PreferencesView = ({ lang }: any) => {
 
   const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   // const jobCategoryList = getJobCategoryList(config).map((category) => {
-  //   return {
-  //     label: category.value,
-  //     value: category.id
-  //   }
+  // return {
+  // label: category.value,
+  // value: category.id
+  // }
   // })
   const jobData = useMemo(() => {
     return [userDetail?.job_preferences || [], Date.now()]
