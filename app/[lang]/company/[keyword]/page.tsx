@@ -177,7 +177,7 @@ const Page = () => {
 						<div className={style.company_culture}>
 							<CulturePanel {...detail} />
 							{
-								hr?.length && <>
+								!!hr?.length && <>
 									<div style={{ height: 40 }}></div>
 									<ChatPanel list={hr} />
 								</>
