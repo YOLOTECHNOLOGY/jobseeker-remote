@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import Image from 'next/image'
 
-import {UploadDocIcon} from 'images' 
+import { UploadDocIcon } from 'images'
 
 interface PropsType {
   isShowBtn: Boolean

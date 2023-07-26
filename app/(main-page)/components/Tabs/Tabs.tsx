@@ -85,7 +85,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
@@ -284,7 +284,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                       {user?.avatar ? <img src={user?.avatar} /> : null}
                       {home.jobPreference}:{' '}
                       <Link
-                        prefetch={false}
+                        prefetch={true}
                         href={`${langKey}/manage-profile?tab=job-preferences`}
                         className={styles.link}
                       >
@@ -339,7 +339,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
               )}
 
               <div className={styles.tabContainer_more}>
-                <Link prefetch={false} className={styles.moreBtn} href='/my-jobs'>
+                <Link prefetch={true} className={styles.moreBtn} href='/my-jobs'>
                   {home.seeMoreBtn}
                 </Link>
               </div>
