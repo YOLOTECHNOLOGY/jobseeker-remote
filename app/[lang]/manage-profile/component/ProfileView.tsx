@@ -308,7 +308,7 @@ const ProfileView = ({ lang }: any) => {
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.educationSection}>
-            <div className={styles.titleWrapper}>
+            <div className={styles.titleWrapper} style={{ alignItems: 'flex-start' }}>
               <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
                 {description ?
                   <ReadMore
@@ -324,6 +324,7 @@ const ProfileView = ({ lang }: any) => {
                 <div
                   className={styles.iconWrapper}
                   onClick={() => handleModal('introduction', true, null, null)}
+                  style={{ alignItems: 'flex-start' }}
                 >
                   <img src={PencilIcon} width='22' height='22' />
                 </div>
