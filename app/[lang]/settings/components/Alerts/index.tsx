@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
 import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import Text from 'components/Text'
-import Modal from 'components/Modal'
+import Modal from '../Modal'
 import { BossjobLogo } from 'images'
 
 import Radio from '@mui/material/Radio'
@@ -26,7 +26,8 @@ import { useRouter } from 'next/navigation'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { changeAlertValue } from 'helpers/config/changeAlertValue'
 import { MemoedFilters } from 'components/ModalJobAlerts/MemoedFilter'
-
+import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import MaterialTextField from 'components/MaterialTextField'
 const Alerts = ({ accessToken, lang }: any) => {
   const router = useRouter()
   const { search, accountSetting } = lang
@@ -34,6 +35,8 @@ const Alerts = ({ accessToken, lang }: any) => {
   const { width } = useWindowDimensions()
   const [alertEdit, setAlertEdit] = useState(null)
   const [removeId, setRemoveId] = useState(null)
+  const [open, setOpen] = useState<boolean>(false)
+  const [openDelete, setOpenDelete] = useState<boolean>(true)
   const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
   const isLoading = useSelector((store: any) => store.alerts.fetchJobAlertsList.fetching)
   const showCreateJobAlertModal = useSelector((store: any) => store.modal.createJobAlertModal.show)
@@ -89,6 +92,13 @@ const Alerts = ({ accessToken, lang }: any) => {
   const handelBackToJobSearch = () => {
     router.push('/jobs-hiring/job-search')
   }
+
+  const handleSave = () => {}
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const handleConfirm = () => {}
+
   return (
     <div className={styles.JobAlertContainer}>
       <div className={styles.JobAlertContainer_wrapper}>
@@ -127,6 +137,9 @@ const Alerts = ({ accessToken, lang }: any) => {
                   </Text>
                   <Text block className={styles.JobAlertContainer_desc}>
                     {accountSetting.frequency}: {item.frequency_value}
+                  </Text>
+                  <Text block className={styles.JobAlertContainer_desc}>
+                    {accountSetting.email}: {item.email}
                   </Text>
                   {alertEdit === item.id && (
                     <div>
@@ -206,6 +219,60 @@ const Alerts = ({ accessToken, lang }: any) => {
         )}
 
         <Modal
+          key={'Job-Alert-Setting'}
+          open={open}
+          cancel='Cancel'
+          confirm='Done'
+          handleSave={handleSave}
+          handleClose={handleClose}
+          title='Job Alert Setting'
+          lang={lang}
+        >
+          <div className={styles.modal}>
+            <div className={styles.item}>
+              <p className={styles.title}>Job filters</p>
+              <p className={styles.content}>Chongqing - java - Bachelor</p>
+            </div>
+            <div className={styles.item}>
+              <p className={`${styles.title} ${styles.titleFilters}`}>Job filters</p>
+              <div className={styles.select}>
+                <MaterialBasicSelect
+                  options={[]}
+                  className={styles.fullWidth}
+                  variant='standard'
+                ></MaterialBasicSelect>
+              </div>
+            </div>
+            <div className={styles.item}>
+              <p className={`${styles.title} ${styles.titleFilters}`}>Job filters</p>
+              <div className={styles.select}>
+                <MaterialTextField
+                  value={'Johndoe@gmail.com'}
+                  className={styles.fullWidth}
+                  variant='standard'
+                ></MaterialTextField>
+              </div>
+            </div>
+          </div>
+        </Modal>
+
+        <Modal
+          key={'openDelete'}
+          open={openDelete}
+          cancel='Cancel'
+          confirm='yes'
+          handleSave={handleConfirm}
+          handleClose={() => setOpenDelete(false)}
+          title='Job Alert Setting'
+          lang={lang}
+        >
+          <div className={styles.modal}>
+            Are you sure you want to delete this job reminder? After deleting, you will not be able
+            to get high-quality job recommendation information
+          </div>
+        </Modal>
+
+        {/* <Modal
           headerTitle={accountSetting.deleteTitle}
           showModal={showCreateJobAlertModal}
           handleModal={() => {
@@ -227,7 +294,7 @@ const Alerts = ({ accessToken, lang }: any) => {
               {accountSetting.deleteTips}
             </Text>
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   )
