@@ -3,19 +3,32 @@ import moment from 'moment'
 
 /* Components */
 import { Avatar } from '@mui/material'
+import Text from 'components/Text'
+import ReadMore from 'components/ReadMore'
 
 /* Helpers */
 import useWindowDimensions from 'helpers/useWindowDimensions'
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 /* Images */
 import {
-  DefaultAvatar} from '../../images'
+  DefaultAvatar,
+  LocationIcon,
+  MailIcon,
+  BriefcaseIcon,
+  MobileIcon,
+  PencilIcon,
+  BodyIcon
+} from '../../images'
 import Image from 'next/image';
 
 /* Styles */
 import styles from './UserProfileOverview.module.scss'
-import { formatTemplateString } from 'helpers/formatter'
+import { flat, formatTemplateString } from 'helpers/formatter'
 import { MouseOverPopover } from '../../app/components/popover/MouseOverPopover';
+import { formatLocationConfig } from 'helpers/jobPayloadFormatter'
 import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
+import { config } from '../../middleware';
+import configs from '../../app/(companies)/[lang]/companies/page';
 
 type UserProfileOverviewProps = {
   name: string

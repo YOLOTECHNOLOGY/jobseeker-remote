@@ -88,7 +88,7 @@ const ManageProfilePage = () => {
       }))
     }
     if (userDetail?.resumes) {
-      setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes?.length == 0 }))
+      setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes ? userDetail?.resumes?.length == 0 : !userDetail.resumes }))
     }
   }, [userDetail])
   return <>
