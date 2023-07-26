@@ -31,18 +31,14 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
-import Countdown from '../captcha/countDown'
 
-const VerifyMailAndBindEmail = ({
-  label,
-  setEdit,
-  edit,
-  emailDefault,
-  verify,
-  errorText,
-  COUNT_DOWN_VERIFY_DEFAULT,
-  lang
-}: any) => {
+let timer = null
+// 默认位数
+const originTimer = 10
+
+const VIf = (props) => (props.show ? props.children : null)
+
+const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }: any) => {
   const { accountSetting } = lang
   const dispatch = useDispatch()
   console.log({ emailDefault })
@@ -53,27 +49,54 @@ const VerifyMailAndBindEmail = ({
   const [email, setEmail] = useState(emailDefault)
   const [open, setOpen] = useState(false)
 
+  const [initialTime, setInitialTime] = useState(0)
+  const [startTimer, setStartTimer] = useState(false)
+  const [showCountDown, setShowCountDown] = useState(false)
+
   const [otp, setOtp] = useState('')
 
   const [number, setNumber] = useState<number>(0)
 
+  const { newGetStarted } = lang
+
+  const clear = () => {
+    clearTimeout(timer)
+    setStartTimer(false)
+    setInitialTime(0)
+  }
+
+  useEffect(() => {
+    if (initialTime > 0) {
+      timer = setTimeout(() => {
+        console.log('startTime, ', initialTime)
+        setInitialTime(initialTime - 1)
+      }, 1000)
+    }
+
+    if (initialTime === 0 && startTimer) {
+      console.log('done')
+      clear()
+    }
+  }, [initialTime, startTimer])
+
   const handleOpen = () => {
     console.log('handle open!!!')
     setOpen(true)
+    clear()
   }
 
   const handleSave = () => {
     console.log('save')
     // setOpen(false)
+    clear()
+    setShowCountDown(false)
   }
 
   const handleClose = () => {
     console.log('close')
     setOpen(false)
-  }
-
-  const sendOpt = () => {
-    console.log('send opt')
+    clear()
+    setShowCountDown(false)
   }
 
   const onChange = (opt) => {
@@ -82,6 +105,10 @@ const VerifyMailAndBindEmail = ({
 
   const handleSendOTP = () => {
     console.log('handle send otp')
+    clear()
+    setTimeout(() => {
+      setInitialTime(originTimer)
+    }, 20)
   }
 
   return (
@@ -153,7 +180,13 @@ const VerifyMailAndBindEmail = ({
                 }}
               />
               <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
-              <button className={styles.sendOTP} onClick={handleSendOTP}>
+              <button
+                className={styles.sendOTP}
+                onClick={() => {
+                  setShowCountDown(true)
+                  handleSendOTP()
+                }}
+              >
                 Send OTP
               </button>
             </div>
@@ -162,11 +195,20 @@ const VerifyMailAndBindEmail = ({
               lang={lang}
               autoFocus={true}
               onChange={onChange}
-              sendOpt={sendOpt}
               error={errorText}
               number={number}
             />
-            <Countdown sendOpt={sendOpt} lang={lang} />
+            <VIf show={showCountDown}>
+              <p className={styles.countdown}>
+                {initialTime <= 0 ? (
+                  <span className={styles.resendCode} onClick={handleSendOTP}>
+                    {newGetStarted.resendCode}
+                  </span>
+                ) : (
+                  initialTime + 's'
+                )}
+              </p>
+            </VIf>
           </div>
         </div>
       </ModalDialog>

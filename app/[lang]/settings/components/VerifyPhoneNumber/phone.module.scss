@@ -181,3 +181,21 @@
     }
   }
 }
+
+.countdown {
+  margin: 20px auto 0 auto;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  color: #86909c;
+  text-align: center;
+
+  .resendCode {
+    color: #2379ea;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

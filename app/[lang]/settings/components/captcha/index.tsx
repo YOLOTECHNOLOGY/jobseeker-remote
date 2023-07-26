@@ -26,22 +26,13 @@ interface ICaptchaProps {
   autoFocus?: boolean
   className?: string | undefined
   style?: CSSProperties | undefined
-  sendOpt?: () => void
   error?: string
   lang?: any
   number: number
 }
 
 const Captcha: React.FC<ICaptchaProps> = (props) => {
-  const {
-    value = '',
-    onChange,
-    length = DEFAULT_LENGTH,
-    autoFocus = false,
-    sendOpt,
-    error,
-    lang
-  } = props
+  const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false, error, lang } = props
   // 组件内部维护的输入框输入值
   const [inputValue, setInputValue] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
