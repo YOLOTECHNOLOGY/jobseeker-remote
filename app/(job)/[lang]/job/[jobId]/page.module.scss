@@ -378,8 +378,10 @@
         font-weight: 400;
         font-size: 16px;
         color: #353535;
-        margin-bottom: 18px;
+        margin-bottom: 14px;
       }
+
+
     }
 
     // search
@@ -419,6 +421,8 @@
         // width: calc(100% - (183px + 119px + 30px));
       }
     }
+
+
 
     .published_at {
       font-weight: 400;
@@ -1561,4 +1565,17 @@
       }
     }
   }
+}
+
+.mapDistance {
+  color: #7D7D7D;
+  font-family: Product Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 171.429% */
+  letter-spacing: 0.28px;
+  padding-bottom: 16px;
+  margin-bottom: 0;
 }

@@ -59,8 +59,14 @@ const rad = (d)=> {
 }
 
 
-export const getDistance = (lat1, lng1, lat2, lng2)=> {
-
+export const getDistance = (Plat1, Plng1, Plat2, Plng2)=> {
+  if(!Plat1 || !Plng1 || !Plat2 || !Plng2){
+    return 0
+  }
+  const lat1 = Number(Plat1)
+  const lng1 = Number(Plng1)
+  const lat2 = Number(Plat2)
+  const lng2 = Number(Plng2)
   const radLat1 = rad(lat1);
   const radLat2 = rad(lat2);
   const a = radLat1 - radLat2;

@@ -445,7 +445,8 @@
       "jobPostedOn": "Posted on",
       "benefits": "Benefits",
       "workingLocation": "Working Location",
-      "workLocation": "Work Location"
+      "workLocation": "Work Location",
+      "distanceFromHome": "Distance from home"
     },
     "shareModal": {
       "title": "Share this job",

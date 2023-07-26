@@ -7,6 +7,8 @@ import GoogleMap from 'components/GoogleMap/GoogleMap'
 import styles from '../../../page.module.scss'
 import { IconButton, Button } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { getDistance } from 'helpers/utilities'
+import { getCookie } from 'helpers/cookies'
 
 export type propsType = {
   lat: number
@@ -27,24 +29,31 @@ const Map = ({ lat, lng, full_address, lang }: propsType) => {
   const handleMapLayer = () => {
     setOpen(true)
   }
-
+  const userInfo = getCookie('user') || {}
+  const { latitude, longitude } = userInfo
   return (
     <section className={styles.map} id='WorkingLocation'>
       <h5>{lang?.workingLocation}</h5>
       <p>{full_address}</p>
-
       {lat && lng ? (
-        <div className={styles.map_context} onClick={handleMapLayer}>
-          <GoogleMap
-            lat={Number(lat)}
-            lng={Number(lng)}
-            gestureHandling='none'
-            zoomControl={false}
-            fullscreenControl={false}
-            streetViewControl={false}
-            clickable={false}
-          />
-        </div>
+        <>
+          {userInfo?.latitude && (
+            <p className={styles.mapDistance}>
+              {lang?.distanceFromHome}: {getDistance(latitude, longitude, lat, lng)}
+            </p>
+          )}
+          <div className={styles.map_context} onClick={handleMapLayer}>
+            <GoogleMap
+              lat={Number(lat)}
+              lng={Number(lng)}
+              gestureHandling='none'
+              zoomControl={false}
+              fullscreenControl={false}
+              streetViewControl={false}
+              clickable={false}
+            />
+          </div>
+        </>
       ) : null}
       <Modal
         open={open}

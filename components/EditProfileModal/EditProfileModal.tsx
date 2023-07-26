@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete'
 
 /* Components */
 import Text from 'components/Text'
@@ -17,7 +17,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import GoogleMap from 'components/GoogleMap/GoogleMap'
-import _styles from 'styles/maintenance.module.scss';
+import _styles from 'styles/maintenance.module.scss'
 
 /* Helpers */
 import { flat } from 'helpers/formatter'
@@ -26,8 +26,9 @@ import styles from './EditProfileModal.module.scss'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile/service'
-import { useLanguage } from 'app/components/providers/languageProvider';
-import { useProfileData } from 'app/components/providers/profileProvider';
+import { useLanguage } from 'app/components/providers/languageProvider'
+import { useProfileData } from 'app/components/providers/profileProvider'
+import useGetStarted from 'app/[lang]/get-started/hooks/useGetStarted'
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
@@ -35,7 +36,7 @@ type EditProfileModalProps = {
   userDetail: any
   handleModal: Function
   lang?: any
-  fetchProfile?: () => void;
+  fetchProfile?: () => void
 }
 
 const dayList = []
@@ -84,9 +85,9 @@ const getDiffYear = (time) => {
   return age
 }
 interface PlaceType {
-  description: string;
-  formatted_address: string;
-  structured_formatting: any;
+  description: string
+  formatted_address: string
+  structured_formatting: any
   geometry: {
     location: {
       lat: () => number
@@ -117,15 +118,16 @@ const EditProfileModal = ({
     latitude,
     address,
     working_since
-
   } = userDetail
-  const {fetchProfile: providerFetchProfile} = useProfileData();
+  const { fetchProfile: providerFetchProfile } = useProfileData()
   const lang = useLanguage()
-  const mapRef = useRef(null);
-  const [value, setLocationValue] = React.useState<PlaceType | null>(null);
-  const [inputValue, setInputValue] = React.useState(address || '');
-  const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-  const [debouncedValue, setDebouncedValue] = useState('');
+  const mapRef = useRef(null)
+  const [value, setLocationValue] = React.useState<PlaceType | null>(null)
+  const [inputValue, setInputValue] = React.useState(address || '')
+  const [options, setOptions] = React.useState<readonly PlaceType[]>([])
+  const [debouncedValue, setDebouncedValue] = useState('')
+  const { setCookiesWithLoginData } = useGetStarted()
+
   const {
     manageProfile: {
       tab: {
@@ -133,41 +135,42 @@ const EditProfileModal = ({
       }
     }
   } = lang
-  const {manageProfile, profile} = useLanguage();
+  const { manageProfile, profile } = useLanguage()
   useEffect(() => {
-    const delay = 500; // 设置延迟时间（毫秒）
+    const delay = 500 // 设置延迟时间（毫秒）
     const timerId = setTimeout(() => {
-      setDebouncedValue(inputValue);
-    }, delay);
+      setDebouncedValue(inputValue)
+    }, delay)
 
     return () => {
-      clearTimeout(timerId); // 清除计时器
-    };
-  }, [inputValue]);
+      clearTimeout(timerId) // 清除计时器
+    }
+  }, [inputValue])
 
   useEffect(() => {
-    if (!mapRef.current) return;
-
+    if (!mapRef.current) return
 
     mapRef.current.textSearch({ query: debouncedValue }, function (results, status) {
       // @ts-ignore
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log('results', results);
-        setOptions(results);
+        console.log('results', results)
+        setOptions(results)
         // renderSearchPlaceList(results, map)
       }
     })
-  }, [mapRef.current, debouncedValue]);
+  }, [mapRef.current, debouncedValue])
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
-  const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
-  const [workingSince, setWorkingSince] = useState('');
+  const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false)
+  const [workingSince, setWorkingSince] = useState('')
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
   const { xp_lvls: xpLevelList, location_lists: locationList } = config
-  const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
+  const [yearsOfExperience, setYearsOfExperience] = useState(
+    xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+  )
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
@@ -183,7 +186,8 @@ const EditProfileModal = ({
     location: userLocation,
     birthdate: birthdate,
     working_since: working_since,
-    yearsOfExperience: xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+    yearsOfExperience:
+      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
   }
   const {
     register,
@@ -224,7 +228,7 @@ const EditProfileModal = ({
 
   const onSubmit = async (data) => {
     const { firstName, lastName, summary } = data
-    
+
     const payload = {
       // country_id: getCountryId(),
       avatar: selectedAvatar,
@@ -242,32 +246,25 @@ const EditProfileModal = ({
     setIsSecondButtonLoading(true)
     try {
       // @ts-ignore
-      await updateUserProfile(removeEmptyOrNullValues(payload))
+      const p = await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
       await providerFetchProfile()
+      setCookiesWithLoginData(p.data)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     } finally {
       setIsSecondButtonLoading(false)
     }
 
     // dispatch(updateUserProfileRequest(removeEmptyOrNullValues(payload)))
-
-
   }
-
-
 
   const onDateChange = (value) => {
     const isMinYear = getDiffYear(value) < SIXTEEN_YEAR
     const isMaxYear = getDiffYear(value) > HUNDRED_YEAR
     if (isMaxYear || isMinYear) {
       setBirthdate(value)
-      setError(
-        'birthdate',
-        { message: aboutMeModal.birthdayError },
-        { shouldFocus: true }
-      )
+      setError('birthdate', { message: aboutMeModal.birthdayError }, { shouldFocus: true })
     } else {
       clearErrors('birthdate')
       setBirthdate(value)
@@ -288,10 +285,8 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
-
         className={styles.modal}
         bodyClass={styles.showScroll}
-
       >
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>
@@ -381,41 +376,35 @@ const EditProfileModal = ({
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
                 {
-                  
                   // @ts-ingore
-                manageProfile.tab.profile.aboutMeModal.workingSince
+                  manageProfile.tab.profile.aboutMeModal.workingSince
                 }
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
-            <MaterialDatePicker
-                  refs={{
-                    ...register('working_since')
-                  }}
-                  label={profile.startedWorkingSince}
-                  hiddenLabel
-                  views={['year', 'month']}
-                  inputFormat='yyyy-MM'
-                  value={workingSince}
-                  onDateChange={setWorkingSince}
-                  fullWidth={true}
-                />
-
+              <MaterialDatePicker
+                refs={{
+                  ...register('working_since')
+                }}
+                label={profile.startedWorkingSince}
+                hiddenLabel
+                views={['year', 'month']}
+                inputFormat='yyyy-MM'
+                value={workingSince}
+                onDateChange={setWorkingSince}
+                fullWidth={true}
+              />
             </div>
             <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.accountSetting.email}
-              </Text>
+              <Text className={styles.profileFormTitleText}>{lang.accountSetting.email}</Text>
             </div>
             <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{email}</span>
               <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
             </div>
 
-            <div className={styles.profileFormTitle} >
-              <Text className={styles.profileFormTitleText}>
-                {lang.newGetStarted.phone}
-              </Text>
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>{lang.newGetStarted.phone}</Text>
             </div>
             <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{phone_num}</span>
@@ -451,9 +440,7 @@ const EditProfileModal = ({
             </div>
 
             <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.myJobs.address}
-              </Text>
+              <Text className={styles.profileFormTitleText}>{lang.myJobs.address}</Text>
             </div>
             <Autocomplete
               noOptionsText={aboutMeModal.noLocation}
@@ -466,28 +453,30 @@ const EditProfileModal = ({
               value={value || { formatted_address: inputValue }}
               includeInputInList
               onChange={(event: any, newValue: PlaceType | null) => {
-                setLocationValue(newValue);
+                setLocationValue(newValue)
               }}
               onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
+                setInputValue(newInputValue)
               }}
               disableClearable={false}
               // className={className}
               renderInput={(params) => {
-                return (<TextField
-                  {...params}
-                  label={aboutMeModal.address}
-                  placeholder={aboutMeModal.address}
-                  autoComplete='off'
-                  type='text'
-                  className={_styles.hiddenLabel}
-                />)
+                return (
+                  <TextField
+                    {...params}
+                    label={aboutMeModal.address}
+                    placeholder={aboutMeModal.address}
+                    autoComplete='off'
+                    type='text'
+                    className={_styles.hiddenLabel}
+                  />
+                )
               }}
-            // {...rest}
+              // {...rest}
             />
-            <div className={styles.profileFormGroup + " " + styles.mapWrapper}>
+            <div className={styles.profileFormGroup + ' ' + styles.mapWrapper}>
               <GoogleMap
-                height={"500px"}
+                height={'500px'}
                 lat={Number(value?.geometry.location.lat()) || Number(latitude)}
                 lng={Number(value?.geometry.location.lng()) || Number(longitude as String)}
                 ref={mapRef}
@@ -499,7 +488,6 @@ const EditProfileModal = ({
                 infoWindow={value?.formatted_address || address}
               />
             </div>
-
           </div>
         </div>
       </Modal>
