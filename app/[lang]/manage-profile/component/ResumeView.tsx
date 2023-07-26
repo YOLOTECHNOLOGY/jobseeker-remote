@@ -168,6 +168,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             {/* Upload your own resume */}
             {transitions.upload.title}
           </Text>
+          <div style={{height: 20}}></div>
           {resume.length < 3 && (
             <label className={styles.add}>
               {/* <img style={{ cursor: 'pointer' }} src={AddIcon} width={14} height={14} /> */}
