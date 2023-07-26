@@ -21,7 +21,7 @@ const SearchHistories = (props: any) => {
               key={item}
               title={item.value}
               href={buildQuery(location, item)}
-              prefetch={false}
+              prefetch={true}
             >
               {item.value}
             </Link>

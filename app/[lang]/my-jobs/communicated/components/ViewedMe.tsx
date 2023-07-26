@@ -26,7 +26,7 @@ const ViewedMe = async (props: any) => {
               })}
             </div>
             <button className={styles.button}>
-              <Link prefetch={false} href={'/my-jobs/communicated?type=viewedMe'}>
+              <Link prefetch={true} href={'/my-jobs/communicated?type=viewedMe'}>
                 {lang?.seeMore}
               </Link>
             </button>
