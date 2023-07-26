@@ -32,10 +32,6 @@ interface ICaptchaProps {
   number: number
 }
 
-let timer = null
-
-const origninTimer = 60
-
 const Captcha: React.FC<ICaptchaProps> = (props) => {
   const {
     value = '',
@@ -44,10 +40,8 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
     autoFocus = false,
     sendOpt,
     error,
-    lang,
-    number
+    lang
   } = props
-  const { newGetStarted } = lang
   // 组件内部维护的输入框输入值
   const [inputValue, setInputValue] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -75,31 +69,10 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   //   }
   // }, [])
 
-  const [countdown, setCountdown] = useState<number>(origninTimer)
-
-  const timerRef = useRef(origninTimer)
-
-  useEffect(() => {
-    timer = setInterval(() => {
-      const newTime = timerRef.current - 1
-      if (newTime <= 0) {
-        clearInterval(timer)
-        timerRef.current = origninTimer
-      } else {
-        timerRef.current = newTime
-      }
-      setCountdown(newTime)
-    }, 1000)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [number])
-
   const handleInputCodeChange = (e: any) => {
     const eValue = e.target.value
     const tempValue = eValue.replace(/[^0-9]/g, '').slice(0, length)
     setInputValue(tempValue)
-    //  onChange?.(tempValue)
   }
 
   const handleCodeBoxClick = (e: any) => {
@@ -148,15 +121,6 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
           />
         </div>
       </div>
-      <p className={styles.countdown}>
-        {countdown <= 0 ? (
-          <span className={styles.resendCode} onClick={() => sendOpt()}>
-            {newGetStarted.resendCode}
-          </span>
-        ) : (
-          countdown + 's'
-        )}
-      </p>
     </>
   )
 }

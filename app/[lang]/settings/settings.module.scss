@@ -220,6 +220,7 @@
     @include sm {
       width: 100%;
       margin-top: 16px;
+      border-bottom: 1px solid #e4e4e4;
 
       :global {
         .MuiButtonBase-root.Mui-selected {
@@ -237,7 +238,6 @@
 
     @include sm {
       width: 100%;
-      margin-top: 16px;
     }
   }
 }

@@ -31,6 +31,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
+import Countdown from '../captcha/countDown'
 
 const VerifyMailAndBindEmail = ({
   label,
@@ -45,176 +46,16 @@ const VerifyMailAndBindEmail = ({
   const { accountSetting } = lang
   const dispatch = useDispatch()
   console.log({ emailDefault })
-  let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
-  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
-  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
-  const refCountDownTimeName = useRef(null)
 
   const firstRender = useFirstRender()
-  const [isBtnDisabled, setBtnDisabled] = useState(verify)
-  const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
   const [open, setOpen] = useState(false)
 
-  const [isShowemailVerify, setIsShowemailVerify] = useState(false)
   const [otp, setOtp] = useState('')
-  const [otpError, setOtpError] = useState('')
-  const [emailTip, setEmailTip] = useState(
-    verify ? accountSetting.editEmailExplanation : accountSetting.notVerifyTips
-  )
+
   const [number, setNumber] = useState<number>(0)
-
-  useEffect(() => {
-    if (isShowCountDownSwitch) {
-      const eventCallBack = () => {
-        if (countDownVerify <= 1) {
-          setIsShowCountDownSwitch(false)
-          clearInterval(refCountDownTimeName.current)
-        } else {
-          countDownVerify = countDownVerify - 1
-          setCountDown(countDownVerify)
-        }
-      }
-      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
-      return () => clearInterval(refCountDownTimeName.current)
-    } else {
-      clearInterval(refCountDownTimeName.current)
-      // setBtnDisabled(false)
-      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
-      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
-    }
-  }, [isShowCountDownSwitch])
-
-  const reductionEmail = () => {
-    setEmail(emailDefault ? emailDefault : null)
-    setIsShowemailVerify(false)
-    setOtp('')
-    // setEmailTip('To receive job applications update, please verify your email.')
-    setOtpError(null)
-    setBtnDisabled(verify)
-  }
-
-  useEffect(() => {
-    if (firstRender || isShowCountDownSwitch) {
-      return
-    }
-    let errorText = null
-    if (email && !/\S+@\S+\.\S+/.test(email)) {
-      errorText = 'Please enter a valid email address.'
-    }
-
-    if (errorText) {
-      setBtnDisabled(true)
-    } else {
-      setBtnDisabled(false)
-    }
-
-    setEmailError(errorText)
-  }, [email])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    if (otp.length > 6) {
-      setIsBtnDisabledVerify(true)
-      setOtpError(accountSetting.errorMsg.optIncorrect)
-    } else {
-      setIsBtnDisabledVerify(false)
-      setOtpError(null)
-    }
-  }, [otp])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    setBtnDisabled(isShowCountDownSwitch)
-  }, [isShowCountDownSwitch])
-
-  const sendEmailOTPS = () => {
-    setIsShowCountDownSwitch(true)
-    setIsShowemailVerify(true)
-    setEmail(email)
-    emailOTPChangeEmailGenerate({ email })
-      .then()
-      .catch((exceptionHandler) => {
-        const { data } = exceptionHandler.response
-        let errorMessage
-        if (data?.data) {
-          errorMessage = data?.data?.detail
-        } else {
-          errorMessage = data?.errors?.email[0]
-        }
-        dispatch(
-          displayNotification({
-            open: true,
-            message: exceptionHandler.message ?? errorMessage,
-            severity: 'warning'
-          })
-        )
-      })
-  }
-
-  const emailVerifiSuccess = () => {
-    setEmailTip(
-      'Your email has been verified. You will be able to receive job applications update through your email.'
-    )
-    setIsShowemailVerify(false)
-    setOtpError(null)
-    setEdit(null)
-  }
-
-  const emailVerifiError = () => {
-    setOtpError(accountSetting.errorMsg.optIncorrect)
-  }
-
-  const verifyEmailOrChangeEmail = () => {
-    if (emailDefault === email) {
-      // verify
-      verifyEmail({ otp })
-        .then(() => {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: 'Your email account has been verified successfully',
-              severity: 'success'
-            })
-          )
-          emailVerifiSuccess()
-        })
-        .catch(() => {
-          emailVerifiError()
-        })
-    } else {
-      // change
-      changeEmail({ otp, email })
-        .then(() => {
-          dispatch(
-            displayNotification({
-              open: true,
-              message: 'Your email account has been verified successfully',
-              severity: 'success'
-            })
-          )
-          emailVerifiSuccess()
-        })
-        .catch(() => {
-          emailVerifiError()
-        })
-    }
-  }
-
-  const requiredLabel = (text: string) => {
-    return (
-      <>
-        <span>{text}&nbsp;</span>
-        <span className={styles.stepFieldRequired}>* &nbsp; &nbsp;</span>
-      </>
-    )
-  }
 
   const handleOpen = () => {
     console.log('handle open!!!')
@@ -237,6 +78,10 @@ const VerifyMailAndBindEmail = ({
 
   const onChange = (opt) => {
     console.log('on change opt', opt)
+  }
+
+  const handleSendOTP = () => {
+    console.log('handle send otp')
   }
 
   return (
@@ -311,7 +156,9 @@ const VerifyMailAndBindEmail = ({
                 }}
               />
               <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
-              <button className={styles.sendOTP}>Send OTP</button>
+              <button className={styles.sendOTP} onClick={handleSendOTP}>
+                Send OTP
+              </button>
             </div>
             <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
             <Captcha
@@ -322,6 +169,7 @@ const VerifyMailAndBindEmail = ({
               error={errorText}
               number={number}
             />
+            <Countdown sendOpt={sendOpt} lang={lang} />
           </div>
         </div>
       </ModalDialog>

@@ -33,6 +33,7 @@ import styles from './phone.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
 import { find } from 'lodash-es'
+import Countdown from '../captcha/countDown'
 
 const VerifyPhoneNumber = ({
   label,
@@ -48,10 +49,6 @@ const VerifyPhoneNumber = ({
   const { accountSetting, newGetStarted } = lang
   const dispatch = useDispatch()
 
-  let countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
-  const [countDown, setCountDown] = useState(COUNT_DOWN_VERIFY_DEFAULT)
-  const [isShowCountDownSwitch, setIsShowCountDownSwitch] = useState(false)
-  const refCountDownTimeName = useRef(null)
   const [open, setOpen] = useState(false)
   const [number, setNumber] = useState<number>(0)
 
@@ -76,185 +73,6 @@ const VerifyPhoneNumber = ({
     setSmsCode('+63')
   } else if (phoneDefault) {
     phoneDefault = phoneDefault.substring(smsCode.length, phoneDefault.length)
-  }
-  const countryId = useMemo(() => {
-    return smsCountryList.find((item) => item.value === smsCode)?.id
-  }, [smsCode, smsCountryList])
-
-  const [isBtnDisabled, setBtnDisabled] = useState(verify)
-  const [isBtnDisabledVerify, setIsBtnDisabledVerify] = useState(true)
-
-  const [phoneNumError] = useState(null)
-  const [phoneNum, setPhoneNum] = useState(phoneDefault)
-
-  const [isShowPhoneVerify, setIsShowPhoneVerify] = useState(false)
-  const [otp, setOtp] = useState('')
-  const [otpError, setOtpError] = useState('')
-  const [phoneTip, setPhoneTip] = useState(
-    verify ? accountSetting.mobileExplanation : accountSetting.mobileNotVerified
-  )
-
-  useEffect(() => {
-    if (isShowCountDownSwitch) {
-      const eventCallBack = () => {
-        if (countDownVerify <= 1) {
-          setIsShowCountDownSwitch(false)
-          clearInterval(refCountDownTimeName.current)
-        } else {
-          countDownVerify = countDownVerify - 1
-          setCountDown(countDownVerify)
-        }
-      }
-      refCountDownTimeName.current = setInterval(eventCallBack, 1000)
-      return () => clearInterval(refCountDownTimeName.current)
-    } else {
-      clearInterval(refCountDownTimeName.current)
-      // setBtnDisabled(false)
-      countDownVerify = COUNT_DOWN_VERIFY_DEFAULT
-      setCountDown(COUNT_DOWN_VERIFY_DEFAULT)
-    }
-  }, [isShowCountDownSwitch])
-
-  const reductionEmail = () => {
-    setPhoneNum(phoneDefault ? phoneDefault : null)
-    setIsShowPhoneVerify(false)
-    setOtp('')
-  }
-
-  useEffect(() => {
-    if (isShowCountDownSwitch) {
-      return
-    }
-    if (phoneNum && phoneNum.length) {
-      setBtnDisabled(false)
-    } else {
-      setBtnDisabled(true)
-    }
-  }, [phoneNum])
-
-  useEffect(() => {
-    setPhoneNum(phoneDefault)
-  }, [phoneDefault])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    if (otp.length > 6) {
-      setIsBtnDisabledVerify(true)
-      setOtpError(accountSetting.errorMsg.optIncorrect)
-    } else {
-      setIsBtnDisabledVerify(false)
-      setOtpError('')
-    }
-  }, [otp])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    if (phoneNumError) {
-      setBtnDisabled(true)
-    } else {
-      setBtnDisabled(false)
-    }
-  }, [phoneNumError])
-
-  useEffect(() => {
-    if (firstRender) {
-      return
-    }
-    setBtnDisabled(isShowCountDownSwitch)
-  }, [isShowCountDownSwitch])
-  const sendPhoneNumberOTPS = () => {
-    setIsShowCountDownSwitch(true)
-    setIsShowPhoneVerify(true)
-    setPhoneNum(phoneNum)
-    const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
-    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNum, mobile_country_id })
-      .then()
-      .catch((exceptionHandler) => {
-        const { data } = exceptionHandler.response
-        let errorMessage
-        if (data?.data) {
-          errorMessage = data?.data?.detail ?? data?.message
-        } else {
-          errorMessage = data?.errors?.phone_num[0]
-        }
-        dispatch(
-          displayNotification({
-            open: true,
-            message: errorMessage ?? exceptionHandler.message,
-            severity: 'warning'
-          })
-        )
-      })
-  }
-
-  const verifiSuccess = () => {
-    setPhoneTip(
-      'Your mobile number has been verified. Recruiters will be able to contact you through your mobile number.'
-    )
-    setDefaultPhone(smsCode + phoneNum)
-    setIsShowPhoneVerify(false)
-    setOtpError(null)
-    setEdit(null)
-  }
-
-  const verifiError = (errorMessage?: string) => {
-    if (errorMessage == 'Invalid otp') {
-      errorMessage = accountSetting.errorMsg.invalidOtp
-    }
-    setOtpError(errorMessage)
-  }
-
-  const verifyEmailOrChangeEmail = () => {
-    const phone = smsCode + phoneNum
-    if (defaultPhone === phone) {
-      // verify
-      verifyPhoneNumber({ otp: otp })
-        .then(({ data }) => {
-          if (data.data?.message == 'success') {
-            dispatch(
-              displayNotification({
-                open: true,
-                message: 'Your mobile number has been verified successfully.',
-                severity: 'success'
-              })
-            )
-            verifiSuccess()
-          }
-        })
-        .catch((error) => {
-          const response = error.response
-          const resultError = response.data?.message
-          verifiError(resultError ?? error.message)
-        })
-    } else {
-      // change
-      changePhoneNumber({
-        otp: otp,
-        mobile_country_id: countryId,
-        phone_num: smsCode + Number(phoneNum)
-      })
-        .then(({ data }) => {
-          if (data.data?.message == 'success') {
-            dispatch(
-              displayNotification({
-                open: true,
-                message: 'Your mobile number has been verified successfully.',
-                severity: 'success'
-              })
-            )
-            verifiSuccess()
-          }
-        })
-        .catch((error) => {
-          const response = error.response
-          const resultError = response?.data?.message
-          verifiError(resultError ?? error.message)
-        })
-    }
   }
 
   const handleOpen = () => {
@@ -361,6 +179,7 @@ const VerifyPhoneNumber = ({
               error={errorText}
               number={number}
             />
+            <Countdown sendOpt={sendOpt} lang={lang} />
           </div>
         </div>
       </ModalDialog>
