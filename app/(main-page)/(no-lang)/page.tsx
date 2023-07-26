@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 import React from 'react'
 import { getDictionary } from 'get-dictionary'
 import Main from '../components/main'
-
+export const revalidate = 3600
 export default async (props: any) => {
     const locale = getCountryAndLang(cookies() as any || 'en-US')
     const lang = locale?.[1] as any

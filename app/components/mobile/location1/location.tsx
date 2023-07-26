@@ -100,7 +100,6 @@ const formatLocationConfig = (locationList) => {
 const MaterialLocationField = ({ className, label, locationList, width, disableClearable = false, defaultValue, required, fieldRef, error, value, height, ...rest }: any) => {
 
   const formattedLocationList = flat(formatLocationConfig(locationList))
-  const locationRef = React.useRef(null)
   return (
     <ThemeProvider theme={textFieldTheme(value, height, width)}>
       <Autocomplete

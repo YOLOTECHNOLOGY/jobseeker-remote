@@ -185,6 +185,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
+        <div style={{height: 20}}></div>
+
         <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
         </Text>
