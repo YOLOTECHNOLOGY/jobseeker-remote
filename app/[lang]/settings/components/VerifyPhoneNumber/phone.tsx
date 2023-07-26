@@ -33,59 +33,44 @@ import styles from './phone.module.scss'
 import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
 import { find } from 'lodash-es'
+import classNames from 'classnames/bind'
+import { getCountryId } from 'helpers/country'
 
 let timer = null
 // 默认位数
-const originTimer = 10
+const originTimer = 60
 
-const VIf = (props) => (props.show ? props.children : null)
+const VerifyPhoneNumber = (props: any) => {
+  const { label, phoneDefault, verify, errorText, config, lang, userDetail } = props
 
-const VerifyPhoneNumber = ({
-  label,
-  setEdit,
-  edit,
-  phoneDefault,
-  verify,
-  errorText,
-  config,
-  COUNT_DOWN_VERIFY_DEFAULT,
-  lang
-}: any) => {
   const { accountSetting, newGetStarted } = lang
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
 
   const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
-  const firstRender = useFirstRender()
-  const [otpError, setOtpError] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState(userDetail.phone_num_without_country_code || '')
+  // const firstRender = useFirstRender()
   const smsCountryList = getSmsCountryList(config)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
+  const [disabled, setDisabled] = useState(false)
+  const [otp, setOtp] = useState('')
 
-  const getSmsCountryCode = (phoneNumber, smsCountryList) => {
-    if (!phoneNumber || !smsCountryList) return null
-
-    const matchedCountryCode = smsCountryList.filter((country) => {
-      return phoneNumber.includes(country.value)
-    })
-
-    return matchedCountryCode ? matchedCountryCode[0]?.value : null
+  const getSmsCountryCode = (userDetail, smsCountryList) => {
+    const mobile_country_id = userDetail.mobile_country_id || getCountryId()
+    const smsCode = smsCountryList.find((item) => item.id == mobile_country_id)?.value
+    return smsCode || '+63'
   }
 
-  const [smsCode, setSmsCode] = useState(getSmsCountryCode(phoneDefault, smsCountryList))
-
-  if (!smsCode) {
-    setSmsCode('+63')
-  } else if (phoneDefault) {
-    phoneDefault = phoneDefault.substring(smsCode.length, phoneDefault.length)
-  }
+  const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail, smsCountryList))
 
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
     setInitialTime(0)
+    setDisabled(false)
   }
 
   useEffect(() => {
@@ -114,25 +99,111 @@ const VerifyPhoneNumber = ({
   }
 
   const handleSave = () => {
-    console.log('save')
-    clearCloseModal()
+    if (otp.length == 6 && smsCode && phoneNumber) {
+      verifyEmailOrChangeEmail({ phoneNumber, otp, smsCode })
+    }
   }
 
   const handleClose = () => {
-    console.log('close')
     clearCloseModal()
   }
 
   const onChange = (opt) => {
-    console.log('on change opt', opt)
+    setOtp(opt)
   }
 
   const handleSendOTP = () => {
-    console.log('handle send otp')
-    clear()
-    setTimeout(() => {
-      setInitialTime(originTimer)
-    }, 20)
+    if (phoneNumber && smsCode) {
+      clear()
+      sendPhoneNumberOTP({ phoneNumber, smsCode })
+    }
+  }
+
+  const sendPhoneNumberOTP = ({ phoneNumber, smsCode }) => {
+    const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
+    // console.log('handle send otp', { phoneNumber, smsCode, mobile_country_id })
+    smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNumber, mobile_country_id })
+      .then(() => {
+        setStartTimer(true)
+        setInitialTime(originTimer)
+        setDisabled(true)
+      })
+      .catch((exceptionHandler) => {
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail ?? data?.message
+        } else {
+          errorMessage = data?.errors?.phone_num[0]
+        }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage || data.message,
+            severity: 'warning'
+          })
+        )
+      })
+  }
+
+  const verifyEmailOrChangeEmail = ({ phoneNumber, smsCode, otp }) => {
+    const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
+    const phone = smsCode + phoneNumber
+    console.log('verify', { phoneNumber, smsCode, otp, phone, mobile_country_id })
+    if (defaultPhone === phone) {
+      // verify
+      verifyPhoneNumber({ otp: otp })
+        .then(({ data }) => {
+          if (data.data?.message == 'success') {
+            clearCloseModal()
+            dispatch(
+              displayNotification({
+                open: true,
+                message: 'Your mobile number has been verified successfully.',
+                severity: 'success'
+              })
+            )
+          }
+        })
+        .catch(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your mobile number has been verified failed',
+              severity: 'error'
+            })
+          )
+        })
+    } else {
+      // change
+      changePhoneNumber({
+        otp: otp,
+        mobile_country_id: mobile_country_id,
+        phone_num: smsCode + Number(phoneNumber)
+      })
+        .then(({ data }) => {
+          if (data.data?.message == 'success') {
+            clearCloseModal()
+            setDefaultPhone(smsCode + Number(phoneNumber))
+            dispatch(
+              displayNotification({
+                open: true,
+                message: 'Your mobile number has been verified successfully.',
+                severity: 'success'
+              })
+            )
+          }
+        })
+        .catch(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your mobile number has been verified failed',
+              severity: 'error'
+            })
+          )
+        })
+    }
   }
 
   return (
@@ -200,14 +271,17 @@ const VerifyPhoneNumber = ({
                 label='Phone Number'
                 className={styles.smsInput}
                 variant='standard'
-                onChange={(e) => setDefaultPhone(e.target.value)}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
-              <button className={styles.sendOTP} onClick={handleSendOTP}>
+              <button
+                className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
+                onClick={handleSendOTP}
+                disabled={disabled}
+              >
                 Send OTP {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
-
-            <div>{otpError && errorText(otpError)}</div>
 
             {/* verify code */}
             <Captcha lang={lang} autoFocus={true} onChange={onChange} error={errorText} />
