@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './index.module.scss'
 import Empty from '../Empty'
 import List from './List'
@@ -8,6 +8,8 @@ import MaterialButton from 'components/MaterialButton'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
+import { debounce } from 'lodash-es'
+import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
 interface IProps {
   lang: any
 }
@@ -15,9 +17,46 @@ interface IProps {
 const ShieldingCompany = (props: IProps) => {
   const { lang } = props
   const [open, setOpen] = useState<boolean>(false)
-  const [openUnlock, setOpenUnlock] = useState<boolean>(true)
-
+  const [openUnlock, setOpenUnlock] = useState<boolean>(false)
+  const [companyInfo, setCompanyInfo] = useState<any>(null)
+  const [list, setList] = useState<Array<any>>([])
+  const [searchList, setSearchList] = useState<Array<any>>([])
+  const [searchValue, setSearchValue] = useState<string>('')
   const handleConfirm = () => {}
+
+  useEffect(() => {
+    if (searchValue) {
+    }
+  }, [searchValue])
+
+  const handleClick = (data, showModal) => {
+    if (showModal) {
+      setOpen(false)
+    }
+    setCompanyInfo(data)
+    setOpenUnlock(true)
+  }
+  console.log(searchValue)
+  const handleConfirmUnclock = () => {}
+
+  const debounced = useRef(debounce((newValue) => filterCompany(newValue), 1000))
+
+  useEffect(() => debounced.current(searchValue), [searchValue])
+
+  const filterCompany = (newValue) => {
+    const param = {
+      explain: 1,
+      size: 8,
+      page: 1,
+      show_blacklisted: 1,
+      query: newValue
+    }
+    fetchCompanyFilterService(param).then((res) => {
+      console.log(res?.data?.data?.companies)
+      setSearchList(res?.data?.data?.companies || [])
+    })
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.mainNav}>
@@ -42,7 +81,7 @@ const ShieldingCompany = (props: IProps) => {
       </div>
 
       <div className={styles.mainContent}>
-        <List />
+        <List handleClick={handleClick} list={list} />
         {/* <Empty style={{ marginTop: '80px' }} lang={lang} /> */}
       </div>
       <Modal
@@ -63,31 +102,41 @@ const ShieldingCompany = (props: IProps) => {
           <div className={styles.search}>
             <MaterialTextField
               label={'Job title or company'}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
               className={styles.searchInput}
             ></MaterialTextField>
             <MaterialButton className={styles.searchButton} variant='contained' capitalize>
               Search
             </MaterialButton>
           </div>
-          <div className={styles.list}>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label={
-                  <p className={styles.item}>
-                    <span> xxxxx company</span> Unblock
-                  </p>
-                }
-              />
-            </FormGroup>
-          </div>
-          <div className={styles.tips}>
-            <h5>The company can be searched by：</h5>
-            <p>
-              Full name of the company: such as "Beijing Huapin Borui Network Technology Co., Ltd."
-            </p>
-            <p>Company abbreviation: such as "BOSS Direct Employment</p>
-          </div>
+          {searchList?.length > 0 ? (
+            <div className={styles.list}>
+              <FormGroup>
+                {searchList.map((e) => (
+                  <FormControlLabel
+                    key={e.id}
+                    control={<Checkbox checked={true} />}
+                    label={
+                      <p className={styles.item}>
+                        <span> xxxxx company</span>{' '}
+                        <i onClick={(e) => handleClick(e, true)}>Unblock</i>
+                      </p>
+                    }
+                  />
+                ))}
+              </FormGroup>
+            </div>
+          ) : (
+            <div className={styles.tips}>
+              <h5>The company can be searched by：</h5>
+              <p>
+                Full name of the company: such as "Beijing Huapin Borui Network Technology Co.,
+                Ltd."
+              </p>
+              <p>Company abbreviation: such as "BOSS Direct Employment</p>
+            </div>
+          )}
         </div>
       </Modal>
 
@@ -96,7 +145,7 @@ const ShieldingCompany = (props: IProps) => {
         open={openUnlock}
         cancel='Cancel'
         confirm='yes'
-        handleSave={handleConfirm}
+        handleSave={handleConfirmUnclock}
         handleClose={() => setOpenUnlock(false)}
         title='Unblock'
         lang={{}}
