@@ -79,8 +79,9 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       if (!isbenefits) {
         arr.splice(3, 1)
       }
+      console.log(arr)
       arr.map((e, index) => {
-        if (Math.abs(e) < 100) {
+        if (Math.abs(e) < 80) {
           scrollRef.current = true
           setCurrent(index)
         }
@@ -88,11 +89,14 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       if (wrkingLocationTop < -600) {
         setCurrent(arr?.length - 1)
       }
+      if (top < 200) {
+        setCurrent(0)
+      }
     }
   }, [timeStamp])
 
   const computeHeight = (top, bodyTop, headerHeight) => {
-    return top - headerHeight - bodyTop - 100
+    return top - headerHeight - bodyTop - 50
   }
 
   const getOffsetTop = (dom) => {
@@ -116,7 +120,8 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
     if (domID) {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
-      const position = domTop - headerHeight - 100
+      console.log(headerHeight, 9999)
+      const position = domTop - headerHeight - (domID === 'JobDescription' ? 210 : 40)
       position && scrollSmoothTo(position)
     }
   }, [current])
@@ -148,21 +153,23 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   }
 
   return (
-    <div className={styles.menu}>
-      <div className={styles.menuMain}>
-        <ul>
-          {menuNew.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => handleClick(index)}
-              className={`${index === current ? styles.active : ''} `}
-            >
-              {item.name}
-            </li>
-          ))}
-        </ul>
-        <div className={styles.operator}>
-          <JobClient isLogin={Boolean(token)} {...shareParams} />
+    <div className={styles.headSticky} id='jobDetaiPagelHead'>
+      <div className={styles.menu}>
+        <div className={styles.menuMain}>
+          <ul>
+            {menuNew.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => handleClick(index)}
+                className={`${index === current ? styles.active : ''} `}
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
+          <div className={styles.operator}>
+            <JobClient isLogin={Boolean(token)} {...shareParams} />
+          </div>
         </div>
       </div>
     </div>
