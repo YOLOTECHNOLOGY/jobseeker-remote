@@ -6,7 +6,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
 import Captcha from '../captcha/index'
-
+import { validEmailReg } from '../../config'
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
 
@@ -36,12 +36,10 @@ let timer = null
 // 默认位数
 const originTimer = 10
 
-const VIf = (props) => (props.show ? props.children : null)
-
 const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }: any) => {
   const { accountSetting } = lang
+  const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
-  console.log({ emailDefault })
 
   const firstRender = useFirstRender()
 
@@ -51,13 +49,73 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
-  const [showCountDown, setShowCountDown] = useState(false)
 
   const [otp, setOtp] = useState('')
 
-  const [number, setNumber] = useState<number>(0)
+  const validEmail = (value: string) => {
+    let errorMessage = !validEmailReg.test(value) ? alertJobsModal?.emailValid : ''
+    if (value == '') {
+      errorMessage = alertJobsModal?.emailEmpty
+    }
+    return errorMessage
+  }
 
-  const { newGetStarted } = lang
+  const sendEmailOTPS = () => {
+    emailOTPChangeEmailGenerate({ email })
+      .then()
+      .catch((exceptionHandler) => {
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail
+        } else {
+          errorMessage = data?.errors?.email[0]
+        }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: exceptionHandler.message ?? errorMessage,
+            severity: 'warning'
+          })
+        )
+      })
+  }
+
+  const verifyEmailOrChangeEmail = () => {
+    if (emailDefault === email) {
+      // verify
+      verifyEmail({ otp })
+        .then(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified successfully',
+              severity: 'success'
+            })
+          )
+          console.log('verify success')
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    } else {
+      // change
+      changeEmail({ otp, email })
+        .then(() => {
+          console.log('change success')
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified successfully',
+              severity: 'success'
+            })
+          )
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    }
+  }
 
   const clear = () => {
     clearTimeout(timer)
@@ -68,43 +126,46 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
   useEffect(() => {
     if (initialTime > 0) {
       timer = setTimeout(() => {
-        console.log('startTime, ', initialTime)
         setInitialTime(initialTime - 1)
       }, 1000)
     }
 
     if (initialTime === 0 && startTimer) {
-      console.log('done')
       clear()
     }
   }, [initialTime, startTimer])
 
+  const handleKeyUp = (ev) => {
+    const value = ev?.target?.value || ''
+    setEmailError(validEmail(value))
+  }
+
   const handleOpen = () => {
-    console.log('handle open!!!')
     setOpen(true)
     clear()
   }
 
-  const handleSave = () => {
-    console.log('save')
-    // setOpen(false)
+  const clearCloseModal = () => {
     clear()
-    setShowCountDown(false)
+    setOpen(false)
+  }
+
+  const handleSave = () => {
+    console.log('save', { otp, email })
+    // clearCloseModal()
   }
 
   const handleClose = () => {
     console.log('close')
-    setOpen(false)
-    clear()
-    setShowCountDown(false)
+    clearCloseModal()
   }
 
-  const onChange = (opt) => {
-    console.log('on change opt', opt)
+  const onChange = (otp) => {
+    setOtp(otp)
   }
 
   const handleSendOTP = () => {
-    console.log('handle send otp')
+    console.log('handle send otp', email)
     clear()
     setTimeout(() => {
       setInitialTime(originTimer)
@@ -147,6 +208,7 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
         </div>
       </div>
 
+      {/* modal */}
       <ModalDialog
         key={'verify-email'}
         open={open}
@@ -159,6 +221,7 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>
+            {/* email input */}
             <div className={styles.emailInput}>
               <MaterialTextField
                 className={styles.fullWidth}
@@ -166,7 +229,9 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
                 size='medium'
                 type='text'
                 name='email'
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyUp={handleKeyUp}
                 error={emailError ? true : false}
                 autoComplete='true'
                 variant='standard'
@@ -180,35 +245,14 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
                 }}
               />
               <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
-              <button
-                className={styles.sendOTP}
-                onClick={() => {
-                  setShowCountDown(true)
-                  handleSendOTP()
-                }}
-              >
-                Send OTP
+              <button className={styles.sendOTP} onClick={handleSendOTP}>
+                Send OTP {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
             <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
-            <Captcha
-              lang={lang}
-              autoFocus={true}
-              onChange={onChange}
-              error={errorText}
-              number={number}
-            />
-            <VIf show={showCountDown}>
-              <p className={styles.countdown}>
-                {initialTime <= 0 ? (
-                  <span className={styles.resendCode} onClick={handleSendOTP}>
-                    {newGetStarted.resendCode}
-                  </span>
-                ) : (
-                  initialTime + 's'
-                )}
-              </p>
-            </VIf>
+
+            {/* verify code */}
+            <Captcha lang={lang} autoFocus={true} onChange={onChange} error={errorText} />
           </div>
         </div>
       </ModalDialog>

@@ -55,16 +55,14 @@ const VerifyPhoneNumber = ({
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
-  const [number, setNumber] = useState<number>(0)
 
   const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
   const firstRender = useFirstRender()
-
+  const [otpError, setOtpError] = useState('')
   const smsCountryList = getSmsCountryList(config)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
-  const [showCountDown, setShowCountDown] = useState(false)
 
   const getSmsCountryCode = (phoneNumber, smsCountryList) => {
     if (!phoneNumber || !smsCountryList) return null
@@ -110,18 +108,19 @@ const VerifyPhoneNumber = ({
     clear()
   }
 
+  const clearCloseModal = () => {
+    clear()
+    setOpen(false)
+  }
+
   const handleSave = () => {
     console.log('save')
-    // setOpen(false)
-    clear()
-    setShowCountDown(false)
+    clearCloseModal()
   }
 
   const handleClose = () => {
     console.log('close')
-    setOpen(false)
-    clear()
-    setShowCountDown(false)
+    clearCloseModal()
   }
 
   const onChange = (opt) => {
@@ -174,6 +173,7 @@ const VerifyPhoneNumber = ({
         </div>
       </div>
 
+      {/* modal */}
       <ModalDialog
         key={'verify-phone'}
         open={open}
@@ -186,6 +186,7 @@ const VerifyPhoneNumber = ({
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>
+            {/* phone input */}
             <div className={styles.phoneInput}>
               <MaterialBasicSelect
                 className={styles.smsCountry}
@@ -199,37 +200,17 @@ const VerifyPhoneNumber = ({
                 label='Phone Number'
                 className={styles.smsInput}
                 variant='standard'
+                onChange={(e) => setDefaultPhone(e.target.value)}
               />
-              <button
-                className={styles.sendOTP}
-                onClick={() => {
-                  setShowCountDown(true)
-                  handleSendOTP()
-                }}
-              >
-                Send OTP
+              <button className={styles.sendOTP} onClick={handleSendOTP}>
+                Send OTP {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
 
-            {/* <div>{emailError && errorText(emailError)}</div> */}
-            <Captcha
-              lang={lang}
-              autoFocus={true}
-              onChange={onChange}
-              error={errorText}
-              number={number}
-            />
-            <VIf show={showCountDown}>
-              <p className={styles.countdown}>
-                {initialTime <= 0 ? (
-                  <span className={styles.resendCode} onClick={handleSendOTP}>
-                    {newGetStarted.resendCode}
-                  </span>
-                ) : (
-                  initialTime + 's'
-                )}
-              </p>
-            </VIf>
+            <div>{otpError && errorText(otpError)}</div>
+
+            {/* verify code */}
+            <Captcha lang={lang} autoFocus={true} onChange={onChange} error={errorText} />
           </div>
         </div>
       </ModalDialog>
