@@ -28,7 +28,6 @@ interface ICaptchaProps {
   style?: CSSProperties | undefined
   error?: string
   lang?: any
-  number: number
 }
 
 const Captcha: React.FC<ICaptchaProps> = (props) => {
@@ -85,7 +84,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
             const isItemActive = isFocused && index == currentIndex
             return (
               <div
-                key={index}
+                key={index + '@' + item}
                 className={`
                 ${styles.itemContent}
                 ${item ? styles.itemContentHit : ''}

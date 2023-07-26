@@ -6,7 +6,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
 import Captcha from '../captcha/index'
-
+import { validEmailReg } from '../../config'
 // tools
 import { handleNumericInput } from 'helpers/handleInput'
 
@@ -31,84 +31,168 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { formatTemplateString } from 'helpers/formatter'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
+import classNames from 'classnames/bind'
 
 let timer = null
 // 默认位数
-const originTimer = 10
+const originTimer = 60
 
-const VIf = (props) => (props.show ? props.children : null)
-
-const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }: any) => {
+const VerifyMailAndBindEmail = (props: any) => {
+  const { label, emailDefault, verify, errorText, lang } = props
   const { accountSetting } = lang
+  const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
-  console.log({ emailDefault })
 
   const firstRender = useFirstRender()
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
+  const [defaultEmail, setDefaultEmail] = useState(emailDefault)
   const [open, setOpen] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
-  const [showCountDown, setShowCountDown] = useState(false)
 
   const [otp, setOtp] = useState('')
 
-  const [number, setNumber] = useState<number>(0)
-
-  const { newGetStarted } = lang
+  const validEmail = (value: string) => {
+    let errorMessage = !validEmailReg.test(value) ? alertJobsModal?.emailValid : ''
+    if (value == '') {
+      errorMessage = alertJobsModal?.emailEmpty
+    }
+    return errorMessage
+  }
 
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
     setInitialTime(0)
+    setDisabled(false)
+    setEmailError('')
   }
 
   useEffect(() => {
     if (initialTime > 0) {
       timer = setTimeout(() => {
-        console.log('startTime, ', initialTime)
         setInitialTime(initialTime - 1)
       }, 1000)
     }
-
     if (initialTime === 0 && startTimer) {
-      console.log('done')
       clear()
     }
   }, [initialTime, startTimer])
 
+  const handleKeyUp = (ev) => {
+    const value = ev?.target?.value || ''
+    setEmailError(validEmail(value))
+  }
+
   const handleOpen = () => {
-    console.log('handle open!!!')
     setOpen(true)
     clear()
   }
 
-  const handleSave = () => {
-    console.log('save')
-    // setOpen(false)
+  const clearCloseModal = () => {
     clear()
-    setShowCountDown(false)
+    setOpen(false)
+  }
+
+  const handleSave = () => {
+    if (!emailError && otp.length == 6) {
+      verifyEmailOrChangeEmail({ otp, email, emailDefault })
+    }
   }
 
   const handleClose = () => {
-    console.log('close')
-    setOpen(false)
-    clear()
-    setShowCountDown(false)
+    clearCloseModal()
   }
 
-  const onChange = (opt) => {
-    console.log('on change opt', opt)
+  const onChange = (otp) => {
+    setOtp(otp)
   }
 
   const handleSendOTP = () => {
-    console.log('handle send otp')
-    clear()
-    setTimeout(() => {
-      setInitialTime(originTimer)
-    }, 20)
+    if (!emailError) {
+      clear()
+      sendEmailOTP(email)
+    }
+  }
+
+  const sendEmailOTP = (email) => {
+    emailOTPChangeEmailGenerate({ email })
+      .then(() => {
+        setStartTimer(true)
+        setInitialTime(originTimer)
+        setDisabled(true)
+      })
+      .catch((exceptionHandler) => {
+        setDisabled(false)
+        const { data } = exceptionHandler.response
+        let errorMessage
+        if (data?.data) {
+          errorMessage = data?.data?.detail
+        } else {
+          errorMessage = data?.errors?.email[0]
+        }
+        dispatch(
+          displayNotification({
+            open: true,
+            message: errorMessage || data.message,
+            severity: 'warning'
+          })
+        )
+      })
+  }
+
+  const verifyEmailOrChangeEmail = ({ otp, email, emailDefault }) => {
+    if (emailDefault === email) {
+      // verify
+      verifyEmail({ otp: Number(otp) || 0 })
+        .then(() => {
+          clearCloseModal()
+          setDefaultEmail(email)
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified successfully',
+              severity: 'success'
+            })
+          )
+        })
+        .catch(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified failed',
+              severity: 'error'
+            })
+          )
+        })
+    } else {
+      // change
+      changeEmail({ otp: Number(otp) || 0, email })
+        .then(() => {
+          clearCloseModal()
+          setDefaultEmail(email)
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified successfully',
+              severity: 'success'
+            })
+          )
+        })
+        .catch(() => {
+          dispatch(
+            displayNotification({
+              open: true,
+              message: 'Your email account has been verified failed',
+              severity: 'error'
+            })
+          )
+        })
+    }
   }
 
   return (
@@ -128,7 +212,7 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
         <div className={styles.tip}>Receive job applications updates through your email.</div>
         <div className={styles.content}>
           <div className={styles.info}>
-            <span>{email ? email : 'Not provided'}</span>
+            <span>{defaultEmail ? defaultEmail : 'Not provided'}</span>
             {verify && (
               <Tooltip title='Verified' placement='top' arrow classes={{ tooltip: styles.toolTip }}>
                 <Image
@@ -147,6 +231,7 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
         </div>
       </div>
 
+      {/* modal */}
       <ModalDialog
         key={'verify-email'}
         open={open}
@@ -159,6 +244,7 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>
+            {/* email input */}
             <div className={styles.emailInput}>
               <MaterialTextField
                 className={styles.fullWidth}
@@ -166,7 +252,9 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
                 size='medium'
                 type='text'
                 name='email'
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyUp={handleKeyUp}
                 error={emailError ? true : false}
                 autoComplete='true'
                 variant='standard'
@@ -181,34 +269,23 @@ const VerifyMailAndBindEmail = ({ label, emailDefault, verify, errorText, lang }
               />
               <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
               <button
-                className={styles.sendOTP}
-                onClick={() => {
-                  setShowCountDown(true)
-                  handleSendOTP()
-                }}
+                className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
+                onClick={handleSendOTP}
+                disabled={disabled}
               >
-                Send OTP
+                Send OTP {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
             <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
+
+            {/* verify code */}
             <Captcha
+              key={'verify-email-captcha'}
               lang={lang}
               autoFocus={true}
               onChange={onChange}
               error={errorText}
-              number={number}
             />
-            <VIf show={showCountDown}>
-              <p className={styles.countdown}>
-                {initialTime <= 0 ? (
-                  <span className={styles.resendCode} onClick={handleSendOTP}>
-                    {newGetStarted.resendCode}
-                  </span>
-                ) : (
-                  initialTime + 's'
-                )}
-              </p>
-            </VIf>
           </div>
         </div>
       </ModalDialog>

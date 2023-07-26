@@ -46,6 +46,7 @@ const index = (props: IProps) => {
         setEdit={setEdit}
         isEdit
         errorText={errorText}
+        userDetail={userDetail}
         phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
         verify={userDetail.is_mobile_verified}
         config={config}
