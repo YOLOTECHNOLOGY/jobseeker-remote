@@ -284,7 +284,13 @@ const VerifyPhoneNumber = (props: any) => {
             </div>
 
             {/* verify code */}
-            <Captcha lang={lang} autoFocus={true} onChange={onChange} error={errorText} />
+            <Captcha
+              key={'verify-phone-captcha'}
+              lang={lang}
+              autoFocus={true}
+              onChange={onChange}
+              error={errorText}
+            />
           </div>
         </div>
       </ModalDialog>

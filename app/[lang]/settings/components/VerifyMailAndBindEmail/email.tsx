@@ -279,7 +279,13 @@ const VerifyMailAndBindEmail = (props: any) => {
             <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
 
             {/* verify code */}
-            <Captcha lang={lang} autoFocus={true} onChange={onChange} error={errorText} />
+            <Captcha
+              key={'verify-email-captcha'}
+              lang={lang}
+              autoFocus={true}
+              onChange={onChange}
+              error={errorText}
+            />
           </div>
         </div>
       </ModalDialog>
