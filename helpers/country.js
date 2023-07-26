@@ -38,12 +38,12 @@ const countryCounfig = [
     key: 'jp',
     url: 'bossjob.jp',
     defaultLocation: {
-      id: 68,
+      id: 1714,
       is_popular: false,
-      key: "tokyo",
+      key: "chuo_ku",
       region_display_name: "Tokyo To",
-      seo_value: "tokyo_to",
-      value: "Tokyo To",
+      seo_value: "chuo-ku",
+      value: "Chuo Ku"
     },
     currency: 'jpy',
     id: 105
@@ -92,7 +92,7 @@ export const getDefaultLocation = key => {
   return countryCounfig.find(item => item.key === key)?.defaultLocation
 }
 
-const defaultNation = nations[0];
+const defaultNation = nations[2];
 
 export const defaultCountryKey = () => defaultNation.value
 export const defaultCountryId = () => defaultNation.id
