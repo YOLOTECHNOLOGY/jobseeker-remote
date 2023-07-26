@@ -93,7 +93,7 @@
     },
     "loginUsingSocialMediaOTP": "Login using social media/OTP",
     "loginUsingQRCode": "Login using QR code",
-    "scanQRCodeOnAppToLogin": "Use Bossjob APP to scan the QR code to login",
+    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
     "donHaveApp": "Don’t have App",
     "howToScanQRCode": "How to scan the QR code",
     "ImJobSeeker": "I'm a Jobseeker",
@@ -645,7 +645,10 @@
           "location": "Current Location",
           "exp": "Years of Experience",
           "summary": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
-          "birthdayError": "You need to be at least 16 years old to use Bossjob."
+          "birthdayError": "You need to be at least 16 years old to use Bossjob.",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "Work Experience",
@@ -711,7 +714,8 @@
           "btn2": "Save",
           "suggestions": "We will suggest skill for you according to job function:",
           "jobFunction": "Job Function",
-          "skill": "Search or add a skill"
+          "skill": "Search or add a skill",
+          "addBtn": "Add"
         },
         "licenses": {
           "title": "Licenses and Certifications",
@@ -954,7 +958,8 @@
     "skip": "Skip profile setup",
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
-    "skipAnyway": "Skip Anyway"
+    "skipAnyway": "Skip Anyway",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1145,8 +1150,20 @@
   "accountSetting": {
     "title": "Account Setting",
     "tabs": {
+      "settings": "Settings",
       "account": "Account",
-      "jobAlert": "Job Alert"
+      "jobAlert": "Job Alert",
+      "accountSetting": "Account Setting",
+      "notification": "Notification",
+      "shieldingCompany": "Shielding Company"
+    },
+    "modals": {
+      "verifyMobileTitle": "Verify your mobile number",
+      "verifyEmailTitle": "Change email address verify"
+    },
+    "verifiedMessages": {
+      "mobile": "Your mobile number has been verified successfully.",
+      "email": "Your email account has been verified successfully."
     },
     "email": "Email",
     "sendOpt": "Send OTP",
@@ -1185,7 +1202,8 @@
     "deleteTitle": "Delete job alert",
     "keep": "Keep",
     "delete": "Delete",
-    "deleteTips": "You are about to delete this job alert. This cannot be undone."
+    "deleteTips": "You are about to delete this job alert. This cannot be undone.",
+    "notProvided": "Not provided"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
