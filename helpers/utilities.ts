@@ -80,9 +80,9 @@ export const getDistance = (Plat1, Plng1, Plat2, Plng2)=> {
   let distance_str = "";
 
   if (distance >= 1) {
-      distance_str = distance.toFixed(1) + "km";
+      distance_str = distance.toFixed(1) + " km";
   } else {
-      distance_str = distance * 1000 + "m";
+      distance_str = distance * 1000 + " m";
   }
 
   console.info(distance, distance_str);
