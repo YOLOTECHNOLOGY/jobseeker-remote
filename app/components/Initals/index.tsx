@@ -60,65 +60,65 @@ const Initial = () => {
     fbq.pageview()
   }, [])
   return <>
-    <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
     <Script
+      strategy='afterInteractive'
+      src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
+    <Script
+      strategy='afterInteractive'
       id='gtag-init'
-      dangerouslySetInnerHTML={{
-        __html: `
-            window.dataLayer = window.dataLayer || [];
+    >{
+        `window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${gtag.GA_TRACKING_ID}', {
               page_path: window.location.pathname,
             });
           `
-      }}
-    />
+      } </Script>
     {/* Facebook  */}
     <Script
-      dangerouslySetInnerHTML={{
-        __html: `
-            function initialize() {	
-              FB.init({	
-                appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
-          },
-                xfbml            : true,	
-                version          : 'v6.0'	
-              });	
-            };	
+      strategy='afterInteractive'
+    >{`
+    function initialize() {	
+      FB.init({	
+        appId            : ${process.env.ENV === 'production' ? '2026042927653653' : '2111002932479859'
+      },
+        xfbml            : true,	
+        version          : 'v6.0'	
+      });	
+    };	
 
-            if(window.FB === undefined) {	
-              window.fbAsyncInit = function() {	
-                initialize();	
-              };	
-            }	else {	
-              initialize();	
-            }	
+    if(window.FB === undefined) {	
+      window.fbAsyncInit = function() {	
+        initialize();	
+      };	
+    }	else {	
+      initialize();	
+    }	
 
-            (function(d, s, id){	
-              var js, fjs = d.getElementsByTagName(s)[0];	
-              if (d.getElementById(id)) {return;}	
-              js = d.createElement(s); js.id = id;	
-              js.src = "https://connect.facebook.net/en_US/sdk.js";	
-              fjs.parentNode.insertBefore(js, fjs);	
-            }(document, 'script', 'facebook-jssdk'));	
+    (function(d, s, id){	
+      var js, fjs = d.getElementsByTagName(s)[0];	
+      if (d.getElementById(id)) {return;}	
+      js = d.createElement(s); js.id = id;	
+      js.src = "https://connect.facebook.net/en_US/sdk.js";	
+      fjs.parentNode.insertBefore(js, fjs);	
+    }(document, 'script', 'facebook-jssdk'));	
 
-            // Fb pixel
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', ${fbq.FB_PIXEL_ID});
-            `
-      }}
-    />
+    // Fb pixel
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', ${fbq.FB_PIXEL_ID});
+    `}</Script>
     {/* Google One Tap Sign in */}
     <Script
       src='https://accounts.google.com/gsi/client'
+      strategy='afterInteractive'
       onReady={() => {
         if (!accessToken) {
           const google = (window as any)?.google
@@ -154,8 +154,9 @@ const Initial = () => {
       }}
     />
     <Script
-      strategy='lazyOnload'
+      // strategy='lazyOnload'
       src='https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=CGUHCV3C77U5RBGMKBDG&lib=ttq'
+      strategy='afterInteractive'
       onLoad={() => {
         (window as any)?.ttq.page();
       }}
