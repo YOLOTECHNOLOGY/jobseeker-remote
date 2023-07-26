@@ -127,13 +127,10 @@ const VerifyMailAndBindEmail = ({
         confirm='Verify'
         handleSave={handleSave}
         handleClose={handleClose}
+        title='Change email address verify'
         lang={lang}
       >
         <div className={styles.modalContent}>
-          <div className={styles.title}>
-            <span>Change email address verify</span>
-            <CloseIcon onClick={handleClose} sx={{ color: '#BCBCBC', cursor: 'pointer' }} />
-          </div>
           <div className={styles.content}>
             <div className={styles.emailInput}>
               <MaterialTextField
