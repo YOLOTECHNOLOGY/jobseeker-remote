@@ -10,6 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { debounce } from 'lodash-es'
 import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
+import { fetchBlacklistCompaniesService } from 'store/services/companies2/fetchBlackCompany'
 interface IProps {
   lang: any
 }
@@ -23,6 +24,13 @@ const ShieldingCompany = (props: IProps) => {
   const [searchList, setSearchList] = useState<Array<any>>([])
   const [searchValue, setSearchValue] = useState<string>('')
   const handleConfirm = () => {}
+
+  useEffect(() => {
+    fetchBlacklistCompaniesService().then((res) => {
+      console.log(res?.data?.data?.blacklist_companies || [])
+      setList(res?.data?.data?.blacklist_companies)
+    })
+  }, [])
 
   useEffect(() => {
     if (searchValue) {
@@ -41,7 +49,11 @@ const ShieldingCompany = (props: IProps) => {
 
   const debounced = useRef(debounce((newValue) => filterCompany(newValue), 1000))
 
-  useEffect(() => debounced.current(searchValue), [searchValue])
+  useEffect(() => {
+    if (searchValue) {
+      debounced.current(searchValue)
+    }
+  }, [searchValue])
 
   const filterCompany = (newValue) => {
     const param = {
