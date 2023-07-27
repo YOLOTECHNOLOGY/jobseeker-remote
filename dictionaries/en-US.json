@@ -1214,6 +1214,7 @@
     "notProvided": "Not provided",
     "noData": "No Data",
     "blockMessages": {
+      "searchLabel": "Search companies",
       "unblock": "Unblock",
       "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",
       "jobOrCompany": "Job title or company",

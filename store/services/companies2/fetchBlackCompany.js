@@ -1,4 +1,11 @@
 import configuredAxios from 'helpers/configuredAxios'
+import queryString from 'query-string'
+
+
+const fetchSearchCompanyService = (payload) => {
+    const axios = configuredAxios('company', 'protected')
+    return axios.get(`/search?${queryString.stringify(payload)}`)
+  }
 
 const fetchBlacklistCompaniesService = (payload) => {
     const axios = configuredAxios('company', 'protected')
@@ -14,9 +21,9 @@ const fetchAddBlacklistCompaniesService = (payload) => {
 
 const fetchDeleteBlacklistCompaniesService = (payload) => {
     const axios = configuredAxios('company', 'protected')
-    return axios.post(`/blacklist-companies/delete`, payload)
+    return axios.delete(`/blacklist-companies/delete`, payload)
 }
 
 
 
-export { fetchBlacklistCompaniesService, fetchAddBlacklistCompaniesService, fetchDeleteBlacklistCompaniesService }
+export { fetchSearchCompanyService, fetchBlacklistCompaniesService, fetchAddBlacklistCompaniesService, fetchDeleteBlacklistCompaniesService }

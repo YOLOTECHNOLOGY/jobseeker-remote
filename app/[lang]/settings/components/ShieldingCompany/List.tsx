@@ -4,10 +4,12 @@ import styles from './index.module.scss'
 interface IProps {
   handleClick: Function
   list: Array<any>
+  lang: any
 }
 
 const List = (props: IProps) => {
-  const { handleClick, list } = props
+  const { handleClick, list, lang } = props
+  const { accountSetting } = lang
 
   return (
     <div className={styles.companyList}>
@@ -16,7 +18,7 @@ const List = (props: IProps) => {
           <div className={styles.companyItem} key={item?.id}>
             <div className={styles.companyItemTitle}>{item?.company?.name}</div>
             <div className={styles.companyItemAction} onClick={() => handleClick(item)}>
-              Unblock
+              {accountSetting?.blockMessages?.unblock}
             </div>
           </div>
         )

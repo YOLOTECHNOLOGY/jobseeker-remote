@@ -1,20 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react'
-import styles from './index.module.scss'
-import Empty from '../Empty'
-import List from './List'
-import Modal from '../Modal'
-import MaterialTextField from 'components/MaterialTextField'
-import MaterialButton from 'components/MaterialButton'
-import FormGroup from '@mui/material/FormGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
+import { useDispatch } from 'react-redux'
+
 import { debounce } from 'lodash-es'
-import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
 import {
+  fetchSearchCompanyService,
   fetchBlacklistCompaniesService,
   fetchAddBlacklistCompaniesService,
   fetchDeleteBlacklistCompaniesService
 } from 'store/services/companies2/fetchBlackCompany'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+
+import MaterialTextField from 'components/MaterialTextField'
+import MaterialButton from 'components/MaterialButton'
+import Empty from '../Empty'
+import List from './List'
+import Modal from '../Modal'
+
+import styles from './index.module.scss'
 
 interface IProps {
   lang: any
@@ -22,6 +28,9 @@ interface IProps {
 
 const ShieldingCompany = (props: IProps) => {
   const { lang } = props
+  const { accountSetting = {} } = lang
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState<boolean>(false)
   const [openUnlock, setOpenUnlock] = useState<boolean>(false)
 
@@ -34,11 +43,32 @@ const ShieldingCompany = (props: IProps) => {
 
   const [showSearchModal, setShowSearchModal] = useState(true)
 
+  const handleError = (error) => {
+    const { data } = error.response
+    let errorMessage
+    if (data?.data) {
+      errorMessage = data?.data?.detail ?? data?.message
+    } else {
+      errorMessage = data?.errors?.phone_num[0]
+    }
+    dispatch(
+      displayNotification({
+        open: true,
+        message: errorMessage || data.message,
+        severity: 'error'
+      })
+    )
+  }
+
   const blackListCompanies = () => {
-    fetchBlacklistCompaniesService({ page: 1, size: 100 }).then((res) => {
-      const resData = res?.data?.data?.blacklist_companies || []
-      setList(resData)
-    })
+    fetchBlacklistCompaniesService({ page: 1, size: 100 })
+      .then((res) => {
+        const resData = res?.data?.data?.blacklist_companies || []
+        setList(resData)
+      })
+      .catch((err) => {
+        handleError(err)
+      })
   }
   const addBlackCompanies = (companyIds: Array<number>) => {
     fetchAddBlacklistCompaniesService({ company_ids: companyIds })
@@ -49,18 +79,19 @@ const ShieldingCompany = (props: IProps) => {
       })
       .catch((err) => {
         console.log('err', err)
+        handleError(err)
       })
   }
 
-  const handleUpdateBlackStatus = (companyIds) => {
-    const list = [...searchList].map((item) => {
-      if (companyIds.includes(item.id)) {
-        item.is_blacklisted = true
-      }
-      return item
-    })
-    setList(list)
-  }
+  // const handleUpdateBlackStatus = (companyIds) => {
+  //   const list = [...searchList].map((item) => {
+  //     if (companyIds.includes(item.id)) {
+  //       item.is_blacklisted = false
+  //     }
+  //     return item
+  //   })
+  //   setList([...list])
+  // }
 
   const deleteBlackCompanies = (companyIds: Array<number>) => {
     fetchDeleteBlacklistCompaniesService({ company_ids: companyIds })
@@ -69,14 +100,14 @@ const ShieldingCompany = (props: IProps) => {
         if (!showSearchModal) {
           setOpen(true)
           setShowSearchModal(true)
-          console.log('delete', companyIds)
-          handleUpdateBlackStatus(companyIds)
+          filterCompany(searchValue)
         }
         // refresh backlist companies
         blackListCompanies()
       })
       .catch((err) => {
         console.log(err)
+        handleError(err)
       })
   }
 
@@ -110,14 +141,14 @@ const ShieldingCompany = (props: IProps) => {
   }, [searchValue])
 
   const filterCompany = (newValue) => {
-    const param = {
+    const params = {
       explain: 1,
       size: 8,
       page: 1,
       show_blacklisted: 1,
       query: newValue
     }
-    fetchCompanyFilterService(param).then((res) => {
+    fetchSearchCompanyService(params).then((res) => {
       console.log(res?.data?.data?.companies)
       const data = res?.data?.data?.companies || []
       setSearchList(data)
@@ -156,7 +187,7 @@ const ShieldingCompany = (props: IProps) => {
   return (
     <div className={styles.main}>
       <div className={styles.mainNav}>
-        <div className={styles.mainTitle}>Shielding Company</div>
+        <div className={styles.mainTitle}>{accountSetting?.tabs?.shieldingCompany}</div>
         <div className={styles.mainAdd} onClick={() => setOpen(true)}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -178,7 +209,7 @@ const ShieldingCompany = (props: IProps) => {
 
       <div className={styles.mainContent}>
         {list?.length > 0 ? (
-          <List handleClick={(data) => handleBlackCompany(data, false)} list={list} />
+          <List lang={lang} handleClick={(data) => handleBlackCompany(data, false)} list={list} />
         ) : (
           <Empty style={{ marginTop: '80px' }} lang={lang} />
         )}
@@ -195,19 +226,16 @@ const ShieldingCompany = (props: IProps) => {
         lang={{}}
       >
         <div className={styles.modal}>
-          <p className={styles.title}>
-            After adding blocked companies, you and the bosses of these companies will not be
-            recommended to each other, and your viewing behavior will not be notified to each other
-          </p>
+          <p className={styles.title}>{accountSetting?.blockMessages?.title}</p>
           <div className={styles.search}>
             <MaterialTextField
-              label={'Job title or company'}
+              label={accountSetting?.blockMessages?.searchLabel}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               className={styles.searchInput}
             ></MaterialTextField>
             <MaterialButton className={styles.searchButton} variant='contained' capitalize>
-              Search
+              {accountSetting?.search}
             </MaterialButton>
           </div>
           {searchList?.length > 0 ? (
@@ -233,7 +261,7 @@ const ShieldingCompany = (props: IProps) => {
                               handleBlackCompany(item, true)
                             }}
                           >
-                            Unblock
+                            {accountSetting?.blockMessages?.unblock}
                           </i>
                         )}
                       </p>
@@ -244,12 +272,9 @@ const ShieldingCompany = (props: IProps) => {
             </div>
           ) : (
             <div className={styles.tips}>
-              <h5>The company can be searched by：</h5>
-              <p>
-                Full name of the company: such as "Beijing Huapin Borui Network Technology Co.,
-                Ltd."
-              </p>
-              <p>Company abbreviation: such as "BOSS Direct Employment</p>
+              <h5>{accountSetting?.blockMessages?.tip1}：</h5>
+              <p>{accountSetting?.blockMessages?.tip2}</p>
+              <p>{accountSetting?.blockMessages?.tip3}</p>
             </div>
           )}
         </div>
@@ -258,19 +283,16 @@ const ShieldingCompany = (props: IProps) => {
       <Modal
         key={'openUnlock' + companyInfo?.id}
         open={openUnlock}
-        cancel='Cancel'
-        confirm='yes'
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.yes}
         handleSave={handleConfirmUnClock}
         handleClose={handleCloseUnlock}
-        title='Unblock'
+        title={accountSetting?.blockMessages?.unlock}
         lang={lang}
       >
         <div className={styles.modal}>
-          <h6>The following related companies will be unblocked at the same time：</h6>
-          <p className={styles.titleUnlock}>
-            The company is referred to as Changdian, related companies of Chongqing Changdian
-            Network
-          </p>
+          <h6>{accountSetting?.blockMessages?.unBlockTip1}：</h6>
+          <p className={styles.titleUnlock}>{accountSetting?.blockMessages?.unBlockTip2}</p>
         </div>
       </Modal>
     </div>
