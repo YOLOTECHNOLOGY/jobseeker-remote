@@ -22,7 +22,7 @@ interface IProps {
 const SettingModal = (props: IProps) => {
   const { open, lang, config, job, handleClose, handleSave, filterValues } = props
   const alertJobsModal = lang?.search?.alertJobsModal || {}
-  const [frequency, setFrequency] = useState(job?.frequency_id || '')
+  const [frequencyId, setFrequencyId] = useState(job?.frequency_id || '')
   const [email, setEmail] = useState(job?.email)
   const [emailError, setEmailError] = useState(null)
 
@@ -31,15 +31,11 @@ const SettingModal = (props: IProps) => {
   }, [config])
 
   const handleMethodSave = () => {
-    handleSave({ frequency, email, id: job?.id })
-    setTimeout(() => {
-      setFrequency('')
-      setEmail('')
-    })
+    handleSave({ frequency_id: frequencyId, email, id: job?.id })
   }
 
   const handleMethodClose = () => {
-    setFrequency('')
+    setFrequencyId('')
     setEmail('')
     handleClose()
   }
@@ -72,15 +68,17 @@ const SettingModal = (props: IProps) => {
         <div className={styles.modal}>
           <div className={styles.item}>
             <p className={styles.title}>Job filters</p>
-            <p className={styles.content}>{job ? filterValues(job) : null}</p>
+            <p className={styles.content} title={job ? filterValues(job) : null}>
+              {job ? filterValues(job) : null}
+            </p>
           </div>
           <div className={styles.item}>
             <p className={`${styles.title} ${styles.titleFilters}`}>Frequency</p>
             <div className={styles.select}>
               <Select
                 variant='standard'
-                value={frequency}
-                onChange={(ev) => setFrequency(ev.target.value)}
+                value={frequencyId}
+                onChange={(ev) => setFrequencyId(ev.target.value)}
               >
                 {frequencyList &&
                   frequencyList.map((item) => {

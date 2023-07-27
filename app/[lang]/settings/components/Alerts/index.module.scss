@@ -125,6 +125,13 @@
       width: 100%;
     }
 
+    .content {
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
     .content,
     .select {
       color: #121212;

@@ -10,10 +10,9 @@ import Loading from 'app/components/loading'
 import Image from 'next/image'
 
 // actions
-import { fetchJobAlertsListRequest } from 'store/actions/alerts/fetchJobAlertsList'
-import { updateJobAlertRequest } from 'store/actions/alerts/updateJobAlert'
-import { deleteJobAlertRequest } from 'store/actions/alerts/deleteJobAlert'
-import { openCreateJobAlertModal } from 'store/actions/modals/createJobAlertModal'
+import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsList'
+import { updateJobAlertService } from 'store/services/alerts/updateJobAlert'
+import { deleteJobAlertService } from 'store/services/alerts/deleteJobAlert'
 
 // styles
 import styles from './index.module.scss'
@@ -26,53 +25,65 @@ const Alerts = ({ accessToken, lang }: any) => {
   const router = useRouter()
   const { search, accountSetting } = lang
   const dispatch = useDispatch()
-  const [removeId, setRemoveId] = useState(null)
   const [open, setOpen] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
-  const jobAlertListResponse = useSelector((store: any) => store.alerts.fetchJobAlertsList.response)
-  const isLoading = useSelector((store: any) => store.alerts.fetchJobAlertsList.fetching)
+  const [jobAlertList, setJobAlertList] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const config = useSelector((store: any) => store.config.config.response)
   const [currentJobAlert, setCurrentJobAlert] = useState(null)
 
-  const formattedAlertList = useMemo(() => {
-    jobAlertListResponse?.forEach?.((item) => {
-      changeAlertValue(item, config)
-    })
-    return jobAlertListResponse
-  }, [jobAlertListResponse, config])
-
   useEffect(() => {
-    getFetchAlertsListRequest()
+    getAlertsListRequest()
   }, [])
 
-  const getFetchAlertsListRequest = () => {
-    dispatch(fetchJobAlertsListRequest({ accessToken }))
-  }
-
-  const showDeleteJobAlertModule = (id) => {
-    setRemoveId(id)
-    dispatch(openCreateJobAlertModal())
-  }
-
-  const deleteJobAlert = (id) => {
-    const payload = {
-      accessToken,
-      jobAlertId: id
+  const getAlertsListRequest = async () => {
+    try {
+      setIsLoading(true)
+      const list = await fetchJobAlertsListService({ accessToken })
+      const resData = list.data.data || []
+      resData?.forEach?.((item) => {
+        changeAlertValue(item, config)
+      })
+      setJobAlertList(resData)
+      setIsLoading(false)
+    } catch (error) {
+      console.log('get list error', error)
+      setIsLoading(false)
     }
-    dispatch(deleteJobAlertRequest(payload))
-    getFetchAlertsListRequest()
   }
 
-  const handelSaveSetFrequency = (item) => {
-    const payload = {
-      accessToken,
-      updateJobAlertData: {
-        email: item.email,
-        id: item.id,
-        frequency_id: item.frequency
+  const deleteJobAlert = async (id) => {
+    try {
+      const payload = {
+        accessToken,
+        jobAlertId: id
       }
+      await deleteJobAlertService(payload)
+      await getAlertsListRequest()
+      setCurrentJobAlert(null)
+      setOpenDelete(false)
+    } catch (error) {
+      console.log('delete error', error)
     }
-    dispatch(updateJobAlertRequest(payload))
+  }
+
+  const updateJobAlert = async (item) => {
+    try {
+      const payload = {
+        accessToken,
+        updateJobAlertData: {
+          email: item.email,
+          id: item.id,
+          frequency_id: item.frequency_id
+        }
+      }
+      await updateJobAlertService(payload)
+      await getAlertsListRequest()
+      setOpen(false)
+      setCurrentJobAlert(null)
+    } catch (error) {
+      console.log('update error', error)
+    }
   }
 
   const handelBackToJobSearch = () => {
@@ -85,7 +96,6 @@ const Alerts = ({ accessToken, lang }: any) => {
   }
 
   const handleEditJobAlert = (item) => {
-    console.log('handleEdit', item)
     if (item) {
       setOpen(true)
       setCurrentJobAlert(item)
@@ -93,19 +103,15 @@ const Alerts = ({ accessToken, lang }: any) => {
   }
 
   const handleDeleteJobAlert = (item) => {
-    console.log('handleDelete', item)
     if (item) {
       setOpenDelete(true)
       setCurrentJobAlert(item)
     }
   }
 
-  const handleSettingSave = (data) => {
-    console.log('save', data)
-    if (data) {
-      setCurrentJobAlert(null)
-      setOpen(false)
-      handelSaveSetFrequency(data)
+  const handleSettingSave = (item) => {
+    if (item) {
+      updateJobAlert(item)
     }
   }
 
@@ -115,7 +121,6 @@ const Alerts = ({ accessToken, lang }: any) => {
   }
 
   const handleDeleteConfirm = () => {
-    console.log('delete', currentJobAlert)
     if (currentJobAlert?.id) {
       deleteJobAlert(currentJobAlert?.id)
     }
@@ -139,8 +144,8 @@ const Alerts = ({ accessToken, lang }: any) => {
         )}
         {!isLoading && (
           <>
-            {formattedAlertList.length ? (
-              formattedAlertList.map((item) => (
+            {jobAlertList.length ? (
+              jobAlertList.map((item) => (
                 <div className={styles.JobAlertContainer_item} key={item.id}>
                   <div className={styles.JobAlertContainer_desc}>
                     <div className={styles.JobAlertContainer_left}>
