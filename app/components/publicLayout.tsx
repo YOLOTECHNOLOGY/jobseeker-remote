@@ -16,7 +16,7 @@ const Providers = dynamic(() => import('app/components/providers'), { ssr: true 
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-  const { children, seo }: any = props
+  const { children, seo, position }: any = props
   const { title, imageUrl, description, canonical } = seo
   let { lang } = props.params
   lang = lang || getServerLang()
@@ -99,7 +99,7 @@ export default async function PublicLayout(props: any) {
         `
             }}
           ></noscript>
-          <Header lang={dictionary} />
+          <Header lang={dictionary} position={position} />
           <HamburgerMenu lang={dictionary} />
           <LinkProvider>{children}</LinkProvider>
           <AutoShowModalAppRedirect />

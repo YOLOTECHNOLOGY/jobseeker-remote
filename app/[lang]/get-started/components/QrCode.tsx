@@ -93,7 +93,15 @@ const qrCode = ({ lang }: any) => {
       expiration_time: timeRef.current
     }
     getQrcode(parm).then(() => {
-      setQrCodeParams(JSON.stringify(parm))
+      setQrCodeParams(
+        JSON.stringify({
+          qrcode_uuid: uuid,
+          source: 'web',
+          status_id: 1,
+          qr_expired_at: timeRef.current,
+          website_login: 'app_scan_code'
+        })
+      )
       judgeTime()
     })
   }
@@ -166,7 +174,7 @@ const qrCode = ({ lang }: any) => {
               </div>
             )}
           </div>
-          <p className={styles.codeTips}>
+          <div className={styles.codeTips}>
             <span>
               {donHaveApp} <HelpOutlineIcon className={styles.icon}></HelpOutlineIcon>
               <div className={styles.popver}>
@@ -200,7 +208,7 @@ const qrCode = ({ lang }: any) => {
                 </div>
               </div>
             </span>
-          </p>
+          </div>
         </>
       )}
     </>

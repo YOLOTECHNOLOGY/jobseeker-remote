@@ -43,6 +43,12 @@
   }
 }
 
+.headerPosition {
+  position: absolute;
+  left: 0;
+  top: 0
+}
+
 .headerContainer {
   @include containers();
   position: relative;

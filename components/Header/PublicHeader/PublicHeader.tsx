@@ -11,10 +11,10 @@ import NavLogo from '../Common/NavLogo'
 import NavLeft from '../Common/NavLeft'
 import NavRight from './NavRight'
 
-const PublicHeader = ({ lang }: any) => {
+const PublicHeader = ({ lang, position = false }: any) => {
   const langKey = getLang()
   return (
-    <div className={styles.header}>
+    <div className={`${styles.header} ${position && styles.headerPosition}`}>
       <nav className={styles.headerContainer}>
         {/* Logo */}
         <NavLogo langKey={langKey} />
