@@ -198,6 +198,7 @@ const Alerts = ({ accessToken, lang }: any) => {
 
         <SettingModal
           key={'Job-Alert-Setting' + currentJobAlert?.id}
+          title='Job Alert Setting'
           open={open}
           config={config}
           job={currentJobAlert}

@@ -127,6 +127,23 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     }
   }
 
+  const handleError = (error) => {
+    const { data } = error.response
+    let errorMessage
+    if (data?.data) {
+      errorMessage = data?.data?.detail ?? data?.message
+    } else {
+      errorMessage = data?.errors?.phone_num[0]
+    }
+    dispatch(
+      displayNotification({
+        open: true,
+        message: errorMessage || data.message,
+        severity: 'error'
+      })
+    )
+  }
+
   const sendEmailOTP = (email) => {
     emailOTPChangeEmailGenerate({ email })
       .then(() => {
@@ -134,22 +151,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         setInitialTime(originTimer)
         setDisabled(true)
       })
-      .catch((exceptionHandler) => {
+      .catch((error) => {
         setDisabled(false)
-        const { data } = exceptionHandler.response
-        let errorMessage
-        if (data?.data) {
-          errorMessage = data?.data?.detail
-        } else {
-          errorMessage = data?.errors?.email[0]
-        }
-        dispatch(
-          displayNotification({
-            open: true,
-            message: errorMessage || data.message,
-            severity: 'warning'
-          })
-        )
+        handleError(error)
       })
   }
 
@@ -168,21 +172,8 @@ const VerifyMailAndBindEmail = (props: IProps) => {
             })
           )
         })
-        .catch((exceptionHandler) => {
-          const { data } = exceptionHandler.response
-          let errorMessage
-          if (data?.data) {
-            errorMessage = data?.data?.detail ?? data?.message
-          } else {
-            errorMessage = data?.errors?.phone_num[0]
-          }
-          dispatch(
-            displayNotification({
-              open: true,
-              message: errorMessage || data.message,
-              severity: 'warning'
-            })
-          )
+        .catch((error) => {
+          handleError(error)
         })
     } else {
       // change
@@ -198,21 +189,8 @@ const VerifyMailAndBindEmail = (props: IProps) => {
             })
           )
         })
-        .catch((exceptionHandler) => {
-          const { data } = exceptionHandler.response
-          let errorMessage
-          if (data?.data) {
-            errorMessage = data?.data?.detail ?? data?.message
-          } else {
-            errorMessage = data?.errors?.phone_num[0]
-          }
-          dispatch(
-            displayNotification({
-              open: true,
-              message: errorMessage || data.message,
-              severity: 'warning'
-            })
-          )
+        .catch((error) => {
+          handleError(error)
         })
     }
   }

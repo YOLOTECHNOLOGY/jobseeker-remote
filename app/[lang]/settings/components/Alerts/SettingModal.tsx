@@ -14,13 +14,14 @@ interface IProps {
   lang: any
   job: any
   config: any
+  title: string
   handleClose: () => void
   handleSave: Function
   filterValues?: Function
 }
 
 const SettingModal = (props: IProps) => {
-  const { open, lang, config, job, handleClose, handleSave, filterValues } = props
+  const { open, lang, config, job, title, handleClose, handleSave, filterValues } = props
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const [frequencyId, setFrequencyId] = useState(job?.frequency_id || '')
   const [email, setEmail] = useState(job?.email)
@@ -62,7 +63,7 @@ const SettingModal = (props: IProps) => {
         confirm='Done'
         handleSave={handleMethodSave}
         handleClose={handleMethodClose}
-        title='Job Alert Setting'
+        title={title}
         lang={lang}
       >
         <div className={styles.modal}>

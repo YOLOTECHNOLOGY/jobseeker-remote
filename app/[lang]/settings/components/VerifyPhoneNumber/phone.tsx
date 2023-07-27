@@ -127,30 +127,33 @@ const VerifyPhoneNumber = (props: IProps) => {
     }
   }
 
+  const handleError = (error) => {
+    const { data } = error.response
+    let errorMessage
+    if (data?.data) {
+      errorMessage = data?.data?.detail ?? data?.message
+    } else {
+      errorMessage = data?.errors?.phone_num[0]
+    }
+    dispatch(
+      displayNotification({
+        open: true,
+        message: errorMessage || data.message,
+        severity: 'error'
+      })
+    )
+  }
+
   const sendPhoneNumberOTP = ({ phoneNumber, smsCode }) => {
     const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
-    // console.log('handle send otp', { phoneNumber, smsCode, mobile_country_id })
     smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNumber, mobile_country_id })
       .then(() => {
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
       })
-      .catch((exceptionHandler) => {
-        const { data } = exceptionHandler.response
-        let errorMessage
-        if (data?.data) {
-          errorMessage = data?.data?.detail ?? data?.message
-        } else {
-          errorMessage = data?.errors?.phone_num[0]
-        }
-        dispatch(
-          displayNotification({
-            open: true,
-            message: errorMessage || data.message,
-            severity: 'warning'
-          })
-        )
+      .catch((error) => {
+        handleError(error)
       })
   }
 
@@ -173,21 +176,8 @@ const VerifyPhoneNumber = (props: IProps) => {
             )
           }
         })
-        .catch((exceptionHandler) => {
-          const { data } = exceptionHandler.response
-          let errorMessage
-          if (data?.data) {
-            errorMessage = data?.data?.detail ?? data?.message
-          } else {
-            errorMessage = data?.errors?.phone_num[0]
-          }
-          dispatch(
-            displayNotification({
-              open: true,
-              message: errorMessage || data.message,
-              severity: 'warning'
-            })
-          )
+        .catch((error) => {
+          handleError(error)
         })
     } else {
       // change
@@ -209,21 +199,8 @@ const VerifyPhoneNumber = (props: IProps) => {
             )
           }
         })
-        .catch((exceptionHandler) => {
-          const { data } = exceptionHandler.response
-          let errorMessage
-          if (data?.data) {
-            errorMessage = data?.data?.detail ?? data?.message
-          } else {
-            errorMessage = data?.errors?.phone_num[0]
-          }
-          dispatch(
-            displayNotification({
-              open: true,
-              message: errorMessage || data.message,
-              severity: 'warning'
-            })
-          )
+        .catch((error) => {
+          handleError(error)
         })
     }
   }

@@ -1159,7 +1159,8 @@
     },
     "modals": {
       "verifyMobileTitle": "Verify your mobile number",
-      "verifyEmailTitle": "Change email address verify"
+      "verifyEmailTitle": "Change email address verify",
+      "verifyJobAlertTitle": "Job Alert Setting"
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
