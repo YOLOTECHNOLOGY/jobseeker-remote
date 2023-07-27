@@ -121,7 +121,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
       console.log(headerHeight, 9999)
-      const position = domTop - headerHeight - (domID === 'JobDescription' ? 210 : 40)
+      const position = domTop - headerHeight - (domID === 'JobDescription' ? 300 : 60)
       position && scrollSmoothTo(position)
     }
   }, [current])

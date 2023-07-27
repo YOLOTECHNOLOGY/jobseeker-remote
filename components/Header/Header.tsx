@@ -27,10 +27,10 @@ const Header = (props: any) => {
   // }
   //
   return (
-    <div>
+    <>
       {isAuthenticated && <ProtectedHeader lang={data.header} position={props.position} />}
       {!isAuthenticated && <PublicHeader lang={data.header} position={props.position} />}
-    </div>
+    </>
   )
 }
 

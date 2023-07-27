@@ -129,7 +129,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   }
 
   return (
-    <div>
+    <div style={{ paddingTop: '64px' }}>
       <Head {...headProps} />
       <Menu
         {...mainProps}
