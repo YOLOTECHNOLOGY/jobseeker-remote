@@ -21,7 +21,7 @@ export default async function Companies({ location_id, lang, config, langKey }: 
         <CompanyCardList data={data} langKey={langKey} lang={lang} config={config} />
       </div>
       {data?.data?.featured_companies?.length ? (
-        <Link prefetch={false} href={'/' + langKey + '/companies'} className={styles.moreBtn}>
+        <Link prefetch={true} href={'/' + langKey + '/companies'} className={styles.moreBtn}>
           {home.seeMoreBtn}
         </Link>
       ) : null}

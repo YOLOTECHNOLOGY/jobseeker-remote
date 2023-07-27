@@ -1,4 +1,5 @@
 import { memoizeWith } from 'ramda'
+import { languages } from './country'
 
 export const memoizeWithTime = (fn, makeKey, time = 60) => {
     let lastStamp = new Date().getTime()
@@ -11,4 +12,10 @@ export const memoizeWithTime = (fn, makeKey, time = 60) => {
         }
         return cache(...args)
     }
+}
+
+export const withLanguages = params => {
+    return languages.map(item => item.value)
+        .map(lang => params.map(param => ({ ...param, lang })))
+        .reduce((a, b) => a.concat(b), [])
 }

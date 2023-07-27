@@ -67,7 +67,7 @@ const MainItem: FunctionComponent<MainProps> = hoverable((props: HoverableProps 
             <div className={styles.mainTitleFirst}>{data.simpleTitle || data.title}</div>
             <div className={styles.subContainer}>
                 {subTitles.map((subTitle, index) => (
-                    <Link prefetch={false} key={subTitle + index} href={'/' + props.langKey + buildQuery(location?.seo_value, subTitle)}>
+                    <Link prefetch={true} key={subTitle + index} href={'/' + props.langKey + buildQuery(location?.seo_value, subTitle)}>
                         <div key={subTitle + index} title={subTitle} style={{ maxWidth: contentWidth }} className={styles.mainTitleSub}>
                             {subTitle}
                         </div>
@@ -95,7 +95,7 @@ const SectionItem = (props: SectionProps) => {
 const SubItem: FunctionComponent<SubItemProps> = hoverable((props: SubItemProps & HoverableProps) => {
     const { location } = useContext(LocationContext)
     const { data } = props
-    return <Link className={styles.subItem} prefetch={false} href={'/' + props.langKey + buildQuery(location?.seo_value, data?.label)}>
+    return <Link className={styles.subItem} prefetch={true} href={'/' + props.langKey + buildQuery(location?.seo_value, data?.label)}>
         <Tooltip title={data.label} placement="top-start">
             <div className={styles.linkText}> {data.label}</div>
         </Tooltip>

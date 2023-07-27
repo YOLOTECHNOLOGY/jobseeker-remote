@@ -17,6 +17,7 @@ import JobAlert from './components/jobAlert'
 import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
+import { languages } from 'helpers/country'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -39,7 +40,15 @@ const configs = getConfigs([
   ['country_lists']
 ])
 
-
+export const revalidate = 3600
+export async function generateStaticParams() {
+  return languages.map(lang => lang.value).map(lang => {
+    return {
+      lang,
+      path: 'job-search'
+    }
+  })
+}
 const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run
@@ -57,7 +66,7 @@ const Main = async (props: any) => {
         <div style={{ position: 'sticky', top: 0, zIndex: 90 }}>
           <SearchForm config={props.config} lang={lang} searchValues={props.searchValues ?? null} />
         </div>
-        
+
         {/* Main Content */}
         <div className={styles.contentWrap}>
 

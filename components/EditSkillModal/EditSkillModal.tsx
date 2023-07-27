@@ -66,11 +66,9 @@ const EditSkillModal = ({
   const jobFunctionLists = useSelector(
     (store: any) => store.config?.config?.response?.inputs?.job_function_lists ?? []
   )
-  const [selectedSkills, setSelectedSkills] = useState<any>([])
 
   const [allSkills, setAllSkills] = useState([]);
 
-  const accessToken = getCookie('accessToken')
 
   const skillList = useMemo(() => {
     const jobFunction = flatMap(jobFunctionLists, (item) => {
@@ -103,8 +101,11 @@ const EditSkillModal = ({
     }
   }, [updateProfileSuccess])
   useEffect(()=>{
-    setChoosed(skills);
-  },[skills])
+    
+    if(showModal && skills){
+      setChoosed(skills)
+    };
+  },[skills, showModal])
   const onSubmit = () => {
     const payload = {
       skills: choosed.join(',')
@@ -139,8 +140,9 @@ const EditSkillModal = ({
   const handleResetForm = () => {
     setFunctionTitle({ value: '', id: undefined })
     setSearchValue('')
+    setAllSkills([])
   }
-  console.log('allSkills, choosed',allSkills, choosed)
+  console.log('allSkills, choosed',functionTitle)
   return (
     <div>
       <Modal

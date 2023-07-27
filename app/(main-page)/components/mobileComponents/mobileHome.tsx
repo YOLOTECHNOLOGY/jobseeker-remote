@@ -57,7 +57,7 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
 
                 return (
                   <Link
-                    prefetch={false}
+                    prefetch={true}
                     href={`/${langKey}${company_url}/jobs`}
                     className={styles.item}
                     key={id}
@@ -95,7 +95,7 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
         </>
       ) : null}
 
-      <Link prefetch={false} href={'/' + langKey + '/companies'} className={styles.moreBtn}>
+      <Link prefetch={true} href={'/' + langKey + '/companies'} className={styles.moreBtn}>
         {seeMoreBtn}
       </Link>
 

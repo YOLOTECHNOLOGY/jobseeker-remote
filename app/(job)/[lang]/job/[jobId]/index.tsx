@@ -130,16 +130,14 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
 
   return (
     <div>
-      <div className={styles.headSticky}>
-        <Head {...headProps} />
-        <Menu
-          {...mainProps}
-          lang={languages}
-          jobDetail={data}
-          jobId={jobId}
-          isbenefits={!!mainProps?.benefitsProps?.length}
-        />
-      </div>
+      <Head {...headProps} />
+      <Menu
+        {...mainProps}
+        lang={languages}
+        jobDetail={data}
+        jobId={jobId}
+        isbenefits={!!mainProps?.benefitsProps?.length}
+      />
 
       <div style={{ background: '#f5f7fb' }}>
         <div className={styles.container}>

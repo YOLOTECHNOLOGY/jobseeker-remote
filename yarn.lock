@@ -4168,10 +4168,10 @@ busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
-buzzmsg@^1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.7.4.tgz#9237a8978f387c9c5c513f87be3f30f98db1f13a"
-  integrity sha512-s5DG0RpE+9fZeK/ZQJmx2E6iSHMQkLrefHglALGwFZCUwkp+qxZH6YybET5Z/EH9w+dj4DxZiAKikXFQgFlfXA==
+buzzmsg@^1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.7.7.tgz#c8fb631886df536359b8c683f325b6fbc643f384"
+  integrity sha512-hFBiYMqj7oILvYLAbNfUfyje8CbntJTbbpKPuKj2g1PW9A+7dKQzsyZw877mNSg/+MVq5dwiSvpZn4CK5/RcoA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -6168,10 +6168,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.2.3-fix2:
-  version "0.2.3-fix2"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.3-fix2.tgz#7c5b01726120fa4dee051ceefeafc0b882400ebf"
-  integrity sha512-PNJu6j5eyIBxwjvcO2erz04RjAemdCt2bEWNYRsAcPCeGzaSweSzKUCEFAwbWJRWpPv9DQMcY3PqAIcplOZJMg==
+imforbossjob@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.4.tgz#ff12717896ef27a6fc9feedea9f45e4fa3d679c8"
+  integrity sha512-IPmblbKONDjt6tK6ED4DOr+JUmb6Qfgd/ClCDoISFbZv4+x38suEdiDMX4Ixyq3QecK3m8pQvKljnR09IRsx5w==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@aws-sdk/client-s3" "^3.3.0"
@@ -6181,7 +6181,7 @@ imforbossjob@^0.2.3-fix2:
     antd "^4.23.3"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.7.4"
+    buzzmsg "^1.7.7"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
@@ -9652,7 +9652,6 @@ tr46@~0.0.3:
 
 "ts-streamclient-base@git+https://github.com/xpwu/ts-streamclient-base.git#v0.1.1":
   version "0.1.1"
-  uid "732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
   resolved "git+https://github.com/xpwu/ts-streamclient-base.git#732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
   dependencies:
     ts-xutils "https://github.com/xpwu/ts-xutils.git#v0.1.2"

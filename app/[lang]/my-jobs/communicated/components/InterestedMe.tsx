@@ -26,7 +26,7 @@ const Interested = async (props) => {
             </div>
 
             <button className={styles.button}>
-              <Link prefetch={false} href={'/my-jobs/communicated?type=interested'}>
+              <Link prefetch={true} href={'/my-jobs/communicated?type=interested'}>
                 {lang?.seeMore}
               </Link>
             </button>
