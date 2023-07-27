@@ -7,6 +7,16 @@
 
   @include sm {
     border: none;
+
+    &_mobileWrapper {
+      padding: 20px;
+    }
+
+    &_mobileStyle {
+      border: 2px solid #1976d2;
+      border-radius: 5px;
+      padding-bottom: 25px;
+    }
   }
 
   &_wrapper {
@@ -19,7 +29,6 @@
   .JobAlertTitle {
     padding-bottom: 20px;
     border-bottom: 1px solid #e4e4e4;
-    margin-bottom: 40px;
 
     color: #121212;
     font-size: 24px;
@@ -28,47 +37,70 @@
     line-height: normal;
   }
 
-  &_item {
-    margin-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e4e4e4;
+  .fieldWrapperTitle {
+    font-size: 16px;
+    color: #353535;
+  }
+
+  .fieldWrapper {
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    .fieldFromWrapper_title_context {
+      font-size: 12px;
+      color: #353535;
+    }
+
+    &_border {
+      width: 100%;
+      border-bottom: 1px solid #707070;
+      margin-top: 20px;
+      opacity: 0.3;
+    }
+  }
+
+  &_title {
+    margin-bottom: 15px;
+    font-size: 14px;
   }
 
   &_desc {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    color: #707070;
     margin-bottom: 5px;
-
-    color: #515151;
-    font-size: 16px;
+    font-size: 14px;
   }
 
-  &_left {
-    color: #000;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 23px;
-    letter-spacing: 0.36px;
-    display: flex;
-    width: 60%;
+  &_Text {
+    margin-bottom: 5px;
   }
 
-  &_filter {
-    width: 100%;
-    margin-left: 5px;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  &_EditContainer {
+    margin-top: 25px;
   }
 
-  &_right {
-    img {
-      cursor: pointer;
-      margin: 0 10px;
+  &_button {
+    margin-top: 15px;
+
+    button {
+      text-transform: none;
+      min-width: 143px;
+      height: 44px;
     }
+
+    button:nth-child(2) {
+      margin-left: 20px;
+    }
+  }
+
+  &Info {
+    max-width: 480px;
+    padding: 50px 25px;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 100px;
   }
 
   &_noJobAlert {
@@ -138,7 +170,6 @@
 
     .select {
       padding-bottom: 0;
-      margin-top: 10px;
     }
 
     :global {
@@ -147,16 +178,8 @@
       }
 
       .MuiInputBase-root {
-        margin-top: 0;
         padding-bottom: 10px;
-        width: 100%;
       }
     }
-  }
-
-  .errorInfo {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
   }
 }

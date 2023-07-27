@@ -78,6 +78,7 @@ export default function VerticalTabs(props: any) {
   }
 
   const { accountSetting } = lang
+  const { tabs } = accountSetting || {}
 
   return (
     <Box
@@ -89,7 +90,7 @@ export default function VerticalTabs(props: any) {
       }}
     >
       <div className={styles.settingsTabs}>
-        {isMobile ? null : <div className={styles.settingsTitle}>Settings</div>}
+        {isMobile ? null : <div className={styles.settingsTitle}>{tabs?.settings}</div>}
         <Tabs
           orientation={isMobile ? 'horizontal' : 'vertical'}
           variant='scrollable'
@@ -97,19 +98,19 @@ export default function VerticalTabs(props: any) {
           onChange={handleChange}
         >
           <Tab
-            label={<div className={styles.lineCamp}>Account Setting</div>}
+            label={<div className={styles.lineCamp}>{tabs?.account}</div>}
             {...a11yProps(TabValues.Account)}
           />
           <Tab
-            label={<div className={styles.lineCamp}>Notification</div>}
+            label={<div className={styles.lineCamp}>{tabs?.notification}</div>}
             {...a11yProps(TabValues.Notifications)}
           />
           <Tab
-            label={<div className={styles.lineCamp}>Job Alert</div>}
+            label={<div className={styles.lineCamp}>{tabs?.jobAlert}</div>}
             {...a11yProps(TabValues.JobAlert)}
           />
           <Tab
-            label={<div className={styles.lineCamp}>Shielding Company</div>}
+            label={<div className={styles.lineCamp}>{tabs?.shieldingCompany}</div>}
             {...a11yProps(TabValues.ShieldingCompany)}
           />
         </Tabs>

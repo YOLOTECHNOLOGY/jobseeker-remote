@@ -1,7 +1,7 @@
 {
   "header": {
     "home": "首页",
-    "findJobs": "职位123",
+    "findJobs": "职位",
     "companies": "公司",
     "courses": "课程",
     "careerGuide": "职业指南",
@@ -93,7 +93,7 @@
     },
     "loginUsingSocialMediaOTP": "验证码登录/注册",
     "loginUsingQRCode": "使用二维码登录",
-    "scanQRCodeOnAppToLogin": "通过Bossjob APP扫描二维码登录",
+    "scanQRCodeOnAppToLogin": "Scan QR code by  Bossjob APP to login",
     "donHaveApp": "没有应用程序",
     "howToScanQRCode": "如何扫描二维码",
     "ImJobSeeker": "我是一名求职者",
@@ -645,7 +645,10 @@
           "location": "当前城市",
           "exp": "工作经验",
           "summary": "我的优势 （写写你的相关经验和个人成就等，更能赢得Boss赏识）",
-          "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。"
+          "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。",
+          "workingSince": "Working since",
+          "address": "Input and select address",
+          "noLocation": "No location"
         },
         "exp": {
           "title": "工作经验",
@@ -711,7 +714,8 @@
           "btn2": "保存",
           "suggestions": "我们会根据您最近的职位类型为您推荐技能：",
           "jobFunction": "职位类型",
-          "skill": "搜索或者添加一个技能"
+          "skill": "搜索或者添加一个技能",
+          "addBtn": "Add"
         },
         "licenses": {
           "title": "资格证书",
@@ -954,7 +958,8 @@
     "skip": "跳过职位设置",
     "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
-    "skipAnyway": "任性跳过"
+    "skipAnyway": "任性跳过",
+    "uploadSeccess": "upload seccess"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -1145,8 +1150,20 @@
   "accountSetting": {
     "title": "账户设置",
     "tabs": {
+      "settings": "Settings",
       "account": "账户",
-      "jobAlert": "职位提醒"
+      "jobAlert": "职位提醒",
+      "accountSetting": "Account Setting",
+      "notification": "Notification",
+      "shieldingCompany": "Shielding Company"
+    },
+    "modals": {
+      "verifyMobileTitle": "Verify your mobile number",
+      "verifyEmailTitle": "Change email address verify"
+    },
+    "verifiedMessages": {
+      "mobile": "Your mobile number has been verified successfully.",
+      "email": "Your email account has been verified successfully."
     },
     "email": "邮件",
     "sendOpt": "发送验证码",
@@ -1185,7 +1202,8 @@
     "deleteTitle": "删除工作通知",
     "keep": "保留",
     "delete": "删除",
-    "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
+    "deleteTips": "您即将删除此职位提醒。 这不能被撤消。",
+    "notProvided": "Not provided"
   },
   "chatExchange": {
     "exchangeTitle": "电话号码",

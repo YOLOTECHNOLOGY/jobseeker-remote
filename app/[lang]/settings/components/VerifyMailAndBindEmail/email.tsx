@@ -1,21 +1,21 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
+// import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
-import Text from 'components/Text'
+// import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
 import Captcha from '../captcha/index'
 import { validEmailReg } from '../../config'
 // tools
-import { handleNumericInput } from 'helpers/handleInput'
+// import { handleNumericInput } from 'helpers/handleInput'
 
 // ui
-import { Button } from '@mui/material'
+// import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import ModalDialog from '../Modal/index'
 import InputAdornment from '@mui/material/InputAdornment'
-import CloseIcon from '@mui/icons-material/Close'
+// import CloseIcon from '@mui/icons-material/Close'
 
 // api
 import { changeEmail } from 'store/services/auth/changeEmail'
@@ -27,8 +27,8 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './email.module.scss'
-import { useFirstRender } from 'helpers/useFirstRender'
-import { formatTemplateString } from 'helpers/formatter'
+// import { useFirstRender } from 'helpers/useFirstRender'
+// import { formatTemplateString } from 'helpers/formatter'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
@@ -37,13 +37,21 @@ let timer = null
 // 默认位数
 const originTimer = 60
 
-const VerifyMailAndBindEmail = (props: any) => {
-  const { label, emailDefault, verify, errorText, lang } = props
+interface IProps {
+  label: string
+  emailDefault: string
+  verify: boolean
+  // errorText: React.ReactNode
+  lang: any
+}
+
+const VerifyMailAndBindEmail = (props: IProps) => {
+  const { label, emailDefault, verify, lang } = props
   const { accountSetting } = lang
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
 
-  const firstRender = useFirstRender()
+  // const firstRender = useFirstRender()
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
@@ -155,17 +163,24 @@ const VerifyMailAndBindEmail = (props: any) => {
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your email account has been verified successfully',
+              message: accountSetting?.verifiedMessages?.email,
               severity: 'success'
             })
           )
         })
-        .catch(() => {
+        .catch((exceptionHandler) => {
+          const { data } = exceptionHandler.response
+          let errorMessage
+          if (data?.data) {
+            errorMessage = data?.data?.detail ?? data?.message
+          } else {
+            errorMessage = data?.errors?.phone_num[0]
+          }
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your email account has been verified failed',
-              severity: 'error'
+              message: errorMessage || data.message,
+              severity: 'warning'
             })
           )
         })
@@ -178,17 +193,24 @@ const VerifyMailAndBindEmail = (props: any) => {
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your email account has been verified successfully',
+              message: accountSetting?.verifiedMessages?.email,
               severity: 'success'
             })
           )
         })
-        .catch(() => {
+        .catch((exceptionHandler) => {
+          const { data } = exceptionHandler.response
+          let errorMessage
+          if (data?.data) {
+            errorMessage = data?.data?.detail ?? data?.message
+          } else {
+            errorMessage = data?.errors?.phone_num[0]
+          }
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your email account has been verified failed',
-              severity: 'error'
+              message: errorMessage || data.message,
+              severity: 'warning'
             })
           )
         })
@@ -209,10 +231,10 @@ const VerifyMailAndBindEmail = (props: any) => {
             <Image className={styles.image} src={TooltipIcon} alt='icon' width={20} height={20} />
           </Tooltip>
         </div>
-        <div className={styles.tip}>Receive job applications updates through your email.</div>
+        <div className={styles.tip}>{accountSetting?.emailTip}</div>
         <div className={styles.content}>
           <div className={styles.info}>
-            <span>{defaultEmail ? defaultEmail : 'Not provided'}</span>
+            <span>{defaultEmail ? defaultEmail : accountSetting?.notProvided}</span>
             {verify && (
               <Tooltip title='Verified' placement='top' arrow classes={{ tooltip: styles.toolTip }}>
                 <Image
@@ -235,11 +257,11 @@ const VerifyMailAndBindEmail = (props: any) => {
       <ModalDialog
         key={'verify-email'}
         open={open}
-        cancel='Cancel'
-        confirm='Verify'
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.verify}
         handleSave={handleSave}
         handleClose={handleClose}
-        title='Change email address verify'
+        title={accountSetting?.modals?.verifyEmailTitle}
         lang={lang}
       >
         <div className={styles.modalContent}>
@@ -267,16 +289,20 @@ const VerifyMailAndBindEmail = (props: any) => {
                   )
                 }}
               />
-              <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
+              <div className={classNames([styles.displayForMobile, styles.errorInfo])}>
+                {emailError ? emailError : null}
+              </div>
               <button
                 className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
                 onClick={handleSendOTP}
                 disabled={disabled}
               >
-                Send OTP {initialTime ? `(${initialTime}s)` : ''}
+                {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
-            <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
+            <div className={classNames([styles.displayForWeb, styles.errorInfo])}>
+              {emailError ? emailError : null}
+            </div>
 
             {/* verify code */}
             <Captcha
@@ -284,7 +310,6 @@ const VerifyMailAndBindEmail = (props: any) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
-              error={errorText}
             />
           </div>
         </div>

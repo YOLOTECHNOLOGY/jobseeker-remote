@@ -1,24 +1,24 @@
-import { useEffect, useState, useRef, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
+// import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
-import Text from 'components/Text'
+// import Text from 'components/Text'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
 import Captcha from '../captcha/index'
-import TextField from '@mui/material/TextField'
+// import TextField from '@mui/material/TextField'
 
 // tools
-import { handleNumericInput } from 'helpers/handleInput'
+// import { handleNumericInput } from 'helpers/handleInput'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 
 // ui
-import { Button } from '@mui/material'
+// import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Image from 'next/image'
-import CloseIcon from '@mui/icons-material/Close'
+// import CloseIcon from '@mui/icons-material/Close'
 
 // api
 import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
@@ -30,8 +30,8 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './phone.module.scss'
-import { useFirstRender } from 'helpers/useFirstRender'
-import { formatTemplateString } from 'helpers/formatter'
+// import { useFirstRender } from 'helpers/useFirstRender'
+// import { formatTemplateString } from 'helpers/formatter'
 import { find } from 'lodash-es'
 import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
@@ -40,10 +40,19 @@ let timer = null
 // 默认位数
 const originTimer = 60
 
-const VerifyPhoneNumber = (props: any) => {
-  const { label, phoneDefault, verify, errorText, config, lang, userDetail } = props
+interface IProps {
+  label: string
+  phoneDefault: string
+  verify: boolean
+  config: any
+  lang: any
+  userDetail: any
+}
 
-  const { accountSetting, newGetStarted } = lang
+const VerifyPhoneNumber = (props: IProps) => {
+  const { label, phoneDefault, verify, config, lang, userDetail } = props
+
+  const { accountSetting } = lang
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
@@ -88,7 +97,6 @@ const VerifyPhoneNumber = (props: any) => {
   }, [initialTime, startTimer])
 
   const handleOpen = () => {
-    console.log('handle open!!!')
     setOpen(true)
     clear()
   }
@@ -149,7 +157,7 @@ const VerifyPhoneNumber = (props: any) => {
   const verifyEmailOrChangeEmail = ({ phoneNumber, smsCode, otp }) => {
     const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
     const phone = smsCode + phoneNumber
-    console.log('verify', { phoneNumber, smsCode, otp, phone, mobile_country_id })
+    // console.log('verify', { phoneNumber, smsCode, otp, phone, mobile_country_id })
     if (defaultPhone === phone) {
       // verify
       verifyPhoneNumber({ otp: otp })
@@ -159,18 +167,25 @@ const VerifyPhoneNumber = (props: any) => {
             dispatch(
               displayNotification({
                 open: true,
-                message: 'Your mobile number has been verified successfully.',
+                message: accountSetting?.verifiedMessages?.mobile,
                 severity: 'success'
               })
             )
           }
         })
-        .catch(() => {
+        .catch((exceptionHandler) => {
+          const { data } = exceptionHandler.response
+          let errorMessage
+          if (data?.data) {
+            errorMessage = data?.data?.detail ?? data?.message
+          } else {
+            errorMessage = data?.errors?.phone_num[0]
+          }
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your mobile number has been verified failed',
-              severity: 'error'
+              message: errorMessage || data.message,
+              severity: 'warning'
             })
           )
         })
@@ -188,18 +203,25 @@ const VerifyPhoneNumber = (props: any) => {
             dispatch(
               displayNotification({
                 open: true,
-                message: 'Your mobile number has been verified successfully.',
+                message: accountSetting?.verifiedMessages?.mobile,
                 severity: 'success'
               })
             )
           }
         })
-        .catch(() => {
+        .catch((exceptionHandler) => {
+          const { data } = exceptionHandler.response
+          let errorMessage
+          if (data?.data) {
+            errorMessage = data?.data?.detail ?? data?.message
+          } else {
+            errorMessage = data?.errors?.phone_num[0]
+          }
           dispatch(
             displayNotification({
               open: true,
-              message: 'Your mobile number has been verified failed',
-              severity: 'error'
+              message: errorMessage || data.message,
+              severity: 'warning'
             })
           )
         })
@@ -220,12 +242,10 @@ const VerifyPhoneNumber = (props: any) => {
             <Image className={styles.image} src={TooltipIcon} alt='icon' width={20} height={20} />
           </Tooltip>
         </div>
-        <div className={styles.tip}>
-          Help recruiters to better contact you for job opportunities.
-        </div>
+        <div className={styles.tip}>{accountSetting?.mobileTip}</div>
         <div className={styles.content}>
           <div className={styles.info}>
-            <span>{defaultPhone ? defaultPhone : 'Not provided'}</span>
+            <span>{defaultPhone ? defaultPhone : accountSetting?.notProvided}</span>
             {verify && (
               <Tooltip title='Verified' placement='top' arrow classes={{ tooltip: styles.toolTip }}>
                 <Image
@@ -248,11 +268,11 @@ const VerifyPhoneNumber = (props: any) => {
       <ModalDialog
         key={'verify-phone'}
         open={open}
-        cancel='Cancel'
-        confirm='Verify'
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.verify}
         handleSave={handleSave}
         handleClose={handleClose}
-        title='Verify your mobile number'
+        title={accountSetting?.modals?.verifyMobileTitle}
         lang={lang}
       >
         <div className={styles.modalContent}>
@@ -279,7 +299,7 @@ const VerifyPhoneNumber = (props: any) => {
                 onClick={handleSendOTP}
                 disabled={disabled}
               >
-                Send OTP {initialTime ? `(${initialTime}s)` : ''}
+                {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
 
@@ -289,7 +309,6 @@ const VerifyPhoneNumber = (props: any) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
-              error={errorText}
             />
           </div>
         </div>
