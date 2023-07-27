@@ -10,6 +10,11 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { debounce } from 'lodash-es'
 import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
+import {
+  fetchBlacklistCompaniesService,
+  fetchAddBlacklistCompaniesService
+} from 'store/services/companies2/fetchBlackCompany'
+
 interface IProps {
   lang: any
 }
@@ -22,7 +27,20 @@ const ShieldingCompany = (props: IProps) => {
   const [list, setList] = useState<Array<any>>([])
   const [searchList, setSearchList] = useState<Array<any>>([])
   const [searchValue, setSearchValue] = useState<string>('')
-  const handleConfirm = () => {}
+  const [checkedCompany, setCheckedCompany] = useState<string>('')
+
+  const handleConfirm = () => {
+    fetchAddBlacklistCompaniesService({
+      company_ids: checkedCompany
+    }).then((res) => {})
+  }
+
+  useEffect(() => {
+    fetchBlacklistCompaniesService().then((res) => {
+      console.log(res?.data?.data?.blacklist_companies || [])
+      setList(res?.data?.data?.blacklist_companies)
+    })
+  }, [])
 
   useEffect(() => {
     if (searchValue) {
@@ -39,9 +57,13 @@ const ShieldingCompany = (props: IProps) => {
   console.log(searchValue)
   const handleConfirmUnclock = () => {}
 
-  const debounced = useRef(debounce((newValue) => filterCompany(newValue), 1000))
+  const debounced = useRef(debounce((newValue) => filterCompany(newValue), 300))
 
-  useEffect(() => debounced.current(searchValue), [searchValue])
+  useEffect(() => {
+    if (searchValue) {
+      debounced.current(searchValue)
+    }
+  }, [searchValue])
 
   const filterCompany = (newValue) => {
     const param = {
@@ -53,7 +75,9 @@ const ShieldingCompany = (props: IProps) => {
     }
     fetchCompanyFilterService(param).then((res) => {
       console.log(res?.data?.data?.companies)
-      setSearchList(res?.data?.data?.companies || [])
+      const data = res?.data?.data?.companies || []
+      setSearchList(data)
+      setCheckedCompany(data.map((e) => e.id))
     })
   }
 
@@ -81,8 +105,11 @@ const ShieldingCompany = (props: IProps) => {
       </div>
 
       <div className={styles.mainContent}>
-        <List handleClick={handleClick} list={list} />
-        {/* <Empty style={{ marginTop: '80px' }} lang={lang} /> */}
+        {list?.length > 0 ? (
+          <List handleClick={handleClick} list={list} />
+        ) : (
+          <Empty style={{ marginTop: '80px' }} lang={lang} />
+        )}
       </div>
       <Modal
         key={'open'}
@@ -113,14 +140,16 @@ const ShieldingCompany = (props: IProps) => {
           {searchList?.length > 0 ? (
             <div className={styles.list}>
               <FormGroup>
-                {searchList.map((e) => (
+                {searchList.map((item) => (
                   <FormControlLabel
-                    key={e.id}
-                    control={<Checkbox checked={true} />}
+                    key={item.id}
+                    control={<Checkbox checked={checkedCompany.includes(item.id)} />}
                     label={
                       <p className={styles.item}>
-                        <span> xxxxx company</span>{' '}
-                        <i onClick={(e) => handleClick(e, true)}>Unblock</i>
+                        <span>{item.name}</span>
+                        {item.is_blacklisted && (
+                          <i onClick={() => handleClick(item, true)}>Unblock</i>
+                        )}
                       </p>
                     }
                   />
