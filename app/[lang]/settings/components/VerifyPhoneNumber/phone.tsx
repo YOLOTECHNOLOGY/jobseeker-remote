@@ -44,14 +44,13 @@ interface IProps {
   label: string
   phoneDefault: string
   verify: boolean
-  errorText: any
   config: any
   lang: any
   userDetail: any
 }
 
 const VerifyPhoneNumber = (props: IProps) => {
-  const { label, phoneDefault, verify, errorText, config, lang, userDetail } = props
+  const { label, phoneDefault, verify, config, lang, userDetail } = props
 
   const { accountSetting } = lang
   const dispatch = useDispatch()
@@ -310,7 +309,6 @@ const VerifyPhoneNumber = (props: IProps) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
-              error={errorText}
             />
           </div>
         </div>

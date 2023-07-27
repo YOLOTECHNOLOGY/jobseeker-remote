@@ -14,7 +14,7 @@ interface ModalJobAlertsProps {
   lang: any
   handleClose: () => void
   handleSave: Function
-  children: React.ReactElement
+  children: React.ReactNode
   cancel: string
   confirm: string
   title: string

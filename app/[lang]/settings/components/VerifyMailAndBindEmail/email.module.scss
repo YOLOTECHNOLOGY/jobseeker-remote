@@ -150,6 +150,10 @@
     cursor: not-allowed;
     pointer-events: none;
   }
+
+  .errorInfo {
+    color: red;
+  }
 }
 
 .displayForWeb {

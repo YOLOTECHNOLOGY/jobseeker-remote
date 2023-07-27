@@ -41,12 +41,12 @@ interface IProps {
   label: string
   emailDefault: string
   verify: boolean
-  errorText: any
+  // errorText: React.ReactNode
   lang: any
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, emailDefault, verify, errorText, lang } = props
+  const { label, emailDefault, verify, lang } = props
   const { accountSetting } = lang
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
@@ -289,7 +289,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
                   )
                 }}
               />
-              <div className={styles.displayForMobile}>{emailError && errorText(emailError)}</div>
+              <div className={classNames([styles.displayForMobile, styles.errorInfo])}>
+                {emailError ? emailError : null}
+              </div>
               <button
                 className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
                 onClick={handleSendOTP}
@@ -298,7 +300,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
                 {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
-            <div className={styles.displayForWeb}>{emailError && errorText(emailError)}</div>
+            <div className={classNames([styles.displayForWeb, styles.errorInfo])}>
+              {emailError ? emailError : null}
+            </div>
 
             {/* verify code */}
             <Captcha
@@ -306,7 +310,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
-              error={errorText}
             />
           </div>
         </div>
