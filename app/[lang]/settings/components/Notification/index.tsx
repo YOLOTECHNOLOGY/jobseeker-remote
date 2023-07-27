@@ -13,19 +13,17 @@ import Switch from '@mui/material/Switch'
 import styles from './index.module.scss'
 
 interface IProps {
-  label: any
   lang: any
   notificationSetting: any
 }
 
 const EmailNotification = (props: IProps) => {
-  const { label, notificationSetting, lang } = props
+  const { notificationSetting, lang } = props
   const { accountSetting } = lang
   const firstRender = useFirstRender()
   const [systemEmail, setSystemEmail] = useState(notificationSetting?.system_email)
   const [chatEmail, setChatEmail] = useState(notificationSetting?.chat_email)
   const [newsletterEmail, setNewsletterEmail] = useState(notificationSetting?.newsletter_email)
-  const [edit, setEdit] = useState(null)
 
   useEffect(() => {
     if (firstRender) {
@@ -41,7 +39,7 @@ const EmailNotification = (props: IProps) => {
 
   return (
     <div className={styles.VerifyMailAndBindEmail}>
-      <div className={styles.navTitle}>Notification</div>
+      <div className={styles.navTitle}>{accountSetting?.tabs?.notification}</div>
       <div className={styles.accessSettingsContainerItem}>
         <div className={styles.accessSettingsContainer_notification}>
           <Text>{accountSetting.receiveNewMessage}</Text>

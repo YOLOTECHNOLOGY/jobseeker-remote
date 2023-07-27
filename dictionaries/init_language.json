@@ -1212,6 +1212,7 @@
     "delete": "Delete",
     "deleteTips": "You are about to delete this job alert. This cannot be undone.",
     "notProvided": "Not provided",
+    "noData": "No Data",
     "blockMessages": {
       "unblock": "Unblock",
       "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",

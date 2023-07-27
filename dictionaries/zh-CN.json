@@ -1159,7 +1159,9 @@
     },
     "modals": {
       "verifyMobileTitle": "Verify your mobile number",
-      "verifyEmailTitle": "Change email address verify"
+      "verifyEmailTitle": "Change email address verify",
+      "verifyJobAlertTitle": "Job Alert Setting",
+      "deleteAlertTip": "Are you sure you want to delete this job reminder? After deleting, you will not be able to get high-quality job recommendation information"
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
@@ -1170,6 +1172,10 @@
     "save": "保存",
     "cancel": "取消",
     "verify": "验证",
+    "done": "Done",
+    "yes": "Yes",
+    "search": "Search",
+    "add": "Add",
     "optLabel": "6位数字验证码",
     "errorMsg": {
       "invalidOtp": "无效的OTP",
@@ -1195,7 +1201,9 @@
     "receiveTipsExplanation": "这是为了分享有助于您求职的见解和技巧。",
     "jobAlertTitle": "职位提醒",
     "filter": "筛选条件",
+    "jobFilter": "Job Filter",
     "frequency": "通知频率",
+    "sendToEmail": "Send to email",
     "alertFrequency": "通知频率",
     "notJobAlert": "你还没有工作通知",
     "toSearch": "返回到搜索工作",
@@ -1203,7 +1211,18 @@
     "keep": "保留",
     "delete": "删除",
     "deleteTips": "您即将删除此职位提醒。 这不能被撤消。",
-    "notProvided": "Not provided"
+    "notProvided": "Not provided",
+    "noData": "No Data",
+    "blockMessages": {
+      "unblock": "Unblock",
+      "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",
+      "jobOrCompany": "Job title or company",
+      "tip1": "The company can be searched by",
+      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
+      "tip3": "Company abbreviation: such as \"BOSS Direct Employment\"",
+      "unBlockTip1": "The following related companies will be unblocked at the same time",
+      "unBlockTip2": "The company is referred to as Changdian, related companies of Chongqing Changdian Network"
+    }
   },
   "chatExchange": {
     "exchangeTitle": "电话号码",

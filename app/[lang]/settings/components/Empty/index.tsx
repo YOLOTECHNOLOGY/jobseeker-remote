@@ -10,7 +10,9 @@ interface IProps {
 }
 
 const Empty = (props: IProps) => {
-  const { style = {}, message = 'No data' } = props
+  const { lang } = props
+  const { accountSetting } = lang
+  const { style = {}, message = accountSetting?.noData } = props
 
   return (
     <div className={styles.main} style={style}>

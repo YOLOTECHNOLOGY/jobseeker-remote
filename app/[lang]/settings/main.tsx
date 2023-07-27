@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useCallback, useContext } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
 import Notification from './components/Notification'
 import Alerts from './components/Alerts'
 import ShieldingCompany from './components/ShieldingCompany'
@@ -121,7 +121,6 @@ export default function VerticalTabs(props: any) {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Notification
-            label={accountSetting.notify}
             notificationSetting={userDetail ? userDetail.email_notification_setting : null}
             lang={lang}
           />

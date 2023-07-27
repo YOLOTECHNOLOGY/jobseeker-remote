@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-// import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
-// import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
 import Captcha from '../Captcha/index'
 import { validEmailReg } from '../../config'
-// tools
-// import { handleNumericInput } from 'helpers/handleInput'
 
 // ui
-// import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import ModalDialog from '../Modal/index'
 import InputAdornment from '@mui/material/InputAdornment'
-// import CloseIcon from '@mui/icons-material/Close'
 
 // api
 import { changeEmail } from 'store/services/auth/changeEmail'
@@ -27,8 +21,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './email.module.scss'
-// import { useFirstRender } from 'helpers/useFirstRender'
-// import { formatTemplateString } from 'helpers/formatter'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
@@ -41,7 +33,6 @@ interface IProps {
   label: string
   emailDefault: string
   verify: boolean
-  // errorText: React.ReactNode
   lang: any
 }
 
@@ -50,8 +41,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const { accountSetting } = lang
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
-
-  // const firstRender = useFirstRender()
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)

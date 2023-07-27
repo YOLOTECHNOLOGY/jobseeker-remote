@@ -1,24 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-// import FieldFormWrapper from 'components/AccountSettings/FieldFormWrapper'
 import MaterialTextField from 'components/MaterialTextField'
-// import Text from 'components/Text'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
 import Captcha from '../Captcha/index'
-// import TextField from '@mui/material/TextField'
 
 // tools
-// import { handleNumericInput } from 'helpers/handleInput'
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 
 // ui
-// import { Button } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Image from 'next/image'
-// import CloseIcon from '@mui/icons-material/Close'
 
 // api
 import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
@@ -30,8 +24,6 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 
 // styles
 import styles from './phone.module.scss'
-// import { useFirstRender } from 'helpers/useFirstRender'
-// import { formatTemplateString } from 'helpers/formatter'
 import { find } from 'lodash-es'
 import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
@@ -59,7 +51,6 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
   const [phoneNumber, setPhoneNumber] = useState(userDetail.phone_num_without_country_code || '')
-  // const firstRender = useFirstRender()
   const smsCountryList = getSmsCountryList(config)
 
   const [initialTime, setInitialTime] = useState(0)
