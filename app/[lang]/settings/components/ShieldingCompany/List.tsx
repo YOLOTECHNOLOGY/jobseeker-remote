@@ -1,23 +1,26 @@
 import React from 'react'
 import styles from './index.module.scss'
 
-const List = ({ handleClick, list }) => {
+interface IProps {
+  handleClick: Function
+  list: Array<any>
+}
+
+const List = (props: IProps) => {
+  const { handleClick, list } = props
+
   return (
     <div className={styles.companyList}>
-      <div className={styles.companyItem}>
-        <div className={styles.companyItemTitle}>Shielding Company 123</div>
-        <div className={styles.companyItemAction} onClick={() => handleClick('id')}>
-          Unblock
-        </div>
-      </div>
-      <div className={styles.companyItem}>
-        <div className={styles.companyItemTitle}>Shielding Company 456</div>
-        <div className={styles.companyItemAction}>Unblock</div>
-      </div>
-      <div className={styles.companyItem}>
-        <div className={styles.companyItemTitle}>Shielding Company 789</div>
-        <div className={styles.companyItemAction}>Unblock</div>
-      </div>
+      {list.map((item) => {
+        return (
+          <div className={styles.companyItem} key={item?.id}>
+            <div className={styles.companyItemTitle}>{item?.company?.name}</div>
+            <div className={styles.companyItemAction} onClick={() => handleClick(item)}>
+              Unblock
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

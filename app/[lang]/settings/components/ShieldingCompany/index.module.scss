@@ -91,6 +91,8 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.17px;
+  max-height: 50vh;
+  overflow: auto;
 
   i {
     font-style: normal;
@@ -125,7 +127,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #2378E5;
+      color: #2378e5;
       font-size: 16px;
 
       span {
@@ -133,6 +135,15 @@
         font-size: 18px;
         margin-right: 20px;
         color: #121212;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      span,
+      i {
+        cursor: pointer;
       }
     }
 
@@ -144,6 +155,10 @@
         font-weight: 400;
         line-height: 18px;
         letter-spacing: 0.15px;
+      }
+
+      .MuiFormControlLabel-root {
+        cursor: default;
       }
     }
   }
@@ -179,12 +194,16 @@
       &:hover {
         background: #1854a3 !important;
       }
+
+      @include sm {
+        width: 100px;
+      }
     }
   }
 
   .tips {
-    border: 1px dashed #E4E4E4;
-    background: #FCFCFC;
+    border: 1px dashed #e4e4e4;
+    background: #fcfcfc;
     padding: 20px;
 
     h5 {

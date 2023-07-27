@@ -12,7 +12,8 @@ import { debounce } from 'lodash-es'
 import { fetchCompanyFilterService } from 'store/services/companies2/fetchCompanyFilter'
 import {
   fetchBlacklistCompaniesService,
-  fetchAddBlacklistCompaniesService
+  fetchAddBlacklistCompaniesService,
+  fetchDeleteBlacklistCompaniesService
 } from 'store/services/companies2/fetchBlackCompany'
 
 interface IProps {
@@ -23,39 +24,82 @@ const ShieldingCompany = (props: IProps) => {
   const { lang } = props
   const [open, setOpen] = useState<boolean>(false)
   const [openUnlock, setOpenUnlock] = useState<boolean>(false)
+
   const [companyInfo, setCompanyInfo] = useState<any>(null)
   const [list, setList] = useState<Array<any>>([])
+
   const [searchList, setSearchList] = useState<Array<any>>([])
   const [searchValue, setSearchValue] = useState<string>('')
-  const [checkedCompany, setCheckedCompany] = useState<string>('')
+  const [checkedCompany, setCheckedCompany] = useState([])
 
-  const handleConfirm = () => {
-    fetchAddBlacklistCompaniesService({
-      company_ids: checkedCompany
-    }).then((res) => {})
+  const [showSearchModal, setShowSearchModal] = useState(true)
+
+  const blackListCompanies = () => {
+    fetchBlacklistCompaniesService({ page: 1, size: 100 }).then((res) => {
+      const resData = res?.data?.data?.blacklist_companies || []
+      setList(resData)
+    })
+  }
+  const addBlackCompanies = (companyIds: Array<number>) => {
+    fetchAddBlacklistCompaniesService({ company_ids: companyIds })
+      .then((res) => {
+        console.log('add', res)
+        setOpen(false)
+        blackListCompanies()
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
+  }
+
+  const handleUpdateBlackStatus = (companyIds) => {
+    const list = [...searchList].map((item) => {
+      if (companyIds.includes(item.id)) {
+        item.is_blacklisted = true
+      }
+      return item
+    })
+    setList(list)
+  }
+
+  const deleteBlackCompanies = (companyIds: Array<number>) => {
+    fetchDeleteBlacklistCompaniesService({ company_ids: companyIds })
+      .then(() => {
+        setOpenUnlock(false)
+        if (!showSearchModal) {
+          setOpen(true)
+          setShowSearchModal(true)
+          console.log('delete', companyIds)
+          handleUpdateBlackStatus(companyIds)
+        }
+        // refresh backlist companies
+        blackListCompanies()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   useEffect(() => {
-    fetchBlacklistCompaniesService().then((res) => {
-      console.log(res?.data?.data?.blacklist_companies || [])
-      setList(res?.data?.data?.blacklist_companies)
-    })
+    blackListCompanies()
   }, [])
 
-  useEffect(() => {
-    if (searchValue) {
-    }
-  }, [searchValue])
-
-  const handleClick = (data, showModal) => {
-    if (showModal) {
+  const handleBlackCompany = (data, showSearchModal) => {
+    if (showSearchModal) {
       setOpen(false)
+      setShowSearchModal(false)
     }
     setCompanyInfo(data)
     setOpenUnlock(true)
   }
+
   console.log(searchValue)
-  const handleConfirmUnclock = () => {}
+
+  const handleConfirm = () => {
+    if (checkedCompany.length > 0) {
+      addBlackCompanies(checkedCompany)
+    }
+  }
 
   const debounced = useRef(debounce((newValue) => filterCompany(newValue), 300))
 
@@ -77,8 +121,36 @@ const ShieldingCompany = (props: IProps) => {
       console.log(res?.data?.data?.companies)
       const data = res?.data?.data?.companies || []
       setSearchList(data)
-      setCheckedCompany(data.map((e) => e.id))
+      const resData = data.filter((item) => !item.is_blacklisted)
+      setCheckedCompany(resData.map((e) => e.id))
     })
+  }
+
+  const handleChange = (event, item) => {
+    console.log('event', event.target.checked, item.id)
+    const newCheckedCompany = checkedCompany.slice()
+    const index = newCheckedCompany.slice().indexOf(item.id)
+    if (event.target.checked) {
+      newCheckedCompany.push(item.id)
+    } else {
+      index > -1 && newCheckedCompany.splice(index, 1)
+    }
+    setCheckedCompany([...newCheckedCompany])
+  }
+
+  const handleConfirmUnClock = () => {
+    if (companyInfo?.id) {
+      const id = companyInfo?.company_id || companyInfo?.id
+      deleteBlackCompanies([id])
+    }
+  }
+
+  const handleCloseUnlock = () => {
+    setOpenUnlock(false)
+    if (!showSearchModal) {
+      setOpen(true)
+      setShowSearchModal(true)
+    }
   }
 
   return (
@@ -106,11 +178,12 @@ const ShieldingCompany = (props: IProps) => {
 
       <div className={styles.mainContent}>
         {list?.length > 0 ? (
-          <List handleClick={handleClick} list={list} />
+          <List handleClick={(data) => handleBlackCompany(data, false)} list={list} />
         ) : (
           <Empty style={{ marginTop: '80px' }} lang={lang} />
         )}
       </div>
+
       <Modal
         key={'open'}
         open={open}
@@ -143,12 +216,25 @@ const ShieldingCompany = (props: IProps) => {
                 {searchList.map((item) => (
                   <FormControlLabel
                     key={item.id}
-                    control={<Checkbox checked={checkedCompany.includes(item.id)} />}
+                    onChange={(ev) => handleChange(ev, item)}
+                    control={
+                      <Checkbox
+                        disabled={item.is_blacklisted}
+                        checked={checkedCompany.includes(item.id)}
+                      />
+                    }
                     label={
                       <p className={styles.item}>
                         <span>{item.name}</span>
                         {item.is_blacklisted && (
-                          <i onClick={() => handleClick(item, true)}>Unblock</i>
+                          <i
+                            onClick={(ev) => {
+                              ev.preventDefault()
+                              handleBlackCompany(item, true)
+                            }}
+                          >
+                            Unblock
+                          </i>
                         )}
                       </p>
                     }
@@ -170,14 +256,14 @@ const ShieldingCompany = (props: IProps) => {
       </Modal>
 
       <Modal
-        key={'openUnlock'}
+        key={'openUnlock' + companyInfo?.id}
         open={openUnlock}
         cancel='Cancel'
         confirm='yes'
-        handleSave={handleConfirmUnclock}
-        handleClose={() => setOpenUnlock(false)}
+        handleSave={handleConfirmUnClock}
+        handleClose={handleCloseUnlock}
         title='Unblock'
-        lang={{}}
+        lang={lang}
       >
         <div className={styles.modal}>
           <h6>The following related companies will be unblocked at the same time：</h6>

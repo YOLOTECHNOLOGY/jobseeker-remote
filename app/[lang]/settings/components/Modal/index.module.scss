@@ -31,6 +31,11 @@
   .actions {
     display: flex;
     padding: 20px;
+
+    @include sm {
+      flex: 1;
+      width: 100%;
+    }
   }
 
   .actionsItem {
@@ -43,6 +48,10 @@
     flex-shrink: 0;
     border-radius: 8px;
     cursor: pointer;
+
+    @include sm {
+      flex: 1;
+    }
   }
 
   .cancel {

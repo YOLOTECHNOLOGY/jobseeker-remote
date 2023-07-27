@@ -34,7 +34,7 @@ const AlertJobs = (props: IProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
   const [jobAlertList, setJobAlertList] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const config = useSelector((store: any) => store.config.config.response)
   const [currentJobAlert, setCurrentJobAlert] = useState(null)
 

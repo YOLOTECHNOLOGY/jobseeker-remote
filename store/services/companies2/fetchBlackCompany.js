@@ -1,8 +1,10 @@
 import configuredAxios from 'helpers/configuredAxios'
 
-const fetchBlacklistCompaniesService = (companyId) => {
+const fetchBlacklistCompaniesService = (payload) => {
     const axios = configuredAxios('company', 'protected')
-    return axios.get(`/blacklist-companies/list?page=1&size=100`)
+    const page = payload.page || 1
+    const size = payload.size || 10
+    return axios.get(`/blacklist-companies/list?page=${page}&size=${size}`)
 }
 
 const fetchAddBlacklistCompaniesService = (payload) => {
@@ -10,6 +12,11 @@ const fetchAddBlacklistCompaniesService = (payload) => {
     return axios.post(`/blacklist-companies/create`, payload)
 }
 
+const fetchDeleteBlacklistCompaniesService = (payload) => {
+    const axios = configuredAxios('company', 'protected')
+    return axios.post(`/blacklist-companies/delete`, payload)
+}
 
 
-export { fetchBlacklistCompaniesService, fetchAddBlacklistCompaniesService }
+
+export { fetchBlacklistCompaniesService, fetchAddBlacklistCompaniesService, fetchDeleteBlacklistCompaniesService }
