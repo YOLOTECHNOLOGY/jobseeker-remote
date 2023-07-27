@@ -1160,7 +1160,8 @@
     "modals": {
       "verifyMobileTitle": "Verify your mobile number",
       "verifyEmailTitle": "Change email address verify",
-      "verifyJobAlertTitle": "Job Alert Setting"
+      "verifyJobAlertTitle": "Job Alert Setting",
+      "deleteAlertTip": "Are you sure you want to delete this job reminder? After deleting, you will not be able to get high-quality job recommendation information"
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
@@ -1171,6 +1172,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "verify": "Verify",
+    "done": "Done",
+    "yes": "Yes",
     "optLabel": "6-digit OTP",
     "errorMsg": {
       "invalidOtp": "The OTP you have entered is wrong. Please try again.",
@@ -1196,7 +1199,9 @@
     "receiveTipsExplanation": "This is to share insights and tips that will help you with your job search.",
     "jobAlertTitle": "Job alert",
     "filter": "Filters",
+    "jobFilter": "Job Filter",
     "frequency": "Frequency",
+    "sendToEmail": "Send to email",
     "alertFrequency": "Alert Frequency",
     "notJobAlert": "You have no job alert yet.",
     "toSearch": " Back to job search",

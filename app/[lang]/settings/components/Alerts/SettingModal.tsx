@@ -1,13 +1,11 @@
 import React, { useMemo, useState } from 'react'
 
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
+import { MenuItem, Select } from '@mui/material'
 import MaterialTextField from 'components/MaterialTextField'
 import Modal from '../Modal'
 
 import { validEmailReg } from '../../config'
-
 import styles from './index.module.scss'
-import { MenuItem, Select } from '@mui/material'
 
 interface IProps {
   open: boolean
@@ -23,12 +21,13 @@ interface IProps {
 const SettingModal = (props: IProps) => {
   const { open, lang, config, job, title, handleClose, handleSave, filterValues } = props
   const alertJobsModal = lang?.search?.alertJobsModal || {}
+  const accountSetting = lang?.accountSetting || {}
   const [frequencyId, setFrequencyId] = useState(job?.frequency_id || '')
   const [email, setEmail] = useState(job?.email)
   const [emailError, setEmailError] = useState(null)
 
   const frequencyList = useMemo(() => {
-    return config.subscibe_job_frequency_lists
+    return config.subscibe_job_frequency_lists || []
   }, [config])
 
   const handleMethodSave = () => {
@@ -59,8 +58,8 @@ const SettingModal = (props: IProps) => {
       <Modal
         key={'Job-Alert-Setting'}
         open={open}
-        cancel='Cancel'
-        confirm='Done'
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.done}
         handleSave={handleMethodSave}
         handleClose={handleMethodClose}
         title={title}
@@ -68,13 +67,13 @@ const SettingModal = (props: IProps) => {
       >
         <div className={styles.modal}>
           <div className={styles.item}>
-            <p className={styles.title}>Job filters</p>
+            <p className={styles.title}>{accountSetting?.jobFilter}</p>
             <p className={styles.content} title={job ? filterValues(job) : null}>
               {job ? filterValues(job) : null}
             </p>
           </div>
           <div className={styles.item}>
-            <p className={`${styles.title} ${styles.titleFilters}`}>Frequency</p>
+            <p className={`${styles.title} ${styles.titleFilters}`}>{accountSetting?.frequency}</p>
             <div className={styles.select}>
               <Select
                 variant='standard'
@@ -93,7 +92,9 @@ const SettingModal = (props: IProps) => {
             </div>
           </div>
           <div className={styles.item} style={{ marginTop: '36px' }}>
-            <p className={`${styles.title} ${styles.titleFilters}`}>Send to email</p>
+            <p className={`${styles.title} ${styles.titleFilters}`}>
+              {accountSetting?.sendToEmail}
+            </p>
             <div className={styles.select}>
               <MaterialTextField
                 value={email}

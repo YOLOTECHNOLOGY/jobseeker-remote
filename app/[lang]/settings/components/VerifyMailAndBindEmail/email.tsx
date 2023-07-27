@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import MaterialTextField from 'components/MaterialTextField'
 // import Text from 'components/Text'
 import { BlueTickIcon } from 'images'
-import Captcha from '../captcha/index'
+import Captcha from '../Captcha/index'
 import { validEmailReg } from '../../config'
 // tools
 // import { handleNumericInput } from 'helpers/handleInput'

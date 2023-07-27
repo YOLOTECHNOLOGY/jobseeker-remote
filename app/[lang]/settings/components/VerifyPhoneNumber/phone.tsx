@@ -7,7 +7,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
-import Captcha from '../captcha/index'
+import Captcha from '../Captcha/index'
 // import TextField from '@mui/material/TextField'
 
 // tools
