@@ -1174,6 +1174,8 @@
     "verify": "Verify",
     "done": "Done",
     "yes": "Yes",
+    "search": "Search",
+    "add": "Add",
     "optLabel": "6-digit OTP",
     "errorMsg": {
       "invalidOtp": "The OTP you have entered is wrong. Please try again.",
@@ -1209,7 +1211,17 @@
     "keep": "Keep",
     "delete": "Delete",
     "deleteTips": "You are about to delete this job alert. This cannot be undone.",
-    "notProvided": "Not provided"
+    "notProvided": "Not provided",
+    "blockMessages": {
+      "unblock": "Unblock",
+      "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",
+      "jobOrCompany": "Job title or company",
+      "tip1": "The company can be searched by",
+      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
+      "tip3": "Company abbreviation: such as \"BOSS Direct Employment\"",
+      "unBlockTip1": "The following related companies will be unblocked at the same time",
+      "unBlockTip2": "The company is referred to as Changdian, related companies of Chongqing Changdian Network"
+    }
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
