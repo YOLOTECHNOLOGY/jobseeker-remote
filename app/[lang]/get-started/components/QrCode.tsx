@@ -97,7 +97,7 @@ const qrCode = ({ lang }: any) => {
         JSON.stringify({
           qrcode_uuid: uuid,
           // source: 'web',
-          // status_id: 1,
+          status_id: 1,
           qr_expired_at: timeRef.current,
           website_login: 'app_scan_code'
         })
