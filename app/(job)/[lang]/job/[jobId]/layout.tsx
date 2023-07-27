@@ -8,7 +8,6 @@ import { handleFetchJobDetail } from './service'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import { redirect } from 'next/navigation'
-import { TrendingUp } from '@mui/icons-material'
 export const revalidate = 3600
 const handleShareInfo = async (params: any): Promise<any> => {
   const shareId = params.jobId?.split('-').shift()
@@ -81,7 +80,7 @@ export default async function Layout(props: any) {
   const seo = await generateSEO(props)
   return (
     /* @ts-expect-error Async Server Component */
-    <PublicLayout {...props} seo={seo} position={TrendingUp}>
+    <PublicLayout {...props} seo={seo} position={true}>
       {children}
       <Footer />
     </PublicLayout>
