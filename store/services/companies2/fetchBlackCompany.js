@@ -19,11 +19,10 @@ const fetchAddBlacklistCompaniesService = (payload) => {
     return axios.post(`/blacklist-companies/create`, payload)
 }
 
-const fetchDeleteBlacklistCompaniesService = (payload) => {
+const fetchDeleteBlacklistCompaniesService = ({id}) => {
     const axios = configuredAxios('company', 'protected')
-    return axios.delete(`/blacklist-companies/delete`, payload)
+    if(!id) return
+    return axios.delete(`/${id}/blacklist-companies/delete`)
 }
-
-
 
 export { fetchSearchCompanyService, fetchBlacklistCompaniesService, fetchAddBlacklistCompaniesService, fetchDeleteBlacklistCompaniesService }

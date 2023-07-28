@@ -93,8 +93,8 @@ const ShieldingCompany = (props: IProps) => {
   //   setList([...list])
   // }
 
-  const deleteBlackCompanies = (companyIds: Array<number>) => {
-    fetchDeleteBlacklistCompaniesService({ company_ids: companyIds })
+  const deleteBlackCompanies = (companyId) => {
+    fetchDeleteBlacklistCompaniesService({ id: companyId })
       .then(() => {
         setOpenUnlock(false)
         if (!showSearchModal) {
@@ -172,7 +172,7 @@ const ShieldingCompany = (props: IProps) => {
   const handleConfirmUnClock = () => {
     if (companyInfo?.id) {
       const id = companyInfo?.company_id || companyInfo?.id
-      deleteBlackCompanies([id])
+      deleteBlackCompanies(id)
     }
   }
 
@@ -218,8 +218,8 @@ const ShieldingCompany = (props: IProps) => {
       <Modal
         key={'open'}
         open={open}
-        cancel='Cancel'
-        confirm='yes'
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.yes}
         handleSave={handleConfirm}
         handleClose={() => setOpen(false)}
         title='Add'
