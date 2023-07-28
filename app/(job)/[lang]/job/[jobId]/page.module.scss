@@ -443,18 +443,20 @@
       padding: 20px 16px;
       border-bottom: 1px solid #E4E4E4;
       display: flex;
-      justify-content: space-between;
 
-      >div {
+
+      .avatatBox {
         display: flex;
         align-items: center;
+        flex: 1;
+        width: 0;
       }
 
       .footer_name {
         font-size: 16px;
         margin-left: 10px;
         color: #353535;
-
+        max-width: 300px;
         overflow: hidden;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -465,7 +467,8 @@
       .chatBox {
         display: flex;
         align-items: center;
-
+        width: fit-content;
+        margin-left: 20px;
       }
 
 
@@ -476,6 +479,8 @@
         letter-spacing: 0.0075em;
         color: #707070;
         padding-left: 10px;
+        width: fit-content;
+        display: block;
       }
 
       .lineStatus {
