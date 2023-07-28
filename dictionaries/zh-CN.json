@@ -93,7 +93,7 @@
     },
     "loginUsingSocialMediaOTP": "验证码登录/注册",
     "loginUsingQRCode": "使用二维码登录",
-    "scanQRCodeOnAppToLogin": "Scan this code with  Bossjob app to login instantly",
+    "scanQRCodeOnAppToLogin": "使用Bossjob APP扫描二维码即可登录",
     "donHaveApp": "没有应用程序",
     "howToScanQRCode": "如何扫描二维码",
     "ImJobSeeker": "我是一名求职者",
@@ -622,7 +622,7 @@
   "manageProfile": {
     "tab": {
       "profile": {
-        "tabTitle": "档案",
+        "tabTitle": "我的资料",
         "findYou": "让企业更快找到您!",
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
