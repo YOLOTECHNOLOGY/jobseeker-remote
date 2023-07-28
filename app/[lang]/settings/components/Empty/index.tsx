@@ -16,7 +16,9 @@ const Empty = (props: IProps) => {
 
   return (
     <div className={styles.main} style={style}>
-      <Image src={ImageEmpty} width={362} height={247} alt='empty' />
+      <div className={styles.image}>
+        <Image src={ImageEmpty} fill={true} alt='empty' />
+      </div>
       <div className={styles.message}>{message}</div>
     </div>
   )

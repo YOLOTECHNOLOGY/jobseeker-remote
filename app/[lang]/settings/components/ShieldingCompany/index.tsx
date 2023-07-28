@@ -34,6 +34,7 @@ const ShieldingCompany = (props: IProps) => {
   const dispatch = useDispatch()
 
   const [isLoading, setIsLoading] = useState(true)
+  const [searchLoading, setSearchLoading] = useState(false)
 
   const [open, setOpen] = useState<boolean>(false)
   const [openUnlock, setOpenUnlock] = useState<boolean>(false)
@@ -46,6 +47,7 @@ const ShieldingCompany = (props: IProps) => {
   const [checkedCompany, setCheckedCompany] = useState([])
 
   const [showSearchModal, setShowSearchModal] = useState(true)
+  const [showSearchEmpty, setShowSearchEmpty] = useState(true)
 
   const handleError = (error) => {
     const { data } = error.response
@@ -64,6 +66,13 @@ const ShieldingCompany = (props: IProps) => {
     )
   }
 
+  const resetSearchModalValues = () => {
+    setOpen(false)
+    setSearchValue('')
+    setSearchList(() => [])
+    setShowSearchEmpty(true)
+  }
+
   const blackListCompanies = () => {
     setIsLoading(true)
     fetchBlacklistCompaniesService({ page: 1, size: 100 })
@@ -78,11 +87,11 @@ const ShieldingCompany = (props: IProps) => {
         setIsLoading(false)
       })
   }
+
   const addBlackCompanies = (companyIds: Array<number>) => {
     fetchAddBlacklistCompaniesService({ company_ids: companyIds })
       .then(() => {
-        setOpen(false)
-        setSearchList(() => [])
+        resetSearchModalValues()
         blackListCompanies()
       })
       .catch((err) => {
@@ -140,8 +149,7 @@ const ShieldingCompany = (props: IProps) => {
   }
 
   const handleClose = () => {
-    setOpen(false)
-    setSearchList(() => [])
+    resetSearchModalValues()
   }
 
   const debounced = useRef(debounce((newValue) => filterCompany(newValue), 300))
@@ -153,6 +161,7 @@ const ShieldingCompany = (props: IProps) => {
   // }, [searchValue])
 
   const filterCompany = (newValue) => {
+    setSearchLoading(true)
     const params = {
       explain: 1,
       size: 10,
@@ -160,17 +169,24 @@ const ShieldingCompany = (props: IProps) => {
       show_blacklisted: 1,
       query: newValue
     }
-    fetchSearchCompanyService(params).then((res) => {
-      console.log(res?.data?.data?.companies)
-      const data = res?.data?.data?.companies || []
-      setSearchList(data)
-      const resData = data.filter((item) => !item.is_blacklisted)
-      setCheckedCompany(resData.map((e) => e.id))
-    })
+    fetchSearchCompanyService(params)
+      .then((res) => {
+        const data = res?.data?.data?.companies || []
+        setSearchList(data)
+        const resData = data.filter((item) => !item.is_blacklisted)
+        setCheckedCompany(resData.map((e) => e.id))
+      })
+      .catch((err) => {
+        handleError(err)
+      })
+      .finally(() => {
+        setSearchLoading(false)
+        setShowSearchEmpty(false)
+      })
   }
 
   const handleChange = (event, item) => {
-    console.log('event', event.target.checked, item.id)
+    // console.log('event', event.target.checked, item.id)
     const newCheckedCompany = checkedCompany.slice()
     const index = newCheckedCompany.slice().indexOf(item.id)
     if (event.target.checked) {
@@ -212,6 +228,58 @@ const ShieldingCompany = (props: IProps) => {
     ) : (
       <Empty style={{ marginTop: '80px' }} lang={lang} />
     )
+  }
+
+  const SearchModalList = () => {
+    return (
+      <div className={styles.list}>
+        <FormGroup>
+          {searchList.map((item) => (
+            <FormControlLabel
+              key={item.id}
+              onChange={(ev) => handleChange(ev, item)}
+              control={
+                <Checkbox
+                  disabled={item.is_blacklisted}
+                  checked={checkedCompany.includes(item.id)}
+                />
+              }
+              label={
+                <p className={styles.item}>
+                  <span>{item.name}</span>
+                  {item.is_blacklisted && (
+                    <i
+                      onClick={(ev) => {
+                        ev.preventDefault()
+                        handleBlackCompany({ ...item, __company_name: item.name }, true)
+                      }}
+                    >
+                      {accountSetting?.blockMessages?.unblock}
+                    </i>
+                  )}
+                </p>
+              }
+            />
+          ))}
+        </FormGroup>
+      </div>
+    )
+  }
+
+  const SearchModalEmpty = () => {
+    return showSearchEmpty ? (
+      <div className={styles.tips}>
+        <h5>{accountSetting?.blockMessages?.tip1}：</h5>
+        <p>{accountSetting?.blockMessages?.tip2}</p>
+        <p>{accountSetting?.blockMessages?.tip3}</p>
+      </div>
+    ) : (
+      <div className={styles.tips}>{accountSetting?.blockMessages?.noCompanies}</div>
+    )
+  }
+
+  const SearchModalContent = () => {
+    return searchList?.length > 0 ? <SearchModalList /> : <SearchModalEmpty />
   }
 
   return (
@@ -275,44 +343,12 @@ const ShieldingCompany = (props: IProps) => {
               {accountSetting?.search}
             </MaterialButton>
           </div>
-          {searchList?.length > 0 ? (
-            <div className={styles.list}>
-              <FormGroup>
-                {searchList.map((item) => (
-                  <FormControlLabel
-                    key={item.id}
-                    onChange={(ev) => handleChange(ev, item)}
-                    control={
-                      <Checkbox
-                        disabled={item.is_blacklisted}
-                        checked={checkedCompany.includes(item.id)}
-                      />
-                    }
-                    label={
-                      <p className={styles.item}>
-                        <span>{item.name}</span>
-                        {item.is_blacklisted && (
-                          <i
-                            onClick={(ev) => {
-                              ev.preventDefault()
-                              handleBlackCompany({ ...item, __company_name: item.name }, true)
-                            }}
-                          >
-                            {accountSetting?.blockMessages?.unblock}
-                          </i>
-                        )}
-                      </p>
-                    }
-                  />
-                ))}
-              </FormGroup>
+          {searchLoading ? (
+            <div className={styles.searchLoading}>
+              <Loading />
             </div>
           ) : (
-            <div className={styles.tips}>
-              <h5>{accountSetting?.blockMessages?.tip1}：</h5>
-              <p>{accountSetting?.blockMessages?.tip2}</p>
-              <p>{accountSetting?.blockMessages?.tip3}</p>
-            </div>
+            <SearchModalContent />
           )}
         </div>
       </Modal>

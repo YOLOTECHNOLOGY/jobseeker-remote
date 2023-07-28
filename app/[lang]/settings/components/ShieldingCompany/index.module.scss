@@ -103,6 +103,10 @@
   max-height: 50vh;
   overflow: auto;
 
+  @include sm {
+    padding: 20px;
+  }
+
   i {
     font-style: normal;
   }
@@ -236,5 +240,10 @@
       letter-spacing: 0.135px;
       margin: 0;
     }
+  }
+
+  .searchLoading {
+    position: relative;
+    height: 15vh;
   }
 }
