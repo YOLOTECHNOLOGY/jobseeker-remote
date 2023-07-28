@@ -249,7 +249,7 @@ const EditProfileModal = ({
       const p = await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
       await providerFetchProfile()
-      setCookiesWithLoginData(p.data)
+      setCookiesWithLoginData(p.data, false)
     } catch (e) {
       console.log(e)
     } finally {

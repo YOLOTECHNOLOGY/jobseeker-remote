@@ -109,7 +109,7 @@ const follow_use = [
 const Footer = () => {
   const langKey = getLang()
   const contextLang = useContext(languageContext)
-
+  console.log(process.env, process.env.BOSSHUNT_URL, 'process')
   const isLogin = getCookie('accessToken') ? true : false
 
   const {
