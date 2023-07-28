@@ -445,7 +445,7 @@ const IMProvider = ({ children, lang }: any) => {
         self_role: 'jobseeker'
     } as any)
     const interpreter = hooks.useInterpreter(interpreters, contextRef)
-    const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList)
+    const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList, lang)
     useEffect(() => {
         const receive = e => {
             const data = e.detail?.data ?? {}
