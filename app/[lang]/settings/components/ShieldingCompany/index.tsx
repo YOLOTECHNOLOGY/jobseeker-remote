@@ -14,6 +14,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 
+import Loading from 'app/components/loading'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'
 import Empty from '../Empty'
@@ -21,6 +22,7 @@ import List from './List'
 import Modal from '../Modal'
 
 import styles from './index.module.scss'
+import { formatTemplateString } from 'helpers/formatter'
 
 interface IProps {
   lang: any
@@ -30,6 +32,8 @@ const ShieldingCompany = (props: IProps) => {
   const { lang } = props
   const { accountSetting = {} } = lang
   const dispatch = useDispatch()
+
+  const [isLoading, setIsLoading] = useState(true)
 
   const [open, setOpen] = useState<boolean>(false)
   const [openUnlock, setOpenUnlock] = useState<boolean>(false)
@@ -61,6 +65,7 @@ const ShieldingCompany = (props: IProps) => {
   }
 
   const blackListCompanies = () => {
+    setIsLoading(true)
     fetchBlacklistCompaniesService({ page: 1, size: 100 })
       .then((res) => {
         const resData = res?.data?.data?.blacklist_companies || []
@@ -69,16 +74,18 @@ const ShieldingCompany = (props: IProps) => {
       .catch((err) => {
         handleError(err)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
   const addBlackCompanies = (companyIds: Array<number>) => {
     fetchAddBlacklistCompaniesService({ company_ids: companyIds })
-      .then((res) => {
-        console.log('add', res)
+      .then(() => {
         setOpen(false)
+        setSearchList(() => [])
         blackListCompanies()
       })
       .catch((err) => {
-        console.log('err', err)
         handleError(err)
       })
   }
@@ -120,11 +127,11 @@ const ShieldingCompany = (props: IProps) => {
       setOpen(false)
       setShowSearchModal(false)
     }
-    setCompanyInfo(data)
+    setCompanyInfo({ ...data })
     setOpenUnlock(true)
   }
 
-  console.log(searchValue)
+  // console.log(searchValue)
 
   const handleConfirm = () => {
     if (checkedCompany.length > 0) {
@@ -132,13 +139,18 @@ const ShieldingCompany = (props: IProps) => {
     }
   }
 
+  const handleClose = () => {
+    setOpen(false)
+    setSearchList(() => [])
+  }
+
   const debounced = useRef(debounce((newValue) => filterCompany(newValue), 300))
 
-  useEffect(() => {
-    if (searchValue) {
-      debounced.current(searchValue)
-    }
-  }, [searchValue])
+  // useEffect(() => {
+  //   if (searchValue) {
+  //     debounced.current(searchValue)
+  //   }
+  // }, [searchValue])
 
   const filterCompany = (newValue) => {
     const params = {
@@ -184,6 +196,24 @@ const ShieldingCompany = (props: IProps) => {
     }
   }
 
+  const handleSearch = () => {
+    debounced.current(searchValue)
+  }
+
+  const Content = () => {
+    return list?.length > 0 ? (
+      <List
+        lang={lang}
+        handleClick={(data) =>
+          handleBlackCompany({ ...data, __company_name: data?.company?.name }, false)
+        }
+        list={list}
+      />
+    ) : (
+      <Empty style={{ marginTop: '80px' }} lang={lang} />
+    )
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.mainNav}>
@@ -208,10 +238,12 @@ const ShieldingCompany = (props: IProps) => {
       </div>
 
       <div className={styles.mainContent}>
-        {list?.length > 0 ? (
-          <List lang={lang} handleClick={(data) => handleBlackCompany(data, false)} list={list} />
+        {isLoading ? (
+          <div className={styles.loading}>
+            <Loading />
+          </div>
         ) : (
-          <Empty style={{ marginTop: '80px' }} lang={lang} />
+          <Content />
         )}
       </div>
 
@@ -221,9 +253,9 @@ const ShieldingCompany = (props: IProps) => {
         cancel={accountSetting?.cancel}
         confirm={accountSetting?.yes}
         handleSave={handleConfirm}
-        handleClose={() => setOpen(false)}
-        title='Add'
-        lang={{}}
+        handleClose={handleClose}
+        title={accountSetting?.add}
+        lang={lang}
       >
         <div className={styles.modal}>
           <p className={styles.title}>{accountSetting?.blockMessages?.title}</p>
@@ -234,7 +266,12 @@ const ShieldingCompany = (props: IProps) => {
               onChange={(e) => setSearchValue(e.target.value)}
               className={styles.searchInput}
             ></MaterialTextField>
-            <MaterialButton className={styles.searchButton} variant='contained' capitalize>
+            <MaterialButton
+              onClick={handleSearch}
+              className={styles.searchButton}
+              variant='contained'
+              capitalize
+            >
               {accountSetting?.search}
             </MaterialButton>
           </div>
@@ -258,7 +295,7 @@ const ShieldingCompany = (props: IProps) => {
                           <i
                             onClick={(ev) => {
                               ev.preventDefault()
-                              handleBlackCompany(item, true)
+                              handleBlackCompany({ ...item, __company_name: item.name }, true)
                             }}
                           >
                             {accountSetting?.blockMessages?.unblock}
@@ -287,12 +324,16 @@ const ShieldingCompany = (props: IProps) => {
         confirm={accountSetting?.yes}
         handleSave={handleConfirmUnClock}
         handleClose={handleCloseUnlock}
-        title={accountSetting?.blockMessages?.unlock}
+        title={accountSetting?.blockMessages?.unblock}
         lang={lang}
       >
         <div className={styles.modal}>
           <h6>{accountSetting?.blockMessages?.unBlockTip1}：</h6>
-          <p className={styles.titleUnlock}>{accountSetting?.blockMessages?.unBlockTip2}</p>
+          <p className={styles.titleUnlock}>
+            {formatTemplateString(accountSetting?.blockMessages?.unBlockTip2, {
+              company: companyInfo?.__company_name
+            })}
+          </p>
         </div>
       </Modal>
     </div>

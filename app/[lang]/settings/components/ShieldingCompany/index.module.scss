@@ -36,6 +36,11 @@
     overflow: auto;
     height: calc(100% - 52px);
   }
+
+  .loading {
+    position: relative;
+    height: 50vh;
+  }
 }
 
 .company {
