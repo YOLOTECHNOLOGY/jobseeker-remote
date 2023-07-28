@@ -1,6 +1,6 @@
 'use client';
 import { useLanguage } from 'app/components/providers/languageProvider';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useManageProfileData } from './DataProvider';
 import ProfileLayout from 'components/ProfileLayout'
@@ -14,7 +14,7 @@ const ManageProfilePage = () => {
   const lang = useLanguage();
   const { profile: userDetail, config, fetchProfile } = useManageProfileData()
   const searchParams = new URLSearchParams(window.location.search);
-  const tab = searchParams.get('tab');;
+  const tab = searchParams.get('tab');
   const {
     manageProfile: { tab: tabDic }
   } = lang
@@ -72,8 +72,22 @@ const ManageProfilePage = () => {
     }
   })
 
+  useLayoutEffect(()=>{
+    if(tab !== tabValue){
+      setTabValue(tab || 'profile');
+    }
+  },[tabValue,tab]);
 
-
+  
+  useEffect(() => {
+    if (userDetail?.job_preferences) {
+      setUnCompleted((prev) => ({
+        ...prev,
+        'job-preferences': userDetail?.job_preferences?.length == 0
+      }))
+    }
+    setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes ? userDetail?.resumes?.length == 0 : !userDetail.resumes }))
+  }, [userDetail])
   return <>
 
     <EditProfileModal

@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
 /* Actions */
-import { manageUserWorkExperiencesRequest } from 'store/actions/users/manageUserWorkExperiences'
+
+import { differenceBy, difference, differenceWith} from 'lodash-es'
 
 /* Components */
 import { Chip } from '@mui/material'
@@ -18,14 +19,13 @@ import { Button } from '@mui/material'
 
 /* Helpers */
 import { updateUserProfileRequest } from 'store/actions/users/updateUserProfile'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 import { keys, flatMap } from 'lodash-es'
 /* Styles */
 import styles from './EditSkillModal.module.scss'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import { getCookie } from 'helpers/cookies'
-
+import profileStyles from 'app/(jobseeker-complete-profile)/[lang]/jobseeker-complete-profile/index.module.scss'
 
 type EditSkillModalProps = {
   modalName: string
@@ -49,11 +49,14 @@ const EditSkillModal = ({
       tab: {
         profile: { skillModal }
       }
+    },
+    profile : {
+      skillsWillBeSuggested
     }
   } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
-
+  console.log('skills',skills);
   const [choosed, setChoosed] = useState(skills || [])
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
@@ -64,7 +67,8 @@ const EditSkillModal = ({
     (store: any) => store.config?.config?.response?.inputs?.job_function_lists ?? []
   )
 
-  const accessToken = getCookie('accessToken')
+  const [allSkills, setAllSkills] = useState([]);
+
 
   const skillList = useMemo(() => {
     const jobFunction = flatMap(jobFunctionLists, (item) => {
@@ -96,7 +100,12 @@ const EditSkillModal = ({
       handleCloseModal()
     }
   }, [updateProfileSuccess])
-
+  useEffect(()=>{
+    
+    if(showModal && skills){
+      setChoosed(skills)
+    };
+  },[skills, showModal])
   const onSubmit = () => {
     const payload = {
       skills: choosed.join(',')
@@ -110,6 +119,7 @@ const EditSkillModal = ({
   }
 
   const handleAddSkill = (skill) => {
+    if(choosed.length > 9) return;
     setChoosed((prevState) => {
       if (!prevState?.includes?.(skill)) {
         return [...prevState, skill]
@@ -130,10 +140,9 @@ const EditSkillModal = ({
   const handleResetForm = () => {
     setFunctionTitle({ value: '', id: undefined })
     setSearchValue('')
+    setAllSkills([])
   }
-
-  console.log('choosed:', functionTitle)
-
+  console.log('allSkills, choosed',functionTitle)
   return (
     <div>
       <Modal
@@ -146,6 +155,7 @@ const EditSkillModal = ({
         handleFirstButton={handleCloseModal}
         handleSecondButton={handleSubmit(onSubmit)}
         fullScreen
+        bodyClass={styles.modalBody}
       >
         <div>
           <Text>{skillModal.suggestions}</Text>
@@ -158,11 +168,26 @@ const EditSkillModal = ({
               isTouched={true}
               title={lang.profile.jobFunction}
               value={functionTitle}
-              onChange={(item) => setFunctionTitle({
-                id: item.id,
-                value: item.value
-              })}
+              onChangeSkill={(skills)=>{
+                setAllSkills(skills.map(item=>item.value));
+              }}
+              onChange={(item) => {
+                setFunctionTitle({
+                  id: item.id,
+                  value: item.value
+                })
+              }}
             />
+          </div>
+          <div className={styles.form}>
+            <p className={profileStyles.titleTip}>{skillsWillBeSuggested}</p>
+            <div className={profileStyles.skillList}>
+              {difference(allSkills, choosed).map((e) => (
+                <span key={e} onClick={() => handleAddSkill(e)}>
+                  {e}
+                </span>
+              ))}
+            </div>
           </div>
           <div className={styles.form}>
             <div className={styles.specilField}>
@@ -195,16 +220,11 @@ const EditSkillModal = ({
                     handleAddSkill(searchValue)
                     setSearchValue('')
                   }
-
-
                 }}
               >
                 {skillModal.addBtn}
               </Button>
-
             </div>
-
-
           </div>
           <div className={styles.skillList}>
             {(choosed ?? []).map((skill, i) => {

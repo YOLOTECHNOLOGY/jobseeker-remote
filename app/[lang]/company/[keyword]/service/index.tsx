@@ -3,7 +3,6 @@ import { fetchJobsListService } from "store/services/jobs/fetchJobsList";
 import { fetchConfigService } from "store/services/config/fetchConfig";
 import { fetchCompanyDetailService } from "store/services/companies2/fetchCompanyDetail";
 import { fetchCompanyHRService } from "store/services/companies2/fetchCompanyHR"
-import { fetchHotJobsListService } from "store/services/jobs/fetchHotJobs";
 
 
 export async function fetchJobsListReq(data, accessToken) {
@@ -272,30 +271,6 @@ interface Input {
 	key: string;
 	value: any;
 }
-
-interface Query {
-	bool: {
-		filter: any[];
-	};
-}
-
-interface SortObject {
-	_script: {
-		type: string;
-		order: string;
-		script: {
-			source: string;
-		};
-	};
-}
-
-interface Analysis {
-	synonyms: any[];
-	query_string: string;
-}
-
-
-
 
 export interface Recruiter {
 	id: number;

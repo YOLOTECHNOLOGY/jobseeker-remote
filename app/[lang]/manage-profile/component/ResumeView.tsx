@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useCallback } from 'react'
 
 /* Vendors */
@@ -7,8 +8,6 @@ import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import { Download } from '@mui/icons-material';
-
-import { useConfirm } from "material-ui-confirm";
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -28,16 +27,13 @@ import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 moment.locale('en')
 /* Services */
-import { fetchResumeDelete } from 'store/services/auth/fetchResumeDelete'
 import { ColorButton } from './Button';
 /* Assets */
 import {
   ResumeTemplate1,
   ResumeTemplate2,
   DownloadWhiteIcon,
-  CarouselRightRoundedBlueButton,
-  AddIcon
-} from 'images'
+  CarouselRightRoundedBlueButton} from 'images'
 
 /* Styles */
 import classNames from 'classnames'
@@ -53,7 +49,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
       tab: { resume: transitions }
     }
   } = lang
-  const confirm = useConfirm();
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
   const dispatch = useDispatch()
@@ -122,26 +117,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
     emblaApi.reInit()
   }, [emblaApi, setScrollSnaps, onSelect])
 
-  const handleDeleteResume = (resumeId: number) => {
-    setDeleteResumeLoading(true);
-    alert('1')
-    return;
-    confirm({description: 'Are you sure ?'}).then(()=>{
-      fetchResumeDelete(resumeId)
-      .then(({ status }) => {
-        if (status === 200) {
-          setResume((resumes) => resumes.filter((item) => item.id !== resumeId))
-        }
-      })
-      .catch(() => {
-        setShowSnackbarModal(true)
-      })
-      .finally(() => {
-        setDeleteResumeLoading(false)
-      })
-    })
-
-  }
 
   const handleUploadResume = (file) => {
     uploadUserResumeService(file)
@@ -210,6 +185,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
+        <div style={{height: 20}}></div>
+
         <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
         </Text>

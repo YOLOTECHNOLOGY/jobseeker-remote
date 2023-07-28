@@ -242,7 +242,6 @@ const JobsCard = ({
       )
     })
   }
-  console.log({ tabValue }, data)
   return (
     <>
       {tabValue === 'interview' ? interviewCard(data) : card(translateData(data, config))}

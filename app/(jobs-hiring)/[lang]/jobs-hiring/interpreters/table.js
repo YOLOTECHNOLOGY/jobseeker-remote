@@ -5,16 +5,20 @@ import { fetchJobsListService } from 'store/services/jobs/fetchJobsList'
 import { check } from 'app/[lang]/chat/[chat_id]/interpreters/services/chat'
 import { cookies } from 'next/headers'
 import { buildParams } from './encoder'
+import { memoizeWithTime } from 'helpers/cache'
 
-
+const fetchList = memoizeWithTime(
+    fetchJobsListService,
+    (params, token) => JSON.stringify(params) + token,
+    600
+)
 export default registInterpreter(command =>
     command.cata({
         fetchData: () => M(context => {
             const { searchValues, config } = context
             const queriyParams = buildParams(config, searchValues)
-            console.log({ queriyParams })
             const token = cookies().get('accessToken')
-            return fetchJobsListService(queriyParams, token?.value)
+            return fetchList(queriyParams, token?.value)
                 .then(result => {
                     return ({
                         jobs: result.data?.data?.jobs,

@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useMemo } from 'react'
-import Link from 'app/components/Link'
+import Link from 'next/link'
 import styles from 'app/index.module.scss'
 
 import { LocationContext } from 'app/components/providers/locationProvier'
@@ -26,21 +26,21 @@ const PopularJob = ({ langKey }: any) => {
   return (
     <div className={styles.popularJobs}>
       <div className={styles.popularBox}>
-      <label>{home.popularJobs}</label>
-      <div className={styles.tagContainer}>
-        {tags.map((tag, index) => (
-          <Link
-            key={tag.value}
-            prefetch={false}
-            href={'/' + langKey + querys[index]}
-            className={styles.tag}
-          >
-            <div >
-              {tag.label}
-            </div>
-          </Link>
-        ))}
-      </div>
+        <label>{home.popularJobs}</label>
+        <div className={styles.tagContainer}>
+          {tags.map((tag, index) => (
+            <Link
+              key={tag.value}
+              prefetch={true}
+              href={'/' + langKey + querys[index]}
+              className={styles.tag}
+            >
+              <div >
+                {tag.label}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

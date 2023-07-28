@@ -9,7 +9,6 @@ import { throttle } from 'lodash-es'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
 const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
-  console.log({ jobDetail })
   const token = getCookie(accessToken)
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
@@ -57,8 +56,6 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   }, [])
 
   const handleScroll = () => {
-    // scrollRef.current = new Date().getTime() // window.document.body.scrollTop
-    // console.log(scrollRef.current, 999)
     setTimeStamp(new Date().getTime())
   }
 
@@ -84,7 +81,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       }
       console.log(arr)
       arr.map((e, index) => {
-        if (Math.abs(e) < 100) {
+        if (Math.abs(e) < 80) {
           scrollRef.current = true
           setCurrent(index)
         }
@@ -92,11 +89,14 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       if (wrkingLocationTop < -600) {
         setCurrent(arr?.length - 1)
       }
+      if (top < 200) {
+        setCurrent(0)
+      }
     }
   }, [timeStamp])
 
   const computeHeight = (top, bodyTop, headerHeight) => {
-    return top - headerHeight - bodyTop - 100
+    return top - headerHeight - bodyTop - 50
   }
 
   const getOffsetTop = (dom) => {
@@ -120,8 +120,8 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
     if (domID) {
       const domTop = document.getElementById(domID)?.offsetTop
       const headerHeight = document.getElementById('jobDetaiPagelHead')?.offsetHeight
-      const position = domTop - headerHeight - 100
-      console.log(position, domTop, headerHeight)
+      console.log(headerHeight, 9999)
+      const position = domTop - headerHeight - (domID === 'JobDescription' ? 300 : 60)
       position && scrollSmoothTo(position)
     }
   }, [current])
@@ -153,21 +153,23 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   }
 
   return (
-    <div className={styles.menu}>
-      <div className={styles.menuMain}>
-        <ul>
-          {menuNew.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => handleClick(index)}
-              className={`${index === current ? styles.active : ''} `}
-            >
-              {item.name}
-            </li>
-          ))}
-        </ul>
-        <div className={styles.operator}>
-          <JobClient isLogin={Boolean(token)} {...shareParams} />
+    <div className={styles.headSticky} id='jobDetaiPagelHead'>
+      <div className={styles.menu}>
+        <div className={styles.menuMain}>
+          <ul>
+            {menuNew.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => handleClick(index)}
+                className={`${index === current ? styles.active : ''} `}
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
+          <div className={styles.operator}>
+            <JobClient isLogin={Boolean(token)} {...shareParams} />
+          </div>
         </div>
       </div>
     </div>

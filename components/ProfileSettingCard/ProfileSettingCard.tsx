@@ -1,6 +1,5 @@
 /* Components */
 import Text from '../Text'
-import MaterialButton from '../MaterialButton'
 
 /* Styles */
 import styles from './ProfileSettingCard.module.scss'
@@ -32,7 +31,17 @@ const ProfileSettingCard = ({
         <Text textColor='primaryBlue' textStyle='xl' bold style={{ fontSize: '24px' }}>
           {title}
         </Text>
-        <img src={AddIcon} width='14' height='14' style={{ cursor: 'pointer', marginRight: '15px' }} onClick={onClick} />
+        <span style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'relative',
+          width: '40px',
+          height: '40px'
+        }}>
+          <img src={AddIcon} width='26' height='26' style={{ cursor: 'pointer' }} onClick={onClick} />
+        </span>
+
       </div>
 
       <Text tagName='p' textStyle='lg'>
@@ -48,7 +57,7 @@ const ProfileSettingCard = ({
       >
         {buttonText}
       </MaterialButton> */}
-    </div>
+    </div >
   )
 }
 

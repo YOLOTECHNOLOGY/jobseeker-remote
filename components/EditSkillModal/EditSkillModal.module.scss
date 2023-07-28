@@ -24,13 +24,17 @@
 
 .skillList {
   margin-top: 16px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 
   .skillChip {
     margin-right: 16px;
     margin-bottom: 16px;
     background-color: #1976d2;
   }
+}
+
+.modalBody {
+  height: 60vh;
 }

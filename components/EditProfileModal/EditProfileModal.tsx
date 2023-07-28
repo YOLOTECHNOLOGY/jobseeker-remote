@@ -2,36 +2,33 @@
 import { useEffect, useRef, useState } from 'react'
 
 /* Vendors */
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import moment from 'moment'
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete'
 
 /* Components */
 import Text from 'components/Text'
-import Tooltip from '@mui/material/Tooltip';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Button, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import Modal from 'components/Modal'
 import UploadUserAvatar from 'components/UploadUserAvatar'
 import MaterialTextField from 'components/MaterialTextField'
-import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialDatePicker from 'components/MaterialDatePicker'
 import GoogleMap from 'components/GoogleMap/GoogleMap'
-import _styles from 'styles/maintenance.module.scss';
+import _styles from 'styles/maintenance.module.scss'
 
 /* Helpers */
 import { flat } from 'helpers/formatter'
 /* Styles */
 import styles from './EditProfileModal.module.scss'
-import { getCountryId } from 'helpers/country'
 import React from 'react'
 import { removeEmptyOrNullValues } from 'helpers/formatter'
 import { updateUserProfile } from 'app/[lang]/manage-profile/service'
-import { useLanguage } from 'app/components/providers/languageProvider';
-import { useProfileData } from 'app/components/providers/profileProvider';
+import { useLanguage } from 'app/components/providers/languageProvider'
+import { useProfileData } from 'app/components/providers/profileProvider'
+import useGetStarted from 'app/[lang]/get-started/hooks/useGetStarted'
 type EditProfileModalProps = {
   modalName: string
   showModal: boolean
@@ -39,7 +36,7 @@ type EditProfileModalProps = {
   userDetail: any
   handleModal: Function
   lang?: any
-  fetchProfile?: () => void;
+  fetchProfile?: () => void
 }
 
 const dayList = []
@@ -88,9 +85,9 @@ const getDiffYear = (time) => {
   return age
 }
 interface PlaceType {
-  description: string;
-  formatted_address: string;
-  structured_formatting: any;
+  description: string
+  formatted_address: string
+  structured_formatting: any
   geometry: {
     location: {
       lat: () => number
@@ -115,25 +112,22 @@ const EditProfileModal = ({
     location: userLocation,
     description,
     location_id,
-    xp_lvl: expLevel,
     phone_num,
     email,
     longitude,
     latitude,
     address,
     working_since
-
   } = userDetail
-  const {fetchProfile: providerFetchProfile} = useProfileData();
+  const { fetchProfile: providerFetchProfile } = useProfileData()
   const lang = useLanguage()
-  const mapRef = useRef(null);
-  const [value, setLocationValue] = React.useState<PlaceType | null>(null);
-  const [inputValue, setInputValue] = React.useState(address || '');
-  const [options, setOptions] = React.useState<readonly PlaceType[]>([]);
-  const [debouncedValue, setDebouncedValue] = useState('');
+  const mapRef = useRef(null)
+  const [value, setLocationValue] = React.useState<PlaceType | null>(null)
+  const [inputValue, setInputValue] = React.useState(address || '')
+  const [options, setOptions] = React.useState<readonly PlaceType[]>([])
+  const [debouncedValue, setDebouncedValue] = useState('')
+  const { setCookiesWithLoginData } = useGetStarted()
 
-
-  console.log('userDetail', userDetail, address);
   const {
     manageProfile: {
       tab: {
@@ -141,58 +135,47 @@ const EditProfileModal = ({
       }
     }
   } = lang
-  const {manageProfile, profile} = useLanguage();
+  const { manageProfile, profile } = useLanguage()
   useEffect(() => {
-    const delay = 500; // 设置延迟时间（毫秒）
+    const delay = 500 // 设置延迟时间（毫秒）
     const timerId = setTimeout(() => {
-      setDebouncedValue(inputValue);
-    }, delay);
+      setDebouncedValue(inputValue)
+    }, delay)
 
     return () => {
-      clearTimeout(timerId); // 清除计时器
-    };
-  }, [inputValue]);
+      clearTimeout(timerId) // 清除计时器
+    }
+  }, [inputValue])
 
   useEffect(() => {
-    if (!mapRef.current) return;
-
+    if (!mapRef.current) return
 
     mapRef.current.textSearch({ query: debouncedValue }, function (results, status) {
       // @ts-ignore
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log('results', results);
-        setOptions(results);
+        console.log('results', results)
+        setOptions(results)
         // renderSearchPlaceList(results, map)
       }
     })
-  }, [mapRef.current, debouncedValue]);
+  }, [mapRef.current, debouncedValue])
 
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [birthdate, setBirthdate] = useState(dob)
-  const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false);
-  const [workingSince, setWorkingSince] = useState(working_since || '');
+  const [isSecondButtonLoading, setIsSecondButtonLoading] = useState(false)
+  const [workingSince, setWorkingSince] = useState('')
   const updateUserProfileSuccess = useSelector(
     (store: any) => store.users.updateUserProfile.response
   )
   const { xp_lvls: xpLevelList, location_lists: locationList } = config
-
-  const formattedXpLevelList = xpLevelList?.map?.((xp) => {
-    return { ...xp, label: xp.value, value: xp.key }
-  })
-
-  const [yearsOfExperience, setYearsOfExperience] = useState(xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id)
-
+  const [yearsOfExperience, setYearsOfExperience] = useState(
+    xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+  )
   const formattedLocationList = flat(formatLocationConfig(locationList))
-
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
   })
   const [location, setLocation] = useState(matchedLocation)
-  console.log('location',location);
-  // Limit user from selecting date more than 16-100 years ago from now.
-  // const today = new Date()
-  // const sixteenYearsAgo = today.getFullYear() - 16
-  // const hundredYearsAgo = today.getFullYear() - 100
   const SIXTEEN_YEAR = 16
   const HUNDRED_YEAR = 100
 
@@ -203,7 +186,8 @@ const EditProfileModal = ({
     location: userLocation,
     birthdate: birthdate,
     working_since: working_since,
-    yearsOfExperience: xpLevelList.find(item => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+    yearsOfExperience:
+      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
   }
   const {
     register,
@@ -243,8 +227,8 @@ const EditProfileModal = ({
   }
 
   const onSubmit = async (data) => {
-    const { firstName, lastName, summary, yearsOfExperience } = data
-    
+    const { firstName, lastName, summary } = data
+
     const payload = {
       // country_id: getCountryId(),
       avatar: selectedAvatar,
@@ -259,36 +243,28 @@ const EditProfileModal = ({
       longitude: value?.geometry?.location?.lng() || longitude,
       working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM-DD')
     }
-    console.log('payload', payload);
     setIsSecondButtonLoading(true)
     try {
       // @ts-ignore
-      await updateUserProfile(removeEmptyOrNullValues(payload))
+      const p = await updateUserProfile(removeEmptyOrNullValues(payload))
       await fetchProfile()
       await providerFetchProfile()
+      setCookiesWithLoginData(p.data, false)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     } finally {
       setIsSecondButtonLoading(false)
     }
 
     // dispatch(updateUserProfileRequest(removeEmptyOrNullValues(payload)))
-
-
   }
-
-
 
   const onDateChange = (value) => {
     const isMinYear = getDiffYear(value) < SIXTEEN_YEAR
     const isMaxYear = getDiffYear(value) > HUNDRED_YEAR
     if (isMaxYear || isMinYear) {
       setBirthdate(value)
-      setError(
-        'birthdate',
-        { message: aboutMeModal.birthdayError },
-        { shouldFocus: true }
-      )
+      setError('birthdate', { message: aboutMeModal.birthdayError }, { shouldFocus: true })
     } else {
       clearErrors('birthdate')
       setBirthdate(value)
@@ -309,10 +285,8 @@ const EditProfileModal = ({
         // Disable button if error exist for fields with manual setError
         isSecondButtonDisabled={!!(errors && errors.birthdate)}
         fullScreen
-
         className={styles.modal}
         bodyClass={styles.showScroll}
-
       >
         <div className={styles.profile}>
           <div className={styles.profileAvatar}>
@@ -402,64 +376,35 @@ const EditProfileModal = ({
             <div className={styles.profileFormTitle}>
               <Text className={styles.profileFormTitleText}>
                 {
-                  
                   // @ts-ingore
-                manageProfile.tab.profile.aboutMeModal.workingSince
+                  manageProfile.tab.profile.aboutMeModal.workingSince
                 }
               </Text>
             </div>
             <div className={styles.profileFormGroup}>
-            <MaterialDatePicker
-                  refs={{
-                    ...register('working_since', {
-                      // validate: () => {
-                      //   const isMinYear = getDiffYear(birthdate) < SIXTEEN_YEAR
-                      //   const isMaxYear = getDiffYear(birthdate) > HUNDRED_YEAR
-                      //   if (isMaxYear || isMinYear) {
-                      //     return aboutMeModal.birthdayError
-                      //   } else {
-                      //     return true
-                      //   }
-                      // }
-                    })
-                  }}
-                  label={profile.startedWorkingSince}
-                  hiddenLabel
-                  views={['year', 'month']}
-                  inputFormat='yyyy-MM'
-                  value={workingSince}
-                  onDateChange={setWorkingSince}
-                  fullWidth={true}
-                />
-              {/* <MaterialBasicSelect
-                fieldRef={{
-                  ...register('yearsOfExperience')
+              <MaterialDatePicker
+                refs={{
+                  ...register('working_since')
                 }}
-                useID={true}
-                className={styles.profileFormInput}
-                label={aboutMeModal.exp}
-                value={yearsOfExperience}
-                options={formattedXpLevelList}
+                label={profile.startedWorkingSince}
                 hiddenLabel
-                onChange={(e, v) => {
-                  setYearsOfExperience(v.props.value)
-                }}
-              /> */}
+                views={['year', 'month']}
+                inputFormat='yyyy-MM'
+                value={workingSince}
+                onDateChange={setWorkingSince}
+                fullWidth={true}
+              />
             </div>
             <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.accountSetting.email}
-              </Text>
+              <Text className={styles.profileFormTitleText}>{lang.accountSetting.email}</Text>
             </div>
             <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{email}</span>
               <span className={styles.tips}>Please change it in [Settings - Account Settings]</span>
             </div>
 
-            <div className={styles.profileFormTitle} >
-              <Text className={styles.profileFormTitleText}>
-                {lang.newGetStarted.phone}
-              </Text>
+            <div className={styles.profileFormTitle}>
+              <Text className={styles.profileFormTitleText}>{lang.newGetStarted.phone}</Text>
             </div>
             <div className={styles.profileFormGroup + ' ' + styles.info_layout}>
               <span>{phone_num}</span>
@@ -495,9 +440,7 @@ const EditProfileModal = ({
             </div>
 
             <div className={styles.profileFormTitle}>
-              <Text className={styles.profileFormTitleText}>
-                {lang.myJobs.address}
-              </Text>
+              <Text className={styles.profileFormTitleText}>{lang.myJobs.address}</Text>
             </div>
             <Autocomplete
               noOptionsText={aboutMeModal.noLocation}
@@ -510,28 +453,30 @@ const EditProfileModal = ({
               value={value || { formatted_address: inputValue }}
               includeInputInList
               onChange={(event: any, newValue: PlaceType | null) => {
-                setLocationValue(newValue);
+                setLocationValue(newValue)
               }}
               onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
+                setInputValue(newInputValue)
               }}
               disableClearable={false}
               // className={className}
               renderInput={(params) => {
-                return (<TextField
-                  {...params}
-                  label={aboutMeModal.address}
-                  placeholder={aboutMeModal.address}
-                  autoComplete='off'
-                  type='text'
-                  className={_styles.hiddenLabel}
-                />)
+                return (
+                  <TextField
+                    {...params}
+                    label={aboutMeModal.address}
+                    placeholder={aboutMeModal.address}
+                    autoComplete='off'
+                    type='text'
+                    className={_styles.hiddenLabel}
+                  />
+                )
               }}
-            // {...rest}
+              // {...rest}
             />
-            <div className={styles.profileFormGroup + " " + styles.mapWrapper}>
+            <div className={styles.profileFormGroup + ' ' + styles.mapWrapper}>
               <GoogleMap
-                height={"500px"}
+                height={'500px'}
                 lat={Number(value?.geometry.location.lat()) || Number(latitude)}
                 lng={Number(value?.geometry.location.lng()) || Number(longitude as String)}
                 ref={mapRef}
@@ -543,7 +488,6 @@ const EditProfileModal = ({
                 infoWindow={value?.formatted_address || address}
               />
             </div>
-
           </div>
         </div>
       </Modal>

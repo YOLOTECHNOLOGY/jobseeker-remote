@@ -71,7 +71,6 @@ const SearchPanel = (props: Props) => {
             location: location?.id,
             jobFunctions: job_function_ids ? String(job_function_ids) : classes?.id,
         }
-        console.log('reqData', reqData);
         if (job_function_ids === 'all') {
             delete reqData.jobFunctions;
         }
@@ -79,8 +78,7 @@ const SearchPanel = (props: Props) => {
             setJobsData(res.data);
             setLoading(false);
 
-        }).catch(e => {
-            console.log('catch');
+        }).catch(() => {
             setLoading(false)
         })
     }
@@ -113,7 +111,6 @@ const SearchPanel = (props: Props) => {
         try {
             // @ts-ignore
             const { offsetWidth } = all[index + 1];
-            // console.log(_offset);
             setOffset((_) => offsetWidth + _);
         } catch (e) {
             console.log('list of filter tag is end');
@@ -133,7 +130,6 @@ const SearchPanel = (props: Props) => {
             value={location}
             size='small'
             onChange={(e, value) => {
-                // console.log('value',value);
                 currentLocation.current = value;
                 setLocation(value);
                 searchFunc(inputText.current, value, 1);
@@ -392,7 +388,7 @@ const JobsSearchCard = (props: JobData) => {
                         {props.recruiter_full_name}
                     </span>
                     {
-                        props.recruiter_job_title && 
+                        props.recruiter_job_title &&
                         <>
                             &nbsp;<div style={{ position: 'relative', top: -2 }}>.</div>&nbsp;
                             <span title={props.recruiter_job_title}>{props.recruiter_job_title}</span>

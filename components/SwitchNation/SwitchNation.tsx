@@ -17,7 +17,8 @@ import {
   setCookie,
   removeCookie,
   refreshToken as refreshTokenKey,
-  userKey
+  userKey,
+  redirectUrl
 } from 'helpers/cookies'
 
 import MaterialButton from 'components/MaterialButton'
@@ -138,8 +139,12 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         accessToken +
         `&country=${country}` +
         `&${refreshTokenKey}=${refreshToken}` +
-        `&${userKey}=${JSON.stringify(user)}`
+        `&${userKey}=${JSON.stringify(user)}` +
+        `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
+    }else{
+      query +=  '/' +pathname.split('/').slice(2).join('/')
     }
+    console.log('query',query);
     window.location.href = newOrigin + query
   }
 

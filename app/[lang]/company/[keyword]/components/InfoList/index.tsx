@@ -43,7 +43,6 @@ const CompanyInfo = (_props: Props) => {
 		props.company_business_info.name = _props.legal_name;
 		// @ts-ignore
 		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
-		console.log('config.company_types',config.company_types,props.company_business_info);
 		props.company_business_info.company_type = config.company_types.find(_=> _.id === props.company_business_info.type_of_enterprise_id)?.value
 		// props.company_business_info.industry = _props.industry;
 	}

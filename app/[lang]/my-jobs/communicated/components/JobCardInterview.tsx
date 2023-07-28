@@ -29,7 +29,6 @@ const JobCardInterview = (props: any) => {
     full_address: fullAddress,
     jobseeker_display_status: jobseekerDisplayStatus
   } = data
-  console.log(data, lang, 1111)
   const {
     pending,
     accepted,

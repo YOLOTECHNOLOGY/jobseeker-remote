@@ -47,6 +47,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
       tab: { preference: transitions }
     }
   } = lang
+
   const minSalary = preference?.salary_range_from
   const maxSalary = preference?.salary_range_to
   const salaryRange = minSalary + ' - ' + maxSalary
@@ -62,14 +63,14 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
 
         {userDetail?.job_preferences?.length > 1 ? (
           <div
-            style={{ right: '10px' }}
+            style={{ right: '12px' }}
             className={styles.iconWrapperP}
           >
             <img src={PencilIcon} width='22' height='22' onClick={handleEditClick} />
             &nbsp;&nbsp;
             <img src={AccountSettingDeleteIconBin} width='14' height='14' onClick={() => setShowDelete(true)} />
           </div>
-        ) : <div style={{ right: '10px' }} className={styles.iconWrapperP} onClick={handleEditClick}>
+        ) : <div className={styles.iconWrapperP} onClick={handleEditClick}>
           <img src={PencilIcon} width='22' height='22' />
         </div>}
 
@@ -217,10 +218,10 @@ const PreferencesView = ({ lang }: any) => {
 
   const [openToWork, setOpenToWork] = useState(userDetail?.is_visible)
   // const jobCategoryList = getJobCategoryList(config).map((category) => {
-  //   return {
-  //     label: category.value,
-  //     value: category.id
-  //   }
+  // return {
+  // label: category.value,
+  // value: category.id
+  // }
   // })
   const jobData = useMemo(() => {
     return [userDetail?.job_preferences || [], Date.now()]
@@ -357,7 +358,7 @@ const PreferencesView = ({ lang }: any) => {
             >
               <img src={PencilIcon} width='22' height='22' />
             </div>
-            <Text tagName='p' textStyle='lg'>
+            <Text tagName='p' textStyle='lg' style={{ marginBottom: 0 }}>
               {availability}
             </Text>
           </div>
@@ -371,7 +372,7 @@ const PreferencesView = ({ lang }: any) => {
               className={styles.iconWrapperP}
               onClick={() => handleModal('createJobPreference', true, null, null)}
             >
-              <Image src={AddIcon} width='14' height='14' color='#337f43' alt={''} />
+              <Image src={AddIcon} width='26' height='26' color='#337f43' alt={''} />
             </div>
           )}
 

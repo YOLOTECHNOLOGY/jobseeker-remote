@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
-import Link from 'next/link'
 import { CircularProgress } from 'app/components/MUIs'
 
 interface IProps {

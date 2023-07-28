@@ -54,7 +54,7 @@ const Header = ({
   useEffect(() => {
     setSourceCookie(`${tabValue}_jobs`)
   }, [tabValue])
-  const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
+  const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
     '&.Mui-selected': {
       color: '#136FD3',
       fontWeight: '700',
@@ -91,7 +91,7 @@ const Header = ({
           marginBottom: tabValue == 'interested' || tabValue == 'viewedMe' ? '14px' : '10px'
         }}
       >
-        <Link prefetch={false} href={'/my-jobs'} className={styles.backLink}>
+        <Link prefetch={true} href={'/my-jobs'} className={styles.backLink}>
           <ArrowBackIosRoundedIcon className={styles.back} style={{ fontSize: '28px' }} />
           <span className={styles.bactText}>{back}</span>
         </Link>

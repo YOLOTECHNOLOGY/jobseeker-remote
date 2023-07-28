@@ -1,8 +1,7 @@
 import React from 'react'
 import styles from '../index.module.scss'
-import Link from 'next/link'
 const codePopver = (props: any) => {
-  const { dictionary, isModal = false, qrCode, setQrCode, lang } = props
+  const { dictionary, isModal = false, qrCode, setQrCode } = props
   const { getStatred, newGetStarted } = dictionary
   const { loginUsingSocialMediaOTP, loginUsingQRCode } = getStatred
   const haderCom = (

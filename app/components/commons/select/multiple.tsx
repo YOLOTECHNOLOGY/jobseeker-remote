@@ -24,6 +24,17 @@ interface OptionType {
   label: string | boolean
 }
 
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 10 + ITEM_PADDING_TOP,
+      overflow: 'auto'
+    }
+  }
+}
+
 const MultipleSelect = ({
   id,
   label,
@@ -68,6 +79,7 @@ const MultipleSelect = ({
         onChange={handleChange}
         input={<OutlinedInput label='Tag' />}
         placeholder={label}
+        MenuProps={MenuProps}
         renderValue={(selected: any) => {
           if (selected?.[0] === 'emptyValue') {
             return (
@@ -95,20 +107,16 @@ const MultipleSelect = ({
           }
         }}
       >
-        {options && (
-          <div style={{ maxHeight: '60vh', overflow: 'auto' }}>
-            {options &&
-              options.map((option: any) => (
-                <MenuItem key={option.value} value={option.value}>
-                  <Checkbox
-                    checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
-                    size='small'
-                  />
-                  <ListItemText primary={option.label} />
-                </MenuItem>
-              ))}
-          </div>
-        )}
+        {options &&
+          options.map((option: any) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox
+                checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
+                size='small'
+              />
+              <ListItemText primary={option.label} />
+            </MenuItem>
+          ))}
       </Select>
     </FormControl>
   )

@@ -33,7 +33,7 @@ const CompanyList = (props: any) => {
         const companySize = getValueById(config, company_size_id, 'company_size_id')
         return (
           <div className={styles.card} key={Id}>
-            <Link prefetch={false} className={styles.header} href={'/' + langKey + companyUrl}>
+            <Link prefetch={true} className={styles.header} href={'/' + langKey + companyUrl}>
               <Image
                 className={styles.img}
                 src={logoUrl}
@@ -56,7 +56,7 @@ const CompanyList = (props: any) => {
                 job_title: jobTitle,
                 salary_range_value: salaryRangeValue,
                 // job_location: jobLocation,
-                job_location_id:job_location_id,
+                job_location_id: job_location_id,
                 // xp_lvl: xpLvl,
                 xp_lvl_id,
                 // degree,

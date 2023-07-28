@@ -96,7 +96,7 @@ const Desc = ({
       <div className={styles.desc_mobileLine}></div>
 
       <div className={styles.jobseeker}>
-        <div>
+        <div className={styles.avatatBox}>
           <Avatar
             sx={{ width: '29.94px', height: '29px' }}
             src={recruiter?.avatar || DefaultAvatar}

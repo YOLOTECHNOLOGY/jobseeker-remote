@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { FormControl, MenuList, Paper } from '@mui/material'
 import MaterialTextField from 'components/MaterialTextField'
 import Modal from '@mui/material/Modal'
@@ -278,7 +279,6 @@ const JobFunctionSelector = (props: any) => {
                                 if (subItem.id === (selectedSubItem as any)?.id) {
                                   setSelectedSubItem(undefined)
                                 } else {
-                                  console.log(subItem, 'subItem')
                                   setSelectedSubItem(subItem)
                                 }
                               }}

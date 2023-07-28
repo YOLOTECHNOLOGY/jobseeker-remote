@@ -4,7 +4,7 @@ import { authenticationSendEmailMagicLink } from 'store/services/auth/authentica
 // import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 // import { getCountryId, getLanguageId } from 'helpers/country'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
@@ -96,7 +96,7 @@ const useGetStarted = () => {
     //   dispatch(jobbseekersLoginRequest(data))
     // })
   }
-  const setCookiesWithLoginData = (loginData) => {
+  const setCookiesWithLoginData = (loginData, changeToken = true) => {
     const { refresh_token, token, token_expired_at } = loginData
     const userCookie = {
       active_key: loginData.active_key,
@@ -113,11 +113,15 @@ const useGetStarted = () => {
       is_bosshunt_talent: loginData.is_bosshunt_talent,
       is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
       bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-      is_profile_completed: loginData.is_profile_completed
+      is_profile_completed: loginData.is_profile_completed,
+      longitude: loginData?.longitude,
+      latitude: loginData?.latitude
     }
-    setCookie('refreshToken', refresh_token)
+    if (changeToken) {
+      setCookie('refreshToken', refresh_token)
+      setCookie('accessToken', token, token_expired_at)
+    }
     setCookie('user', userCookie)
-    setCookie('accessToken', token, token_expired_at)
   }
   const sendEventWithLoginData = (loginData) => {
     // Send register event (First time login user)
@@ -154,7 +158,6 @@ const useGetStarted = () => {
   const loginRequest = (data) => {
     authenticationJobseekersLogin(data)
       .then((res) => {
-        console.log(res.data, 999999)
         if (res.data) {
           setUserInfo(res.data)
           setCookiesWithLoginData(res.data.data)
@@ -162,7 +165,6 @@ const useGetStarted = () => {
         }
       })
       .catch((err) => {
-        console.log(err.response, '8888')
         setError(err?.response)
       })
   }
@@ -265,7 +267,6 @@ const useGetStarted = () => {
     params = { email, source: 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
-        console.log(data)
         dispatch(
           displayNotification({
             open: true,

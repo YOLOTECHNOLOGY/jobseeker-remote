@@ -38,12 +38,12 @@ const countryCounfig = [
     key: 'jp',
     url: 'bossjob.jp',
     defaultLocation: {
-      id: 68,
+      id: 1714,
       is_popular: false,
-      key: "tokyo",
+      key: "chuo_ku",
       region_display_name: "Tokyo To",
-      seo_value: "tokyo_to",
-      value: "Tokyo To",
+      seo_value: "chuo-ku",
+      value: "Chuo Ku"
     },
     currency: 'jpy',
     id: 105
@@ -156,7 +156,6 @@ export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
   path = path?.split?.('//')[1]?.split?.('/')?.[1] // https://dev.bossjob.sg/en-US/...
-  console.log({ path, languages })
   return languages.map(item => item.value).includes(path) ? path : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
 }
 

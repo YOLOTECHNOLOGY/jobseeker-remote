@@ -19,7 +19,7 @@
             animation-timing-function: linear;
             animation-iteration-count: infinite;
             animation-fill-mode: backwards;
-            animation-duration: 3s;
+            animation-duration: var(--i, 5s);
             width: fit-content;
         }
     }

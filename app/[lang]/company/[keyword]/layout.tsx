@@ -1,16 +1,13 @@
 // import './flexible';
-import Head from 'next/head'
 import { Metadata } from 'next'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { buildComponentScript } from 'app/models/abstractModels/util'
 import { getCountryKey } from '../../../../helpers/country'
-import { formatTemplateString } from '../../../../helpers/formatter'
 import { getDictionary } from '../../../../get-dictionary'
 import { cookies, headers } from 'next/headers'
 import {
   fetchCompanyDetailReq,
   fetchCompanyHR,
-  fetchConfigReq,
   fetchJobsListReq,
   getIDFromKeyword
 } from './service'
@@ -20,7 +17,7 @@ import { fetchHotJobsListService } from 'store/services/jobs/fetchHotJobs'
 import Footer from 'components/Footer/Footer'
 import getConfigs from 'app/models/interpreters/config'
 import { redirect } from 'next/navigation'
-import {ConfigType} from 'types/config';
+import { ConfigType } from 'types/config';
 
 const configs = getConfigs([
   ['location_lists'],
@@ -55,21 +52,20 @@ export async function generateMetadata(props: { params: { lang: any } }): Promis
 }
 
 async function CompanyLayout(props: {
-	children: React.ReactNode;
-	params: {
-		keyword: string;
-		lang: string;
-	},
-	configs: {
-		config: Partial<ConfigType>
-	}
+  children: React.ReactNode;
+  params: {
+    keyword: string;
+    lang: string;
+  },
+  configs: {
+    config: Partial<ConfigType>
+  }
 }) {
-	// URL -> /shop/shoes/nike-air-max-97
-	// `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-	const cookieStore = cookies()
-	const headeStore = headers()
-	const token = cookieStore.get('accessToken')
-	const id = getIDFromKeyword(props.params.keyword);
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  const cookieStore = cookies()
+  const token = cookieStore.get('accessToken')
+  const id = getIDFromKeyword(props.params.keyword);
 
   // if(isMobile && process.env.ENV === 'production'){
   // 	return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
@@ -103,9 +99,6 @@ async function CompanyLayout(props: {
     const jobClasses = props.configs.config.job_functions.filter((item) =>
       function_ids.includes(String(item.id))
     )
-    // const configkey =cookieStore.get(configKey);
-    // console.log('configkey', configkey);
-    // const res1 = await fetchConfigReq(req.cookies[configKey]?.split('_')?.[1]);
     return (
       <>
         <CompanyDetailsProvider

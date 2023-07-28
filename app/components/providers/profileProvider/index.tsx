@@ -23,12 +23,9 @@ export function ProfileProvider(
 	{children, ...props}: Props) {
   const [profile, setProfile]  = useState(props.profile);
 	const accessToken = getCookie('accessToken')
-  if(accessToken){
-    console.log('token',accessToken);
-  }
+
 	const fetchProfile = useCallback(()=>{
 		fetchUserOwnDetail(accessToken).then(profile=>{
-			console.log('profile.data',profile.data);
 			setProfile(profile.data)
 		})
 	},[]);

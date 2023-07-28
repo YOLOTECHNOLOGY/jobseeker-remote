@@ -11,6 +11,7 @@ import { scanJob } from 'images'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import CircularProgress from '@mui/material/CircularProgress'
 import Toast from 'app/components/Toast'
+import QrCodeDraw from './QrCodeDraw'
 function guid() {
   return 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0
@@ -25,7 +26,7 @@ const qrCode = ({ lang }: any) => {
   const { getStatred, header } = lang
 
   const [current, setCurrent] = useState<number>(0)
-  const [qrCodeImg, setQrCodeImg] = useState<any>({})
+  const [qrCodeParams, setQrCodeParams] = useState<string>('')
   const [scanInfo, setScanInfo] = useState<any>({})
   const [overtime, setOvertime] = useState<boolean>(false)
   const [userInfo, setUserInfo] = useState<any>(null)
@@ -44,7 +45,8 @@ const qrCode = ({ lang }: any) => {
     pleaseConfirmLoginOnAPP,
     pleaseRefreshQrCode,
     clickToRefresh,
-    accountMismatch
+    accountMismatch,
+    loginWithQRCode
   } = getStatred
 
   const menu = [ImJobSeeker, ImRecruiter]
@@ -55,7 +57,6 @@ const qrCode = ({ lang }: any) => {
 
   useEffect(() => {
     if (userInfo?.status) {
-      console.log({ userInfo })
       userInfo.token = userInfo.access_token
       getInfo(userInfo)
     }
@@ -64,7 +65,6 @@ const qrCode = ({ lang }: any) => {
   const getInfo = (userInfo) => {
     fetchUserOwnDetailService({ accessToken: userInfo.access_token }).then((res) => {
       const userDetail = { ...(res?.data?.data || {}), ...userInfo }
-      console.log({ userDetail })
       setCookiesWithLoginData(userDetail)
       sendEventWithLoginData(userDetail)
       setTimeout(() => {
@@ -81,7 +81,6 @@ const qrCode = ({ lang }: any) => {
         clearInterval(timer)
         setOvertime(true)
       }
-     
     }, 1500)
   }
 
@@ -89,11 +88,20 @@ const qrCode = ({ lang }: any) => {
     const uuid = guid()
     uuidRef.current = uuid
     timeRef.current = moment(new Date()).add(3, 'minute').format('YYYY-MM-DD HH:mm:ss')
-    getQrcode({
+    const parm = {
       generate_uuid: uuid,
       expiration_time: timeRef.current
-    }).then((res) => {
-      setQrCodeImg(res.data.data)
+    }
+    getQrcode(parm).then(() => {
+      setQrCodeParams(
+        JSON.stringify({
+          qrcode_uuid: uuid,
+          // source: 'web',
+          status_id: 1,
+          qr_expired_at: timeRef.current,
+          website_login: 'app_scan_code'
+        })
+      )
       judgeTime()
     })
   }
@@ -138,14 +146,6 @@ const qrCode = ({ lang }: any) => {
             {' '}
             {welcomeBack} {scanInfo?.first_name}
           </h3>
-          {/* <Image
-            src={scanInfo?.avatar}
-            alt=''
-            fill={true}
-            width='160'
-            className={styles.qrAvator}
-            height='160'
-          /> */}
           <div className={styles.qrAvator}>
             <img src={scanInfo?.avatar} alt='' />
           </div>
@@ -155,19 +155,18 @@ const qrCode = ({ lang }: any) => {
         </>
       ) : (
         <>
-          <h3 className={styles.codeTitle}> {scanQRCodeOnAppToLogin}</h3>
+          <h3 className={styles.codeTitle}> {loginWithQRCode}</h3>
+          <h4 className={styles.codeTitleSed}> {scanQRCodeOnAppToLogin}</h4>
           <div className={styles.qrCode}>
-            {qrCodeImg?.qrcode_base_code ? (
-              <Image
-                src={`data:image/gif;base64,${qrCodeImg?.qrcode_base_code}`}
-                alt='app down'
-                width='186'
-                className={styles.qrcode}
-                height='186'
-              />
-            ) : (
-              <CircularProgress size={26} />
-            )}
+            <div className={styles.qrCodeBox}>
+              <div className={styles.code}>
+                {qrCodeParams ? <QrCodeDraw text={qrCodeParams} /> : null}
+              </div>
+              <div className={styles.circle}>
+                <CircularProgress size={26} />
+              </div>
+            </div>
+
             {overtime && (
               <div className={styles.overTime}>
                 <p>{pleaseRefreshQrCode}</p>
@@ -175,7 +174,7 @@ const qrCode = ({ lang }: any) => {
               </div>
             )}
           </div>
-          <p className={styles.codeTips}>
+          <div className={styles.codeTips}>
             <span>
               {donHaveApp} <HelpOutlineIcon className={styles.icon}></HelpOutlineIcon>
               <div className={styles.popver}>
@@ -209,7 +208,7 @@ const qrCode = ({ lang }: any) => {
                 </div>
               </div>
             </span>
-          </p>
+          </div>
         </>
       )}
     </>

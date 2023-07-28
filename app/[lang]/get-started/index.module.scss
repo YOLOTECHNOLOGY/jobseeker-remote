@@ -12,6 +12,10 @@
   flex-direction: column;
   justify-content: space-between;
 
+  @include sm {
+    justify-content: flex-start;
+  }
+
   .bg {
     position: absolute;
     width: 1366px;
@@ -53,13 +57,30 @@
   }
 
   .codeTitle {
-    color: rgba(29, 33, 41, 1);
+    color: #121212;
     font-size: 18px;
     text-align: center;
     position: relative;
-    padding-top: 100px;
-    padding-bottom: 15px;
+    padding-top: 60px;
     margin: 0;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .codeTitleSed {
+    padding-top: 4px;
+    font-size: 16px;
+    color: #7D7D7D;
+    text-align: center;
+    padding-bottom: 30px;
+    margin-bottom: 0;
   }
 
   .qrCode {
@@ -71,6 +92,39 @@
     align-items: center;
     justify-content: center;
 
+    .qrCodeBox {
+      width: 188px;
+      height: 188px;
+      position: relative;
+      padding: 14px;
+      box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.10);
+      border-radius: 8px;
+      border: 1px solid #E4E4E4;
+      background: #FFF;
+
+      .code {
+        position: absolute;
+        left: 12px;
+        top: 14px;
+        z-index: 10;
+        background-color: #fff;
+      }
+
+      img {
+        width: 160px;
+        height: 160px;
+
+      }
+
+      .circle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+    }
+
     .overTime {
       position: absolute;
       height: 100%;
@@ -78,6 +132,7 @@
       background: rgba(237, 237, 237, 0.9);
       left: 0;
       top: 0;
+      z-index: 20;
 
       p {
         font-size: 14px;
@@ -248,7 +303,7 @@
     color: #4e5969;
     display: flex;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 35px;
 
     span {
       display: flex;
@@ -415,7 +470,6 @@
             left: 17px;
             top: 18px;
           }
-
         }
       }
     }
@@ -441,8 +495,6 @@
         color: #fff;
         background: #fff;
         box-shadow: unset;
-
-
       }
     }
 
@@ -831,12 +883,22 @@
     // position: fixed;
     width: 100%;
     text-align: center;
+    margin: 0;
+    padding-bottom: 10px;
     // bottom: 30px;
     // margin: 0;
     // left: 0;
 
     a {
       color: rgba(19, 111, 211, 1);
+    }
+
+    @include sm {
+      // position: fixed;
+      // bottom: 0;
+      // left: 0;
+      // right: 0;
+      padding-top: 30px;
     }
   }
 
@@ -856,7 +918,6 @@
     &:hover {
       border: 1px solid #2378e5;
     }
-
 
     i {
       position: absolute;
