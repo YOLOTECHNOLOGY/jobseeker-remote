@@ -1222,7 +1222,7 @@
       "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
       "tip3": "Company abbreviation: such as \"BOSS Direct Employment\"",
       "unBlockTip1": "The following related companies will be unblocked at the same time",
-      "unBlockTip2": "The company is referred to as Changdian, related companies of Chongqing Changdian Network"
+      "unBlockTip2": "The company is referred to as {{company}}"
     }
   },
   "chatExchange": {
