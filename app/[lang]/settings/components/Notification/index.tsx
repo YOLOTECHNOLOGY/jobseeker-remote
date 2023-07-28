@@ -38,7 +38,7 @@ const EmailNotification = (props: IProps) => {
   }, [systemEmail, chatEmail, newsletterEmail])
 
   return (
-    <div className={styles.VerifyMailAndBindEmail}>
+    <div className={styles.notificationWrapper}>
       <div className={styles.navTitle}>{accountSetting?.tabs?.notification}</div>
       <div className={styles.accessSettingsContainerItem}>
         <div className={styles.accessSettingsContainer_notification}>

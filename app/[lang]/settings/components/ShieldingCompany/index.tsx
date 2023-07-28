@@ -143,7 +143,7 @@ const ShieldingCompany = (props: IProps) => {
   const filterCompany = (newValue) => {
     const params = {
       explain: 1,
-      size: 8,
+      size: 10,
       page: 1,
       show_blacklisted: 1,
       query: newValue

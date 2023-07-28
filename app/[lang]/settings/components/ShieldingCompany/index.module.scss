@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
+  padding: 20px;
 
   &Nav {
     display: flex;
@@ -30,7 +32,9 @@
   }
 
   &Content {
-    flex: 1;
+    // flex: 1;
+    overflow: auto;
+    height: calc(100% - 52px);
   }
 }
 

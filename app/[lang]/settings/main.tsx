@@ -16,6 +16,7 @@ interface TabPanelProps {
   children?: React.ReactNode
   index: number
   value: number
+  className?: string
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -28,11 +29,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <>{children}</>}
     </div>
   )
 }
@@ -116,19 +113,19 @@ export default function VerticalTabs(props: any) {
         </Tabs>
       </div>
       <div className={styles.settingsPanel}>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={0} className={styles.settingsPanelItem}>
           <AccountSetting lang={lang} userDetail={userDetail} config={config} />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={1} className={styles.settingsPanelItem}>
           <Notification
             notificationSetting={userDetail ? userDetail.email_notification_setting : null}
             lang={lang}
           />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={2} className={styles.settingsPanelItem}>
           <Alerts accessToken={accessToken} lang={lang} />
         </TabPanel>
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={3} className={styles.settingsPanelItem}>
           <ShieldingCompany lang={lang} />
         </TabPanel>
       </div>

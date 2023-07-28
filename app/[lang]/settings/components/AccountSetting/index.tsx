@@ -14,7 +14,7 @@ const index = (props: IProps) => {
   const { accountSetting } = lang
 
   return (
-    <>
+    <div className={styles.accountSettingWrapper}>
       <div className={styles.navTitle}>{accountSetting?.title}</div>
       <VerifyMailAndBindEmail
         label={accountSetting.email}
@@ -31,7 +31,7 @@ const index = (props: IProps) => {
         config={config}
         lang={lang}
       />
-    </>
+    </div>
   )
 }
 

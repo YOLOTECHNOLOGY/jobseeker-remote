@@ -210,10 +210,10 @@ const AlertJobs = (props: IProps) => {
 
   return (
     <div className={styles.JobAlertContainer}>
+      <Text tagName='h2' className={styles.JobAlertTitle}>
+        {accountSetting.jobAlertTitle}
+      </Text>
       <div className={styles.JobAlertContainer_wrapper}>
-        <Text tagName='h2' className={styles.JobAlertTitle}>
-          {accountSetting.jobAlertTitle}
-        </Text>
         {isLoading && (
           <div className={styles.loading}>
             <Loading />
