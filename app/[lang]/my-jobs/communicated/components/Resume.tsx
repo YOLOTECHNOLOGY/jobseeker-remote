@@ -213,7 +213,7 @@ const Resume = (props: any) => {
             </FormControl>
           </Box>
           <button className={styles.button}>
-            <Link href='/manage-profile?tab=profile' prefetch={false}>
+            <Link href='/manage-profile?tab=profile' prefetch={true}>
               {editOnlineResume}
             </Link>
           </button>

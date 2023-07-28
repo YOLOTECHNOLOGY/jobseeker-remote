@@ -23,7 +23,7 @@ import NavLeft from '../Common/NavLeft'
 import DropDownMenu from '../Common/DropDownMenu'
 import NavRight from './NavRight'
 
-const ProtectedHeader = ({ lang }: any) => {
+const ProtectedHeader = ({ lang, position = false }: any) => {
   const pathname = usePathname()
   const dispatch = useDispatch()
   const ref = useRef(null)
@@ -56,7 +56,6 @@ const ProtectedHeader = ({ lang }: any) => {
     }
   }, [])
 
-
   const handleChangeNation = () => {
     setOpenSwitchNationModal(true)
     setIsShowHeaderMenu(false)
@@ -67,9 +66,8 @@ const ProtectedHeader = ({ lang }: any) => {
   }
 
   return (
-    <div className={styles.header}>
+    <div className={`${styles.header} ${position && styles.headerPosition}`}>
       <nav className={styles.headerContainer}>
-
         {/* logo */}
         <NavLogo langKey={langKey} />
 
@@ -79,7 +77,12 @@ const ProtectedHeader = ({ lang }: any) => {
         </div>
 
         {/* Right Menu */}
-        <NavRight lang={lang} langKey={langKey} totalUnread={totalUnread} handleShowMenu={handleShowMenu} />
+        <NavRight
+          lang={lang}
+          langKey={langKey}
+          totalUnread={totalUnread}
+          handleShowMenu={handleShowMenu}
+        />
 
         {/* mobile */}
         <div className={styles.mobileIconWrapper}>

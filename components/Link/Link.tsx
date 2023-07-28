@@ -51,7 +51,7 @@ const Link = ({
   return (
     <a
       href={to}
-      // prefetch={false}
+      // prefetch={true}
       // passHref={passHref}
       target={external ? '_blank' : '_self'}
       rel='noopener noreferrer'

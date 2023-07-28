@@ -10,6 +10,7 @@ import { cookies } from "next/headers"
 import { ReaderTPromise as M } from "app/models/abstractModels/monads"
 import { dropLast } from 'ramda'
 import { recordTime } from 'helpers/analizeTools'
+import { memoizeWithTime } from 'helpers/cache'
 // eslint-disable-next-line react/display-name
 const LiftClient = Client => props => <Client {...props} />
 
@@ -49,6 +50,8 @@ const fillTo3 = popularList => filledList => sourceList => {
   }
 }
 
+const fetchJobs = memoizeWithTime(fetchJobsPreferences, (payload, token) => token, 36000)
+
 const ServerFunctionFilter = async (props: { config: any, langKey: any }) => {
   const config = props?.config
   const list = config?.main_job_function_lists?.map?.(item => {
@@ -71,7 +74,7 @@ const ServerFunctionFilter = async (props: { config: any, langKey: any }) => {
   const accessToken = cookies().get('accessToken')?.value
   if (accessToken) {
     const stop = recordTime('main-page job-preferences')
-    const result = await fetchJobsPreferences({}, accessToken)
+    const result = await fetchJobs({}, accessToken)
     stop()
     popularList = result?.data?.data?.map(item => item.function_job_title_id) ?? []
 

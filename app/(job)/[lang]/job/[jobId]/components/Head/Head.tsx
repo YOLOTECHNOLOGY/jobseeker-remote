@@ -48,7 +48,7 @@ const Head = ({
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
   return (
-    <section id='jobDetaiPagelHead' className={classNames([styles.head])}>
+    <section className={classNames([styles.head])}>
       <div className={styles.head_main}>
         <div className={styles.head_main_title}>
           <div className={styles.head_main_titleWrapper}>

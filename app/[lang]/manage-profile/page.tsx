@@ -18,7 +18,6 @@ const ManageProfilePage = () => {
   const {
     manageProfile: { tab: tabDic }
   } = lang
-  console.log('tab',tab);
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const [unCompleted, setUnCompleted] = useState({
     profile: false,
@@ -87,9 +86,7 @@ const ManageProfilePage = () => {
         'job-preferences': userDetail?.job_preferences?.length == 0
       }))
     }
-    if (userDetail?.resumes) {
-      setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes?.length == 0 }))
-    }
+    setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes ? userDetail?.resumes?.length == 0 : !userDetail.resumes }))
   }, [userDetail])
   return <>
 

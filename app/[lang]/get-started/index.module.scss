@@ -22,14 +22,12 @@
     height: 768px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(
-      166.11deg,
-      #ffffff 18.61%,
-      #9dedff 59.16%,
-      #1052fb 100.91%,
-      #1052fb 133%,
-      rgba(16, 82, 251, 0.89) 186.95%
-    );
+    background: linear-gradient(166.11deg,
+        #ffffff 18.61%,
+        #9dedff 59.16%,
+        #1052fb 100.91%,
+        #1052fb 133%,
+        rgba(16, 82, 251, 0.89) 186.95%);
     opacity: 0.6;
     filter: blur(154.5px);
     transform: translateZ(0);
@@ -59,13 +57,30 @@
   }
 
   .codeTitle {
-    color: rgba(29, 33, 41, 1);
+    color: #121212;
     font-size: 18px;
     text-align: center;
     position: relative;
-    padding-top: 100px;
-    padding-bottom: 15px;
+    padding-top: 60px;
     margin: 0;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .codeTitleSed {
+    padding-top: 4px;
+    font-size: 16px;
+    color: #7D7D7D;
+    text-align: center;
+    padding-bottom: 30px;
+    margin-bottom: 0;
   }
 
   .qrCode {
@@ -77,6 +92,39 @@
     align-items: center;
     justify-content: center;
 
+    .qrCodeBox {
+      width: 188px;
+      height: 188px;
+      position: relative;
+      padding: 14px;
+      box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.10);
+      border-radius: 8px;
+      border: 1px solid #E4E4E4;
+      background: #FFF;
+
+      .code {
+        position: absolute;
+        left: 12px;
+        top: 14px;
+        z-index: 10;
+        background-color: #fff;
+      }
+
+      img {
+        width: 160px;
+        height: 160px;
+
+      }
+
+      .circle {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+    }
+
     .overTime {
       position: absolute;
       height: 100%;
@@ -84,6 +132,7 @@
       background: rgba(237, 237, 237, 0.9);
       left: 0;
       top: 0;
+      z-index: 20;
 
       p {
         font-size: 14px;
@@ -254,7 +303,7 @@
     color: #4e5969;
     display: flex;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 35px;
 
     span {
       display: flex;
@@ -430,7 +479,7 @@
       justify-content: space-around;
       padding-top: 24px;
 
-      > div {
+      >div {
         width: 130px;
 
         i,

@@ -23,7 +23,7 @@
 
 .headSticky {
   position: sticky;
-  top: 0;
+  top: 64px;
   z-index: 2;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 }
@@ -284,10 +284,12 @@
 
       &_context {
         overflow: hidden;
+        font-size: 16px;
 
         ul,
         ol {
           margin-left: 22px;
+          font-size: 16px;
         }
       }
 
@@ -378,8 +380,10 @@
         font-weight: 400;
         font-size: 16px;
         color: #353535;
-        margin-bottom: 18px;
+        margin-bottom: 14px;
       }
+
+
     }
 
     // search
@@ -420,6 +424,8 @@
       }
     }
 
+
+
     .published_at {
       font-weight: 400;
       font-size: 12px;
@@ -437,18 +443,20 @@
       padding: 20px 16px;
       border-bottom: 1px solid #E4E4E4;
       display: flex;
-      justify-content: space-between;
 
-      >div {
+
+      .avatatBox {
         display: flex;
         align-items: center;
+        flex: 1;
+        width: 0;
       }
 
       .footer_name {
         font-size: 16px;
         margin-left: 10px;
         color: #353535;
-
+        max-width: 300px;
         overflow: hidden;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -459,7 +467,8 @@
       .chatBox {
         display: flex;
         align-items: center;
-
+        width: fit-content;
+        margin-left: 20px;
       }
 
 
@@ -470,6 +479,8 @@
         letter-spacing: 0.0075em;
         color: #707070;
         padding-left: 10px;
+        width: fit-content;
+        display: block;
       }
 
       .lineStatus {
@@ -1561,4 +1572,17 @@
       }
     }
   }
+}
+
+.mapDistance {
+  color: #7D7D7D;
+  font-family: Product Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 171.429% */
+  letter-spacing: 0.28px;
+  padding-bottom: 16px;
+  margin-bottom: 0;
 }

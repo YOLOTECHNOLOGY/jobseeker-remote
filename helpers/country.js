@@ -38,12 +38,12 @@ const countryCounfig = [
     key: 'jp',
     url: 'bossjob.jp',
     defaultLocation: {
-      id: 68,
+      id: 1714,
       is_popular: false,
-      key: "tokyo",
+      key: "chuo_ku",
       region_display_name: "Tokyo To",
-      seo_value: "tokyo_to",
-      value: "Tokyo To",
+      seo_value: "chuo-ku",
+      value: "Chuo Ku"
     },
     currency: 'jpy',
     id: 105

@@ -96,7 +96,7 @@ const useGetStarted = () => {
     //   dispatch(jobbseekersLoginRequest(data))
     // })
   }
-  const setCookiesWithLoginData = (loginData) => {
+  const setCookiesWithLoginData = (loginData, changeToken = true) => {
     const { refresh_token, token, token_expired_at } = loginData
     const userCookie = {
       active_key: loginData.active_key,
@@ -113,11 +113,15 @@ const useGetStarted = () => {
       is_bosshunt_talent: loginData.is_bosshunt_talent,
       is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
       bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-      is_profile_completed: loginData.is_profile_completed
+      is_profile_completed: loginData.is_profile_completed,
+      longitude: loginData?.longitude,
+      latitude: loginData?.latitude
     }
-    setCookie('refreshToken', refresh_token)
+    if (changeToken) {
+      setCookie('refreshToken', refresh_token)
+      setCookie('accessToken', token, token_expired_at)
+    }
     setCookie('user', userCookie)
-    setCookie('accessToken', token, token_expired_at)
   }
   const sendEventWithLoginData = (loginData) => {
     // Send register event (First time login user)

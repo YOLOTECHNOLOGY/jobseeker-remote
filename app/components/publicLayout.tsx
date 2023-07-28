@@ -12,11 +12,12 @@ import 'app/index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import LinkProvider from './providers/linkProvider'
 import { getServerLang } from 'helpers/country.server'
+import Script from 'next/script'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-  const { children, seo }: any = props
+  const { children, seo, position }: any = props
   const { title, imageUrl, description, canonical } = seo
   let { lang } = props.params
   lang = lang || getServerLang()
@@ -65,26 +66,18 @@ export default async function PublicLayout(props: any) {
         <meta name='twitter:image:alt' content={decodeURI(description)} />
         <meta name='twitter:creator' content='BossjobPH' />
         {/* Google Tag Manager (gtm)  https://tagmanager.google.com */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script>{`
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer', '${gtmID}')
-        `
-          }}
-        />
-        <script
-          // defer
-          // async
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.googletag = window.googletag || {cmd: []}
-          `
-          }}
-        ></script>
+        `}
+        </Script>
+
+        <Script >{`
+        window.googletag = window.googletag || {cmd: []}
+      `}</Script>
       </head>
       <body id='next-app'>
         <Providers LG={dictionary} lang={lang}>
@@ -92,14 +85,13 @@ export default async function PublicLayout(props: any) {
           <noscript
             dangerouslySetInnerHTML={{
               __html: `
-          <iframe src="https://www.googletagmanager.com/ns.html?id=${
-            process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-          }"
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
+                }"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `
             }}
           ></noscript>
-          <Header lang={dictionary} />
+          <Header lang={dictionary} position={position} />
           <HamburgerMenu lang={dictionary} />
           <LinkProvider>{children}</LinkProvider>
           <AutoShowModalAppRedirect />

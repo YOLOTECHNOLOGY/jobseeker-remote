@@ -42,3 +42,4 @@ jsconfig.json
 
 .idea
 next-env.d.ts
+.vscode/settings.json
