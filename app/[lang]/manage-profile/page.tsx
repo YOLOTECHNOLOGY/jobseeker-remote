@@ -18,7 +18,6 @@ const ManageProfilePage = () => {
   const {
     manageProfile: { tab: tabDic }
   } = lang
-  console.log('tab',tab,userDetail);
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const [unCompleted, setUnCompleted] = useState({
     profile: false,
@@ -89,7 +88,6 @@ const ManageProfilePage = () => {
     }
     setUnCompleted((prev) => ({ ...prev, resume: userDetail?.resumes ? userDetail?.resumes?.length == 0 : !userDetail.resumes }))
   }, [userDetail])
-  console.log('unCompleted',unCompleted);
   return <>
 
     <EditProfileModal

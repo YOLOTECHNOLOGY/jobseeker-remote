@@ -7,6 +7,9 @@ import classNames from 'classnames';
 import { isURL } from '../../[lang]/company/[keyword]/components/InfoList';
 
 
+export function isContentOverflowing(element) {
+	return element?.scrollWidth > element?.clientWidth;
+}
 export function MouseOverPopover(props: {
 	value: string;
 	className?: string;
@@ -28,9 +31,6 @@ export function MouseOverPopover(props: {
 
 	const open = Boolean(anchorEl);
 
-	function isContentOverflowing(element) {
-		return element?.scrollWidth > element?.clientWidth;
-	}
 
 	useLayoutEffect(() => {
 		if (isContentOverflowing(ref.current)) {
