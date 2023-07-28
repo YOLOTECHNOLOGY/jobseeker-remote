@@ -104,7 +104,7 @@
     "pleaseRefreshQrCode": "请刷新二维码",
     "clickToRefresh": "点击刷新",
     "accountMismatch": "账户类型不匹配，请使用求职端登录",
-    "loginWithQRCode": "Login with QR code"
+    "loginWithQRCode": "扫描二维码登录"
   },
   "myJobs": {
     "communicated": "已沟通",
@@ -446,7 +446,7 @@
       "benefits": "福利待遇",
       "workingLocation": "工作地址",
       "workLocation": "工作地址",
-      "distanceFromHome": "Distance from home"
+      "distanceFromHome": "距离我的住址"
     },
     "shareModal": {
       "title": "分享工作",
@@ -634,8 +634,8 @@
           "content": "帮助招聘者了解和联系您",
           "btn": "完善信息"
         },
-        "introduction": "Introduction",
-        "introductionEmpty": "Provide a career summary and briefly highlight your relevant experience, achievement and skills.",
+        "introduction": "简介",
+        "introductionEmpty": "填写您的个人优势，获得更多Boss的关注",
         "aboutMeModal": {
           "title": "个人信息",
           "btn1": "取消",
@@ -648,9 +648,9 @@
           "exp": "工作经验",
           "summary": "我的优势 （写写你的相关经验和个人成就等，更能赢得Boss赏识）",
           "birthdayError": "您需要满足年龄大于16岁才能继续使用Bossjob。",
-          "workingSince": "Working since",
-          "address": "Input and select address",
-          "noLocation": "No location"
+          "workingSince": "开始工作",
+          "address": "输入并选择地址",
+          "noLocation": "无位置信息"
         },
         "exp": {
           "title": "工作经验",
@@ -717,7 +717,7 @@
           "suggestions": "我们会根据您最近的职位类型为您推荐技能：",
           "jobFunction": "职位类型",
           "skill": "搜索或者添加一个技能",
-          "addBtn": "Add"
+          "addBtn": "添加"
         },
         "licenses": {
           "title": "资格证书",
@@ -755,15 +755,15 @@
           "linkDesc": "输入描述信息..."
         },
         "deleteModal": {
-          "title": "Delete",
-          "tips": "You sure you want to delete it?",
-          "btn1": "Cancel",
-          "btn2": "Delete"
+          "title": "删除",
+          "tips": "确定要删除吗？",
+          "btn1": "取消",
+          "btn2": "删除"
         },
         "introductionModal": {
           "title": "Introduction",
-          "btn1": "Cancel",
-          "btn2": "Save"
+          "btn1": "取消",
+          "btn2": "保存"
         }
       },
       "preference": {
@@ -817,7 +817,7 @@
           "time": "上传于 {{time}}",
           "uploadBtn": "上传简历",
           "support": "支持的文件类型: PDF, DOC, DOCX. 最大: 5MB",
-          "upToFiles": "Up to {{number}} files",
+          "upToFiles": "不超过{{number}}个文件",
           "error": {
             "title": "文件大小超出了限制",
             "tips": "请上传小于5MB的文件。"
@@ -961,7 +961,7 @@
     "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
     "skipAnyway": "任性跳过",
-    "uploadSeccess": "upload seccess"
+    "uploadSeccess": "上传成功"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -1248,7 +1248,7 @@
     "emailLabel": "邮件地址",
     "sendCode": "发送验证码",
     "welcomeBack": "欢迎回来",
-    "sendCodeDigit": "Please enter the 6-digit code that we sent ",
+    "sendCodeDigit": "请输入我们发送的6位验证码 ",
     "signUpAnAccount": "注册新帐户",
     "checkSpamEmail": "如果您没有收到验证码，请检查您的垃圾邮件",
     "havingTrouble": "还是有问题？ 尝试注册",
@@ -1258,10 +1258,10 @@
     "resendCode": "重新发送验证码",
     "country": "国家",
     "phoneNumber": "电话号码",
-    "twoFactor": "Safety Verification",
+    "twoFactor": "安全验证",
     "authentication": "验证",
     "secure": "保护您的帐户并在您的电子邮件中接收代码",
-    "emailTips": "The login method is inconsistent with the last login, please verify the security via email",
+    "emailTips": "登录方式与上次登录不一致，请通过电子邮件验证安全",
     "setUpLater": "稍后设置",
     "enableTwoFactor": "双重验证",
     "authenticationEnabled": "验证已启用",
@@ -1278,8 +1278,8 @@
     "thisPhoneNumber": "此电话号码已关联的账号",
     "youNeedToChooseVerified": "您需要选择并验证Email来关联账号",
     "validateErr": "电子邮件已注册。请更改绑定到另一个email",
-    "checkYourSpam": "Check your spam mail if you didn’t receive code.",
-    "authenticationSuccessful": "Authentication Successful",
+    "checkYourSpam": "如果您没有收到验证码，请检查您的垃圾邮件。",
+    "authenticationSuccessful": "验证成功",
     "Bossjob": "Bossjob"
   },
   "seo": {

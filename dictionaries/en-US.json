@@ -961,7 +961,7 @@
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
     "skipAnyway": "Skip Anyway",
-    "uploadSeccess": "upload seccess"
+    "uploadSeccess": "Upload successfully"
   },
   "chat": {
     "chatTitle": "Chat",

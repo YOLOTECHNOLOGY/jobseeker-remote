@@ -4,13 +4,13 @@ import { useUserAgent } from 'next-useragent'
 import { getCountryId, getLanguageId } from './country'
 import { getCookie } from 'helpers/cookies'
 const guestLogin = async (token) => {
-    let deviceUdid = localStorage.getItem('deviceUdid')
+    let deviceUdid = localStorage.getItem('uuid')
     if (!deviceUdid) {
         const fpPromise = FingerprintJS.load()
         const fp = await fpPromise
         const result = await fp.get()
         deviceUdid = result.visitorId
-        localStorage.setItem('deviceUdid', deviceUdid)
+        localStorage.setItem('uuid', deviceUdid)
     }
     const browser = useUserAgent?.()?.browser
     const accessToken = getCookie('accessToken')
