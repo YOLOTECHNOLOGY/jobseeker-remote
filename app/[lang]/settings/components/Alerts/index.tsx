@@ -9,7 +9,7 @@ import Text from 'components/Text'
 import { changeAlertValue } from 'helpers/config/changeAlertValue'
 import Modal from '../Modal'
 import SettingModal from './SettingModal'
-// import { MemoedFilters } from 'components/ModalJobAlerts/MemoedFilter'
+import { formatJobAlertFilter } from './formatJobAlert'
 
 // actions
 import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsList'
@@ -113,11 +113,6 @@ const AlertJobs = (props: IProps) => {
     router.push('/jobs-hiring/job-search')
   }
 
-  const filterValues = (item) => {
-    const keyword = item.keyword_value ? item.keyword_value + ', ' : ''
-    return keyword + item.filters
-  }
-
   const handleEditJobAlert = (item) => {
     if (item) {
       setOpen(true)
@@ -171,14 +166,23 @@ const AlertJobs = (props: IProps) => {
     )
   }
 
+  function formatJobAlertFilterItem(item) {
+    let result = formatJobAlertFilter(config, item)
+    let companyVerify = item.is_company_verified == '1' ? 'Verified' : ''
+    companyVerify = !companyVerify ? `` : lang.search?.alertModal?.companyVerified
+    const searchQuery = item.keyword_value
+    result = [searchQuery, ...result, companyVerify]
+    return result.filter(Boolean).join(',')
+  }
+
   const JobAlertCard = ({ item }) => {
     return (
       <div className={styles.JobAlertContainer_item} key={item.id}>
         <div className={styles.JobAlertContainer_desc}>
           <div className={styles.JobAlertContainer_left}>
             {accountSetting.filter}:
-            <div className={styles.JobAlertContainer_filter} title={filterValues(item)}>
-              {filterValues(item)}
+            <div className={styles.JobAlertContainer_filter} title={formatJobAlertFilterItem(item)}>
+              {formatJobAlertFilterItem(item)}
             </div>
           </div>
           <div className={styles.JobAlertContainer_right}>
@@ -235,7 +239,7 @@ const AlertJobs = (props: IProps) => {
           open={open}
           config={config}
           job={currentJobAlert}
-          filterValues={filterValues}
+          filterValues={formatJobAlertFilterItem}
           handleSave={handleSettingSave}
           handleClose={handleSettingClose}
           lang={lang}
