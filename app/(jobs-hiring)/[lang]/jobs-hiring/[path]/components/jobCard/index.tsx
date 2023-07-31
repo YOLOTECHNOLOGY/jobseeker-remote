@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
+import { ChatDataContext } from '../ChatProvider'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -125,6 +126,7 @@ const JobCard = (props: any) => {
     // job_location,
     // xp_lvl,
     // degree,
+    index,
     recruiter_full_name,
     recruiter_job_title,
     recruiter_is_online,
@@ -135,7 +137,7 @@ const JobCard = (props: any) => {
     job_benefits,
     external_apply_url,
     id,
-    chat,
+    // chat,
     is_saved,
     job_url,
     company_url,
@@ -147,6 +149,9 @@ const JobCard = (props: any) => {
     company_financing_stage_id,
     company_industry_id
   } = props
+
+  const chatDatas = useContext(ChatDataContext)
+  const chat = chatDatas?.[index]
   const config = useSelector((store: any) => store.config.config.response)
   const { search } = useContext(languageContext) as any
   const labels = [

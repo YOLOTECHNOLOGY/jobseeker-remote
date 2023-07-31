@@ -8,16 +8,16 @@ import PublicLayout from 'app/components/publicLayout'
 import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 
-export const revalidate = 3600
-export async function generateStaticParams(params: any) {
-  console.log({ generateStaticParams: params })
-  return [
-    { lang: 'en-US' },
-    { lang: 'zh-CN' },
-    { lang: 'ja-JP' },
-    { lang: 'id-ID' },
-  ]
-}
+// export const revalidate = 3600
+// export async function generateStaticParams(params: any) {
+//   console.log({ generateStaticParams: params })
+//   return [
+//     { lang: 'en-US' },
+//     { lang: 'zh-CN' },
+//     { lang: 'ja-JP' },
+//     { lang: 'id-ID' },
+//   ]
+// }
 
 export default async function RootLayout(props: any) {
 
