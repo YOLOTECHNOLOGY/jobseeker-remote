@@ -21,8 +21,8 @@ import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { setCookie } from 'helpers/cookies'
-import { HistoryIcons } from 'images'
-
+import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
+import Link from 'components/Link'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -143,120 +143,155 @@ const SearchArea = (props: any) => {
   }
 
   return (
-    <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
-      <ThemeProvider theme={theme}>
-        <div className={styles.box}>
-          <div className={styles.searchWrapper}>
-            <LocationMultiSelector
-              className={styles.location}
-              // locationList={config.location_lists}
-              value={location}
-              label={isPC ? home.search.location : home.search.location2}
-              onChange={setLocation}
-              lang={home.search}
-              sx={{
-                '> .MuiFormControl-root': {
-                  borderRadius: '8px',
-                  height: '60px',
-                  marginTop: '4px',
-                  overflow: 'hidden',
-                  '> .MuiOutlinedInput-root': {
+    <>
+      <div className={`${styles.searchArea} ${isShow ? styles.searchAreaFix : ''}`}>
+        <ThemeProvider theme={theme}>
+          <div className={styles.box}>
+            <div className={styles.searchWrapper}>
+              <LocationMultiSelector
+                className={styles.location}
+                // locationList={config.location_lists}
+                value={location}
+                label={isPC ? home.search.location : home.search.location2}
+                onChange={setLocation}
+                lang={home.search}
+                isPC={isPC}
+                sx={{
+                  '> .MuiFormControl-root': {
                     borderRadius: '8px',
                     height: '60px',
+                    marginTop: '4px',
                     overflow: 'hidden',
-                    marginTop: '4px'
-                  }
-                }
-              }}
-            />
-            <div className={styles.searchSpread}></div>
-            <div style={{ display: 'flex' }} className={styles.searchBox}>
-              <JobSearchBar
-                id='search'
-                // label={home.search.title}
-                placeholder={home.search.title}
-                variant='outlined'
-                size='small'
-                className={styles.search}
-                value={searchValue}
-                maxLength={255}
-                searchFn={handleSuggestionSearch}
-                updateSearchValue={setSearchValue}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    const value = (e.target as HTMLInputElement).value
-                    setSearchValue(value)
-                    addSearchHistory(value)
-                    if (value) {
-                      pushJobPage(value, '')
+                    '> .MuiOutlinedInput-root': {
+                      borderRadius: '8px',
+                      height: '60px',
+                      overflow: 'hidden',
+                      marginTop: '4px'
                     }
                   }
                 }}
-                options={suggestionList}
-                onSelect={(value: any) => {
-                  const newValue = value?.value || value || ''
-                  const type = value?.type || ''
-                  setSearchValue(newValue)
-                  addSearchHistory(newValue)
-                  if (newValue) {
-                    pushJobPage(newValue, type)
-                  }
-                }}
-                renderOption={(props, option) => {
-                  const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
-                  return type === 'company' ? (
-                    <li {...props} style={styleleSelect} key={props.id}>
-                      <Image src={logoUrl} alt={value} width='22' height='22' />
-                      <span style={spanStyle}>{value}</span>
-                    </li>
-                  ) : isHistory ? (
-                    <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
-                      <AccessTimeIcon />
-                      <span style={spanStyle}>{value}==1</span>
-                    </li>
-                  ) : (
-                    <li {...props} style={styleleSelect} key={props.id}>
-                      <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
-                      <span style={spanStyle}>{value || option}</span>
-                    </li>
-                  )
-                }}
               />
-              <MaterialButton
-                className={styles.searchButton}
-                onClick={() => {
-                  if (!searchValue) return
-                  addSearchHistory(searchValue)
-                  pushJobPage(searchValue, '')
-                }}
-                style={{
-                  textTransform: 'capitalize'
-                }}
-              >
-                {' '}
-                {home.search.btn1}{' '}
-              </MaterialButton>
-            </div>
-          </div>
-          {isShow && (
-            <div className={styles.download}>
-              <PhoneIphoneIcon className={styles.icon} />
-              <p>
-                {' '}
-                {home.search.download}
-                <br />
-                {home.search.chatBoss}
-              </p>
-              <div className={styles.popver}>
-                <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                <p>{home.search.popup.chatBoss}</p>
+              <div className={styles.searchSpread}></div>
+              <div style={{ display: 'flex' }} className={styles.searchBox}>
+                <JobSearchBar
+                  id='search'
+                  // label={home.search.title}
+                  placeholder={home.search.title}
+                  variant='outlined'
+                  size='small'
+                  className={styles.search}
+                  value={searchValue}
+                  maxLength={255}
+                  searchFn={handleSuggestionSearch}
+                  updateSearchValue={setSearchValue}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      const value = (e.target as HTMLInputElement).value
+                      setSearchValue(value)
+                      addSearchHistory(value)
+                      if (value) {
+                        pushJobPage(value, '')
+                      }
+                    }
+                  }}
+                  options={suggestionList}
+                  onSelect={(value: any) => {
+                    const newValue = value?.value || value || ''
+                    const type = value?.type || ''
+                    setSearchValue(newValue)
+                    addSearchHistory(newValue)
+                    if (newValue) {
+                      pushJobPage(newValue, type)
+                    }
+                  }}
+                  renderOption={(props, option) => {
+                    const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                    return type === 'company' ? (
+                      <li {...props} style={styleleSelect} key={props.id}>
+                        <Image src={logoUrl} alt={value} width='22' height='22' />
+                        <span style={spanStyle}>{value}</span>
+                      </li>
+                    ) : isHistory ? (
+                      <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
+                        <AccessTimeIcon />
+                        <span style={spanStyle}>{value}==1</span>
+                      </li>
+                    ) : (
+                      <li {...props} style={styleleSelect} key={props.id}>
+                        <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                        <span style={spanStyle}>{value || option}</span>
+                      </li>
+                    )
+                  }}
+                />
+                <MaterialButton
+                  className={styles.searchButton}
+                  onClick={() => {
+                    if (!searchValue) return
+                    addSearchHistory(searchValue)
+                    pushJobPage(searchValue, '')
+                  }}
+                  style={{
+                    textTransform: 'capitalize'
+                  }}
+                >
+                  {' '}
+                  {home.search.btn1}{' '}
+                </MaterialButton>
               </div>
             </div>
-          )}
-        </div>
-      </ThemeProvider>
-    </div>
+            {isShow && (
+              <div className={styles.download}>
+                <PhoneIphoneIcon className={styles.icon} />
+                <p>
+                  {' '}
+                  {home.search.download}
+                  <br />
+                  <span>{home.search.chatBoss}</span>
+                </p>
+                <div className={styles.popver}>
+                  <div className={styles.popverMain}>
+                    <div className={styles.info}>
+                      <h5 className={styles.getApp}>Get the Dice app</h5>
+                      <p className={styles.getAppTips}>
+                        You must install our app to chat with employers and edit your profile. Scan
+                        the QR code to download the app.
+                      </p>
+                      <div>
+                        <Link
+                          to={process.env.APP_STORE_LINK}
+                          external
+                          style={{ marginRight: '20px' }}
+                        >
+                          <Image
+                            src={footer_apple_download}
+                            alt='AppStore'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                        <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
+                          <Image
+                            src={footer_googleplay_download}
+                            alt='GooglePlay'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className={styles.code}>
+                      <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </ThemeProvider>
+      </div>
+    </>
   )
 }
 export default SearchArea

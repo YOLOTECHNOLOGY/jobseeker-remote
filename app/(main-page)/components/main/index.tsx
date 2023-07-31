@@ -38,16 +38,17 @@ const Main = async (props: any) => {
   if (location?.length) {
     try {
       const locationArr = JSON.parse(location)
-      const locations = Array.isArray(locationArr) ? locationArr : [locationArr].filter(a => a)
+      const locations = Array.isArray(locationArr) ? locationArr : [locationArr].filter((a) => a)
       // locationId = locations?.map(loc=>loc.id).join(',')
       if (locations?.length) {
-        locationId = locations?.map(e => e.id)?.join(',')
+        locationId = locations?.map((e) => e.id)?.join(',')
       }
     } catch (error) {
       console.log({ error })
     }
   }
-  const langKey = props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
+  const langKey =
+    props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
   // const {
   //   lang: { home }
   // } = props || {}
@@ -56,7 +57,6 @@ const Main = async (props: any) => {
   return (
     <>
       <div className={styles.main}>
-
         {/* <div className={styles.title}><span>{home.title}</span>{home.title2}</div> */}
         <TopModule params={props.params} lang={props.lang} config={config} />
 

@@ -24,6 +24,8 @@ import {
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
+import { throttle } from 'lodash-es'
+
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -85,7 +87,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
@@ -98,6 +100,28 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) =>
 const Tabs = ({ config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
+  const [showBtn, setShowBtn] = useState<boolean>(false)
+  useEffect(() => {
+    window.addEventListener('scroll', useFn)
+
+    return () => {
+      window.removeEventListener('scroll', useFn)
+    }
+  }, [])
+
+  const useFn = throttle(() => {
+    getScrollTop()
+  }, 500)
+
+  const getScrollTop = () => {
+    const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+    if (scrollTopHeight > 960) {
+      setShowBtn(true)
+    } else {
+      setShowBtn(false)
+    }
+  }
+
   const tabList = useMemo(() => {
     return [
       {
@@ -243,6 +267,16 @@ const Tabs = ({ config, location_id, langKey }: any) => {
     //
   }
 
+  const scrollTopFun = () => {
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth'
+    // })
+    document.documentElement.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className={styles.popularJobsBox}>
       <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
@@ -271,7 +305,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                       letterSpacing: '1px',
                       width: 'auto',
                       padding: '12px 0',
-                      marginRight: '52px',
+                      marginRight: '51px',
                       fontWeight: '400'
                     }}
                   />
@@ -325,16 +359,15 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                 ))
               ) : (
                 <Box sx={{ width: '100%' }}>
-                  <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((e) => (
+                    <Skeleton
+                      key={e}
+                      width={'100%'}
+                      height={20}
+                      animation='wave'
+                      sx={{ margin: '10px 0' }}
+                    />
+                  ))}
                 </Box>
               )}
 
@@ -378,6 +411,24 @@ const Tabs = ({ config, location_id, langKey }: any) => {
       <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
         <Alert severity='error'>{message}</Alert>
       </Snackbar>
+      {showBtn && (
+        <div className={styles.backBtn} onClick={() => scrollTopFun()}>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='22'
+            height='12'
+            viewBox='0 0 22 12'
+            fill='none'
+          >
+            <path
+              d='M1.89844 10.6333L10.6376 1.86387C11.0338 1.46633 11.6795 1.4726 12.0678 1.87774L20.8125 11'
+              stroke='white'
+              stroke-width='2'
+              stroke-linecap='round'
+            />
+          </svg>
+        </div>
+      )}
     </div>
   )
 }
