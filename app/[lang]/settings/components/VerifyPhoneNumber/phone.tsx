@@ -5,7 +5,7 @@ import MaterialTextField from 'components/MaterialTextField'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
-import Captcha from '../Captcha'
+import Captcha from '../CaptchaCode'
 
 // tools
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'

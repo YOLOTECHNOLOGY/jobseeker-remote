@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
 import { BlueTickIcon } from 'images'
-import Captcha from '../Captcha'
+import Captcha from '../CaptchaCode'
 import { validEmailReg } from '../../config'
 
 // ui
