@@ -17,10 +17,10 @@ const Table = (props: any) => {
             <ChatDataProvider recruiterIds={jobs.map(job => job.recruiter_id).join(',')}>
                 {jobs?.length ? (
                     <div className={styles.tableContainer}>
-                        {jobs.map((job, index) => {
+                        {jobs.map((job) => {
                             return (
                                 <div className={styles.jobContainer} key={job?.id}>
-                                    <JobCard {...job} index={index} />
+                                    <JobCard {...job} />
                                 </div>
                             )
                         })}
