@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Button } from '@mui/material'
 import Loading from 'app/components/loading'
 import Text from 'components/Text'
-import { changeAlertValue } from 'helpers/config/changeAlertValue'
+import { getValueById } from 'helpers/config/getValueById'
 import Modal from '../Modal'
 import SettingModal from './SettingModal'
 import { formatJobAlertFilter } from './formatJobAlert'
@@ -64,9 +64,6 @@ const AlertJobs = (props: IProps) => {
       setIsLoading(true)
       const list = await fetchJobAlertsListService({ accessToken })
       const resData = list.data.data || []
-      resData?.forEach?.((item) => {
-        changeAlertValue(item, config)
-      })
       setJobAlertList(resData)
       setIsLoading(false)
     } catch (error) {
@@ -177,7 +174,7 @@ const AlertJobs = (props: IProps) => {
 
   const JobAlertCard = ({ item }) => {
     return (
-      <div className={styles.JobAlertContainer_item} key={item.id}>
+      <div className={styles.JobAlertContainer_item}>
         <div className={styles.JobAlertContainer_desc}>
           <div className={styles.JobAlertContainer_left}>
             {accountSetting.filter}:
@@ -203,7 +200,8 @@ const AlertJobs = (props: IProps) => {
           </div>
         </div>
         <div className={styles.JobAlertContainer_desc}>
-          {accountSetting.frequency}: {item.frequency_value}
+          {accountSetting.frequency}:{' '}
+          {getValueById(config, item.frequency_id, 'subscibe_job_frequency_id')}
         </div>
         <div className={styles.JobAlertContainer_desc}>
           {accountSetting.email}: {item.email}
