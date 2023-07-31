@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import Image from 'next/image'
@@ -172,6 +172,16 @@ const AlertJobs = (props: IProps) => {
     return result.filter(Boolean).join(',')
   }
 
+  const frequencyValue = useCallback(
+    (item) => {
+      return (
+        getValueById(config, item?.frequency_id, 'subscibe_job_frequency_id') ||
+        item?.frequency_value
+      )
+    },
+    [config]
+  )
+
   const JobAlertCard = ({ item }) => {
     return (
       <div className={styles.JobAlertContainer_item}>
@@ -200,8 +210,7 @@ const AlertJobs = (props: IProps) => {
           </div>
         </div>
         <div className={styles.JobAlertContainer_desc}>
-          {accountSetting.frequency}:{' '}
-          {getValueById(config, item.frequency_id, 'subscibe_job_frequency_id')}
+          {accountSetting.frequency}: {frequencyValue(item)}
         </div>
         <div className={styles.JobAlertContainer_desc}>
           {accountSetting.email}: {item.email}

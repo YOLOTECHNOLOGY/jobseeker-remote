@@ -5,13 +5,13 @@ import Alerts from './components/Alerts'
 import ShieldingCompany from './components/ShieldingCompany'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { isMobile } from 'react-device-detect'
 import styles from './settings.module.scss'
 import { useSearchParams, usePathname } from 'next/navigation'
 import { LoadingContext } from 'app/components/providers/loadingProvider'
 import AccountSetting from './components/AccountSetting'
+
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
