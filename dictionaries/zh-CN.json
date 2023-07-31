@@ -93,7 +93,7 @@
     },
     "loginUsingSocialMediaOTP": "验证码登录/注册",
     "loginUsingQRCode": "使用二维码登录",
-    "scanQRCodeOnAppToLogin": "Scan this code with  Bossjob app to login instantly",
+    "scanQRCodeOnAppToLogin": "使用Bossjob APP扫描二维码即可登录",
     "donHaveApp": "没有应用程序",
     "howToScanQRCode": "如何扫描二维码",
     "ImJobSeeker": "我是一名求职者",
@@ -622,7 +622,7 @@
   "manageProfile": {
     "tab": {
       "profile": {
-        "tabTitle": "档案",
+        "tabTitle": "我的资料",
         "findYou": "让企业更快找到您!",
         "year_one": "{{age}} 岁",
         "year_other": "{{age}} 岁",
@@ -1152,14 +1152,32 @@
   "accountSetting": {
     "title": "账户设置",
     "tabs": {
+      "settings": "设置",
       "account": "账户",
-      "jobAlert": "职位提醒"
+      "jobAlert": "职位提醒",
+      "accountSetting": "账户设置",
+      "notification": "通知",
+      "shieldingCompany": "屏蔽公司"
+    },
+    "modals": {
+      "verifyMobileTitle": "验证您的手机号码",
+      "verifyEmailTitle": "更改邮件地址验证",
+      "verifyJobAlertTitle": "新职位提醒设置",
+      "deleteAlertTip": "您确定要删除此提醒吗？删除后，您将无法获得高质量的职位推荐信息"
+    },
+    "verifiedMessages": {
+      "mobile": "您的电话账户已成功验证。",
+      "email": "您的电子邮件账户已成功验证。"
     },
     "email": "邮件",
     "sendOpt": "发送验证码",
     "save": "保存",
     "cancel": "取消",
     "verify": "验证",
+    "done": "完成",
+    "yes": "同意",
+    "search": "搜索",
+    "add": "添加",
     "optLabel": "6位数字验证码",
     "errorMsg": {
       "invalidOtp": "无效的OTP",
@@ -1185,14 +1203,30 @@
     "receiveTipsExplanation": "这是为了分享有助于您求职的见解和技巧。",
     "jobAlertTitle": "职位提醒",
     "filter": "筛选条件",
+    "jobFilter": "职位筛选",
     "frequency": "通知频率",
+    "sendToEmail": "发送至电子邮件",
     "alertFrequency": "通知频率",
     "notJobAlert": "你还没有工作通知",
     "toSearch": "返回到搜索工作",
     "deleteTitle": "删除工作通知",
     "keep": "保留",
     "delete": "删除",
-    "deleteTips": "您即将删除此职位提醒。 这不能被撤消。"
+    "deleteTips": "您即将删除此职位提醒。 这不能被撤消。",
+    "notProvided": "未提供",
+    "noData": "暂无数据",
+    "blockMessages": {
+      "searchLabel": "搜索公司",
+      "unblock": "解除屏蔽",
+      "title": "添加屏蔽公司后，您和这些公司的老板将不会相互推荐，您的查看行为也不会通知对方。 ",
+      "jobOrCompany": "职位或者公司名称",
+      "tip1": "公司可以通过以下方式搜索",
+      "tip2": "公司全名：“Beijing Huapin Borui Network Technology Co., Ltd.”",
+      "tip3": "公司缩写：“BSS Direct Employment”",
+      "unBlockTip1": "以下关联的公司将同时解冻。",
+      "unBlockTip2": "该公司名称为 {{company}}",
+      "noCompanies": "搜索公司不存在"
+    }
   },
   "chatExchange": {
     "exchangeTitle": "电话号码",
