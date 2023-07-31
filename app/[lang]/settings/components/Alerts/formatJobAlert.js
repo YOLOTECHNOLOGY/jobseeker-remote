@@ -21,7 +21,7 @@ export const formatJobAlertFilter = (config, job) => {
   })?.filter(Boolean).join(',')
 
   const job_functions_values = job_functions?.map(item => {
-    return config.job_functions.find(job_function => job_function.id === item.id)?.value
+    return config.job_functions?.find(job_function => job_function.id === item.id)?.value
   })?.filter(Boolean).join(',')
 
   const function_job_titles_values = function_job_titles?.map(item => {
