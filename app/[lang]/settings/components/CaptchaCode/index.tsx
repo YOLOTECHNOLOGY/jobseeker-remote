@@ -61,7 +61,7 @@ const Captcha = (props: ICaptchaProps) => {
 
   return (
     <div className={`${styles.captcha} ${styles.captchaThemeBox}`}>
-      <div className={styles.codeBox} onMouseDown={(e) => handleCodeBoxClick(e)}>
+      <div className={styles.codeBox} onClick={(e) => handleCodeBoxClick(e)}>
         {codeArray.map((item, index) => {
           const isItemActive = isFocused && index == currentIndex
           return (
