@@ -13,6 +13,7 @@ import SearchCompany from './components/SearchCompany'
 import FeaturedCompanied from './components/FeaturedCompanied'
 import { useFirstRender } from 'helpers/useFirstRender'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
+import Image from 'next/Image'
 
 const initSearchQueries = {
   query: '',
@@ -133,12 +134,14 @@ const Companies = (props: IProps) => {
       </div>
     )
   }
-
+  console.log('featuredCompany',featuredCompany);
   return (
     <>
       <div className={styles.container}>
         {/* search */}
         <div className={styles.searchContainer}>
+          <Image fill alt='bg' style={{objectFit: 'cover'}} src={require('./companies-search-bg.svg').default.src}/>
+
           <div className={styles.searchCompany}>
             <SearchCompany
               transitions={companies.search}
@@ -153,7 +156,7 @@ const Companies = (props: IProps) => {
             />
           </div>
         </div>
-
+        <div className={styles.placeholderSpace}></div>
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
           <FeaturedCompanied
@@ -166,43 +169,47 @@ const Companies = (props: IProps) => {
         ) : null}
 
         {/* companies list */}
-        <div className={styles.companies}>
-          {/* fetching loading: true */}
-          {isFeaturedCompaniesFetching && <CompaniesLoader />}
+        <div className={styles.companiesWrapper} style={{backgroundColor: '#F7F8FA'}}>
+          <div className={styles.companies} >
+            {/* fetching loading: true */}
+            {isFeaturedCompaniesFetching && <CompaniesLoader />}
 
-          {/* fetching loading: false */}
-          {!isFeaturedCompaniesFetching && (
-            <>
-              {/* company card title */}
-              {reset ? (
-                <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
-              ) : null}
+            {/* fetching loading: false */}
+            {!isFeaturedCompaniesFetching && (
+              <div>
+                {/* company card title */}
+                {reset ? (
+                  <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
+                ) : null}
 
-              {/* company card list */}
-              <CompanyCardList
-                companiesList={featuredCompanies}
-                isLoading={isFeaturedCompaniesFetching}
-                transitions={companies.popularCompany}
-                langKey={langKey}
-                config={config}
-                lang={props.lang}
-              />
-            </>
-          )}
+                {/* company card list */}
+                <CompanyCardList
+                  companiesList={featuredCompanies}
+                  isLoading={isFeaturedCompaniesFetching}
+                  transitions={companies.popularCompany}
+                  langKey={langKey}
+                  config={config}
+                  lang={props.lang}
+                  page={searchQuery.page}
+                />
+              </div>
+            )}
 
-          {/* Pagination */}
-          {totalPage > 1 && (
-            <div className={styles.companiesPagination}>
-              <MaterialRoundedPagination
-                onChange={handlePaginationClick}
-                defaultPage={Number(searchQuery.page) || 1}
-                totalPages={totalPage || 1}
-                page={searchQuery.page}
-                boundaryCount={isMobile ? 0 : 1}
-              />
-            </div>
-          )}
+            {/* Pagination */}
+            {totalPage > 1 && (
+              <div className={styles.companiesPagination}>
+                <MaterialRoundedPagination
+                  onChange={handlePaginationClick}
+                  defaultPage={Number(searchQuery.page) || 1}
+                  totalPages={totalPage || 1}
+                  page={searchQuery.page}
+                  boundaryCount={isMobile ? 0 : 1}
+                />
+              </div>
+            )}
+          </div>
         </div>
+
       </div>
     </>
   )

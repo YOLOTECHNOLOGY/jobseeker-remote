@@ -2,11 +2,15 @@
 
 
 'use client'
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 import LoginDialog from '../../LoginDialog'
 
 export const LoginModalContext = createContext({ showLogin: false, setShowLogin: null })
 const Provider = LoginModalContext.Provider
+
+export const useLoginModal = () => {
+    return useContext(LoginModalContext);
+}
 
 const LoginModalProvider = ({ children }: any) => {
     const [showLogin, setShowLogin] = useState(false)

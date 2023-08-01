@@ -5,7 +5,7 @@ import styles from '../Companies.module.scss'
 import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import { Button } from 'app/components/MUIs'
-
+import Image from 'next/image'
 interface IProps {
   config: any
   resetFilterFn: Function
@@ -130,7 +130,10 @@ const SortFilter = (props: IProps) => {
           }}
         /> */}
         {/* Rest Filter */}
-        <Button className={styles.clearButton} variant='text' onClick={handleReset}>
+        <Button 
+            className={styles.clearButton}
+            startIcon={<Image className={styles.reset} width={18} height={18} src={require('../reset.svg').default.src} alt='clear' />}
+            variant='text' onClick={handleReset}>
           {lang?.companies?.employer?.resetFilters}
         </Button>
       </div>
