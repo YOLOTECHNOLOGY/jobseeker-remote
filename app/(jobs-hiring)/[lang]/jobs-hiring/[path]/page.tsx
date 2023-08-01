@@ -40,15 +40,15 @@ const configs = getConfigs([
   ['country_lists']
 ])
 
-export const revalidate = 3600
-export async function generateStaticParams() {
-  return languages.map(lang => lang.value).map(lang => {
-    return {
-      lang,
-      path: 'job-search'
-    }
-  })
-}
+// export const revalidate = 3600
+// export async function generateStaticParams() {
+//   return languages.map(lang => lang.value).map(lang => {
+//     return {
+//       lang,
+//       path: 'job-search'
+//     }
+//   })
+// }
 const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run

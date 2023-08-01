@@ -1,7 +1,7 @@
 // 'use client'
 import React from 'react'
 
-import { cookies } from 'next/headers'
+// import { cookies } from 'next/headers'
 import Footer from 'components/Footer'
 
 import AutoShowModalAppRedirect from '../AutoShowModalAppRedirect'
@@ -13,6 +13,8 @@ import Tracker from '../tracker'
 import getConfigs from 'app/models/interpreters/config'
 import styles from '../../../index.module.scss'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
+import { cookies } from 'next/headers'
+// import { cookies } from 'next/headers'
 const configs = getConfigs([
   ['location_lists'],
   ['main_functions'],
@@ -47,18 +49,18 @@ const Main = async (props: any) => {
       console.log({ error })
     }
   }
-  const langKey =
-    props?.params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
-  // const {
-  //   lang: { home }
-  // } = props || {}
+  let langKey = props?.params?.lang
+  if (!langKey) {
+    langKey = (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
+  }
+
   const { config } = await configs(serverDataScript()).run(props)
 
   return (
     <>
       <div className={styles.main}>
         {/* <div className={styles.title}><span>{home.title}</span>{home.title2}</div> */}
-        <TopModule params={props.params} lang={props.lang} config={config} />
+        <TopModule langKey={langKey} lang={props.lang} config={config} />
 
         <Tabs config={config} langKey={langKey} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}

@@ -1,0 +1,287 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import Image from 'next/image'
+import { Button } from '@mui/material'
+import Loading from 'app/components/loading'
+import Text from 'components/Text'
+import { getValueById } from 'helpers/config/getValueById'
+import Modal from '../Modal'
+import SettingModal from './SettingModal'
+import { formatJobAlertFilter } from './formatJobAlert'
+
+// actions
+import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsList'
+import { updateJobAlertService } from 'store/services/alerts/updateJobAlert'
+import { deleteJobAlertService } from 'store/services/alerts/deleteJobAlert'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+
+// styles
+import { AccountSettingDeleteIconBin, AccountSettingEditIconPen } from 'images'
+import styles from './index.module.scss'
+
+interface IProps {
+  accessToken: string
+  lang: any
+}
+
+const AlertJobs = (props: IProps) => {
+  const { accessToken, lang } = props
+  const router = useRouter()
+  const { accountSetting } = lang
+  const dispatch = useDispatch()
+
+  const [open, setOpen] = useState<boolean>(false)
+  const [openDelete, setOpenDelete] = useState<boolean>(false)
+  const [jobAlertList, setJobAlertList] = useState([])
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false)
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false)
+
+  const config = useSelector((store: any) => store.config.config.response)
+  const [currentJobAlert, setCurrentJobAlert] = useState(null)
+
+  useEffect(() => {
+    getAlertsListRequest()
+  }, [])
+
+  const handleError = (error) => {
+    const { data } = error.response
+    let errorMessage
+    if (data?.data) {
+      errorMessage = data?.data?.detail ?? data?.message
+    } else {
+      errorMessage = data?.errors?.phone_num[0]
+    }
+    dispatch(
+      displayNotification({
+        open: true,
+        message: errorMessage || data.message,
+        severity: 'error'
+      })
+    )
+  }
+
+  const getAlertsListRequest = async () => {
+    try {
+      setIsLoading(true)
+      const list = await fetchJobAlertsListService({ accessToken })
+      const resData = list.data.data || []
+      setJobAlertList(resData)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      handleError(error)
+    }
+  }
+
+  const deleteJobAlert = async (id) => {
+    setIsDeleteLoading(true)
+    try {
+      const payload = {
+        accessToken,
+        jobAlertId: id
+      }
+      await deleteJobAlertService(payload)
+      await getAlertsListRequest()
+      setCurrentJobAlert(null)
+      setOpenDelete(false)
+      setIsDeleteLoading(false)
+    } catch (error) {
+      setIsDeleteLoading(false)
+      handleError(error)
+    }
+  }
+
+  const updateJobAlert = async (item) => {
+    setIsUpdateLoading(true)
+    try {
+      const payload = {
+        accessToken,
+        updateJobAlertData: {
+          email: item.email,
+          id: item.id,
+          frequency_id: item.frequency_id
+        }
+      }
+      await updateJobAlertService(payload)
+      await getAlertsListRequest()
+      setOpen(false)
+      setCurrentJobAlert(null)
+      setIsUpdateLoading(false)
+    } catch (error) {
+      setIsUpdateLoading(false)
+      handleError(error)
+    }
+  }
+
+  const handelBackToJobSearch = () => {
+    router.push('/jobs-hiring/job-search')
+  }
+
+  const handleEditJobAlert = (item) => {
+    if (item) {
+      setOpen(true)
+      setCurrentJobAlert(item)
+    }
+  }
+
+  const handleDeleteJobAlert = (item) => {
+    if (item) {
+      setOpenDelete(true)
+      setCurrentJobAlert(item)
+    }
+  }
+
+  const handleSettingSave = (item) => {
+    if (item) {
+      updateJobAlert(item)
+    }
+  }
+
+  const handleSettingClose = () => {
+    setCurrentJobAlert(null)
+    setOpen(false)
+  }
+
+  const handleDeleteConfirm = () => {
+    if (currentJobAlert?.id) {
+      deleteJobAlert(currentJobAlert.id)
+    }
+  }
+
+  const handleDeleteClose = () => {
+    setCurrentJobAlert(null)
+    setOpenDelete(false)
+  }
+
+  const Empty = () => {
+    return (
+      <div className={styles.JobAlertContainer_noJobAlert}>
+        <Text block>{accountSetting.notJobAlert} </Text>
+        <Button
+          variant='contained'
+          onClick={() => {
+            handelBackToJobSearch()
+          }}
+          className={styles.JobAlertContainer_noJobAlert_backBtn}
+        >
+          {accountSetting.toSearch}
+        </Button>
+      </div>
+    )
+  }
+
+  function formatJobAlertFilterItem(item) {
+    let result = formatJobAlertFilter(config, item)
+    let companyVerify = item.is_company_verified == '1' ? 'Verified' : ''
+    companyVerify = !companyVerify ? `` : lang.search?.alertModal?.companyVerified
+    const searchQuery = item.keyword_value
+    result = [searchQuery, ...result, companyVerify]
+    return result.filter(Boolean).join(',')
+  }
+
+  const frequencyValue = useCallback(
+    (item) => {
+      return (
+        getValueById(config, item?.frequency_id, 'subscibe_job_frequency_id') ||
+        item?.frequency_value
+      )
+    },
+    [config]
+  )
+
+  const JobAlertCard = ({ item }) => {
+    return (
+      <div className={styles.JobAlertContainer_item}>
+        <div className={styles.JobAlertContainer_desc}>
+          <div className={styles.JobAlertContainer_left}>
+            {accountSetting.filter}:
+            <div className={styles.JobAlertContainer_filter} title={formatJobAlertFilterItem(item)}>
+              {formatJobAlertFilterItem(item)}
+            </div>
+          </div>
+          <div className={styles.JobAlertContainer_right}>
+            <Image
+              src={AccountSettingEditIconPen}
+              onClick={() => handleEditJobAlert(item)}
+              width={14}
+              height={16}
+              alt='edit'
+            ></Image>
+            <Image
+              src={AccountSettingDeleteIconBin}
+              onClick={() => handleDeleteJobAlert(item)}
+              width={14}
+              height={16}
+              alt='delete'
+            ></Image>
+          </div>
+        </div>
+        <div className={styles.JobAlertContainer_desc}>
+          {accountSetting.frequency}: {frequencyValue(item)}
+        </div>
+        <div className={styles.JobAlertContainer_desc}>
+          {accountSetting.email}: {item.email}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={styles.JobAlertContainer}>
+      <Text tagName='h2' className={styles.JobAlertTitle}>
+        {accountSetting?.tabs?.jobAlert}
+      </Text>
+      <div className={styles.JobAlertContainer_wrapper}>
+        {isLoading && (
+          <div className={styles.loading}>
+            <Loading />
+          </div>
+        )}
+        {!isLoading && (
+          <>
+            {jobAlertList.length > 0 ? (
+              jobAlertList.map((item) => <JobAlertCard key={item.id} item={item} />)
+            ) : (
+              <Empty />
+            )}
+          </>
+        )}
+
+        <SettingModal
+          key={'Job-Alert-Setting' + currentJobAlert?.id}
+          title={accountSetting?.modals?.verifyJobAlertTitle}
+          open={open}
+          config={config}
+          job={currentJobAlert}
+          filterValues={formatJobAlertFilterItem}
+          handleSave={handleSettingSave}
+          handleClose={handleSettingClose}
+          isLoading={isUpdateLoading}
+          lang={lang}
+        />
+
+        <Modal
+          key={'openDelete' + currentJobAlert?.id}
+          open={openDelete}
+          cancel={accountSetting?.cancel}
+          confirm={accountSetting?.yes}
+          handleSave={handleDeleteConfirm}
+          handleClose={handleDeleteClose}
+          title={accountSetting?.modals?.verifyJobAlertTitle}
+          isLoading={isDeleteLoading}
+          lang={lang}
+        >
+          <div className={styles.modal}>
+            <span className={styles.deleteTip}>{accountSetting?.modals?.deleteAlertTip}</span>
+          </div>
+        </Modal>
+      </div>
+    </div>
+  )
+}
+
+export default AlertJobs

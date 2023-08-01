@@ -24,16 +24,16 @@ interface OptionType {
   label: string | boolean
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 10 + ITEM_PADDING_TOP,
       overflow: 'auto'
-    },
-  },
-};
+    }
+  }
+}
 
 const MultipleSelect = ({
   id,
@@ -44,7 +44,7 @@ const MultipleSelect = ({
   style,
   value,
   fieldRef,
-  error,
+  error
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
   useEffect(() => {
@@ -52,12 +52,12 @@ const MultipleSelect = ({
   }, [value])
   const handleChange = (event: SelectChangeEvent) => {
     const {
-      target: { value },
+      target: { value }
     } = event
     // On autofill we get a the stringified value.
     const formattedValue = (typeof value === 'string' ? value.split(',') : value)
-      .filter(item => item !== 'emptyValue')
-      .map(item => item.toLowerCase())
+      .filter((item) => item !== 'emptyValue')
+      .map((item) => item.toLowerCase())
     setSelectedOptions(formattedValue)
     if (onSelect) {
       onSelect(formattedValue)
@@ -81,32 +81,42 @@ const MultipleSelect = ({
         placeholder={label}
         MenuProps={MenuProps}
         renderValue={(selected: any) => {
-
           if (selected?.[0] === 'emptyValue') {
-            return <div style={{
-              color: 'rgba(0, 0, 0, 0.6)', position: 'relative',
-              left: 13,
-              top: 2,
-            }}>{label}</div>
+            return (
+              <div
+                style={{
+                  color: 'rgba(0, 0, 0, 0.6)',
+                  position: 'relative',
+                  left: 13,
+                  top: 2
+                }}
+              >
+                {label}
+              </div>
+            )
           } else {
-            return <div style={{
-              position: 'relative',
-              left: 13,
-              top: 2,
-
-            }}>{`${label} ${selected?.length ? `(${selected.length})` : label}`}</div>
+            return (
+              <div
+                style={{
+                  position: 'relative',
+                  left: 13,
+                  top: 2
+                }}
+              >{`${label} ${selected?.length ? `(${selected.length})` : label}`}</div>
+            )
           }
         }}
       >
-        {options && options.map((option: any) => (
-          <MenuItem key={option.value} value={option.value}>
-            <Checkbox
-              checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
-              size='small'
-            />
-            <ListItemText primary={option.label} />
-          </MenuItem>
-        ))}
+        {options &&
+          options.map((option: any) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox
+                checked={selectedOptions.indexOf(option.value?.toLowerCase()) > -1}
+                size='small'
+              />
+              <ListItemText primary={option.label} />
+            </MenuItem>
+          ))}
       </Select>
     </FormControl>
   )

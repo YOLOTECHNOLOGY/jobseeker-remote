@@ -13,6 +13,7 @@ import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
 import { routes } from 'helpers/utilities'
+import { isMobile } from 'react-device-detect'
 
 const useGetStarted = () => {
   // const routes = useRouter()
@@ -64,7 +65,7 @@ const useGetStarted = () => {
     const data = {
       email,
       otp: code,
-      source: 'web',
+      source: isMobile ? 'mobile_web' : 'web',
       userId,
       browser_serial_number: uuid
     }
@@ -84,7 +85,7 @@ const useGetStarted = () => {
     const data = {
       phone_num,
       otp: code,
-      source: 'web',
+      source: isMobile ? 'mobile_web' : 'web',
       userId,
       browser_serial_number: uuid,
       mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]
@@ -264,7 +265,7 @@ const useGetStarted = () => {
         redirect_fail: '/get-started'
       }
     }
-    params = { email, source: 'web', ...params }
+    params = { email, source: isMobile ? 'mobile_web' : 'web', ...params }
     authenticationSendEmailMagicLink(params)
       .then(({ data }) => {
         dispatch(

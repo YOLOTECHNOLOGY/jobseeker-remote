@@ -2,7 +2,6 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useContext, useMemo } from 'react'
 import styles from './web.module.scss'
-import { HomePageChat } from 'images'
 import useChatNow from 'app/models/hooks/useChatNow'
 import Image from 'next/image'
 import classNames from 'classnames'
