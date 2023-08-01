@@ -31,10 +31,15 @@ const AlertJobs = (props: IProps) => {
   const router = useRouter()
   const { accountSetting } = lang
   const dispatch = useDispatch()
+
   const [open, setOpen] = useState<boolean>(false)
   const [openDelete, setOpenDelete] = useState<boolean>(false)
   const [jobAlertList, setJobAlertList] = useState([])
+
   const [isLoading, setIsLoading] = useState(true)
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false)
+  const [isUpdateLoading, setIsUpdateLoading] = useState(false)
+
   const config = useSelector((store: any) => store.config.config.response)
   const [currentJobAlert, setCurrentJobAlert] = useState(null)
 
@@ -73,6 +78,7 @@ const AlertJobs = (props: IProps) => {
   }
 
   const deleteJobAlert = async (id) => {
+    setIsDeleteLoading(true)
     try {
       const payload = {
         accessToken,
@@ -82,12 +88,15 @@ const AlertJobs = (props: IProps) => {
       await getAlertsListRequest()
       setCurrentJobAlert(null)
       setOpenDelete(false)
+      setIsDeleteLoading(false)
     } catch (error) {
+      setIsDeleteLoading(false)
       handleError(error)
     }
   }
 
   const updateJobAlert = async (item) => {
+    setIsUpdateLoading(true)
     try {
       const payload = {
         accessToken,
@@ -101,7 +110,9 @@ const AlertJobs = (props: IProps) => {
       await getAlertsListRequest()
       setOpen(false)
       setCurrentJobAlert(null)
+      setIsUpdateLoading(false)
     } catch (error) {
+      setIsUpdateLoading(false)
       handleError(error)
     }
   }
@@ -249,6 +260,7 @@ const AlertJobs = (props: IProps) => {
           filterValues={formatJobAlertFilterItem}
           handleSave={handleSettingSave}
           handleClose={handleSettingClose}
+          isLoading={isUpdateLoading}
           lang={lang}
         />
 
@@ -260,9 +272,12 @@ const AlertJobs = (props: IProps) => {
           handleSave={handleDeleteConfirm}
           handleClose={handleDeleteClose}
           title={accountSetting?.modals?.verifyJobAlertTitle}
+          isLoading={isDeleteLoading}
           lang={lang}
         >
-          <div className={styles.modal}>{accountSetting?.modals?.deleteAlertTip}</div>
+          <div className={styles.modal}>
+            <span className={styles.deleteTip}>{accountSetting?.modals?.deleteAlertTip}</span>
+          </div>
         </Modal>
       </div>
     </div>
