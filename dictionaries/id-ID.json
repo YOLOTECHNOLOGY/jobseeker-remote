@@ -1163,7 +1163,7 @@
       "verifyMobileTitle": "Verify your mobile number",
       "verifyEmailTitle": "Change email address verify",
       "verifyJobAlertTitle": "Job Alert Setting",
-      "deleteAlertTip": "Are you sure you want to delete this job reminder? After deleting, you will not be able to get high-quality job recommendation information"
+      "deleteAlertTip": "Are you sure you want to delete this job reminder? "
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
@@ -1221,7 +1221,7 @@
       "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",
       "jobOrCompany": "Job title or company",
       "tip1": "The company can be searched by",
-      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
+      "tip2": "Full name of the company: such as “Google Inc.\"",
       "tip3": "Company abbreviation: such as \"BOSS Direct Employment\"",
       "unBlockTip1": "The following related companies will be unblocked at the same time",
       "unBlockTip2": "The company is referred to as {{company}}",
