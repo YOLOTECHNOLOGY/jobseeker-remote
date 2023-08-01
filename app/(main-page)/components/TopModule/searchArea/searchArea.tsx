@@ -254,11 +254,8 @@ const SearchArea = (props: any) => {
                 <div className={styles.popverContainer}>
                   <div className={styles.popverMain}>
                     <div className={styles.info}>
-                      <h5 className={styles.getApp}>Get the Dice app</h5>
-                      <p className={styles.getAppTips}>
-                        You must install our app to chat with employers and edit your profile. Scan
-                        the QR code to download the app.
-                      </p>
+                      <h5 className={styles.getApp}>{home?.search?.getTheDiceApp}</h5>
+                      <p className={styles.getAppTips}>{home?.search?.youMustInstallApp}</p>
                       <div>
                         <Link
                           to={process.env.APP_STORE_LINK}
