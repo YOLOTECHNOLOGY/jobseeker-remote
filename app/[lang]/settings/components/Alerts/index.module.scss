@@ -147,6 +147,10 @@
       line-height: 25px;
       letter-spacing: 0.15px;
       padding-bottom: 20px;
+
+      @include sm {
+        font-size: 18px;
+      }
     }
 
     .select {
@@ -157,6 +161,10 @@
     :global {
       .MuiInput-underline::before {
         border-bottom: 1px solid #e4e4e4;
+      }
+
+      .MuiInput-input {
+        font-size: 18px;
       }
 
       .MuiInputBase-root {

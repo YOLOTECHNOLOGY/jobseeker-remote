@@ -1,4 +1,5 @@
 import AccountSettings from './main'
+import Footer from 'components/Footer'
 
 import { buildComponentScript, needLogin } from 'app/models/abstractModels/util'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
@@ -9,7 +10,12 @@ import { getDictionary } from 'get-dictionary'
 const configs = getConfigs([['country_lists']])
 const Settings = async (props: any) => {
   const lang = await getDictionary(props?.params?.lang as 'en-US')
-  return <AccountSettings {...props} lang={lang} />
+  return (
+    <>
+      <AccountSettings {...props} lang={lang} />
+      <Footer />
+    </>
+  )
 }
 
 export default configs(serverDataScript()).chain((configs) =>
