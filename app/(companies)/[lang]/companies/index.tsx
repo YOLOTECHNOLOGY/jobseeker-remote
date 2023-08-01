@@ -13,7 +13,7 @@ import SearchCompany from './components/SearchCompany'
 import FeaturedCompanied from './components/FeaturedCompanied'
 import { useFirstRender } from 'helpers/useFirstRender'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
-import Image from 'next/Image'
+import Image from 'next/image'
 
 const initSearchQueries = {
   query: '',
