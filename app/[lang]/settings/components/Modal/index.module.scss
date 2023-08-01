@@ -48,6 +48,7 @@
     flex-shrink: 0;
     border-radius: 8px;
     cursor: pointer;
+    position: relative;
 
     @include sm {
       flex: 1;

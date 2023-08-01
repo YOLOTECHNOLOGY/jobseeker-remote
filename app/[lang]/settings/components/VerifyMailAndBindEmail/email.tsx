@@ -52,6 +52,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const [startTimer, setStartTimer] = useState(false)
 
   const [otp, setOtp] = useState('')
+  const [isLoadingButton, setIsLoadingButton] = useState(false)
 
   const validEmail = (value: string) => {
     let errorMessage = !validEmailReg.test(value) ? alertJobsModal?.emailValid : ''
@@ -147,6 +148,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   const verifyEmailOrChangeEmail = ({ otp, email, emailDefault }) => {
+    setIsLoadingButton(true)
     if (emailDefault === email) {
       // verify
       verifyEmail({ otp: Number(otp) || 0 })
@@ -164,6 +166,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         .catch((error) => {
           handleError(error)
         })
+        .finally(() => setIsLoadingButton(false))
     } else {
       // change
       changeEmail({ otp: Number(otp) || 0, email })
@@ -181,6 +184,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         .catch((error) => {
           handleError(error)
         })
+        .finally(() => setIsLoadingButton(false))
     }
   }
 
@@ -230,6 +234,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         handleClose={handleClose}
         title={accountSetting?.modals?.verifyEmailTitle}
         lang={lang}
+        isLoading={isLoadingButton}
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>

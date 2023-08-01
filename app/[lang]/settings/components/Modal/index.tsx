@@ -8,6 +8,7 @@ import { theme } from './theme'
 import classNames from 'classnames/bind'
 import DialogTitle from '@mui/material/DialogTitle'
 import CloseIcon from '@mui/icons-material/Close'
+import CircularProgress from '@mui/material/CircularProgress'
 
 interface ModalJobAlertsProps {
   open: boolean
@@ -18,10 +19,11 @@ interface ModalJobAlertsProps {
   cancel: string
   confirm: string
   title: string
+  isLoading?: boolean
 }
 
 export default function FormDialog(props: ModalJobAlertsProps) {
-  const { open, lang, title, handleClose, handleSave, cancel, confirm } = props
+  const { open, lang, title, handleClose, handleSave, cancel, confirm, isLoading = false } = props
 
   const handleCloseMethod = () => {
     handleClose()
@@ -55,7 +57,21 @@ export default function FormDialog(props: ModalJobAlertsProps) {
                 className={classNames([styles.save, styles.actionsItem])}
                 onClick={handleSaveMethod}
               >
-                {confirm}
+                {isLoading ? (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: '#ffffff',
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px'
+                    }}
+                  />
+                ) : (
+                  confirm
+                )}
               </div>
             </div>
           </DialogActions>

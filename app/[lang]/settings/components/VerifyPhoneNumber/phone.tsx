@@ -58,6 +58,8 @@ const VerifyPhoneNumber = (props: IProps) => {
   const [disabled, setDisabled] = useState(false)
   const [otp, setOtp] = useState('')
 
+  const [isLoadingButton, setIsLoadingButton] = useState(false)
+
   const getSmsCountryCode = (userDetail, smsCountryList) => {
     const mobile_country_id = userDetail.mobile_country_id || getCountryId()
     const smsCode = smsCountryList.find((item) => item.id == mobile_country_id)?.value
@@ -151,6 +153,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   const verifyEmailOrChangeEmail = ({ phoneNumber, smsCode, otp }) => {
     const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
     const phone = smsCode + phoneNumber
+    setIsLoadingButton(true)
     // console.log('verify', { phoneNumber, smsCode, otp, phone, mobile_country_id })
     if (defaultPhone === phone) {
       // verify
@@ -170,6 +173,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         .catch((error) => {
           handleError(error)
         })
+        .finally(() => setIsLoadingButton(false))
     } else {
       // change
       changePhoneNumber({
@@ -193,6 +197,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         .catch((error) => {
           handleError(error)
         })
+        .finally(() => setIsLoadingButton(false))
     }
   }
 
@@ -241,6 +246,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         handleSave={handleSave}
         handleClose={handleClose}
         title={accountSetting?.modals?.verifyMobileTitle}
+        isLoading={isLoadingButton}
         lang={lang}
       >
         <div className={styles.modalContent}>

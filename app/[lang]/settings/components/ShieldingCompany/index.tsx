@@ -35,6 +35,8 @@ const ShieldingCompany = (props: IProps) => {
 
   const [isLoading, setIsLoading] = useState(true)
   const [searchLoading, setSearchLoading] = useState(false)
+  const [isUnlockLoading, setIsUnlockLoading] = useState(false)
+  const [isLockLoading, setIsLockLoading] = useState(false)
 
   const [open, setOpen] = useState<boolean>(false)
   const [openUnlock, setOpenUnlock] = useState<boolean>(false)
@@ -89,6 +91,7 @@ const ShieldingCompany = (props: IProps) => {
   }
 
   const addBlackCompanies = (companyIds: Array<number>) => {
+    setIsLockLoading(true)
     fetchAddBlacklistCompaniesService({ company_ids: companyIds })
       .then(() => {
         resetSearchModalValues()
@@ -97,19 +100,11 @@ const ShieldingCompany = (props: IProps) => {
       .catch((err) => {
         handleError(err)
       })
+      .finally(() => setIsLockLoading(false))
   }
 
-  // const handleUpdateBlackStatus = (companyIds) => {
-  //   const list = [...searchList].map((item) => {
-  //     if (companyIds.includes(item.id)) {
-  //       item.is_blacklisted = false
-  //     }
-  //     return item
-  //   })
-  //   setList([...list])
-  // }
-
   const deleteBlackCompanies = (companyId) => {
+    setIsUnlockLoading(true)
     fetchDeleteBlacklistCompaniesService({ id: companyId })
       .then(() => {
         setOpenUnlock(false)
@@ -118,13 +113,13 @@ const ShieldingCompany = (props: IProps) => {
           setShowSearchModal(true)
           filterCompany(searchValue)
         }
-        // refresh backlist companies
         blackListCompanies()
       })
       .catch((err) => {
         console.log(err)
         handleError(err)
       })
+      .finally(() => setIsUnlockLoading(false))
   }
 
   useEffect(() => {
@@ -323,6 +318,7 @@ const ShieldingCompany = (props: IProps) => {
         handleSave={handleConfirm}
         handleClose={handleClose}
         title={accountSetting?.add}
+        isLoading={isLockLoading}
         lang={lang}
       >
         <div className={styles.modal}>
@@ -361,6 +357,7 @@ const ShieldingCompany = (props: IProps) => {
         handleSave={handleConfirmUnClock}
         handleClose={handleCloseUnlock}
         title={accountSetting?.blockMessages?.unblock}
+        isLoading={isUnlockLoading}
         lang={lang}
       >
         <div className={styles.modal}>
