@@ -23,7 +23,7 @@ import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encode
 import { setCookie } from 'helpers/cookies'
 import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
 import Link from 'components/Link'
-import { homeHeaderPhoneBg } from 'images/svg'
+import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -243,7 +243,8 @@ const SearchArea = (props: any) => {
           </div>
           {isShow && (
             <div className={styles.download}>
-              <PhoneIphoneIcon className={styles.icon} />
+              {/* <PhoneIphoneIcon  className={styles.icon}/> */}
+              <div className={styles.icon}>{downloadApp}</div>
               <p>
                 {' '}
                 {home.search.download}

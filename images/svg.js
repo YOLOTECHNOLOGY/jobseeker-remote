@@ -33,3 +33,11 @@ export const chatSVG = (<svg
         fill='white'
     />
 </svg>)
+
+export const downloadApp = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="42" viewBox="0 0 25 42" fill="none">
+        <path d="M0.875 4.15252C0.875 2.15167 2.49701 0.529663 4.49786 0.529663H21.2521C23.253 0.529663 24.875 2.15167 24.875 4.15252V35.0021C24.875 37.003 23.253 38.625 21.2521 38.625H4.49786C2.49701 38.625 0.875 37.003 0.875 35.0021V4.15252Z" fill="#2378E5" />
+        <path d="M12.6542 12.5V21.941M12.6542 21.941L8.59375 17.6236M12.6542 21.941L16.8595 17.6236" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M8.32812 33.7588H17.4219" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+)

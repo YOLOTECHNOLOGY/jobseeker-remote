@@ -203,7 +203,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    ; (chatNow as any)().catch((err) => {
+    ;(chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -379,7 +379,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
