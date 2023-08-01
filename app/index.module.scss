@@ -536,8 +536,9 @@
         color: #1d2129;
 
         .jobName {
-          width: 66%;
-          height: 48px;
+          flex: 1;
+          width: 0;
+          height: 46px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -547,13 +548,15 @@
           /* autoprefixer: on */
           font-size: 20px;
           color: #1D2129;
+          margin-right: 10px;
         }
 
         .salary {
-          width: 36%;
+          width: fit-content;
           text-align: right;
           font-size: 20px;
           color: #2378e5;
+          font-weight: 400;
         }
       }
 
@@ -1244,6 +1247,7 @@
 
     @include sm {
       border-radius: 0;
+      width: 104px;
     }
 
     // &:hover {
@@ -1436,6 +1440,16 @@
     }
   }
 
+  .shadeheader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    background: rgba(0, 0, 0, .3);
+  }
+
   .download {
     margin-left: 62px;
     width: 150px;
@@ -1481,7 +1495,7 @@
 
     &:hover .popver {
       transition: .4s;
-      transform: translateY(184px);
+      top: 0;
     }
   }
 
@@ -1489,20 +1503,27 @@
     position: fixed;
     background: #ffffff;
     z-index: 100;
-    box-shadow: 0px 0px 14px #bcbcbc;
+    // box-shadow: 0px 0px 14px #bcbcbc;
     width: 100%;
     left: 0;
-    background: #2378E5;
-    transform: translateY(-214px);
+    background-color: rgba(0, 0, 0, .25);
+    // transform: translateY(-214px);
     transition: .4s;
     z-index: 20;
-    height: 296px;
+    padding-top: 110px;
+    top: -406px;
 
+    .popverContainer {
+      background: #2378E5;
+      height: 296px;
+    }
 
     .popverMain {
       @extend .GlobalNextAppContainer;
       display: flex;
       padding: 0 124px;
+      position: relative;
+      height: 100%;
 
       .info {
         width: 490px;
@@ -1529,6 +1550,31 @@
           margin: 0;
           text-align: left;
           padding-bottom: 30px;
+        }
+      }
+
+      .code {
+        width: 338px;
+        position: relative;
+
+        .qrcode {
+          width: 148px;
+          height: 148px;
+          background-color: #fff;
+          border-radius: 8px;
+          position: absolute;
+          left: 92px;
+          top: 115px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+        }
+
+        .homeBg {
+          position: absolute;
+          left: 0;
+          top: 37px;
         }
       }
     }
@@ -1914,6 +1960,7 @@
         margin: 0;
         padding: 0;
         width: 100%;
+        min-width: 100%;
 
         .location {
           width: 100%;
@@ -1940,6 +1987,11 @@
           border: 1px solid #2378E5;
         }
       }
+    }
+
+    .searchAreaFix {
+      position: initial;
+      height: auto;
     }
 
     .popularBox {

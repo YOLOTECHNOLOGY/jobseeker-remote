@@ -25,7 +25,7 @@ import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
 import { throttle } from 'lodash-es'
-
+import { backTopBtn } from 'images/svg'
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -413,20 +413,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
       </Snackbar>
       {showBtn && (
         <div className={styles.backBtn} onClick={() => scrollTopFun()}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='22'
-            height='12'
-            viewBox='0 0 22 12'
-            fill='none'
-          >
-            <path
-              d='M1.89844 10.6333L10.6376 1.86387C11.0338 1.46633 11.6795 1.4726 12.0678 1.87774L20.8125 11'
-              stroke='white'
-              stroke-width='2'
-              stroke-linecap='round'
-            />
-          </svg>
+          {backTopBtn}
         </div>
       )}
     </div>
