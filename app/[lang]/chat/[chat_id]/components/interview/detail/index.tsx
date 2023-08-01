@@ -53,7 +53,7 @@ const DetailModal = (props: any) => {
             setShow(false)
         },
         canAskResult() {
-            return isStatusIn(['Completed'])
+            return moment().isAfter(moment(data?.interviewed_at).add(30, 'minutes')) || isStatusIn(['Completed'])
         }
     }
     contextRef.current = assign(contextRef.current, context)
