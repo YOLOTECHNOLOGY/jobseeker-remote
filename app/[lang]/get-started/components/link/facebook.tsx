@@ -1,8 +1,11 @@
 import React from 'react'
-import styles from '../../index.module.scss'
-import { removeItem } from 'helpers/localStorage'
 import { useSearchParams } from 'next/navigation'
+import { isMobile } from 'react-device-detect'
+
+import { removeItem } from 'helpers/localStorage'
 import useGetStarted from '../../hooks/useGetStarted'
+
+import styles from '../../index.module.scss'
 
 interface IFacebook {
   className?: string
@@ -37,7 +40,7 @@ const FacebookLogin = (props: IFacebook) => {
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source: 'web'
+      source: isMobile ? 'mobile_web' : 'web'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

@@ -203,3 +203,6 @@ export const MoreFilterIcon = `${S3BucketJobseeker}/MoreFilterIcon.svg`
 
 // home
 export const BannerBackground = `${S3BucketJobseeker}/banner.svg`
+
+// empty
+export const Empty = `${S3BucketJobseeker}/empty.svg`

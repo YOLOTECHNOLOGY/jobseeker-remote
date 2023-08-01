@@ -20,29 +20,6 @@ export const handleSalary = (salaryRanges, salaryList) => {
     const from = selected?.map(item => item.from).join(',')
     const to = selected?.map(item => item.to).join(',')
     return [from, to]
-    // let salaryFrom = ''
-    // let salaryTo = ''
-    // if (salaryRanges?.length) {
-    //     salaryFrom = salaryRanges
-    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-    //         .map((salaryFrom) => thousandsToNumber('' + salaryFrom.split('-')[0]))
-
-    //     salaryTo = salaryRanges
-    //         .filter((salary) => salary !== 'below-30k' && salary !== 'above-200k')
-    //         .map((salaryTo) => thousandsToNumber('' + salaryTo.split('-')[1]))
-
-    //     if (salaryRanges.includes('below-30k')) {
-    //         salaryFrom.push(0)
-    //         salaryTo.push(30000)
-    //     }
-    //     if (salaryRanges.includes('above-200k')) {
-    //         salaryFrom.push(200001)
-    //         salaryTo.push(400000)
-    //     }
-    //     salaryFrom = salaryFrom.join(',')
-    //     salaryTo = salaryTo.join(',')
-    // }
-    // return [salaryFrom, salaryTo]
 }
 export default registInterpreter(command =>
     command.cata({

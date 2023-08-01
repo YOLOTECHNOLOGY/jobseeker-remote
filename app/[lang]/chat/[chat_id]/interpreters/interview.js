@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable new-cap */
 import { scripts, M } from 'imforbossjob'
 import { accept, decline, cancel, checkIn, reportIssue, askResult, attend } from './services/interview'

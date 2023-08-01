@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import * as jose from 'jose'
 import classNames from 'classnames'
-import useGetStarted from '../../hooks/useGetStarted'
+import { isMobile } from 'react-device-detect'
+
 import { removeItem } from 'helpers/localStorage'
+import useGetStarted from '../../hooks/useGetStarted'
+
 import styles from '../../index.module.scss'
 
 interface IApple {
@@ -94,7 +97,7 @@ const AppleLogin = (props: IApple) => {
         social_user_token: payload?.authorization?.id_token,
         social_type: 'apple',
         social_user_id: decodeJwt.sub || '',
-        source: 'web'
+        source: isMobile ? 'mobile_web' : 'web'
       }
       // submit
       handleAuthenticationSocialLogin(data).then((res) => {

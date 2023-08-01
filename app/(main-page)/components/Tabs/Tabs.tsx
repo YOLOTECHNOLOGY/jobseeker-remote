@@ -133,7 +133,11 @@ const Tabs = ({ config, location_id, langKey }: any) => {
   const [open, setOpen] = useState<boolean>(false)
   const [message, setMessage] = useState<String>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const accessToken = getCookie('accessToken')
+  const [accessToken, setAccessToken] = useState()
+  useEffect(() => {
+    setAccessToken(getCookie('accessToken'))
+  }, [])
+  // const accessToken = getCookie('accessToken')
   const user = getCookie('user')
   const [newTabList, setNewTabList] = useState<Array<any>>([])
   const jobseekerPrefIdRef = useRef(null)

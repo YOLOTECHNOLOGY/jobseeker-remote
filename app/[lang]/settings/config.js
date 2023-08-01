@@ -1,0 +1,1 @@
+export const validEmailReg = /^[\w-\\.]+@([\w-]+\.)+[\w-]{1,9}$/i

@@ -14,7 +14,7 @@ export default command => command.cata({
             context =>
                 new Promise(resolve => {
                     const delete_status = context.getLocalImState(chatId)?.delete_status
-                    resolve(!!delete_status)
+                    resolve(!!delete_status || imState?.chatStatus === 'New' && imState?.initiated_role === 'jobseeker')
                 })
         ),
     requestFirst: aChatId => M(context => {
