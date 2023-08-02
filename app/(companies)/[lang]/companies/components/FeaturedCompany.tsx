@@ -60,7 +60,7 @@ const FeaturedCompany = (props: IProps) => {
                 )}
               </Link>
             </div>
-            <Image src={CompanyVerifiedIcon} width={55} height={55} alt={'Verified'} />
+            <Image src={CompanyVerifiedIcon} width={40} height={40} alt={'Verified'} />
           </div>
           {/* company details */}
           <div className={styles.featuredCompanyDetails}>
@@ -108,7 +108,7 @@ const FeaturedCompany = (props: IProps) => {
                 ))}
             </div> */}
           </div>
-          <Image alt="img" fill src={require('../featured-bg.png').default.src}></Image>
+          <Image alt="img" fill src={`${process.env.S3_BUCKET_URL}/companies/featured-bg.png`}></Image>
         </div>
       ) : (
         <div className={styles.featuredCompany} />

@@ -13,8 +13,8 @@ AWS.config.update({ region: 'ap-southeast-1' })
 
 const s3 = new AWS.S3()
 
-const file_namespace = 'profile'
-const directoryPath = 'components/ProfileLayout'
+const file_namespace = 'companies'
+const directoryPath = 'app/(companies)/[lang]/companies'
 const targetPath = `jobseeker/${file_namespace}/`
 const devBucket = 'dev-assets.bossjob.com'
 const prodBucket = 'assets.bossjob.com'
@@ -23,6 +23,11 @@ let totalFiles = 0
 let uploadedFiles = 0
 
 const isProduction = env === 'prod'
+
+function isSVG(filePath) {
+  return path.extname(filePath).toLowerCase() === '.svg';
+}
+
 // Function to upload an image file to S3
 function uploadImageToS3(filePath) {
   // Read the image file
@@ -33,6 +38,9 @@ function uploadImageToS3(filePath) {
     Bucket: env === 'prod' ? prodBucket : devBucket,
     Key: `${targetPath}${path.basename(filePath)}`,
     Body: fileContent
+  }
+  if(isSVG(filePath)){
+    params.ContentType = 'image/svg+xml'
   }
 
   // Upload the image to S3

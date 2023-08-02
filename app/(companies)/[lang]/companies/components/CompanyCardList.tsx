@@ -34,7 +34,7 @@ const CompanyCardList = (props: ICompanyCardList) => {
   const Tips = <div className={styles.tips_wrapper}>
     <div className={styles.tips_content}>
       <Image alt={'img'} width={106} height={102}
-        src={require('../registerLock.svg').default.src}
+        src={`${process.env.S3_BUCKET_URL}/companies/registerLock.svg`}
       ></Image>
       <div className={styles.tips_content_text}>
         {companies.loginNowDescription}
@@ -48,7 +48,7 @@ const CompanyCardList = (props: ICompanyCardList) => {
     <div className={styles.tips_full}>
       <Image alt={'fill'} fill
         style={{ objectFit: 'contain' }}
-        src={require('../companies-search-bg.svg').default.src}
+        src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}
       ></Image>
     </div>
   </div>
