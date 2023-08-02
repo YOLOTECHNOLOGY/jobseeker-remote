@@ -213,7 +213,9 @@
       "noResult": "No Results Found.",
       "seoText": "Find Companies Hiring in {{country}} | Bossjob"
     },
-    "companiesEmpty": "Companies Not Found"
+    "companiesEmpty": "Companies Not Found",
+    "loginNow": "Login Now",
+    "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
   },
   "companyDetail": {
     "tab": {
