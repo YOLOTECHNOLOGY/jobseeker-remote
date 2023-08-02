@@ -6,6 +6,8 @@ import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import OutlinedInput from '@mui/material/OutlinedInput'
+
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -73,6 +75,7 @@ const MultipleSelect = ({
         labelId={`${id}-select-label`}
         id={id}
         multiple
+        IconComponent={() => <ExpandMoreOutlinedIcon sx={{color: '#515151'}} fontSize={'small'} strokeWidth={0.3}></ExpandMoreOutlinedIcon>}
         style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
         value={selectedOptions.length ? selectedOptions : ['emptyValue']}
         label={label}

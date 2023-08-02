@@ -52,6 +52,7 @@
 .headerContainer {
   @include containers();
   position: relative;
+  background-color: #ffffff;
 }
 
 .unread {

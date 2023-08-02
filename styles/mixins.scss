@@ -62,7 +62,15 @@
   text-overflow: ellipsis;
   word-break: break-all;
 }
-
+@mixin line-clamp-with-line-height($line-count, $line-height) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  // Specify the number of lines to be displayed
+  -webkit-line-clamp: $line-count;
+  line-height: $line-height;
+  white-space: wrap;
+}
 @mixin respond-to($breakpoint) {
   @if $breakpoint == phone {
     @media (max-width: 767px) {

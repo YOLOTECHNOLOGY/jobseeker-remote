@@ -65,6 +65,7 @@ const BannerCarousel = ({
                 >
                   <Image 
                     fill={true}
+                    style={{objectFit: 'cover'}}
                     src={banner.cover_pic_url}
                     alt={`${banner.title} photo`}
                   />

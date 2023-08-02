@@ -44,22 +44,24 @@ const FeaturedCompany = (props: IProps) => {
       {featuredCompany ? (
         <div className={styles.featuredCompany}>
           {/* company logo */}
-          <div className={styles.featuredCompanyLogo}>
-            <Link
-              to={'/' + langKey + featuredCompany?.company_url || '/'}
-              className={styles.featuredCompanyLogoLink}
-              target='_blank'
-            >
-              {featuredCompany?.logo && (
-                <Image
-                  fill={true}
-                  src={featuredCompany?.logo}
-                  alt={`${featuredCompany?.name} logo`}
-                />
-              )}
-            </Link>
+          <div className={styles.featuredTitleWrapper}>
+            <div className={styles.featuredCompanyLogo}>
+              <Link
+                to={'/' + langKey + featuredCompany?.company_url || '/'}
+                className={styles.featuredCompanyLogoLink}
+                target='_blank'
+              >
+                {featuredCompany?.logo && (
+                  <Image
+                    fill={true}
+                    src={featuredCompany?.logo}
+                    alt={`${featuredCompany?.name} logo`}
+                  />
+                )}
+              </Link>
+            </div>
+            <Image src={CompanyVerifiedIcon} width={55} height={55} alt={'Verified'} />
           </div>
-
           {/* company details */}
           <div className={styles.featuredCompanyDetails}>
             {/* company name */}
@@ -72,9 +74,6 @@ const FeaturedCompany = (props: IProps) => {
               >
                 {featuredCompany?.name}
               </Link>
-              {featuredCompany?.is_verify ? (
-                <Image src={CompanyVerifiedIcon} width={16} height={16} alt={'Verified'} />
-              ) : null}
             </Text>
 
             {/* company about */}
@@ -100,15 +99,16 @@ const FeaturedCompany = (props: IProps) => {
             </p>
 
             {/* company photos */}
-            <div className={styles.featuredCompanyPhotos}>
+            {/* <div className={styles.featuredCompanyPhotos}>
               {featuredCompany?.pictures?.length > 0 &&
                 featuredCompany.pictures.slice(0, 3).map((item) => (
                   <div key={item.id} className={styles.featuredCompanyPhoto}>
                     <Image fill={true} src={item.url} alt={`${featuredCompany?.name} photo`} />
                   </div>
                 ))}
-            </div>
+            </div> */}
           </div>
+          <Image alt="img" fill src={require('../featured-bg.png').default.src}></Image>
         </div>
       ) : (
         <div className={styles.featuredCompany} />
