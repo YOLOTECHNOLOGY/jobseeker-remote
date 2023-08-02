@@ -132,7 +132,7 @@ const SortFilter = (props: IProps) => {
         {/* Rest Filter */}
         <Button 
             className={styles.clearButton}
-            startIcon={<Image className={styles.reset} width={18} height={18} src={require('../reset.svg').default.src} alt='clear' />}
+            startIcon={<Image className={styles.reset} width={18} height={18} src={`${process.env.S3_BUCKET_URL}/companies/reset.svg`} alt='clear' />}
             variant='text' onClick={handleReset}>
           {lang?.companies?.employer?.resetFilters}
         </Button>
