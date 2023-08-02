@@ -105,7 +105,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const handleOpen = () => {
     setOpen(true)
     clear()
-    setEmail(userDetail.phone_num ? userDetail.phone_num : null)
+    setEmail(userDetail?.email ? userDetail.email : null)
   }
 
   const clearCloseModal = () => {
@@ -140,7 +140,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     if (data?.data) {
       errorMessage = data?.data?.detail ?? data?.message
     } else {
-      errorMessage = data?.errors?.phone_num[0]
+      errorMessage = data?.errors?.email[0]
     }
     dispatch(
       displayNotification({
@@ -173,7 +173,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
           clearCloseModal()
           setDefaultEmail(email)
           startTransition(() => {
-            dispatch(fetchUserOwnDetailRequest({ accessToken }))
             router.refresh()
           })
           dispatch(

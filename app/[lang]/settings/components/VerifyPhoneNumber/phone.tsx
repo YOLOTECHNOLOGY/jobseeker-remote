@@ -180,7 +180,6 @@ const VerifyPhoneNumber = (props: IProps) => {
             clearCloseModal()
 
             startTransition(() => {
-              dispatch(fetchUserOwnDetailRequest({ accessToken }))
               router.refresh()
             })
             
@@ -210,7 +209,6 @@ const VerifyPhoneNumber = (props: IProps) => {
             setDefaultPhone(smsCode + Number(phoneNumber))
 
             startTransition(() => {
-              dispatch(fetchUserOwnDetailRequest({ accessToken }))
               router.refresh()
             })
          
