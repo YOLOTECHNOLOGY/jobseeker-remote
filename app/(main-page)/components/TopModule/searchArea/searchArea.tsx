@@ -16,7 +16,7 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-
+import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
@@ -283,7 +283,8 @@ const SearchArea = (props: any) => {
                     <div className={styles.code}>
                       <div className={styles.homeBg}>{homeHeaderPhoneBg}</div>
                       <div className={styles.qrcode}>
-                        <Image src={AppDownQRCode} alt='app down' width='128' height='128' />
+                      <QrCodeDraw   text={'bossjob.com/app'}  width={128} height={128} />
+                        {/* <Image src={AppDownQRCode} alt='app down' width='128' height='128' /> */}
                       </div>
                     </div>
                   </div>
