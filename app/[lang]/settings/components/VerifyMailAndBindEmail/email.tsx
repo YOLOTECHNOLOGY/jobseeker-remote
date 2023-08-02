@@ -45,7 +45,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const dispatch = useDispatch()
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
-  const accessToken = getCookie('accessToken')
+  // const accessToken = getCookie('accessToken')
   const captchaRef = useRef(null)
   
   const [loading, startTransition] = useTransition()
