@@ -101,7 +101,7 @@ const VerifyPhoneNumber = (props: IProps) => {
     setOpen(true)
     clear()
     setSmsCode(getSmsCountryCode(userDetail, smsCountryList))
-    setPhoneNumber(userDetail.phone_num_without_country_code || '')
+    setPhoneNumber(userDetail?.phone_num_without_country_code || '')
   }
 
   const clearCloseModal = () => {
@@ -169,7 +169,7 @@ const VerifyPhoneNumber = (props: IProps) => {
       // verify
       verifyPhoneNumber({ otp: otp })
         .then(({ data }) => {
-          if (data.data?.message == 'success') {
+          if (data?.data?.message == 'success') {
             clearCloseModal()
 
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
@@ -198,7 +198,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         phone_num: smsCode + Number(phoneNumber)
       })
         .then(({ data }) => {
-          if (data.data?.message == 'success') {
+          if (data?.data?.message == 'success') {
             clearCloseModal()
             setDefaultPhone(smsCode + Number(phoneNumber))
 

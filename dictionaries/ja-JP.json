@@ -1171,7 +1171,9 @@
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
-      "email": "Your email account has been verified successfully."
+      "email": "Your email account has been verified successfully.",
+      "phoneEmpty": "Phone Number is not empty",
+      "phoneError": "The phone number should not be less than 7 digits"
     },
     "email": "Email",
     "sendOpt": "Send OTP",
