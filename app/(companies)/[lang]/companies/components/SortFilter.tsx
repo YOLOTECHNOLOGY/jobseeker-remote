@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Multiple from 'app/components/commons/select/multiple'
+import Multiple from './Select'
+// import Multiple from 'app/components/commons/select/multiple'
 // import LocationField1 from 'app/[lang]/components/mobile/location1'
 import styles from '../Companies.module.scss'
 import theme from 'app/components/commons/theme'

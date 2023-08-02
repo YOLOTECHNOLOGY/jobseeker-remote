@@ -7,6 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -74,6 +75,7 @@ const MultipleSelect = ({
         labelId={`${id}-select-label`}
         id={id}
         multiple
+        IconComponent={(props) => <ExpandMoreOutlinedIcon {...props} fontSize={'small'} strokeWidth={0.3}></ExpandMoreOutlinedIcon>}
         style={{ ...style, background: value?.length ? '#E7F1FB' : '#F0F0F0' }}
         value={selectedOptions.length ? selectedOptions : ['emptyValue']}
         label={label}
@@ -88,8 +90,8 @@ const MultipleSelect = ({
                 style={{
                   color: 'rgba(0, 0, 0, 0.6)',
                   position: 'relative',
-                  left: 13,
-                  top: 2
+                  top: 2,
+                  fontSize: 16
                 }}
               >
                 {label}
@@ -100,7 +102,7 @@ const MultipleSelect = ({
               <div
                 style={{
                   position: 'relative',
-                  left: 13,
+                  fontSize: 16,
                   top: 2
                 }}
               >{`${label} ${selected?.length ? `(${selected.length})` : label}`}</div>

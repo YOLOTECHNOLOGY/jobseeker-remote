@@ -90,7 +90,8 @@ $searchContentWidth : 750px;
 
   .filterItems {
     height: 64px;
-    width: 166px;
+    flex:1;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,6 +116,8 @@ $searchContentWidth : 750px;
       // &:nth-child(even) {
       //   margin-right: 0;
       // }
+
+      flex: inherit;
       &:hover{
         background-color: transparent !important;
         :global{
@@ -195,6 +198,7 @@ $searchContentWidth : 750px;
     }
     @include msd {
       height: 44px;
+      justify-content: center;
       &:hover {
         background-color: transparent !important;
         .reset{

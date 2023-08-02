@@ -155,7 +155,7 @@ const Companies = (props: IProps) => {
             />
           </div>
         </div>
-        <div className={styles.placeholderSpace}></div>
+        <div className={styles.placeholderSpace} style={{height: (searchQuery.page === 1 || isMobile)  ? 75 : 125}}></div>
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
           <FeaturedCompanied
