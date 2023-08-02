@@ -103,7 +103,7 @@
 
   .phoneInput {
     display: flex;
-    align-items: end;
+    align-items: baseline;
 
     @include sm {
       flex-direction: column;
@@ -144,7 +144,7 @@
 
     :global {
       .MuiInput-input {
-        height: 42px;
+        height: 44px;
       }
 
       .MuiInputLabel-root {

@@ -1167,7 +1167,9 @@
     },
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
-      "email": "Your email account has been verified successfully."
+      "email": "Your email account has been verified successfully.",
+      "phoneEmpty": "Phone Number is not empty",
+      "phoneError": "Phone Number is too short"
     },
     "email": "Email",
     "sendOpt": "Send OTP",
