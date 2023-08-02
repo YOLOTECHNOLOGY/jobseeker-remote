@@ -38,23 +38,23 @@ const originTimer = 60
 
 interface IProps {
   label: string
-  phoneDefault: string
-  verify: boolean
   config: any
   lang: any
   userDetail: any
 }
 
 const VerifyPhoneNumber = (props: IProps) => {
-  const { label, phoneDefault, verify, config, lang, userDetail } = props
+  const { label, config, lang, userDetail } = props
 
   const { accountSetting } = lang
   const dispatch = useDispatch()
   const accessToken = getCookie('accessToken')
   const router = useRouter()
+  const phoneDefault = userDetail.phone_num ? userDetail.phone_num : null
 
   const [open, setOpen] = useState(false)
 
+  const [verify, setVerify] = useState(!!userDetail.is_mobile_verified)
   const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
   const [phoneNumber, setPhoneNumber] = useState('')
   const smsCountryList = getSmsCountryList(config)
@@ -75,7 +75,7 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail, smsCountryList))
 
-  const [_, startTransition] = useTransition()
+  const [loading, startTransition] = useTransition()
 
   const clear = () => {
     clearTimeout(timer)
@@ -84,6 +84,13 @@ const VerifyPhoneNumber = (props: IProps) => {
     setDisabled(false)
     setNumberError('')
   }
+
+  useEffect(() => {
+    if(loading) {
+      setVerify(!!userDetail?.is_mobile_verified)
+    }
+  }, [loading, userDetail])
+
 
   useEffect(() => {
     if (initialTime > 0) {
@@ -172,8 +179,8 @@ const VerifyPhoneNumber = (props: IProps) => {
           if (data?.data?.message == 'success') {
             clearCloseModal()
 
-            dispatch(fetchUserOwnDetailRequest({ accessToken }))
             startTransition(() => {
+              dispatch(fetchUserOwnDetailRequest({ accessToken }))
               router.refresh()
             })
             
@@ -202,8 +209,8 @@ const VerifyPhoneNumber = (props: IProps) => {
             clearCloseModal()
             setDefaultPhone(smsCode + Number(phoneNumber))
 
-            dispatch(fetchUserOwnDetailRequest({ accessToken }))
             startTransition(() => {
+              dispatch(fetchUserOwnDetailRequest({ accessToken }))
               router.refresh()
             })
          
