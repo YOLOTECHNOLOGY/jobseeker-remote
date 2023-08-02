@@ -10,7 +10,7 @@ const retry = (fn, max, currentTime = 1) => {
             if (currentTime <= max) {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                       resolve(retry(fn, max, currentTime + 1))
+                       resolve(retry(fn, max, currentTime + 1)(...args))
                     },currentTime * 1000)
                 }) 
             } else {
