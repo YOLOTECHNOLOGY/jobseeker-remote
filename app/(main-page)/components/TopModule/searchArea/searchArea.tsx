@@ -24,6 +24,7 @@ import { setCookie } from 'helpers/cookies'
 import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
 import Link from 'components/Link'
 import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
+import QRCode from 'qrcode'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -283,7 +284,7 @@ const SearchArea = (props: any) => {
                     <div className={styles.code}>
                       <div className={styles.homeBg}>{homeHeaderPhoneBg}</div>
                       <div className={styles.qrcode}>
-                      <QrCodeDraw   text={'bossjob.com/app'}  width={128} height={128} />
+                         <QrCodeDraw   text={'http://bossjob.com/app'} ecl='H'  width={128} height={128} />
                         {/* <Image src={AppDownQRCode} alt='app down' width='128' height='128' /> */}
                       </div>
                     </div>
