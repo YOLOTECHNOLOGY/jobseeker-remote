@@ -155,16 +155,27 @@ const Companies = (props: IProps) => {
             />
           </div>
         </div>
-        <div className={styles.placeholderSpace} style={{height: (searchQuery.page === 1 || isMobile)  ? 75 : 125}}></div>
+        <div 
+          className={styles.placeholderSpace} 
+
+          style={{
+            height: (searchQuery.page === 1 || isMobile)  ? 75 : 125,
+            backgroundColor: (searchQuery.page === 1 || isMobile) ?  '#ffffff' : '#F7F8FA'
+            }}
+          />
+
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
-          <FeaturedCompanied
-            featuredCompany={featuredCompany}
-            langKey={langKey}
-            config={config}
-            featureBanners={featureBanners}
-            lang={props.lang}
-          />
+          <>
+            <FeaturedCompanied
+                featuredCompany={featuredCompany}
+                langKey={langKey}
+                config={config}
+                featureBanners={featureBanners}
+                lang={props.lang}
+            />
+          </>
+
         ) : null}
 
         {/* companies list */}
