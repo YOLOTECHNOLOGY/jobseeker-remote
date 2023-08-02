@@ -13,7 +13,7 @@ interface ICaptchaProps {
   lang?: any
 }
 
-const Captcha = (props: ICaptchaProps) => {
+const Captcha = (props: ICaptchaProps, ref) => {
   const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false, lang } = props
   // 组件内部维护的输入框输入值
   const [inputValue, setInputValue] = useState('')
@@ -35,6 +35,9 @@ const Captcha = (props: ICaptchaProps) => {
     setInputValue(tempValue)
   }, [value, length])
 
+  ref.current = {
+    focus: () => inputRef.current?.focus()
+  }
   // useEffect(() => {
   //   if (autoFocus) {
   //     setTimeout(() => {
@@ -94,4 +97,4 @@ const Captcha = (props: ICaptchaProps) => {
     </div>
   )
 }
-export default Captcha
+export default React.forwardRef(Captcha)

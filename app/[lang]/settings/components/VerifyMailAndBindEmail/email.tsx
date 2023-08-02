@@ -1,4 +1,4 @@
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -46,6 +46,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
   const accessToken = getCookie('accessToken')
+  const captchaRef = useRef(null)
   
   const [loading, startTransition] = useTransition()
   
@@ -154,6 +155,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const sendEmailOTP = (email) => {
     emailOTPChangeEmailGenerate({ email })
       .then(() => {
+        captchaRef.current && captchaRef.current?.focus()
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
@@ -194,7 +196,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
           clearCloseModal()
           setDefaultEmail(email)
           startTransition(() => {
-            dispatch(fetchUserOwnDetailRequest({ accessToken }))
             router.refresh()
           })
           dispatch(
@@ -306,6 +307,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
+              ref={captchaRef}
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -48,8 +48,9 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const { accountSetting } = lang
   const dispatch = useDispatch()
-  const accessToken = getCookie('accessToken')
+  // const accessToken = getCookie('accessToken')
   const router = useRouter()
+  const captchaRef = useRef(null)
   const phoneDefault = userDetail.phone_num ? userDetail.phone_num : null
 
   const [open, setOpen] = useState(false)
@@ -158,6 +159,7 @@ const VerifyPhoneNumber = (props: IProps) => {
     const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
     smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNumber, mobile_country_id })
       .then(() => {
+        captchaRef.current && captchaRef.current.focus()
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
@@ -322,6 +324,7 @@ const VerifyPhoneNumber = (props: IProps) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
+              ref={captchaRef}
             />
           </div>
         </div>
