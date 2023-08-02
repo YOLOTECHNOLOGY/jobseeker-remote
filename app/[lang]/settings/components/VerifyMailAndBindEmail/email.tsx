@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -15,6 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import { changeEmail } from 'store/services/auth/changeEmail'
 import { verifyEmail } from 'store/services/auth/verifyEmail'
 import { emailOTPChangeEmailGenerate } from 'store/services/auth/emailOTPChangeEmailGenerate'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -24,27 +25,37 @@ import styles from './email.module.scss'
 import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
+import { useRouter } from 'next/navigation'
+import { getCookie } from 'helpers/cookies'
 
 let timer = null
 // 默认位数
 const originTimer = 60
 
 interface IProps {
+  userDetail: any
   label: string
-  emailDefault: string
-  verify: boolean
   lang: any
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, emailDefault, verify, lang } = props
+  const { label, userDetail, lang } = props
   const { accountSetting } = lang
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
+  const emailDefault = userDetail?.email ? userDetail.email : null
+  const router = useRouter()
+  // const accessToken = getCookie('accessToken')
+  const captchaRef = useRef(null)
+  
+  const [loading, startTransition] = useTransition()
+  
+  const [verify, setVerify] = useState(!!userDetail.is_email_verify)
 
   const [emailError, setEmailError] = useState(null)
   const [email, setEmail] = useState(emailDefault)
   const [defaultEmail, setDefaultEmail] = useState(emailDefault)
+
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
 
@@ -71,6 +82,12 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   useEffect(() => {
+    if(loading) {
+      setVerify(!!userDetail?.is_email_verify)
+    }
+  }, [loading, userDetail])
+
+  useEffect(() => {
     if (initialTime > 0) {
       timer = setTimeout(() => {
         setInitialTime(initialTime - 1)
@@ -89,6 +106,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const handleOpen = () => {
     setOpen(true)
     clear()
+    setEmail(userDetail?.email ? userDetail.email : null)
   }
 
   const clearCloseModal = () => {
@@ -123,7 +141,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     if (data?.data) {
       errorMessage = data?.data?.detail ?? data?.message
     } else {
-      errorMessage = data?.errors?.phone_num[0]
+      errorMessage = data?.errors?.email[0]
     }
     dispatch(
       displayNotification({
@@ -137,6 +155,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const sendEmailOTP = (email) => {
     emailOTPChangeEmailGenerate({ email })
       .then(() => {
+        captchaRef.current && captchaRef.current?.focus()
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
@@ -155,6 +174,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         .then(() => {
           clearCloseModal()
           setDefaultEmail(email)
+          startTransition(() => {
+            router.refresh()
+          })
           dispatch(
             displayNotification({
               open: true,
@@ -173,6 +195,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         .then(() => {
           clearCloseModal()
           setDefaultEmail(email)
+          startTransition(() => {
+            router.refresh()
+          })
           dispatch(
             displayNotification({
               open: true,
@@ -282,6 +307,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
               lang={lang}
               autoFocus={true}
               onChange={onChange}
+              ref={captchaRef}
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -6,6 +6,7 @@ import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
 import Captcha from '../CaptchaCode'
+import { getCookie } from 'helpers/cookies'
 
 // tools
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
@@ -18,6 +19,7 @@ import Image from 'next/image'
 import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
 import { verifyPhoneNumber } from 'store/services/auth/verifyPhoneNumber'
 import { changePhoneNumber } from 'store/services/auth/changePhoneNumber'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -27,6 +29,8 @@ import styles from './phone.module.scss'
 import { find } from 'lodash-es'
 import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
+import { useRouter } from 'next/navigation'
+
 
 let timer = null
 // 默认位数
@@ -34,29 +38,33 @@ const originTimer = 60
 
 interface IProps {
   label: string
-  phoneDefault: string
-  verify: boolean
   config: any
   lang: any
   userDetail: any
 }
 
 const VerifyPhoneNumber = (props: IProps) => {
-  const { label, phoneDefault, verify, config, lang, userDetail } = props
+  const { label, config, lang, userDetail } = props
 
   const { accountSetting } = lang
   const dispatch = useDispatch()
+  // const accessToken = getCookie('accessToken')
+  const router = useRouter()
+  const captchaRef = useRef(null)
+  const phoneDefault = userDetail.phone_num ? userDetail.phone_num : null
 
   const [open, setOpen] = useState(false)
 
+  const [verify, setVerify] = useState(!!userDetail.is_mobile_verified)
   const [defaultPhone, setDefaultPhone] = useState(phoneDefault)
-  const [phoneNumber, setPhoneNumber] = useState(userDetail.phone_num_without_country_code || '')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const smsCountryList = getSmsCountryList(config)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [otp, setOtp] = useState('')
+  const [numberError, setNumberError] = useState('')
 
   const [isLoadingButton, setIsLoadingButton] = useState(false)
 
@@ -68,23 +76,31 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const [smsCode, setSmsCode] = useState(getSmsCountryCode(userDetail, smsCountryList))
 
+  const [loading, startTransition] = useTransition()
+
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
     setInitialTime(0)
     setDisabled(false)
+    setNumberError('')
   }
+
+  useEffect(() => {
+    if(loading) {
+      setVerify(!!userDetail?.is_mobile_verified)
+    }
+  }, [loading, userDetail])
+
 
   useEffect(() => {
     if (initialTime > 0) {
       timer = setTimeout(() => {
-        console.log('startTime, ', initialTime)
         setInitialTime(initialTime - 1)
       }, 1000)
     }
 
     if (initialTime === 0 && startTimer) {
-      console.log('done')
       clear()
     }
   }, [initialTime, startTimer])
@@ -92,6 +108,8 @@ const VerifyPhoneNumber = (props: IProps) => {
   const handleOpen = () => {
     setOpen(true)
     clear()
+    setSmsCode(getSmsCountryCode(userDetail, smsCountryList))
+    setPhoneNumber(userDetail?.phone_num_without_country_code || '')
   }
 
   const clearCloseModal = () => {
@@ -141,6 +159,7 @@ const VerifyPhoneNumber = (props: IProps) => {
     const mobile_country_id = find(smsCountryList, { value: smsCode })?.id
     smsOTPChangePhoneNumverGenerate({ phone_num: smsCode + phoneNumber, mobile_country_id })
       .then(() => {
+        captchaRef.current && captchaRef.current.focus()
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
@@ -159,8 +178,13 @@ const VerifyPhoneNumber = (props: IProps) => {
       // verify
       verifyPhoneNumber({ otp: otp })
         .then(({ data }) => {
-          if (data.data?.message == 'success') {
+          if (data?.data?.message == 'success') {
             clearCloseModal()
+
+            startTransition(() => {
+              router.refresh()
+            })
+            
             dispatch(
               displayNotification({
                 open: true,
@@ -182,9 +206,14 @@ const VerifyPhoneNumber = (props: IProps) => {
         phone_num: smsCode + Number(phoneNumber)
       })
         .then(({ data }) => {
-          if (data.data?.message == 'success') {
+          if (data?.data?.message == 'success') {
             clearCloseModal()
             setDefaultPhone(smsCode + Number(phoneNumber))
+
+            startTransition(() => {
+              router.refresh()
+            })
+         
             dispatch(
               displayNotification({
                 open: true,
@@ -199,6 +228,18 @@ const VerifyPhoneNumber = (props: IProps) => {
         })
         .finally(() => setIsLoadingButton(false))
     }
+  }
+
+  const handlePhoneNumber = (ev) => {
+    const value = ev.target.value || ''
+    if(!value) {
+      setNumberError(accountSetting?.verifiedMessages?.phoneEmpty)
+    }else if(value.length < 7) {
+      setNumberError(accountSetting?.verifiedMessages?.phoneError)
+    } else {
+      setNumberError('')
+    }
+    setPhoneNumber(value)
   }
 
   return (
@@ -266,7 +307,8 @@ const VerifyPhoneNumber = (props: IProps) => {
                 className={styles.smsInput}
                 variant='standard'
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={handlePhoneNumber}
+                helperText={<span style={{color: 'red'}}>{numberError}</span>}
               />
               <button
                 className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
@@ -276,13 +318,13 @@ const VerifyPhoneNumber = (props: IProps) => {
                 {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
             </div>
-
             {/* verify code */}
             <Captcha
               key={'verify-phone-captcha'}
               lang={lang}
               autoFocus={true}
               onChange={onChange}
+              ref={captchaRef}
             />
           </div>
         </div>

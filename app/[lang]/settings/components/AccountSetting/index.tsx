@@ -18,16 +18,13 @@ const index = (props: IProps) => {
       <div className={styles.navTitle}>{accountSetting?.title}</div>
       <VerifyMailAndBindEmail
         label={accountSetting.email}
-        emailDefault={userDetail?.email ? userDetail.email : null}
-        verify={userDetail.is_email_verify}
+        userDetail={userDetail}
         lang={lang}
       />
 
       <VerifyPhoneNumber
         label={accountSetting.mobile}
         userDetail={userDetail}
-        phoneDefault={userDetail.phone_num ? userDetail.phone_num : null}
-        verify={userDetail.is_mobile_verified}
         config={config}
         lang={lang}
       />
