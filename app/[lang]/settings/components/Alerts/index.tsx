@@ -53,7 +53,10 @@ const AlertJobs = (props: IProps) => {
     if (data?.data) {
       errorMessage = data?.data?.detail ?? data?.message
     } else {
-      errorMessage = data?.errors?.phone_num[0]
+      const errors = Object.values(data?.errors)[0]
+      if (errors) {
+        errorMessage = errors[0]
+      }
     }
     dispatch(
       displayNotification({

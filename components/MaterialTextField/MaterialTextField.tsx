@@ -26,7 +26,7 @@ type MaterialTextFieldProps = {
   maxLength?: Number
   isSubmitOnEnter?: boolean
   onSubmit?: any
-  helperText?: string
+  helperText?: string | React.ReactNode
   sx?: any
   ref?: any
 } & Omit<Input, 'size'>

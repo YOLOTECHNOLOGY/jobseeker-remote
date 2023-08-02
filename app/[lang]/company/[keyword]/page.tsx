@@ -93,7 +93,6 @@ const Page = () => {
 						}
 					</div>
 				</div>
-
 				<div className={style.header_title_right}>
 					<div className={style.header_title_num_wrapper}>
 						<span className={style.header_title_num}>{jobs?.total_num}</span>
@@ -137,7 +136,7 @@ const Page = () => {
 						</div>
 						<div className={style.jobs_item_layout}>
 							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item,index) => {
-								if(!item) return <div key={index} className={style.jobs_item} style={{opacity:0}}></div>;
+								if(!item) return <div key={index} className={style.jobs_item} style={{opacity:0}} />;
 								return <div className={style.jobs_item} key={index}>
 									<Link 
 										href={`/${lang}${item.job_url}`}

@@ -9,6 +9,7 @@ import styles from '../Companies.module.scss'
 import { padArrayToMultiple } from 'app/[lang]/company/[keyword]/components/InfoList'
 import { useLoginModal } from 'app/components/providers/loginModalProvider'
 import { getCookie } from 'helpers/cookies'
+import { useLanguage } from 'app/components/providers/languageProvider'
 
 interface ICompanyCardList {
   companiesList: any
@@ -29,19 +30,19 @@ const CompanyCardList = (props: ICompanyCardList) => {
   const { companiesList, isLoading, transitions = {}, lang, langKey, config } = props
   const isLogin = getCookie('accessToken') ? true : false
   const loginToggle = useLoginModal();
-
+  const {companies} = useLanguage();
   const Tips = <div className={styles.tips_wrapper}>
     <div className={styles.tips_content}>
       <Image alt={'img'} width={106} height={102}
         src={require('../registerLock.svg').default.src}
       ></Image>
       <div className={styles.tips_content_text}>
-        Create your job profile for free on Bossjob to explore top jobs applied by your peers!
+        {companies.loginNowDescription}
       </div>
       <div className={styles.tips_content_go} onClick={()=>{
         loginToggle.setShowLogin(true)
       }}>
-        Login Now
+        {companies.loginNow}
       </div>
     </div>
     <div className={styles.tips_full}>
