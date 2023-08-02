@@ -134,7 +134,6 @@ const Companies = (props: IProps) => {
       </div>
     )
   }
-  console.log('featuredCompany',featuredCompany);
   return (
     <>
       <div className={styles.container}>

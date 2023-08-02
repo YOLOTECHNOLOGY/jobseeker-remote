@@ -30,18 +30,24 @@
   }
 
   .moreBtn {
-    color: rgba(29, 33, 41, 1);
+    color: #1D2129;
     height: 44px;
     width: 112px;
     font-size: 14px;
-    border-radius: 4px;
     line-height: 44px;
     text-align: center;
     background: #ffffff;
     margin: 0 auto 10px;
     display: inline-block;
     cursor: pointer;
-    border: 1px solid rgba(201, 205, 212, 1);
+    border: 1px solid #C9CDD4;
+    border-radius: 4px;
+
+
+    &:hover {
+      color: #2378E5;
+      border-color: #2378E5;
+    }
   }
 }
 
@@ -55,7 +61,7 @@
     transition: box-shadow 0.3s ease-in;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid #e5e6eb;
+    border: 1px solid #E5E6EB;
     background: #fff;
   }
 
@@ -77,15 +83,16 @@
     &_title {
       font-style: normal;
       font-weight: 500;
-      font-size: 17px;
-      letter-spacing: 0.02em;
-      color: #333945;
+      font-size: 20px;
+      color: #1D2129;
       width: 0;
+      font-weight: 700;
       flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       transition: color 0.3s ease-in;
+      letter-spacing: 0.15px;
 
       &:hover {
         color: #136fd3;
@@ -101,7 +108,7 @@
     &_salary {
       font-style: normal;
       font-weight: 400;
-      font-size: 15px;
+      font-size: 20px;
       letter-spacing: 0.02em;
       color: #2378e5;
       overflow: hidden;
@@ -122,13 +129,17 @@
       border-radius: 4px;
       font-weight: 400;
       min-width: 76px;
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.0075em;
       color: #ffffff;
       transform: translateY(30px);
       white-space: nowrap;
       transition: all 0.4s ease 0s;
       float: right;
+
+      svg {
+        padding-right: 2px;
+      }
     }
   }
 
@@ -144,27 +155,28 @@
     }
 
     .job_info_chat {
-      transform: translateY(-23px);
+      transform: translateY(-30px);
     }
   }
 
   &_tags {
     display: flex;
-    padding: 8px 0 0;
+    padding: 16px 0 0;
 
     div {
-      align-items: center;
-      padding: 0 10px;
-      height: 25px;
-      line-height: 25px;
-      background: #f7f8fa;
-      border-radius: 4px;
+      padding: 0;
       font-style: normal;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.0075em;
       margin-right: 8px;
-      color: #4e5969;
+      color: #7D7D7D;
+      margin-right: 10px;
+
+      span {
+        color: #E4E4E4;
+        padding-left: 10px;
+      }
     }
   }
 
@@ -196,7 +208,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 0 16px 0;
+    padding: 20px 0;
     display: block;
 
     &_name {
@@ -206,12 +218,18 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: #4e5969;
+      color: #4E5969;
     }
 
     &_industry {
-      color: #86909c;
+      color: #7D7D7D;
       float: right;
+      font-size: 14px;
+
+      span {
+        color: #E4E4E4;
+        padding: 0 10px;
+      }
     }
   }
 
@@ -228,6 +246,31 @@
     line-height: 55px;
     margin: 0;
   }
+
+  .backBtn {
+    position: fixed;
+    bottom: 0;
+    right: calc(50vw - 660px);
+    width: 60px;
+    height: 50px;
+    border-radius: 8px 8px 0px 0px;
+    background: #3A90FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 1;
+    cursor: pointer;
+    transition: .2s;
+    transform: scale(1);
+
+    &:hover {
+      svg {
+        transition: .2s;
+        transform: scale(1.1);
+      }
+    }
+  }
 }
 
 .webTab {
@@ -241,6 +284,31 @@
 
     .MuiTabs-root .MuiTabs-indicatorSpan {
       background-color: #1d2129;
+    }
+
+    .MuiButtonBase-root {
+      position: relative;
+
+      &::after {
+        content: " ";
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 3px;
+        bottom: 0px;
+        left: 0;
+        background-color: #1D2129;
+        transform-origin: bottom right;
+        transition: transform .25s ease-out
+      }
+
+      &:hover {
+        &::after {
+          transform: scaleX(1);
+          transform-origin: bottom left
+        }
+
+      }
     }
   }
 
@@ -310,14 +378,15 @@
     line-height: 25px;
     letter-spacing: 1px;
     color: #121212;
-    padding: 24px 16px 4px 16px;
+    padding: 24px 14px 0 14px;
+    margin: 0;
   }
 
   .hiring {
     overflow: scroll;
     width: 100%;
     height: auto;
-    padding: 0 16px;
+    padding: 0 14px;
 
     .itemBox {
       width: 100%;
@@ -330,12 +399,10 @@
       min-height: 95px;
       display: block;
       background: #ffffff;
-      border-radius: 8px;
       margin: 20px 0 0 0;
       display: flex;
       padding: 12px;
-      border-radius: 4px;
-      border: 1px solid #e5e6eb;
+      border-bottom: 1px solid #e5e6eb;
       background: #fff;
       position: relative;
 
@@ -361,10 +428,10 @@
 
         .name {
           font-weight: 500;
-          font-size: 14px;
+          font-size: 20px;
           line-height: 24px;
           letter-spacing: 1px;
-          color: #353535;
+          color: #121212;
           text-overflow: ellipsis;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -378,20 +445,21 @@
         .companyInfo {
           font-style: normal;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 14px;
           line-height: 15px;
           letter-spacing: 0.0075em;
-          color: #4e5969;
+          color: #7D7D7D;
           text-overflow: ellipsis;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           line-clamp: 1;
+          padding: 4px 0 6px 0;
         }
 
         .num {
-          font-size: 14px;
+          font-size: 15px;
           line-height: 18px;
           color: #136fd3;
           margin: 0;
@@ -401,8 +469,8 @@
     }
   }
 
-  .moreBtn {
-    color: rgba(29, 33, 41, 1);
+  .moreBtnActive {
+    color: #2378E5;
     height: 44px;
     width: 112px;
     font-size: 14px;
@@ -414,11 +482,11 @@
     display: block;
     cursor: pointer;
     text-align: center;
-    border: 1px solid rgba(201, 205, 212, 1);
+    border: 1px solid #2378E5;
   }
 
   .jobs {
-    padding: 56px 16px 40px 16px;
+    padding: 44px 14px 40px 14px;
 
     h2 {
       padding-left: 0;
@@ -445,7 +513,7 @@
       width: 91px;
       height: 30px;
       background: #136fd3;
-      border-radius: 10px;
+      border-radius: 8px;
       float: right;
       cursor: pointer;
       font-size: 12px;
@@ -457,7 +525,7 @@
       border-radius: 10px;
       padding: 16px;
       margin-bottom: 8px;
-      border-radius: 12px;
+      border-radius: 8px;
       border: 1px solid #f2f3f5;
       background: #fff;
 
@@ -469,8 +537,9 @@
         color: #1d2129;
 
         .jobName {
-          width: 70%;
-          height: 48px;
+          flex: 1;
+          width: 0;
+          height: 46px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -478,21 +547,25 @@
           /*! autoprefixer: off */
           -webkit-box-orient: vertical;
           /* autoprefixer: on */
+          font-size: 20px;
+          color: #1D2129;
+          margin-right: 10px;
         }
 
         .salary {
-          width: 30%;
+          width: fit-content;
           text-align: right;
-          font-size: 15px;
+          font-size: 20px;
           color: #2378e5;
+          font-weight: 400;
         }
       }
 
       .company {
-        font-size: 12px;
+        font-size: 14px;
         letter-spacing: 1px;
         color: #353535;
-        padding: 12px 0;
+        padding: 0 0 4px 0;
       }
 
       .tag {
@@ -975,7 +1048,7 @@
   background-image: linear-gradient(272deg, #26bcf7 0%, #367bff 100%);
 
   @include sm {
-    height: 200px;
+    height: 158px;
   }
 }
 
@@ -1009,7 +1082,7 @@
   bottom: -25px;
   left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 8;
 
   .box {
     display: flex;
@@ -1030,10 +1103,22 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      border: 1px solid #fff;
+
+      &:hover {
+        border-color: #2378E5;
+      }
 
       @include sm {
-        flex: 1;
-        padding: 0 5px;
+        display: block;
+        width: 100%;
+        background: transparent !important;
+        padding: 0;
+
+        &:hover {
+          border-radius: 0px;
+          border-color: transparent;
+        }
       }
     }
 
@@ -1091,7 +1176,7 @@
     background-color: #e4e4e4;
 
     @include sm {
-      margin-left: 0;
+      display: none;
     }
   }
 
@@ -1162,14 +1247,8 @@
     }
 
     @include sm {
-      position: relative;
-      height: 28px;
-      padding: 0 8px;
-      top: 9px;
-      border-radius: 4px;
-      font-size: 13px;
-      width: unset;
-      // margin-right: 8px;
+      border-radius: 0;
+      width: 104px;
     }
 
     // &:hover {
@@ -1241,11 +1320,16 @@
     flex-wrap: nowrap;
     margin-top: 0px;
 
+    &:active,
+    &:hover {
+      color: #2378E5;
+    }
+
     @include sm {
-      margin-top: 10px;
       flex-wrap: wrap;
       height: fit-content;
       width: 100%;
+
     }
 
     .tag {
@@ -1274,8 +1358,8 @@
       color: #4e5969;
 
       @include sm {
-        width: calc(50% - 5px);
-        margin: 10px 10px 0 0;
+        width: calc(50% - 8px);
+        margin: 16px 16px 0 0;
 
         &:nth-of-type(even) {
           margin-right: 0;
@@ -1356,6 +1440,16 @@
     }
   }
 
+  .shadeheader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    background: rgba(0, 0, 0, .3);
+  }
+
   .download {
     margin-left: 62px;
     width: 150px;
@@ -1364,6 +1458,14 @@
     cursor: pointer;
     position: relative;
     word-break: keep-all;
+    border-radius: 8px;
+    border: 1px solid #2378E5;
+    min-width: 170px;
+    height: 60px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @include msd {
       display: none;
@@ -1374,57 +1476,134 @@
       font-size: 32px;
       line-height: 18px;
       letter-spacing: 1px;
-      position: relative;
-      top: 4px;
     }
 
-    > p {
-      padding-left: 24px;
-      line-height: 20px;
+    >p {
+      color: #2378E5;
+      font-size: 16px;
+      padding-left: 9px;
+      margin-bottom: 0;
+      font-weight: 700;
+      line-height: 18px;
+
+      span {
+        font-size: 12px;
+        color: #515151;
+        font-weight: normal;
+      }
     }
 
     &:hover .popver {
-      display: block;
+      transition: .4s;
+      top: 0;
     }
   }
 
   .popver {
-    position: absolute;
-    left: -12px;
-    top: 50px;
+    position: fixed;
     background: #ffffff;
-    border: 0.5px solid #bcbcbc;
-    border-radius: 10px;
-    padding: 14px 20px;
     z-index: 100;
-    text-align: center;
-    display: none;
-    box-shadow: 0px 0px 14px #bcbcbc;
+    // box-shadow: 0px 0px 14px #bcbcbc;
+    width: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, .25);
+    // transform: translateY(-214px);
+    transition: .4s;
+    z-index: 20;
+    padding-top: 110px;
+    top: -406px;
 
-    &::after {
-      content: ' ';
-      position: absolute;
-      left: 20px;
-      top: -16px;
-      width: 0;
-      height: 0;
-      border-width: 8px;
-      border-style: solid;
-      border-color: transparent transparent #fff transparent;
+    .popverContainer {
+      background: #2378E5;
+      height: 296px;
     }
 
-    img {
-      width: 104px;
-      height: 104px;
+    .popverMain {
+      @extend .GlobalNextAppContainer;
+      display: flex;
+      padding: 0 124px;
+      position: relative;
+      height: 100%;
+
+      .info {
+        width: 490px;
+        margin-right: 60px;
+
+        h5 {
+          color: var(--main-color-white-white-ffffff, #FFF);
+          font-size: 60px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 60px;
+          letter-spacing: -3px;
+          margin: 0;
+          padding: 50px 0 20px;
+        }
+
+        .getAppTips {
+          color: #FFF;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0.12px;
+          margin: 0;
+          text-align: left;
+          padding-bottom: 30px;
+        }
+      }
+
+      .code {
+        width: 338px;
+        position: relative;
+
+        .qrcode {
+          width: 148px;
+          height: 148px;
+          background-color: #fff;
+          border-radius: 8px;
+          position: absolute;
+          left: 92px;
+          top: 115px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+        }
+
+        .homeBg {
+          position: absolute;
+          left: 0;
+          top: 37px;
+        }
+      }
     }
 
-    p {
-      padding: 6px 0 0 0;
-      text-align: center;
-      line-height: 20px;
-      margin: 0;
-    }
+    // &::after {
+    //   content: ' ';
+    //   position: absolute;
+    //   left: 20px;
+    //   top: -16px;
+    //   width: 0;
+    //   height: 0;
+    //   border-width: 8px;
+    //   border-style: solid;
+    //   border-color: transparent transparent #fff transparent;
+    // }
+
   }
+
+
+}
+
+.searchshade {
+  position: fixed;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, .3);
 }
 
 .errorMain {
@@ -1508,7 +1687,7 @@
     font-style: normal;
     font-weight: 700;
     margin-top: 40px;
-    z-index: 10;
+    z-index: 8;
 
     @include sm {
       font-size: 32px;
@@ -1540,7 +1719,7 @@
     letter-spacing: 1px;
     color: #353535;
     text-align: center;
-    padding: 60px 0 60px;
+    padding: 40px 0;
     margin: 0;
   }
 
@@ -1560,6 +1739,7 @@
     margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid#E5E6EB;
+    background: #FCFCFC;
 
     &:nth-of-type(even) {
       margin-right: 0;
@@ -1569,15 +1749,15 @@
       // height: 110px;
       cursor: pointer;
       display: block;
-      margin: 0 20px;
       border-bottom: 1px solid #e5e6eb;
-      padding-bottom: 34px;
+      background-color: #fff;
+      padding: 0 20px 20px 20px;
 
       .img {
         width: 48px;
         height: 48px;
         float: left;
-        margin: 34px 11px 0 0;
+        margin: 20px 11px 0 0;
         border-radius: 5px;
         border: 1px solid #e5e6eb;
       }
@@ -1585,10 +1765,10 @@
       h5 {
         font-style: normal;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 20px;
         line-height: 24px;
         color: #121212;
-        padding: 34px 0 4px 0;
+        padding: 20px 0 4px 0;
         margin: 0;
       }
 
@@ -1598,6 +1778,12 @@
         line-height: 15px;
         letter-spacing: 1px;
         color: #707070;
+        padding-top: 2px;
+
+        span {
+          color: #E5E6EB;
+          padding: 0 10px;
+        }
       }
 
       &:hover h5 {
@@ -1606,9 +1792,12 @@
     }
 
     .list {
-      padding: 28px 23px 8px 24px;
+      margin: 0 20px;
+      padding-bottom: 20px;
       cursor: pointer;
       display: block;
+      border-bottom: 1px solid #F6F6F6;
+      padding: 20px 0;
 
       .jobType {
         letter-spacing: 1px;
@@ -1624,7 +1813,7 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           font-weight: 400;
-          font-size: 18px;
+          font-size: 20px;
           margin: 0;
           transition: all 0.4s ease 0s;
         }
@@ -1638,7 +1827,7 @@
         .salary {
           font-style: normal;
           font-weight: 400;
-          font-size: 15px;
+          font-size: 20px;
           letter-spacing: 0.02em;
           color: #2378e5;
           overflow: hidden;
@@ -1668,6 +1857,10 @@
           transition: all 0.4s ease 0s;
           float: right;
           box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+
+          svg {
+            padding-right: 2px;
+          }
         }
       }
 
@@ -1675,11 +1868,13 @@
         font-weight: 400;
         font-size: 12px;
         color: #4e5969;
-        padding: 0 10px;
-        margin-right: 6px;
-        background: #f7f8fa;
-        border-radius: 4px;
         display: inline-block;
+
+        i {
+          font-style: normal;
+          color: #E4E4E4;
+          padding: 10px;
+        }
       }
 
       &:hover {
@@ -1689,7 +1884,7 @@
         }
 
         .chat {
-          transform: translateY(-22px);
+          transform: translateY(-30px);
         }
 
         .salary {
@@ -1700,12 +1895,11 @@
     }
 
     .linkAddress {
-      text-decoration: underline;
       color: #4e5969;
       font-weight: 400;
       font-size: 15px;
       text-align: center;
-      margin: 10px 0 18px 0;
+      margin: 30px 0;
       display: block;
 
       &:hover {
@@ -1716,17 +1910,22 @@
 
   .moreBtn {
     width: 112px;
-    color: rgba(29, 33, 41, 1);
+    color: #1D2129;
     height: 44px;
     font-size: 14px;
     border-radius: 4px;
     line-height: 44px;
     text-align: center;
     background: #ffffff;
-    margin: 26px auto 10px;
+    margin: 26px auto 0px;
     display: block;
     cursor: pointer;
-    border: 1px solid rgba(201, 205, 212, 1);
+    border: 1px solid #C9CDD4;
+
+    &:hover {
+      color: #2378E5;
+      border-color: #2378E5;
+    }
   }
 }
 
@@ -1738,21 +1937,17 @@
 
     .search {
       width: auto;
-      height: 44px;
       margin: 0;
     }
 
     .searchArea {
-      padding: 0 18px;
+      padding: 0 14px;
+      bottom: -150px;
 
       .search {
         flex: 1;
 
         :global {
-          .MuiOutlinedInput-root {
-            height: 44px;
-          }
-
           .MuiOutlinedInput-notchedOutline {
             border-color: transparent;
           }
@@ -1761,37 +1956,47 @@
 
       .box {
         border-radius: 4px;
-        border: 1px solid #e5e6eb;
-        background: #fff;
+        background: #fafafa;
         margin: 0;
         padding: 0;
         width: 100%;
+        min-width: 100%;
 
         .location {
-          width: 124px;
-          height: 44px;
+          width: 100%;
           border-radius: 4px 0 0 4px;
           border-bottom-width: 0;
           border-top-width: 0;
           border-left-width: 0;
+          border-radius: 4px;
+          border: 1px solid #E4E4E4;
+          background: #FFF;
+          padding: 0 12px;
 
           :global {
             .MuiOutlinedInput-root {
               width: 100%;
-              height: 44px;
             }
           }
         }
 
         .searchBox {
           flex: 1;
+          margin-top: 14px;
+          border-radius: 4px;
+          border: 1px solid #2378E5;
         }
       }
     }
 
+    .searchAreaFix {
+      position: initial;
+      height: auto;
+    }
+
     .popularBox {
       display: block;
-      padding: 32px 16px 27px 16px;
+      padding: 158px 16px 27px 16px;
     }
   }
 
