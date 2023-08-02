@@ -201,7 +201,12 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
-
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 4px;
+    &:hover{
+      background: #f7f8fa;
+    }
     .label {
       position: relative;
       z-index: 1;
