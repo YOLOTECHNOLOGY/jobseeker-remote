@@ -846,6 +846,9 @@ $searchContentWidth : 750px;
   position: relative;
   border-radius: 8px;
   margin-bottom: 15px;
+  @include msd {
+    display: none;
+  }
 }
 .tips_full{
   position: absolute;
