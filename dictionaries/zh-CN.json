@@ -213,7 +213,9 @@
       "noResult": "未找到结果",
       "seoText": "寻找在{{country}}的优秀公司"
     },
-    "companiesEmpty": "暂无公司信息"
+    "companiesEmpty": "暂无公司信息",
+    "loginNow": "Login Now",
+    "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
   },
   "companyDetail": {
     "tab": {
