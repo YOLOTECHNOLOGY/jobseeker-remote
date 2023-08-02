@@ -15,12 +15,13 @@ const removeQuotes = (str) => {
 }
 // 递归遍历文件夹
 function traverseFolder(folderPath, file_namespace = 'profile') {
+  console.log('companies',file_namespace, folderPath)
   fs.readdirSync(folderPath).forEach((file) => {
     const filePath = path.resolve(folderPath, file)
 
     // 如果是文件夹，则递归遍历
     if (fs.statSync(filePath).isDirectory()) {
-      traverseFolder(filePath)
+      traverseFolder(filePath, file_namespace);
     } else if (!isImageFile(filePath)) {
       // 读取文件内容
       let fileContent = fs.readFileSync(filePath, 'utf-8')
@@ -38,7 +39,6 @@ function traverseFolder(folderPath, file_namespace = 'profile') {
           : path.basename(requireStatement)
         // 构建替换后的字符串
         const replacedStatement = `\`\${process.env.S3_BUCKET_URL}/${file_namespace}/${fileName}\``
-
         // 返回替换后的字符串
         return replacedStatement
       })

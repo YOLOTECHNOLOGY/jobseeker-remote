@@ -3,6 +3,7 @@
 
 
 $contentWidth : 90vw;
+$searchContentWidth : 750px;
 .container {
   background: #fcfcfc;
 }
@@ -74,9 +75,8 @@ $contentWidth : 90vw;
   border-radius: 0px 0px 8px 8px;
   border: 1px solid #E4E4E4;
   background: #FAFAFA;
-  width: 694px;
+  width: $searchContentWidth;
   overflow: hidden;
-  padding-right: 20px;
   @include sm {
     justify-content: flex-start;
   }
@@ -183,7 +183,9 @@ $contentWidth : 90vw;
     align-items: center;
     letter-spacing: 0.0075em;
     color: #86909c;
-    font-size: 14px;
+    font-size: 16px;
+    justify-content: flex-end;
+    padding-right: 20px;
     &:hover {
       background-color: #F2F3F5 !important;
       .reset{
@@ -312,7 +314,7 @@ $contentWidth : 90vw;
   font-weight: 400;
   color: var(--main-color-black-black-037-d-7-d-7-d, #7D7D7D) !important;
   font-family: Product Sans;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 14px; /* 100% */
@@ -347,7 +349,7 @@ $contentWidth : 90vw;
   color: var(--main-color-black-black-01121212, #121212);
   /* Bold/super title/medium */
   font-family: Product Sans;
-  font-size: 32px;
+  font-size: 28px;
   font-style: normal;
   font-weight: 700;
   line-height: 40px; /* 125% */
@@ -405,7 +407,7 @@ $contentWidth : 90vw;
   }
 }
 .placeholderSpace{
-  height: 125px;
+  height: 60px;
   background-color: #ffffff;
   @include msd {
     height: 60px;
@@ -417,7 +419,7 @@ $contentWidth : 90vw;
   text-align: center;
   margin: 0;
   color: #353535;
-  font-size: 44px;
+  font-size: 32px;
   font-style: normal;
   font-weight: 700;
   line-height: 55px;
@@ -457,7 +459,7 @@ $contentWidth : 90vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 694px;
+  width: $searchContentWidth;
   padding: 14px;
   border-radius: 8px 8px 0px 0px;
   background: #FFF;
@@ -602,7 +604,12 @@ $contentWidth : 90vw;
 }
 
 .searchInput{
-  flex:1
+  flex:1;
+  :global {
+    .MuiInputLabel-root{
+      font-size: 16px;  
+    }
+  }
 }
 
 .companyList {
@@ -638,8 +645,8 @@ $contentWidth : 90vw;
   }
 }
 .companyVerify{
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   position: relative;
   @include msd{
     position: absolute;
@@ -660,7 +667,7 @@ $contentWidth : 90vw;
   flex-direction: column;
   background-color: #fff;
   border-radius: 8px;
-  height: 340px;
+  height: 300px;
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
@@ -727,7 +734,7 @@ $contentWidth : 90vw;
       font-style: normal;
       color: #1B1534;
       font-family: Product Sans;
-      font-size: 24px;
+      font-size: 20px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
@@ -749,7 +756,7 @@ $contentWidth : 90vw;
     white-space: nowrap;
 
     color: #353535;
-    font-size: 15px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 23px;
@@ -778,17 +785,16 @@ $contentWidth : 90vw;
     }
     p {
       color: #4e5969;
-      font-size: 15px;
+      font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 23px;
       letter-spacing: 0.113px;
-
       padding: 0;
       margin: 0;
     }
-
     span {
+      font-size: 16px;
       color: #2378e5;
     }
   }
@@ -881,6 +887,8 @@ $contentWidth : 90vw;
   border-radius: 4px;
   background: var(--main-color-white-white-ffffff, #FFF);
   cursor: pointer;
+  font-size: 18px;
+  color: #2378e5;
   &:hover{
     background: darken(#FFF, 10%);
   }

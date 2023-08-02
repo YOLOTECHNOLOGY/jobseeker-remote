@@ -38,7 +38,7 @@ const CompanyCard = (props: ICompanyCard) => {
             <Image fill={true} src={company?.logo_url || company?.logo} alt={company?.name} />
           </Link>
           <div className={styles.companyVerify}>
-            <Image alt={'fill'} fill src={require('../verify.svg').default.src}></Image>
+            <Image alt={'fill'} fill src={`${process.env.S3_BUCKET_URL}/companies/verify1.svg`}></Image>
           </div>
         </div>
         <div className={styles.companyCardRight}>

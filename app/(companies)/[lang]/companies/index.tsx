@@ -139,7 +139,7 @@ const Companies = (props: IProps) => {
       <div className={styles.container}>
         {/* search */}
         <div className={styles.searchContainer}>
-          <Image fill alt='bg' style={{objectFit: 'cover'}} src={require('./companies-search-bg.svg').default.src}/>
+          <Image fill alt='bg' style={{objectFit: 'cover'}} src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}/>
 
           <div className={styles.searchCompany}>
             <SearchCompany
