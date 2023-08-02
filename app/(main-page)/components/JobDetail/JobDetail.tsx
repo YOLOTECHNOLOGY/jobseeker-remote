@@ -11,7 +11,7 @@ import { addJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
-
+import { chatSVG } from 'images/svg'
 const JobDetail = ({ detail, config, langKey }: any) => {
   const router = useRouter()
 
@@ -54,22 +54,28 @@ const JobDetail = ({ detail, config, langKey }: any) => {
             <div className={styles.transBox}>
               <div className={styles.job_info_salary}>{detail?.local_salary_range_value}</div>
               <div className={styles.job_info_chat}>
-                <Image
+                {/* <Image
                   src={HomePageChat}
                   alt='Boss job chat now'
                   width='18'
                   height='18'
                   quality={0}
                   style={{ paddingRight: '4px' }}
-                />{' '}
+                />{' '} */}
+                {chatSVG}
                 {home.jobCard.chatNow}
               </div>
             </div>
           </div>
 
           <div className={styles.job_tags}>
-            <div>{jobLocation}</div>
-            <div>{xpLvlValue}</div>
+            <div>
+              {jobLocation} <span>|</span>
+            </div>
+            <div>
+              {xpLvlValue}
+              <span>|</span>
+            </div>
             <div>{degreeValue}</div>
           </div>
         </Link>
@@ -89,7 +95,7 @@ const JobDetail = ({ detail, config, langKey }: any) => {
           </div>
           <div className={styles.job_companyInfo_industry}>
             {industry}
-            {industry && financingStage ? ' | ' : null}
+            {industry && financingStage ? <span>|</span> : null}
             {financingStage}
           </div>
         </div>

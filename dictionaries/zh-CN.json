@@ -352,7 +352,9 @@
         "chatBoss": "和老板直接谈"
       },
       "reset2": "重置",
-      "save": "保存"
+      "save": "保存",
+      "getTheDiceApp": "Get the Dice app",
+      "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
     },
     "popularJobs": "热门工作",
     "tag": {
@@ -1163,7 +1165,7 @@
       "verifyMobileTitle": "验证您的手机号码",
       "verifyEmailTitle": "更改邮件地址验证",
       "verifyJobAlertTitle": "新职位提醒设置",
-      "deleteAlertTip": "您确定要删除此提醒吗？删除后，您将无法获得高质量的职位推荐信息"
+      "deleteAlertTip": "Are you sure you want to delete this job reminder? After deleting, you will not be able to get high-quality job recommendation information"
     },
     "verifiedMessages": {
       "mobile": "您的电话账户已成功验证。",
@@ -1221,9 +1223,9 @@
       "title": "添加屏蔽公司后，您和这些公司的老板将不会相互推荐，您的查看行为也不会通知对方。 ",
       "jobOrCompany": "职位或者公司名称",
       "tip1": "公司可以通过以下方式搜索",
-      "tip2": "公司全名：“Beijing Huapin Borui Network Technology Co., Ltd.”",
+      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
       "tip3": "公司缩写：“BSS Direct Employment”",
-      "unBlockTip1": "以下关联的公司将同时解冻。",
+      "unBlockTip1": "以下关联的公司将同时解冻",
       "unBlockTip2": "该公司名称为 {{company}}",
       "noCompanies": "搜索公司不存在"
     }

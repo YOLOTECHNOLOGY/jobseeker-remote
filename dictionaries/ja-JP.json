@@ -352,7 +352,9 @@
         "chatBoss": "Chat directly with Boss"
       },
       "reset2": "Reset",
-      "save": "Save"
+      "save": "Save",
+      "getTheDiceApp": "Get the Dice app",
+      "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
     },
     "popularJobs": "Popular Jobs",
     "tag": {

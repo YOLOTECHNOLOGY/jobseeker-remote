@@ -21,8 +21,9 @@ import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { setCookie } from 'helpers/cookies'
-import { HistoryIcons } from 'images'
-
+import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
+import Link from 'components/Link'
+import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -154,6 +155,7 @@ const SearchArea = (props: any) => {
               label={isPC ? home.search.location : home.search.location2}
               onChange={setLocation}
               lang={home.search}
+              isPC={isPC}
               sx={{
                 '> .MuiFormControl-root': {
                   borderRadius: '8px',
@@ -241,19 +243,55 @@ const SearchArea = (props: any) => {
           </div>
           {isShow && (
             <div className={styles.download}>
-              <PhoneIphoneIcon className={styles.icon} />
+              {/* <PhoneIphoneIcon  className={styles.icon}/> */}
+              <div className={styles.icon}>{downloadApp}</div>
               <p>
                 {' '}
                 {home.search.download}
                 <br />
-                {home.search.chatBoss}
+                <span>{home.search.chatBoss}</span>
               </p>
               <div className={styles.popver}>
-                <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                <p>{home.search.popup.chatBoss}</p>
+                <div className={styles.popverContainer}>
+                  <div className={styles.popverMain}>
+                    <div className={styles.info}>
+                      <h5 className={styles.getApp}>{home?.search?.getTheDiceApp}</h5>
+                      <p className={styles.getAppTips}>{home?.search?.youMustInstallApp}</p>
+                      <div>
+                        <Link
+                          to={process.env.APP_STORE_LINK}
+                          external
+                          style={{ marginRight: '20px' }}
+                        >
+                          <Image
+                            src={footer_apple_download}
+                            alt='AppStore'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                        <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
+                          <Image
+                            src={footer_googleplay_download}
+                            alt='GooglePlay'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className={styles.code}>
+                      <div className={styles.homeBg}>{homeHeaderPhoneBg}</div>
+                      <div className={styles.qrcode}>
+                        <Image src={AppDownQRCode} alt='app down' width='128' height='128' />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
+          {/* <div className={styles.shadeheader}></div> */}
         </div>
       </ThemeProvider>
     </div>

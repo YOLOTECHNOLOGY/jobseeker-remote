@@ -74,7 +74,6 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
                       </p>
                       <p className={styles.num}>
                         {num_of_active_jobs} {jobs}{' '}
-
                       </p>
                       <span className={styles.arowForward}>
                         <ArrowForwardIosIcon
@@ -95,7 +94,7 @@ const mobileHome = async ({ location, lang, location_id, config, langKey }) => {
         </>
       ) : null}
 
-      <Link prefetch={true} href={'/' + langKey + '/companies'} className={styles.moreBtn}>
+      <Link prefetch={true} href={'/' + langKey + '/companies'} className={styles.moreBtnActive}>
         {seeMoreBtn}
       </Link>
 
