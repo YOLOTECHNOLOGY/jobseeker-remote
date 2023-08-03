@@ -216,7 +216,7 @@ const SearchArea = (props: any) => {
                   ) : isHistory ? (
                     <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
                       <AccessTimeIcon />
-                      <span style={spanStyle}>{value}==1</span>
+                      <span style={spanStyle}>{value}</span>
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect} key={props.id}>

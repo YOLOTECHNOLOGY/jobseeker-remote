@@ -12,7 +12,6 @@ import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
 // import { useRouter } from 'next/navigation'
 import { toPairs } from 'ramda'
-import { Button } from 'app/components/MUIs'
 import { useDispatch } from 'react-redux'
 import { fetchConfigSuccess } from 'store/actions/config/fetchConfig'
 import { useFirstRender } from 'helpers/useFirstRender'
@@ -27,6 +26,8 @@ import { flatMap } from 'lodash-es'
 import { SortContext } from './SortProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import Image from 'next/image'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { HistoryIcons } from 'images'
 
 const SearchArea = (props: any) => {
   const { sort, setSort } = useContext(SortContext)
@@ -51,13 +52,14 @@ const SearchArea = (props: any) => {
   )
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
-  const pushJobSearch = useCallback(() => {
+  const pushJobSearch = useCallback((type='') => {
     if (firstRender) {
       return
     }
     const params = {
       query: searchValue?.trim?.(),
-      location: location.map((a) => a['seo_value'])
+      location: location.map((a) => a['seo_value']),
+      queryFields: type
     }
     const result = encode(params)
     const url = new URLSearchParams(toPairs(result.params)).toString()
@@ -154,6 +156,17 @@ const SearchArea = (props: any) => {
     filterLocation
   ])
 
+  const styleleSelect = {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer'
+  }
+
+  const spanStyle = {
+    paddingLeft: '10px',
+    fontSize: '15px'
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -201,18 +214,44 @@ const SearchArea = (props: any) => {
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault()
+                  const value = (e.target as HTMLInputElement).value
                   flushSync(() => {
-                    setSearchValue((e.target as any).value)
+                    setSearchValue(value)
+                    addSearchHistory(value)
                   })
-                  addSearchHistory((e.target as any).value)
-                  pushJobSearchRef.current()
+                  value && pushJobSearchRef.current()
                 }
               }}
               options={suggestionList}
               onSelect={(value: any) => {
+                const newValue = value?.value || value || ''
+                const type = value?.type || ''
                 flushSync(() => {
-                  setSearchValue(value)
+                  setSearchValue(newValue)
                 })
+                addSearchHistory(searchValue)
+                if (newValue) {
+                  pushJobSearchRef.current(type)
+                }
+              }}
+              renderOption={(props, option) => {
+                const { type, is_history: isHistory, value, logo_url: logoUrl } = option || {}
+                return type === 'company' ? (
+                  <li {...props} style={styleleSelect} key={props.id}>
+                    <Image src={logoUrl} alt={value} width='22' height='22' />
+                    <span style={spanStyle}>{value}</span>
+                  </li>
+                ) : isHistory ? (
+                  <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
+                    <AccessTimeIcon />
+                    <span style={spanStyle}>{value}</span>
+                  </li>
+                ) : (
+                  <li {...props} style={styleleSelect} key={props.id}>
+                    <Image src={HistoryIcons} alt='history icons' width='17' height='17' />
+                    <span style={spanStyle}>{value || option}</span>
+                  </li>
+                )
               }}
             />
 
@@ -220,6 +259,7 @@ const SearchArea = (props: any) => {
             <button
               className={styles.searchButton}
               onClick={() => {
+                if (!searchValue) return
                 addSearchHistory(searchValue)
                 pushJobSearchRef.current()
               }}
