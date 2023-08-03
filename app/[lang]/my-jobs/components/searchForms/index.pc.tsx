@@ -134,9 +134,6 @@ const SearchArea = (props: any) => {
   ])
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
-    if (firstRender) {
-      return
-    }
     const url = new URLSearchParams(toPairs(filterParams)).toString()
     push(window.location.pathname + '?' + url)
   }, [filterParams, push])
@@ -144,7 +141,10 @@ const SearchArea = (props: any) => {
   useEffect(() => {
     reloadRef.current = reload
   }, [reload])
-  useEffect(reload, [
+  useEffect(() => {
+    if(firstRender) return
+    reloadRef.current()
+  }, [
     qualification,
     workExperience,
     companySizes,
