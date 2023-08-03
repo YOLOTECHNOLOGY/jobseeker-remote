@@ -10,9 +10,9 @@ const retry = (fn, max, currentTime = 1) => {
             if (currentTime <= max) {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                       resolve(retry(fn, max, currentTime + 1)(...args))
-                    },currentTime * 1000)
-                }) 
+                        resolve(retry(fn, max, currentTime + 1)(...args))
+                    }, currentTime * 1000)
+                })
             } else {
                 return Promise.reject(e)
             }
@@ -25,17 +25,20 @@ export default command => command.cata({
     })),
     isFirstReceivedMessage: chatId =>
         M(
-            context =>
-                new Promise(resolve => {
+            context => {
+                const imState = context.getState()
+                return new Promise(resolve => {
                     const delete_status = context.getLocalImState(chatId)?.delete_status
                     resolve(!!delete_status || imState?.chatStatus === 'New' && imState?.initiated_role === 'jobseeker')
                 })
+            }
+
         ),
     requestFirst: aChatId => M(context => {
         context.setLoading(true)
         const chatId = aChatId || context.getChatId()
         return retry(requestFirstService, 5)(chatId)
-        // return retry(() => Promise.reject(new Error('123')), 5)(chatId)
+            // return retry(() => Promise.reject(new Error('123')), 5)(chatId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
