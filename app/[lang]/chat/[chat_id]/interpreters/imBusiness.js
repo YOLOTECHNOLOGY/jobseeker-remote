@@ -4,6 +4,20 @@ import { M, scripts } from 'imforbossjob'
 import { requestFirstService } from './services/imBusiness'
 const { utils } = scripts
 const { RequestResult } = utils
+const retry = (fn, max, currentTime = 1) => {
+    return (...args) => fn(...args)
+        .catch((e) => {
+            if (currentTime <= max) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                       resolve(retry(fn, max, currentTime + 1)(...args))
+                    },currentTime * 1000)
+                }) 
+            } else {
+                return Promise.reject(e)
+            }
+        })
+}
 export default command => command.cata({
     isFirstMessage: () => M(context => new Promise(resolve => {
         const imState = context.getState()
@@ -20,10 +34,12 @@ export default command => command.cata({
     requestFirst: aChatId => M(context => {
         context.setLoading(true)
         const chatId = aChatId || context.getChatId()
-        return requestFirstService(chatId)
+        return retry(requestFirstService, 5)(chatId)
+        // return retry(() => Promise.reject(new Error('123')), 5)(chatId)
             .then(result => RequestResult.success(result.data))
             .catch(error => RequestResult.error(error))
             .finally(() => context.setLoading(false))
     }),
 
 })
+
