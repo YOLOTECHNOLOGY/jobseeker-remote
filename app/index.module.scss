@@ -573,11 +573,14 @@
         font-weight: 400;
         font-size: 12px;
         color: #4e5969;
-        padding: 0 10px;
+        padding: 0 8px;
         margin-right: 8px;
         background: #f7f8fa;
         border-radius: 6px;
         display: inline-block;
+        &:last-of-type{
+          margin-right: 0;
+        }
       }
 
       .contact {
