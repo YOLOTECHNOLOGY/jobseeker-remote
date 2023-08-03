@@ -25,10 +25,10 @@ export default usedConfigProps => {
             fetchData: () => M((content) => {
                 const lang = getLang();
                 return fetchConfigService(
-                    isString(content?.langKey) ??
-                    isString(content?.params?.langKey) ??
-                    isString(content?.params?.lang) ??
-                    isString(content?.lang) ?? lang
+                    isString(content?.langKey) ||
+                    isString(content?.params?.langKey) ||
+                    isString(content?.params?.lang) ||
+                    isString(content?.lang) || lang
                 ).then(data => {
 
                     return Result.success({
