@@ -8,6 +8,7 @@ import { isURL } from '../../[lang]/company/[keyword]/components/InfoList';
 
 
 export function isContentOverflowing(element) {
+	console.log(' element?.scrollWidth ',element, element?.scrollWidth , element?.clientWidth)
 	return element?.scrollWidth > element?.clientWidth;
 }
 export function MouseOverPopover(props: {
@@ -20,8 +21,7 @@ export function MouseOverPopover(props: {
 	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 	const is_url = isURL(props.value);
 	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if (!showPop)
-			return;
+		if (!showPop)return;
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -47,11 +47,10 @@ export function MouseOverPopover(props: {
 				aria-haspopup="true"
 				onMouseEnter={handlePopoverOpen}
 				onMouseLeave={handlePopoverClose}
-				ref={ref}
 			>
 				{is_url ?
-					<Link href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
-					<span>{props.value}</span>}
+					<Link ref={ref} href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
+					<span ref={ref}>{props.value}</span>}
 			</div>
 			<Popover
 				id="mouse-over-popover"

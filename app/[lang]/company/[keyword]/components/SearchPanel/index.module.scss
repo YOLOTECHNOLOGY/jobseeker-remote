@@ -381,6 +381,7 @@
     font-weight: 400;
     line-height: 0.23rem;
     margin-bottom: 0.08rem;
+    @include text_overflow;
   }
 }
 
