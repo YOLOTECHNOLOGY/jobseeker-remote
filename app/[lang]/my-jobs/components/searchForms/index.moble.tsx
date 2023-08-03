@@ -125,17 +125,11 @@ const SearchArea = (props: any) => {
   const router = useRouter()
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
+    if(firstRender) return
     const url = new URLSearchParams(toPairs(filterParams)).toString()
     push(window.location.pathname + '?' + url)
   }, [filterParams, push])
-  const reloadRef = useRef(reload)
-  useEffect(() => {
-    reloadRef.current = reload
-  }, [reload])
-  useEffect(() => {
-    if(firstRender) return
-    reloadRef.current()
-  }, [location, moreData, sort, selectedPreferenceId])
+  useEffect(reload, [location, moreData, sort, selectedPreferenceId])
 
   const newTheme = cloneDeep(theme)
   newTheme.components.MuiPaper.styleOverrides.root['height'] = 'calc(100% - 64px)'
