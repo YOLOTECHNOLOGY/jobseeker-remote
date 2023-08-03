@@ -69,7 +69,7 @@
   // Specify the number of lines to be displayed
   -webkit-line-clamp: $line-count;
   line-height: $line-height;
-  white-space: wrap;
+  white-space: normal;
 }
 @mixin respond-to($breakpoint) {
   @if $breakpoint == phone {
