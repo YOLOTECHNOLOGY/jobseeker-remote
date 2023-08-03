@@ -24,6 +24,7 @@ import { setCookie } from 'helpers/cookies'
 import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
 import Link from 'components/Link'
 import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
+import {appLinkUrl} from 'helpers/constants'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -152,7 +153,7 @@ const SearchArea = (props: any) => {
               className={styles.location}
               // locationList={config.location_lists}
               value={location}
-              label={isPC ? home.search.location : home.search.location2}
+              label={home.search.location}
               onChange={setLocation}
               lang={home.search}
               isPC={isPC}
@@ -215,7 +216,7 @@ const SearchArea = (props: any) => {
                   ) : isHistory ? (
                     <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
                       <AccessTimeIcon />
-                      <span style={spanStyle}>{value}==1</span>
+                      <span style={spanStyle}>{value}</span>
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect} key={props.id}>
@@ -283,7 +284,7 @@ const SearchArea = (props: any) => {
                     <div className={styles.code}>
                       <div className={styles.homeBg}>{homeHeaderPhoneBg}</div>
                       <div className={styles.qrcode}>
-                      <QrCodeDraw   text={'bossjob.com/app'}  width={128} height={128} />
+                         <QrCodeDraw   text={appLinkUrl} ecl='H'  width={128} height={128} />
                         {/* <Image src={AppDownQRCode} alt='app down' width='128' height='128' /> */}
                       </div>
                     </div>

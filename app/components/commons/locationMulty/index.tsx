@@ -312,7 +312,7 @@ const LocationMultiSelector = (props: any) => {
             >
               <Header title={label} onClose={animtionClose}></Header>
 
-              <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10 }}>
+              <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10,paddingBottom:'70px' }}>
                 {locationList.map((first) => {
                   return (
                     <JobItem
