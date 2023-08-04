@@ -10,7 +10,7 @@ import { memoizeWithTime } from 'helpers/cache'
 const fetchList = memoizeWithTime(
     fetchJobsListService,
     (params, token) => JSON.stringify(params) + token,
-    300
+    180
 )
 export default registInterpreter(command =>
     command.cata({
