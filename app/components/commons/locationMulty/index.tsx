@@ -1,6 +1,6 @@
 'use client'
 import { FormControl, TextField } from '@mui/material'
-import { useCallback, useEffect, useMemo, useState,useContext } from 'react'
+import { useCallback, useEffect, useMemo, useState, useContext } from 'react'
 import styles from './index.module.scss'
 import { useSelector } from 'react-redux'
 import { isEqual } from 'lodash-es'
@@ -14,10 +14,10 @@ import { useRef } from 'react'
 import { debounce } from 'lodash-es'
 import { uniqBy, prop } from 'ramda'
 // import { LocationContext } from 'app/[lang]/components/providers/locationProvier'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import InputAdornment from '@mui/material/InputAdornment';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import InputAdornment from '@mui/material/InputAdornment'
 const LocationMultiSelector = (props: any) => {
-  const { label, className, value, isTouched, onChange, lang, ...rest } = props
+  const { label, className, value, isTouched, onChange, lang, isPC, ...rest } = props
   const [showModal, setShowModal] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
@@ -33,9 +33,9 @@ const LocationMultiSelector = (props: any) => {
   }, [activeFirst])
   const locationList = useSelector((store: any) => store.config.config.response?.location_lists)
   const [locations, setLocations] = useState<any[]>([])
-  const locationIds = useMemo(() => {   
-   // setLocation(locations)
-    return locations.map(item => item?.id)
+  const locationIds = useMemo(() => {
+    // setLocation(locations)
+    return locations.map((item) => item?.id)
   }, [locations])
 
   const [height, setHeight] = useState(0)
@@ -66,7 +66,7 @@ const LocationMultiSelector = (props: any) => {
 
   useEffect(() => {
     if (!isEqual(value, locations)) {
-      setLocations(value?.filter(a => a) ?? [])
+      setLocations(value?.filter((a) => a) ?? [])
     }
   }, [value])
   const preShowModal = useRef(false)
@@ -77,28 +77,27 @@ const LocationMultiSelector = (props: any) => {
     preShowModal.current = showModal
   }, [showModal])
 
-
   const textValue = useMemo(() => {
     return locationIds?.join(',')
   }, [locationIds])
 
   const isSecondSelected = useCallback(
     (second) => {
-      return !!locations.find(item => item.id === second.id)
+      return !!locations.find((item) => item.id === second.id)
     },
     [locations]
   )
 
   const isFirstSelected = useCallback(
     (first) => {
-      return !first.locations.find(item => !isSecondSelected(item))
+      return !first.locations.find((item) => !isSecondSelected(item))
     },
     [locationList, isSecondSelected]
   )
 
   const isFirstHalfSelected = useCallback(
     (first) => {
-      return first.locations.find(item => isSecondSelected(item))
+      return first.locations.find((item) => isSecondSelected(item))
     },
     [locationList, isSecondSelected]
   )
@@ -106,7 +105,9 @@ const LocationMultiSelector = (props: any) => {
   const onFirstClick = useCallback(
     (first) => {
       if (isFirstSelected(first)) {
-        setLocations(locations.filter(item => !first.locations.map(item => item.id).includes(item.id)))
+        setLocations(
+          locations.filter((item) => !first.locations.map((item) => item.id).includes(item.id))
+        )
       } else {
         setLocations(uniqBy(prop('id'), [...locations, ...first.locations]))
       }
@@ -117,14 +118,13 @@ const LocationMultiSelector = (props: any) => {
   const onSecondClick = useCallback(
     (second) => {
       if (locationIds.includes(second.id)) {
-        setLocations(locations.filter(location => location.id !== second.id))
+        setLocations(locations.filter((location) => location.id !== second.id))
       } else {
         setLocations([...locations, second])
       }
     },
     [locations]
   )
-
 
   const listener = useCallback((e) => {
     if (e.target.id?.includes?.('job-item')) {
@@ -169,7 +169,6 @@ const LocationMultiSelector = (props: any) => {
     animtionClose()
   }, [onChange, locations, animtionClose])
 
-
   const onFirstHover = useCallback(
     (hoverSecondList) => {
       if (firstRender) {
@@ -190,28 +189,32 @@ const LocationMultiSelector = (props: any) => {
       <TextField
         value={valueText}
         autoComplete='off'
-        
         label={<div style={{ position: 'relative', bottom: 7 }}>{label}</div>}
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
           setShowModal(true)
         }}
-       
         classes={{}}
         style={{
           background: textValue.split(',').filter((a) => a)?.length ? '#E7F1FB' : '#F0F0F0',
-          borderRadius:"10px"
+          borderRadius: '10px'
         }}
         inputProps={{
           style: {
             color: textValue.split(',').filter((a) => a)?.length ? '#1D2129' : '#86909C',
             background: textValue.split(',').filter((a) => a)?.length ? '#fff' : '#ffff',
-            textAlign:"center"
-          },
+            textAlign: isPC ? 'center' : 'left'
+          }
         }}
         InputProps={{
-          endAdornment : <InputAdornment position="end"><KeyboardArrowDownIcon style={{color:"#1D2129",position:'relative',left:'-8px'}} /></InputAdornment> 
+          endAdornment: (
+            <InputAdornment position='end'>
+              <KeyboardArrowDownIcon
+                style={{ color: '#1D2129', position: 'relative', left: '-8px' }}
+              />
+            </InputAdornment>
+          )
         }}
         disabled={showModal}
         onFocus={(e) => {
@@ -284,7 +287,6 @@ const LocationMultiSelector = (props: any) => {
               })}
             </div>
           )}
-
         </div>
       )}
       {showModal && isMobile && (
@@ -310,7 +312,7 @@ const LocationMultiSelector = (props: any) => {
             >
               <Header title={label} onClose={animtionClose}></Header>
 
-              <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10 }}>
+              <div className={styles.columnMain} style={{ height: height - 56 - 76 - 10,paddingBottom:'70px' }}>
                 {locationList.map((first) => {
                   return (
                     <JobItem
@@ -342,29 +344,28 @@ const LocationMultiSelector = (props: any) => {
             >
               <Header title={activeFirst?.display_name} onBack={onBack} onClose={onClose}></Header>
               {/* <div className={styles.subContainer} style={{ height: height - 59 - 75 }}> */}
-                <div className={styles.secondContainer}>
-                  {secondList.length > 0 && (
-                    <div className={styles.columnSub}>
-                      {secondList.map((second: any) => {
-                        return (
-                          <JobItem
-                            key={second.id}
-                            data={second}
-                            checked={isSecondSelected(second)}
-                            onArrowClick={(e) => {
-                              e.stopPropagation()
-                            }}
-                            onClick={() => {
-                              onSecondClick(second)
-                            }}
-                            noArrow
-                          />
-                        )
-                      })}
-                    </div>
-                  )}
+              <div className={styles.secondContainer}>
+                {secondList.length > 0 && (
+                  <div className={styles.columnSub}>
+                    {secondList.map((second: any) => {
+                      return (
+                        <JobItem
+                          key={second.id}
+                          data={second}
+                          checked={isSecondSelected(second)}
+                          onArrowClick={(e) => {
+                            e.stopPropagation()
+                          }}
+                          onClick={() => {
+                            onSecondClick(second)
+                          }}
+                          noArrow
+                        />
+                      )
+                    })}
+                  </div>
+                )}
                 {/* </div> */}
-
               </div>
             </div>
           </div>

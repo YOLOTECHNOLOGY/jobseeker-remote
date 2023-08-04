@@ -2,15 +2,12 @@ import React from 'react'
 import PopularJob from './popularJobs'
 import Ad from '../Ad/Ad'
 import dynamic from 'next/dynamic'
-import { cookies } from 'next/headers'
 const SearchArea = dynamic(() => import('./searchArea'))
 const ServerFunctionFilter = dynamic(() => import('./functionFilter/server'))
 import styles from '../../../index.module.scss'
 import HomeBanner from './HomeBanner'
 
-const TopModule = ({ params, lang, config }) => {
-  const langKey =
-    params?.lang || (cookies().get('geoConfiguration') as any)?.split?.('_')?.[1] || 'en-US'
+const TopModule = ({ lang, langKey, config }) => {
 
   const {
     home

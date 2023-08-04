@@ -90,11 +90,15 @@
     height: 35px;
     width: 116px;
     border: 1px solid #579BF5;
-    border-radius: 10px;
+    border-radius: 4px;
     text-align: center;
     line-height: 35px;
     font-size: 14px;
     color: #2378E5;
+    &:hover,&:active,&:focus{
+      background:  #2378E5;
+      color: #fff;
+    }
   }
 
   .mobile {

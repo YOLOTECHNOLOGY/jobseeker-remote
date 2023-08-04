@@ -197,7 +197,6 @@
   justify-content: center;
 }
 .title {
-  flex: 1;
   // width: 446px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -209,6 +208,7 @@
   font-family: Product Sans;
   font-weight: 700;
   line-height: 22px;
+  width: 80%;
   &:hover {
     color: #136fd3;
   }
@@ -381,6 +381,7 @@
     font-weight: 400;
     line-height: 0.23rem;
     margin-bottom: 0.08rem;
+    @include text_overflow;
   }
 }
 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import classNames from 'classnames'
-import useGetStarted from '../../hooks/useGetStarted'
-import { removeItem } from 'helpers/localStorage'
 import { GoogleLogo } from 'images'
-import styles from '../../index.module.scss'
+import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
+import { removeItem } from 'helpers/localStorage'
+import useGetStarted from '../../hooks/useGetStarted'
+import styles from '../../index.module.scss'
 
 interface IGoogle {
   className?: string
@@ -85,7 +86,7 @@ const GoogleLogin = (props: IGoogle) => {
       social_user_token: payload.accessToken,
       social_type: 'google',
       social_user_id: payload.userId,
-      source: 'web'
+      source: isMobile ? 'mobile_web' : 'web'
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

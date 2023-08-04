@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React from 'react'
 import styles from './index.module.scss'
 import tableIp from '../../interpreters/table'
@@ -13,15 +14,15 @@ import NoData from '../noData'
 const Table = (props: any) => {
   const { jobs = [], page, totalPages, preferences, preferenceId } = props
   // jobs = [], page, totalPages, searchValues, config
-  const preference = preferences?.find?.((item) => item.id === +preferenceId)
-  const recruiterIds = jobs.map((job) => job.recruiter_id)
+  const preference = preferences?.find?.((item: { id: number }) => item.id === +preferenceId)
+  const recruiterIds = jobs.map((job: { recruiter_id: any }) => job.recruiter_id)
 
   return (
     <ChatInfoProvider recruiterIds={recruiterIds}>
       {jobs?.length ? (
         <Loader>
           <div className={styles.container}>
-            {jobs.map((job) => {
+            {jobs.map((job: { id: React.Key }) => {
               return (
                 <div className={styles.jobContainer} key={job?.id}>
                   <JobCard
@@ -44,10 +45,10 @@ const Table = (props: any) => {
   )
 }
 
-export default (props) => {
+export default (props: any) => {
   const { preferences } = props
   if (preferences?.length) {
-    return tableIp(serverDataScript().chain((props) => buildComponentScript(props, Table))).run(
+    return tableIp(serverDataScript().chain((props: any) => buildComponentScript(props, Table))).run(
       props
     )
   } else {

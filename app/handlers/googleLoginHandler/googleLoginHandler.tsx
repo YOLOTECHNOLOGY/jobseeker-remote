@@ -53,7 +53,7 @@ const googleLoginHandler = ({
               last_name: data.given_name,
               avatar: data.picture,
               token: accessToken,
-              social_type: 'google',
+              social_type: 'google-one-tap',
               source: userAgent.isMobile ? 'mobile_web' : 'web',
               social_user_token: accessToken,
               social_user_id: data.sub,

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useContext, useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import Image from 'next/image'
 import classNames from 'classnames'
@@ -23,6 +23,7 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
+import { ChatDataContext } from '../ChatProvider'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -128,6 +129,7 @@ const JobCard = (props: any) => {
     recruiter_full_name,
     recruiter_job_title,
     recruiter_is_online,
+    recruiter_id,
     recruiter_last_active_at,
     job_skills,
     company_logo,
@@ -135,7 +137,7 @@ const JobCard = (props: any) => {
     job_benefits,
     external_apply_url,
     id,
-    chat,
+    // chat,
     is_saved,
     job_url,
     company_url,
@@ -147,6 +149,11 @@ const JobCard = (props: any) => {
     company_financing_stage_id,
     company_industry_id
   } = props
+
+  const chatDatas = useContext(ChatDataContext)
+  const chat = useMemo(() => {
+    return chatDatas.find((chatInfo) => chatInfo.recruiter_id === recruiter_id)
+  }, [chatDatas])
   const config = useSelector((store: any) => store.config.config.response)
   const { search } = useContext(languageContext) as any
   const labels = [
@@ -164,7 +171,7 @@ const JobCard = (props: any) => {
   const { lang: langKey } = useParams()
   const router = useRouter()
   const dispatch = useDispatch()
-  const [loading, chatNow, modalChange] = useChatNow(props)
+  const [loading, chatNow, modalChange] = useChatNow({ ...props, chat })
   const [titleHover, setTitleHover] = useState(false)
   const [popHover, setPopHover] = useState(false)
   const jobBenefitsValue = job_benefits
@@ -196,7 +203,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    ; (chatNow as any)().catch((err) => {
+    ;(chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -372,7 +379,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg

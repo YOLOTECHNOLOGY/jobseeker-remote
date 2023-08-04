@@ -213,7 +213,9 @@
       "noResult": "No Results Found.",
       "seoText": "Find Companies Hiring in {{country}} | Bossjob"
     },
-    "companiesEmpty": "Companies Not Found"
+    "companiesEmpty": "Companies Not Found",
+    "loginNow": "Login Now",
+    "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
   },
   "companyDetail": {
     "tab": {
@@ -352,7 +354,9 @@
         "chatBoss": "Chat directly with Boss"
       },
       "reset2": "Reset",
-      "save": "Save"
+      "save": "Save",
+      "getTheDiceApp": "Get the Dice app",
+      "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
     },
     "popularJobs": "Popular Jobs",
     "tag": {
@@ -1152,14 +1156,34 @@
   "accountSetting": {
     "title": "Account Setting",
     "tabs": {
+      "settings": "Settings",
       "account": "Account",
-      "jobAlert": "Job Alert"
+      "jobAlert": "Job Alert",
+      "accountSetting": "Account Setting",
+      "notification": "Notification",
+      "shieldingCompany": "Shielding Company"
+    },
+    "modals": {
+      "verifyMobileTitle": "Verify your mobile number",
+      "verifyEmailTitle": "Change email address verify",
+      "verifyJobAlertTitle": "Job Alert Setting",
+      "deleteAlertTip": "Are you sure you want to delete this job reminder? After deleting, you will not be able to get high-quality job recommendation information"
+    },
+    "verifiedMessages": {
+      "mobile": "Your mobile number has been verified successfully.",
+      "email": "Your email account has been verified successfully.",
+      "phoneEmpty": "Phone Number is not empty",
+      "phoneError": "The phone number should not be less than 7 digits"
     },
     "email": "Email",
     "sendOpt": "Send OTP",
     "save": "Save",
     "cancel": "Cancel",
     "verify": "Verify",
+    "done": "Done",
+    "yes": "Yes",
+    "search": "Search",
+    "add": "Add",
     "optLabel": "6-digit OTP",
     "errorMsg": {
       "invalidOtp": "The OTP you have entered is wrong. Please try again.",
@@ -1185,14 +1209,30 @@
     "receiveTipsExplanation": "This is to share insights and tips that will help you with your job search.",
     "jobAlertTitle": "Job alert",
     "filter": "Filters",
+    "jobFilter": "Job Filter",
     "frequency": "Frequency",
+    "sendToEmail": "Send to email",
     "alertFrequency": "Alert Frequency",
     "notJobAlert": "You have no job alert yet.",
     "toSearch": " Back to job search",
     "deleteTitle": "Delete job alert",
     "keep": "Keep",
     "delete": "Delete",
-    "deleteTips": "You are about to delete this job alert. This cannot be undone."
+    "deleteTips": "You are about to delete this job alert. This cannot be undone.",
+    "notProvided": "Not provided",
+    "noData": "No Data",
+    "blockMessages": {
+      "searchLabel": "Search companies",
+      "unblock": "Unblock",
+      "title": "After adding blocked companies, you and the bosses of these companies will not be recommended to each other, and your viewing behavior will not be notified to each other.",
+      "jobOrCompany": "Job title or company",
+      "tip1": "The company can be searched by",
+      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
+      "tip3": "Company abbreviation: such as \"BOSS Direct Employment\"",
+      "unBlockTip1": "The following related companies will be unblocked at the same time",
+      "unBlockTip2": "The company is referred to as {{company}}",
+      "noCompanies": "Non-existence of searching company"
+    }
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",

@@ -2,6 +2,7 @@ import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import { isMobile } from 'react-device-detect'
 
 interface MaterialRoundedPaginationProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>, val?: any) => void
@@ -63,7 +64,7 @@ const MaterialRoundedPagination = ({
           defaultPage={defaultPage}
           boundaryCount={boundaryCount}
           shape='rounded'
-          size='large'
+          size={isMobile ? 'small' :'large'}
           page={page}
         />
       </Stack>

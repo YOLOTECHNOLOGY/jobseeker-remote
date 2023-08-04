@@ -1,0 +1,36 @@
+@import 'styles/variable.scss';
+@import 'styles/mixins.scss';
+
+.main {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.image {
+  position: relative;
+  width: 362px;
+  height: 274px;
+  margin: 0 auto;
+
+  @include sm {
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%;
+  }
+}
+
+.message {
+  margin: 20px auto;
+  max-width: 60%;
+
+  color: #121212;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  @include sm {
+    max-width: 100%;
+    font-size: 18px;
+  }
+}

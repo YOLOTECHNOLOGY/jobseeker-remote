@@ -16,13 +16,15 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import { AppDownQRCode } from 'images'
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-
+import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { setCookie } from 'helpers/cookies'
-import { HistoryIcons } from 'images'
-
+import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
+import Link from 'components/Link'
+import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
+import {appLinkUrl} from 'helpers/constants'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -151,9 +153,10 @@ const SearchArea = (props: any) => {
               className={styles.location}
               // locationList={config.location_lists}
               value={location}
-              label={isPC ? home.search.location : home.search.location2}
+              label={home.search.location}
               onChange={setLocation}
               lang={home.search}
+              isPC={isPC}
               sx={{
                 '> .MuiFormControl-root': {
                   borderRadius: '8px',
@@ -213,7 +216,7 @@ const SearchArea = (props: any) => {
                   ) : isHistory ? (
                     <li {...props} style={{ ...styleleSelect, color: '#136fd3' }} key={props.id}>
                       <AccessTimeIcon />
-                      <span style={spanStyle}>{value}==1</span>
+                      <span style={spanStyle}>{value}</span>
                     </li>
                   ) : (
                     <li {...props} style={styleleSelect} key={props.id}>
@@ -241,19 +244,56 @@ const SearchArea = (props: any) => {
           </div>
           {isShow && (
             <div className={styles.download}>
-              <PhoneIphoneIcon className={styles.icon} />
+              {/* <PhoneIphoneIcon  className={styles.icon}/> */}
+              <div className={styles.icon}>{downloadApp}</div>
               <p>
                 {' '}
                 {home.search.download}
                 <br />
-                {home.search.chatBoss}
+                <span>{home.search.chatBoss}</span>
               </p>
               <div className={styles.popver}>
-                <Image src={AppDownQRCode} alt='app down' width='104' height='104' />
-                <p>{home.search.popup.chatBoss}</p>
+                <div className={styles.popverContainer}>
+                  <div className={styles.popverMain}>
+                    <div className={styles.info}>
+                      <h5 className={styles.getApp}>{home?.search?.getTheDiceApp}</h5>
+                      <p className={styles.getAppTips}>{home?.search?.youMustInstallApp}</p>
+                      <div>
+                        <Link
+                          to={process.env.APP_STORE_LINK}
+                          external
+                          style={{ marginRight: '20px' }}
+                        >
+                          <Image
+                            src={footer_apple_download}
+                            alt='AppStore'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                        <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>
+                          <Image
+                            src={footer_googleplay_download}
+                            alt='GooglePlay'
+                            width={140}
+                            height={42}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className={styles.code}>
+                      <div className={styles.homeBg}>{homeHeaderPhoneBg}</div>
+                      <div className={styles.qrcode}>
+                         <QrCodeDraw   text={appLinkUrl} ecl='H'  width={128} height={128} />
+                        {/* <Image src={AppDownQRCode} alt='app down' width='128' height='128' /> */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
+          {/* <div className={styles.shadeheader}></div> */}
         </div>
       </ThemeProvider>
     </div>

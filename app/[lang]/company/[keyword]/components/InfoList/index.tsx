@@ -16,7 +16,6 @@ import { useMediaQuery } from '@mui/material';
 import { SocialMedia, TagContent } from '../Culture';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { ChatItem } from '../ChatPanel'
-import { detail } from 'app/[lang]/chat/[chat_id]/interpreters/services/offer';
 import "swiper/swiper.min.css";
 import { formatTemplateString } from 'helpers/formatter';
 import Lightbox from 'react-image-lightbox';

@@ -32,7 +32,7 @@ moment.locale('en')
 import {
   AddIcon,
   PencilIcon,
-  TrashIcon,
+  TrashIcon2,
 } from 'images'
 
 /* Styles */
@@ -397,7 +397,7 @@ const ProfileView = ({ lang }: any) => {
                         }
                       }}
                     >
-                      <img src={TrashIcon} width='14' height='14' />
+                      <img src={TrashIcon2} width='14' height='22' />
                     </div>
                   </div>
                 </div>
@@ -512,7 +512,7 @@ const ProfileView = ({ lang }: any) => {
                         }
                       }}
                     >
-                      <img src={TrashIcon} width='14' height='14' />
+                      <img src={TrashIcon2} width='14' height='22' />
                     </div>
                   </div>
                 </div>
@@ -544,7 +544,7 @@ const ProfileView = ({ lang }: any) => {
             {profile.skill.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleModal('skills', true, null, null)}>
-            <img style={{marginRight: 15}} src={AddIcon} width='26' height='26' />
+            <img  src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
@@ -631,7 +631,7 @@ const ProfileView = ({ lang }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData('deleteConfirm', sectionName, link, link.id)}
                     >
-                      <img src={TrashIcon} width='14' height='14' />
+                      <img src={TrashIcon2} width='14' height='22' />
                     </div>
                   </div>
                 </div>
@@ -696,7 +696,7 @@ const ProfileView = ({ lang }: any) => {
                       className={styles.iconWrapper}
                       onClick={() => handleDeleteData('deleteConfirm', sectionName, licenseCertification, licenseCertification.id)}
                     >
-                      <img src={TrashIcon} width='14' height='14' />
+                      <img src={TrashIcon2} width='14' height='22' />
                     </div>
                   </div>
                 </div>

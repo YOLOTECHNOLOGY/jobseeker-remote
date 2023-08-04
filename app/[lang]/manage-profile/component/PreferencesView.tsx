@@ -22,6 +22,7 @@ moment.locale('en')
 import {
   AddIcon,
   PencilIcon,
+  TrashIcon2,
   AccountSettingDeleteIconBin
 } from 'images'
 
