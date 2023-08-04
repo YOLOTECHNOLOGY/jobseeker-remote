@@ -355,8 +355,8 @@
       },
       "reset2": "重置",
       "save": "保存",
-      "getTheDiceApp": "Get the Dice app",
-      "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
+      "getTheDiceApp": "获取设备应用",
+      "youMustInstallApp": "您必须安装我们的应用与雇主聊天并编辑您的个人资料。扫描二维码下载应用程序。"
     },
     "popularJobs": "热门工作",
     "tag": {
@@ -1227,7 +1227,7 @@
       "title": "添加屏蔽公司后，您和这些公司的老板将不会相互推荐，您的查看行为也不会通知对方。 ",
       "jobOrCompany": "职位或者公司名称",
       "tip1": "公司可以通过以下方式搜索",
-      "tip2": "Full name of the company: such as \"Beijing Huapin Borui Network Technology Co., Ltd.\"",
+      "tip2": "公司全名：“Beijing Huapin Borui Network Technology Co., Ltd.”",
       "tip3": "公司缩写：“BSS Direct Employment”",
       "unBlockTip1": "以下关联的公司将同时解冻",
       "unBlockTip2": "该公司名称为 {{company}}",
