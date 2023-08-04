@@ -27,6 +27,9 @@
 .bannerViewport {
   overflow: hidden;
   width: 100%;
+  @include msd {
+    height: 274px;
+  }
 }
 
 .bannerContainer {
@@ -61,6 +64,10 @@
   @include lg {
     height: 274px;
     width: 560px;
+  }
+  @include msd {
+    height: 274px;
+    width: 100%;
   }
 }
 

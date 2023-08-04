@@ -49,7 +49,7 @@
     }
 
     .location {
-      width: 137px;
+      flex: 0 1 145px;
       height: 44px;
 
       :global {
@@ -65,14 +65,14 @@
         }
 
         .MuiOutlinedInput-input {
-          padding-left: 0;
+          padding-left: 14px;
         }
       }
     }
 
     .search {
-      width: 586px;
       height: 54px;
+      flex: 1;
       background: #fff;
       margin-left: 8px;
 
@@ -129,6 +129,7 @@
       font-weight: 700;
       outline: none;
       border: 0;
+      cursor: pointer;
 
       &:hover {
         background: rgb(24, 84, 163);

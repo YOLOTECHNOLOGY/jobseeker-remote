@@ -1,6 +1,9 @@
 @import 'styles/mixins.scss';
 @import 'styles/variable.scss';
 
+
+$contentWidth : 90vw;
+$searchContentWidth : 750px;
 .container {
   background: #fcfcfc;
 }
@@ -17,13 +20,26 @@
     margin-top: 50px;
     display: flex;
   }
+  @include msd {
+    width: $contentWidth;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 }
 
 .searchContainer {
   background: #f0f4f7;
+  position: relative;
 }
 
 .searchCompany {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(64px);
+  position: relative;
+  z-index: 3;
   @extend .GlobalContainer;
   padding-top: 20px;
 
@@ -34,6 +50,7 @@
   &Title {
     margin-bottom: 24px;
   }
+
 }
 
 .companiesPagination {
@@ -52,29 +69,76 @@
 .filters {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  padding-top: 24px;
-  flex-wrap: wrap;
-
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: 100%;
+  border-radius: 0px 0px 8px 8px;
+  border: 1px solid #E4E4E4;
+  background: #FAFAFA;
+  width: $searchContentWidth;
+  overflow: hidden;
   @include sm {
     justify-content: flex-start;
   }
 
+  @include msd {
+    width: 90vw;
+    // padding: 10px;
+    flex-wrap: wrap;
+    min-height: 88px;
+  }
+
   .filterItems {
-    height: 30px;
-    width: 176px;
-    margin: 0 20px 20px 0;
-
+    height: 64px;
+    flex:1;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &:hover{
+      background-color: #F2F3F5;
+      :global{
+        .MuiOutlinedInput-root {
+          background-color: #F2F3F5 !important;
+        }
+        .MuiOutlinedInput-input {
+          background-color: #F2F3F5 !important;
+        }
+      }
+    }
     @include msd {
-      flex: 0 1 48%;
-      margin: 0 8px 15px 0;
+      height: 44px;
+      width: 50%;
+      // flex: 0 1 48%;
+      // margin: 0 8px 15px 0;
 
-      &:nth-child(even) {
-        margin-right: 0;
+      // &:nth-child(even) {
+      //   margin-right: 0;
+      // }
+
+      flex: inherit;
+      &:hover{
+        background-color: transparent !important;
+        :global{
+          .MuiOutlinedInput-root {
+            background-color: transparent !important;
+          }
+          .MuiOutlinedInput-input {
+            background-color: transparent !important;
+          }
+        }
       }
     }
 
     :global {
+      .MuiSelect-select{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .MuiPaper-root {
         width: 300px;
 
@@ -86,19 +150,34 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        text-align: center;
         width: calc(100% - 13px);
+        line-height: 1.5;
       }
       .MuiOutlinedInput-root {
-        background-color: #fff !important;
+        width: 100%;
+        height: 100%;
+        background: #FAFAFA !important;
         border-radius: 4px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+          background-color: #F2F3F5 !important;
+        }
       }
       .MuiOutlinedInput-input {
-        background-color: #ffffff !important;
+        background: #FAFAFA !important;
+        &:hover{
+          background-color: #F2F3F5 !important;
+        }
       }
     }
   }
 
   .clearButton {
+    height: 64px;
+    flex:1;
     text-transform: capitalize !important;
     font-family: 'Product Sans';
     font-style: normal;
@@ -108,13 +187,29 @@
     align-items: center;
     letter-spacing: 0.0075em;
     color: #86909c;
-    font-size: 14px;
-    margin-left: 4px;
-    height: 30px;
-
+    font-size: 16px;
+    justify-content: flex-end;
+    padding-right: 20px;
     &:hover {
-      background: transparent;
+      background-color: #F2F3F5 !important;
+      .reset{
+          transform: rotate(180deg);
+          transition: all 0.3s linear;
+      }
     }
+    @include msd {
+      height: 44px;
+      justify-content: center;
+      &:hover {
+        background-color: transparent !important;
+        .reset{
+            transform: rotate(180deg);
+            transition: all 0.3s linear;
+        }
+      }
+      // margin: 0 8px 15px 0;
+    }
+
   }
 }
 
@@ -129,6 +224,10 @@
 
 .featuredCompanyMain {
   @extend .GlobalContainer;
+  padding: 0 !important;
+  width: $contentWidth;
+
+
 }
 
 .featuredEmployer {
@@ -145,45 +244,60 @@
 .featuredCompany {
   width: 560px;
   display: flex;
-  padding: 28px 0 0 28px;
+  flex-direction: column;
+  padding: 16px;
   box-sizing: border-box;
   overflow: hidden;
   background-color: #fff;
   border-radius: 12px;
   border: 1px solid #e5e6eb;
   height: 274px;
+  position: relative;
 
   @include sm {
     width: 100%;
     padding: 28px 12px;
     height: auto;
   }
+
+
 }
 
 .featuredCompanyLogo {
-  width: 64px;
-  height: 64px;
+  width: 90px;
+  height: 90px;
   user-select: none;
-  margin-right: 16px;
 
   a {
     display: inline-block;
   }
 }
-
+.featuredTitleWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
 .featuredCompanyLogoLink {
-  width: 64px;
-  height: 64px;
+  width: 90px;
+  height: 90px;
   border-radius: 5px;
   overflow: hidden;
-  border: 1px solid #f2f5fa;
+  // border: 1px solid #f2f5fa;
   position: relative;
 }
 
 .featuredCompanyDetails {
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
   width: calc(100% - 80px);
+  position: relative;
+  z-index: 2;
+  @include msd {
+    width: 100%;
+  }
 }
 
 .featuredCompanyAbout {
@@ -203,7 +317,13 @@
 .featuredCompanyAboutItem {
   margin-right: 8px;
   font-weight: 400;
-  font-size: 13px;
+  color: var(--main-color-black-black-037-d-7-d-7-d, #7D7D7D) !important;
+  font-family: Product Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px; /* 100% */
+  letter-spacing: 0.105px;
 }
 
 .featuredCompanyAboutItemSeparator {
@@ -225,16 +345,25 @@
 
 .featuredCompanyName {
   margin-right: 8px;
-  color: #1d2129;
   font-weight: normal;
   display: inline-block;
   max-width: 408px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--main-color-black-black-01121212, #121212);
+  /* Bold/super title/medium */
+  font-family: Product Sans;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 125% */
+  letter-spacing: 0.24px;
+  margin-bottom: 10px;
 
   @include msd {
     max-width: 100%;
+    white-space: wrap;
   }
 }
 
@@ -282,15 +411,20 @@
     padding-bottom: 25%;
   }
 }
-
+.placeholderSpace{
+  height: 60px;
+  background-color: #ffffff;
+  @include msd {
+    height: 60px;
+  }
+}
 .featuredSectionTitle {
   padding-top: 60px;
   padding-bottom: 60px;
   text-align: center;
   margin: 0;
-
   color: #353535;
-  font-size: 44px;
+  font-size: 32px;
   font-style: normal;
   font-weight: 700;
   line-height: 55px;
@@ -301,16 +435,19 @@
     padding-bottom: 20px;
     font-size: 32px;
   }
+  @include msd{
+    display: none;
+  }
 }
 
 .popularCompanyTitle {
-  padding-top: 60px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 60px;
   text-align: center;
   margin: 0;
 
   color: #353535;
-  font-size: 44px;
+  font-size: 34px;
   font-style: normal;
   font-weight: 700;
   line-height: 55px;
@@ -327,13 +464,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: $searchContentWidth;
+  padding: 14px;
+  border-radius: 8px 8px 0px 0px;
+  background: #FFF;
+  // box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 
+  @include msd {
+    width: 90vw;
+    padding: 4px;
+  }
   &InputContainer {
-    width: 570px;
     position: relative;
     border-radius: 8px 0 0 8px;
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
-
+    display: flex;
+    height: 60px;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 8px 0px 0px 8px;
+    background: var(--background-white, #FFF);
+    flex: 1;
     :global {
       .MuiOutlinedInput-root {
         height: 60px;
@@ -410,7 +560,6 @@
     text-transform: capitalize;
     background: #136fd3;
     color: #fff;
-    width: 127px;
     height: 60px;
     border-radius: 0 8px 8px 0;
     font-size: 20px;
@@ -419,11 +568,30 @@
     line-height: 18px;
     letter-spacing: 0.15px;
     cursor: pointer;
-    outline: none;
     border: 1px solid #136fd3;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 0px 8px 8px 0px;
+    background: var(--main-color-blue-blue-012378-e-5, #2378E5);
+    min-width: 145px;
     &:hover {
       background: #1854a3;
+    }
+
+    @include msd {
+      width: auto !important;
+      min-width: 97px;
+      border-radius: 0px 8px 0px 0px;
+      background: var(--main-color-blue-blue-012378-e-5, #2378E5);
+      color: #FFF;
+      font-family: Product Sans;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 18px; /* 90% */
+      letter-spacing: 0.15px;
     }
   }
 
@@ -440,58 +608,120 @@
   }
 }
 
+.searchInput{
+  flex:1;
+  :global {
+    .MuiInputLabel-root{
+      font-size: 16px;  
+    }
+  }
+}
+
 .companyList {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
+  // margin-top: 20px;
+  justify-content: space-between;
 
   @include msd {
+    margin-top: 20px;
     flex-direction: column;
   }
 }
 
 .companyItem {
   width: 368px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  // margin-right: 10px;
+  margin-bottom: 15px;
   overflow: hidden;
+  transition: all .3s ease-in;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  &:hover{
+    box-shadow: 7px 0px 70px 0px rgba(0, 0, 0, 0.10);
+    border: 1px solid #2378e5;
+    .split_hover{
+      width: 100%;
+    }
+  }
 
   @include msd {
     width: 100%;
   }
 }
+.companyVerify{
+  height: 30px;
+  width: 30px;
+  position: relative;
+  @include msd{
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    bottom: -10px;
+    right: -10px;
+  }
+}
+.mobile{
+  @include msd {
+    display: block !important;
+  }
+}
 
 .companyCard {
   display: flex;
-  padding: 20px 24px;
+  flex-direction: column;
   background-color: #fff;
-  overflow: hidden;
   border-radius: 8px;
-  border: 1px solid #e5e6eb;
+  height: 300px;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex-shrink: 0;
+  align-self: stretch;
+
+
 
   @include msd {
     flex-direction: row;
+    background: transparent;
+    height: auto;
+    padding: 0px;
+    
   }
 
   &Image {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    border-radius: 5px;
-    border: 1px solid #f2f5fa;
     position: relative;
+    border-radius: 8px;
+    border: 1px solid #E4E4E4;
+    overflow: hidden;
   }
 
   &Left {
-    margin-right: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    @include msd{
+      position: relative;
+      margin-right: 20px;
+      width: auto;
+      
+    }
   }
-
+  
   &Right {
-    width: 274px;
-
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     p {
       margin: 0;
+      flex: 1;
     }
 
     @include msd {
@@ -506,13 +736,22 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      color: #353535;
-      font-size: 18px;
+      font-style: normal;
+      color: #1B1534;
+      font-family: Product Sans;
+      font-size: 20px;
       font-style: normal;
       font-weight: 700;
-      line-height: 23px;
-      letter-spacing: 0.36px;
+      line-height: normal;
+      margin-bottom: 10px;
+      width: 90%;
+
+      @include msd {
+        @include line-clamp-with-line-height(2, 1.5);
+        font-size: 20px;
+        font-weight: 700;
+        
+      }
     }
   }
 
@@ -520,38 +759,150 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
     color: #353535;
-    font-size: 15px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 23px;
     letter-spacing: 0.113px;
+    @include text_overflow;
+    @include msd {
+      color: var(--general-black, #353535);
+      font-family: Product Sans;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 23px; /* 153.333% */
+      margin-bottom: 20px !important;
+      width: 80%;
+    }
+  
   }
 
   &Openings {
     position: relative;
-    margin-top: 14px;
-    display: inline-block;
-
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include msd {
+      display: none;
+    }
     p {
       color: #4e5969;
-      font-size: 15px;
+      font-size: 16px;
       font-style: normal;
       font-weight: 400;
       line-height: 23px;
       letter-spacing: 0.113px;
-
       padding: 0;
       margin: 0;
     }
-
     span {
+      font-size: 16px;
       color: #2378e5;
     }
   }
 
   .arrowIcon {
     margin-left: 10px;
+  }
+}
+
+.compnayCardWrapper{
+  @include msd {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--main-color-black-black-06-e-4-e-4-e-4, #E4E4E4);
+  }
+}
+.mobileOpenings{
+  display: none;
+  @include msd{
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-top: 1px solid var(--main-color-black-black-06-e-4-e-4-e-4, #E4E4E4);
+    justify-content: center;
+    align-items: center;
+  }
+}
+.split{
+  display: block;
+  border-top: 1px solid #e4e4e4;
+  width: 100%;
+  @include msd{
+    display: none;
+  }
+}
+.split_hover{
+  border-top: 1px solid #2378e5;
+  transition: all .3s ease-in;
+  width: 0;
+}
+.tips_wrapper{
+  width: 100%;
+  height: 139px;
+  position: relative;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  @include msd {
+    display: none;
+  }
+}
+.tips_full{
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 139px;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.tips_content{
+  position: relative;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  height: 139px;
+  align-items: center;
+  padding: 0 40px;
+  
+}
+.tips_content_text{
+  color: #FFF;
+  font-family: Product Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 125% */
+  letter-spacing: 0.18px;
+  flex:1;
+  margin-left: 30px;
+  margin-right: 60px;
+}
+.tips_content_go{
+  width: 151px;
+  display: flex;
+  height: 44px;
+  padding: 12px 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--main-color-white-white-ffffff, #FFF);
+  cursor: pointer;
+  font-size: 18px;
+  color: #2378e5;
+  &:hover{
+    background: darken(#FFF, 10%);
+  }
+  &:active{
+    background: darken(#FFF, 20%);
   }
 }

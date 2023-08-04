@@ -13,6 +13,7 @@ import SearchCompany from './components/SearchCompany'
 import FeaturedCompanied from './components/FeaturedCompanied'
 import { useFirstRender } from 'helpers/useFirstRender'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
+import Image from 'next/image'
 
 const initSearchQueries = {
   query: '',
@@ -133,12 +134,13 @@ const Companies = (props: IProps) => {
       </div>
     )
   }
-
   return (
     <>
       <div className={styles.container}>
         {/* search */}
         <div className={styles.searchContainer}>
+          <Image fill alt='bg' style={{objectFit: 'cover'}} src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}/>
+
           <div className={styles.searchCompany}>
             <SearchCompany
               transitions={companies.search}
@@ -153,56 +155,70 @@ const Companies = (props: IProps) => {
             />
           </div>
         </div>
+        <div 
+          className={styles.placeholderSpace}
+          style={{
+            height: (searchQuery.page === 1 || isMobile)  ? 75 : 125,
+            backgroundColor: (searchQuery.page === 1 || isMobile) ?  '#ffffff' : '#F7F8FA'
+            }}
+          />
 
         {/* featured company */}
         {!isFeaturedCompaniesFetching && reset ? (
-          <FeaturedCompanied
-            featuredCompany={featuredCompany}
-            langKey={langKey}
-            config={config}
-            featureBanners={featureBanners}
-            lang={props.lang}
-          />
+          <>
+            <FeaturedCompanied
+                featuredCompany={featuredCompany}
+                langKey={langKey}
+                config={config}
+                featureBanners={featureBanners}
+                lang={props.lang}
+            />
+          </>
+
         ) : null}
 
         {/* companies list */}
-        <div className={styles.companies}>
-          {/* fetching loading: true */}
-          {isFeaturedCompaniesFetching && <CompaniesLoader />}
+        <div className={styles.companiesWrapper} style={{backgroundColor: '#F7F8FA'}}>
+          <div className={styles.companies} >
+            {/* fetching loading: true */}
+            {isFeaturedCompaniesFetching && <CompaniesLoader />}
 
-          {/* fetching loading: false */}
-          {!isFeaturedCompaniesFetching && (
-            <>
-              {/* company card title */}
-              {reset ? (
-                <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
-              ) : null}
+            {/* fetching loading: false */}
+            {!isFeaturedCompaniesFetching && (
+              <div>
+                {/* company card title */}
+                {reset ? (
+                  <h2 className={styles.popularCompanyTitle}>{companies.popularCompany.title}</h2>
+                ) : null}
 
-              {/* company card list */}
-              <CompanyCardList
-                companiesList={featuredCompanies}
-                isLoading={isFeaturedCompaniesFetching}
-                transitions={companies.popularCompany}
-                langKey={langKey}
-                config={config}
-                lang={props.lang}
-              />
-            </>
-          )}
+                {/* company card list */}
+                <CompanyCardList
+                  companiesList={featuredCompanies}
+                  isLoading={isFeaturedCompaniesFetching}
+                  transitions={companies.popularCompany}
+                  langKey={langKey}
+                  config={config}
+                  lang={props.lang}
+                  page={searchQuery.page}
+                />
+              </div>
+            )}
 
-          {/* Pagination */}
-          {totalPage > 1 && (
-            <div className={styles.companiesPagination}>
-              <MaterialRoundedPagination
-                onChange={handlePaginationClick}
-                defaultPage={Number(searchQuery.page) || 1}
-                totalPages={totalPage || 1}
-                page={searchQuery.page}
-                boundaryCount={isMobile ? 0 : 1}
-              />
-            </div>
-          )}
+            {/* Pagination */}
+            {totalPage > 1 && (
+              <div className={styles.companiesPagination}>
+                <MaterialRoundedPagination
+                  onChange={handlePaginationClick}
+                  defaultPage={Number(searchQuery.page) || 1}
+                  totalPages={totalPage || 1}
+                  page={searchQuery.page}
+                  boundaryCount={isMobile ? 0 : 1}
+                />
+              </div>
+            )}
+          </div>
         </div>
+
       </div>
     </>
   )

@@ -24,6 +24,8 @@ import {
 import { fetchJobsForYou } from 'store/services/jobs/fetchJobsForYou'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
+import { throttle } from 'lodash-es'
+import { backTopBtn } from 'images/svg'
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -85,7 +87,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
@@ -98,6 +100,28 @@ const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) =>
 const Tabs = ({ config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
+  const [showBtn, setShowBtn] = useState<boolean>(false)
+  useEffect(() => {
+    window.addEventListener('scroll', useFn)
+
+    return () => {
+      window.removeEventListener('scroll', useFn)
+    }
+  }, [])
+
+  const useFn = throttle(() => {
+    getScrollTop()
+  }, 500)
+
+  const getScrollTop = () => {
+    const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+    if (scrollTopHeight > 960) {
+      setShowBtn(true)
+    } else {
+      setShowBtn(false)
+    }
+  }
+
   const tabList = useMemo(() => {
     return [
       {
@@ -133,6 +157,10 @@ const Tabs = ({ config, location_id, langKey }: any) => {
   const [open, setOpen] = useState<boolean>(false)
   const [message, setMessage] = useState<String>('')
   const [loading, setLoading] = useState<boolean>(false)
+  // const [accessToken, setAccessToken] = useState()
+  // useEffect(() => {
+  //   setAccessToken(getCookie('accessToken'))
+  // }, [])
   const accessToken = getCookie('accessToken')
   const user = getCookie('user')
   const [newTabList, setNewTabList] = useState<Array<any>>([])
@@ -243,6 +271,16 @@ const Tabs = ({ config, location_id, langKey }: any) => {
     //
   }
 
+  const scrollTopFun = () => {
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth'
+    // })
+    document.documentElement.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className={styles.popularJobsBox}>
       <h2 className={styles.jobTitle}>{accessToken ? home.jobCard.jobForYou : home.popularJobs}</h2>
@@ -271,7 +309,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                       letterSpacing: '1px',
                       width: 'auto',
                       padding: '12px 0',
-                      marginRight: '52px',
+                      marginRight: '51px',
                       fontWeight: '400'
                     }}
                   />
@@ -325,16 +363,15 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                 ))
               ) : (
                 <Box sx={{ width: '100%' }}>
-                  <Skeleton width={'100%'} height={200} sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' sx={{ margin: '20px 0' }} />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
-                  <Skeleton width={'100%'} height={20} animation='wave' />
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((e) => (
+                    <Skeleton
+                      key={e}
+                      width={'100%'}
+                      height={20}
+                      animation='wave'
+                      sx={{ margin: '10px 0' }}
+                    />
+                  ))}
                 </Box>
               )}
 
@@ -378,6 +415,11 @@ const Tabs = ({ config, location_id, langKey }: any) => {
       <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
         <Alert severity='error'>{message}</Alert>
       </Snackbar>
+      {showBtn && (
+        <div className={styles.backBtn} onClick={() => scrollTopFun()}>
+          {backTopBtn}
+        </div>
+      )}
     </div>
   )
 }

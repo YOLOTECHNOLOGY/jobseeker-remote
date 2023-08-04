@@ -1,0 +1,83 @@
+.notificationWrapper {
+  padding: 20px;
+  height: 100%;
+
+  .accessSettingsContainer_fromWrapper {
+    &_verifyContainer {
+      margin-top: 20px;
+    }
+
+    &_edit {
+      &_input {
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      &_wrapper {
+        display: flex;
+        justify-content: space-between;
+        &_block {
+          width: 49%;
+        }
+      }
+    }
+  }
+
+  &_button {
+    margin-top: 24px;
+    button {
+      text-transform: none;
+      min-width: 143px;
+      height: 44px;
+    }
+    button:nth-child(2) {
+      margin-left: 20px;
+    }
+  }
+
+  .accessSettingsContainerItem {
+    justify-content: space-between;
+    display: flex;
+    align-items: self-start;
+    color: blue;
+
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .accessSettingsContainer {
+    &_notification {
+      width: 85%;
+
+      span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+        color: #000000;
+      }
+
+      p {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        margin: 0;
+        color: #515151;
+      }
+    }
+  }
+
+  .navTitle {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 40px;
+
+    color: #121212;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}

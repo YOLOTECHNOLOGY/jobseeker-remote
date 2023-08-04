@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Multiple from 'app/components/commons/select/multiple'
+import Multiple from './Select'
+// import Multiple from 'app/components/commons/select/multiple'
 // import LocationField1 from 'app/[lang]/components/mobile/location1'
 import styles from '../Companies.module.scss'
 import theme from 'app/components/commons/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import { Button } from 'app/components/MUIs'
-
+import Image from 'next/image'
 interface IProps {
   config: any
   resetFilterFn: Function
@@ -130,7 +131,10 @@ const SortFilter = (props: IProps) => {
           }}
         /> */}
         {/* Rest Filter */}
-        <Button className={styles.clearButton} variant='text' onClick={handleReset}>
+        <Button 
+            className={styles.clearButton}
+            startIcon={<Image className={styles.reset} width={18} height={18} src={`${process.env.S3_BUCKET_URL}/companies/reset.svg`} alt='clear' />}
+            variant='text' onClick={handleReset}>
           {lang?.companies?.employer?.resetFilters}
         </Button>
       </div>
