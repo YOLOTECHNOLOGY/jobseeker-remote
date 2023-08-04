@@ -735,8 +735,9 @@ $searchContentWidth : 750px;
 
     a {
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp:2;
       font-style: normal;
       color: #1B1534;
       font-family: Product Sans;
@@ -745,8 +746,6 @@ $searchContentWidth : 750px;
       font-weight: 700;
       line-height: normal;
       margin-bottom: 10px;
-      width: 90%;
-
       @include msd {
         @include line-clamp-with-line-height(2, 1.5);
         font-size: 20px;

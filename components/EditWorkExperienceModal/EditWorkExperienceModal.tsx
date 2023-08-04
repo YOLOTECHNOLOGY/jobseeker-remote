@@ -304,6 +304,7 @@ const EditWorkExperienceModal = ({
                   className={styles.fullWidth}
                   label={requiredLabel(expModal.jobTitle)}
                   size='small'
+                  maxLength={100}
                   value={jobTitle}
                   defaultValue={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
@@ -468,6 +469,7 @@ const EditWorkExperienceModal = ({
                   <MaterialTextField
                     className={styles.fullWidth}
                     required
+                    maxLength={15}
                     label={formatTemplateString(
                       expModal.salary,
                       currencyLists.find(({ value }) => value === currency)?.label
