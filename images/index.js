@@ -79,6 +79,8 @@ export const ResumeTemplate2 = `${S3BucketJobseeker}/ResumeTemplate2.png`
 export const LocationPinIcon = `${S3BucketJobseeker}/LocationPinIcon.svg`
 export const RateIcon = `${S3BucketJobseeker}/RateIcon.svg`
 export const TrashIcon = `${S3BucketJobseeker}/trash.svg`
+export const TrashIcon2 = `${S3BucketJobseeker}/trash_s2.svg`
+
 export const DocumentIcon = `${S3BucketJobseeker}/document.svg`
 export const DisclaimerIcon = `${S3BucketJobseeker}/disclaimer.svg`
 export const MailIcon = `${S3BucketJobseeker}/mailIcon.svg`
