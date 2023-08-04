@@ -30,7 +30,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { HistoryIcons } from 'images'
 
 const SearchArea = (props: any) => {
-  const { sort, setSort } = useContext(SortContext)
+
+  const { sort: currentSort } = useContext(SortContext)
+  const [sort, setSort] = useState(currentSort)
   let { config, preferences, preferenceId, lang } = props
   const allLang = lang
   const locationRef = useRef();
@@ -52,7 +54,7 @@ const SearchArea = (props: any) => {
   )
   const [searchValue, setSearchValue] = useState<any>()
   const router = useRouter()
-  const pushJobSearch = useCallback((type='') => {
+  const pushJobSearch = useCallback((type = '') => {
     if (firstRender) {
       return
     }
@@ -134,7 +136,7 @@ const SearchArea = (props: any) => {
   ])
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
-    if(firstRender) return
+    if (firstRender) return
     const url = new URLSearchParams(toPairs(filterParams)).toString()
     push(window.location.pathname + '?' + url)
   }, [filterParams, push])

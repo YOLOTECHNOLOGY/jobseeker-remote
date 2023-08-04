@@ -18,10 +18,8 @@ import { LoadingContext } from 'app/components/providers/loadingProvider'
 import { cloneDeep, flatMap } from 'lodash-es'
 import MaterialLocationField from 'app/components/mobile/location1'
 import { getValueById } from 'helpers/config/getValueById'
-import { SortContext } from './SortProvider'
 
 const SearchArea = (props: any) => {
-  const { setSort: setSortContextSort } = useContext(SortContext)
   const { config, preferences, preferenceId, searchParams, lang } = props
   const {
     newest,
@@ -88,9 +86,9 @@ const SearchArea = (props: any) => {
     locations.find((location) => location.id == searchParams.location)
   )
   const [sort, setSort] = useState(searchParams?.sort?.[0] ?? '2')
-  useEffect(() => {
-    setSortContextSort(sort)
-  }, [sort])
+  // useEffect(() => {
+  //   setSortContextSort(sort)
+  // }, [sort])
   const [moreData, setMoreData] = useState(
     pipe(
       map((item) => {
@@ -125,7 +123,7 @@ const SearchArea = (props: any) => {
   const router = useRouter()
   const firstRender = useFirstRender()
   const reload = useCallback(() => {
-    if(firstRender) return
+    if (firstRender) return
     const url = new URLSearchParams(toPairs(filterParams)).toString()
     push(window.location.pathname + '?' + url)
   }, [filterParams, push])
