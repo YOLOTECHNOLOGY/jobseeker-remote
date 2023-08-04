@@ -8,6 +8,8 @@ import { FormHelperText } from '@mui/material'
 import styles from 'styles/maintenance.module.scss'
 import classNames from 'classnames'
 
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 
 const MaterialBasicSelect = ({
   id,
@@ -38,6 +40,16 @@ const MaterialBasicSelect = ({
       onSelect(event.target.value)
     }
   }
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 8 + ITEM_PADDING_TOP,
+        overflow: 'auto'
+      }
+    }
+  }
+
   const theme = createTheme({
     components: {
       MuiInputLabel: {
@@ -118,7 +130,7 @@ const MaterialBasicSelect = ({
           onOpen={onOpen}
           disabled={disabled}
           helpertext={error?.message}
-          
+          MenuProps={MenuProps}
           {...rest}
         >
           {options &&
