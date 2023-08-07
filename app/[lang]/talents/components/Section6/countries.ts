@@ -87,8 +87,8 @@ const countries: ICountry[] = [
 	},
 	{
 		"country": "Türkiye",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Türkiye-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Türkiye.png`,
+		"flag": `${process.env.S3_BUCKET_URL}/landing/Turkiye-flag.png`,
+		"image": `${process.env.S3_BUCKET_URL}/landing/Turkiye.png`,
 		"coming": true,
 	},
 	{
