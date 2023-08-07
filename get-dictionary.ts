@@ -14,7 +14,7 @@ import idErrorcode from './errorcode/id-ID/errorcode.json'
 
 import jpPageLanguage from './dictionaries/ja-JP.json'
 import jpErrorcode from './errorcode/ja-JP/errorcode.json'
-import { empty } from 'ramda'
+import { isEmpty } from 'ramda'
 // We enumerate all dictionaries here for better linting and typescript support
 // We also get the default import for cleaner types
 const enLanguage = { errorcode: enErrorcode, ...enPageLanguage }
@@ -65,7 +65,7 @@ export const getDictionary = async (locale: Locale) => {
     .filter(key => !isNaN(Number(key)))
     .map(key => ({ [key]: dic[key] }))
     .reduce((a, b) => ({ ...a, ...b }), {})
-  if (empty(dic)) {
+  if (isEmpty(dic)) {
     return dictionaries[locale]?.() || dictionaries['en-US']()
   }
   return { ...dic, errorcode }
