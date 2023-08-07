@@ -92,6 +92,21 @@ const countryCounfig = [
     },
     currency: 'ntd',
     id: 211
+  },
+  {
+    name: 'Macau',
+    key: 'mo',
+    url: 'bossjob.mo',
+    defaultLocation: {
+      id: 2486,
+      is_popular: false,
+      key: "macau",
+      region_display_name: "Macau",
+      seo_value: "macau",
+      value: "Macau",
+    },
+    currency: 'mop',
+    id: 123
   }
 ]
 
