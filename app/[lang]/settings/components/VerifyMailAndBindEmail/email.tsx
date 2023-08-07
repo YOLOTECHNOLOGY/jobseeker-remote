@@ -115,7 +115,8 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   const handleSave = () => {
-    if (!emailError && otp.length == 6) {
+    const emailError = validEmail(email)
+    if (!emailError && otp?.length == 6) {
       verifyEmailOrChangeEmail({ otp, email, emailDefault })
     }
   }
@@ -129,6 +130,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   const handleSendOTP = () => {
+    const emailError = validEmail(email)
     if (!emailError) {
       clear()
       sendEmailOTP(email)

@@ -118,7 +118,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   const handleSave = () => {
-    if (otp.length == 6 && smsCode && phoneNumber) {
+    if (otp?.length == 6 && smsCode && phoneNumber?.length > 6) {
       verifyEmailOrChangeEmail({ phoneNumber, otp, smsCode })
     }
   }
@@ -132,7 +132,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   const handleSendOTP = () => {
-    if (phoneNumber && smsCode) {
+    if (phoneNumber && smsCode && phoneNumber?.length > 6) {
       clear()
       sendPhoneNumberOTP({ phoneNumber, smsCode })
     }
