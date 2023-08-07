@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styles from '../index.module.scss'
 
 import { CameraIcon, DefaultAvatar } from 'images'
@@ -23,13 +23,13 @@ const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
   const {
     config: { notice_period_lists: noticePeriodLists },
-    lang:{profile},
+    lang: { profile },
     userDetail,
-    getUserInfo,
+    getUserInfo
   } = props
 
   const { push } = useContext(LinkContext)
-  const  isExperienced =  sessionStorage.getItem('isExperienced') || '1'
+  const isExperienced = sessionStorage.getItem('isExperienced') || '1'
   const [selectedAvatar, setSelectedAvatar] = useState(null)
   const [selectedAvatarDefault, setSelectedAvatarDefault] = useState<number>(-1)
   const [selectedAvailability, setSelectedAvailability] = useState<number>(5)
@@ -54,7 +54,7 @@ const BasicInformation = (props: any) => {
     freshGraduate,
     thisFieldIsRequired,
     skip
-  }  = profile || {} 
+  } = profile || {}
 
   const pathname = usePathname()
   const experiencedList = [
@@ -74,16 +74,15 @@ const BasicInformation = (props: any) => {
       lastName: ''
     }
   })
-   useEffect(() => {
+  useEffect(() => {
     if (userDetail?.id) {
-      const { avatar, first_name, last_name, notice_period_id} = userDetail
+      const { avatar, first_name, last_name, notice_period_id } = userDetail
       setPreview(avatar)
       setValue('firstName', first_name)
       setValue('lastName', last_name)
       setSelectedAvailability(notice_period_id || 5)
     }
   }, [userDetail])
-
 
   const handleChosenPhoto = async (e) => {
     const file = e.target.files[0]
@@ -115,7 +114,6 @@ const BasicInformation = (props: any) => {
   }
 
   const handleUpdateProfile = async (data) => {
-
     const { firstName, lastName } = data || {}
     const payload = {
       first_name: firstName,
@@ -127,19 +125,21 @@ const BasicInformation = (props: any) => {
       await uploadUserAvatarService(selectedAvatar)
     }
 
-    updateUserCompleteProfileService(payload).then((res) => {
-      if (res.data) {
-        getUserInfo?.()
-        let url = `${pathname}?step=2`
-        sessionStorage.removeItem('isExperienced')
-        if (selectedExperienced === '2') {
-          sessionStorage.setItem('isExperienced','2')
-          url = `${pathname}?step=3`
+    updateUserCompleteProfileService(payload)
+      .then((res) => {
+        if (res.data) {
+          getUserInfo?.()
+          let url = `${pathname}?step=2`
+          sessionStorage.removeItem('isExperienced')
+          if (selectedExperienced === '2') {
+            sessionStorage.setItem('isExperienced', '2')
+            url = `${pathname}?step=3`
+          }
+          push(url)
+          // router.push(url)
         }
-        push(url)
-        // router.push(url)
-      }
-    }).finally(()=>setLoading(false))
+      })
+      .finally(() => setLoading(false))
   }
 
   const changeAvator = async (item, index) => {
@@ -162,13 +162,11 @@ const BasicInformation = (props: any) => {
         <div className={styles.topModule}>
           <div className={styles.headerInfo}>
             <h2>{basicInformation}</h2>
-            <p>{theseInformationWillBeShown}</p>
+            {/* <p>{theseInformationWillBeShown}</p> */}
           </div>
           <div className={styles.container}>
             <h3>{profilePhoto}</h3>
-            <p className={styles.uploadTips}>
-              {uploadAphoto}
-            </p>
+            <p className={styles.uploadTips}>{uploadAphoto}</p>
             <ul className={styles.avatarList}>
               <li className={`${selectedAvatarDefault === -1 ? styles.active : ''}`}>
                 <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
@@ -202,7 +200,7 @@ const BasicInformation = (props: any) => {
 
             <div className={styles.nameBox}>
               <p className={styles.name}>
-                {name} <span>*</span>
+                <span>*</span> {name}
               </p>
               <div>
                 <div className={styles.nameFlex}>
@@ -216,6 +214,7 @@ const BasicInformation = (props: any) => {
                           <MaterialTextField
                             className={styles.stepFullwidth}
                             label={firstName}
+                            variant='standard'
                             required
                             {...fieldState}
                             {...field}
@@ -234,6 +233,7 @@ const BasicInformation = (props: any) => {
                           <MaterialTextField
                             className={styles.stepFullwidth}
                             label={lastName}
+                            variant='standard'
                             required
                             {...fieldState}
                             {...field}
@@ -248,9 +248,9 @@ const BasicInformation = (props: any) => {
 
             <div className={styles.Im}>
               <p className={styles.name}>
-                {IAm} <span>*</span>
+                <span>*</span> {IAm}
               </p>
-              <div className={styles.btnList} style={{flexWrap:'nowrap'}}>
+              <div className={styles.btnList} style={{ flexWrap: 'nowrap' }}>
                 {experiencedList.map((item) => (
                   <button
                     key={item.value}
@@ -267,8 +267,8 @@ const BasicInformation = (props: any) => {
 
             <div className={styles.availability}>
               <p className={styles.name}>
-                {' '}
-                {availability} <span>*</span>
+                <span>*</span>
+                {availability}
               </p>
               <div className={styles.btnList}>
                 {noticePeriodLists.map((item) => (
@@ -287,12 +287,12 @@ const BasicInformation = (props: any) => {
           </div>
         </div>
 
-        <FootBtn 
+        <FootBtn
           showBack={isMobile}
           loading={loading}
-          backText = {back}
+          backText={back}
           rightText={Next1}
-          skipText = {skip}
+          skipText={skip}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
       </div>

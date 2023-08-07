@@ -1,6 +1,5 @@
-import React, { useState, useEffect ,useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styles from '../index.module.scss'
-import Stepper from './stepper'
 import MaterialTextField from 'components/MaterialTextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
@@ -20,8 +19,8 @@ const EducationExperience = (props: any) => {
     userDetail,
     getUserInfo
   } = props
-  const {educations} = userDetail
-  const  isExperienced =  sessionStorage.getItem('isExperienced')
+  const { educations } = userDetail
+  const isExperienced = sessionStorage.getItem('isExperienced')
   const { push } = useContext(LinkContext)
   const [selectedDegrees, setSelectedDegrees] = useState<number>(null)
   const [school, setSchool] = useState('')
@@ -32,24 +31,24 @@ const EducationExperience = (props: any) => {
   const [studyPeriodTo, setStudyPeriodTo] = useState(null)
   const [loading, setLoading] = useState(false)
   const isMobile = !!(document?.body.clientWidth < 750)
-    useEffect(()=>{
-    if(userDetail.educations?.length ){
-      const { 
+  useEffect(() => {
+    if (userDetail.educations?.length) {
+      const {
         degree_id,
         is_currently_studying,
         school,
         field_of_study,
         study_period_from,
-        study_period_to,     
-      } =  userDetail.educations[0]
-      setSelectedDegrees(degree_id )
+        study_period_to
+      } = userDetail.educations[0]
+      setSelectedDegrees(degree_id)
       setIsCurrentStudying(is_currently_studying)
       setSchool(school)
       setFieldStudy(field_of_study)
       setStudyPeriodFrom(study_period_from)
       setStudyPeriodTo(study_period_to)
     }
-  },[JSON.stringify(userDetail)])
+  }, [JSON.stringify(userDetail)])
 
   const pathname = usePathname()
   const {
@@ -66,70 +65,78 @@ const EducationExperience = (props: any) => {
     studyPeriod,
     skip
   } = lang?.profile || {}
- useEffect(()=>{
-   if(selectedDegrees && school && fieldStudy  && studyPeriodFrom  && (!isCurrentStudying  ? studyPeriodTo :true ) ){
-    setIsDisabled(false)
-   }else{
-    setIsDisabled(true)
-   }
- },[selectedDegrees,school,fieldStudy,studyPeriodFrom,studyPeriodTo,isCurrentStudying])
-
-
+  useEffect(() => {
+    if (
+      selectedDegrees &&
+      school &&
+      fieldStudy &&
+      studyPeriodFrom &&
+      (!isCurrentStudying ? studyPeriodTo : true)
+    ) {
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [selectedDegrees, school, fieldStudy, studyPeriodFrom, studyPeriodTo, isCurrentStudying])
 
   const handleSubmit = () => {
     const educationData = {
       school: school,
       is_currently_studying: isCurrentStudying,
       study_period_from: `${moment(new Date(studyPeriodFrom)).format('yyyy-MM')}-01`,
-      study_period_to: isCurrentStudying  ? null : `${moment(new Date(studyPeriodTo)).format('yyyy-MM')}-01`,
+      study_period_to: isCurrentStudying
+        ? null
+        : `${moment(new Date(studyPeriodTo)).format('yyyy-MM')}-01`,
       field_of_study: fieldStudy,
       degree_id: selectedDegrees
     }
     setLoading(true)
-   if(educations?.length){
-    const id = educations[0].id
-    const educationPayload= {
-      educationId:id,
-      educationData:removeEmptyOrNullValues(educationData)
-     }
-     updateUserEducationService(educationPayload).then(res=>{
-      if(res.data){
-        getUserInfo?.()
-        push(`${pathname}?step=4`)
+    if (educations?.length) {
+      const id = educations[0].id
+      const educationPayload = {
+        educationId: id,
+        educationData: removeEmptyOrNullValues(educationData)
       }
-     }).finally(()=>setLoading(false))
-   }else{
-    const educationPayload= {
-      educationData:removeEmptyOrNullValues(educationData)
-     }
-     addUserEducationService(educationPayload).then(res=>{
-      if(res.data){
-        getUserInfo?.()
-        push(`${pathname}?step=4`)
+      updateUserEducationService(educationPayload)
+        .then((res) => {
+          if (res.data) {
+            getUserInfo?.()
+            push(`${pathname}?step=4`)
+          }
+        })
+        .finally(() => setLoading(false))
+    } else {
+      const educationPayload = {
+        educationData: removeEmptyOrNullValues(educationData)
       }
-     }).finally(()=>setLoading(false))
-   }
+      addUserEducationService(educationPayload)
+        .then((res) => {
+          if (res.data) {
+            getUserInfo?.()
+            push(`${pathname}?step=4`)
+          }
+        })
+        .finally(() => setLoading(false))
+    }
   }
 
   const backClick = () => {
-    if(isMobile){
+    if (isMobile) {
       push(`${pathname}?step=4`)
-    }else{
-      const  isExperienced =  sessionStorage.getItem('isExperienced')
+    } else {
+      const isExperienced = sessionStorage.getItem('isExperienced')
       push(`${pathname}?step=${isExperienced ? 1 : 2}`)
     }
-    
   }
 
   return (
     <div className={styles.work}>
       <div className={styles.workContainer}>
-        <Stepper step={1} lang={lang}/>
         <div className={styles.box}>
           <div className={styles.headerInfo}>{educationExperience}</div>
           <div className={styles.body}>
             <p className={styles.title}>{educationLevel}</p>
-            <div className={styles.btnList}>
+            <div className={`${styles.btnGroup}`}>
               {degrees
                 .filter((e) => e.id !== 5)
                 .map((item) => (
@@ -150,6 +157,12 @@ const EducationExperience = (props: any) => {
                 label={schoolName}
                 size='small'
                 value={school}
+                variant='standard'
+                sx={{
+                  '.MuiInput-input': {
+                    padding: '4px 0 8px'
+                  }
+                }}
                 defaultValue={school}
                 onChange={(e) => setSchool(e.target.value)}
               />
@@ -162,6 +175,12 @@ const EducationExperience = (props: any) => {
                 label={fieldOfStudy}
                 size='small'
                 value={fieldStudy}
+                variant='standard'
+                sx={{
+                  '.MuiInput-input': {
+                    padding: '4px 0 8px'
+                  }
+                }}
                 defaultValue={fieldStudy}
                 onChange={(e) => setFieldStudy(e.target.value)}
               />
@@ -206,9 +225,11 @@ const EducationExperience = (props: any) => {
                 )}
               </div>
             </div>
-            {
-              isMobile ? null : <p className={`${styles.fillLater}`} onClick={()=>push(`${pathname}?step=4`)}>{fillThisLater}</p>
-            }       
+            {isMobile ? null : (
+              <p className={`${styles.fillLater}`} onClick={() => push(`${pathname}?step=4`)}>
+                {fillThisLater}
+              </p>
+            )}
           </div>
         </div>
 

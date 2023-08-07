@@ -1,66 +1,96 @@
-
 @include msd {
-    .profile{
-        .bg{
+    .profile {
+        .bg {
             display: none;
         }
+
+        .mainContainer {
+            width: 100%;
+            display: block;
         }
-    .main{
+
+        .steps {
+            width: 100%;
+        }
+
+        .rightContainer {
+            width: 100%;
+            box-shadow: none;
+            padding: 20px 10px;
+        }
+
+
+    }
+
+    .main {
         background: #fff;
-        .header{
-            margin-bottom: 16px;
+
+        .header {
+            margin-bottom: 8px;
         }
-        .header{
-            .headerMain{
+
+        .header {
+            .headerMain {
                 width: 100%;
                 padding: 0 20px;
-               
-              }
+
+            }
         }
-       
-        .basicInfo{
+
+        .basicInfo {
             width: 100%;
             box-sizing: border-box;
             box-shadow: none;
-          
-            .headerInfo{
+
+            .headerInfo {
                 padding: 0 20px;
             }
-            .topModule{
+
+            .topModule {
                 box-shadow: none;
-                border-radius: 0 ;
-               padding-bottom: 70px;
+                border-radius: 0;
             }
-            .container{
+
+            .container {
                 padding: 0 20px;
-                .nameBox{
-                    .nameFlex{
+
+                .nameBox {
+                    .nameFlex {
                         display: block;
-                        .namesFirst{
+
+                        .namesFirst {
                             margin: 0 0 16px 0;
-                          &:last-child{
-                            margin-bottom: 0;
-                          }
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+
+                .availability {
+                    .btnList {
+                        button {
+                            margin-right: 0 !important;
+                            width: 100%;
                         }
                     }
                 }
             }
-          
-           
+
+
+
         }
-        .btnList{
-            button {       
+
+        .btnList {
+            button {
                 width: 100%;
             }
         }
-        .availability{
-            .btnList{
-                button {
-                    margin-right: 0 !important;               
-                }
-        }
-       }
-        .next{
+
+
+
+        .next {
             margin: 0 auto;
             padding: 0 20px;
             position: fixed;
@@ -73,71 +103,88 @@
             box-sizing: border-box;
             background: #fff;
             border-top: 1px solid #BCBCBC;
+
             .rightBtnBox {
                 flex: 1;
                 margin-left: 8px;
-                &:last-child{
+
+                &:last-child {
                     margin-left: 0;
                 }
-            }        
+            }
         }
-        .work{       
-            .workContainer{
+
+        .work {
+            .workContainer {
                 width: 100%;
             }
-            .next{
+
+            .next {
                 margin: 0 auto;
                 width: 100%;
             }
-            .btnList{
-                button{
+
+            .btnList {
+                button {
                     margin-right: 0;
                 }
             }
-            .box{
+
+            .box {
                 width: 100%;
                 box-shadow: none;
                 border-radius: 0;
                 margin-top: 0;
-                .headerInfo{
+
+                .headerInfo {
                     padding-left: 20px;
                 }
-                .body{
+
+                .body {
                     padding: 0 20px 70px 20px;
                 }
-                .stepFieldDateItem, .stepFieldToItem{
+
+                .stepFieldDateItem,
+                .stepFieldToItem {
                     width: 100%;
                     max-width: 100%;
                 }
-                .stepFieldDate{
-                 display: block;
-                 .stepFieldDateItem{
-                    margin-bottom: 16px;
-                    &:last-child{
-                        margin-bottom: 0;
-                    }
-                 }
-                }
-                .currency{
-                  width: 100%;
-                }
-                .salaryBox{
+
+                .stepFieldDate {
                     display: block;
-                    .minSalary{
-                       margin-right: 0;
+
+                    .stepFieldDateItem {
+                        margin-bottom: 16px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+
+                .currency {
+                    width: 100%;
+                }
+
+                .salaryBox {
+                    display: block;
+
+                    .minSalary {
+                        margin-right: 0;
                     }
                 }
             }
-           
+
         }
-       .skipModal {
-        .modalContainer{
-            width: 100%;
-            left: 0;
-            transform: translate(0,0);
-            bottom: 0;
-            top: unset;
+
+        .skipModal {
+            .modalContainer {
+                width: 100%;
+                left: 0;
+                transform: translate(0, 0);
+                bottom: 0;
+                top: unset;
+            }
         }
-       }
     }
 }

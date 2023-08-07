@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import styles from '../index.module.scss'
-import Stepper from './stepper'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Text from 'components/Text'
 import { maxFileSize } from 'helpers/handleInput'
@@ -24,6 +23,7 @@ import moment from 'moment'
 import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/components/providers/linkProvider'
+import MaterialButton from 'components/MaterialButton'
 
 const WorkExperience = (props: any) => {
   const { lang, userDetail, getUserInfo } = props
@@ -169,7 +169,7 @@ const WorkExperience = (props: any) => {
     return (
       <>
         <span>{text}</span>
-        <span className={styles.stepFieldRequired}>*</span>
+        {/* <span className={styles.stepFieldRequired}>*</span> */}
       </>
     )
   }
@@ -270,7 +270,6 @@ const WorkExperience = (props: any) => {
   return (
     <div className={styles.work}>
       <div className={styles.workContainer}>
-        <Stepper step={0} lang={lang} />
         <div className={styles.box}>
           <div className={styles.headerInfo}>{workExperience}</div>
           <div className={styles.body}>
@@ -285,7 +284,7 @@ const WorkExperience = (props: any) => {
                 sx={{
                   textTransform: 'capitalize',
                   width: '330px',
-                  height: '44px',
+                  height: '60px',
                   border: '1px solid #136FD3',
                   borderRadius: '10px',
                   background: '#fff',
@@ -293,9 +292,7 @@ const WorkExperience = (props: any) => {
                   color: '#136FD3'
                 }}
               >
-                <Text textColor='#136FD3' bold>
-                  {uploadResume}
-                </Text>
+                <Text textColor='#136FD3'>{uploadResume}</Text>
                 <input
                   type='file'
                   hidden
@@ -321,7 +318,8 @@ const WorkExperience = (props: any) => {
               : null}
             <p className={styles.titleTip}>{supportedFileType}</p>
             <p className={styles.title}>
-              {startedWorkingSince} <span>*</span>
+              <span>*</span>
+              {startedWorkingSince}
             </p>
             <div className={styles.stepFieldDateItem}>
               <MaterialDatePicker
@@ -336,8 +334,8 @@ const WorkExperience = (props: any) => {
               />
             </div>
             <p className={styles.title}>
-              {mostRecentCompany}
               <span>*</span>
+              {mostRecentCompany}
             </p>
             <div className={styles.stepCompany}>
               <MaterialTextField
@@ -345,6 +343,12 @@ const WorkExperience = (props: any) => {
                 label={requiredLabel(companyNameText)}
                 size='small'
                 fullWidth
+                variant='standard'
+                sx={{
+                  '.MuiInput-input': {
+                    padding: '4px 0 8px'
+                  }
+                }}
                 value={companyName}
                 defaultValue={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
@@ -352,47 +356,53 @@ const WorkExperience = (props: any) => {
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-              {WorkingPeriod} <span>*</span>
+              <span>*</span>
+              {WorkingPeriod}
             </p>
             <div className={styles.stepFieldBody}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={isCurrentJob}
-                    onChange={() => setIsCurrentJob(!isCurrentJob)}
-                    name='currentJob'
-                  />
-                }
-                label={<Text textStyle='base'>{currentlyWorkHere}</Text>}
-              />
-              <div className={styles.stepFieldToItem}>
-                <MaterialDatePicker
-                  label={from}
-                  views={['year', 'month']}
-                  inputFormat='MMM yyyy'
-                  value={workPeriodFrom}
-                  onDateChange={(value) => {
-                    setWorkPeriodFrom(value)
-                  }}
+              <div>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={isCurrentJob}
+                      onChange={() => setIsCurrentJob(!isCurrentJob)}
+                      name='currentJob'
+                    />
+                  }
+                  label={<Text textStyle='base'>{currentlyWorkHere}</Text>}
                 />
               </div>
-              {!isCurrentJob && (
+              <div className={styles.pickBox}>
                 <div className={styles.stepFieldToItem}>
                   <MaterialDatePicker
-                    label={to}
+                    label={from}
                     views={['year', 'month']}
                     inputFormat='MMM yyyy'
-                    value={workPeriodTo}
+                    value={workPeriodFrom}
                     onDateChange={(value) => {
-                      setWorkPeriodTo(value)
+                      setWorkPeriodFrom(value)
                     }}
                   />
                 </div>
-              )}
+                {!isCurrentJob && (
+                  <div className={styles.stepFieldToItem}>
+                    <MaterialDatePicker
+                      label={to}
+                      views={['year', 'month']}
+                      inputFormat='MMM yyyy'
+                      value={workPeriodTo}
+                      onDateChange={(value) => {
+                        setWorkPeriodTo(value)
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
 
             <p className={`${styles.title} ${styles.titlePeriod}`}>
-              {mostRecentJobTitle} <span>*</span>
+              <span>*</span>
+              {mostRecentJobTitle}
             </p>
             <div id='jobFunction' className={styles.stepJobFunction}>
               <JobFunctionSelector
@@ -403,6 +413,12 @@ const WorkExperience = (props: any) => {
                 name='jobFunction'
                 isTouched
                 fullWidth
+                variant='standard'
+                sx={{
+                  '.MuiInput-input': {
+                    padding: '4px 0 8px'
+                  }
+                }}
                 value={jobFunction}
                 onChange={(value) => setJobFunction(value)}
                 onChangeSkill={(value) => setSkills(value)}
@@ -417,17 +433,47 @@ const WorkExperience = (props: any) => {
                 </span>
               ))}
             </div>
+            <div className={styles.addSkils}>
+              <input
+                id={'job_skills'}
+                name={'job_skills'}
+                ref={inputNode}
+                type='text'
+                disabled={selectedSkills?.length >= 5}
+                onKeyUp={handleKeyUp}
+                onKeyDown={handleKeyDown}
+                autoComplete='off'
+                placeholder='Search or add a skill'
+              />
+              <MaterialButton
+                variant='outlined'
+                size='medium'
+                capitalize
+                sx={{
+                  height: '60px !important',
+                  borderRadius: '10px',
+                  backgroundColor: '#fff',
+                  color: '#2378E5',
+                  padding: '0 30px',
+                  ':hover': {}
+                }}
+              >
+                ADD
+              </MaterialButton>
+            </div>
             <div className={styles.chooseSkill}>
               <label htmlFor={'job_skills'} className={styles.labelBox}>
-                <p>{selectSkillsOr}</p>
+                {/* <p>{selectSkillsOr}</p> */}
                 <div className={styles.inputTag}>
                   <div className={styles.inputSkills}>
                     {selectedSkills.map((item, index) => (
                       <Chip
                         key={item.id}
                         sx={{
+                          borderRadius: '4px',
+                          height: '34px',
                           background: '#136FD3',
-                          margin: '8px  8px 0 0'
+                          margin: '10px  10px 0 0'
                         }}
                         color='primary'
                         label={item.value}
@@ -435,16 +481,6 @@ const WorkExperience = (props: any) => {
                       />
                     ))}
                   </div>
-                  <input
-                    id={'job_skills'}
-                    name={'job_skills'}
-                    ref={inputNode}
-                    type='text'
-                    disabled={selectedSkills?.length >= 5}
-                    onKeyUp={handleKeyUp}
-                    onKeyDown={handleKeyDown}
-                    autoComplete='off'
-                  />
                 </div>
               </label>
             </div>
