@@ -63,6 +63,36 @@ const countryCounfig = [
     currency: 'idr',
     id: 96
   },
+  {
+    name: 'Hongkong',
+    key: 'hk',
+    url: 'bossjob.hk',
+    defaultLocation: {
+      id: 2857,
+      is_popular: false,
+      key: "cheung_chau_area",
+      region_display_name: "Cheung Chau Area",
+      seo_value: "cheung_chau_area",
+      value: "Cheung Chau Area",
+    },
+    currency: 'hkd',
+    id: 92
+  },
+  {
+    name: 'Taiwan',
+    key: 'tw',
+    url: 'bossjob.tw',
+    defaultLocation: {
+      id: 2487,
+      is_popular: false,
+      key: "zhongzheng_district",
+      region_display_name: "Zhongzheng District",
+      seo_value: "zhongzheng_district",
+      value: "Zhongzheng District",
+    },
+    currency: 'ntd',
+    id: 211
+  }
 ]
 
 export const languages = [

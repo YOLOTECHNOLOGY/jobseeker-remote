@@ -125,7 +125,7 @@ const GoogleMap = forwardRef(({
         initSearchCart(map)
       }
       mapRef.current = map;
-      
+
 
       // const input = inputDom as HTMLInputElement
 
@@ -145,8 +145,10 @@ const GoogleMap = forwardRef(({
 
       // @ts-ignore
       search.current = new google.maps.places.PlacesService(map)
-      // @ts-ignore
-      ref.current =  new google.maps.places.PlacesService(map)
+      if (ref) {
+        // @ts-ignore
+        ref.current = new google.maps.places.PlacesService(map)
+      }
       if (openMarker) {
         map.addListener('click', (ev) => {
           placeMarkerAndPanTo(ev.latLng, map)
@@ -160,11 +162,11 @@ const GoogleMap = forwardRef(({
     })
   }, [])
 
-  useEffect(()=>{
-    if(typeof lat === 'number' && typeof lng === 'number' && mapRef.current){
+  useEffect(() => {
+    if (typeof lat === 'number' && typeof lng === 'number' && mapRef.current) {
       placeMarkerAndPanTo({ lat, lng }, mapRef.current, infoWindow)
     }
-  },[lat,lng])
+  }, [lat, lng])
   const placeMarkerAndPanTo = useCallback(
     // @ts-ignore
     (latLng: google.maps.LatLng, map: google.maps.Map, infoWindow?) => {
@@ -194,7 +196,7 @@ const GoogleMap = forwardRef(({
     []
   )
 
-  const searchPlace = (ev: any, map: any = mapRef.current ) => {
+  const searchPlace = (ev: any, map: any = mapRef.current) => {
     if (ev.target?.value) {
       // var request = {
       //   query: ev.target?.value,
@@ -229,7 +231,7 @@ const GoogleMap = forwardRef(({
     function callback(place, status) {
       // @ts-ignore
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        ;(mapInput.current as HTMLInputElement).value = place.name + place.formatted_address
+        ; (mapInput.current as HTMLInputElement).value = place.name + place.formatted_address
         setAddress(place)
         map.setCenter(place.geometry?.location)
       }
@@ -238,7 +240,7 @@ const GoogleMap = forwardRef(({
 
   // eslint-disable-next-line
   const searchPlaceList = (latLng, map) => {
-    console.log('searchPlaceList',latLng ,);
+    console.log('searchPlaceList', latLng,);
     // @ts-ignore
     const pyrmont = new google.maps.LatLng(latLng.lat(), latLng.lng())
     const request = {
@@ -255,7 +257,7 @@ const GoogleMap = forwardRef(({
     function callback(results, status) {
       // @ts-ignore
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        ;(mapInput.current as HTMLInputElement).value = ''
+        ; (mapInput.current as HTMLInputElement).value = ''
         renderSearchPlaceList(results, map)
       }
     }
@@ -276,8 +278,8 @@ const GoogleMap = forwardRef(({
     mapInput.current.style.height = '38px'
     mapInput.current.style.fontSize = '14px'
     mapInput.current.addEventListener('focus', () => {
-      ;(searchCart.current as HTMLElement).innerHTML = ''
-      ;(mapInput.current as HTMLInputElement).placeholder = 'Search map'
+      ; (searchCart.current as HTMLElement).innerHTML = ''
+        ; (mapInput.current as HTMLInputElement).placeholder = 'Search map'
     })
     mapInput.current.addEventListener('input', (ev) => searchPlace(ev, map))
     // @ts-ignore
@@ -302,8 +304,8 @@ const GoogleMap = forwardRef(({
   }
 
   const renderSearchPlaceList = (placeList: [any], map) => {
-    ;(mapInput.current as HTMLInputElement).placeholder = 'Please select your location in the list'
-    ;(searchCart.current as HTMLElement).innerHTML = ''
+    ; (mapInput.current as HTMLInputElement).placeholder = 'Please select your location in the list'
+      ; (searchCart.current as HTMLElement).innerHTML = ''
 
     const fragment = document.createDocumentFragment()
     for (let i = 0; i < placeList.length && i < placeList.length; i++) {
@@ -335,13 +337,13 @@ const GoogleMap = forwardRef(({
   }
 
   const handelSelectPlacel = (placel, map) => {
-    
+
     placeMarkerAndPanTo(placel.geometry?.location, map)
 
     if (placel.place_id) {
       searchPlaceDetail(placel.place_id, map)
     } else {
-      ;(mapInput.current as HTMLInputElement).value = placel.name + placel.formatted_address
+      ; (mapInput.current as HTMLInputElement).value = placel.name + placel.formatted_address
       setAddress(placel)
     }
   }
