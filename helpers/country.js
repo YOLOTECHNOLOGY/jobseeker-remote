@@ -99,13 +99,15 @@ export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
-  { value: 'ja-JP', id: 4, label: '日本語' }
+  { value: 'ja-JP', id: 4, label: '日本語' },
+  { value: 'zh-TW', id: 5, label: '中文(繁體)' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
   'zh-CN': 'zh-CN',
   'id-ID': 'id',
-  'ja-JP': 'ja'
+  'ja-JP': 'ja',
+  'zh-TW': 'zh-TW'
 }
 
 export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey
