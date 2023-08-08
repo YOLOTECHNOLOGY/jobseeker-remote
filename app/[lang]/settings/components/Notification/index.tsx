@@ -16,6 +16,7 @@ import Switch from '@mui/material/Switch'
 import styles from './index.module.scss'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { useDispatch } from 'react-redux'
+import { formatTemplateString } from 'helpers/formatter'
 
 interface IProps {
   lang: any
@@ -25,6 +26,7 @@ interface IProps {
 const EmailNotification = (props: IProps) => {
   const { userDetail, lang } = props
   const { accountSetting } = lang
+  const errorCode = lang.errorcode || {}
 
   const notificationSetting = userDetail ? userDetail.email_notification_setting : {}
   const SMSNotificationSetting = userDetail ? userDetail.sms_notification_setting : {}
@@ -55,10 +57,19 @@ const EmailNotification = (props: IProps) => {
         errorMessage = errors[0]
       }
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
