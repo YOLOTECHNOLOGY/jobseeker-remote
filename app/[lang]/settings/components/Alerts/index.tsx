@@ -1,15 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-import Image from 'next/image'
-import { Button } from '@mui/material'
 import Loading from 'app/components/loading'
 import Text from 'components/Text'
-import { getValueById } from 'helpers/config/getValueById'
 import Modal from '../Modal'
 import SettingModal from './SettingModal'
 import { formatJobAlertFilter } from './formatJobAlert'
+import JobCard from './JobCard'
+import Empty from '../Empty'
 
 // actions
 import { fetchJobAlertsListService } from 'store/services/alerts/fetchJobAlertsList'
@@ -18,7 +16,6 @@ import { deleteJobAlertService } from 'store/services/alerts/deleteJobAlert'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 // styles
-import { AccountSettingDeleteIconBin, AccountSettingEditIconPen } from 'images'
 import styles from './index.module.scss'
 
 interface IProps {
@@ -28,7 +25,6 @@ interface IProps {
 
 const AlertJobs = (props: IProps) => {
   const { accessToken, lang } = props
-  const router = useRouter()
   const { accountSetting } = lang
   const dispatch = useDispatch()
 
@@ -88,10 +84,10 @@ const AlertJobs = (props: IProps) => {
         jobAlertId: id
       }
       await deleteJobAlertService(payload)
-      await getAlertsListRequest()
       setCurrentJobAlert(null)
       setOpenDelete(false)
       setIsDeleteLoading(false)
+      await getAlertsListRequest()
     } catch (error) {
       setIsDeleteLoading(false)
       handleError(error)
@@ -110,18 +106,14 @@ const AlertJobs = (props: IProps) => {
         }
       }
       await updateJobAlertService(payload)
-      await getAlertsListRequest()
       setOpen(false)
       setCurrentJobAlert(null)
       setIsUpdateLoading(false)
+      await getAlertsListRequest()
     } catch (error) {
       setIsUpdateLoading(false)
       handleError(error)
     }
-  }
-
-  const handelBackToJobSearch = () => {
-    router.push('/jobs-hiring/job-search')
   }
 
   const handleEditJobAlert = (item) => {
@@ -160,22 +152,6 @@ const AlertJobs = (props: IProps) => {
     setOpenDelete(false)
   }
 
-  const Empty = () => {
-    return (
-      <div className={styles.JobAlertContainer_noJobAlert}>
-        <Text block>{accountSetting.notJobAlert} </Text>
-        <Button
-          variant='contained'
-          onClick={() => {
-            handelBackToJobSearch()
-          }}
-          className={styles.JobAlertContainer_noJobAlert_backBtn}
-        >
-          {accountSetting.toSearch}
-        </Button>
-      </div>
-    )
-  }
 
   function formatJobAlertFilterItem(item) {
     let result = formatJobAlertFilter(config, item)
@@ -184,53 +160,6 @@ const AlertJobs = (props: IProps) => {
     const searchQuery = item.keyword_value
     result = [searchQuery, ...result, companyVerify]
     return result.filter(Boolean).join(',')
-  }
-
-  const frequencyValue = useCallback(
-    (item) => {
-      return (
-        getValueById(config, item?.frequency_id, 'subscibe_job_frequency_id') ||
-        item?.frequency_value
-      )
-    },
-    [config]
-  )
-
-  const JobAlertCard = ({ item }) => {
-    return (
-      <div className={styles.JobAlertContainer_item}>
-        <div className={styles.JobAlertContainer_desc}>
-          <div className={styles.JobAlertContainer_left}>
-            {accountSetting.filter}:
-            <div className={styles.JobAlertContainer_filter} title={formatJobAlertFilterItem(item)}>
-              {formatJobAlertFilterItem(item)}
-            </div>
-          </div>
-          <div className={styles.JobAlertContainer_right}>
-            <Image
-              src={AccountSettingEditIconPen}
-              onClick={() => handleEditJobAlert(item)}
-              width={14}
-              height={16}
-              alt='edit'
-            ></Image>
-            <Image
-              src={AccountSettingDeleteIconBin}
-              onClick={() => handleDeleteJobAlert(item)}
-              width={14}
-              height={16}
-              alt='delete'
-            ></Image>
-          </div>
-        </div>
-        <div className={styles.JobAlertContainer_desc}>
-          {accountSetting.frequency}: {frequencyValue(item)}
-        </div>
-        <div className={styles.JobAlertContainer_desc}>
-          {accountSetting.email}: {item.email}
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -247,42 +176,52 @@ const AlertJobs = (props: IProps) => {
         {!isLoading && (
           <>
             {jobAlertList.length > 0 ? (
-              jobAlertList.map((item) => <JobAlertCard key={item.id} item={item} />)
+              jobAlertList.map((item) => (
+                <JobCard
+                  key={item.id}
+                  item={item}
+                  config={config}
+                  lang={lang}
+                  filterValues={formatJobAlertFilterItem(item)}
+                  handleEditJobAlert={handleEditJobAlert}
+                  handleDeleteJobAlert={handleDeleteJobAlert}
+                />
+              ))
             ) : (
-              <Empty />
+              <Empty lang={lang} />
             )}
           </>
         )}
-
-        <SettingModal
-          key={'Job-Alert-Setting' + currentJobAlert?.id}
-          title={accountSetting?.modals?.verifyJobAlertTitle}
-          open={open}
-          config={config}
-          job={currentJobAlert}
-          filterValues={formatJobAlertFilterItem}
-          handleSave={handleSettingSave}
-          handleClose={handleSettingClose}
-          isLoading={isUpdateLoading}
-          lang={lang}
-        />
-
-        <Modal
-          key={'openDelete' + currentJobAlert?.id}
-          open={openDelete}
-          cancel={accountSetting?.cancel}
-          confirm={accountSetting?.yes}
-          handleSave={handleDeleteConfirm}
-          handleClose={handleDeleteClose}
-          title={accountSetting?.modals?.verifyJobAlertTitle}
-          isLoading={isDeleteLoading}
-          lang={lang}
-        >
-          <div className={styles.modal}>
-            <span className={styles.deleteTip}>{accountSetting?.modals?.deleteAlertTip}</span>
-          </div>
-        </Modal>
       </div>
+
+      <SettingModal
+        key={'Job-Alert-Setting' + currentJobAlert?.id}
+        title={accountSetting?.modals?.verifyJobAlertTitle}
+        open={open}
+        config={config}
+        job={currentJobAlert}
+        filterValues={formatJobAlertFilterItem}
+        handleSave={handleSettingSave}
+        handleClose={handleSettingClose}
+        isLoading={isUpdateLoading}
+        lang={lang}
+      />
+
+      <Modal
+        key={'openDelete' + currentJobAlert?.id}
+        open={openDelete}
+        cancel={accountSetting?.cancel}
+        confirm={accountSetting?.yes}
+        handleSave={handleDeleteConfirm}
+        handleClose={handleDeleteClose}
+        title={accountSetting?.modals?.verifyJobAlertTitle}
+        isLoading={isDeleteLoading}
+        lang={lang}
+      >
+        <div className={styles.modal}>
+          <span className={styles.deleteTip}>{accountSetting?.modals?.deleteAlertTip}</span>
+        </div>
+      </Modal>
     </div>
   )
 }

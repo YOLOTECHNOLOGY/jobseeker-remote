@@ -9,4 +9,11 @@ const emailNotificationSettingUpdate = (payload) => {
   )
 }
 
-export { emailNotificationSettingUpdate }
+const smsNotificationSettingUpdate = (payload) => {
+  const axios = configuredAxios('jobseeker', 'protected')
+  return axios.patch(`/sms-notification-setting/update`, {
+    ...payload
+  })
+}
+
+export { emailNotificationSettingUpdate,smsNotificationSettingUpdate }

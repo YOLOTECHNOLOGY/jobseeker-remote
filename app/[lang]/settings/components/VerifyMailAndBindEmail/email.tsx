@@ -15,7 +15,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import { changeEmail } from 'store/services/auth/changeEmail'
 import { verifyEmail } from 'store/services/auth/verifyEmail'
 import { emailOTPChangeEmailGenerate } from 'store/services/auth/emailOTPChangeEmailGenerate'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -26,7 +25,6 @@ import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/navigation'
-import { getCookie } from 'helpers/cookies'
 
 let timer = null
 // 默认位数
@@ -45,7 +43,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const dispatch = useDispatch()
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
-  // const accessToken = getCookie('accessToken')
   const captchaRef = useRef(null)
   
   const [loading, startTransition] = useTransition()
