@@ -355,7 +355,7 @@
       },
       "reset2": "Reset",
       "save": "Save",
-      "getTheDiceApp": "Get the Dice app",
+      "getTheDiceApp": "Get Bossjob App",
       "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
     },
     "popularJobs": "Popular Jobs",
@@ -1172,7 +1172,7 @@
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
       "email": "Your email account has been verified successfully.",
-      "phoneEmpty": "Phone Number is not empty",
+      "phoneEmpty": "Phone number can't be empty",
       "phoneError": "The phone number should not be less than 7 digits"
     },
     "email": "Email",
@@ -1232,7 +1232,11 @@
       "unBlockTip1": "The following related companies will be unblocked at the same time",
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
-    }
+    },
+    "smsSystemTip": "sms system tip",
+    "smsSystemExplanation": "sms system explanation",
+    "smsChatTip": "sms chat tip",
+    "smsChatExplanation": "sms chat explanation"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
@@ -1404,6 +1408,19 @@
     "Macao": "China Macau",
     "Taiwan": "China Taiwan",
     "Japan": "Japan",
+    "Australia": "Australia",
+    "Nigeria": "Nigeria",
+    "South Korea": "South Korea",
+    "India": "India",
+    "Türkiye": "Türkiye",
+    "Chile": "Chile",
+    "Bangladesh": "Bangladesh",
+    "Europe": "Europe",
+    "Brazil": "Brazil",
+    "USA": "USA",
+    "Mexico": "Mexico",
+    "Canada": "Canada",
+    "Pakistan": "Pakistan",
     "section6_title": "Best hiring APP",
     "section6_subtitle": "Find jobs anywhere, everywhere",
     "section6_coming_soon": "Coming soon...",
