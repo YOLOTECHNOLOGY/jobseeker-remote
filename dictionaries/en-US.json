@@ -1232,7 +1232,11 @@
       "unBlockTip1": "The following related companies will be unblocked at the same time",
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
-    }
+    },
+    "smsSystemTip": "sms system tip",
+    "smsSystemExplanation": "sms system explanation",
+    "smsChatTip": "sms chat tip",
+    "smsChatExplanation": "sms chat explanation"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
