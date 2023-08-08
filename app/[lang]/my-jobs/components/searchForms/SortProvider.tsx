@@ -10,7 +10,7 @@ const Provider = SortContext.Provider
 
 const SortProvider = ({ children }: any) => {
     const params = useSearchParams()
-    const sort = params.get('sort')
+    const sort = params.get('sort') || '2'
     // const [sort, setSort] = useState('2')
     const router = useRouter()
     const pairs = []

@@ -225,7 +225,7 @@ const EditWorkExperienceModal = ({
     const workExperienceData = {
       job_title: jobTitle,
       company: companyName,
-      country_key: country?.value || 'ph',
+      country_key: country?.value,
       company_industry_key: matchedIndustry?.key || null,
       company_industry_id: matchedIndustry?.id || null,
       is_currently_work_here: isCurrentJob,
@@ -469,7 +469,7 @@ const EditWorkExperienceModal = ({
                   <MaterialTextField
                     className={styles.fullWidth}
                     required
-                    maxLength={15}
+                    maxLength={10}
                     label={formatTemplateString(
                       expModal.salary,
                       currencyLists.find(({ value }) => value === currency)?.label

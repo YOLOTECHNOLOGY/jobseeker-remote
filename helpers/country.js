@@ -63,19 +63,66 @@ const countryCounfig = [
     currency: 'idr',
     id: 96
   },
+  {
+    name: 'Hongkong',
+    key: 'hk',
+    url: 'bossjob.hk',
+    defaultLocation: {
+      id: 2857,
+      is_popular: false,
+      key: "cheung_chau_area",
+      region_display_name: "Cheung Chau Area",
+      seo_value: "cheung_chau_area",
+      value: "Cheung Chau Area",
+    },
+    currency: 'hkd',
+    id: 92
+  },
+  {
+    name: 'Taiwan',
+    key: 'tw',
+    url: 'bossjob.tw',
+    defaultLocation: {
+      id: 2487,
+      is_popular: false,
+      key: "zhongzheng_district",
+      region_display_name: "Zhongzheng District",
+      seo_value: "zhongzheng_district",
+      value: "Zhongzheng District",
+    },
+    currency: 'ntd',
+    id: 211
+  },
+  {
+    name: 'Macau',
+    key: 'mo',
+    url: 'bossjob.mo',
+    defaultLocation: {
+      id: 2486,
+      is_popular: false,
+      key: "macau",
+      region_display_name: "Macau",
+      seo_value: "macau",
+      value: "Macau",
+    },
+    currency: 'mop',
+    id: 123
+  }
 ]
 
 export const languages = [
   { value: 'en-US', id: 1, label: 'English' },
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
-  { value: 'ja-JP', id: 4, label: '日本語' }
+  { value: 'ja-JP', id: 4, label: '日本語' },
+  { value: 'zh-TW', id: 5, label: '中文(繁體)' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
   'zh-CN': 'zh-CN',
   'id-ID': 'id',
-  'ja-JP': 'ja'
+  'ja-JP': 'ja',
+  'zh-TW': 'zh-TW'
 }
 
 export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey

@@ -7,64 +7,9 @@ import {useInView, InView } from "react-intersection-observer";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import {languageContext} from "../../../../components/providers/languageProvider";
 
-let countries = [
-	{
-		"country": "Philippines",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Philippines-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Philippines.png`
-	},
-	{
-		"country": "Singapore",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Singapore-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Singapore.png`
-	},
-	{
-		"country": "Indonesia",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Indonesia-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Indonesia.png`
-	},
+import countryList from './countries'
 
-	{
-		"country": "Hongkong",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Hongkong-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Hongkong.png`,
-	},
-	{
-		"country": "Macao",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/macao-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Macao.png`
-	},
-	{
-		"country": "Taiwan",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/taiwan-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/taiwan.png`
-	},
-	{
-		"country": "Japan",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/japen-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/japen.png`
-	},
-	{
-		"country": "Malaysia",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Malaysia-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Malaysia.png`,
-		"coming": true,
-	},
-
-	{
-		"country": "Thailand",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Thailand-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Thailand.png`,
-		"coming": true,
-	},
-	{
-		"country": "Vietnam",
-		"flag": `${process.env.S3_BUCKET_URL}/landing/Vietnam-flag.png`,
-		"image": `${process.env.S3_BUCKET_URL}/landing/Vietnam.png`,
-		"coming": true,
-	},
-	
-];
+let countries = countryList
 
 if (countries.length % 2 !== 0) {
 	countries = countries.concat(countries)

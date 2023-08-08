@@ -6,7 +6,6 @@ import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { BlueTickIcon, TooltipIcon, AccountSettingEditIconPen } from 'images'
 import ModalDialog from '../Modal/index'
 import Captcha from '../CaptchaCode'
-import { getCookie } from 'helpers/cookies'
 
 // tools
 import { getSmsCountryList } from 'helpers/jobPayloadFormatter'
@@ -19,7 +18,6 @@ import Image from 'next/image'
 import { smsOTPChangePhoneNumverGenerate } from 'store/services/auth/smsOTPChangePhoneNumberGenerate'
 import { verifyPhoneNumber } from 'store/services/auth/verifyPhoneNumber'
 import { changePhoneNumber } from 'store/services/auth/changePhoneNumber'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -48,7 +46,6 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const { accountSetting } = lang
   const dispatch = useDispatch()
-  // const accessToken = getCookie('accessToken')
   const router = useRouter()
   const captchaRef = useRef(null)
   const phoneDefault = userDetail.phone_num ? userDetail.phone_num : null
@@ -118,7 +115,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   const handleSave = () => {
-    if (otp.length == 6 && smsCode && phoneNumber) {
+    if (otp?.length == 6 && smsCode && phoneNumber?.length > 6) {
       verifyEmailOrChangeEmail({ phoneNumber, otp, smsCode })
     }
   }
@@ -132,7 +129,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   const handleSendOTP = () => {
-    if (phoneNumber && smsCode) {
+    if (phoneNumber && smsCode && phoneNumber?.length > 6) {
       clear()
       sendPhoneNumberOTP({ phoneNumber, smsCode })
     }

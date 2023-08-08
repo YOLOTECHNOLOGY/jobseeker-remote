@@ -117,10 +117,7 @@ export default function VerticalTabs(props: any) {
           <AccountSetting lang={lang} userDetail={userDetail} config={config} />
         </TabPanel>
         <TabPanel value={value} index={1} className={styles.settingsPanelItem}>
-          <Notification
-            notificationSetting={userDetail ? userDetail.email_notification_setting : null}
-            lang={lang}
-          />
+          <Notification userDetail={userDetail} lang={lang} />
         </TabPanel>
         <TabPanel value={value} index={2} className={styles.settingsPanelItem}>
           <Alerts accessToken={accessToken} lang={lang} />
