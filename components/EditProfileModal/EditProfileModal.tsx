@@ -213,6 +213,9 @@ const EditProfileModal = ({
         // setLocation(matchedLocation)
         setValue('location', matchedLocation?.value)
       }
+      if(userDetail && userDetail.working_since) {
+        setWorkingSince(userDetail.working_since)
+      }
     }
   }, [userDetail])
 
@@ -241,7 +244,7 @@ const EditProfileModal = ({
       address: inputValue,
       latitude: value?.geometry?.location?.lat() || latitude,
       longitude: value?.geometry?.location?.lng() || longitude,
-      working_since: workingSince && moment(new Date(workingSince)).format('yyyy-MM-DD')
+      working_since: workingSince && moment(workingSince).format('yyyy-MM-DD')
     }
     setIsSecondButtonLoading(true)
     try {
