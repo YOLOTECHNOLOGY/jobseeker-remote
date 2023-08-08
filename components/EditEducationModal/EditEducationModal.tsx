@@ -284,7 +284,7 @@ const EditEducationModal = ({
                 <div className={styles.field}>
                   <div className={styles.fieldHeader}>
                     <Text textStyle='base' bold>
-                      {eduModal.from}
+                      {eduModal.to}
                     </Text>
                   </div>
                   <div className={classNames(styles.fieldDate)}>

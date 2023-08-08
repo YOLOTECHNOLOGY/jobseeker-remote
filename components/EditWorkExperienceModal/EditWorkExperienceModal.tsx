@@ -469,7 +469,7 @@ const EditWorkExperienceModal = ({
                   <MaterialTextField
                     className={styles.fullWidth}
                     required
-                    maxLength={15}
+                    maxLength={10}
                     label={formatTemplateString(
                       expModal.salary,
                       currencyLists.find(({ value }) => value === currency)?.label
