@@ -30,6 +30,7 @@ interface IProps {
 
 const ShieldingCompany = (props: IProps) => {
   const { lang } = props
+  const errorCode = lang.errorcode || {}
   const { accountSetting = {} } = lang
   const dispatch = useDispatch()
 
@@ -62,10 +63,19 @@ const ShieldingCompany = (props: IProps) => {
         errorMessage = errors[0]
       }
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
