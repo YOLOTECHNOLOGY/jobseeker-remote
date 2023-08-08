@@ -136,7 +136,7 @@ const EducationExperience = (props: any) => {
           <div className={styles.headerInfo}>{educationExperience}</div>
           <div className={styles.body}>
             <p className={styles.title}>{educationLevel}</p>
-            <div className={`${styles.btnGroup}`}>
+            <div className={`${isMobile ? styles.btnList : styles.btnGroup}`}>
               {degrees
                 .filter((e) => e.id !== 5)
                 .map((item) => (

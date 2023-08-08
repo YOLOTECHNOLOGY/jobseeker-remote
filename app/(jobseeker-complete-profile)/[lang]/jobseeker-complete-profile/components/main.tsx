@@ -14,7 +14,7 @@ import Header from './header'
 import { LinkContext } from 'app/components/providers/linkProvider'
 import { getLang } from 'helpers/country'
 import Stepper from './stepper'
-
+import { seekerBanner } from 'images'
 const Main = (props: any) => {
   const accessToken = getCookie('accessToken')
   const { push } = useContext(LinkContext)
@@ -71,7 +71,19 @@ const Main = (props: any) => {
     <div className={styles.profile}>
       <Header lang={props.lang} step={step} />
       <div className={styles.bg}></div>
-      <div className={styles.banner}></div>
+      <div className={styles.banner}>
+        <div
+          className={styles.bannerBox}
+          style={{
+            background: `url(${seekerBanner}) no-repeat center`
+          }}
+        >
+          <div className={styles.bannerMain}>
+            <h2>{props?.lang?.profile?.updateYouronLineResume} </h2>
+            <p>{props?.lang?.profile?.getMoreRelevantJobRecommendations} </p>
+          </div>
+        </div>
+      </div>
       <div className={styles.mainContainer}>
         <div className={styles.steps}>
           <Stepper step={step - 1} lang={props.lang} />

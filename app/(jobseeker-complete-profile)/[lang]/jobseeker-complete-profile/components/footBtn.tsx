@@ -71,9 +71,9 @@ const FootBtn = ({
                 textTransform: 'capitalize',
                 boxShadow: 'none',
                 borderRadius: '8px',
-                border: '1px solid #136FD3',
+                border: '1px solid #E4E4E4',
                 background: 'transparent',
-                color: '#136FD3'
+                color: '#515151'
               }}
             >
               <span>{isMobile ? skipText : backText}</span>

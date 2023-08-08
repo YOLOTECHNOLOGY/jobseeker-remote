@@ -965,7 +965,11 @@
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
     "skipAnyway": "skipAnyway",
-    "uploadSeccess": "upload seccess"
+    "uploadSeccess": "upload seccess",
+    "updateYouronLineResume": "update your online resume",
+    "getMoreRelevantJobRecommendations": "to get more relevant job recommendations",
+    "searchOrAddSkill": "Search or add a skill",
+    "add": "Add"
   },
   "chat": {
     "chatTitle": "Chat",

@@ -27,8 +27,42 @@ $contentWidth: 894px;
   .banner {
     height: 140px;
     width: 100%;
-    background: red;
     margin-bottom: 30px;
+    background: linear-gradient(158deg, #F5FEFF 0%, rgba(241, 250, 253, 0.95) 58.75%, rgba(200, 233, 255, 1) 100%);
+    position: relative;
+    z-index: 2;
+
+    .bannerBox {
+      height: 100%;
+    }
+
+    .bannerMain {
+      width: 960px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      color: #121212;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      text-transform: capitalize;
+      padding: 30px 0 10px;
+      margin: 0;
+
+
+    }
+
+    p {
+      color: #515151;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      text-transform: capitalize;
+      margin: 0;
+    }
   }
 
   .mainContainer {
@@ -39,7 +73,7 @@ $contentWidth: 894px;
   }
 
   .steps {
-    width: 204px;
+    width: 184px;
   }
 
   .rightContainer {
@@ -280,7 +314,7 @@ $contentWidth: 894px;
 
         .btnList {
           button {
-            width: 218px;
+            width: 225px;
 
             &:nth-of-type(even) {
               margin-right: 20px;
@@ -301,7 +335,7 @@ $contentWidth: 894px;
     flex-wrap: wrap;
 
     button {
-      width: 338px;
+      width: 346px;
       margin-right: 20px;
       background: #e7f1fb;
       border-radius: 10px;
@@ -465,13 +499,23 @@ $contentWidth: 894px;
 
       .upload {
         margin: 20px 0 8px 0;
+
+        :global {
+          .MuiLoadingButton-root {
+            width: 345px;
+            max-width: 100%;
+          }
+        }
       }
 
       .stepFieldDateItem {
         margin-left: 20px;
         flex: 1;
         max-width: 231px;
+      }
 
+      .workingSince,
+      .stepFieldDateItem {
         :global {
           .MuiInputLabel-root {
             left: 0;
@@ -479,8 +523,12 @@ $contentWidth: 894px;
         }
       }
 
+      .workingSince {
+        width: 345px;
+      }
+
       .stepFieldToItem {
-        max-width: 227px;
+        max-width: 236px;
         margin-top: 10px;
 
         :global {
@@ -566,7 +614,7 @@ $contentWidth: 894px;
       }
 
       .stepJobFunction {
-        margin: 14px 0 20px;
+        margin: 4px 0 20px;
       }
     }
 
@@ -666,7 +714,7 @@ $contentWidth: 894px;
 
     .modalFooter {
       border-top: 1px solid #bcbcbc;
-      height: 77px;
+      height: 84px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -854,6 +902,9 @@ $contentWidth: 894px;
 
 .skillList {
   margin: 20px 0 0 0;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
 
   span {
     cursor: pointer;
@@ -866,10 +917,12 @@ $contentWidth: 894px;
     letter-spacing: 1px;
     display: inline-block;
     color: #353535;
-    margin: 0 10px 10px 0;
+
     border-radius: 8px;
     border: 1px solid #E4E4E4;
     background: #FFF;
+
+
   }
 }
 

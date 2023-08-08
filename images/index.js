@@ -208,3 +208,5 @@ export const BannerBackground = `${S3BucketJobseeker}/banner.svg`
 
 // empty
 export const Empty = `${S3BucketJobseeker}/empty.svg`
+
+export const seekerBanner = `${S3BucketJobseeker}/seekerBanner.png`

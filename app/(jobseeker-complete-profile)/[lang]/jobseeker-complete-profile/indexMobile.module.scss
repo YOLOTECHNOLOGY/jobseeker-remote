@@ -1,4 +1,5 @@
 @include msd {
+
     .profile {
         .bg {
             display: none;
@@ -16,14 +17,37 @@
         .rightContainer {
             width: 100%;
             box-shadow: none;
-            padding: 20px 10px;
+            padding: 20px;
+
         }
 
+        .banner {
+            height: 110px;
 
+            .bannerMain {
+                width: 100%;
+                padding-left: 10px;
+
+                h2 {
+                    font-size: 22px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
     }
 
     .main {
         background: #fff;
+        padding-bottom: 60px;
+
+        .addSkils {
+            button {
+                width: 110px;
+            }
+        }
 
         .header {
             margin-bottom: 8px;
@@ -42,17 +66,12 @@
             box-sizing: border-box;
             box-shadow: none;
 
-            .headerInfo {
-                padding: 0 20px;
-            }
-
             .topModule {
                 box-shadow: none;
                 border-radius: 0;
             }
 
             .container {
-                padding: 0 20px;
 
                 .nameBox {
                     .nameFlex {
@@ -88,8 +107,6 @@
             }
         }
 
-
-
         .next {
             margin: 0 auto;
             padding: 0 20px;
@@ -99,7 +116,7 @@
             bottom: 0;
             z-index: 100;
             height: 84px;
-            padding-top: 18px;
+            padding-top: 12px;
             box-sizing: border-box;
             background: #fff;
             border-top: 1px solid #BCBCBC;
@@ -136,30 +153,62 @@
                 border-radius: 0;
                 margin-top: 0;
 
-                .headerInfo {
-                    padding-left: 20px;
+                .workingSince {
+                    width: 100%;
                 }
 
                 .body {
-                    padding: 0 20px 70px 20px;
+
+                    .stepFieldDate {
+                        display: block;
+                        height: auto;
+                        margin-top: 20px;
+                    }
                 }
 
-                .stepFieldDateItem,
-                .stepFieldToItem {
-                    width: 100%;
-                    max-width: 100%;
+                .stepFieldDateItem {
+                    margin-left: 0;
                 }
+
+                .stepFieldBody {
+                    display: block;
+
+                    .workingPeriod {
+                        display: block;
+                        height: auto;
+                        position: relative;
+                        top: -10px;
+                    }
+
+                    .pickBox {
+                        .stepFieldToItem {
+                            width: 100%;
+                            max-width: 100%;
+                        }
+
+                        .stepFieldToItem:first-child {
+                            margin-left: 0;
+                        }
+                    }
+
+                }
+
 
                 .stepFieldDate {
                     display: block;
 
                     .stepFieldDateItem {
                         margin-bottom: 16px;
+                        max-width: 100%;
 
                         &:last-child {
                             margin-bottom: 0;
                         }
                     }
+                }
+
+                .step1SalaryRanges {
+                    display: block;
                 }
 
                 .currency {
@@ -171,6 +220,8 @@
 
                     .minSalary {
                         margin-right: 0;
+                        margin-left: 0;
+                        margin-top: 20px;
                     }
                 }
             }
@@ -186,5 +237,7 @@
                 top: unset;
             }
         }
+
+
     }
 }

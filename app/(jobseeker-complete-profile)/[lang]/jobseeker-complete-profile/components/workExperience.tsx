@@ -24,6 +24,7 @@ import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/components/providers/linkProvider'
 import MaterialButton from 'components/MaterialButton'
+import { fabClasses } from '@mui/material'
 
 const WorkExperience = (props: any) => {
   const { lang, userDetail, getUserInfo } = props
@@ -44,6 +45,7 @@ const WorkExperience = (props: any) => {
   const [existingResume, setExistingResume] = useState<any>([])
   const [resumeDisable, setResumeDisable] = useState<boolean>(false)
   const [resumeLoading, setResumeLoading] = useState<boolean>(false)
+
   const dataSkills = userDetail?.skills
   const dispatch = useDispatch()
   const { push } = useContext(LinkContext)
@@ -140,7 +142,9 @@ const WorkExperience = (props: any) => {
     to,
     placeholder,
     skip,
-    uploadSeccess
+    uploadSeccess,
+    searchOrAddSkill,
+    add
   } = lang?.profile || {}
   useEffect(() => {
     if (resume) {
@@ -232,13 +236,14 @@ const WorkExperience = (props: any) => {
     setSelectedSkills([...selectedSkills, item])
   }
 
-  const handleKeyUp = (e) => {
-    const val = e.target.value
+  const handleKeyUp = (e, isBtn = false) => {
+    const val = isBtn ? inputNode.current.value : e.target.value
+    console.log(val)
     const formattedVal = val.substring(0, val.length - 1).trim()
 
     if (
       val &&
-      (e.key === 'Enter' || e.keyCode == 13) &&
+      (e.key === 'Enter' || e.keyCode == 13 || isBtn) &&
       !tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
     ) {
       setSelectedSkills([...selectedSkills, { id: val, value: val }])
@@ -283,7 +288,6 @@ const WorkExperience = (props: any) => {
                 disabled={resumeDisable}
                 sx={{
                   textTransform: 'capitalize',
-                  width: '330px',
                   height: '60px',
                   border: '1px solid #136FD3',
                   borderRadius: '10px',
@@ -321,7 +325,7 @@ const WorkExperience = (props: any) => {
               <span>*</span>
               {startedWorkingSince}
             </p>
-            <div className={styles.stepFieldDateItem}>
+            <div className={styles.workingSince}>
               <MaterialDatePicker
                 label={'Month year'}
                 views={['year', 'month']}
@@ -360,7 +364,7 @@ const WorkExperience = (props: any) => {
               {WorkingPeriod}
             </p>
             <div className={styles.stepFieldBody}>
-              <div>
+              <div className={styles.workingPeriod}>
                 <FormControlLabel
                   control={
                     <Switch
@@ -443,12 +447,14 @@ const WorkExperience = (props: any) => {
                 onKeyUp={handleKeyUp}
                 onKeyDown={handleKeyDown}
                 autoComplete='off'
-                placeholder='Search or add a skill'
+                placeholder={searchOrAddSkill}
               />
               <MaterialButton
                 variant='outlined'
                 size='medium'
                 capitalize
+                disabled={selectedSkills?.length >= 5}
+                onClick={() => handleKeyUp('', true)}
                 sx={{
                   height: '60px !important',
                   borderRadius: '10px',
@@ -458,7 +464,7 @@ const WorkExperience = (props: any) => {
                   ':hover': {}
                 }}
               >
-                ADD
+                {add}
               </MaterialButton>
             </div>
             <div className={styles.chooseSkill}>

@@ -37,8 +37,8 @@ const Page = async (props: any) => {
     <>
       <div className={styles.main}>
         <Main {...newProps} />
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }
