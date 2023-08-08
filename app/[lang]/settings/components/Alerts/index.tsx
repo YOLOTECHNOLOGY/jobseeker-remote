@@ -84,10 +84,10 @@ const AlertJobs = (props: IProps) => {
         jobAlertId: id
       }
       await deleteJobAlertService(payload)
-      await getAlertsListRequest()
       setCurrentJobAlert(null)
       setOpenDelete(false)
       setIsDeleteLoading(false)
+      await getAlertsListRequest()
     } catch (error) {
       setIsDeleteLoading(false)
       handleError(error)
@@ -106,10 +106,10 @@ const AlertJobs = (props: IProps) => {
         }
       }
       await updateJobAlertService(payload)
-      await getAlertsListRequest()
       setOpen(false)
       setCurrentJobAlert(null)
       setIsUpdateLoading(false)
+      await getAlertsListRequest()
     } catch (error) {
       setIsUpdateLoading(false)
       handleError(error)
