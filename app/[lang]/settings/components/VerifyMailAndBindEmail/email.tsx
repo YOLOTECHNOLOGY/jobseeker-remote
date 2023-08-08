@@ -25,6 +25,7 @@ import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/navigation'
+import { formatTemplateString } from 'helpers/formatter'
 
 let timer = null
 // 默认位数
@@ -37,8 +38,10 @@ interface IProps {
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, userDetail, lang } = props
-  const { accountSetting } = lang
+  const { label, userDetail, lang={} } = props
+  const accountSetting = lang.accountSetting || {}
+  const errorCode = lang.errorcode || {}
+
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
   const emailDefault = userDetail?.email ? userDetail.email : null
@@ -142,10 +145,19 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     } else {
       errorMessage = data?.errors?.email[0]
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )

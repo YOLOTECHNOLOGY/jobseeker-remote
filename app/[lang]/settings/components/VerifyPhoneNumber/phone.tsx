@@ -28,6 +28,7 @@ import { find } from 'lodash-es'
 import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
 import { useRouter } from 'next/navigation'
+import { formatTemplateString } from 'helpers/formatter'
 
 
 let timer = null
@@ -45,6 +46,8 @@ const VerifyPhoneNumber = (props: IProps) => {
   const { label, config, lang, userDetail } = props
 
   const { accountSetting } = lang
+  const errorCode = lang.errorcode || {}
+
   const dispatch = useDispatch()
   const router = useRouter()
   const captchaRef = useRef(null)
@@ -143,10 +146,19 @@ const VerifyPhoneNumber = (props: IProps) => {
     } else {
       errorMessage = data?.errors?.phone_num[0]
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
