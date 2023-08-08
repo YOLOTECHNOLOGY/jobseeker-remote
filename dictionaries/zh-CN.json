@@ -1329,6 +1329,11 @@
   "seo": {
     "ph": "菲律宾",
     "sg": "新加坡",
+    "jp": "Japan",
+    "id": "Indonesia",
+    "hk": "Hongkong",
+    "tw": "Taiwan",
+    "mo": "Macao",
     "siteName": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "metaDescription": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "jobSearch": {
