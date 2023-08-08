@@ -1329,6 +1329,11 @@
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
+    "jp": "Japan",
+    "id": "Indonesia",
+    "hk": "Hongkong",
+    "tw": "Taiwan",
+    "mo": "Macao",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
     "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {
