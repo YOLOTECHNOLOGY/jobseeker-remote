@@ -355,7 +355,7 @@
       },
       "reset2": "Reset",
       "save": "Save",
-      "getTheDiceApp": "Get the Dice app",
+      "getTheDiceApp": "Get Bossjob App",
       "youMustInstallApp": "You must install our app to chat with employers and edit your profile. Scan the QR code to download the app."
     },
     "popularJobs": "Popular Jobs",
@@ -1172,7 +1172,7 @@
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
       "email": "Your email account has been verified successfully.",
-      "phoneEmpty": "Phone Number is not empty",
+      "phoneEmpty": "Phone number can't be empty",
       "phoneError": "The phone number should not be less than 7 digits"
     },
     "email": "Email",
