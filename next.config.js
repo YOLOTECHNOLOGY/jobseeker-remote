@@ -19,7 +19,8 @@ module.exports = withBundleAnalyzer({
         },
         {
           source: '/:lang/company/:keyword/jobs',
-          destination: '/:lang/company/:keyword'
+          destination: '/:lang/company/:keyword',
+          permanent: false
         }
       ]
     }
