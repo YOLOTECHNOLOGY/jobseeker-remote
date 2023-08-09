@@ -17,7 +17,7 @@ import FootBtn from './footBtn'
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { LinkContext } from 'app/components/providers/linkProvider'
-
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import { usePathname } from 'next/navigation'
 const avatarList = [avatar1, avatar2, avatar3, avatar4, avatar5]
 const BasicInformation = (props: any) => {
@@ -170,7 +170,7 @@ const BasicInformation = (props: any) => {
             <ul className={styles.avatarList}>
               <li className={`${selectedAvatarDefault === -1 ? styles.active : ''}`}>
                 <div className={styles.uploadAvatarDisplay} onClick={handleChoosePhoto}>
-                  <Avatar sx={{ width: '58px', height: '58px' }} src={preview || DefaultAvatar} />
+                  <Avatar sx={{ width: '64px', height: '64px' }} src={preview || DefaultAvatar} />
                   <input
                     id='uploadUserAvatar'
                     accept='image/*'
@@ -182,6 +182,19 @@ const BasicInformation = (props: any) => {
                     <img src={CameraIcon} height='14' width='14' />
                   </button>
                 </div>
+                {selectedAvatarDefault === -1 && (
+                  <span className={styles.selected}>
+                    <CheckCircleRoundedIcon
+                      style={{
+                        color: '#5BB647',
+                        fontSize: '28px',
+                        position: 'relative',
+                        top: '-2px',
+                        left: '-2px'
+                      }}
+                    />
+                  </span>
+                )}
               </li>
               {avatarList.map((item, index) => (
                 <li
@@ -190,11 +203,30 @@ const BasicInformation = (props: any) => {
                   className={`${selectedAvatarDefault === index ? styles.active : ''}`}
                 >
                   <Avatar sx={{ width: '100%', height: '100%' }} src={item.src || DefaultAvatar} />
+                  {selectedAvatarDefault === index && (
+                    <span className={styles.selected}>
+                      <CheckCircleRoundedIcon
+                        style={{
+                          color: '#5BB647',
+                          fontSize: '28px',
+                          position: 'relative',
+                          top: '-2px',
+                          left: '-2px'
+                        }}
+                      />
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
             <p className={styles.photoTips}>
-              <InfoOutlinedIcon sx={{ fontSize: '16px', color: '#FE574A', marginRight: '4px' }} />
+              <InfoOutlinedIcon
+                sx={{
+                  fontSize: '16px',
+                  color: '#FE574A',
+                  marginRight: '4px'
+                }}
+              />
               {havingArealPhoto}
             </p>
 
