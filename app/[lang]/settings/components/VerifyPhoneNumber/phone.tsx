@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -29,7 +29,6 @@ import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
 import { useRouter } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
-
 
 let timer = null
 // 默认位数
@@ -87,11 +86,20 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       setVerify(!!userDetail?.is_mobile_verified)
     }
   }, [loading, userDetail])
 
+  useEffect(() => {
+    setDisabled(!smsCode || phoneNumber?.length < 7)
+  }, [smsCode, phoneNumber])
+
+  const disabledSave = useMemo(() => {
+    const disabledOtp = otp?.length < 6 ? true : false
+    const errorMessage = phoneNumber?.length < 7 ? true : false
+    return disabledOtp || errorMessage || !smsCode
+  }, [otp, smsCode, phoneNumber])
 
   useEffect(() => {
     if (initialTime > 0) {
@@ -193,7 +201,7 @@ const VerifyPhoneNumber = (props: IProps) => {
             startTransition(() => {
               router.refresh()
             })
-            
+
             dispatch(
               displayNotification({
                 open: true,
@@ -222,7 +230,7 @@ const VerifyPhoneNumber = (props: IProps) => {
             startTransition(() => {
               router.refresh()
             })
-         
+
             dispatch(
               displayNotification({
                 open: true,
@@ -241,13 +249,14 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const handlePhoneNumber = (ev) => {
     const value = ev.target.value || ''
-    if(!value) {
+    if (!value) {
       setNumberError(accountSetting?.verifiedMessages?.phoneEmpty)
-    }else if(value.length < 7) {
+    } else if (value.length < 7) {
       setNumberError(accountSetting?.verifiedMessages?.phoneError)
     } else {
       setNumberError('')
     }
+    setDisabled(!smsCode || value?.length < 7)
     setPhoneNumber(value)
   }
 
@@ -298,6 +307,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         title={accountSetting?.modals?.verifyMobileTitle}
         isLoading={isLoadingButton}
         lang={lang}
+        disabled={disabledSave}
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>
@@ -317,7 +327,7 @@ const VerifyPhoneNumber = (props: IProps) => {
                 variant='standard'
                 value={phoneNumber}
                 onChange={handlePhoneNumber}
-                helperText={<span style={{color: 'red'}}>{numberError}</span>}
+                helperText={<span style={{ color: 'red' }}>{numberError}</span>}
               />
               <button
                 className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}

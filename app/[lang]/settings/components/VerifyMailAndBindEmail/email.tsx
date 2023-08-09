@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -38,7 +38,7 @@ interface IProps {
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, userDetail, lang={} } = props
+  const { label, userDetail, lang = {} } = props
   const accountSetting = lang.accountSetting || {}
   const errorCode = lang.errorcode || {}
 
@@ -47,9 +47,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
   const captchaRef = useRef(null)
-  
+
   const [loading, startTransition] = useTransition()
-  
+
   const [verify, setVerify] = useState(!!userDetail.is_email_verify)
 
   const [emailError, setEmailError] = useState(null)
@@ -57,7 +57,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const [defaultEmail, setDefaultEmail] = useState(emailDefault)
 
   const [open, setOpen] = useState(false)
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(!!email)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
@@ -73,6 +73,12 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     return errorMessage
   }
 
+  const disabledSave = useMemo(() => {
+    const disabledOtp = otp?.length < 6 ? true : false
+    const errorMessage = !!validEmail(email)
+    return disabledOtp || errorMessage
+  }, [otp, email])
+
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
@@ -82,7 +88,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       setVerify(!!userDetail?.is_email_verify)
     }
   }, [loading, userDetail])
@@ -100,7 +106,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const handleKeyUp = (ev) => {
     const value = ev?.target?.value || ''
-    setEmailError(validEmail(value))
+    const errorMessage = validEmail(value)
+    setEmailError(errorMessage)
+    setDisabled(!!errorMessage)
   }
 
   const handleOpen = () => {
@@ -270,6 +278,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         handleClose={handleClose}
         title={accountSetting?.modals?.verifyEmailTitle}
         lang={lang}
+        disabled={disabledSave}
         isLoading={isLoadingButton}
       >
         <div className={styles.modalContent}>

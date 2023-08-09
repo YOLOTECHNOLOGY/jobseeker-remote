@@ -75,4 +75,10 @@
 
     margin-left: 14px;
   }
+
+  .disabled {
+    background: rgba(0, 0, 0, 0.23);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }

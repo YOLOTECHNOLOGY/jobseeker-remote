@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { debounce } from 'lodash-es'
@@ -23,6 +23,7 @@ import Modal from '../Modal'
 
 import styles from './index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
+import classNames from 'classnames/bind'
 
 interface IProps {
   lang: any
@@ -85,6 +86,7 @@ const ShieldingCompany = (props: IProps) => {
     setOpen(false)
     setSearchValue('')
     setSearchList(() => [])
+    setCheckedCompany([])
     setShowSearchEmpty(true)
   }
 
@@ -169,6 +171,7 @@ const ShieldingCompany = (props: IProps) => {
   // }, [searchValue])
 
   const filterCompany = (newValue) => {
+    if (!newValue) return
     setSearchLoading(true)
     const params = {
       explain: 1,
@@ -290,6 +293,14 @@ const ShieldingCompany = (props: IProps) => {
     return searchList?.length > 0 ? <SearchModalList /> : <SearchModalEmpty />
   }
 
+  const disabledSave = useMemo(() => {
+    return checkedCompany?.length == 0
+  }, [checkedCompany])
+
+  const disabledSearch = useMemo(() => {
+    return !searchValue
+  }, [searchValue])
+
   return (
     <div className={styles.main}>
       <div className={styles.mainNav}>
@@ -333,6 +344,7 @@ const ShieldingCompany = (props: IProps) => {
         title={accountSetting?.add}
         isLoading={isLockLoading}
         lang={lang}
+        disabled={disabledSave}
       >
         <div className={styles.modal}>
           <p className={styles.title}>{accountSetting?.blockMessages?.title}</p>
@@ -345,9 +357,10 @@ const ShieldingCompany = (props: IProps) => {
             ></MaterialTextField>
             <MaterialButton
               onClick={handleSearch}
-              className={styles.searchButton}
+              className={classNames([styles.searchButton, disabledSearch && styles.disabled])}
               variant='contained'
               capitalize
+              disabled={disabledSearch}
             >
               {accountSetting?.search}
             </MaterialButton>
