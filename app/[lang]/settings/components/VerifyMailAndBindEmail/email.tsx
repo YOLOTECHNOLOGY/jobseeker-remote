@@ -57,7 +57,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const [defaultEmail, setDefaultEmail] = useState(emailDefault)
 
   const [open, setOpen] = useState(false)
-  const [disabled, setDisabled] = useState(!!email)
+  const [disabled, setDisabled] = useState(false)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
@@ -85,6 +85,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     setInitialTime(0)
     setDisabled(false)
     setEmailError('')
+    setOtp('')
   }
 
   useEffect(() => {
@@ -114,7 +115,9 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   const handleOpen = () => {
     setOpen(true)
     clear()
-    setEmail(userDetail?.email ? userDetail.email : null)
+    const email = userDetail?.email ? userDetail.email : null
+    setEmail(email)
+    setDisabled(!email)
   }
 
   const clearCloseModal = () => {

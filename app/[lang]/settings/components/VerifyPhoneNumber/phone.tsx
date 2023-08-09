@@ -92,8 +92,8 @@ const VerifyPhoneNumber = (props: IProps) => {
   }, [loading, userDetail])
 
   useEffect(() => {
-    setDisabled(!smsCode || phoneNumber?.length < 7)
-  }, [smsCode, phoneNumber])
+    setDisabled(phoneNumber?.length < 7)
+  }, [phoneNumber])
 
   const disabledSave = useMemo(() => {
     const disabledOtp = otp?.length < 6 ? true : false
@@ -117,12 +117,14 @@ const VerifyPhoneNumber = (props: IProps) => {
     setOpen(true)
     clear()
     setSmsCode(getSmsCountryCode(userDetail, smsCountryList))
-    setPhoneNumber(userDetail?.phone_num_without_country_code || '')
+    const phone = userDetail?.phone_num_without_country_code || ''
+    setPhoneNumber(phone)
+    setDisabled(phone?.length < 7)
   }
 
   const clearCloseModal = () => {
-    clear()
     setOpen(false)
+    clear()
   }
 
   const handleSave = () => {
