@@ -14,6 +14,7 @@ import offer from './offer'
 import alertInfo from './alertInfo'
 import conversation from './conversation'
 import autoSendResumeIp from './autoSendResume'
+import chatListIp from './chatList'
 const {
     utils,
     responseResumeJobseeker,
@@ -28,7 +29,8 @@ const {
     offerJobseeker,
     infoAlert,
     autoSendResume,
-    conversation: conversationJobseeker
+    conversation: conversationJobseeker,
+    chatList
 } = scripts
 const { CommonActions } = utils
 const { Actions: ResponseResumeActions } = responseResumeJobseeker
@@ -43,6 +45,7 @@ const { Actions: OfferActions } = offerJobseeker
 const { Actions: InfoAlertActions } = infoAlert
 const { Actions: AutoSendResumeActions } = autoSendResume
 const { Actions: ConversationActions } = conversationJobseeker
+const { Actions: ChatListActions } = chatList
 const { IMBusinessActions } = im
 
 export default cond([
@@ -59,7 +62,8 @@ export default cond([
     [OfferActions.is, offer],
     [InfoAlertActions.is, alertInfo],
     [AutoSendResumeActions.is, autoSendResumeIp],
-    [ConversationActions.is, conversation]
+    [ConversationActions.is, conversation],
+    [ChatListActions.is, chatListIp]
 ])
 
 
