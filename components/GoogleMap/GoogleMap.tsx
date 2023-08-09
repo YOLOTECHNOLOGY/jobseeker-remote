@@ -222,7 +222,7 @@ const GoogleMap = forwardRef(({
   const searchPlaceDetail = (placeId, map) => {
     const request = {
       placeId: placeId,
-      fields: ['ALL']
+      fields: ['name', 'formatted_address', 'vicinity', 'geometry', 'place_id']
     }
     // @ts-ignore
     const service = new google.maps.places.PlacesService(map)
@@ -243,11 +243,14 @@ const GoogleMap = forwardRef(({
     console.log('searchPlaceList', latLng,);
     // @ts-ignore
     const pyrmont = new google.maps.LatLng(latLng.lat(), latLng.lng())
-    const request = {
+    var request = {
       location: pyrmont,
       // @ts-ignore
       rankBy: google.maps.places.RankBy.DISTANCE,
-      type: ['All']
+      maxPriceLevel: 2,
+      minPriceLevel: 0,
+      type: ['establishment'],
+      keyword: 'office'
     }
 
     // @ts-ignore

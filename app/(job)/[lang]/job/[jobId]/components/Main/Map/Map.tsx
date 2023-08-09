@@ -60,6 +60,7 @@ const Map = ({ lat, lng, full_address, lang }: propsType) => {
         onClose={() => setOpen(false)}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
+        keepMounted
         // hideBackdrop={true}
       >
         <div className={styles.workLocal}>
