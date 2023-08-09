@@ -64,7 +64,7 @@ const Header = (props: any) => {
                   }
                 }}
               >
-                {lang?.profile?.skip}
+                {lang?.profile?.ImHiring}
               </MaterialButton>
             </Link>
           )}
