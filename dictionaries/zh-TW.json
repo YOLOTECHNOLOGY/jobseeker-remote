@@ -1237,10 +1237,10 @@
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
     },
-    "smsSystemTip": "sms system tip",
-    "smsSystemExplanation": "sms system explanation",
-    "smsChatTip": "sms chat tip",
-    "smsChatExplanation": "sms chat explanation"
+    "smsSystemTip": "Receive system SMS reminders",
+    "smsSystemExplanation": "Receive system message text messages, such as job post recommendations you are interested in",
+    "smsChatTip": "Receive chat SMS reminders",
+    "smsChatExplanation": "Receive text message alerts about chats"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",

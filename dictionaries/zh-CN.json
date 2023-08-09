@@ -966,9 +966,9 @@
     "skipTipsSure": "您确定要跳过这些步骤吗?",
     "skipAnyway": "任性跳过",
     "uploadSeccess": "上传成功",
-    "updateYouronLineResume": "update your online resume",
-    "getMoreRelevantJobRecommendations": "to get more relevant job recommendations",
-    "searchOrAddSkill": "Search or add a skill",
+    "updateYouronLineResume": "优化您的在线简历",
+    "getMoreRelevantJobRecommendations": "获得更多高质量的工作推荐",
+    "searchOrAddSkill": "搜索或添加技能",
     "add": "Add"
   },
   "chat": {
@@ -1177,7 +1177,7 @@
       "mobile": "您的电话账户已成功验证。",
       "email": "您的电子邮件账户已成功验证。",
       "phoneEmpty": "电话号码不能为空",
-      "phoneError": "The phone number should not be less than 7 digits"
+      "phoneError": "电话号码不少于7位"
     },
     "email": "邮件",
     "sendOpt": "发送验证码",
@@ -1237,10 +1237,10 @@
       "unBlockTip2": "该公司名称为 {{company}}",
       "noCompanies": "搜索公司不存在"
     },
-    "smsSystemTip": "sms system tip",
-    "smsSystemExplanation": "sms system explanation",
-    "smsChatTip": "sms chat tip",
-    "smsChatExplanation": "sms chat explanation"
+    "smsSystemTip": "接收系统短信提醒",
+    "smsSystemExplanation": "接收系统消息短信，例如你感兴趣的工作职位推荐",
+    "smsChatTip": "接收聊天短信提醒",
+    "smsChatExplanation": "接收关于聊天的短信提醒"
   },
   "chatExchange": {
     "exchangeTitle": "电话号码",
@@ -1333,11 +1333,11 @@
   "seo": {
     "ph": "菲律宾",
     "sg": "新加坡",
-    "jp": "Japan",
-    "id": "Indonesia",
-    "hk": "Hongkong",
-    "tw": "Taiwan",
-    "mo": "Macao",
+    "jp": "日本",
+    "id": "印度尼西亚",
+    "hk": "中国香港",
+    "tw": "中国台湾",
+    "mo": "中国澳门",
     "siteName": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "metaDescription": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "jobSearch": {
