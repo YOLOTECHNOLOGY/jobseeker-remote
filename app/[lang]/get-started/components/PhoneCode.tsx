@@ -12,13 +12,14 @@ import { verificationPhoneOtp, phoneOtpenerate } from 'store/services/auth/newLo
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
-
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 function PhoneCode(props: any) {
   const {
     lang: { newGetStarted },
     isModal = false,
     loginData,
-    setStep
+    setStep,
+    handleBackClick
   } = props
   const searchParams = useSearchParams()
   const [errorText, setErrorText] = useState<string>('')
@@ -196,6 +197,15 @@ function PhoneCode(props: any) {
               {newGetStarted.otherOptions}.
             </span>
           </p>
+          <div
+            className={styles.backBox}
+            onClick={() =>
+              isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/phone`)
+            }
+          >
+            <KeyboardArrowLeftIcon />
+            <span>{newGetStarted.back}</span>
+          </div>
         </div>
       </div>
     </>

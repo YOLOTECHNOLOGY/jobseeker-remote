@@ -17,6 +17,7 @@ interface IProps {
   stepModal?: number
   loginData?: any
   setLoginType?: any
+  handleBackClick?: () => void
 }
 
 const EmailLogin = (props: IProps) => {
@@ -27,7 +28,8 @@ const EmailLogin = (props: IProps) => {
     setLoginData,
     stepModal,
     loginData,
-    setLoginType
+    setLoginType,
+    handleBackClick
   } = props
   const searchParams = useSearchParams()
   const search = searchParams.get('step')
@@ -67,6 +69,7 @@ const EmailLogin = (props: IProps) => {
               <VerifyEmail
                 lang={props.lang}
                 isModal={isModal}
+                handleBackClick={handleBackClick}
                 loginData={loginData}
                 setStep={setLoginType}
               />

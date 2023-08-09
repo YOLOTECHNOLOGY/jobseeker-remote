@@ -11,8 +11,9 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { useRouter } from 'next/navigation'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 const verifyEmail = function (props) {
-  const { isModal, lang, loginData, setStep } = props
+  const { isModal, lang, loginData, setStep, handleBackClick } = props
   const { newGetStarted } = lang
   const searchParams = useSearchParams()
 
@@ -160,6 +161,15 @@ const verifyEmail = function (props) {
                 {' '}
                 {newGetStarted.magicLink}
               </span>
+            </div>
+            <div
+              className={styles.backBox}
+              onClick={() =>
+                isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/email`)
+              }
+            >
+              <KeyboardArrowLeftIcon />
+              <span>{newGetStarted.back}</span>
             </div>
           </div>
         </div>
