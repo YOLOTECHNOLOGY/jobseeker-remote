@@ -185,7 +185,7 @@
   }
 
   .sendOTP.disabled {
-    background: #e4e4e4;
+    background: rgba(0, 0, 0, 0.23);
     cursor: not-allowed;
     pointer-events: none;
   }
