@@ -252,6 +252,7 @@ const EducationExperience = (props: any) => {
                       className={styles.stepFullwidth}
                       label={currentLocation}
                       required
+                      disableClearable={true}
                       fieldRef={{
                         variant: 'standard'
                       }}

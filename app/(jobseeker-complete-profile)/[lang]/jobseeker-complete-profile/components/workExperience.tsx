@@ -447,6 +447,7 @@ const WorkExperience = (props: any) => {
                 onKeyUp={handleKeyUp}
                 onKeyDown={handleKeyDown}
                 autoComplete='off'
+                maxLength={100}
                 placeholder={searchOrAddSkill}
               />
               <MaterialButton
@@ -479,7 +480,8 @@ const WorkExperience = (props: any) => {
                           borderRadius: '4px',
                           height: '34px',
                           background: '#136FD3',
-                          margin: '10px  10px 0 0'
+                          margin: '10px  10px 0 0',
+                          maxWidth: '100%'
                         }}
                         color='primary'
                         label={item.value}

@@ -247,6 +247,7 @@ const BasicInformation = (props: any) => {
                             className={styles.stepFullwidth}
                             label={firstName}
                             variant='standard'
+                            maxLength={50}
                             required
                             {...fieldState}
                             {...field}
@@ -266,6 +267,7 @@ const BasicInformation = (props: any) => {
                             className={styles.stepFullwidth}
                             label={lastName}
                             variant='standard'
+                            maxLength={50}
                             required
                             {...fieldState}
                             {...field}
