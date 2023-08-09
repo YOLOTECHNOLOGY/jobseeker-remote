@@ -43,6 +43,7 @@ export default function HorizontalLabelPositionBelowStepper({ step, lang }: Prop
                 <div className={styles.circle}>{index + 1}</div>
               </div>
               <p>{e}</p>
+              {index < steps?.length - 1 && <div className={styles.line2}></div>}
             </div>
           ))}
         </div>

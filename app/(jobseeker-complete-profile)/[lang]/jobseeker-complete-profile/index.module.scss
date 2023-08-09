@@ -203,12 +203,22 @@ $contentWidth: 894px;
           border-radius: 50%;
           padding: 3px;
           box-sizing: border-box;
-          width: 70px;
-          height: 70px;
+          width: 75px;
+          height: 75px;
           cursor: pointer;
 
           &.active {
             border: 3px solid #0ebd5c;
+          }
+
+          .selected {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
           }
 
           .uploadAvatar {
@@ -293,10 +303,18 @@ $contentWidth: 894px;
           margin-right: 16px;
           flex: 1;
 
+          :global {
+            .MuiInputLabel-root {
+              span {
+                span {
+                  display: none;
+                }
+              }
+            }
+          }
+
           .stepFullwidth {
             width: 100%;
-
-
           }
 
           &:last-child {
@@ -810,8 +828,9 @@ $contentWidth: 894px;
   .step {
     width: 140px;
 
-    .line {
-      height: 70px;
+    .line,
+    .line2 {
+      height: 35px;
       width: 1px;
       margin: 0 auto;
       background: #D2E0F1;
@@ -860,7 +879,8 @@ $contentWidth: 894px;
       background: rgba(58, 144, 255, 0.50);
     }
 
-    .line {
+    .line,
+    .line2 {
       background: #2378E5;
     }
 
