@@ -47,7 +47,8 @@ const FeaturedCompany = (props: IProps) => {
       payload: {
         source: 'company_reco',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: featuredCompany?.reco_from || ''
+        reco_from: featuredCompany?.reco_from || '',
+        device_udid: localStorage.getItem('deviceUdid')
       }
     }
     setCookie('view-company-buried', JSON.stringify(params))

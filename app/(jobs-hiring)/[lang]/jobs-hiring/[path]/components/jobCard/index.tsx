@@ -221,7 +221,8 @@ const JobCard = (props: any) => {
       payload: {
         source: 'job_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: props?.reco_from || ''
+        reco_from: props?.reco_from || '',
+        device_udid: localStorage.getItem('deviceUdid')
       }
     }
 

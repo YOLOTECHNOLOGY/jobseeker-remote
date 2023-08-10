@@ -36,7 +36,7 @@ const Company = (company: propsType) => {
       payload: {
         source: 'job_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: company?.reco_from || ''
+        device_udid: localStorage.getItem('deviceUdid')
       }
     }
     setCookie('view-company-buried', JSON.stringify(params))

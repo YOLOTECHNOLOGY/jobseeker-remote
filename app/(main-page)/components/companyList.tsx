@@ -48,7 +48,8 @@ const CompanyList = (props: any) => {
             payload: {
               source: 'company_reco',
               device: isMobile ? 'mobile_web' : 'web',
-              reco_from: company?.reco_from || ''
+              reco_from: company?.reco_from || '',
+              device_udid: localStorage.getItem('deviceUdid')
             }
           }
           setCookie('view-company-buried', JSON.stringify(params))

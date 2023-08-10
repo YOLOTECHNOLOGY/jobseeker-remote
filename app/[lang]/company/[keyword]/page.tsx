@@ -68,13 +68,14 @@ const Page = () => {
 
 	const params = getCookie('view-company-buried')
 	
-	useEffect(()=> {
-		if(params) {
-			fetchViewCompany(params).then(()=> {
-				removeCookie('view-company-buried')
-			})
-		}
-	}, [])
+  useEffect(() => {
+    if (params) {
+      const token = getCookie('accessToken')
+      fetchViewCompany({ ...params, token }).then(() => {
+        removeCookie('view-company-buried')
+      })
+    }
+  }, [])
 
 	if(isMobile){
 		return <MobilePage/>	
