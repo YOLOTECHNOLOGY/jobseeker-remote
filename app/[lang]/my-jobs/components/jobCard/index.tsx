@@ -23,8 +23,8 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import { QRCodeSVG } from 'qrcode.react'
 import { SortContext } from '../searchForms/SortProvider'
 import { cloneDeep } from 'lodash-es'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { getDeviceUuid } from 'helpers/guest'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -213,18 +213,20 @@ const JobCard = (props: any) => {
     router.push(`/${langKey}` + job_url, { scroll: true })
   }
 
-  const sendViewCompany = () => {
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: company_id,
       payload: {
         source: sort == '2' ? 'reco' : 'reco-latest',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: reco_from || ''
+        device_udid
       }
     }
-    fetchViewCompany(params).finally(() => {
-      window.location.href = `/${langKey}` + company_url
-    })
+
+    const url = `/${langKey}` + company_url
+    setCookie('view-company-buried', JSON.stringify(params))
+    window.location.href = url
   }
 
   return (

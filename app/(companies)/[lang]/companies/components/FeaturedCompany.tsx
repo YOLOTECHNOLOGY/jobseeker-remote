@@ -5,8 +5,9 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
 import { getValueById } from 'helpers/config/getValueById'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
 
 interface IProps {
   featuredCompany: any
@@ -41,16 +42,18 @@ const FeaturedCompany = (props: IProps) => {
     return [financingStageValue, companySizeValue, industryValue].filter(Boolean)
   }, [featuredCompany])
 
-  const sendViewCompany = () => {
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: featuredCompany?.id,
       payload: {
         source: 'company_reco',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: featuredCompany?.reco_from || ''
+        reco_from: featuredCompany?.reco_from || '',
+        device_udid
       }
     }
-    fetchViewCompany(params).catch((err) => console.log(err))
+    setCookie('view-company-buried', JSON.stringify(params))
   }
 
   return (

@@ -5,8 +5,9 @@ import styles from '../../../page.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import { getValueById } from 'helpers/config/getValueById'
 import React from 'react'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
 export type propsType = {
   name: string
   companySize: string
@@ -30,22 +31,18 @@ const Company = (company: propsType) => {
   } = languages as any
   const industry = getValueById(config, jobDetail.company.industry_id, 'industry_id')
 
-  const sendViewCompany = (url) => {
+  const sendViewCompany = async (url) => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: company?.company_id,
       payload: {
         source: 'job_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: company?.reco_from || ''
+        device_udid
       }
     }
-    // fetchViewCompany(params).finally(() => {
-    //   window.location.href = url
-    // })
-    new Promise((resolve, _) => {
-      fetchViewCompany(params).finally(resolve((window.location.href = url)))
-      setTimeout(() => resolve((window.location.href = url)), 1000)
-    })
+    setCookie('view-company-buried', JSON.stringify(params))
+    window.location.href = url
   }
 
   return (
