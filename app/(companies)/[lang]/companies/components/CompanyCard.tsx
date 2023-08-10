@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { getValueById } from 'helpers/config/getValueById'
 import { CompanyDetail } from './../typed'
 import { isMobile } from 'react-device-detect'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
+import { setCookie } from 'helpers/cookies'
 
 interface ICompanyCard {
   company: CompanyDetail
@@ -36,10 +36,11 @@ const CompanyCard = (props: ICompanyCard) => {
       payload: {
         source: 'company_reco',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: company?.reco_from || ''
+        reco_from: company?.reco_from || '',
+        device_udid: localStorage.getItem('deviceUdid')
       }
     }
-    fetchViewCompany(params).catch((err) => console.log(err))
+    setCookie('view-company-buried', JSON.stringify(params))
   }
 
   const industryValue = useMemo(() => {

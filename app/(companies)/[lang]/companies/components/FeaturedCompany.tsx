@@ -5,8 +5,8 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
 import { getValueById } from 'helpers/config/getValueById'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
 
 interface IProps {
   featuredCompany: any
@@ -47,10 +47,11 @@ const FeaturedCompany = (props: IProps) => {
       payload: {
         source: 'company_reco',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: featuredCompany?.reco_from || ''
+        reco_from: featuredCompany?.reco_from || '',
+        device_udid: localStorage.getItem('deviceUdid')
       }
     }
-    fetchViewCompany(params).catch((err) => console.log(err))
+    setCookie('view-company-buried', JSON.stringify(params))
   }
 
   return (

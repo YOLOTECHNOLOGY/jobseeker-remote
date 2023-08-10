@@ -257,8 +257,8 @@ $contentWidth: 894px;
               align-items: center;
               width: 22px;
               height: 22px;
-              left: 2px;
-              top: 45px;
+              left: 0px;
+              top: 0px;
               position: absolute;
               background: #F0F0F0;
               border-radius: 50%;
@@ -766,6 +766,7 @@ $contentWidth: 894px;
       border: 1px solid #E4E4E4;
       margin-right: 20px;
       text-indent: 10px;
+      font-size: 16px;
     }
 
     button {

@@ -6,8 +6,8 @@ import { HomePageChat } from 'images'
 import { chatSVG } from 'images/svg'
 import Image from 'next/image'
 import { getValueById } from 'helpers/config/getValueById'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
 
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
@@ -48,12 +48,12 @@ const CompanyList = (props: any) => {
             payload: {
               source: 'company_reco',
               device: isMobile ? 'mobile_web' : 'web',
-              reco_from: company?.reco_from || ''
+              reco_from: company?.reco_from || '',
+              device_udid: localStorage.getItem('deviceUdid')
             }
           }
-          fetchViewCompany(params).finally(() => {
-            window.location.href = url
-          })
+          setCookie('view-company-buried', JSON.stringify(params))
+          window.location.href = url
         }
 
         return (
