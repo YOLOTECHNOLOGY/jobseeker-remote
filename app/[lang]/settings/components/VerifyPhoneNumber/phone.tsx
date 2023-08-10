@@ -116,6 +116,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   const handleOpen = () => {
     setOpen(true)
     clear()
+    setOtp('')
     setSmsCode(getSmsCountryCode(userDetail, smsCountryList))
     const phone = userDetail?.phone_num_without_country_code || ''
     setPhoneNumber(phone)
@@ -135,6 +136,7 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const handleClose = () => {
     clearCloseModal()
+    setOtp('')
   }
 
   const onChange = (opt) => {
@@ -182,6 +184,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
+        setOtp('')
       })
       .catch((error) => {
         handleError(error)
@@ -332,9 +335,12 @@ const VerifyPhoneNumber = (props: IProps) => {
                 helperText={<span style={{ color: 'red' }}>{numberError}</span>}
               />
               <button
-                className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
+                className={classNames([
+                  styles.sendOTP,
+                  disabled || initialTime > 0 ? styles.disabled : ''
+                ])}
                 onClick={handleSendOTP}
-                disabled={disabled}
+                disabled={disabled || initialTime > 0}
               >
                 {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
@@ -342,6 +348,7 @@ const VerifyPhoneNumber = (props: IProps) => {
             {/* verify code */}
             <Captcha
               key={'verify-phone-captcha'}
+              value={otp}
               lang={lang}
               autoFocus={true}
               onChange={onChange}

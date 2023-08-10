@@ -58,6 +58,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [disabledOtp, setDisabledOtp] = useState(false)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
@@ -85,7 +86,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     setInitialTime(0)
     setDisabled(false)
     setEmailError('')
-    setOtp('')
+    // setOtp('')
   }
 
   useEffect(() => {
@@ -113,16 +114,18 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   const handleOpen = () => {
-    setOpen(true)
     clear()
+    setOpen(true)
     const email = userDetail?.email ? userDetail.email : null
     setEmail(email)
     setDisabled(!email)
+    setOtp('')
   }
 
   const clearCloseModal = () => {
-    clear()
     setOpen(false)
+    setOtp('')
+    clear()
   }
 
   const handleSave = () => {
@@ -181,6 +184,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
+        setOtp('')
       })
       .catch((error) => {
         setDisabled(false)
@@ -313,9 +317,12 @@ const VerifyMailAndBindEmail = (props: IProps) => {
                 {emailError ? emailError : null}
               </div>
               <button
-                className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
+                className={classNames([
+                  styles.sendOTP,
+                  disabled || initialTime > 0 ? styles.disabled : ''
+                ])}
                 onClick={handleSendOTP}
-                disabled={disabled}
+                disabled={disabled || initialTime > 0}
               >
                 {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
@@ -326,6 +333,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
             {/* verify code */}
             <Captcha
+              value={otp}
               key={'verify-email-captcha'}
               lang={lang}
               autoFocus={true}

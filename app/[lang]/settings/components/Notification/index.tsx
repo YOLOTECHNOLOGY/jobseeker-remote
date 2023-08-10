@@ -43,8 +43,7 @@ const EmailNotification = (props: IProps) => {
   const router = useRouter()
   const [_, startTransition] = useTransition()
 
-
-  console.log('userDetail', {userDetail, SMSNotificationSetting, systemSMS, chatSMS})
+  // console.log('userDetail', {userDetail})
 
   const handleError = (error) => {
     const { data } = error.response
@@ -75,8 +74,8 @@ const EmailNotification = (props: IProps) => {
     )
   }
 
-  const handleEmailChange = (ev:React.ChangeEvent<HTMLInputElement>, type:string) => {
-    if(!type) return
+  const handleEmailChange = (ev: React.ChangeEvent<HTMLInputElement>, type: string) => {
+    if (!type) return
     const value = ev.target.checked
 
     const data = {
@@ -87,23 +86,24 @@ const EmailNotification = (props: IProps) => {
 
     data[type] = value ? 1 : 0
 
-    emailNotificationSettingUpdate(data).then(() => {
-      if (type === 'system_email') {
-        setSystemEmail(value)
-      } else if (type === 'chat_email') {
-        setChatEmail(value)
-      } else {
-        setNewsletterEmail(value)
-      }
-      startTransition(() => {
-        router.refresh()
+    emailNotificationSettingUpdate(data)
+      .then(() => {
+        if (type === 'system_email') {
+          setSystemEmail(value)
+        } else if (type === 'chat_email') {
+          setChatEmail(value)
+        } else {
+          setNewsletterEmail(value)
+        }
+        startTransition(() => {
+          router.refresh()
+        })
       })
-    })
-    .catch((err) => handleError(err))
+      .catch((err) => handleError(err))
   }
 
   const handleSMSChange = (ev: React.ChangeEvent<HTMLInputElement>, type: string) => {
-    if(!type) return
+    if (!type) return
     const value = ev.target.checked
 
     const data = {
@@ -151,7 +151,10 @@ const EmailNotification = (props: IProps) => {
           <Text>{accountSetting.receiveTips}</Text>
           <p>{accountSetting.receiveTipsExplanation}</p>
         </div>
-        <Switch checked={newsletterEmail} onChange={(ev) => handleEmailChange(ev, 'newsletter_email')} />
+        <Switch
+          checked={newsletterEmail}
+          onChange={(ev) => handleEmailChange(ev, 'newsletter_email')}
+        />
       </div>
 
       {/* SMS Notification */}
