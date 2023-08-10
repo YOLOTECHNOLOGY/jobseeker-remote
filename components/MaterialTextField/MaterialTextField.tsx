@@ -49,7 +49,7 @@ const theme = createTheme({
         shrink: {
           fontSize: '10px',
           transform: 'translate(14px, -10px) scale(1)',
-          letterSpacing:'0.00938em'
+          letterSpacing: '0.00938em'
         },
         outlined: {
           '&.MuiInputLabel-shrink': {
@@ -110,9 +110,11 @@ const MaterialTextField = ({
         {...refs}
         id={id}
         label={
-          <span>
-            {label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
-          </span>
+          label && (
+            <span>
+              {label} {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
+            </span>
+          )
         }
         color={color as any}
         value={value}

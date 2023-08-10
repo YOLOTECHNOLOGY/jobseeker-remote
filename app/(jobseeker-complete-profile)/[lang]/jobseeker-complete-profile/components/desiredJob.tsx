@@ -219,7 +219,8 @@ const EducationExperience = (props: any) => {
             </p>
             <div id='jobFunctionDesign' className={styles.stepFieldItem}>
               <JobFunctionSelector
-                label={lang?.profile?.jobFunction}
+                // label={lang?.profile?.jobFunction}
+                placeholder={lang?.profile?.jobFunction}
                 title={lang?.profile?.jobFunction}
                 lang={lang}
                 name='jobFunction'
@@ -250,11 +251,12 @@ const EducationExperience = (props: any) => {
                   return (
                     <MaterialLocationField
                       className={styles.stepFullwidth}
-                      label={currentLocation}
+                      // label={currentLocation}
                       required
                       disableClearable={true}
                       fieldRef={{
-                        variant: 'standard'
+                        variant: 'standard',
+                        placeholder: currentLocation
                       }}
                       {...fieldState}
                       {...field}

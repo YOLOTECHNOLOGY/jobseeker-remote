@@ -344,7 +344,7 @@ const WorkExperience = (props: any) => {
             <div className={styles.stepCompany}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={requiredLabel(companyNameText)}
+                // label={requiredLabel(companyNameText)}
                 size='small'
                 fullWidth
                 variant='standard'
@@ -353,6 +353,7 @@ const WorkExperience = (props: any) => {
                     padding: '4px 0 8px'
                   }
                 }}
+                placeholder={companyNameText}
                 value={companyName}
                 defaultValue={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
@@ -411,7 +412,8 @@ const WorkExperience = (props: any) => {
             <div id='jobFunction' className={styles.stepJobFunction}>
               <JobFunctionSelector
                 className={styles.stepFullwidth}
-                label={lang?.profile?.jobFunction}
+                // label={lang?.profile?.jobFunction}
+                placeholder={lang?.profile?.jobFunction}
                 title={lang?.profile?.jobFunction}
                 lang={lang}
                 name='jobFunction'
