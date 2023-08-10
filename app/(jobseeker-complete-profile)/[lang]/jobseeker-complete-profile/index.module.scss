@@ -84,7 +84,6 @@ $contentWidth: 894px;
     position: relative;
     z-index: 2;
     width: 0;
-    box-shadow: 0px 0px 6px rgba(150, 149, 149, 0.2);
   }
 
   :global {
@@ -109,14 +108,21 @@ $contentWidth: 894px;
     }
   }
 
+  p,
+  ul,
+  h3 {
+    margin: 0;
+  }
 }
 
 .main {
+
+
   position: relative;
 
   .header {
     width: 100%;
-    height: 55px;
+    height: 64px;
     background: #fff;
     line-height: 55px;
     position: relative;
@@ -131,17 +137,18 @@ $contentWidth: 894px;
       color: white;
       height: 100%;
 
+      .headerLogoImage {
+        width: 124px;
+        height: 32px;
+      }
+
       a {
         color: white;
       }
     }
   }
 
-  p,
-  ul,
-  h3 {
-    margin: 0;
-  }
+
 
   .basicInfo {
     .topModule {
@@ -248,13 +255,15 @@ $contentWidth: 894px;
               display: flex;
               justify-content: center;
               align-items: center;
-              width: 20px;
-              height: 20px;
-              left: 6px;
-              top: 43px;
+              width: 22px;
+              height: 22px;
+              left: 0px;
+              top: 0px;
               position: absolute;
-              border: 1px solid $lightgrey;
+              background: #F0F0F0;
               border-radius: 50%;
+              border: none;
+              outline: none;
 
               &:hover {
                 cursor: pointer;
@@ -489,12 +498,13 @@ $contentWidth: 894px;
 
       .headerInfo {
         line-height: 69px;
-        font-size: 30px;
+        font-size: 32px;
         line-height: 40px;
         display: flex;
         align-items: center;
         letter-spacing: 1px;
         color: #353535;
+        font-weight: 700;
       }
 
       .body {
@@ -756,6 +766,7 @@ $contentWidth: 894px;
       border: 1px solid #E4E4E4;
       margin-right: 20px;
       text-indent: 10px;
+      font-size: 16px;
     }
 
     button {
@@ -838,7 +849,7 @@ $contentWidth: 894px;
       height: 35px;
       width: 1px;
       margin: 0 auto;
-      background: #D2E0F1;
+      background: #C5DBF6;
     }
 
     .shadow {
@@ -873,7 +884,7 @@ $contentWidth: 894px;
       font-size: 20px;
       font-weight: 700;
       border-radius: 50%;
-      background: #D2E0F1;
+      background: #C5DBF6;
       color: #fff
     }
   }

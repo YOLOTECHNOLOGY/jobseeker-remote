@@ -13,7 +13,7 @@ import avatar3 from '../images/3.png'
 import avatar4 from '../images/4.png'
 import avatar5 from '../images/5.png'
 import FootBtn from './footBtn'
-
+import { cameraSVG } from 'images/svg'
 import { uploadUserAvatarService } from 'store/services/users/uploadUserAvatar'
 import { updateUserCompleteProfileService } from 'store/services/users/updateUserCompleteProfile'
 import { LinkContext } from 'app/components/providers/linkProvider'
@@ -178,9 +178,7 @@ const BasicInformation = (props: any) => {
                     style={{ display: 'none' }}
                     onChange={handleChosenPhoto}
                   />
-                  <button className={styles.uploadAvatarButton}>
-                    <img src={CameraIcon} height='14' width='14' />
-                  </button>
+                  <button className={styles.uploadAvatarButton}>{cameraSVG}</button>
                 </div>
                 {selectedAvatarDefault === -1 && (
                   <span className={styles.selected}>
@@ -219,7 +217,7 @@ const BasicInformation = (props: any) => {
                 </li>
               ))}
             </ul>
-            <p className={styles.photoTips}>
+            {/* <p className={styles.photoTips}>
               <InfoOutlinedIcon
                 sx={{
                   fontSize: '16px',
@@ -228,7 +226,7 @@ const BasicInformation = (props: any) => {
                 }}
               />
               {havingArealPhoto}
-            </p>
+            </p> */}
 
             <div className={styles.nameBox}>
               <p className={styles.name}>
