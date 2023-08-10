@@ -135,7 +135,10 @@ const EducationExperience = (props: any) => {
         <div className={styles.box}>
           <div className={styles.headerInfo}>{educationExperience}</div>
           <div className={styles.body}>
-            <p className={styles.title}>{educationLevel}</p>
+            <p className={styles.title}>
+              <span>*</span>
+              {educationLevel}
+            </p>
             <div className={`${isMobile ? styles.btnList : styles.btnGroup}`}>
               {degrees
                 .filter((e) => e.id !== 5)
@@ -150,7 +153,10 @@ const EducationExperience = (props: any) => {
                 ))}
             </div>
 
-            <p className={styles.title}>{schoolName}</p>
+            <p className={styles.title}>
+              <span>*</span>
+              {schoolName}
+            </p>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
@@ -168,7 +174,10 @@ const EducationExperience = (props: any) => {
               />
             </div>
 
-            <p className={styles.title}>{fieldOfStudy}</p>
+            <p className={styles.title}>
+              <span>*</span>
+              {fieldOfStudy}
+            </p>
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
@@ -186,7 +195,10 @@ const EducationExperience = (props: any) => {
               />
             </div>
 
-            <p className={`${styles.title} ${styles.titlePeriod}`}>{studyPeriod}</p>
+            <p className={`${styles.title} ${styles.titlePeriod}`}>
+              <span>*</span>
+              {studyPeriod}
+            </p>
             <div className={styles.stepFieldBody}>
               <FormControlLabel
                 control={
@@ -225,11 +237,10 @@ const EducationExperience = (props: any) => {
                 )}
               </div>
             </div>
-            {isMobile ? null : (
-              <p className={`${styles.fillLater}`} onClick={() => push(`${pathname}?step=4`)}>
-                {fillThisLater}
-              </p>
-            )}
+            {/* 
+            <p className={`${styles.fillLater}`} onClick={() => push(`${pathname}?step=4`)}>
+              {fillThisLater}
+            </p> */}
           </div>
         </div>
 
