@@ -24,6 +24,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
 import { ChatDataContext } from '../ChatProvider'
+import { getDeviceUuid } from 'helpers/guest'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -215,14 +216,14 @@ const JobCard = (props: any) => {
     })
   }
 
-  const sendViewCompany = () => {
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: props?.company_id,
       payload: {
         source: 'job_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: props?.reco_from || '',
-        device_udid: localStorage.getItem('deviceUdid')
+        device_udid
       }
     }
 

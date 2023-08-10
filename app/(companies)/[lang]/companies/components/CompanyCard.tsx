@@ -11,6 +11,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import { CompanyDetail } from './../typed'
 import { isMobile } from 'react-device-detect'
 import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
 
 interface ICompanyCard {
   company: CompanyDetail
@@ -30,14 +31,15 @@ const CompanyCard = (props: ICompanyCard) => {
     })
   }
 
-  const sendViewCompany = () => {
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: company?.id,
       payload: {
         source: 'company_reco',
         device: isMobile ? 'mobile_web' : 'web',
         reco_from: company?.reco_from || '',
-        device_udid: localStorage.getItem('deviceUdid')
+        device_udid
       }
     }
     setCookie('view-company-buried', JSON.stringify(params))

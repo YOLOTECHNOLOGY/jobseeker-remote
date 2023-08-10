@@ -24,6 +24,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { SortContext } from '../searchForms/SortProvider'
 import { cloneDeep } from 'lodash-es'
 import { isMobile } from 'react-device-detect'
+import { getDeviceUuid } from 'helpers/guest'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -212,13 +213,14 @@ const JobCard = (props: any) => {
     router.push(`/${langKey}` + job_url, { scroll: true })
   }
 
-  const sendViewCompany = () => {
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: company_id,
       payload: {
         source: sort == '2' ? 'reco' : 'reco-latest',
         device: isMobile ? 'mobile_web' : 'web',
-        device_udid: localStorage.getItem('deviceUdid')
+        device_udid
       }
     }
 

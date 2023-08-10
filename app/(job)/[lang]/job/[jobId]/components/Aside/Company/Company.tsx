@@ -7,6 +7,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
 export type propsType = {
   name: string
   companySize: string
@@ -30,13 +31,14 @@ const Company = (company: propsType) => {
   } = languages as any
   const industry = getValueById(config, jobDetail.company.industry_id, 'industry_id')
 
-  const sendViewCompany = (url) => {
+  const sendViewCompany = async (url) => {
+    const device_udid = await getDeviceUuid()
     const params = {
       id: company?.company_id,
       payload: {
         source: 'job_search',
         device: isMobile ? 'mobile_web' : 'web',
-        device_udid: localStorage.getItem('deviceUdid')
+        device_udid
       }
     }
     setCookie('view-company-buried', JSON.stringify(params))
