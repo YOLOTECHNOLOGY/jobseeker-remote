@@ -181,7 +181,6 @@
         font-size: 18px;
         font-style: normal;
         font-weight: 400;
-        line-height: 18px;
         letter-spacing: 0.15px;
         flex: 1;
         width: 0;
@@ -226,6 +225,10 @@
         .MuiFormLabel-filled {
           top: 4px;
         }
+
+        .Mui-focused .MuiOutlinedInput-notchedOutline {
+          border-width: 1px;
+        }
       }
 
       @include sm {
@@ -255,6 +258,12 @@
         height: $h5-height !important;
         font-weight: 400;
       }
+    }
+
+    .disabled {
+      background: rgba(0, 0, 0, 0.23) !important;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 

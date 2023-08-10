@@ -49,6 +49,11 @@ const SettingModal = (props: IProps) => {
     return errorMessage
   }
 
+  const disabledSave = useMemo(() => {
+    const errorMessage = !!validEmail(email)
+    return errorMessage || !frequencyId
+  }, [email])
+
   const handleKeyUp = (ev) => {
     const value = ev?.target?.value || ''
     setEmailError(validEmail(value))
@@ -66,6 +71,7 @@ const SettingModal = (props: IProps) => {
         title={title}
         isLoading={isLoading}
         lang={lang}
+        disabled={disabledSave}
       >
         <div className={styles.modal}>
           <div className={styles.item}>

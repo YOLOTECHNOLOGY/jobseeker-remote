@@ -21,6 +21,7 @@ interface IProps {
   handleEmailClick?: () => void
   loginData?: any
   setLoginType?: (e: any) => void
+  handleBackClick?: (e: any) => void
 }
 
 const PhoneLogin = (props: IProps) => {
@@ -31,7 +32,8 @@ const PhoneLogin = (props: IProps) => {
     setLoginData,
     handleEmailClick,
     loginData,
-    setLoginType
+    setLoginType,
+    handleBackClick
   } = props
 
   const searchParams = useSearchParams()
@@ -75,6 +77,7 @@ const PhoneLogin = (props: IProps) => {
                 setStep={setLoginType}
                 isModal={isModal}
                 loginData={loginData}
+                handleBackClick={handleBackClick}
               />
             )}
             {step === 3 && <EmailFactor lang={props.lang} />}

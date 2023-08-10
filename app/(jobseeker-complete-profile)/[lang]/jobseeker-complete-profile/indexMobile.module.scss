@@ -1,66 +1,113 @@
-
 @include msd {
-    .profile{
-        .bg{
+
+    .profile {
+        .bg {
             display: none;
         }
+
+        .mainContainer {
+            width: 100%;
+            display: block;
         }
-    .main{
+
+        .steps {
+            width: 100%;
+        }
+
+        .rightContainer {
+            width: 100%;
+            box-shadow: none;
+            padding: 20px;
+
+        }
+
+        .banner {
+            height: 110px;
+
+            .bannerMain {
+                width: 100%;
+                padding-left: 10px;
+
+                h2 {
+                    font-size: 22px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .main {
         background: #fff;
-        .header{
-            margin-bottom: 16px;
+        padding-bottom: 60px;
+
+        .addSkils {
+            button {
+                width: 110px;
+            }
         }
-        .header{
-            .headerMain{
+
+        .header {
+            margin-bottom: 8px;
+        }
+
+        .header {
+            .headerMain {
                 width: 100%;
                 padding: 0 20px;
-               
-              }
+
+            }
         }
-       
-        .basicInfo{
+
+        .basicInfo {
             width: 100%;
             box-sizing: border-box;
             box-shadow: none;
-          
-            .headerInfo{
-                padding: 0 20px;
-            }
-            .topModule{
+
+            .topModule {
                 box-shadow: none;
-                border-radius: 0 ;
-               padding-bottom: 70px;
+                border-radius: 0;
             }
-            .container{
-                padding: 0 20px;
-                .nameBox{
-                    .nameFlex{
+
+            .container {
+
+                .nameBox {
+                    .nameFlex {
                         display: block;
-                        .namesFirst{
+
+                        .namesFirst {
                             margin: 0 0 16px 0;
-                          &:last-child{
-                            margin-bottom: 0;
-                          }
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+
+                .availability {
+                    .btnList {
+                        button {
+                            margin-right: 0 !important;
+                            width: 100%;
                         }
                     }
                 }
             }
-          
-           
+
+
+
         }
-        .btnList{
-            button {       
+
+        .btnList {
+            button {
                 width: 100%;
             }
         }
-        .availability{
-            .btnList{
-                button {
-                    margin-right: 0 !important;               
-                }
-        }
-       }
-        .next{
+
+        .next {
             margin: 0 auto;
             padding: 0 20px;
             position: fixed;
@@ -69,75 +116,128 @@
             bottom: 0;
             z-index: 100;
             height: 84px;
-            padding-top: 18px;
+            padding-top: 12px;
             box-sizing: border-box;
             background: #fff;
             border-top: 1px solid #BCBCBC;
+
             .rightBtnBox {
                 flex: 1;
                 margin-left: 8px;
-                &:last-child{
+
+                &:last-child {
                     margin-left: 0;
                 }
-            }        
+            }
         }
-        .work{       
-            .workContainer{
+
+        .work {
+            .workContainer {
                 width: 100%;
             }
-            .next{
+
+            .next {
                 margin: 0 auto;
                 width: 100%;
             }
-            .btnList{
-                button{
+
+            .btnList {
+                button {
                     margin-right: 0;
                 }
             }
-            .box{
+
+            .box {
                 width: 100%;
                 box-shadow: none;
                 border-radius: 0;
                 margin-top: 0;
-                .headerInfo{
-                    padding-left: 20px;
-                }
-                .body{
-                    padding: 0 20px 70px 20px;
-                }
-                .stepFieldDateItem, .stepFieldToItem{
+
+                .workingSince {
                     width: 100%;
-                    max-width: 100%;
                 }
-                .stepFieldDate{
-                 display: block;
-                 .stepFieldDateItem{
-                    margin-bottom: 16px;
-                    &:last-child{
-                        margin-bottom: 0;
+
+                .body {
+
+                    .stepFieldDate {
+                        display: block;
+                        height: auto;
+                        margin-top: 20px;
                     }
-                 }
                 }
-                .currency{
-                  width: 100%;
+
+                .stepFieldDateItem {
+                    margin-left: 0;
                 }
-                .salaryBox{
+
+                .stepFieldBody {
                     display: block;
-                    .minSalary{
-                       margin-right: 0;
+
+                    .workingPeriod {
+                        display: block;
+                        height: auto;
+                        position: relative;
+                        top: -10px;
+                    }
+
+                    .pickBox {
+                        .stepFieldToItem {
+                            width: 100%;
+                            max-width: 100%;
+                        }
+
+                        .stepFieldToItem:first-child {
+                            margin-left: 0;
+                        }
+                    }
+
+                }
+
+
+                .stepFieldDate {
+                    display: block;
+
+                    .stepFieldDateItem {
+                        margin-bottom: 16px;
+                        max-width: 100%;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+
+                .step1SalaryRanges {
+                    display: block;
+                }
+
+                .currency {
+                    width: 100%;
+                }
+
+                .salaryBox {
+                    display: block;
+
+                    .minSalary {
+                        margin-right: 0;
+                        margin-left: 0;
+                        margin-top: 20px;
                     }
                 }
             }
-           
+
         }
-       .skipModal {
-        .modalContainer{
-            width: 100%;
-            left: 0;
-            transform: translate(0,0);
-            bottom: 0;
-            top: unset;
+
+        .skipModal {
+            .modalContainer {
+                width: 100%;
+                left: 0;
+                transform: translate(0, 0);
+                bottom: 0;
+                top: unset;
+            }
         }
-       }
+
+
     }
 }

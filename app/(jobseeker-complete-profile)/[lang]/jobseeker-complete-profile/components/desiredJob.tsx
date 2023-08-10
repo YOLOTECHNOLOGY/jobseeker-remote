@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useContext } from 'react'
 import styles from '../index.module.scss'
-import Stepper from './stepper'
 import FootBtn from './footBtn'
 import JobFunctionSelector from 'components/JobFunctionSelector'
 import { Controller, useForm } from 'react-hook-form'
@@ -9,13 +8,12 @@ import { getCountryKey } from 'helpers/country'
 import { getCountryId } from 'helpers/country'
 import MaterialBasicSelect from 'components/MaterialBasicSelect'
 import { usePathname } from 'next/navigation'
-import { createUserPreferencesService, updateUserPreferencesService } from 'store/services/users/addUserPreferences'
-import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import {
-  getSalaryOptions,
-  getCountryList,
-  getCurrencyList
-} from 'helpers/jobPayloadFormatter'
+  createUserPreferencesService,
+  updateUserPreferencesService
+} from 'store/services/users/addUserPreferences'
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
+import { getSalaryOptions, getCountryList, getCurrencyList } from 'helpers/jobPayloadFormatter'
 import { getValueById } from 'helpers/config/getValueById'
 import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
@@ -24,14 +22,13 @@ import { generateUserResumeService } from 'store/services/users/generateUserResu
 import { getCookie, setCookie } from 'helpers/cookies'
 import { countryForCurrency } from 'helpers/country'
 const EducationExperience = (props: any) => {
-
   const { lang, userDetail, config } = props
   const { job_preferences, resumes } = userDetail
   const pathname = usePathname()
   const { push } = useContext(LinkContext)
   const preference = userDetail?.job_preferences?.[0]
   const [currencyLists] = useMemo(() => {
-    return [getCurrencyList(config), getCountryList(config),]
+    return [getCurrencyList(config), getCountryList(config)]
   }, [config])
 
   const minSalaryOptions = getSalaryOptions(config)
@@ -83,7 +80,8 @@ const EducationExperience = (props: any) => {
       setValue('location', location)
       setJobFunction({
         id: preference?.function_job_title_id,
-        value: getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
+        value:
+          getValueById(config, preference?.function_job_title_id, 'function_job_title_id') ?? ''
       })
       setMaxSalary(salary_range_to)
       setLocationData({
@@ -116,7 +114,7 @@ const EducationExperience = (props: any) => {
       salary_range_from: Number(minSalary),
       salary_range_to: Number(maxSalary),
       country_id: getCountryId(),
-      location_id: location?.id || '',
+      location_id: location?.id || ''
     }
 
     setLoading(true)
@@ -128,17 +126,21 @@ const EducationExperience = (props: any) => {
       updateUserPreferencesService({
         preferenceId: preference.id,
         params
-      }).then(res => {
-        if (res.data) {
-          jumPage();
-        }
-      }).finally(() => setLoading(false))
+      })
+        .then((res) => {
+          if (res.data) {
+            jumPage()
+          }
+        })
+        .finally(() => setLoading(false))
     } else {
-      createUserPreferencesService({ params }).then(res => {
-        if (res.data) {
-          jumPage()
-        }
-      }).finally(() => setLoading(false))
+      createUserPreferencesService({ params })
+        .then((res) => {
+          if (res.data) {
+            jumPage()
+          }
+        })
+        .finally(() => setLoading(false))
     }
   }
 
@@ -157,7 +159,7 @@ const EducationExperience = (props: any) => {
 
   const jumPage = () => {
     // getUserInfo?.()
-    fetchUserOwnDetailService({ accessToken }).then(res => {
+    fetchUserOwnDetailService({ accessToken }).then((res) => {
       const userDetail = res?.data?.data
       const userCookie = {
         active_key: userDetail.active_key,
@@ -186,9 +188,7 @@ const EducationExperience = (props: any) => {
         push(`/${langKey}/my-jobs`)
       }
     })
-
   }
-
 
   const {
     desiredJob,
@@ -210,19 +210,25 @@ const EducationExperience = (props: any) => {
   return (
     <div className={styles.work}>
       <div className={styles.workContainer}>
-        <Stepper step={2} lang={lang} />
         <div className={styles.box}>
           <div className={styles.headerInfo}>{desiredJob}</div>
           <div className={styles.body}>
             <p className={styles.title}>
-              {desiredJobTitle} <span>*</span>
+              <span>*</span>
+              {desiredJobTitle}
             </p>
-            <div id='jobFunctionDesign' className={styles.stepFieldDateItem}>
+            <div id='jobFunctionDesign' className={styles.stepFieldItem}>
               <JobFunctionSelector
                 label={lang?.profile?.jobFunction}
                 title={lang?.profile?.jobFunction}
                 lang={lang}
                 name='jobFunction'
+                variant='standard'
+                sx={{
+                  '.MuiInput-input': {
+                    padding: '4px 0 8px'
+                  }
+                }}
                 isTouched
                 fullWidth
                 value={jobFunction}
@@ -231,9 +237,10 @@ const EducationExperience = (props: any) => {
             </div>
 
             <p className={styles.title}>
-              {desiredLocation}<span>*</span>
+              <span>*</span>
+              {desiredLocation}
             </p>
-            <div className={styles.stepFieldDateItem}>
+            <div className={styles.stepFieldItem}>
               <Controller
                 control={control}
                 name={'location'}
@@ -245,6 +252,10 @@ const EducationExperience = (props: any) => {
                       className={styles.stepFullwidth}
                       label={currentLocation}
                       required
+                      disableClearable={true}
+                      fieldRef={{
+                        variant: 'standard'
+                      }}
                       {...fieldState}
                       {...field}
                       onChange={(_, location) => {
@@ -281,7 +292,8 @@ const EducationExperience = (props: any) => {
             )} */}
 
             <p className={styles.title}>
-              {desiredSalary}<span>*</span>
+              <span>*</span>
+              {desiredSalary}
             </p>
             <div className={styles.step1Salary}>
               <div className={styles.step1SalaryRanges}>
@@ -296,6 +308,7 @@ const EducationExperience = (props: any) => {
                           label={desiredSalaryCurrency}
                           options={currencyLists}
                           disabled
+                          variant='standard'
                           {...fieldState}
                           {...field}
                           ref={undefined}
@@ -317,6 +330,9 @@ const EducationExperience = (props: any) => {
                             label={lang?.profile?.minSalary}
                             options={minSalaryOptions}
                             required
+                            fieldRef={{
+                              variant: 'standard'
+                            }}
                             {...fieldState}
                             {...field}
                             value={value}
@@ -343,6 +359,7 @@ const EducationExperience = (props: any) => {
                             rules={{ required: thisFieldIsRequired }}
                             required
                             options={maxSalaryOptions}
+                            variant='standard'
                             {...fieldState}
                             {...field}
                             onChange={(e) => {
@@ -371,7 +388,6 @@ const EducationExperience = (props: any) => {
           skipText={skip}
           handleClick={handleSubmit(handleUpdateProfile)}
         />
-
       </div>
     </div>
   )

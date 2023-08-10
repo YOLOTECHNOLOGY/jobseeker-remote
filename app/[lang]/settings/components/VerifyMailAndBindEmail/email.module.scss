@@ -111,15 +111,17 @@
 
   .emailInput {
     display: flex;
+    align-items: end;
 
     @include sm {
       flex-direction: column;
+      align-items: baseline;
     }
   }
 
   .sendOTP {
     display: flex;
-    height: 60px;
+    height: 54px;
     padding: 12px 24px;
     justify-content: center;
     align-items: center;
@@ -144,11 +146,12 @@
       margin-top: 20px;
       height: 44px;
       font-size: 16px;
+      width: 100%;
     }
   }
 
   .sendOTP.disabled {
-    background: #e4e4e4;
+    background: rgba(0, 0, 0, 0.23);
     cursor: not-allowed;
     pointer-events: none;
   }

@@ -5,6 +5,6 @@
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required
-  "editor.formatOnSave": false, // optional
+  "editor.formatOnSave": true, // optional
   // "files.autoSave": "onFocusChange", // optional but recommended
 }

@@ -45,6 +45,14 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
     setLoginType('home')
   }
 
+  const handleBackEmailClick = () => {
+    setStep(1)
+    setLoginType('email')
+  }
+  const handleBackPhoneClick = () => {
+    setStep(1)
+    setLoginType('phone')
+  }
   return (
     <div>
       <Dialog
@@ -73,10 +81,8 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
               <LoginForEmail
                 lang={data}
                 isModal={true}
-                handleEmailClick={() => {
-                  setStep(1)
-                  setLoginType('phone')
-                }}
+                handleEmailClick={handleBackPhoneClick}
+                handleBackClick={handleBackEmailClick}
                 stepModal={step}
                 setLoginType={initLogin}
                 loginData={loginData}
@@ -91,10 +97,8 @@ export default function LoginDialog({ open = true, handleClose }: dialogProps) {
                 lang={data}
                 isModal={true}
                 stepModal={step}
-                handleEmailClick={() => {
-                  setStep(1)
-                  setLoginType('email')
-                }}
+                handleEmailClick={handleBackEmailClick}
+                handleBackClick={handleBackPhoneClick}
                 loginData={loginData}
                 setLoginType={initLogin}
                 setLoginData={(e) => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -28,7 +28,7 @@ import { find } from 'lodash-es'
 import classNames from 'classnames/bind'
 import { getCountryId } from 'helpers/country'
 import { useRouter } from 'next/navigation'
-
+import { formatTemplateString } from 'helpers/formatter'
 
 let timer = null
 // 默认位数
@@ -45,6 +45,8 @@ const VerifyPhoneNumber = (props: IProps) => {
   const { label, config, lang, userDetail } = props
 
   const { accountSetting } = lang
+  const errorCode = lang.errorcode || {}
+
   const dispatch = useDispatch()
   const router = useRouter()
   const captchaRef = useRef(null)
@@ -84,11 +86,20 @@ const VerifyPhoneNumber = (props: IProps) => {
   }
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       setVerify(!!userDetail?.is_mobile_verified)
     }
   }, [loading, userDetail])
 
+  useEffect(() => {
+    setDisabled(phoneNumber?.length < 7)
+  }, [phoneNumber])
+
+  const disabledSave = useMemo(() => {
+    const disabledOtp = otp?.length < 6 ? true : false
+    const errorMessage = phoneNumber?.length < 7 ? true : false
+    return disabledOtp || errorMessage || !smsCode
+  }, [otp, smsCode, phoneNumber])
 
   useEffect(() => {
     if (initialTime > 0) {
@@ -106,12 +117,14 @@ const VerifyPhoneNumber = (props: IProps) => {
     setOpen(true)
     clear()
     setSmsCode(getSmsCountryCode(userDetail, smsCountryList))
-    setPhoneNumber(userDetail?.phone_num_without_country_code || '')
+    const phone = userDetail?.phone_num_without_country_code || ''
+    setPhoneNumber(phone)
+    setDisabled(phone?.length < 7)
   }
 
   const clearCloseModal = () => {
-    clear()
     setOpen(false)
+    clear()
   }
 
   const handleSave = () => {
@@ -143,10 +156,19 @@ const VerifyPhoneNumber = (props: IProps) => {
     } else {
       errorMessage = data?.errors?.phone_num[0]
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
@@ -181,7 +203,7 @@ const VerifyPhoneNumber = (props: IProps) => {
             startTransition(() => {
               router.refresh()
             })
-            
+
             dispatch(
               displayNotification({
                 open: true,
@@ -210,7 +232,7 @@ const VerifyPhoneNumber = (props: IProps) => {
             startTransition(() => {
               router.refresh()
             })
-         
+
             dispatch(
               displayNotification({
                 open: true,
@@ -229,13 +251,14 @@ const VerifyPhoneNumber = (props: IProps) => {
 
   const handlePhoneNumber = (ev) => {
     const value = ev.target.value || ''
-    if(!value) {
+    if (!value) {
       setNumberError(accountSetting?.verifiedMessages?.phoneEmpty)
-    }else if(value.length < 7) {
+    } else if (value.length < 7) {
       setNumberError(accountSetting?.verifiedMessages?.phoneError)
     } else {
       setNumberError('')
     }
+    setDisabled(!smsCode || value?.length < 7)
     setPhoneNumber(value)
   }
 
@@ -286,6 +309,7 @@ const VerifyPhoneNumber = (props: IProps) => {
         title={accountSetting?.modals?.verifyMobileTitle}
         isLoading={isLoadingButton}
         lang={lang}
+        disabled={disabledSave}
       >
         <div className={styles.modalContent}>
           <div className={styles.content}>
@@ -305,7 +329,7 @@ const VerifyPhoneNumber = (props: IProps) => {
                 variant='standard'
                 value={phoneNumber}
                 onChange={handlePhoneNumber}
-                helperText={<span style={{color: 'red'}}>{numberError}</span>}
+                helperText={<span style={{ color: 'red' }}>{numberError}</span>}
               />
               <button
                 className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}

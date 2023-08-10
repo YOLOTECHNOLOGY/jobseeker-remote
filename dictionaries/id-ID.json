@@ -965,7 +965,11 @@
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
     "skipAnyway": "skipAnyway",
-    "uploadSeccess": "upload seccess"
+    "uploadSeccess": "upload seccess",
+    "updateYouronLineResume": "update your online resume",
+    "getMoreRelevantJobRecommendations": "to get more relevant job recommendations",
+    "searchOrAddSkill": "Search or add a skill",
+    "add": "Add"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1233,10 +1237,10 @@
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
     },
-    "smsSystemTip": "sms system tip",
-    "smsSystemExplanation": "sms system explanation",
-    "smsChatTip": "sms chat tip",
-    "smsChatExplanation": "sms chat explanation"
+    "smsSystemTip": "Receive system SMS reminders",
+    "smsSystemExplanation": "Receive system message text messages, such as job post recommendations you are interested in",
+    "smsChatTip": "Receive chat SMS reminders",
+    "smsChatExplanation": "Receive text message alerts about chats"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
@@ -1324,11 +1328,17 @@
     "validateErr": "The email has been registered. Please change the binding to another email",
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
     "authenticationSuccessful": "Authentication Successful",
-    "Bossjob": "Bossjob"
+    "Bossjob": "Bossjob",
+    "back": "Back"
   },
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
+    "jp": "Japan",
+    "id": "Indonesia",
+    "hk": "Hongkong",
+    "tw": "Taiwan",
+    "mo": "Macao",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
     "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {

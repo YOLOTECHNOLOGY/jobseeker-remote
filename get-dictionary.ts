@@ -14,6 +14,9 @@ import idErrorcode from './errorcode/id-ID/errorcode.json'
 
 import jpPageLanguage from './dictionaries/ja-JP.json'
 import jpErrorcode from './errorcode/ja-JP/errorcode.json'
+
+import twPageLanguage from './dictionaries/zh-TW.json'
+import twErrorcode from './errorcode/zh-TW/errorcode.json'
 import { isEmpty } from 'ramda'
 // We enumerate all dictionaries here for better linting and typescript support
 // We also get the default import for cleaner types
@@ -21,12 +24,14 @@ const enLanguage = { errorcode: enErrorcode, ...enPageLanguage }
 const zhLanguage = { errorcode: zhErrorcode, ...zhPageLanguage }
 const idLanguage = { errorcode: idErrorcode, ...idPageLanguage }
 const jpLanguage = { errorcode: jpErrorcode, ...jpPageLanguage }
+const twLanguage = { errorcode: twErrorcode, ...twPageLanguage }
 const dictionaries = {
   'en-US': () => enLanguage,
   'zh-CN': () => zhLanguage,
   'id': () => idLanguage,
   'id-ID': () => idLanguage,
-  'ja-JP': () => jpLanguage
+  'ja-JP': () => jpLanguage,
+  'zh-TW': () => twLanguage
 }
 const client = new otaClient('7ebf57665448382c18ccd49ef5z', {
   disableStringsCache: false,
@@ -56,17 +61,18 @@ const findMatch = (langKeys, key) => {
 }
 
 export const getDictionary = async (locale: Locale) => {
+  return dictionaries[locale]?.() || dictionaries['en-US']()
 
-  const languages = await client.getStrings()
-  const langKeys = Object.keys(languages)
-  const match = findMatch(langKeys, locale)
-  const dic = await client.getStringsByLocale(match ?? defaultLanguage())
-  const errorcode = Object.keys(dic)
-    .filter(key => !isNaN(Number(key)))
-    .map(key => ({ [key]: dic[key] }))
-    .reduce((a, b) => ({ ...a, ...b }), {})
-  if (isEmpty(dic)) {
-    return dictionaries[locale]?.() || dictionaries['en-US']()
-  }
-  return { ...dic, errorcode }
+  // const languages = await client.getStrings()
+  // const langKeys = Object.keys(languages)
+  // const match = findMatch(langKeys, locale)
+  // const dic = await client.getStringsByLocale(match ?? defaultLanguage())
+  // const errorcode = Object.keys(dic)
+  //   .filter(key => !isNaN(Number(key)))
+  //   .map(key => ({ [key]: dic[key] }))
+  //   .reduce((a, b) => ({ ...a, ...b }), {})
+  // if (isEmpty(dic)) {
+  //   return dictionaries[locale]?.() || dictionaries['en-US']()
+  // }
+  // return { ...dic, errorcode }
 }

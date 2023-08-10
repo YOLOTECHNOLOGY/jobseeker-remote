@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -25,6 +25,7 @@ import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/navigation'
+import { formatTemplateString } from 'helpers/formatter'
 
 let timer = null
 // 默认位数
@@ -37,16 +38,18 @@ interface IProps {
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, userDetail, lang } = props
-  const { accountSetting } = lang
+  const { label, userDetail, lang = {} } = props
+  const accountSetting = lang.accountSetting || {}
+  const errorCode = lang.errorcode || {}
+
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
   const captchaRef = useRef(null)
-  
+
   const [loading, startTransition] = useTransition()
-  
+
   const [verify, setVerify] = useState(!!userDetail.is_email_verify)
 
   const [emailError, setEmailError] = useState(null)
@@ -70,16 +73,23 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     return errorMessage
   }
 
+  const disabledSave = useMemo(() => {
+    const disabledOtp = otp?.length < 6 ? true : false
+    const errorMessage = !!validEmail(email)
+    return disabledOtp || errorMessage
+  }, [otp, email])
+
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
     setInitialTime(0)
     setDisabled(false)
     setEmailError('')
+    setOtp('')
   }
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       setVerify(!!userDetail?.is_email_verify)
     }
   }, [loading, userDetail])
@@ -97,13 +107,17 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const handleKeyUp = (ev) => {
     const value = ev?.target?.value || ''
-    setEmailError(validEmail(value))
+    const errorMessage = validEmail(value)
+    setEmailError(errorMessage)
+    setDisabled(!!errorMessage)
   }
 
   const handleOpen = () => {
     setOpen(true)
     clear()
-    setEmail(userDetail?.email ? userDetail.email : null)
+    const email = userDetail?.email ? userDetail.email : null
+    setEmail(email)
+    setDisabled(!email)
   }
 
   const clearCloseModal = () => {
@@ -142,10 +156,19 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     } else {
       errorMessage = data?.errors?.email[0]
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
@@ -258,6 +281,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         handleClose={handleClose}
         title={accountSetting?.modals?.verifyEmailTitle}
         lang={lang}
+        disabled={disabledSave}
         isLoading={isLoadingButton}
       >
         <div className={styles.modalContent}>
