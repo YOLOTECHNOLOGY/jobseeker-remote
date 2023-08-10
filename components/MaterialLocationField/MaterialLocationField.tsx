@@ -106,10 +106,12 @@ const MaterialLocationField = ({
               required={rest.required}
               helperText={error?.message}
               label={
-                <span>
-                  {label ? label : 'Location'}{' '}
-                  {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
-                </span>
+                label && (
+                  <span>
+                    {label ? label : 'Location'}{' '}
+                    {required ? <span style={{ color: 'red' }}>{' *'}</span> : ''}
+                  </span>
+                )
               }
               variant='outlined'
               {...fieldRef}

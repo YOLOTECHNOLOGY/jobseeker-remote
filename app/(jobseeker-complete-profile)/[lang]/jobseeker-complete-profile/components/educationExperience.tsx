@@ -160,7 +160,8 @@ const EducationExperience = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={schoolName}
+                // label={schoolName}
+                placeholder={schoolName}
                 size='small'
                 value={school}
                 variant='standard'
@@ -181,7 +182,8 @@ const EducationExperience = (props: any) => {
             <div className={styles.stepField}>
               <MaterialTextField
                 className={styles.stepFullwidth}
-                label={fieldOfStudy}
+                placeholder={fieldOfStudy}
+                // label={fieldOfStudy}
                 size='small'
                 value={fieldStudy}
                 variant='standard'
