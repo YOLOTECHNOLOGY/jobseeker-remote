@@ -39,8 +39,12 @@ const Company = (company: propsType) => {
         reco_from: company?.reco_from || ''
       }
     }
-    fetchViewCompany(params).finally(() => {
-      window.location.href = url
+    // fetchViewCompany(params).finally(() => {
+    //   window.location.href = url
+    // })
+    new Promise((resolve, _) => {
+      fetchViewCompany(params).finally(resolve((window.location.href = url)))
+      setTimeout(() => resolve((window.location.href = url)), 1000)
     })
   }
 
