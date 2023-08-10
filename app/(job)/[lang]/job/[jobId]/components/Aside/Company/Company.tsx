@@ -5,8 +5,8 @@ import styles from '../../../page.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
 import { getValueById } from 'helpers/config/getValueById'
 import React from 'react'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
 export type propsType = {
   name: string
   companySize: string
@@ -39,13 +39,8 @@ const Company = (company: propsType) => {
         reco_from: company?.reco_from || ''
       }
     }
-    // fetchViewCompany(params).finally(() => {
-    //   window.location.href = url
-    // })
-    new Promise((resolve, _) => {
-      fetchViewCompany(params).finally(resolve((window.location.href = url)))
-      setTimeout(() => resolve((window.location.href = url)), 1000)
-    })
+    setCookie('view-company-buried', JSON.stringify(params))
+    window.location.href = url
   }
 
   return (

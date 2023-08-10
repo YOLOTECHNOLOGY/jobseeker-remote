@@ -5,8 +5,8 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
 import { getValueById } from 'helpers/config/getValueById'
-import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
 
 interface IProps {
   featuredCompany: any
@@ -50,7 +50,7 @@ const FeaturedCompany = (props: IProps) => {
         reco_from: featuredCompany?.reco_from || ''
       }
     }
-    fetchViewCompany(params).catch((err) => console.log(err))
+    setCookie('view-company-buried', JSON.stringify(params))
   }
 
   return (
