@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 
 /* Actions */
 
-import { differenceBy, difference, differenceWith} from 'lodash-es'
+import { differenceBy, difference, differenceWith } from 'lodash-es'
 
 /* Components */
 import { Chip } from '@mui/material'
@@ -50,13 +50,13 @@ const EditSkillModal = ({
         profile: { skillModal }
       }
     },
-    profile : {
+    profile: {
       skillsWillBeSuggested
     }
   } = lang
   const dispatch = useDispatch()
   const { handleSubmit } = useForm()
-  console.log('skills',skills);
+  console.log('skills', skills);
   const [choosed, setChoosed] = useState(skills || [])
   const [searchValue, setSearchValue] = useState('')
   const [functionTitle, setFunctionTitle] = useState({ value: '', id: undefined })
@@ -100,12 +100,12 @@ const EditSkillModal = ({
       handleCloseModal()
     }
   }, [updateProfileSuccess])
-  useEffect(()=>{
-    
-    if(showModal && skills){
+  useEffect(() => {
+
+    if (showModal && skills) {
       setChoosed(skills)
     };
-  },[skills, showModal])
+  }, [skills, showModal])
   const onSubmit = () => {
     const payload = {
       skills: choosed.join(',')
@@ -119,7 +119,7 @@ const EditSkillModal = ({
   }
 
   const handleAddSkill = (skill) => {
-    if(choosed.length > 9) return;
+    if (choosed.length > 9) return;
     setChoosed((prevState) => {
       if (!prevState?.includes?.(skill)) {
         return [...prevState, skill]
@@ -142,7 +142,7 @@ const EditSkillModal = ({
     setSearchValue('')
     setAllSkills([])
   }
-  console.log('allSkills, choosed',functionTitle)
+  console.log('allSkills, choosed', functionTitle)
   return (
     <div>
       <Modal
@@ -168,8 +168,8 @@ const EditSkillModal = ({
               isTouched={true}
               title={lang.profile.jobFunction}
               value={functionTitle}
-              onChangeSkill={(skills)=>{
-                setAllSkills(skills.map(item=>item.value));
+              onChangeSkill={(skills) => {
+                setAllSkills(skills.map(item => item.value));
               }}
               onChange={(item) => {
                 setFunctionTitle({
@@ -227,10 +227,10 @@ const EditSkillModal = ({
             </div>
           </div>
           <div className={styles.skillList}>
-            {(choosed ?? []).map((skill, i) => {
+            {(choosed ?? []).slice(0, 5).map((skill, i) => {
               return (
                 <Chip
-                  key={i}
+                  key={skill}
                   className={styles.skillChip}
                   label={skill}
                   variant='filled'
