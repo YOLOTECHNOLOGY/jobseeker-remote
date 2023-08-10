@@ -18,4 +18,5 @@ export interface CompanyDetail {
   name:               string;
   num_of_active_jobs: number;
   logo_url:           string;
+  reco_from:          string;
 }
