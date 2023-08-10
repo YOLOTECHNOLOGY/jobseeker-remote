@@ -73,7 +73,10 @@ const FootBtn = ({
                 borderRadius: '8px',
                 border: '1px solid #E4E4E4',
                 background: 'transparent',
-                color: '#515151'
+                color: '#515151',
+                '&:hover': {
+                  border: '1px solid #1565c0'
+                }
               }}
             >
               <span>{isMobile ? skipText : backText}</span>

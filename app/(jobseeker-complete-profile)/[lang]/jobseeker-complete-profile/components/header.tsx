@@ -44,30 +44,28 @@ const Header = (props: any) => {
               </Text>
             </MaterialButton>
           </Link> */}
-          {step === 1 && (
-            <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
-              <MaterialButton
-                variant='outlined'
-                size='medium'
-                capitalize
-                sx={{
-                  height: '35px !important',
+          <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
+            <MaterialButton
+              variant='outlined'
+              size='medium'
+              capitalize
+              sx={{
+                height: '40px !important',
+                border: '1px solid #2378E5',
+                borderRadius: '4px',
+                backgroundColor: '#fff',
+                color: '#2378E5',
+                padding: '0 20px',
+                ':hover': {
                   border: '1px solid #2378E5',
-                  borderRadius: '10px',
-                  backgroundColor: '#fff',
-                  color: '#2378E5',
-                  padding: '0 30px',
-                  ':hover': {
-                    border: '1px solid #2378E5',
-                    background: '#2378E5',
-                    color: '#fff'
-                  }
-                }}
-              >
-                {lang?.profile?.ImHiring}
-              </MaterialButton>
-            </Link>
-          )}
+                  background: '#2378E5',
+                  color: '#fff'
+                }
+              }}
+            >
+              {lang?.profile?.ImHiring}
+            </MaterialButton>
+          </Link>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ import Link from 'components/Link'
 import { LinkContext } from 'app/components/providers/linkProvider'
 import MaterialButton from 'components/MaterialButton'
 import { fabClasses } from '@mui/material'
-
+const maxSkillsLen = 10
 const WorkExperience = (props: any) => {
   const { lang, userDetail, getUserInfo } = props
   const { work_experiences } = userDetail
@@ -232,7 +232,7 @@ const WorkExperience = (props: any) => {
   }
 
   const addSecected = (item) => {
-    if (selectedSkills?.length >= 5) return
+    if (selectedSkills?.length >= maxSkillsLen) return
     setSelectedSkills([...selectedSkills, item])
   }
 
@@ -443,7 +443,7 @@ const WorkExperience = (props: any) => {
                 name={'job_skills'}
                 ref={inputNode}
                 type='text'
-                disabled={selectedSkills?.length >= 5}
+                disabled={selectedSkills?.length >= maxSkillsLen}
                 onKeyUp={handleKeyUp}
                 onKeyDown={handleKeyDown}
                 autoComplete='off'
@@ -454,7 +454,7 @@ const WorkExperience = (props: any) => {
                 variant='outlined'
                 size='medium'
                 capitalize
-                disabled={selectedSkills?.length >= 5}
+                disabled={selectedSkills?.length >= maxSkillsLen}
                 onClick={() => handleKeyUp('', true)}
                 sx={{
                   height: '60px !important',
