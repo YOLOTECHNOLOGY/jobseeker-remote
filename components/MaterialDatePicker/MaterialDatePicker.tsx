@@ -82,7 +82,7 @@ const MaterialDatePicker = ({
           value={value}
           onChange={(date) => {
             if (onDateChange) {
-              onDateChange(date)
+              onDateChange(date || new Date())
             }
           }}
           renderInput={(params) => (
