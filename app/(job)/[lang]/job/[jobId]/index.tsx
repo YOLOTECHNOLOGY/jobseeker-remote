@@ -90,6 +90,8 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
 
   const companyProps = {
     name: data.company?.name,
+    company_id: data.company?.id,
+    reco_from: data?.company?.reco_from,
     companySize: data.company?.company_size,
     financingStage: data.company?.financing_stage,
     logo: data.company?.logo,

@@ -5,6 +5,8 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
 import { getValueById } from 'helpers/config/getValueById'
+import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
+import { isMobile } from 'react-device-detect'
 
 interface IProps {
   featuredCompany: any
@@ -39,6 +41,18 @@ const FeaturedCompany = (props: IProps) => {
     return [financingStageValue, companySizeValue, industryValue].filter(Boolean)
   }, [featuredCompany])
 
+  const sendViewCompany = () => {
+    const params = {
+      id: featuredCompany?.id,
+      payload: {
+        source: 'company_reco',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: featuredCompany?.reco_from || ''
+      }
+    }
+    fetchViewCompany(params).catch((err) => console.log(err))
+  }
+
   return (
     <>
       {featuredCompany ? (
@@ -50,6 +64,7 @@ const FeaturedCompany = (props: IProps) => {
                 to={'/' + langKey + featuredCompany?.company_url || '/'}
                 className={styles.featuredCompanyLogoLink}
                 target='_blank'
+                onClick={sendViewCompany}
               >
                 {featuredCompany?.logo && (
                   <Image
@@ -71,6 +86,7 @@ const FeaturedCompany = (props: IProps) => {
                 className={styles.featuredCompanyName}
                 title={featuredCompany?.name}
                 target='_blank'
+                onClick={sendViewCompany}
               >
                 {featuredCompany?.name}
               </Link>
@@ -108,7 +124,11 @@ const FeaturedCompany = (props: IProps) => {
                 ))}
             </div> */}
           </div>
-          <Image alt="img" fill src={`${process.env.S3_BUCKET_URL}/companies/featured-bg.png`}></Image>
+          <Image
+            alt='img'
+            fill
+            src={`${process.env.S3_BUCKET_URL}/companies/featured-bg.png`}
+          ></Image>
         </div>
       ) : (
         <div className={styles.featuredCompany} />

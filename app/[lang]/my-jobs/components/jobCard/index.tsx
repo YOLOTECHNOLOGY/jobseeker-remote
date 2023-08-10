@@ -23,6 +23,8 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import { QRCodeSVG } from 'qrcode.react'
 import { SortContext } from '../searchForms/SortProvider'
 import { cloneDeep } from 'lodash-es'
+import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
+import { isMobile } from 'react-device-detect'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -166,7 +168,8 @@ const JobCard = (props: any) => {
     company_industry_id,
     company_size_id,
     company_financing_stage_id,
-    reco_from
+    reco_from,
+    company_id
   } = memoedJob
   const { chatInfos } = useContext(ChatInfoContext)
   const chat = useMemo(() => {
@@ -208,6 +211,20 @@ const JobCard = (props: any) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
     router.push(`/${langKey}` + job_url, { scroll: true })
+  }
+
+  const sendViewCompany = () => {
+    const params = {
+      id: company_id,
+      payload: {
+        source: sort == '2' ? 'reco' : 'reco-latest',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: reco_from || ''
+      }
+    }
+    fetchViewCompany(params).finally(() => {
+      window.location.href = `/${langKey}` + company_url
+    })
   }
 
   return (
@@ -326,7 +343,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                window.location.href = `/${langKey}` + company_url
+                sendViewCompany()
               }}
             >
               <div className={styles.company}>
