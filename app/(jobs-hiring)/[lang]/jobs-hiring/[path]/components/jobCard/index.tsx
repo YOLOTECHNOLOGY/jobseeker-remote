@@ -24,6 +24,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
 import { ChatDataContext } from '../ChatProvider'
+import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -215,6 +216,20 @@ const JobCard = (props: any) => {
     })
   }
 
+  const sendViewCompany = () => {
+    const params = {
+      id: props?.company_id,
+      payload: {
+        source: 'job_search',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: props?.reco_from || ''
+      }
+    }
+    fetchViewCompany(params).finally(() => {
+      window.location.href = `/${langKey}` + company_url
+    })
+  }
+
   return (
     <div className={styles.jobCard}>
       <>
@@ -317,8 +332,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                window.location.href = `/${langKey}` + company_url
-                // router.push(`/${langKey}` + company_url, { scroll: true })
+                sendViewCompany()
               }}
             >
               <div className={styles.company}>
