@@ -8,6 +8,7 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
+import { getDeviceUuid } from 'helpers/guest'
 const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   const token = getCookie(accessToken)
   const recoFrom = getCookie('reco_from') ?? null
@@ -52,12 +53,13 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       query.status = token ? 'protected' : 'public'
       query.serverAccessToken = token ?? null
     }
-
+    const deviceUuid = getDeviceUuid()
+    console.log({ deviceUuid })
     const tokenData = {
       source: source ? source : 'job_search',
       device: isMobile ? 'mobile_web' : 'web',
       reco_from: recoFrom ? recoFrom : null,
-      device_udid: localStorage.getItem('deviceUdid')
+      device_udid: deviceUuid
     }
     const params = Object.assign(query, tokenData)
 
