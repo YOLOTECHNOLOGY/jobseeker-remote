@@ -12,7 +12,7 @@ import { isMobile } from 'react-device-detect'
 import { getCookie, setCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 import { chatSVG } from 'images/svg'
-const JobDetail = ({ detail, config, langKey }: any) => {
+const JobDetail = ({ detail, config, langKey, tabValue, prefJobTitle }: any) => {
   const router = useRouter()
 
   const accessToken = getCookie('accessToken')
@@ -36,8 +36,9 @@ const JobDetail = ({ detail, config, langKey }: any) => {
         device: isMobile ? 'mobile_web' : 'web',
         reco_from: detail?.reco_from
       }
-      setCookie('source', 'home')
+      setCookie('source', tabValue == 1 ? "reco-latest" : "reco")
       setCookie('reco_from', detail?.reco_from)
+      setCookie('pref_job_title_id', prefJobTitle)
       // addJobViewService(params)
     }
   }

@@ -359,7 +359,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
             <div className={styles.tabContainer}>
               {!loading ? (
                 list?.map((item) => (
-                  <JobDetail config={config} langKey={langKey} key={item.id} detail={item} />
+                  <JobDetail config={config} langKey={langKey} key={item.id} detail={item} tabValue={value} prefJobTitle={jobseekerPrefIdRef.current?.function_job_title_id} />
                 ))
               ) : (
                 <Box sx={{ width: '100%' }}>

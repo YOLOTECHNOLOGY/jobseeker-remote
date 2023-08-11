@@ -12,7 +12,8 @@ import { getDeviceUuid } from 'helpers/guest'
 const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   const token = getCookie(accessToken)
   const recoFrom = getCookie('reco_from') ?? null
-  const source = getCookie("'source'") ?? null
+  const source = getCookie('source') ?? null
+  const pref_job_title_id = getCookie('pref_job_title_id') ?? null
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
   const firstRender = useFirstRender()
@@ -54,12 +55,12 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       query.serverAccessToken = token ?? null
     }
     const deviceUuid = getDeviceUuid()
-    console.log({ deviceUuid })
     const tokenData = {
       source: source ? source : 'job_search',
       device: isMobile ? 'mobile_web' : 'web',
       reco_from: recoFrom ? recoFrom : null,
-      device_udid: deviceUuid
+      device_udid: deviceUuid,
+      job_title_id:pref_job_title_id
     }
     const params = Object.assign(query, tokenData)
 

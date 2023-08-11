@@ -210,6 +210,7 @@ const JobCard = (props: any) => {
   const handleRouterToPath = (job_url: string) => {
     sort == '1' ? setCookie('source', 'reco-latest') : setCookie('source', 'reco')
     setCookie('reco_from', reco_from)
+    setCookie('pref_job_title_id', preference?.function_job_title_id)
     router.push(`/${langKey}` + job_url, { scroll: true })
   }
 
