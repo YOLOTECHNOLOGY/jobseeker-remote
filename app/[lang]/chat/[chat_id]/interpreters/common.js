@@ -62,6 +62,9 @@ export default command => command.cata({
     showToast: (type, content) => M(context => Promise.resolve().then(() => {
         context.showToast(type, content)
     })),
+    showToastTranslateContent: (type, content) => M(context => Promise.resolve().then(() => {
+        context.showToast(type, content)
+    })),
     closeModals: () => M(context => Promise.resolve().then(() => {
         context.hideModals?.()
     })),
