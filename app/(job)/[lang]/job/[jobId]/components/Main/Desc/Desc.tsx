@@ -84,6 +84,7 @@ const Desc = ({
           dangerouslySetInnerHTML={{ __html: description }}
         ></div> */}
         <ReadMore
+          key={'description'}
           expandText={content.showMore}
           shrinkText={content.showLess}
           className={styles.desc_context}
@@ -148,6 +149,7 @@ const Desc = ({
           dangerouslySetInnerHTML={{ __html: requirements }}
         ></div> */}
         <ReadMore
+          key={'requirement'}
           expandText={content.showMore}
           shrinkText={content.showLess}
           className={styles.desc_context}
