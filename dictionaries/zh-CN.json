@@ -478,7 +478,7 @@
     },
     "feedbackModal": {
       "title": "举报成功",
-      "message": "我们已经收到这个工作的举报了，感谢您的通知。你的反馈十分重要，这有助于我们Bossjob社区稳定"
+      "message": "我们已经收到这个工作的举报了，感谢您的通知。您的反馈十分重要，这有助于我们Bossjob社区稳定。"
     },
     "switchModal": {
       "title": "与{{name}}交谈",
