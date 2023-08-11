@@ -141,7 +141,7 @@
     "noResumeUploadNow": "No resume, upload now",
     "uploadResume": "Upload resume",
     "availabilityUpdateSuccessfully": "Availability update successfully",
-    "seeMore": "See More",
+    "seeMore": "View More",
     "seeJobReco": "See job reco",
     "search": "Search",
     "desiredJobTitle": "Desired Job Title",
@@ -407,7 +407,8 @@
       "title": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     },
-    "jobs": "jobs"
+    "jobs": "jobs",
+    "seeMore": "View more"
   },
   "jobDetail": {
     "header": {
@@ -621,7 +622,9 @@
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
     "findNow": "Find Now",
-    "find": "Find"
+    "find": "Find",
+    "viewMore": "View More",
+    "noMore": "No more"
   },
   "manageProfile": {
     "tab": {
@@ -965,7 +968,11 @@
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
     "skipAnyway": "skipAnyway",
-    "uploadSeccess": "upload seccess"
+    "uploadSeccess": "upload seccess",
+    "updateYouronLineResume": "update your online resume",
+    "getMoreRelevantJobRecommendations": "to get more relevant job recommendations",
+    "searchOrAddSkill": "Search or add a skill",
+    "add": "Add"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1232,7 +1239,11 @@
       "unBlockTip1": "The following related companies will be unblocked at the same time",
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
-    }
+    },
+    "smsSystemTip": "Receive system SMS reminders",
+    "smsSystemExplanation": "Receive system message text messages, such as job post recommendations you are interested in",
+    "smsChatTip": "Receive chat SMS reminders",
+    "smsChatExplanation": "Receive text message alerts about chats"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
@@ -1320,11 +1331,17 @@
     "validateErr": "The email has been registered. Please change the binding to another email",
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
     "authenticationSuccessful": "Authentication Successful",
-    "Bossjob": "Bossjob"
+    "Bossjob": "Bossjob",
+    "back": "Back"
   },
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
+    "jp": "Japan",
+    "id": "Indonesia",
+    "hk": "Hongkong",
+    "tw": "Taiwan",
+    "mo": "Macao",
     "siteName": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
     "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
     "jobSearch": {
@@ -1404,6 +1421,19 @@
     "Macao": "Macao",
     "Taiwan": "Taiwan",
     "Japan": "Japan",
+    "Australia": "Australia",
+    "Nigeria": "Nigeria",
+    "South Korea": "South Korea",
+    "India": "India",
+    "Türkiye": "Türkiye",
+    "Chile": "Chile",
+    "Bangladesh": "Bangladesh",
+    "Europe": "Europe",
+    "Brazil": "Brazil",
+    "USA": "USA",
+    "Mexico": "Mexico",
+    "Canada": "Canada",
+    "Pakistan": "Pakistan",
     "section6_title": "Best hiring APP in Southeast-Asia",
     "section6_subtitle": "Find jobs anywhere, everywhere",
     "section6_coming_soon": "Coming soon...",

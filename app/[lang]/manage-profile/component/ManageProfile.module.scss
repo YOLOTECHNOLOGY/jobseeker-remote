@@ -694,14 +694,20 @@
   display: flex;
   flex-wrap: wrap;
 
+  
   &Chip {
     margin-right: 10px;
     margin-bottom: 10px;
     border-radius: 4px !important;
     font-size: 14px !important;
+    word-break: break-all!important;
     height: 36px;
     color: #4e5969 !important;
     background-color: #f6f6f6;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    
   }
 }
 

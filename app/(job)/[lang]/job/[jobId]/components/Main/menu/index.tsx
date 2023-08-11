@@ -8,8 +8,11 @@ import { useFirstRender } from 'helpers/useFirstRender'
 import { throttle } from 'lodash-es'
 import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
+import { getDeviceUuid } from 'helpers/guest'
 const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   const token = getCookie(accessToken)
+  const recoFrom = getCookie('reco_from') ?? null
+  const source = getCookie("'source'") ?? null
   const [current, setCurrent] = useState<number>(0)
   const [menuNew, setMneuNew] = useState<Array<any>>([])
   const firstRender = useFirstRender()
@@ -40,18 +43,46 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   ]
 
   useEffect(() => {
-    window.document.addEventListener('scroll', throttle(handleScroll, 200))
-    if (!token) {
-      const recoFrom = getCookie('reco_from') ?? null
-      fetchAddJobViewService({
-        jobId,
-        status: 'public',
-        source: 'job_search',
-        device: isMobile ? 'mobile_web' : 'web',
-        reco_from: recoFrom,
-        device_udid: localStorage.getItem('deviceUdid')
-      })
+    const query = {
+      jobId,
+      status: 'public',
+      serverAccessToken: null
     }
+
+    if (token) {
+      query.status = token ? 'protected' : 'public'
+      query.serverAccessToken = token ?? null
+    }
+    const deviceUuid = getDeviceUuid()
+    console.log({ deviceUuid })
+    const tokenData = {
+      source: source ? source : 'job_search',
+      device: isMobile ? 'mobile_web' : 'web',
+      reco_from: recoFrom ? recoFrom : null,
+      device_udid: deviceUuid
+    }
+    const params = Object.assign(query, tokenData)
+
+    try {
+      fetchAddJobViewService(params)
+    } catch (error) {
+      //
+    }
+  }, [])
+
+  useEffect(() => {
+    window.document.addEventListener('scroll', throttle(handleScroll, 200))
+    // if (!token) {
+    //   const recoFrom = getCookie('reco_from') ?? null
+    //   fetchAddJobViewService({
+    //     jobId,
+    //     status: 'public',
+    //     source: 'job_search',
+    //     device: isMobile ? 'mobile_web' : 'web',
+    //     reco_from: recoFrom,
+    //     device_udid: localStorage.getItem('deviceUdid')
+    //   })
+    // }
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

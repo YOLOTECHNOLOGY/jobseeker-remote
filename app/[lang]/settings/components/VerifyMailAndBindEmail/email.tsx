@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 
 import MaterialTextField from 'components/MaterialTextField'
@@ -15,7 +15,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import { changeEmail } from 'store/services/auth/changeEmail'
 import { verifyEmail } from 'store/services/auth/verifyEmail'
 import { emailOTPChangeEmailGenerate } from 'store/services/auth/emailOTPChangeEmailGenerate'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 // actions
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -26,7 +25,7 @@ import Image from 'next/image'
 import { TooltipIcon, AccountSettingEditIconPen } from 'images'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/navigation'
-import { getCookie } from 'helpers/cookies'
+import { formatTemplateString } from 'helpers/formatter'
 
 let timer = null
 // 默认位数
@@ -39,17 +38,18 @@ interface IProps {
 }
 
 const VerifyMailAndBindEmail = (props: IProps) => {
-  const { label, userDetail, lang } = props
-  const { accountSetting } = lang
+  const { label, userDetail, lang = {} } = props
+  const accountSetting = lang.accountSetting || {}
+  const errorCode = lang.errorcode || {}
+
   const alertJobsModal = lang?.search?.alertJobsModal || {}
   const dispatch = useDispatch()
   const emailDefault = userDetail?.email ? userDetail.email : null
   const router = useRouter()
-  // const accessToken = getCookie('accessToken')
   const captchaRef = useRef(null)
-  
+
   const [loading, startTransition] = useTransition()
-  
+
   const [verify, setVerify] = useState(!!userDetail.is_email_verify)
 
   const [emailError, setEmailError] = useState(null)
@@ -58,6 +58,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [disabledOtp, setDisabledOtp] = useState(false)
 
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
@@ -73,16 +74,23 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     return errorMessage
   }
 
+  const disabledSave = useMemo(() => {
+    const disabledOtp = otp?.length < 6 ? true : false
+    const errorMessage = !!validEmail(email)
+    return disabledOtp || errorMessage
+  }, [otp, email])
+
   const clear = () => {
     clearTimeout(timer)
     setStartTimer(false)
     setInitialTime(0)
     setDisabled(false)
     setEmailError('')
+    // setOtp('')
   }
 
   useEffect(() => {
-    if(loading) {
+    if (loading) {
       setVerify(!!userDetail?.is_email_verify)
     }
   }, [loading, userDetail])
@@ -100,22 +108,29 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const handleKeyUp = (ev) => {
     const value = ev?.target?.value || ''
-    setEmailError(validEmail(value))
+    const errorMessage = validEmail(value)
+    setEmailError(errorMessage)
+    setDisabled(!!errorMessage)
   }
 
   const handleOpen = () => {
-    setOpen(true)
     clear()
-    setEmail(userDetail?.email ? userDetail.email : null)
+    setOpen(true)
+    const email = userDetail?.email ? userDetail.email : null
+    setEmail(email)
+    setDisabled(!email)
+    setOtp('')
   }
 
   const clearCloseModal = () => {
-    clear()
     setOpen(false)
+    setOtp('')
+    clear()
   }
 
   const handleSave = () => {
-    if (!emailError && otp.length == 6) {
+    const emailError = validEmail(email)
+    if (!emailError && otp?.length == 6) {
       verifyEmailOrChangeEmail({ otp, email, emailDefault })
     }
   }
@@ -129,6 +144,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
   }
 
   const handleSendOTP = () => {
+    const emailError = validEmail(email)
     if (!emailError) {
       clear()
       sendEmailOTP(email)
@@ -143,10 +159,19 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     } else {
       errorMessage = data?.errors?.email[0]
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
@@ -159,6 +184,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         setStartTimer(true)
         setInitialTime(originTimer)
         setDisabled(true)
+        setOtp('')
       })
       .catch((error) => {
         setDisabled(false)
@@ -259,6 +285,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
         handleClose={handleClose}
         title={accountSetting?.modals?.verifyEmailTitle}
         lang={lang}
+        disabled={disabledSave}
         isLoading={isLoadingButton}
       >
         <div className={styles.modalContent}>
@@ -290,9 +317,12 @@ const VerifyMailAndBindEmail = (props: IProps) => {
                 {emailError ? emailError : null}
               </div>
               <button
-                className={classNames([styles.sendOTP, disabled ? styles.disabled : ''])}
+                className={classNames([
+                  styles.sendOTP,
+                  disabled || initialTime > 0 ? styles.disabled : ''
+                ])}
                 onClick={handleSendOTP}
-                disabled={disabled}
+                disabled={disabled || initialTime > 0}
               >
                 {accountSetting?.sendOpt} {initialTime ? `(${initialTime}s)` : ''}
               </button>
@@ -303,6 +333,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
             {/* verify code */}
             <Captcha
+              value={otp}
               key={'verify-email-captcha'}
               lang={lang}
               autoFocus={true}

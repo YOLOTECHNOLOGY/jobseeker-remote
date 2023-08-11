@@ -5,6 +5,9 @@ import Link from 'components/Link'
 import Image from 'next/image'
 import { CompanyVerifiedIcon } from 'images'
 import { getValueById } from 'helpers/config/getValueById'
+import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
 
 interface IProps {
   featuredCompany: any
@@ -39,6 +42,20 @@ const FeaturedCompany = (props: IProps) => {
     return [financingStageValue, companySizeValue, industryValue].filter(Boolean)
   }, [featuredCompany])
 
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
+    const params = {
+      id: featuredCompany?.id,
+      payload: {
+        source: 'company_search',
+        device: isMobile ? 'mobile_web' : 'web',
+        reco_from: featuredCompany?.reco_from || '',
+        device_udid
+      }
+    }
+    setCookie('view-company-buried', JSON.stringify(params))
+  }
+
   return (
     <>
       {featuredCompany ? (
@@ -50,6 +67,7 @@ const FeaturedCompany = (props: IProps) => {
                 to={'/' + langKey + featuredCompany?.company_url || '/'}
                 className={styles.featuredCompanyLogoLink}
                 target='_blank'
+                onClick={sendViewCompany}
               >
                 {featuredCompany?.logo && (
                   <Image
@@ -71,6 +89,7 @@ const FeaturedCompany = (props: IProps) => {
                 className={styles.featuredCompanyName}
                 title={featuredCompany?.name}
                 target='_blank'
+                onClick={sendViewCompany}
               >
                 {featuredCompany?.name}
               </Link>
@@ -108,7 +127,11 @@ const FeaturedCompany = (props: IProps) => {
                 ))}
             </div> */}
           </div>
-          <Image alt="img" fill src={`${process.env.S3_BUCKET_URL}/companies/featured-bg.png`}></Image>
+          <Image
+            alt='img'
+            fill
+            src={`${process.env.S3_BUCKET_URL}/companies/featured-bg.png`}
+          ></Image>
         </div>
       ) : (
         <div className={styles.featuredCompany} />

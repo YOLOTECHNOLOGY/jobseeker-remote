@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
 'use client'
-import React, { createContext, useState, useCallback, useEffect, useMemo, useContext } from 'react'
+import React, { createContext, useState, useCallback, useEffect, useMemo } from 'react'
 import { ReaderTPromise as M } from 'app/models/abstractModels/monads'
 import { registInterpreter } from 'app/models/abstractModels/util'
 import { locationScript } from 'app/models/abstractModels/updateLocation'
@@ -13,18 +13,28 @@ import { useRouter } from 'next/navigation'
 import { getCountryKey } from 'helpers/country'
 import { getDefaultLocation } from '../../../helpers/country'
 
-export const LocationContext = createContext()
+interface IProps {
+    location: any;
+    setLocation: React.Dispatch<React.SetStateAction<any>>;
+  }
+  
+
+export const LocationContext = createContext<IProps>({
+    location: '',
+    setLocation: (value) => value
+})
+
 const Provider = LocationContext.Provider
 
 // eslint-disable-next-line react/prop-types
-const LocationProvider = ({ children }) => {
+const LocationProvider = ({ children }: any) => {
 
     const country = getCountryKey();
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchConfigRequest())
     }, [])
-    const locations = useSelector(store => store.config?.config?.response?.location_lists)
+    const locations = useSelector((store:any) => store.config?.config?.response?.location_lists)
     const router = useRouter()
     const flatLocations = useMemo(() => {
         if (!locations?.length) {

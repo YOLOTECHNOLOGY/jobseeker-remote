@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from '../index.module.scss'
-import { BossjobLogoWhite } from 'images'
+import { BossjobLogo } from 'images'
 import Link from 'next/link'
+import MaterialButton from 'components/MaterialButton'
 const Header = (props: any) => {
   const { lang, step } = props
   return (
@@ -10,7 +11,7 @@ const Header = (props: any) => {
         <Link href={'/'}>
           <img
             className={styles.headerLogoImage}
-            src={BossjobLogoWhite}
+            src={BossjobLogo}
             title='Bossjob logo'
             alt='Bossjob logo'
             style={{
@@ -43,11 +44,28 @@ const Header = (props: any) => {
               </Text>
             </MaterialButton>
           </Link> */}
-          {step === 1 && (
-            <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
+          <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
+            <MaterialButton
+              variant='outlined'
+              size='medium'
+              capitalize
+              sx={{
+                height: '40px !important',
+                border: '1px solid #2378E5',
+                borderRadius: '4px',
+                backgroundColor: '#fff',
+                color: '#2378E5',
+                padding: '0 20px',
+                ':hover': {
+                  border: '1px solid #2378E5',
+                  background: '#2378E5',
+                  color: '#fff'
+                }
+              }}
+            >
               {lang?.profile?.ImHiring}
-            </Link>
-          )}
+            </MaterialButton>
+          </Link>
         </div>
       </div>
     </div>

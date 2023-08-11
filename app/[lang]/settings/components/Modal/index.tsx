@@ -12,7 +12,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 interface ModalJobAlertsProps {
   open: boolean
-  lang: any
+  lang?: any
   handleClose: () => void
   handleSave: Function
   children: React.ReactNode
@@ -20,10 +20,20 @@ interface ModalJobAlertsProps {
   confirm: string
   title: string
   isLoading?: boolean
+  disabled?: boolean
 }
 
 export default function FormDialog(props: ModalJobAlertsProps) {
-  const { open, lang, title, handleClose, handleSave, cancel, confirm, isLoading = false } = props
+  const {
+    open,
+    disabled = false,
+    title,
+    handleClose,
+    handleSave,
+    cancel,
+    confirm,
+    isLoading = false
+  } = props
 
   const handleCloseMethod = () => {
     handleClose()
@@ -54,7 +64,11 @@ export default function FormDialog(props: ModalJobAlertsProps) {
                 {cancel}
               </div>
               <div
-                className={classNames([styles.save, styles.actionsItem])}
+                className={classNames([
+                  styles.save,
+                  styles.actionsItem,
+                  disabled ? styles.disabled : ''
+                ])}
                 onClick={handleSaveMethod}
               >
                 {isLoading ? (

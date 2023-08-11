@@ -9,7 +9,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
-import { getCookie, setSourceCookie } from 'helpers/cookies'
+import { getCookie, setCookie, setSourceCookie } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { addJobViewService } from 'store/services/jobs/addJobView'
@@ -24,6 +24,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
 import { ChatDataContext } from '../ChatProvider'
+import { getDeviceUuid } from 'helpers/guest'
 
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
@@ -215,6 +216,22 @@ const JobCard = (props: any) => {
     })
   }
 
+  const sendViewCompany = async () => {
+    const device_udid = await getDeviceUuid()
+    const params = {
+      id: props?.company_id,
+      payload: {
+        source: 'job_search',
+        device: isMobile ? 'mobile_web' : 'web',
+        device_udid
+      }
+    }
+
+    const url = `/${langKey}` + company_url
+    setCookie('view-company-buried', JSON.stringify(params))
+    window.location.href = url
+  }
+
   return (
     <div className={styles.jobCard}>
       <>
@@ -317,8 +334,7 @@ const JobCard = (props: any) => {
               className={styles.right}
               onClick={(e) => {
                 e.stopPropagation()
-                window.location.href = `/${langKey}` + company_url
-                // router.push(`/${langKey}` + company_url, { scroll: true })
+                sendViewCompany()
               }}
             >
               <div className={styles.company}>

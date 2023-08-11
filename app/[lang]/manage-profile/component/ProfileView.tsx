@@ -61,7 +61,7 @@ const ProfileView = ({ lang }: any) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
   const config = useSelector((store: any) => store?.config?.config?.response)
-  console.log('userDetail',userDetail);
+  console.log('userDetail', userDetail);
   const {
     // first_name: firstName,
     // last_name: lastName,
@@ -544,13 +544,13 @@ const ProfileView = ({ lang }: any) => {
             {profile.skill.title}
           </Text>
           <div className={styles.iconWrapper} onClick={() => handleModal('skills', true, null, null)}>
-            <img  src={AddIcon} width='26' height='26' />
+            <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
             {
-              skills.map((skill, i) => <Chip
+              skills.slice(0, 5).map((skill, i) => <Chip
                 key={i}
                 className={styles.skillChip}
                 label={skill}

@@ -141,7 +141,7 @@
     "noResumeUploadNow": "No resume found, upload now",
     "uploadResume": "Upload resume",
     "availabilityUpdateSuccessfully": "Availability updated successfully",
-    "seeMore": "See More",
+    "seeMore": "View More",
     "seeJobReco": "See job reco",
     "search": "Search",
     "desiredJobTitle": "Desired Job Title",
@@ -407,7 +407,8 @@
       "title": "Bossjob - Career Platform for Professionals in {{country}}",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     },
-    "jobs": "jobs"
+    "jobs": "jobs",
+    "seeMore": "View more"
   },
   "jobDetail": {
     "header": {
@@ -621,7 +622,9 @@
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
     "findNow": "Search",
-    "find": "Search"
+    "find": "Search",
+    "viewMore": "View More",
+    "noMore": "No more"
   },
   "manageProfile": {
     "tab": {
@@ -933,7 +936,7 @@
     "basicInformation": "Basic Information",
     "theseInformationWillBeShown": "These information will be shown to Boss when you apply for a job.",
     "profilePhoto": "Profile photo",
-    "uploadAphoto": " Upload a photo ( max 2 MB) or choose one from Bossjob default avatars",
+    "uploadAphoto": " Custom upload avatar up to 2MB",
     "havingArealPhoto": "Having a real photo as your profile picture help build trust with potential employers",
     "name": "Name",
     "IAm": "I am",
@@ -947,7 +950,7 @@
     "mostRecentCompany": "Most recent company",
     "WorkingPeriod": "Working period",
     "mostRecentJobTitle": "Most recent job title and  Skills",
-    "skillsWillBeSuggested": "Skills will be suggested based on selected job function. Please select max 5 skills.",
+    "skillsWillBeSuggested": "Skills will be suggested based on selected job function. Please select max 10 skills.",
     "selectSkillsOr": "Select skills or type your own skills",
     "Next2": "Next (2/4)",
     "educationExperience": "Education Experience",
@@ -965,7 +968,11 @@
     "skipTips": "Skipping these steps will reduce job recommendation accuracy. These details help us to tailor job suggestions that match your experience, qualifications and preferences.",
     "skipTipsSure": "Are you sure you want to skip these step?",
     "skipAnyway": "Skip Anyway",
-    "uploadSeccess": "Upload successfully"
+    "uploadSeccess": "Upload successfully",
+    "updateYouronLineResume": "update your online resume",
+    "getMoreRelevantJobRecommendations": "to get more relevant job recommendations",
+    "searchOrAddSkill": "Search or add a skill",
+    "add": "Add"
   },
   "chat": {
     "chatTitle": "Chat",
@@ -1172,7 +1179,7 @@
     "verifiedMessages": {
       "mobile": "Your mobile number has been verified successfully.",
       "email": "Your email account has been verified successfully.",
-      "phoneEmpty": "Phone number can't be empty",
+      "phoneEmpty": "Phone Number is not empty",
       "phoneError": "The phone number should not be less than 7 digits"
     },
     "email": "Email",
@@ -1233,10 +1240,10 @@
       "unBlockTip2": "The company is referred to as {{company}}",
       "noCompanies": "Non-existence of searching company"
     },
-    "smsSystemTip": "sms system tip",
-    "smsSystemExplanation": "sms system explanation",
-    "smsChatTip": "sms chat tip",
-    "smsChatExplanation": "sms chat explanation"
+    "smsSystemTip": "Receive system SMS reminders",
+    "smsSystemExplanation": "Receive system message text messages, such as job post recommendations you are interested in",
+    "smsChatTip": "Receive chat SMS reminders",
+    "smsChatExplanation": "Receive text message alerts about chats"
   },
   "chatExchange": {
     "exchangeTitle": "Mobile number",
@@ -1324,11 +1331,17 @@
     "validateErr": "This Email address has been used. Please change to another email",
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
     "authenticationSuccessful": "Authentication Successful",
-    "Bossjob": "Bossjob"
+    "Bossjob": "Bossjob",
+    "back": "Back"
   },
   "seo": {
     "ph": "Philippines",
     "sg": "Singapore",
+    "jp": "Japan",
+    "id": "Indonesia",
+    "hk": "China Hong Kong",
+    "tw": "China Taiwan",
+    "mo": "China Macau",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
     "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
     "jobSearch": {

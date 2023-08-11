@@ -753,7 +753,7 @@
           align-items: center;
           letter-spacing: 1px;
           color: #7d7d7d;
-          padding-bottom: 26px;
+          padding-bottom: 10px;
           word-break: break-all;
           padding-top: 10px;
 
@@ -811,6 +811,22 @@
           position: relative;
           top: -14px;
         }
+
+
+      }
+    }
+
+    .backBox {
+      display: flex;
+      font-size: 16px;
+      padding-top: 20px;
+      align-items: center;
+      cursor: pointer;
+      width: 100px;
+
+      svg {
+        position: relative;
+        top: 1px;
       }
     }
 

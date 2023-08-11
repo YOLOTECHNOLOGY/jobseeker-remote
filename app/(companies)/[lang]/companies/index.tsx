@@ -178,7 +178,7 @@ const Companies = (props: IProps) => {
         ) : null}
 
         {/* companies list */}
-        <div className={styles.companiesWrapper} style={{backgroundColor: '#F7F8FA'}}>
+        <div className={styles.companiesWrapper}>
           <div className={styles.companies} >
             {/* fetching loading: true */}
             {isFeaturedCompaniesFetching && <CompaniesLoader />}

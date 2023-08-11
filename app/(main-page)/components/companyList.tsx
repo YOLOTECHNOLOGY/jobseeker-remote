@@ -1,9 +1,14 @@
+'use client'
 import React from 'react'
 import styles from 'app/index.module.scss'
 import Link from 'next/link'
 import { chatSVG } from 'images/svg'
 import Image from 'next/image'
 import { getValueById } from 'helpers/config/getValueById'
+import { isMobile } from 'react-device-detect'
+import { setCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
+
 const CompanyList = (props: any) => {
   const { featured_companies: companies } = props?.data?.data || {}
   const { config } = props
@@ -35,9 +40,29 @@ const CompanyList = (props: any) => {
 
         const industry = getValueById(config, industry_id, 'industry_id')
         const companySize = getValueById(config, company_size_id, 'company_size_id')
+
+        const sendViewCompany = async (item, url) => {
+          const company = item?.company
+          const device_udid = await getDeviceUuid()
+          const params = {
+            id: company?.id,
+            payload: {
+              source: 'company_reco',
+              device: isMobile ? 'mobile_web' : 'web',
+              reco_from: company?.reco_from || '',
+              device_udid
+            }
+          }
+          setCookie('view-company-buried', JSON.stringify(params))
+          window.location.href = url
+        }
+
         return (
           <div className={styles.card} key={Id}>
-            <Link prefetch={true} className={styles.header} href={'/' + langKey + companyUrl}>
+            <div
+              onClick={() => sendViewCompany(item, '/' + langKey + companyUrl)}
+              className={styles.header}
+            >
               <Image
                 className={styles.img}
                 src={logoUrl}
@@ -54,7 +79,7 @@ const CompanyList = (props: any) => {
                 {(industry || companySize) && financingStage ? <span>|</span> : null}
                 {financingStage}
               </p>
-            </Link>
+            </div>
             {(item?.company.jobs || item?.company.job)?.map((jobItem, index) => {
               const {
                 job_title: jobTitle,
@@ -106,9 +131,12 @@ const CompanyList = (props: any) => {
                 </Link>
               )
             })}
-            <Link href={`/${langKey}${companyUrl}/jobs`} className={styles.linkAddress}>
+            <div
+              onClick={() => sendViewCompany(item, `/${langKey}${companyUrl}/jobs`)}
+              className={styles.linkAddress}
+            >
               {home.companyCard.moreJob}
-            </Link>
+            </div>
           </div>
         )
       })}

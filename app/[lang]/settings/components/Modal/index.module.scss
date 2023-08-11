@@ -40,7 +40,7 @@
 
   .actionsItem {
     display: flex;
-    height: 60px;
+    height: 54px;
     // padding: 0 50px;
     width: 152px;
     justify-content: center;
@@ -74,5 +74,11 @@
     line-height: 24px;
 
     margin-left: 14px;
+  }
+
+  .disabled {
+    background: rgba(0, 0, 0, 0.23);
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }

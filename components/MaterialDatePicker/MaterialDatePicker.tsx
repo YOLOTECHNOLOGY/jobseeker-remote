@@ -28,27 +28,28 @@ const MaterialDatePicker = ({
   refs,
   hiddenLabel
 }: MaterialDatePickerProps) => {
-
-  const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = useState(false)
   const theme = createTheme({
     components: {
       MuiInputLabel: {
         styleOverrides: {
           root: {
             fontSize: '14px',
-            transform: 'translate(14px, 10px) scale(1)',
+            top: '50%',
+            transform: 'translate(14px, -50%) scale(0.9)',
             letterSpacing: '1px',
             '&.Mui-focused': {
-              fontSize: '10px'
+              // fontSize: '10px'
             }
           },
           shrink: {
             fontSize: '10px',
-            transform: 'translate(12px, -8px) scale(1)'
+            top: 0,
+            transform: 'translate(14px, -8px) scale(0.9)'
           },
           outlined: {
             '&.MuiInputLabel-shrink': {
-              fontSize: '10px'
+              // fontSize: '10px'
             }
           }
         }
@@ -60,7 +61,7 @@ const MaterialDatePicker = ({
             backgroundColor: 'white'
           },
           input: {
-            padding: '10.5px 14px'
+            padding: '18px 14px'
           }
         }
       }
@@ -83,7 +84,7 @@ const MaterialDatePicker = ({
           value={value}
           onChange={(date) => {
             if (onDateChange) {
-              onDateChange(date)
+              onDateChange(date || new Date())
             }
           }}
           renderInput={(params) => (

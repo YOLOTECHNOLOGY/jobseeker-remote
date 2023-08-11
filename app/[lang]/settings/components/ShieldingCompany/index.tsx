@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { debounce } from 'lodash-es'
@@ -23,6 +23,7 @@ import Modal from '../Modal'
 
 import styles from './index.module.scss'
 import { formatTemplateString } from 'helpers/formatter'
+import classNames from 'classnames/bind'
 
 interface IProps {
   lang: any
@@ -30,6 +31,7 @@ interface IProps {
 
 const ShieldingCompany = (props: IProps) => {
   const { lang } = props
+  const errorCode = lang.errorcode || {}
   const { accountSetting = {} } = lang
   const dispatch = useDispatch()
 
@@ -62,10 +64,19 @@ const ShieldingCompany = (props: IProps) => {
         errorMessage = errors[0]
       }
     }
+
+    const code = data?.code
+    let transErr = errorCode[code]
+    if (code === 40006) {
+      transErr = formatTemplateString(transErr, {
+        retry_after: error?.response?.data?.errors?.retry_after
+      })
+    }
+
     dispatch(
       displayNotification({
         open: true,
-        message: errorMessage || data.message,
+        message: transErr || errorMessage || data.message,
         severity: 'error'
       })
     )
@@ -75,6 +86,7 @@ const ShieldingCompany = (props: IProps) => {
     setOpen(false)
     setSearchValue('')
     setSearchList(() => [])
+    setCheckedCompany([])
     setShowSearchEmpty(true)
   }
 
@@ -159,6 +171,7 @@ const ShieldingCompany = (props: IProps) => {
   // }, [searchValue])
 
   const filterCompany = (newValue) => {
+    if (!newValue) return
     setSearchLoading(true)
     const params = {
       explain: 1,
@@ -280,6 +293,14 @@ const ShieldingCompany = (props: IProps) => {
     return searchList?.length > 0 ? <SearchModalList /> : <SearchModalEmpty />
   }
 
+  const disabledSave = useMemo(() => {
+    return checkedCompany?.length == 0
+  }, [checkedCompany])
+
+  const disabledSearch = useMemo(() => {
+    return !searchValue
+  }, [searchValue])
+
   return (
     <div className={styles.main}>
       <div className={styles.mainNav}>
@@ -323,6 +344,7 @@ const ShieldingCompany = (props: IProps) => {
         title={accountSetting?.add}
         isLoading={isLockLoading}
         lang={lang}
+        disabled={disabledSave}
       >
         <div className={styles.modal}>
           <p className={styles.title}>{accountSetting?.blockMessages?.title}</p>
@@ -335,9 +357,10 @@ const ShieldingCompany = (props: IProps) => {
             ></MaterialTextField>
             <MaterialButton
               onClick={handleSearch}
-              className={styles.searchButton}
+              className={classNames([styles.searchButton, disabledSearch && styles.disabled])}
               variant='contained'
               capitalize
+              disabled={disabledSearch}
             >
               {accountSetting?.search}
             </MaterialButton>

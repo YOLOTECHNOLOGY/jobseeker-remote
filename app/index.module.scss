@@ -263,9 +263,10 @@
     cursor: pointer;
     transition: .2s;
     transform: scale(1);
-    
+
     &:hover {
       background: #121212;
+
       svg {
         transition: .2s;
         transform: scale(1.1);
@@ -317,7 +318,8 @@
     position: absolute;
     top: 14px;
     right: 0;
-   font-size: 16px;
+    font-size: 16px;
+
     p {
       margin: 0;
     }
@@ -578,7 +580,8 @@
         background: #f7f8fa;
         border-radius: 6px;
         display: inline-block;
-        &:last-of-type{
+
+        &:last-of-type {
           margin-right: 0;
         }
       }
@@ -618,6 +621,7 @@
     height: 40px;
     line-height: 40px;
     color: #999;
+    margin-top: 20px;
     text-align: center;
   }
 
@@ -1433,12 +1437,14 @@
     display: flex;
     justify-content: center;
     height: 100%;
-    .searchWrapper{
+
+    .searchWrapper {
       padding: 0;
-      .search{
+
+      .search {
         width: 666px;
       }
-     }
+    }
   }
 
   :global {
@@ -1481,7 +1487,7 @@
     @include msd {
       display: none;
     }
-   
+
     .icon {
       float: left;
       font-size: 32px;
@@ -1504,16 +1510,22 @@
         font-weight: normal;
       }
     }
-    &:hover{
-      border: 1px solid  #579BF5;
-      .icon{
-       svg,path{
-        fill:#579BF5;
-       }
+
+    &:hover {
+      border: 1px solid #579BF5;
+
+      .icon {
+
+        svg,
+        path {
+          fill: #579BF5;
+        }
       }
+
       >p {
-        color:  #579BF5;
+        color: #579BF5;
       }
+
       .popver {
         transition: .4s;
         top: 0;

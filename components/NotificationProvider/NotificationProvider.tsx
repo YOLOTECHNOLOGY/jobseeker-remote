@@ -2,11 +2,7 @@ import dynamic from 'next/dynamic'
 import { useSelector } from 'react-redux'
 const NotificationBar = dynamic(() => import('../NotificationBar'))
 
-type NotificationProviderProps = {
-  children: React.ReactNode
-}
-
-const NotificationProvider = ({ children }: NotificationProviderProps) => {
+const NotificationProvider = ({ children }: React.PropsWithChildren) => {
   const notification = useSelector((store: any) => store.notificationbar.notification)
   return (
         <>

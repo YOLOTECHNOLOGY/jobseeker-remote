@@ -141,7 +141,7 @@
     "noResumeUploadNow": "暂无简历，立即上传",
     "uploadResume": "上传简历",
     "availabilityUpdateSuccessfully": "到岗时间更新成功",
-    "seeMore": "查看更多",
+    "seeMore": "View More",
     "seeJobReco": "查看推荐工作",
     "search": "搜索",
     "desiredJobTitle": "期望职位名称",
@@ -407,7 +407,8 @@
       "title": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
       "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
     },
-    "jobs": "职位"
+    "jobs": "职位",
+    "seeMore": "View more"
   },
   "jobDetail": {
     "header": {
@@ -621,7 +622,9 @@
     },
     "downloadAppWithQrCode": "下载APP与老板聊天",
     "findNow": "搜索",
-    "find": "搜索"
+    "find": "搜索",
+    "viewMore": "查看更多",
+    "noMore": "No more"
   },
   "manageProfile": {
     "tab": {
@@ -933,13 +936,13 @@
     "basicInformation": "基本信息",
     "theseInformationWillBeShown": "这些信息会在你求职的时候给老板看。",
     "profilePhoto": "头像照片",
-    "uploadAphoto": " 上传一张照片（最大 5 MB）或从 Bossjob 默认头像中选择一张照片",
+    "uploadAphoto": " 上传一张照片（最大 2 MB）或从 Bossjob 默认头像中选择一张照片",
     "havingArealPhoto": "使用真实照片作为个人资料图片有助于与潜在雇主建立信任",
     "name": "姓名",
     "IAm": "我是",
     "Next1": "下一步(1/4)",
     "workExperience": "工作经验",
-    "autofillMyInfo": "自动填充我的信息",
+    "autofillMyInfo": "Autofill my info",
     "saveTimeByImporting": "通过导入简历节省时间",
     "uploadResume": " 上传简历",
     "supportedFileType": "  支持的文件类型：PDF、DOC、DOCX。",
@@ -947,7 +950,7 @@
     "mostRecentCompany": "最近公司",
     "WorkingPeriod": "工作年限",
     "mostRecentJobTitle": "最近的职位和技能",
-    "skillsWillBeSuggested": "将根据选定的工作职能建议技能。",
+    "skillsWillBeSuggested": "将根据选定的工作职能推荐技能，请选择最大10个技能。",
     "selectSkillsOr": "选择技能或输入您自己的技能",
     "Next2": "下一步(2/4)",
     "educationExperience": "教育经历",
@@ -965,7 +968,11 @@
     "skipTips": "跳过这些步骤会降低工作推荐的准确性。这些细节可以帮助我们根据你的经验、资格和偏好量身定制工作建议。",
     "skipTipsSure": "您确定要跳过这些步骤吗?",
     "skipAnyway": "任性跳过",
-    "uploadSeccess": "上传成功"
+    "uploadSeccess": "上传成功",
+    "updateYouronLineResume": "优化您的在线简历",
+    "getMoreRelevantJobRecommendations": "获得更多高质量的工作推荐",
+    "searchOrAddSkill": "搜索或添加技能",
+    "add": "Add"
   },
   "chat": {
     "chatTitle": "聊天",
@@ -1172,8 +1179,8 @@
     "verifiedMessages": {
       "mobile": "您的电话账户已成功验证。",
       "email": "您的电子邮件账户已成功验证。",
-      "phoneEmpty": "电话号码不能为空",
-      "phoneError": "The phone number should not be less than 7 digits"
+      "phoneEmpty": "Phone Number is not empty",
+      "phoneError": "电话号码不少于7位"
     },
     "email": "邮件",
     "sendOpt": "发送验证码",
@@ -1233,10 +1240,10 @@
       "unBlockTip2": "该公司名称为 {{company}}",
       "noCompanies": "搜索公司不存在"
     },
-    "smsSystemTip": "sms system tip",
-    "smsSystemExplanation": "sms system explanation",
-    "smsChatTip": "sms chat tip",
-    "smsChatExplanation": "sms chat explanation"
+    "smsSystemTip": "接收系统短信提醒",
+    "smsSystemExplanation": "接收系统消息短信，例如你感兴趣的工作职位推荐",
+    "smsChatTip": "接收聊天短信提醒",
+    "smsChatExplanation": "接收关于聊天的短信提醒"
   },
   "chatExchange": {
     "exchangeTitle": "电话号码",
@@ -1324,11 +1331,17 @@
     "validateErr": "电子邮件已注册。请更改绑定到另一个email",
     "checkYourSpam": "如果您没有收到验证码，请检查您的垃圾邮件。",
     "authenticationSuccessful": "验证成功",
-    "Bossjob": "Bossjob"
+    "Bossjob": "Bossjob",
+    "back": "Back"
   },
   "seo": {
     "ph": "菲律宾",
     "sg": "新加坡",
+    "jp": "日本",
+    "id": "印度尼西亚",
+    "hk": "中国香港",
+    "tw": "中国台湾",
+    "mo": "中国澳门",
     "siteName": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "metaDescription": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "jobSearch": {

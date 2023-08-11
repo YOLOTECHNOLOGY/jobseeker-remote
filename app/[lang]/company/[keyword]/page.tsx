@@ -1,5 +1,5 @@
 'use client';
-import * as React from 'react';
+import React,{useEffect} from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -17,6 +17,8 @@ import { useContext } from 'react';
 import { languageContext } from 'app/components/providers/languageProvider';
 import { formatTemplateString } from 'helpers/formatter';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+import { fetchViewCompany } from 'store/services/companies2/fetchViewCompany';
+import { getCookie, removeCookie } from 'helpers/cookies';
 
 
 
@@ -63,8 +65,20 @@ const Page = () => {
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
 	const {width} = useWindowSize();
 	const isMobile = width < 767;
+
+	const params = getCookie('view-company-buried')
+	
+  useEffect(() => {
+    if (params) {
+      const token = getCookie('accessToken')
+      fetchViewCompany({ ...params, token }).then(() => {
+        removeCookie('view-company-buried')
+      })
+    }
+  }, [])
+
 	if(isMobile){
-		return <MobilePage/>
+		return <MobilePage/>	
 	}
 	return <div className={style.container}>
 		<div className={style.header}>

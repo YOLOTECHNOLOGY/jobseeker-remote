@@ -155,7 +155,7 @@
 
   .sendOTP {
     display: flex;
-    height: 60px;
+    height: 54px;
     padding: 12px 24px;
     justify-content: center;
     align-items: center;
@@ -185,7 +185,7 @@
   }
 
   .sendOTP.disabled {
-    background: #e4e4e4;
+    background: rgba(0, 0, 0, 0.23);
     cursor: not-allowed;
     pointer-events: none;
   }

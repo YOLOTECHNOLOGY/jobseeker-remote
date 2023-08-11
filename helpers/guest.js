@@ -3,15 +3,21 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useUserAgent } from 'next-useragent'
 import { getCountryId, getLanguageId } from './country'
 import { getCookie } from 'helpers/cookies'
-const guestLogin = async (token) => {
-    let deviceUdid = localStorage.getItem('uuid')
-    if (!deviceUdid) {
+
+export const getDeviceUuid = async () => {
+    let deviceId = localStorage.getItem('uuid')
+    if (!deviceId) {
         const fpPromise = FingerprintJS.load()
         const fp = await fpPromise
         const result = await fp.get()
-        deviceUdid = result.visitorId
-        localStorage.setItem('uuid', deviceUdid)
+        deviceId = result.visitorId
+        localStorage.setItem('uuid', deviceId)
     }
+    return deviceId
+}
+
+const guestLogin = async (token) => {
+    const deviceId = await getDeviceUuid()
     const browser = useUserAgent?.()?.browser
     const accessToken = getCookie('accessToken')
     if (accessToken) return
@@ -25,7 +31,7 @@ const guestLogin = async (token) => {
         fcm_token_web: token,
         device_name: browser,
         device_type: "web",
-        device_udid: deviceUdid,
+        device_udid: deviceId,
     }).then(res => {
         console.log(res);
     }).catch(err => console.log(err))
