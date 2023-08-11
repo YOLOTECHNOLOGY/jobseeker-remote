@@ -47,7 +47,7 @@ const FeaturedCompany = (props: IProps) => {
     const params = {
       id: featuredCompany?.id,
       payload: {
-        source: 'company_reco',
+        source: 'company_search',
         device: isMobile ? 'mobile_web' : 'web',
         reco_from: featuredCompany?.reco_from || '',
         device_udid
