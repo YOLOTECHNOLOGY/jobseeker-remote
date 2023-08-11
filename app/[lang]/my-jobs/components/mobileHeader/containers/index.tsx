@@ -135,7 +135,11 @@ const Containers = (props: any) => {
                 opacity: inTouches ? rightTouchOpacity : rightNormalOpacity
             }}
         >{secondList.map(data => <Item disabled={tab === 1} {...data} key={data.title} />)}</div>
-        <div className={styles.indicatorContainer}>
+        <div className={styles.indicatorContainer}
+            onTouchStart={touchesBegin}
+            onTouchMove={touchesMove}
+            onTouchEnd={touchesEnd}
+        >
             <div
                 className={styles.indicator}
                 style={{
