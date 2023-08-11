@@ -2,7 +2,6 @@
 import React from 'react'
 import styles from 'app/index.module.scss'
 import Link from 'next/link'
-import { HomePageChat } from 'images'
 import { chatSVG } from 'images/svg'
 import Image from 'next/image'
 import { getValueById } from 'helpers/config/getValueById'
