@@ -636,7 +636,7 @@ $contentWidth: 894px;
             font-weight: 700;
             line-height: 22px;
             letter-spacing: 0.128px;
-            flex:1;
+            flex: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -651,7 +651,6 @@ $contentWidth: 894px;
               overflow: hidden;
               text-overflow: ellipsis;
             }
-
           }
         }
 
@@ -995,7 +994,7 @@ $contentWidth: 894px;
       height: 115px;
       overflow: hidden;
       padding: 13px 16px;
-      background: linear-gradient(354deg, #FFF 0%, #B7DBFF 100%);
+      background: linear-gradient(354deg, #fff 0%, #b7dbff 100%);
 
       &Left {
         flex: 1;
@@ -1367,10 +1366,20 @@ $contentWidth: 894px;
 
 .loadMore {
   width: 100%;
-  height: 30px;
+  // height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 15px auto 35px auto;
+}
+
+.viewMore {
+  border: 1px solid rgb(35, 120, 229);
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(35, 120, 229);
+  padding: 0px 30px;
+  height: 40px;
 }
 
 .histories {

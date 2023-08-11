@@ -622,7 +622,9 @@
     },
     "downloadAppWithQrCode": "Download APP chat with Boss",
     "findNow": "Find Now",
-    "find": "Find"
+    "find": "Find",
+    "viewMore": "View More",
+    "noMore": "No More"
   },
   "manageProfile": {
     "tab": {

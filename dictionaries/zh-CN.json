@@ -622,7 +622,9 @@
     },
     "downloadAppWithQrCode": "下载APP与老板聊天",
     "findNow": "搜索",
-    "find": "搜索"
+    "find": "搜索",
+    "viewMore": "查看更多",
+    "noMore": "没有更多了"
   },
   "manageProfile": {
     "tab": {
