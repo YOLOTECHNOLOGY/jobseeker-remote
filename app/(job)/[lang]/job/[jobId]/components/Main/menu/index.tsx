@@ -47,7 +47,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
       status: 'public',
       serverAccessToken: null
     }
-  
+
     if (token) {
       query.status = token ? 'protected' : 'public'
       query.serverAccessToken = token ?? null
