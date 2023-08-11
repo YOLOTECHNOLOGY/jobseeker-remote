@@ -243,7 +243,8 @@ const BasicInformation = (props: any) => {
                         return (
                           <MaterialTextField
                             className={styles.stepFullwidth}
-                            label={firstName}
+                            // label={firstName}
+                            placeholder={firstName}
                             variant='standard'
                             maxLength={50}
                             required
@@ -263,7 +264,8 @@ const BasicInformation = (props: any) => {
                         return (
                           <MaterialTextField
                             className={styles.stepFullwidth}
-                            label={lastName}
+                            // label={lastName}
+                            placeholder={lastName}
                             variant='standard'
                             maxLength={50}
                             required

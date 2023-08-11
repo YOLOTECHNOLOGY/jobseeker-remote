@@ -407,7 +407,8 @@
       "title": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
       "copyright": "Copyright © {{currentYear}} Singapore: Yolo Technology Pte Ltd. All Rights Reserved. Philippines: Etos Adtech Corporation"
     },
-    "jobs": "jobs"
+    "jobs": "jobs",
+    "seeMore": "View more"
   },
   "jobDetail": {
     "header": {

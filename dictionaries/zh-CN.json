@@ -407,7 +407,8 @@
       "title": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
       "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
     },
-    "jobs": "职位"
+    "jobs": "职位",
+    "seeMore": "View more"
   },
   "jobDetail": {
     "header": {
@@ -933,13 +934,13 @@
     "basicInformation": "基本信息",
     "theseInformationWillBeShown": "这些信息会在你求职的时候给老板看。",
     "profilePhoto": "头像照片",
-    "uploadAphoto": " 上传一张照片（最大 5 MB）或从 Bossjob 默认头像中选择一张照片",
+    "uploadAphoto": " Upload a photo ( max 2 MB) or choose one from Bossjob default avatars",
     "havingArealPhoto": "使用真实照片作为个人资料图片有助于与潜在雇主建立信任",
     "name": "姓名",
     "IAm": "我是",
     "Next1": "下一步(1/4)",
     "workExperience": "工作经验",
-    "autofillMyInfo": "自动填充我的信息",
+    "autofillMyInfo": "Autofill my info",
     "saveTimeByImporting": "通过导入简历节省时间",
     "uploadResume": " 上传简历",
     "supportedFileType": "  支持的文件类型：PDF、DOC、DOCX。",
@@ -947,7 +948,7 @@
     "mostRecentCompany": "最近公司",
     "WorkingPeriod": "工作年限",
     "mostRecentJobTitle": "最近的职位和技能",
-    "skillsWillBeSuggested": "将根据选定的工作职能推荐技能，请选择最大10个技能。",
+    "skillsWillBeSuggested": "Skills will be suggested based on selected job function. Please select max 5 skills.",
     "selectSkillsOr": "选择技能或输入您自己的技能",
     "Next2": "下一步(2/4)",
     "educationExperience": "教育经历",

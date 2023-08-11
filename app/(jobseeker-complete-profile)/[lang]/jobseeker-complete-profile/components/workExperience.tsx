@@ -327,7 +327,7 @@ const WorkExperience = (props: any) => {
             </p>
             <div className={styles.workingSince}>
               <MaterialDatePicker
-                label={'Month year'}
+                label={'Month year Month yearMonth year'}
                 views={['year', 'month']}
                 inputFormat='MMM yyyy'
                 value={workingSince}

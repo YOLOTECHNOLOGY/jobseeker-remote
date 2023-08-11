@@ -14,6 +14,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import { addJobViewService } from 'store/services/jobs/addJobView'
 import { isMobile } from 'react-device-detect'
 import CircularProgress from '@mui/material/CircularProgress'
+import MaterialButton from 'components/MaterialButton'
 import Box from '@mui/material/Box'
 const pageParams = {
   size: 20,
@@ -39,10 +40,10 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
   useEffect(() => {
     dataRef.current = []
     getList({ page: current, job_location_ids: location_id, ...pageParams })
-    window.addEventListener('scroll', useFn)
-    return () => {
-      window.removeEventListener('scroll', useFn)
-    }
+    // window.addEventListener('scroll', useFn)
+    // return () => {
+    //   window.removeEventListener('scroll', useFn)
+    // }
   }, [location_id])
 
   useEffect(() => {
@@ -287,7 +288,27 @@ const JobsCard = ({ lang, config, langKey, location_id }: any) => {
         ) : current === totalPage ? (
           'No more'
         ) : (
-          ''
+          <MaterialButton
+            variant='outlined'
+            size='medium'
+            capitalize
+            onClick={handleLoadMore}
+            sx={{
+              height: '40px !important',
+              border: '1px solid #2378E5',
+              borderRadius: '4px',
+              backgroundColor: '#fff',
+              color: '#2378E5',
+              padding: '0 30px',
+              ':hover': {
+                border: '1px solid #2378E5',
+                background: '#2378E5',
+                color: '#fff'
+              }
+            }}
+          >
+            {lang?.seeMore}
+          </MaterialButton>
         )}
       </p>
     </>
