@@ -36,7 +36,7 @@ const CompanyCard = (props: ICompanyCard) => {
     const params = {
       id: company?.id,
       payload: {
-        source: 'company_reco',
+        source: 'company_search',
         device: isMobile ? 'mobile_web' : 'web',
         reco_from: company?.reco_from || '',
         device_udid
