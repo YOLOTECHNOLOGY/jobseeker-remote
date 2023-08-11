@@ -141,7 +141,7 @@
     "noResumeUploadNow": "暂无简历，立即上传",
     "uploadResume": "上传简历",
     "availabilityUpdateSuccessfully": "到岗时间更新成功",
-    "seeMore": "查看更多",
+    "seeMore": "View More",
     "seeJobReco": "查看推荐工作",
     "search": "搜索",
     "desiredJobTitle": "期望职位名称",
@@ -624,7 +624,7 @@
     "findNow": "搜索",
     "find": "搜索",
     "viewMore": "查看更多",
-    "noMore": "没有更多了"
+    "noMore": "No more"
   },
   "manageProfile": {
     "tab": {

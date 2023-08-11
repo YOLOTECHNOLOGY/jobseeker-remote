@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import styles from './index.module.scss'
 import Image from 'next/image'
 import { isSameDay, transDate } from 'helpers/utilities'
@@ -83,12 +83,12 @@ const JobsCard = ({
     totalPageRef.current = totalPage
   }, [page, loadingList, totalPage])
 
-  useEffect(() => {
-    window.addEventListener('scroll', useFn)
-    return () => {
-      window.removeEventListener('scroll', useFn)
-    }
-  }, [])
+  // useEffect(() => {
+  //   window.addEventListener('scroll', useFn)
+  //   return () => {
+  //     window.removeEventListener('scroll', useFn)
+  //   }
+  // }, [])
 
   // translate Data
   // const translatedData = (data) => translateData(data, config)
@@ -103,33 +103,33 @@ const JobsCard = ({
     }
   }
 
-  const isTouchBottom = (handler) => {
-    const width = document.body.clientWidth
-    if (width < 751) {
-      const showHeight = window.innerHeight
-      const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
-      const allHeight = document.body.scrollHeight
-      if (allHeight <= showHeight + scrollTopHeight + 200) {
-        handler()
-      }
-    }
-  }
+  // const isTouchBottom = (handler) => {
+  //   const width = document.body.clientWidth
+  //   if (width < 751) {
+  //     const showHeight = window.innerHeight
+  //     const scrollTopHeight = document.body.scrollTop || document.documentElement.scrollTop
+  //     const allHeight = document.body.scrollHeight
+  //     if (allHeight <= showHeight + scrollTopHeight + 200) {
+  //       handler()
+  //     }
+  //   }
+  // }
 
-  const throttle = (func, delay) => {
-    let timer = null
-    return function () {
-      if (!timer) {
-        timer = setTimeout(() => {
-          func()
-          timer = null
-        }, delay)
-      }
-    }
-  }
+  // const throttle = (func, delay) => {
+  //   let timer = null
+  //   return function () {
+  //     if (!timer) {
+  //       timer = setTimeout(() => {
+  //         func()
+  //         timer = null
+  //       }, delay)
+  //     }
+  //   }
+  // }
 
-  const useFn = throttle(() => {
-    isTouchBottom(handleLoadMore)
-  }, 300)
+  // const useFn = throttle(() => {
+  //   isTouchBottom(handleLoadMore)
+  // }, 300)
 
   const card = (data) => {
     return data?.map((item, index) => {
@@ -242,10 +242,28 @@ const JobsCard = ({
       )
     })
   }
+
+  const noMore = useMemo(() => {
+    return page === +totalPage
+  }, [page, totalPage])
+
+  const NoMore = () => {
+    return noMore ? (
+      <div style={{ color: '#86909c' }}>{lang?.noMore}</div>
+    ) : (
+      <button className={styles.viewMore} onClick={handleLoadMore}>
+        {lang?.seeMore}
+      </button>
+    )
+  }
+
   return (
     <>
       {tabValue === 'interview' ? interviewCard(data) : card(translateData(data, config))}
-      <p className={styles.load}>
+      <div className={styles.loadMore}>
+        {!loadingList ? <NoMore /> : <CircularProgress color={'primary'} size={20} />}
+      </div>
+      {/* <p className={styles.load}>
         {loadingList ? (
           <CircularProgress style={{ margin: '10px 0' }} />
         ) : page === totalPage ? (
@@ -253,7 +271,7 @@ const JobsCard = ({
         ) : (
           ''
         )}
-      </p>
+      </p> */}
     </>
   )
 }

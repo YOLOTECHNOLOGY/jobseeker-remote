@@ -141,7 +141,7 @@
     "noResumeUploadNow": "No resume, upload now",
     "uploadResume": "Upload resume",
     "availabilityUpdateSuccessfully": "Availability update successfully",
-    "seeMore": "See More",
+    "seeMore": "View More",
     "seeJobReco": "See job reco",
     "search": "Search",
     "desiredJobTitle": "Desired Job Title",
@@ -624,7 +624,7 @@
     "findNow": "Find Now",
     "find": "Find",
     "viewMore": "View More",
-    "noMore": "No More"
+    "noMore": "No more"
   },
   "manageProfile": {
     "tab": {
