@@ -17,6 +17,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest",
     "crowdin:pull": "crowdin pull --all",
     "crowdin:pushS": "crowdin push sources",
+    "crowdin:pushT": "crowdin push translations",
     "crowdin:status": "crowdin status translation"
   },
   "commitplease": {
