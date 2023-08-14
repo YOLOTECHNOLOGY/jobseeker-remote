@@ -118,7 +118,7 @@ const EditWorkExperienceModal = ({
   const updateWorkExpSuccess = useSelector(
     (store: any) => store.users.manageUserWorkExperiences.response
   )
-
+  console.log('data payload:', data)
   const {
     handleSubmit
     // formState: { errors },
@@ -244,6 +244,8 @@ const EditWorkExperienceModal = ({
       workExperienceId: data ? data.id : null,
       workExperienceData: workExperienceData
     }
+    console.log('data payload:', data)
+    // return false;
 
     dispatch(manageUserWorkExperiencesRequest(workExperiencesPayload))
   }

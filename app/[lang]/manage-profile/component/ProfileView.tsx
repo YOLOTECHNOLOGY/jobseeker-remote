@@ -738,7 +738,7 @@ const ProfileView = ({ lang }: any) => {
     }
   }, [isUpdating])
 
-
+  console.log('modalState.workExperience.data:', modalState.workExperience.data)
   return (
     <Fragment>
       {renderIntroduction()}
@@ -750,7 +750,7 @@ const ProfileView = ({ lang }: any) => {
           description={profile.exp.noDataTips} // 'Showcase your past contributions and that you can be an asset to potential employer.'
           // buttonText={profile.exp.addWorkExp} // 'Add work experience'
           // eslint-disable-next-line
-          onClick={handleWorkExpModal}
+          onClick={() => handleWorkExpModal()}
         />
       )}
 
