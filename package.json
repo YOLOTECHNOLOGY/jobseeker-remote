@@ -17,6 +17,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules env=test yarn jest",
     "crowdin:pull": "crowdin pull --all",
     "crowdin:pushS": "crowdin push sources",
+    "crowdin:pushT": "crowdin push translations",
     "crowdin:status": "crowdin status translation"
   },
   "commitplease": {
@@ -73,7 +74,7 @@
     "firebase": "^9.17.1",
     "gapi-script": "^1.2.0",
     "image-conversion": "^2.1.1",
-    "imforbossjob": "^0.2.5-fix3",
+    "imforbossjob": "^0.2.5-fix4",
     "jose": "^4.14.4",
     "lodash-es": "^4.17.21",
     "log4js": "^6.9.1",
