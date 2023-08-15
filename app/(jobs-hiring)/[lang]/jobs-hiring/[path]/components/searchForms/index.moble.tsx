@@ -262,7 +262,7 @@ const SearchArea = (props: any) => {
               lang={search}
             />
             <Multiple
-              label={search.searchModal.industry}
+              label={search.searchModal?.industry}
               value={industry}
               options={industryList}
               className={styles.filterItems}
