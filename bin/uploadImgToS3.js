@@ -39,7 +39,7 @@ function uploadImageToS3(filePath) {
     Key: `${targetPath}${path.basename(filePath)}`,
     Body: fileContent
   }
-  if(isSVG(filePath)){
+  if (isSVG(filePath)) {
     params.ContentType = 'image/svg+xml'
   }
 
@@ -81,7 +81,7 @@ function readFilesRecursively(directoryPath) {
       readFilesRecursively(filePath)
     } else {
       const extension = path.extname(file).toLowerCase()
-      if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg'].includes(extension)) {
+      if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg', '.mp4'].includes(extension)) {
         totalFiles++
         uploadImageToS3(filePath)
       }

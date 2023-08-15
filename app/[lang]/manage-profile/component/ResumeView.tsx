@@ -13,7 +13,7 @@ import { Download } from '@mui/icons-material';
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
+import { uploadUserResumeService, uploadVideoCover } from 'store/services/users/uploadUserResume'
 
 /* Components */
 import Text from 'components/Text'
@@ -33,7 +33,8 @@ import {
   ResumeTemplate1,
   ResumeTemplate2,
   DownloadWhiteIcon,
-  CarouselRightRoundedBlueButton} from 'images'
+  CarouselRightRoundedBlueButton
+} from 'images'
 
 /* Styles */
 import classNames from 'classnames'
@@ -160,6 +161,26 @@ const ResumeView = ({ userDetail, lang }: any) => {
       })
     }
   }
+
+  const handleUploadVideoChange = ({ target }) => {
+    const file = target.files[0]
+    console.log('files:', file)
+    // let img = new Image()
+    // if (file) {
+    //   const objectUrl = URL.createObjectURL(file)
+
+    //   img.onload = function () {
+    //     alert(img.src)
+
+    //     URL.revokeObjectURL(objectUrl)
+    //   }
+    //   img.src = objectUrl
+    // }
+
+
+
+  }
+
   return (
     <div className={styles.tab_content_wrapper}>
       <div className={styles.sectionContainer}>
@@ -185,7 +206,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
-        <div style={{height: 20}}></div>
+        <div style={{ height: 20 }}></div>
 
         <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
@@ -201,6 +222,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         />
         <div className={styles.split}></div>
       </div>
+      <input type="file" accept=".jpg,.jpeg,.png,.gif" onChange={handleUploadVideoChange} />
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
           {transitions.bossjob.title}
@@ -236,20 +258,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                        <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
@@ -265,20 +287,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                      <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
@@ -363,7 +385,9 @@ const ResumeView = ({ userDetail, lang }: any) => {
           Failed to delete resume
         </Alert>
       </Snackbar>
+
     </div>
+
   )
 }
 
