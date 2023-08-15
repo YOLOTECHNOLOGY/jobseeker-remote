@@ -210,3 +210,8 @@ export const BannerBackground = `${S3BucketJobseeker}/banner.svg`
 export const Empty = `${S3BucketJobseeker}/empty.svg`
 
 export const seekerBanner = `${S3BucketJobseeker}/seekerBanner.png`
+
+// footer icon
+export const FooterGalaxyAppStore = `${S3BucketJobseeker}/FooterGalaxyAppstore.png`
+export const FooterHuaweiAppStore = `${S3BucketJobseeker}/FooterHuaweiAppstore.png`
+export const FooterXiaomiAppStore = `${S3BucketJobseeker}/FooterXiaomiApp store.png`
