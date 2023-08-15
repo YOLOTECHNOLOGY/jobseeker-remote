@@ -29,7 +29,7 @@ const Company = (company: propsType) => {
   const {
     aside: { company: companySection }
   } = languages as any
-  const industry = getValueById(config, jobDetail.company.industry_id, 'industry_id')
+  const industry = getValueById(config, jobDetail.company?.industry_id, 'industry_id')
 
   const sendViewCompany = async (url) => {
     const device_udid = await getDeviceUuid()
@@ -97,7 +97,7 @@ const Company = (company: propsType) => {
         <div className={styles.company_mobileHead_info}>
           <span className={styles.company_mobileHead_info_name}>{company?.name}</span>
           <span className={styles.company_mobileHead_info_tag}>
-            {jobDetail.company.industry} &nbsp;|&nbsp; {company.companySize}{' '}
+            {jobDetail.company?.industry} &nbsp;|&nbsp; {company.companySize}{' '}
             {companySection.employees}
           </span>
         </div>
