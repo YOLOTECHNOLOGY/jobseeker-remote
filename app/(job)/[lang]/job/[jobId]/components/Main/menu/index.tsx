@@ -43,32 +43,8 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
     }
   ]
 
-  useEffect(() => {
-    const query = {
-      jobId,
-      status: 'public',
-      serverAccessToken: null
-    }
-
-    if (token) {
-      query.status = token ? 'protected' : 'public'
-      query.serverAccessToken = token ?? null
-    }
-    const deviceUuid = getDeviceUuid()
-    const tokenData = {
-      source: source ? source : 'job_search',
-      device: isMobile ? 'mobile_web' : 'web',
-      reco_from: recoFrom ? recoFrom : null,
-      device_udid: deviceUuid,
-      job_title_id:pref_job_title_id
-    }
-    const params = Object.assign(query, tokenData)
-
-    try {
-      fetchAddJobViewService(params)
-    } catch (error) {
-      //
-    }
+  useEffect( () => {
+    handleFetchAddJobViewService()
   }, [])
 
   useEffect(() => {
@@ -182,6 +158,34 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   const handleClick = (index) => {
     scrollRef.current = false
     setCurrent(index)
+  }
+
+  const handleFetchAddJobViewService = async () => {
+    const query = {
+      jobId,
+      status: 'public',
+      serverAccessToken: null
+    }
+
+    if (token) {
+      query.status = token ? 'protected' : 'public'
+      query.serverAccessToken = token ?? null
+    }
+    const deviceUuid = await getDeviceUuid()
+    const tokenData = {
+      source: source ? source : 'job_search',
+      device: isMobile ? 'mobile_web' : 'web',
+      reco_from: recoFrom ? recoFrom : null,
+      device_udid: deviceUuid,
+      job_title_id:pref_job_title_id
+    }
+    const params = Object.assign(query, tokenData)
+
+    try {
+      fetchAddJobViewService(params)
+    } catch (error) {
+      //
+    }
   }
 
   return (
