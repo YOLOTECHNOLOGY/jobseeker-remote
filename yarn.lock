@@ -6125,10 +6125,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.2.5-fix10:
-  version "0.2.5-fix10"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.5-fix10.tgz#95975de6eeb34f74ace8b42a4e2f2d2ab861c5a5"
-  integrity sha512-qUl5Va5dyheRZmWIG0d8hTguS03iAnSAtTE0Mk1zV86llDaNtZkYWOLCJIwhvg9RUHhpUROLMgmZQs3YlDlSPA==
+imforbossjob@^0.2.5-fix12:
+  version "0.2.5-fix12"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.5-fix12.tgz#9875728317f8ddfcd5ede814116b42f69efadb02"
+  integrity sha512-96I+Lcll6O/SZbNwlnoMfrAWwQVlSCT69Io4/FdiNDB5Ql4JxblunWvSR/jaw0BnaNF1GGx9KKnf52k360j3dg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
