@@ -33,7 +33,8 @@ import {
   ResumeTemplate1,
   ResumeTemplate2,
   DownloadWhiteIcon,
-  CarouselRightRoundedBlueButton} from 'images'
+  CarouselRightRoundedBlueButton
+} from 'images'
 
 /* Styles */
 import classNames from 'classnames'
@@ -185,7 +186,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
-        <div style={{height: 20}}></div>
+        <div style={{ height: 20 }}></div>
 
         <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
@@ -236,20 +237,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                        <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
@@ -265,20 +266,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                       className={`${styles.resumeTemplateItem}`}
                     />
                     {!isMobile && (
-                      <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('creative')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
