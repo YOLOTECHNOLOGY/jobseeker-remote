@@ -20,13 +20,13 @@ const devBucket = 'dev-assets.bossjob.com'
 const prodBucket = 'assets.bossjob.com'
 
 let totalFiles = 0
-let uploadedFiles = 0
+// const uploadedFiles = 0
 
 const isProduction = env === 'prod'
 
-function isSVG(filePath) {
-  return path.extname(filePath).toLowerCase() === '.svg';
-}
+// function isSVG(filePath) {
+//   return path.extname(filePath).toLowerCase() === '.svg';
+// }
 
 // Function to upload an image file to S3
 function uploadImageToS3(filePath) {
@@ -49,18 +49,18 @@ function uploadImageToS3(filePath) {
       console.error(`Error uploading ${filePath} to S3:`, err)
     } else {
       // Remove the local file after uploading it
-      uploadedFiles++
-      if (uploadedFiles === totalFiles) {
-        traverseFolder(directoryPath, file_namespace)
-      }
-      if (!isProduction) return
-      fs.unlink(filePath, function (err) {
-        if (err) {
-          console.error(`Error removing ${filePath}:`, err)
-        } else {
-          console.log(`Local file ${filePath} removed successfully`)
-        }
-      })
+      // uploadedFiles++
+      // if (uploadedFiles === totalFiles) {
+      //   traverseFolder(directoryPath, file_namespace)
+      // }
+      // if (!isProduction) return
+      // fs.unlink(filePath, function (err) {
+      //   if (err) {
+      //     console.error(`Error removing ${filePath}:`, err)
+      //   } else {
+      //     console.log(`Local file ${filePath} removed successfully`)
+      //   }
+      // })
       // Increment the uploaded files counter
 
       // Check if all files have been uploaded

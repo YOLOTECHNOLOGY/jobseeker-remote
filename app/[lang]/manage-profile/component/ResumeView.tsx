@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback } from 'react'
-
+import React, { useState, useEffect, useCallback, useRef } from 'react'
+import axios from 'axios'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -13,7 +13,14 @@ import { Download } from '@mui/icons-material';
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { uploadUserResumeService, uploadVideoCover } from 'store/services/users/uploadUserResume'
+import {
+  uploadUserResumeService,
+  uploadVideoCover,
+  uploadVideoResume,
+  generatePresignedUrl,
+  uploadToAmazonService,
+  getVideoResumesList
+} from 'store/services/users/uploadUserResume'
 
 /* Components */
 import Text from 'components/Text'
@@ -43,6 +50,8 @@ import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
+import { parse } from 'query-string'
+
 
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
@@ -68,6 +77,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [scrollSnaps, setScrollSnaps] = useState([])
   const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
+  const tempVideoRef = useRef(null)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -162,24 +172,77 @@ const ResumeView = ({ userDetail, lang }: any) => {
     }
   }
 
-  const handleUploadVideoChange = ({ target }) => {
-    const file = target.files[0]
-    console.log('files:', file)
-    // let img = new Image()
-    // if (file) {
-    //   const objectUrl = URL.createObjectURL(file)
+  function dataURLtoFile(dataurl, filename) {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
 
-    //   img.onload = function () {
-    //     alert(img.src)
-
-    //     URL.revokeObjectURL(objectUrl)
-    //   }
-    //   img.src = objectUrl
-    // }
-
-
-
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
   }
+
+
+  const handleUploadVideoChange = async ({ target }) => {
+    const file = target.files[0]
+    if (!file) {
+      return false
+    }
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const now = Date.now()
+    tempVideoRef.current.src = URL.createObjectURL(file)
+    tempVideoRef.current.setAttribute('crossOrigin', 'anonymous')
+    tempVideoRef.current.currentTime = 1;
+    canvas.width = tempVideoRef.current.clientWidth
+    canvas.height = tempVideoRef.current.clientHeight
+
+    tempVideoRef.current.addEventListener('loadeddata', async () => {
+      ctx.drawImage(
+        tempVideoRef.current,
+        0,
+        0,
+        tempVideoRef.current.clientWidth,
+        tempVideoRef.current.clientHeight
+      );
+      const dataURL = canvas.toDataURL('image/jpeg')
+      tempVideoRef.current.setAttribute("poster", dataURL)
+      const files = dataURLtoFile(dataURL, now + '.jpeg')
+      try {
+        const aresult = await uploadVideoCover(files).catch(err => console.log('err:', err))
+        const result = await generatePresignedUrl(`${now}-${file.name}`)
+
+        // const aws = await axios.put(result.data.data, file, {
+        //   headers: {
+        //     "Access-Control-Allow-Origin": "*",
+        //     "Access-Control-Allow-Headers": "Content-Type",
+        //     "Accept": "*/*",
+        //     "Cache-Control": "no-cache",
+        //     "Accept-Encoding": "gzip, deflate, br",
+        //     "Content-Type": file.type,
+        //   },
+        // })
+        const aws = await uploadToAmazonService(result.data.data, file)
+        if (aws.status === 200) {
+          const subUrl = `https://${result.data.data.split('?')[0].replace(/(^.*amazonaws\.com\/)/, '')}`
+          console.log('subUrl:', subUrl)
+          uploadVideoResume(subUrl, aresult.data.data.id).then(res => {
+            console.log('res:', res)
+          })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    })
+  }
+  useEffect(() => {
+    getVideoResumesList().then(res => {
+      console.log('res:', res)
+    })
+  }, [])
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -222,7 +285,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         />
         <div className={styles.split}></div>
       </div>
-      <input type="file" accept=".jpg,.jpeg,.png,.gif" onChange={handleUploadVideoChange} />
+      <input
+        type="file"
+        accept=".mp4"
+        onChange={handleUploadVideoChange}
+        style={{ opacity: 0.5 }}
+      />
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
           {transitions.bossjob.title}
@@ -255,7 +323,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     <img
                       src={ResumeTemplate1}
                       alt='Corporate Template'
-                      className={`${styles.resumeTemplateItem}`}
+                      className={`${styles.resumeTemplateItem} `}
                     />
                     {!isMobile && (
                       <ColorButton
@@ -284,7 +352,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     <img
                       src={ResumeTemplate2}
                       alt='Creative Template'
-                      className={`${styles.resumeTemplateItem}`}
+                      className={`${styles.resumeTemplateItem} `}
                     />
                     {!isMobile && (
                       <ColorButton
@@ -296,7 +364,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                         }
                         startIcon={<Download />}
                         onClick={() => {
-                          handleDownloadResume('corporate')
+                          handleDownloadResume('creative')
                         }}
                       >
                         {transitions.bossjob.download}
@@ -385,7 +453,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
           Failed to delete resume
         </Alert>
       </Snackbar>
-
+      <video controls muted ref={tempVideoRef} style={{ position: 'absolute', top: '-99999px' }} />
     </div>
 
   )

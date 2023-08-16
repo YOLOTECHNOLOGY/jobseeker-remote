@@ -1,4 +1,5 @@
 import configuredAxios from 'helpers/configuredAxios'
+import axios from 'axios'
 
 const uploadUserResumeService = (resume) => {
   const axios = configuredAxios('jobseeker', 'protected')
@@ -26,39 +27,57 @@ const uploadVideoCover = (fileName) => {
     headers
   })
 }
-const uploadVideoResume = () => {
+const uploadVideoResume = (url, id) => {
   const axios = configuredAxios('jobseeker', 'protected')
   const URL = '/upload-video-resume'
   const headers = {
     'Content-Type': 'multipart/form-data'
   }
 
-  // const formData = new FormData()
-  // formData.append('file', resume)
-  // formData.append('filename', resume.name)
+  const formData = new FormData()
+  formData.append('url', url)
+  formData.append('video_resume_id', id)
   // formData.append('parse_resume', true)
 
   return axios.post(URL, formData, { headers })
 }
 
-const generatePresignedUrl = () => {
+const generatePresignedUrl = (fileName) => {
   const axios = configuredAxios('jobseeker', 'protected')
   const URL = '/video-resumes/generate-presigned-url'
   const headers = {
     'Content-Type': 'multipart/form-data'
   }
 
-  // const formData = new FormData()
-  // formData.append('file', resume)
-  // formData.append('filename', resume.name)
-  // formData.append('parse_resume', true)
-
+  const formData = new FormData()
+  formData.append('file_name', fileName)
   return axios.post(URL, formData, { headers })
+}
+
+const uploadToAmazonService = (url, file) => {
+  return axios.put(url, file, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Accept": "*/*",
+      "Cache-Control": "no-cache",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Content-Type": file.type,
+    }
+  })
+}
+
+const getVideoResumesList = () => {
+  const axios = configuredAxios('jobseeker', 'protected')
+  const URL = '/video-resumes'
+  return axios.get(URL)
 }
 
 export {
   uploadUserResumeService,
   uploadVideoCover,
   uploadVideoResume,
-  generatePresignedUrl
+  generatePresignedUrl,
+  uploadToAmazonService,
+  getVideoResumesList
 }
