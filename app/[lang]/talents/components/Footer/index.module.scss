@@ -32,15 +32,30 @@
   align-items: center;
   justify-content: center;
 
-  :global {
-    img {
-      width: 205px;
-      margin-right: 24px;
-    }
-  }
+  // :global {
+  //   a {
+  //     // width: 205px;
+  //     margin-right: 20px;
+  //   }
+  // }
 
   .qrcode {
-    width: 85px;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #fff;
+  }
+
+  &_appStore {
+    width: 486px;
+
+    a {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    a:nth-child(4) {
+      margin-top: 20px;
+    }
   }
 }
 
@@ -207,10 +222,21 @@
   justify-content: center;
   margin-bottom: 1.7rem;
 
-  :global {
-    img {
-      width: 1.3rem;
-      margin-right: 0.16rem;
+  // :global {
+  //   img {
+  //     width: 1.3rem;
+  //     margin-right: 0.16rem;
+  //   }
+  // }
+
+  &_appStore {
+    width: 3.2rem;
+    margin: 0 auto;
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      margin-right: 20px;
     }
   }
 }

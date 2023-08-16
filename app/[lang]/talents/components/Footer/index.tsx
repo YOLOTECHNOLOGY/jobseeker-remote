@@ -1,13 +1,27 @@
 'use client'
-import Link from 'next/link'
-import style from './index.module.scss'
-import { getCountryKey, getLang } from 'helpers/country'
-import { languageContext } from 'app/components/providers/languageProvider'
 import React, { useContext } from 'react'
-import { getCookie } from '../../../../../helpers/cookies'
-import useWindowSize from '../../../../../hooks/useWindowSize'
+
+import Link from 'next/link'
+import Image from 'next/image'
+
 import Accordian from 'components/Accordian'
 import Text from '../../../../../components/Text'
+import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
+import { languageContext } from 'app/components/providers/languageProvider'
+
+import { appLinkUrl } from 'helpers/constants'
+import { getCountryKey, getLang } from 'helpers/country'
+import { getCookie } from '../../../../../helpers/cookies'
+import useWindowSize from '../../../../../hooks/useWindowSize'
+
+import { 
+  footer_apple_download,
+  footer_googleplay_download, 
+  FooterGalaxyAppStore, 
+  FooterHuaweiAppStore, 
+  FooterXiaomiAppStore } from 'images'
+
+import style from './index.module.scss'
 import styles from '../../../../../components/Footer/Footer.module.scss'
 
 const source = {
@@ -275,18 +289,23 @@ const Footer = () => {
         <div className={style.mobile_footer_container}>
           <div className={style.mobile_footer_title}>{downloadBossjobApp}</div>
           <div className={style.mobile_footer_download}>
-            <Link href={'https://apps.apple.com/sg/app/bossjob/id1592073585'} target={'_blank'}>
-              <img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_apple.png`} alt='_' />
+          <div className={style.mobile_footer_download_appStore} >
+            <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+              <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
             </Link>
-            <Link
-              href={'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'}
-              target={'_blank'}
-            >
-              <img
-                src={`${process.env.S3_BUCKET_URL}/landing/footer_download_google.png`}
-                alt='_'
-              />
+            <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
+              <Image src={footer_googleplay_download} alt='GooglePlay' width={140} height={42} />
             </Link>
+            <Link href={process.env.GALAXY_APP_STORE_LINK} target={'_blank'}>
+              <Image src={FooterGalaxyAppStore} alt='GalaxyStore' width={140} height={42} />
+            </Link>
+            <Link href={process.env.HUAWEI_APP_STORE_LINK} target={'_blank'}>
+              <Image src={FooterHuaweiAppStore} alt='HuaweiStore' width={140} height={42} />
+            </Link>
+            <Link href={process.env.XIAOMI_APP_STORE_LINK} target={'_blank'}>
+              <Image src={FooterXiaomiAppStore} alt='XiaomiStore' width={140} height={42} />
+            </Link>
+          </div>
           </div>
           <div className={style.mobile_list_container}>
             {colData.map((item, index) => {
@@ -363,20 +382,31 @@ const Footer = () => {
       />
       <div className={style.footer_title}>{downloadBossjobApp}</div>
       <div className={style.footer_download}>
-        <Link href={'https://apps.apple.com/sg/app/bossjob/id1592073585'} target={'_blank'}>
-          <img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_apple.png`} alt='_' />
-        </Link>
-        <Link
-          href={'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp'}
-          target={'_blank'}
-        >
-          <img src={`${process.env.S3_BUCKET_URL}/landing/footer_download_google.png`} alt='_' />
-        </Link>
-        <img
+        <div className={style.footer_download_appStore} >
+          <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+            <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
+          </Link>
+          <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
+            <Image src={footer_googleplay_download} alt='GooglePlay' width={140} height={42} />
+          </Link>
+          <Link href={process.env.GALAXY_APP_STORE_LINK} target={'_blank'}>
+            <Image src={FooterGalaxyAppStore} alt='GalaxyStore' width={140} height={42} />
+          </Link>
+          <Link href={process.env.HUAWEI_APP_STORE_LINK} target={'_blank'}>
+            <Image src={FooterHuaweiAppStore} alt='HuaweiStore' width={140} height={42} />
+          </Link>
+          <Link href={process.env.XIAOMI_APP_STORE_LINK} target={'_blank'}>
+            <Image src={FooterXiaomiAppStore} alt='XiaomiStore' width={140} height={42} />
+          </Link>
+        </div>
+        {/* <img
           className={style.qrcode}
           src={`${process.env.S3_BUCKET_URL}/landing/footer_download_qrcode.png`}
           alt='_'
-        />
+        /> */}
+        <div className={style.qrcode} >
+          <QrCodeDraw  text={appLinkUrl} ecl='H'  width={88} height={88} />
+        </div>
       </div>
       <div className={style.footer_site_map}>
         {colData.map((item, index) => {
