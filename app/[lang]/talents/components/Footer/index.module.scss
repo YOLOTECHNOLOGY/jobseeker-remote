@@ -243,6 +243,12 @@
       margin-top: 20px;
     }
   }
+
+  @media (max-width: 400px) {
+    &_appStore {
+      padding: 0;
+    }
+  }
 }
 
 .mobile_footer_container {
