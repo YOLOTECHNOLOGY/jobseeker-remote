@@ -232,11 +232,13 @@
   &_appStore {
     width: 3.2rem;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
     a {
       display: inline-block;
       margin-top: 20px;
-      margin-right: 20px;
     }
   }
 }
