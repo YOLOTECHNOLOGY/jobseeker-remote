@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import { languageContext } from '../../../../components/providers/languageProvider'
 import useWindowSize from '../../../../../hooks/useWindowSize'
+import linkToHunt from 'helpers/linkToHunt'
 
 const Section8 = () => {
   const swiperRef = useRef(null)
@@ -16,7 +17,7 @@ const Section8 = () => {
   const carouselList = [
     {
       des: `${contextLang.landing['Looking for']} <i style="color: #FED766">${contextLang.landing.talents}</i>? 👀`,
-      link: process.env.BOSSHUNT_URL
+      link: linkToHunt('')
     },
     {
       des: `${contextLang.landing['Looking for']} <i style="color: #FED766">${contextLang.landing.jobs}</i>?  💼`,

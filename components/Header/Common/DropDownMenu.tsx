@@ -11,6 +11,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import { logoutRequest } from 'store/actions/auth/logout'
 
 import styles from '../Header.module.scss'
+import linkToHunt from 'helpers/linkToHunt'
 
 interface IProps {
   langKey: string
@@ -47,7 +48,7 @@ const DropDownMenu = (props: IProps, ref: React.LegacyRef<HTMLDivElement>) => {
 
         <li className={`${styles.headerMenuItem} ${styles.headerMenuItemSpe}`}>
           <Link
-            to={process.env.BOSSHUNT_URL + '/boss'}
+            to={linkToHunt('boss')}
             aTag
             external
             className={styles.headerMenuLink}

@@ -14,15 +14,17 @@ import { getCountryKey, getLang } from 'helpers/country'
 import { getCookie } from '../../../../../helpers/cookies'
 import useWindowSize from '../../../../../hooks/useWindowSize'
 
-import { 
+import {
   footer_apple_download,
-  footer_googleplay_download, 
-  FooterGalaxyAppStore, 
-  FooterHuaweiAppStore, 
-  FooterXiaomiAppStore } from 'images'
+  footer_googleplay_download,
+  FooterGalaxyAppStore,
+  FooterHuaweiAppStore,
+  FooterXiaomiAppStore
+} from 'images'
 
 import style from './index.module.scss'
 import styles from '../../../../../components/Footer/Footer.module.scss'
+import linkToHunt from 'helpers/linkToHunt'
 
 const source = {
   BpoJobs: 'BPO jobs',
@@ -121,9 +123,7 @@ const follow_use = [
 ]
 
 const Footer = () => {
-  const langKey = getLang()
   const contextLang = useContext(languageContext)
-  console.log(process.env, process.env.BOSSHUNT_URL, 'process')
   const isLogin = getCookie('accessToken') ? true : false
 
   const {
@@ -244,7 +244,7 @@ const Footer = () => {
       title: recruiter,
       links: [
         {
-          key: process.env.BOSSHUNT_URL,
+          key: linkToHunt(''),
           child: getStarted
         }
       ]
@@ -289,23 +289,23 @@ const Footer = () => {
         <div className={style.mobile_footer_container}>
           <div className={style.mobile_footer_title}>{downloadBossjobApp}</div>
           <div className={style.mobile_footer_download}>
-          <div className={style.mobile_footer_download_appStore} >
-            <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
-              <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
-            </Link>
-            <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
-              <Image src={footer_googleplay_download} alt='GooglePlay' width={140} height={42} />
-            </Link>
-            <Link href={process.env.GALAXY_APP_STORE_LINK} target={'_blank'}>
-              <Image src={FooterGalaxyAppStore} alt='GalaxyStore' width={140} height={42} />
-            </Link>
-            <Link href={process.env.HUAWEI_APP_STORE_LINK} target={'_blank'}>
-              <Image src={FooterHuaweiAppStore} alt='HuaweiStore' width={140} height={42} />
-            </Link>
-            <Link href={process.env.XIAOMI_APP_STORE_LINK} target={'_blank'}>
-              <Image src={FooterXiaomiAppStore} alt='XiaomiStore' width={140} height={42} />
-            </Link>
-          </div>
+            <div className={style.mobile_footer_download_appStore} >
+              <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+                <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
+              </Link>
+              <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
+                <Image src={footer_googleplay_download} alt='GooglePlay' width={140} height={42} />
+              </Link>
+              <Link href={process.env.GALAXY_APP_STORE_LINK} target={'_blank'}>
+                <Image src={FooterGalaxyAppStore} alt='GalaxyStore' width={140} height={42} />
+              </Link>
+              <Link href={process.env.HUAWEI_APP_STORE_LINK} target={'_blank'}>
+                <Image src={FooterHuaweiAppStore} alt='HuaweiStore' width={140} height={42} />
+              </Link>
+              <Link href={process.env.XIAOMI_APP_STORE_LINK} target={'_blank'}>
+                <Image src={FooterXiaomiAppStore} alt='XiaomiStore' width={140} height={42} />
+              </Link>
+            </div>
           </div>
           <div className={style.mobile_list_container}>
             {colData.map((item, index) => {
@@ -405,7 +405,7 @@ const Footer = () => {
           alt='_'
         /> */}
         <div className={style.qrcode} >
-          <QrCodeDraw  text={appLinkUrl} ecl='H'  width={88} height={88} />
+          <QrCodeDraw text={appLinkUrl} ecl='H' width={88} height={88} />
         </div>
       </div>
       <div className={style.footer_site_map}>

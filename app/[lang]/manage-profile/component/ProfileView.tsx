@@ -738,7 +738,6 @@ const ProfileView = ({ lang }: any) => {
     }
   }, [isUpdating])
 
-  console.log('modalState.workExperience.data:', modalState.workExperience.data)
   return (
     <Fragment>
       {renderIntroduction()}

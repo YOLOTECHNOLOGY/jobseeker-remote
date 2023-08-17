@@ -20,6 +20,7 @@ import { getCookie } from 'helpers/cookies'
 
 import styles from './HamburgerMenu.module.scss'
 import { getCountry, getLanguage } from 'helpers/country'
+import linkToHunt from 'helpers/linkToHunt'
 
 const Divider = () => <div className={styles.divider} />
 
@@ -207,7 +208,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
                 <Divider />
                 <Link
                   className={`${styles.defaultLink}`}
-                  to={`${process.env.BOSSHUNT_URL}/boss`}
+                  to={linkToHunt('boss')}
                   aTag
                   title='Employers'
                 >
@@ -290,7 +291,7 @@ const HamburgerMenu = ({ openState, toggleMenu, lang }: HamburgerMenuProps) => {
 
                 <Divider />
 
-                <Link to={process.env.BOSSHUNT_URL + '/boss'} aTag className={styles.defaultLink}>
+                <Link to={linkToHunt('boss')} aTag className={styles.defaultLink}>
                   <li className={styles.menuList}>
                     <Text textStyle='base'>{hiring}</Text>
                   </li>

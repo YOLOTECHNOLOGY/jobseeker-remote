@@ -30,21 +30,7 @@ const codePopver = (props: any) => {
           {mainCom}
         </>
       )}
-      {/* {!isModal && (
-        <p className={styles.tips}>
-          {newGetStarted.tips}{' '}
-          <Link
-            href={
-              process.env.ENV === 'development'
-                ? 'https://dev.employer.bossjob.com'
-                : 'https://employer.bossjob.com'
-            }
-            className={styles.AuthCTALink}
-          >
-            {newGetStarted.employer}
-          </Link>
-        </p>
-      )} */}
+     
     </div>
   )
 }
