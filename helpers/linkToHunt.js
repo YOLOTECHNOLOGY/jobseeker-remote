@@ -9,15 +9,14 @@ const linkToHunt = (redirect) => {
     const lang = getLanguageCode(langKey);
     // 从cookie中获取accessToken和refreshToken
     const accessToken = getCookie('accessToken');
-    const refreshToken = getCookie('refreshToken');
     // 如果accessToken和refreshToken都存在
-    if (accessToken && refreshToken) {
+    if (accessToken) {
         // 跳转 process.env.BOSSHUNT_URL 参数 county lang accessToken refreshToken redirect
         // process.env.BOSSHUNT_URL
-        return `${process.env.BOSSHUNT_URL}/keep-login?country=${county}&lang=${lang}&accessToken=${accessToken}&refreshToken=${refreshToken}&redirect=${redirect}`
+        return `${'http://localhost:4000'}/keep-login?country=${county}&lang=${lang}&accessToken=${accessToken}&redirect=${redirect === 'boss' ? '' : redirect}`
     } else {
         // 跳转 process.env.BOSSHUNT_URL 参数 county lang redirect
-        return `${process.env.BOSSHUNT_URL}/${redirect}?country=${county}&lang=${lang}`
+        return `${'http://localhost:4000'}/${redirect}?country=${county}&lang=${lang}`
     }
 }
 export default linkToHunt;
