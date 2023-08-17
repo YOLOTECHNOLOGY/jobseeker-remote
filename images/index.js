@@ -210,3 +210,5 @@ export const BannerBackground = `${S3BucketJobseeker}/banner.svg`
 export const Empty = `${S3BucketJobseeker}/empty.svg`
 
 export const seekerBanner = `${S3BucketJobseeker}/seekerBanner.png`
+export const delVideoResume = `${S3BucketJobseeker}/icon_delvideo.png`
+export const playVideoResume = `${S3BucketJobseeker}/icon_playvideo.png`

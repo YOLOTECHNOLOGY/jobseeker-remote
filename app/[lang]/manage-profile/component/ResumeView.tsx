@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -18,8 +17,9 @@ import {
   uploadVideoCover,
   uploadVideoResume,
   generatePresignedUrl,
-  uploadToAmazonService,
-  getVideoResumesList
+  uploadVideoToAmazonService,
+  getVideoResumeList,
+  deleteVideoResume
 } from 'store/services/users/uploadUserResume'
 
 /* Components */
@@ -40,7 +40,11 @@ import {
   ResumeTemplate1,
   ResumeTemplate2,
   DownloadWhiteIcon,
-  CarouselRightRoundedBlueButton
+  CarouselRightRoundedBlueButton,
+  delVideoResume,
+  playVideoResume,
+  AddIcon,
+  CloseIcon
 } from 'images'
 
 /* Styles */
@@ -50,7 +54,63 @@ import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
-import { parse } from 'query-string'
+import Modal from 'components/Modal'
+
+const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
+  if (!data.length) return null
+  return data.map(item =>
+    <div
+      key={item.id}
+      className={styles.item}
+      onClick={() => handlePlayVideo(item.url)}
+    >
+      <img
+        src={delVideoResume}
+        className={styles.imageDel}
+        alt=""
+        width="24"
+        height='24'
+        onClick={(e) => handleDeleteVideo(item.id, e)} />
+      <img
+        src={playVideoResume}
+        className={styles.imagePlay}
+        width="50"
+        height="50"
+        alt="" />
+      <img
+        src={item.video_cover}
+        alt={item.video_cover}
+        className={styles.imageCover} />
+    </div >
+  )
+}
+
+const UploadVideoResumeButton = ({ uploading, uploadInputRef, handleUploadVideoChange }) => (
+  <div className={`${styles.uploadVideoButton} ${styles.item}`}>
+    {
+      !uploading ? <img src={AddIcon} width='32' height='32' alt="" /> :
+        <div className={styles.uploading}></div>
+    }
+    <input
+      ref={uploadInputRef}
+      type="file"
+      accept=".mp4"
+      disabled={uploading}
+      onChange={handleUploadVideoChange}
+    />
+  </div>
+)
+
+const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
+  return (
+    <div className={styles.videoCoverWrap}>
+      <img src={CloseIcon} alt="" width="20" height="20" onClick={handleCloseVideo} />
+      <div className={styles.videoCover}>
+        <video ref={playVideoRef} width="900" height="570" controls />
+      </div>
+    </div>
+  )
+}
 
 
 const ResumeView = ({ userDetail, lang }: any) => {
@@ -77,7 +137,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [scrollSnaps, setScrollSnaps] = useState([])
   const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
-  const tempVideoRef = useRef(null)
+  const uploadInputRef = useRef(null)
+  const [videoResumeList, setVideoResumeList] = useState([])
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [playVideo, setPlayVideo] = useState(false)
+  const videoUrlRef = useRef('')
+  const [uploading, setUploading] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -178,7 +243,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
@@ -194,43 +258,34 @@ const ResumeView = ({ userDetail, lang }: any) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     const now = Date.now()
-    tempVideoRef.current.src = URL.createObjectURL(file)
-    tempVideoRef.current.setAttribute('crossOrigin', 'anonymous')
-    tempVideoRef.current.currentTime = 1;
-    canvas.width = tempVideoRef.current.clientWidth
-    canvas.height = tempVideoRef.current.clientHeight
+    const video = document.createElement('video')
+    video.style.cssText += ';position:absolute; top: -99999px'
+    video.muted = true
+    video.src = URL.createObjectURL(file)
+    video.setAttribute('crossOrigin', 'anonymous')
+    video.currentTime = 1
+    document.body.appendChild(video)
 
-    tempVideoRef.current.addEventListener('loadeddata', async () => {
-      ctx.drawImage(
-        tempVideoRef.current,
-        0,
-        0,
-        tempVideoRef.current.clientWidth,
-        tempVideoRef.current.clientHeight
-      );
+    canvas.width = video.clientWidth
+    canvas.height = video.clientHeight
+
+    video.addEventListener('loadeddata', async () => {
+      setUploading(true)
+      ctx.drawImage(video, 0, 0, video.clientWidth, video.clientHeight);
       const dataURL = canvas.toDataURL('image/jpeg')
-      tempVideoRef.current.setAttribute("poster", dataURL)
+      video.setAttribute("poster", dataURL)
       const files = dataURLtoFile(dataURL, now + '.jpeg')
       try {
-        const aresult = await uploadVideoCover(files).catch(err => console.log('err:', err))
+        const aresult = await uploadVideoCover(files).catch(err => console.log('xxx'))
         const result = await generatePresignedUrl(`${now}-${file.name}`)
-
-        // const aws = await axios.put(result.data.data, file, {
-        //   headers: {
-        //     "Access-Control-Allow-Origin": "*",
-        //     "Access-Control-Allow-Headers": "Content-Type",
-        //     "Accept": "*/*",
-        //     "Cache-Control": "no-cache",
-        //     "Accept-Encoding": "gzip, deflate, br",
-        //     "Content-Type": file.type,
-        //   },
-        // })
-        const aws = await uploadToAmazonService(result.data.data, file)
+        const aws = await uploadVideoToAmazonService(result.data.data, file)
         if (aws.status === 200) {
           const subUrl = `https://${result.data.data.split('?')[0].replace(/(^.*amazonaws\.com\/)/, '')}`
-          console.log('subUrl:', subUrl)
           uploadVideoResume(subUrl, aresult.data.data.id).then(res => {
-            console.log('res:', res)
+            videoResumesList()
+            uploadInputRef.current.value = ''
+            document.body.removeChild(video)
+            setUploading(false)
           })
         }
       } catch (err) {
@@ -238,11 +293,51 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     })
   }
-  useEffect(() => {
-    getVideoResumesList().then(res => {
-      console.log('res:', res)
+
+  const videoResumesList = () => {
+    getVideoResumeList().then(res => {
+      if (res.data.data) {
+        setVideoResumeList(res.data.data)
+      }
+    }).catch(err => {
+      console.log(err)
     })
+  }
+  const currentVideoId = useRef(null)
+  const handleDeleteVideo = (id, e) => {
+    e.stopPropagation()
+    setShowConfirm(true)
+    currentVideoId.current = id
+  }
+  const handlePlayVideo = (url) => {
+    setPlayVideo(true)
+    videoUrlRef.current = url
+  }
+  const handleCloseVideo = () => {
+    setPlayVideo(false)
+  }
+  useEffect(() => {
+    videoResumesList()
   }, [])
+
+  const playVideoRef = useCallback(node => {
+    if (node) {
+      const handleVideoEnded = () => {
+        node.currentTime = 0;
+      }
+      if (playVideo) {
+        node.src = videoUrlRef.current
+        node.addEventListener('ended', handleVideoEnded)
+        // node.play()
+      }
+      else {
+        node.src = ''
+        node.removeEventListener('ended', handleVideoEnded)
+      }
+    }
+  }, [playVideo])
+
+
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -285,12 +380,25 @@ const ResumeView = ({ userDetail, lang }: any) => {
         />
         <div className={styles.split}></div>
       </div>
-      <input
-        type="file"
-        accept=".mp4"
-        onChange={handleUploadVideoChange}
-        style={{ opacity: 0.5 }}
-      />
+      <div className={styles.sectionContainer}>
+        <div className={styles.preview_title}>
+          Self - introduction Videos
+        </div>
+        <div className={styles.videoResumeContainer}>
+          <VideoResumeList
+            data={videoResumeList}
+            handlePlayVideo={handlePlayVideo}
+            handleDeleteVideo={handleDeleteVideo}
+          />
+          {videoResumeList.length < 3 && <UploadVideoResumeButton
+            uploading={uploading}
+            uploadInputRef={uploadInputRef}
+            handleUploadVideoChange={handleUploadVideoChange}
+          />}
+        </div>
+        <div className={styles.split}></div>
+      </div>
+
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
           {transitions.bossjob.title}
@@ -453,10 +561,40 @@ const ResumeView = ({ userDetail, lang }: any) => {
           Failed to delete resume
         </Alert>
       </Snackbar>
-      <video controls muted ref={tempVideoRef} style={{ position: 'absolute', top: '-99999px' }} />
+
+      <Modal
+        showModal={showConfirm}
+        handleModal={() => {
+          setShowConfirm(false)
+          currentVideoId.current = null
+        }}
+        headerTitle="删除简历视频"
+        firstButtonText="取消"
+        secondButtonText="确认"
+        isSecondButtonLoading={null}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          setShowConfirm(false)
+          currentVideoId.current = null
+        }}
+        handleSecondButton={() => {
+          deleteVideoResume(currentVideoId.current).then(res => {
+            console.log('res:', res)
+            setShowConfirm(false)
+            videoResumesList()
+          })
+            .catch(err => console.log(err))
+        }}
+        fullScreen
+      >
+        删除视频简历后不可找回，您确认删除吗？
+      </Modal>
+      {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
     </div>
 
   )
 }
+
+
 
 export default ResumeView

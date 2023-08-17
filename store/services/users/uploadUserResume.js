@@ -54,30 +54,35 @@ const generatePresignedUrl = (fileName) => {
   return axios.post(URL, formData, { headers })
 }
 
-const uploadToAmazonService = (url, file) => {
+const uploadVideoToAmazonService = (url, file) => {
   return axios.put(url, file, {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "Content-Type",
       "Accept": "*/*",
       "Cache-Control": "no-cache",
-      "Accept-Encoding": "gzip, deflate, br",
       "Content-Type": file.type,
     }
   })
 }
 
-const getVideoResumesList = () => {
+const getVideoResumeList = () => {
   const axios = configuredAxios('jobseeker', 'protected')
   const URL = '/video-resumes'
   return axios.get(URL)
+}
+const deleteVideoResume = (id) => {
+  const axios = configuredAxios('jobseeker', 'protected')
+  const URL = `/video-resume/${id}/delete`
+  return axios.delete(URL)
 }
 
 export {
   uploadUserResumeService,
   uploadVideoCover,
   uploadVideoResume,
+  uploadVideoToAmazonService,
   generatePresignedUrl,
-  uploadToAmazonService,
-  getVideoResumesList
+  getVideoResumeList,
+  deleteVideoResume
 }
