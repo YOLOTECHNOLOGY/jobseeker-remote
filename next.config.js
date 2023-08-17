@@ -27,6 +27,7 @@ module.exports = withBundleAnalyzer({
 
     return redirectionPaths
   },
+  assetPrefix:'',
   reactStrictMode: false,
   compiler: {
     removeConsole: process.env.ENV === 'production'

@@ -10,10 +10,10 @@ const linkToHunt = (redirect) => {
     // 从cookie中获取accessToken和refreshToken
     const accessToken = getCookie('accessToken');
     const refreshToken = getCookie('refreshToken');
-    console.log({ accessToken, refreshToken })
     // 如果accessToken和refreshToken都存在
     if (accessToken && refreshToken) {
         // 跳转 process.env.BOSSHUNT_URL 参数 county lang accessToken refreshToken redirect
+        // process.env.BOSSHUNT_URL
         return `${process.env.BOSSHUNT_URL}/keep-login?country=${county}&lang=${lang}&accessToken=${accessToken}&refreshToken=${refreshToken}&redirect=${redirect}`
     } else {
         // 跳转 process.env.BOSSHUNT_URL 参数 county lang redirect
