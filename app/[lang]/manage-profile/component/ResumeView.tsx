@@ -142,6 +142,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [showConfirm, setShowConfirm] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
   const videoUrlRef = useRef('')
+  const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -284,7 +285,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
           uploadVideoResume(subUrl, aresult.data.data.id).then(res => {
             videoResumesList()
             uploadInputRef.current.value = ''
-            document.body.removeChild(video)
+            video && document.body.removeChild(video)
             setUploading(false)
           })
         }
@@ -303,7 +304,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
       console.log(err)
     })
   }
-  const currentVideoId = useRef(null)
   const handleDeleteVideo = (id, e) => {
     e.stopPropagation()
     setShowConfirm(true)
@@ -320,24 +320,22 @@ const ResumeView = ({ userDetail, lang }: any) => {
     videoResumesList()
   }, [])
 
-  const playVideoRef = useCallback(node => {
-    if (node) {
-      const handleVideoEnded = () => {
-        node.currentTime = 0;
-      }
+  const playVideoRef = useCallback(el => {
+    const handleVideoPlayEnded = () => {
+      el.currentTime = 0;
+    }
+    if (el) {
       if (playVideo) {
-        node.src = videoUrlRef.current
-        node.addEventListener('ended', handleVideoEnded)
+        el.src = videoUrlRef.current
+        el.addEventListener('ended', handleVideoPlayEnded)
         // node.play()
       }
       else {
-        node.src = ''
-        node.removeEventListener('ended', handleVideoEnded)
+        el.src = ''
+        el.removeEventListener('ended', handleVideoPlayEnded)
       }
     }
   }, [playVideo])
-
-
 
   return (
     <div className={styles.tab_content_wrapper}>
