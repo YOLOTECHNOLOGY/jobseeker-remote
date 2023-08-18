@@ -298,14 +298,18 @@ const ResumeView = ({ userDetail, lang }: any) => {
     })
   }
 
-  const videoResumesList = () => {
-    getVideoResumeList().then(res => {
-      if (res.data.data) {
-        setVideoResumeList(res.data.data)
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+  const videoResumesList = async () => {
+    const result = await getVideoResumeList().catch(err => { })
+    if (result.data.data) {
+      setVideoResumeList(result.data.data)
+    }
+    // getVideoResumeList().then(res => {
+    //   if (res.data.data) {
+
+    //   }
+    // }).catch(err => {
+    //   console.log(err)
+    // })
   }
   const handleDeleteVideo = (id, e) => {
     e.stopPropagation()
@@ -583,8 +587,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             console.log('res:', res)
             setShowConfirm(false)
             videoResumesList()
-          })
-            .catch(err => console.log(err))
+          }).catch(err => console.log(err))
         }}
         fullScreen
       >
