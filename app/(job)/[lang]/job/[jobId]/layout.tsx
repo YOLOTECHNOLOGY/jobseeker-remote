@@ -80,7 +80,7 @@ export default async function Layout(props: any) {
   const seo = await generateSEO(props)
   return (
     /* @ts-expect-error Async Server Component */
-    <PublicLayout {...props} seo={seo} position={true}>
+    <PublicLayout {...props} seo={seo}>
       {children}
       <Footer />
     </PublicLayout>
