@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../index.module.scss'
 import Link from 'next/link'
+import linkToHunt from 'helpers/linkToHunt'
 
 interface IProps {
   lang: any
@@ -16,11 +17,7 @@ const FooterTip = (props: IProps) => {
       <p className={styles.tips}>
         {newGetStarted.tips}
         <Link
-          href={
-            process.env.ENV === 'development'
-              ? 'https://dev.employer.bossjob.com'
-              : 'https://employer.bossjob.com'
-          }
+          href={linkToHunt('')}
           className={styles.AuthCTALink}
         >
           {newGetStarted.employer}
