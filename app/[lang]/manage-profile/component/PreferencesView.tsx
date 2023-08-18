@@ -132,7 +132,7 @@ const RenderPreferencesView = ({ modalName, config, userDetail, preference, lang
             <div className={styles.jobPreferencesSectionDetailListWrapper}>
               <Text textColor='lightgrey' className={styles.jobPreferencesSectionDetailTitle}>
                 {/* Desired industry: */}
-                {transitions.card.industry}
+                {transitions.card?.industry}
               </Text>
               <Text className={styles.jobPreferencesSectionDetailText}>{preference.industry}</Text>
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 /* eslint-disable new-cap */
 import { M, scripts } from 'imforbossjob'
 import { accept, decline, detail } from './services/offer'

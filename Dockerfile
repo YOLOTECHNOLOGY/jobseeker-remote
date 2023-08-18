@@ -7,7 +7,7 @@ RUN apk add --no-cache git openssh
 COPY package*.json yarn.lock ./
 
 # Run yarn to install and build the project
-RUN yarn install && mkdir /app && mv ./node_modules ./app
+RUN  yarn install && mkdir /app && mv ./node_modules ./app
 
 # Into which the source will be copied inside the destination container.
 WORKDIR /app

@@ -3,6 +3,7 @@ import styles from '../index.module.scss'
 import { BossjobLogo } from 'images'
 import Link from 'next/link'
 import MaterialButton from 'components/MaterialButton'
+import linkToHunt from 'helpers/linkToHunt'
 const Header = (props: any) => {
   const { lang, step } = props
   return (
@@ -44,7 +45,7 @@ const Header = (props: any) => {
               </Text>
             </MaterialButton>
           </Link> */}
-          <Link style={{ marginLeft: '20px' }} href={process.env.BOSSHUNT_URL + '/boss'}>
+          <Link style={{ marginLeft: '20px' }} href={linkToHunt('boss')}>
             <MaterialButton
               variant='outlined'
               size='medium'

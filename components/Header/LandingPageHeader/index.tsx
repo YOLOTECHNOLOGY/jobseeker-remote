@@ -17,6 +17,7 @@ import { getCountryKey, getLang } from '../../../helpers/country'
 import SwitchNation from '../../SwitchNation/SwitchNation'
 import { usePathname } from 'next/navigation'
 import logo from './logo.svg'
+import linkToHunt from 'helpers/linkToHunt'
 
 // this Header will be used when user is not logged in
 const LandingHeader = (props: any) => {
@@ -119,7 +120,7 @@ const LandingHeader = (props: any) => {
             <ul className={styles.headerLinksList}>
               <React.Fragment>
                 <li className={styles.headerLink}>
-                  <Link title='Employer' to={process.env.BOSSHUNT_URL+'/boss'} aTag>
+                  <Link title='Employer' to={linkToHunt('boss')} aTag>
                     <Text textStyle='base' textColor='white' className={styles.headerLinkText}>
                       {hiring}
                     </Text>

@@ -27,9 +27,10 @@ module.exports = withBundleAnalyzer({
 
     return redirectionPaths
   },
+  assetPrefix:'',
   reactStrictMode: false,
   compiler: {
-    removeConsole: process.env.ENV === 'production',
+    removeConsole: process.env.ENV === 'production'
     // relay: {
     //   src: 'node_modules/buzzmsg',
     //   // artifactDirectory?: '';
@@ -85,9 +86,13 @@ module.exports = withBundleAnalyzer({
     LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
     BOSSHUNT_URL: process.env.BOSSHUNT_URL,
     BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
-    APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
+    BLOG_BOSSJOB: 'https://blog.bossjob.ph',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
-    BLOG_BOSSJOB: 'https://blog.bossjob.ph'
+    APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
+    GALAXY_APP_STORE_LINK: 'https://galaxystore.samsung.com/detail/com.poseidon.bossjobapp',
+    HUAWEI_APP_STORE_LINK: 'https://appgallery.huawei.com/#/app/C108906999',
+    XIAOMI_APP_STORE_LINK:
+      'https://global.app.mi.com/details?lo=ID&la=en_US&id=com.poseidon.bossjobapp'
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'node_modules')]

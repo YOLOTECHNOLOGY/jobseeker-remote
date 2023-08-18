@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '../../Footer.module.scss'
 import Link from 'components/Link'
 import Text from 'components/Text'
+import linkToHunt from 'helpers/linkToHunt'
 
 const RecruiterLink = (props: any) => {
   const { data } = props
@@ -13,7 +14,7 @@ const RecruiterLink = (props: any) => {
       <li>
         <Link
           className={styles.footerLink}
-          to={`${process.env.BOSSHUNT_URL}`}
+          to={linkToHunt('')}
           external
           title='Get started'
         >

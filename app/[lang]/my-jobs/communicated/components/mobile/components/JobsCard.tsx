@@ -55,12 +55,6 @@ const translateData = (data, config) => {
         }
       }
     }
-    // item.company.industry = getValueById(config, item.company.industry_id, 'industry_id');
-    // item.job.job_type_value = getValueById(config, item.job.job_type_id, 'job_type_id');
-    // item.job.xp_lvl.value = getValueById(config, item.job.xp_lvl?.id, 'xp_lvl_id');
-    // item.job.degree.value = getValueById(config, item.job.degree.id, 'degree_id')
-    // item.job.location.value = getValueById(config, item.job.location.id, 'location_id')
-    // return item
   })
 }
 
@@ -171,10 +165,10 @@ const JobsCard = ({
             </p>
             {tagsList.length > 0
               ? tagsList.map((item, index) => (
-                  <span key={index} className={styles.tag}>
-                    {item}
-                  </span>
-                ))
+                <span key={index} className={styles.tag}>
+                  {item}
+                </span>
+              ))
               : null}
             <div className={styles.contact}>
               <div className={`${styles.avator}  ${transTime(lastActiveAt) ? styles.avator2 : ''}`}>

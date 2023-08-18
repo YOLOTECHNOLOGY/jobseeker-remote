@@ -76,7 +76,7 @@ const CompanyInfo = (_props: Props) => {
 	];
 	const overview_fields = [{
 		field: 'industry',
-		name: overview.industry,
+		name: overview?.industry,
 	}, {
 		field: 'financing_stage',
 		name: overview.Financing,
