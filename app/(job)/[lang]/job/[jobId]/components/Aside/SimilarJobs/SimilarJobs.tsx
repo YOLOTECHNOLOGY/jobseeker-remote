@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import { fetchSimilarJobsService } from 'store/services/jobs/fetchSimilarJobs'
 import { fetchRecruiterLastActiveService } from 'store/services/recruiters/last-active'
@@ -7,7 +8,8 @@ import { transState } from 'helpers/utilities'
 import styles from '../../../page.module.scss'
 import classNames from 'classnames/bind'
 import { getValueById } from 'helpers/config/getValueById'
-import React from 'react'
+import { cookies } from 'next/headers'
+import { accessToken } from 'helpers/cookies'
 type propsType = {
   id?: number
   jobDetail: any
@@ -21,9 +23,10 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
     jobId: id,
     size: 5
   }
-
   let recruiterLineStatus = []
-  const data = await fetchSimilarJobsService(params)
+  const cookieStore = cookies()
+  const token = cookieStore.get(accessToken)
+  const data = await fetchSimilarJobsService(params,token?.value)
     .then(({ data: { data } }) => data?.jobs)
     .catch(() => ({ error: true }))
   if (!data.error) {
@@ -82,6 +85,7 @@ export default async function SimilarJobs({ id, jobDetail, languages, config, la
                 const lastActiveAt: any =
                   recruiterLineStatus?.length &&
                   recruiterLineStatus?.find((line: any) => line.id == item.recruiter?.id)
+                  console.log({item});
 
                 return (
                   <div key={item.id} className={styles.similarJobs_card}>
