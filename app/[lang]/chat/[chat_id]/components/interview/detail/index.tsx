@@ -36,7 +36,7 @@ const DetailModal = (props: any) => {
         return status.includes(data?.jobseeker_display_status)
     }, [data?.jobseeker_display_status])
     // const dispatch = useDispatch()
-    const [canCheckedIn, checkInTimeover] = useMemo(() => {
+    const [canCheckedIn] = useMemo(() => {
         const hours = (() => {
             const hours = dayjs(data?.interviewed_at).diff(dayjs(), 'hours')
             const minutes = dayjs(data?.interviewed_at).diff(dayjs(), 'minutes')
@@ -98,7 +98,7 @@ const DetailModal = (props: any) => {
                 label: dic.inProgressLabel,
                 isFinish: isStatusIn(['Completed']),
                 // isFinish: data?.data?.is_reported,
-                active: !isStatusIn(['Completed']),
+                active: !isStatusIn(['Pending', 'Not accepted']),
                 show: true,
                 actionName: data?.is_reported ? dic.issueReported : dic.reportIssue,
                 actionEnable: isStatusIn(['In progress'])
@@ -115,10 +115,11 @@ const DetailModal = (props: any) => {
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: checkInTimeover ? (data?.requested_result_at ?
-                    (data?.interview_result ? data?.interview_result : dic.requestResult)
-                    : dic.requestResult) : formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm')),
-                actionEnable: !data?.requested_result_at && checkInTimeover,
+                actionName: '',
+                // actionName: checkInTimeover ? (data?.requested_result_at ?
+                //     (data?.interview_result ? data?.interview_result : dic.requestResult)
+                //     : dic.requestResult) : formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm')),
+                actionEnable: !data?.requested_result_at,
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)
