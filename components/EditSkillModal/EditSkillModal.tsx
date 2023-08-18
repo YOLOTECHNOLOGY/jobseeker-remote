@@ -215,6 +215,7 @@ const EditSkillModal = ({
               <Button
                 variant="contained"
                 sx={{ marginLeft: '20px' }}
+                disabled={choosed.length >= 10}
                 onClick={() => {
                   if (searchValue !== '') {
                     handleAddSkill(searchValue)

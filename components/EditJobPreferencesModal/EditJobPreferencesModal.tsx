@@ -331,7 +331,7 @@ const EditJobPreferencesModal = ({
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
                   required
-                  options={minSalaryOptions}
+                  options={minSalaryOptions.filter(item => item.value >= getValues('minSalary'))}
                   {...fieldState}
                   {...field}
                   value={value}
