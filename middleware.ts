@@ -63,6 +63,7 @@ export function middleware(request: NextRequest) {
       'images',
       'chat-redirect',
       'analized',
+      'linkToJob',
       // 'huawei-jobs',
       // 'job-sitemap',
       // 'jobs.xml',
