@@ -6125,10 +6125,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.6.tgz#f707337d6a866f39103a4bcfea4376a7cbc41259"
-  integrity sha512-bga79pdCcUe4h9GxXX4p7u2kdXSVeDb/Tpl0ASwWF2tWvLim1s/EK0JMqR6CYFi78RpFs/DWB81D4omCrSSUfA==
+imforbossjob@^0.2.6-fix1:
+  version "0.2.6-fix1"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.6-fix1.tgz#046cf8e9efda2faca6bcc1a8b94e243fde62a152"
+  integrity sha512-stk5Uk0++iSPsrt220E3S8jcWbho7h4XeImqJsOl/E6BISQX6w09vRGVU7oWSoJJ0WEEl0tQupik4AneW1hUZA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -9461,22 +9461,15 @@ tr46@~0.0.3:
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-"ts-streamclient-base@git+https://github.com/xpwu/ts-streamclient-base.git#v0.1.1":
-  version "0.1.1"
-  uid "732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
-  resolved "git+https://github.com/xpwu/ts-streamclient-base.git#732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
-  dependencies:
-    ts-xutils "https://github.com/xpwu/ts-xutils.git#v0.1.2"
-
 "ts-streamclient-base@https://github.com/xpwu/ts-streamclient-base.git#v0.1.1":
   version "0.1.1"
   resolved "https://github.com/xpwu/ts-streamclient-base.git#732a69a09877ffccdb6c6c3b252ebbd2ffcc581f"
   dependencies:
     ts-xutils "https://github.com/xpwu/ts-xutils.git#v0.1.2"
 
-"ts-streamclient-browser@git+https://github.com/xpwu/ts-streamclient-browser.git#v0.1.1":
+"ts-streamclient-browser@https://github.com/xpwu/ts-streamclient-browser.git#v0.1.1":
   version "0.1.1"
-  resolved "git+https://github.com/xpwu/ts-streamclient-browser.git#785a3fb50b9f438b337544a37573db495432cc84"
+  resolved "https://github.com/xpwu/ts-streamclient-browser.git#785a3fb50b9f438b337544a37573db495432cc84"
   dependencies:
     ts-streamclient-base "https://github.com/xpwu/ts-streamclient-base.git#v0.1.1"
 
