@@ -87,7 +87,7 @@ const Head = ({
               </svg>
             </i>
             {localhost}
-            <span>|</span>
+            {/* <span>|</span> */}
             <i>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -105,7 +105,7 @@ const Head = ({
               </svg>
             </i>
             {degree}
-            <span>|</span>
+            {/* <span>|</span> */}
             <i>
               {' '}
               <svg
@@ -124,7 +124,7 @@ const Head = ({
               </svg>
             </i>
             {xp_lvl}
-            <span>|</span>
+            {/* <span>|</span> */}
             <i>
               {' '}
               <svg

@@ -141,7 +141,7 @@
     "noResumeUploadNow": "暂无简历，立即上传",
     "uploadResume": "上传简历",
     "availabilityUpdateSuccessfully": "到岗时间更新成功",
-    "seeMore": "View More",
+    "seeMore": "查看更多",
     "seeJobReco": "查看推荐工作",
     "search": "搜索",
     "desiredJobTitle": "期望职位名称",
@@ -214,7 +214,7 @@
       "seoText": "寻找在{{country}}的优秀公司"
     },
     "companiesEmpty": "暂无公司信息",
-    "loginNow": "Login Now",
+    "loginNow": "立即登录！",
     "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
   },
   "companyDetail": {
@@ -408,7 +408,7 @@
       "copyright": "版权所有 ©️ {{currentYear}} 新加坡: Yolo Technology Pte Ltd. 保留所有权利. 菲律宾: Etos Adtech Corporation"
     },
     "jobs": "职位",
-    "seeMore": "View more"
+    "seeMore": "查看更多"
   },
   "jobDetail": {
     "header": {
@@ -511,7 +511,7 @@
         "policy": "隐私政策"
       },
       "uploadResume": "上传简历",
-      "applyJob": "Apply Job!"
+      "applyJob": "申请工作！"
     },
     "seo": {
       "title": "{{company}}正在热招{{jobTitle}} - {{jobId}} | Bossjob",
@@ -624,7 +624,7 @@
     "findNow": "搜索",
     "find": "搜索",
     "viewMore": "查看更多",
-    "noMore": "No more"
+    "noMore": "没有了"
   },
   "manageProfile": {
     "tab": {
@@ -768,7 +768,7 @@
           "btn2": "删除"
         },
         "introductionModal": {
-          "title": "Introduction",
+          "title": "简介",
           "btn1": "取消",
           "btn2": "保存"
         }
@@ -942,7 +942,7 @@
     "IAm": "我是",
     "Next1": "下一步(1/4)",
     "workExperience": "工作经验",
-    "autofillMyInfo": "Autofill my info",
+    "autofillMyInfo": "自动填充信息",
     "saveTimeByImporting": "通过导入简历节省时间",
     "uploadResume": " 上传简历",
     "supportedFileType": "  支持的文件类型：PDF、DOC、DOCX。",
@@ -1179,7 +1179,7 @@
     "verifiedMessages": {
       "mobile": "您的电话账户已成功验证。",
       "email": "您的电子邮件账户已成功验证。",
-      "phoneEmpty": "Phone Number is not empty",
+      "phoneEmpty": "电话号码不能为空",
       "phoneError": "电话号码不少于7位"
     },
     "email": "邮件",
@@ -1281,7 +1281,7 @@
     "warnText": "否则，您将需要等到双方都回复消息以后，才能请求发送简历"
   },
   "newGetStarted": {
-    "title": "Welcome to",
+    "title": "欢迎来到",
     "employer": "招聘端",
     "tips": "寻找人才? 登录",
     "continueWith": "使用其他方式",
