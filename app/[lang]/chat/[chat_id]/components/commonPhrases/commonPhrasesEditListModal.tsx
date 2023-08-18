@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useRef } from 'react'
 import { assign } from 'lodash-es'
 import Modal from 'components/Modal'

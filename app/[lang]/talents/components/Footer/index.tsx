@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { useContext } from 'react'
 
@@ -10,7 +11,7 @@ import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { languageContext } from 'app/components/providers/languageProvider'
 
 import { appLinkUrl } from 'helpers/constants'
-import { getCountryKey, getLang } from 'helpers/country'
+import { getCountryKey } from 'helpers/country'
 import { getCookie } from '../../../../../helpers/cookies'
 import useWindowSize from '../../../../../hooks/useWindowSize'
 
@@ -26,77 +27,6 @@ import style from './index.module.scss'
 import styles from '../../../../../components/Footer/Footer.module.scss'
 import linkToHunt from 'helpers/linkToHunt'
 
-const source = {
-  BpoJobs: 'BPO jobs',
-  FAQ: 'FAQ',
-  ItJobs: 'IT jobs',
-  JobsIn1: 'Jobs in Manila',
-  JobsIn2: 'Jobs in Makati',
-  JobsIn3: 'Jobs in Cebu',
-  about: 'about',
-  aboutBossjob: 'About Bossjob',
-  allJobs: 'All jobs',
-  careerGuide: 'Career guide',
-  corporation: 'Philippines: Etos Adtech Corporation',
-  courses: 'Courses',
-  createFree: 'Create free resume',
-  createJobAlert: 'Create job alert',
-  customerService: 'Customer Service job',
-  downloadBossjobApp: 'Download Bossjob App',
-  financeJobs: 'Finance jobs',
-  followUs: 'Follow us',
-  getStarted: 'Get started',
-  healthcareJobs: 'Healthcare jobs',
-  jobs: 'jobs',
-  legal: 'Legal',
-  popularJobs: 'Popular Jobs',
-  recruiter: 'Recruiter',
-  salesJobs: 'Sales jobs',
-  talents: 'Talents',
-  technology: 'Singapore: Yolo Technology Pte Ltd. All Rights Reserved',
-  termsConditions: 'Terms & Conditions'
-}
-const siteMap = [
-  {
-    category: 'About',
-    items: [
-      { name: 'About Bossjob', link: 'https://bossjob.com/about' },
-      { name: 'Terms & conditions', link: 'https://bossjob.com/terms' },
-      { name: 'Legal', link: 'https://bossjob.com/legal' },
-      { name: 'BossPoints', link: 'https://bossjob.com/bosspoints' },
-      { name: 'FAQ', link: 'https://bossjob.com/faq' },
-      { name: 'Sitemap', link: 'https://bossjob.com/sitemap' }
-    ]
-  },
-  {
-    category: 'Talents',
-    items: [
-      { name: 'All jobs', link: 'https://bossjob.com/jobs' },
-      { name: 'Create job alert', link: 'https://bossjob.com/alert' },
-      { name: 'Create resume', link: 'https://bossjob.com/resume' },
-      { name: 'Career guide', link: 'https://bossjob.com/career-guide' },
-      { name: 'Courses', link: 'https://bossjob.com/courses' }
-    ]
-  },
-  {
-    category: 'Recruiter',
-    items: [{ name: 'Get started', link: 'https://bossjob.com/recruiter' }]
-  },
-  {
-    category: 'Popular Jobs',
-    items: [
-      // { name: 'Jobs in Manila', link: 'https://bossjob.com/jobs/manila' },
-      // { name: 'Jobs in Makati', link: 'https://bossjob.com/jobs/makati' },
-      // { name: 'Jobs in Cebu', link: 'https://bossjob.com/jobs/cebu' },
-      { name: 'IT jobs', link: 'https://bossjob.com/jobs/it' },
-      { name: 'Finance jobs', link: 'https://bossjob.com/jobs/finance' },
-      { name: 'Customer service jobs', link: 'https://bossjob.com/jobs/customer-service' },
-      { name: 'BPO jobs', link: 'https://bossjob.com/jobs/bpo' },
-      { name: 'Sales jobs', link: 'https://bossjob.com/jobs/sales' },
-      { name: 'Healthcare jobs', link: 'https://bossjob.com/jobs/healthcare' }
-    ]
-  }
-]
 
 const follow_use = [
   {
@@ -192,7 +122,6 @@ const Footer = () => {
     jp: [],
     id: []
   }
-  const currentCounties = COUNTRY_MAP[countryKey]
   const colData = [
     {
       title: about,

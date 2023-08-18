@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import style from '../index.module.scss';
 import React, {useRef, useState} from 'react';
-import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import {A11y, Autoplay, Controller, Navigation, Pagination, Scrollbar} from "swiper";
-import AutoScroll from './AutoScrollList'
 import useWindowSize from "../../../../hooks/useWindowSize";
 
 let imgs = [
@@ -26,8 +26,6 @@ let imgs = [
 ]
 imgs = imgs.concat(imgs);
 const Section2 = () => {
-	const [enable, setEnable] = useState(true);
-
 	const swiperRef = useRef(null)
 	const isMobile = useWindowSize().width < 540;
 	return <section className={style.section2}>

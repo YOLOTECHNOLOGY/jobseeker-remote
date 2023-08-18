@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import { useCallback, useState, useEffect } from 'react'
 
@@ -9,7 +10,6 @@ import { useSelector } from 'react-redux'
 import useGetStarted from 'hooks/useGetStarted'
 
 // Components
-import Layout from 'components/Layout'
 // import SEO from 'components/SEO'
 import MaterialTextField from 'components/MaterialTextField'
 import MaterialButton from 'components/MaterialButton'

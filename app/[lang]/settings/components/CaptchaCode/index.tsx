@@ -14,7 +14,7 @@ interface ICaptchaProps {
 }
 
 const Captcha = (props: ICaptchaProps, ref) => {
-  const { value = '', onChange, length = DEFAULT_LENGTH, autoFocus = false, lang } = props
+  const { value = '', onChange, length = DEFAULT_LENGTH } = props
   // 组件内部维护的输入框输入值
   const [inputValue, setInputValue] = useState(value || '')
   const [currentIndex, setCurrentIndex] = useState(0)

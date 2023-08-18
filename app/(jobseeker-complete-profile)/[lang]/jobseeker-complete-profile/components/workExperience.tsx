@@ -24,13 +24,13 @@ import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import Link from 'components/Link'
 import { LinkContext } from 'app/components/providers/linkProvider'
 import MaterialButton from 'components/MaterialButton'
-import { fabClasses } from '@mui/material'
 const maxSkillsLen = 10
 const WorkExperience = (props: any) => {
   const { lang, userDetail, getUserInfo } = props
   const { work_experiences } = userDetail
   const [resume, setResume] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  console.log({ errorMessage })
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [jobFunction, setJobFunction] = useState<any>({ id: undefined, value: '' })
   const [companyName, setCompanyName] = useState<string>('')
@@ -133,7 +133,6 @@ const WorkExperience = (props: any) => {
     WorkingPeriod,
     mostRecentJobTitle,
     skillsWillBeSuggested,
-    selectSkillsOr,
     Next2,
     back,
     companyNameText,
@@ -169,14 +168,6 @@ const WorkExperience = (props: any) => {
       }
     }
   }, [resume])
-  const requiredLabel = (text: string) => {
-    return (
-      <>
-        <span>{text}</span>
-        {/* <span className={styles.stepFieldRequired}>*</span> */}
-      </>
-    )
-  }
   const handleDelete = (e, index) => {
     e.preventDefault()
     selectedSkills.splice(index, 1)
@@ -308,17 +299,17 @@ const WorkExperience = (props: any) => {
 
             {existingResume?.length
               ? existingResume.map((e) => (
-                  <div key={e.id} className={styles.resumeList}>
-                    <Link
-                      to={e.url}
-                      target='_blank'
-                      rel='noreferrer'
-                      style={{ textDecoration: 'underline' }}
-                    >
-                      {e.filename || e.name}
-                    </Link>
-                  </div>
-                ))
+                <div key={e.id} className={styles.resumeList}>
+                  <Link
+                    to={e.url}
+                    target='_blank'
+                    rel='noreferrer'
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    {e.filename || e.name}
+                  </Link>
+                </div>
+              ))
               : null}
             <p className={styles.titleTip}>{supportedFileType}</p>
             <p className={styles.title}>

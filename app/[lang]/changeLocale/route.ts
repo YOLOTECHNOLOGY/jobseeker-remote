@@ -5,7 +5,7 @@ import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
 import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey, redirectUrl } from 'helpers/cookies'
 
-async function removeServiceCache(token, lang?) {
+async function removeServiceCache(token) {
   try {
     const countryId = getCountryId()
     const languageId = getLanguageId()
@@ -32,7 +32,7 @@ export async function GET(request) {
   const { url } = request
   const lang = url.split('//')[1].split('/')[1]
   if (accessToken) {
-    await removeServiceCache(accessToken, lang)
+    await removeServiceCache(accessToken)
   }
   const newUrl = localAddress.find(url => url.includes(country)) || process.env.NEXT_PUBLIC_HOST_PATH
 

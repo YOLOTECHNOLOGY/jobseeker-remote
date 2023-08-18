@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styles from '../index.module.scss'
 
-import { CameraIcon, DefaultAvatar } from 'images'
+import { DefaultAvatar } from 'images'
 import { Avatar } from '@mui/material'
 import { compressImage } from 'helpers/imageCompression'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { Controller, useForm } from 'react-hook-form'
 import MaterialTextField from 'components/MaterialTextField'
 import avatar1 from '../images/1.png'
@@ -39,10 +38,8 @@ const BasicInformation = (props: any) => {
   const isMobile = document?.body.clientWidth < 750
   const {
     basicInformation,
-    theseInformationWillBeShown,
     profilePhoto,
     uploadAphoto,
-    havingArealPhoto,
     name,
     IAm,
     Next1,

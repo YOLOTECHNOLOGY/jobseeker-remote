@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 'use client'
 import React, { useMemo } from 'react'
 import Text from 'components/Text'

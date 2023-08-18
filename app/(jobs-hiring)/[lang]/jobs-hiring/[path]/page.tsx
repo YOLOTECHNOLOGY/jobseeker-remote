@@ -17,7 +17,6 @@ import JobAlert from './components/jobAlert'
 import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
-import { languages } from 'helpers/country'
 
 const configs = getConfigs([
   ['location_lists'],
