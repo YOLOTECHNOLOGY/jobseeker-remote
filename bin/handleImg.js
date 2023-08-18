@@ -5,7 +5,7 @@ const path = require('path')
 
 // 判断是否为图片文件
 function isImageFile(filePath) {
-  const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg']
+  const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg', '.mp4']
   const ext = path.extname(filePath).toLowerCase()
   return imageExtensions.includes(ext)
 }
@@ -15,7 +15,7 @@ const removeQuotes = (str) => {
 }
 // 递归遍历文件夹
 function traverseFolder(folderPath, file_namespace = 'profile') {
-  console.log('companies',file_namespace, folderPath)
+  console.log('companies', file_namespace, folderPath)
   fs.readdirSync(folderPath).forEach((file) => {
     const filePath = path.resolve(folderPath, file)
 

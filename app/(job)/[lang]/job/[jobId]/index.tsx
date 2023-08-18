@@ -132,15 +132,15 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   }
 
   return (
-    <div style={{ paddingTop: '64px' }}>
+    <div>
       <Head {...headProps} />
-      <Menu
+      {/* <Menu
         {...mainProps}
         lang={languages}
         jobDetail={data}
         jobId={jobId}
         isbenefits={!!mainProps?.benefitsProps?.length}
-      />
+      /> */}
 
       <div style={{ background: '#f5f7fb' }}>
         <div className={styles.container}>

@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback } from 'react'
-
+import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -13,7 +12,15 @@ import { Download } from '@mui/icons-material';
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
-import { uploadUserResumeService } from 'store/services/users/uploadUserResume'
+import {
+  uploadUserResumeService,
+  uploadVideoCover,
+  uploadVideoResume,
+  generatePresignedUrl,
+  uploadVideoToAmazonService,
+  getVideoResumeList,
+  deleteVideoResume
+} from 'store/services/users/uploadUserResume'
 
 /* Components */
 import Text from 'components/Text'
@@ -33,7 +40,12 @@ import {
   ResumeTemplate1,
   ResumeTemplate2,
   DownloadWhiteIcon,
-  CarouselRightRoundedBlueButton} from 'images'
+  CarouselRightRoundedBlueButton,
+  delVideoResume,
+  playVideoResume,
+  AddIcon,
+  CloseIcon
+} from 'images'
 
 /* Styles */
 import classNames from 'classnames'
@@ -42,6 +54,64 @@ import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
+import Modal from 'components/Modal'
+
+const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
+  if (!data.length) return null
+  return data.map(item =>
+    <div
+      key={item.id}
+      className={styles.item}
+      onClick={() => handlePlayVideo(item.url)}
+    >
+      <img
+        src={delVideoResume}
+        className={styles.imageDel}
+        alt=""
+        width="24"
+        height='24'
+        onClick={(e) => handleDeleteVideo(item.id, e)} />
+      <img
+        src={playVideoResume}
+        className={styles.imagePlay}
+        width="50"
+        height="50"
+        alt="" />
+      <img
+        src={item.video_cover}
+        alt={item.video_cover}
+        className={styles.imageCover} />
+    </div >
+  )
+}
+
+const UploadVideoResumeButton = ({ uploading, uploadInputRef, handleUploadVideoChange }) => (
+  <div className={`${styles.uploadVideoButton} ${styles.item}`}>
+    {
+      !uploading ? <img src={AddIcon} width='32' height='32' alt="" /> :
+        <div className={styles.uploading}></div>
+    }
+    <input
+      ref={uploadInputRef}
+      type="file"
+      accept=".mp4"
+      disabled={uploading}
+      onChange={handleUploadVideoChange}
+    />
+  </div>
+)
+
+const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
+  return (
+    <div className={styles.videoCoverWrap}>
+      <img src={CloseIcon} alt="" width="20" height="20" onClick={handleCloseVideo} />
+      <div className={styles.videoCover}>
+        <video ref={playVideoRef} width="900" height="570" controls />
+      </div>
+    </div>
+  )
+}
+
 
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
@@ -67,6 +137,13 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [scrollSnaps, setScrollSnaps] = useState([])
   const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
+  const uploadInputRef = useRef(null)
+  const [videoResumeList, setVideoResumeList] = useState([])
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [playVideo, setPlayVideo] = useState(false)
+  const videoUrlRef = useRef('')
+  const currentVideoId = useRef(null)
+  const [uploading, setUploading] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -160,6 +237,113 @@ const ResumeView = ({ userDetail, lang }: any) => {
       })
     }
   }
+
+  function dataURLtoFile(dataurl, filename) {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+
+  const handleUploadVideoChange = async ({ target }) => {
+    const file = target.files[0]
+    if (!file) {
+      return false
+    }
+
+    const now = Date.now()
+
+    const video = document.createElement('video')
+    video.style.cssText += ';position:absolute; top: -99999px'
+    video.muted = true
+    video.src = URL.createObjectURL(file)
+    video.setAttribute('crossOrigin', 'anonymous')
+    video.currentTime = 1
+    document.body.appendChild(video)
+
+    let canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    canvas.width = video.clientWidth
+    canvas.height = video.clientHeight
+
+    video.addEventListener('loadeddata', async () => {
+      setUploading(true)
+      ctx.drawImage(video, 0, 0, video.clientWidth, video.clientHeight);
+      const dataURL = canvas.toDataURL('image/jpeg')
+      video.setAttribute("poster", dataURL)
+      const files = dataURLtoFile(dataURL, now + '.jpeg')
+      try {
+        const aresult = await uploadVideoCover(files).catch(err => console.log('xxx'))
+        const result = await generatePresignedUrl(`${now}-${file.name}`)
+        const aws = await uploadVideoToAmazonService(result.data.data, file)
+        if (aws.status === 200) {
+          const subUrl = `https://${result.data.data.split('?')[0].replace(/(^.*amazonaws\.com\/)/, '')}`
+          uploadVideoResume(subUrl, aresult.data.data.id).then(res => {
+            videoResumesList()
+            uploadInputRef.current.value = ''
+            video && document.body.removeChild(video)
+            canvas = null
+            setUploading(false)
+          })
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    })
+  }
+
+  const videoResumesList = async () => {
+    const result = await getVideoResumeList().catch(err => { })
+    if (result.data.data) {
+      setVideoResumeList(result.data.data)
+    }
+    // getVideoResumeList().then(res => {
+    //   if (res.data.data) {
+
+    //   }
+    // }).catch(err => {
+    //   console.log(err)
+    // })
+  }
+  const handleDeleteVideo = (id, e) => {
+    e.stopPropagation()
+    setShowConfirm(true)
+    currentVideoId.current = id
+  }
+  const handlePlayVideo = (url) => {
+    setPlayVideo(true)
+    videoUrlRef.current = url
+  }
+  const handleCloseVideo = () => {
+    setPlayVideo(false)
+  }
+  useEffect(() => {
+    videoResumesList()
+  }, [])
+
+  const playVideoRef = useCallback(el => {
+    const handleVideoPlayEnded = () => {
+      el.currentTime = 0;
+    }
+    if (el) {
+      if (playVideo) {
+        el.src = videoUrlRef.current
+        el.addEventListener('ended', handleVideoPlayEnded)
+        // node.play()
+      }
+      else {
+        el.src = ''
+        el.removeEventListener('ended', handleVideoPlayEnded)
+      }
+    }
+  }, [playVideo])
+
   return (
     <div className={styles.tab_content_wrapper}>
       <div className={styles.sectionContainer}>
@@ -185,7 +369,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             </label>
           )}
         </div>
-        <div style={{height: 20}}></div>
+        <div style={{ height: 20 }}></div>
 
         <Text className={styles.resume_subtitle} textStyle='lg'>
           {transitions.upload.tips}
@@ -201,6 +385,26 @@ const ResumeView = ({ userDetail, lang }: any) => {
         />
         <div className={styles.split}></div>
       </div>
+      <div className={styles.sectionContainer}>
+        <div className={styles.preview_title}>
+          Self - introduction Videos
+        </div>
+        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在30S内，视频大小不超过5M</p>
+        <div className={styles.videoResumeContainer}>
+          <VideoResumeList
+            data={videoResumeList}
+            handlePlayVideo={handlePlayVideo}
+            handleDeleteVideo={handleDeleteVideo}
+          />
+          {videoResumeList.length < 3 && <UploadVideoResumeButton
+            uploading={uploading}
+            uploadInputRef={uploadInputRef}
+            handleUploadVideoChange={handleUploadVideoChange}
+          />}
+        </div>
+        <div className={styles.split}></div>
+      </div>
+
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
           {transitions.bossjob.title}
@@ -233,23 +437,23 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     <img
                       src={ResumeTemplate1}
                       alt='Corporate Template'
-                      className={`${styles.resumeTemplateItem}`}
+                      className={`${styles.resumeTemplateItem} `}
                     />
                     {!isMobile && (
-                        <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.corporate ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('corporate')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
@@ -262,23 +466,23 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     <img
                       src={ResumeTemplate2}
                       alt='Creative Template'
-                      className={`${styles.resumeTemplateItem}`}
+                      className={`${styles.resumeTemplateItem} `}
                     />
                     {!isMobile && (
-                      <ColorButton 
-                          sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
-                          className={
-                            isTemplateDownloadable?.corporate
-                              ? styles.downloadResumeButtonActive
-                              : styles.downloadResumeButton
-                          }
-                          startIcon={<Download/>}
-                          onClick={()=>{
-                              handleDownloadResume('corporate')
-                          }}
-                        >
-                          {transitions.bossjob.download}
-                        </ColorButton>
+                      <ColorButton
+                        sx={{ display: isTemplateDownloadable?.creative ? 'flex' : 'none' }}
+                        className={
+                          isTemplateDownloadable?.corporate
+                            ? styles.downloadResumeButtonActive
+                            : styles.downloadResumeButton
+                        }
+                        startIcon={<Download />}
+                        onClick={() => {
+                          handleDownloadResume('creative')
+                        }}
+                      >
+                        {transitions.bossjob.download}
+                      </ColorButton>
                     )}
                   </div>
                 </div>
@@ -363,8 +567,39 @@ const ResumeView = ({ userDetail, lang }: any) => {
           Failed to delete resume
         </Alert>
       </Snackbar>
+
+      <Modal
+        showModal={showConfirm}
+        handleModal={() => {
+          setShowConfirm(false)
+          currentVideoId.current = null
+        }}
+        headerTitle="删除简历视频"
+        firstButtonText="取消"
+        secondButtonText="确认"
+        isSecondButtonLoading={null}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          setShowConfirm(false)
+          currentVideoId.current = null
+        }}
+        handleSecondButton={() => {
+          deleteVideoResume(currentVideoId.current).then(res => {
+            console.log('res:', res)
+            setShowConfirm(false)
+            videoResumesList()
+          }).catch(err => console.log(err))
+        }}
+        fullScreen
+      >
+        删除视频简历后不可找回，您确认删除吗？
+      </Modal>
+      {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
     </div>
+
   )
 }
+
+
 
 export default ResumeView
