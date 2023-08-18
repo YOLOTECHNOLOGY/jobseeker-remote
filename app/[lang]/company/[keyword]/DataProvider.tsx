@@ -3,7 +3,7 @@
 import React from 'react';
 import { CompanyDetailsType, JobsResponseType, Recruiter } from "./service";
 import { ConfigType } from 'app/types';
-import { Country, JobClasses } from './service';
+import { JobClasses } from './service';
 
 
 type ProviderData = {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import style from '../index.module.scss';
 import React, {useContext, useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';

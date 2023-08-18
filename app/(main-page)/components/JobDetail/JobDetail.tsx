@@ -2,18 +2,13 @@
 import { memo, useContext } from 'react'
 import Link from 'next/link'
 // import Avatar from '@mui/material/Avatar'
-import { HomePageChat } from 'images'
 import styles from 'app/index.module.scss'
 import Image from 'next/image'
 import { languageContext } from 'app/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
-import { addJobViewService } from 'store/services/jobs/addJobView'
-import { isMobile } from 'react-device-detect'
 import { getCookie, setCookie } from 'helpers/cookies'
-import { useRouter } from 'next/navigation'
 import { chatSVG } from 'images/svg'
 const JobDetail = ({ detail, config, langKey, tabValue, prefJobTitle }: any) => {
-  const router = useRouter()
 
   const accessToken = getCookie('accessToken')
   const { home } = useContext(languageContext) as any
@@ -27,15 +22,8 @@ const JobDetail = ({ detail, config, langKey, tabValue, prefJobTitle }: any) => 
   const degreeValue = getValueById(config, detail?.degree_id, 'degree_id')
   const industry = getValueById(config, detail?.company_industry_id, 'industry_id')
 
-  const handleAddJobView = (url) => {
+  const handleAddJobView = () => {
     if (accessToken) {
-      const params = {
-        jobId: detail.id,
-        source: 'home', // this is usually used in search result
-        status: accessToken ? 'protected' : 'public',
-        device: isMobile ? 'mobile_web' : 'web',
-        reco_from: detail?.reco_from
-      }
       setCookie('source', tabValue == 1 ? "reco-latest" : "reco")
       setCookie('reco_from', detail?.reco_from)
       setCookie('pref_job_title_id', prefJobTitle)
@@ -47,7 +35,7 @@ const JobDetail = ({ detail, config, langKey, tabValue, prefJobTitle }: any) => 
     <div className={styles.job_detail}>
       <div
         className={styles.job_info}
-        onClick={() => handleAddJobView('/' + langKey + detail.job_url)}
+        onClick={() => handleAddJobView()}
       >
         <Link prefetch={true} href={'/' + langKey + detail.job_url}>
           <div className={styles.job_titleWrapper}>

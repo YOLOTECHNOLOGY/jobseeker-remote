@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 /* Components */
-import Layout from 'components/Layout'
 import Text from 'components/Text'
 import Link from 'components/Link'
 

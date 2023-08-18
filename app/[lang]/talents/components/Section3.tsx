@@ -1,10 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import style from '../index.module.scss';
 import React, {useContext} from 'react';
-import Typical from 'react-typical'
 import {useInView , InView} from "react-intersection-observer";
 import classNames from 'classnames'
-import Image from 'next/image'
 import {languageContext} from "../../../components/providers/languageProvider";
 const Des_Schema = [
 	{
@@ -118,7 +117,7 @@ const Section3LeftItem = (props: {
 	des: string,
 	icon: string
 }) => {
-	const {ref, inView, entry} = useInView({
+	const {ref, inView} = useInView({
 		/* Optional options */
 		threshold: 0.3,
 		triggerOnce: true

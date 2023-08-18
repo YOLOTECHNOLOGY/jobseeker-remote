@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState } from 'react'
 import { assign } from 'lodash-es'

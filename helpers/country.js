@@ -126,6 +126,10 @@ export const serverContryCodeMap = {
 }
 
 export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey
+export const getLangKeyByCode = langCode => {
+  const langKey = Object.keys(serverContryCodeMap).find(key => serverContryCodeMap[key] === langCode)
+  return langKey ?? langCode
+}
 
 export const nations = countryCounfig.map(item => {
   return {

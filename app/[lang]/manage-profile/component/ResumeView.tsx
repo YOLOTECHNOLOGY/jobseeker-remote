@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -299,7 +299,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   }
 
   const videoResumesList = async () => {
-    const result = await getVideoResumeList().catch(err => { })
+    const result = await getVideoResumeList().catch(err => { console.log({ err }) })
     if (result.data.data) {
       setVideoResumeList(result.data.data)
     }
@@ -389,7 +389,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.preview_title}>
           Self - introduction Videos
         </div>
-        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在30S内，视频大小不超过5M</p>
+        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在3分钟内</p>
         <div className={styles.videoResumeContainer}>
           <VideoResumeList
             data={videoResumeList}

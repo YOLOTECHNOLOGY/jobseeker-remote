@@ -96,11 +96,14 @@ const EditJobPreferencesModal = ({
   const minSalaryOptions = getSalaryOptions(config)
   const { handleSubmit, getValues, setValue, control, reset, trigger } = useForm({ defaultValues })
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
-  useEffect(() => {
-    if (minSalary) {
-      getMaxSalaryOptions(minSalary)
-    }
-  }, [minSalary])
+  const [maxSalary, setMaxSalary] = useState(getValues().maxSalary)
+
+  // useEffect(() => {
+  //   if (minSalary) {
+  //     getMaxSalaryOptions(minSalary)
+  //   }
+  // }, [minSalary])
+
   useEffect(() => {
     if (initial) {
       setInital(false)
@@ -117,13 +120,26 @@ const EditJobPreferencesModal = ({
       })) ?? []
     )
   }, [config?.industry_lists])
-  const getMaxSalaryOptions = (minSalary) => {
-    const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    // setMaxSalary(maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : null)
-    setValue('maxSalary', maxSalaryOptions.length > 0 ? maxSalaryOptions[0].value : '')
-    setMaxSalaryOptions(maxSalaryOptions)
-    trigger('maxSalary')
-  }
+  // const getMaxSalaryOptions = (minSalary) => {
+  //   const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
+  //   setMaxSalary(maxSalaryOptions.length > 0 ? Number(preference?.salary_range_from_to) : '')
+  //   setValue('maxSalary', maxSalaryOptions.length > 0 ? Number(preference?.salary_range_to) : '')
+  //   setMaxSalaryOptions(maxSalaryOptions)
+  //   trigger('maxSalary')
+  // }
+  useEffect(() => {
+    // if (maxSalaryOptions?.length) {
+    setValue('maxSalary', Number(preference?.salary_range_to) || '')
+    setValue('minSalary', Number(preference?.salary_range_from) || '')
+    // }
+
+  }, [preference?.salary_range_to, preference?.salary_range_from,
+    // maxSalaryOptions
+  ])
+
+  // useEffect(() => {
+  //   minSalary && setMaxSalary(preference?.salary_range_to)
+  // }, [minSalary, preference?.salary_range_to, maxSalaryOptions])
   const onSubmit = (data) => {
     // to add workSetting
     const { jobTitle, jobType, minSalary, maxSalary, location, industry, currencyKey } = data // jobType is a key
@@ -309,16 +325,20 @@ const EditJobPreferencesModal = ({
               validate: (value) => !!value || lang.editJobPreferencesModal.validate.maxSalary
             }}
             render={({ field, fieldState }) => {
-              const { value } = field
+              const { value, onChange } = field
               return (
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
                   required
-                  options={maxSalaryOptions}
+                  options={minSalaryOptions.filter(item => item.value >= getValues('minSalary'))}
                   {...fieldState}
                   {...field}
                   value={value}
+                  onChange={(e) => {
+                    setMaxSalary(e.target.value)
+                    onChange(e)
+                  }}
                 />
               )
             }}

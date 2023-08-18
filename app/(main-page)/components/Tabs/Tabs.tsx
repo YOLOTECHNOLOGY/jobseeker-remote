@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 'use client'
 import { useEffect, useState, useRef, useContext, useMemo } from 'react'
 

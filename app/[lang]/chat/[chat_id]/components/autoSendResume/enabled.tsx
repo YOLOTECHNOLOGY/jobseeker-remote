@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-unused-vars */
 import React, { Ref, useCallback, useEffect, useRef, useState } from 'react'
 import Loader from 'react-content-loader'
@@ -56,7 +58,7 @@ const UploadButton = ({ disabled = false, onChange, dic }: UploadButtonProps) =>
 
 const EnableAutoSendResumeModal = (props: any) => {
   const [show, setShow] = useState(false)
-  const { contextRef, loading, data, applicationId, dic, lang } = props
+  const { contextRef, loading, dic } = props
   const actionsRef = useRef({} as any)
   const { fileSizeIsTooHuge,
     failedToUploadResume,

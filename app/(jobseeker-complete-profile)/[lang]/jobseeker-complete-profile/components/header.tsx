@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import styles from '../index.module.scss'
 import { BossjobLogo } from 'images'
@@ -5,7 +6,7 @@ import Link from 'next/link'
 import MaterialButton from 'components/MaterialButton'
 import linkToHunt from 'helpers/linkToHunt'
 const Header = (props: any) => {
-  const { lang, step } = props
+  const { lang } = props
   return (
     <div className={styles.header}>
       <div className={styles.headerMain}>

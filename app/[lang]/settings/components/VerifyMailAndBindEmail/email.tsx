@@ -58,8 +58,6 @@ const VerifyMailAndBindEmail = (props: IProps) => {
 
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
-  const [disabledOtp, setDisabledOtp] = useState(false)
-
   const [initialTime, setInitialTime] = useState(0)
   const [startTimer, setStartTimer] = useState(false)
 
