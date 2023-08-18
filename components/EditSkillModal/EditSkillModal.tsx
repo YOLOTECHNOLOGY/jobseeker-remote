@@ -227,7 +227,7 @@ const EditSkillModal = ({
             </div>
           </div>
           <div className={styles.skillList}>
-            {(choosed ?? []).slice(0, 5).map((skill, i) => {
+            {(choosed ?? []).slice(0, 10).map((skill, i) => {
               return (
                 <Chip
                   key={skill}
