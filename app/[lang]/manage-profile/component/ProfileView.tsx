@@ -550,7 +550,7 @@ const ProfileView = ({ lang }: any) => {
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
             {
-              skills.slice(0, 5).map((skill, i) => <Chip
+              skills.slice(0, 10).map((skill, i) => <Chip
                 key={i}
                 className={styles.skillChip}
                 label={skill}
