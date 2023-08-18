@@ -137,16 +137,29 @@ const JobClient = (props: sharePropsType) => {
       >
         {isSave ? (
           <>
-            <i
+            {/* <i
               className='icon-save'
-              style={{ ...styleICon, color: '#136FD3', marginRight: '2px' }}
+              style={{
+                ...styleICon,
+                color: '#fff',
+                marginRight: '2px'
+              }}
+            /> */}
+            <FavoriteIcon
+              sx={{
+                color: '#fff',
+                fontSize: '18px',
+                marginRight: '2px'
+              }}
             />
-            {/* <FavoriteIcon sx={{ color: '#136FD3', fontSize: '18px', marginRight: '2px' }} /> */}
             {showText && <span style={{ textTransform: 'capitalize' }}>{header.undoSave}</span>}
           </>
         ) : (
           <>
-            <i className='icon-save' style={{ ...styleICon, marginRight: '2px' }} />
+            <i
+              className='icon-save'
+              style={{ ...styleICon, marginRight: '2px', position: 'relative', top: '1px' }}
+            />
             {showText && <span style={{ textTransform: 'capitalize' }}>{header.save}</span>}
           </>
         )}

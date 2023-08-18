@@ -23,7 +23,7 @@
 
 .headSticky {
   position: sticky;
-  top: 64px;
+  top: 0;
   z-index: 2;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.05);
 }
@@ -100,20 +100,57 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: rgba(255, 255, 255, 0.5);
+
       margin-top: 15px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       line-height: 14px;
+      justify-content: space-between;
+
+      >div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .operator {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 1);
+
+        .item {
+          display: flex;
+          align-items: center;
+          margin-right: 13px;
+          cursor: pointer;
+        }
+
+        .jobClient {
+          &_btn {
+            &_wrapper {
+              display: flex;
+              cursor: pointer;
+              align-items: center;
+
+              .MuiAvatar-root {
+                margin-right: 3px;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
 
       svg path {
         fill: rgba(255, 255, 255, 0.5);
       }
 
-      span {
-        display: none;
-      }
+      // span {
+      //   display: none;
+      // }
 
       i {
         margin-left: 20px;
@@ -243,7 +280,7 @@
           display: flex;
           justify-content: space-between;
 
-          > div {
+          >div {
             display: none;
             align-items: center;
 
@@ -369,7 +406,7 @@
         margin: 0;
       }
 
-      h5 + p {
+      h5+p {
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -1053,7 +1090,14 @@
 
       &_desc {
         line-height: 18px;
-        color: #707070;
+
+        >div {
+          color: #707070;
+        }
+
+        .operator {
+          display: none;
+        }
 
         i {
           display: none;
@@ -1134,7 +1178,7 @@
         }
 
         h5 {
-          > div {
+          >div {
             display: flex;
 
             i {
@@ -1510,38 +1554,7 @@
       }
     }
 
-    .operator {
-      display: flex;
-      align-items: center;
-      font-size: 16px;
 
-      i {
-        color: #121212;
-      }
-
-      .item {
-        display: flex;
-        align-items: center;
-        margin-right: 13px;
-        cursor: pointer;
-      }
-
-      .jobClient {
-        &_btn {
-          &_wrapper {
-            display: flex;
-            cursor: pointer;
-            color: #121212;
-            align-items: center;
-
-            .MuiAvatar-root {
-              margin-right: 3px;
-              align-items: center;
-            }
-          }
-        }
-      }
-    }
   }
 }
 
