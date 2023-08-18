@@ -299,7 +299,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   }
 
   const videoResumesList = async () => {
-    const result = await getVideoResumeList().catch(err => { })
+    const result = await getVideoResumeList().catch(err => { console.log({ err }) })
     if (result.data.data) {
       setVideoResumeList(result.data.data)
     }
