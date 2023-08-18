@@ -20,13 +20,13 @@ const devBucket = 'dev-assets.bossjob.com'
 const prodBucket = 'assets.bossjob.com'
 
 let totalFiles = 0
-let uploadedFiles = 0
+// const uploadedFiles = 0
 
 const isProduction = env === 'prod'
 
-function isSVG(filePath) {
-  return path.extname(filePath).toLowerCase() === '.svg';
-}
+// function isSVG(filePath) {
+//   return path.extname(filePath).toLowerCase() === '.svg';
+// }
 
 // Function to upload an image file to S3
 function uploadImageToS3(filePath) {
@@ -39,7 +39,7 @@ function uploadImageToS3(filePath) {
     Key: `${targetPath}${path.basename(filePath)}`,
     Body: fileContent
   }
-  if(isSVG(filePath)){
+  if (isSVG(filePath)) {
     params.ContentType = 'image/svg+xml'
   }
 
@@ -49,18 +49,18 @@ function uploadImageToS3(filePath) {
       console.error(`Error uploading ${filePath} to S3:`, err)
     } else {
       // Remove the local file after uploading it
-      uploadedFiles++
-      if (uploadedFiles === totalFiles) {
-        traverseFolder(directoryPath, file_namespace)
-      }
-      if (!isProduction) return
-      fs.unlink(filePath, function (err) {
-        if (err) {
-          console.error(`Error removing ${filePath}:`, err)
-        } else {
-          console.log(`Local file ${filePath} removed successfully`)
-        }
-      })
+      // uploadedFiles++
+      // if (uploadedFiles === totalFiles) {
+      //   traverseFolder(directoryPath, file_namespace)
+      // }
+      // if (!isProduction) return
+      // fs.unlink(filePath, function (err) {
+      //   if (err) {
+      //     console.error(`Error removing ${filePath}:`, err)
+      //   } else {
+      //     console.log(`Local file ${filePath} removed successfully`)
+      //   }
+      // })
       // Increment the uploaded files counter
 
       // Check if all files have been uploaded
@@ -81,7 +81,7 @@ function readFilesRecursively(directoryPath) {
       readFilesRecursively(filePath)
     } else {
       const extension = path.extname(file).toLowerCase()
-      if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg'].includes(extension)) {
+      if (['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg', '.mp4'].includes(extension)) {
         totalFiles++
         uploadImageToS3(filePath)
       }

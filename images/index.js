@@ -215,3 +215,5 @@ export const seekerBanner = `${S3BucketJobseeker}/seekerBanner.png`
 export const FooterGalaxyAppStore = `${S3BucketJobseeker}/FooterGalaxyAppstore.png`
 export const FooterHuaweiAppStore = `${S3BucketJobseeker}/FooterHuaweiAppstore.png`
 export const FooterXiaomiAppStore = `${S3BucketJobseeker}/FooterXiaomiApp store.png`
+export const delVideoResume = `${S3BucketJobseeker}/icon_delvideo.png`
+export const playVideoResume = `${S3BucketJobseeker}/icon_playvideo.png`
