@@ -98,11 +98,11 @@ const EditJobPreferencesModal = ({
   const [minSalary, setMinSalary] = useState(getValues().minSalary)
   const [maxSalary, setMaxSalary] = useState(getValues().maxSalary)
 
-  useEffect(() => {
-    if (minSalary) {
-      getMaxSalaryOptions(minSalary)
-    }
-  }, [minSalary])
+  // useEffect(() => {
+  //   if (minSalary) {
+  //     getMaxSalaryOptions(minSalary)
+  //   }
+  // }, [minSalary])
 
   useEffect(() => {
     if (initial) {
@@ -120,21 +120,22 @@ const EditJobPreferencesModal = ({
       })) ?? []
     )
   }, [config?.industry_lists])
-  const getMaxSalaryOptions = (minSalary) => {
-    const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
-    // setMaxSalary(maxSalaryOptions.length > 0 ? preference?.salary_range_to : null)
-    // setValue('maxSalary', maxSalaryOptions.length > 0 ? preference?.salary_range_to : '')
-    setMaxSalaryOptions(maxSalaryOptions)
-    // trigger('maxSalary')
-  }
+  // const getMaxSalaryOptions = (minSalary) => {
+  //   const maxSalaryOptions = getSalaryOptions(config, minSalary, true)
+  //   setMaxSalary(maxSalaryOptions.length > 0 ? Number(preference?.salary_range_from_to) : '')
+  //   setValue('maxSalary', maxSalaryOptions.length > 0 ? Number(preference?.salary_range_to) : '')
+  //   setMaxSalaryOptions(maxSalaryOptions)
+  //   trigger('maxSalary')
+  // }
   useEffect(() => {
-    // alert([preference?.salary_range_to, preference?.salary_range_from])
-    if (maxSalaryOptions?.length) {
-      setValue('maxSalary', Number(preference?.salary_range_to) || '')
-      setValue('minSalary', Number(preference?.salary_range_from) || '')
-    }
+    // if (maxSalaryOptions?.length) {
+    setValue('maxSalary', Number(preference?.salary_range_to) || '')
+    setValue('minSalary', Number(preference?.salary_range_from) || '')
+    // }
 
-  }, [preference?.salary_range_to, preference?.salary_range_from, maxSalaryOptions])
+  }, [preference?.salary_range_to, preference?.salary_range_from,
+    // maxSalaryOptions
+  ])
 
   // useEffect(() => {
   //   minSalary && setMaxSalary(preference?.salary_range_to)
@@ -330,7 +331,7 @@ const EditJobPreferencesModal = ({
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
                   required
-                  options={maxSalaryOptions}
+                  options={minSalaryOptions}
                   {...fieldState}
                   {...field}
                   value={value}

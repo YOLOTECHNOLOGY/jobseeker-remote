@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
