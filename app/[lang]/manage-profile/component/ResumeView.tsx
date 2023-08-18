@@ -389,7 +389,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.preview_title}>
           Self - introduction Videos
         </div>
-        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在30S内</p>
+        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在3分钟内</p>
         <div className={styles.videoResumeContainer}>
           <VideoResumeList
             data={videoResumeList}
