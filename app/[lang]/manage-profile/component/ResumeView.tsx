@@ -256,9 +256,9 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (!file) {
       return false
     }
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+
     const now = Date.now()
+
     const video = document.createElement('video')
     video.style.cssText += ';position:absolute; top: -99999px'
     video.muted = true
@@ -267,6 +267,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
     video.currentTime = 1
     document.body.appendChild(video)
 
+    let canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
     canvas.width = video.clientWidth
     canvas.height = video.clientHeight
 
@@ -286,6 +288,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             videoResumesList()
             uploadInputRef.current.value = ''
             video && document.body.removeChild(video)
+            canvas = null
             setUploading(false)
           })
         }
