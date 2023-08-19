@@ -250,13 +250,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
     return new File([u8arr], filename, { type: mime });
   }
 
+  const handleVideoScreenShot = () => {
+
+  }
 
   const handleUploadVideoChange = async ({ target }) => {
-    const file = target.files[0]
-    if (!file) {
-      return false
-    }
-
+    const file = target.files?.[0]
     const now = Date.now()
 
     const video = document.createElement('video')
@@ -303,13 +302,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (result.data.data) {
       setVideoResumeList(result.data.data)
     }
-    // getVideoResumeList().then(res => {
-    //   if (res.data.data) {
-
-    //   }
-    // }).catch(err => {
-    //   console.log(err)
-    // })
   }
   const handleDeleteVideo = (id, e) => {
     e.stopPropagation()
