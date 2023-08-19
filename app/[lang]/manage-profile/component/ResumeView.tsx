@@ -250,9 +250,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     return new File([u8arr], filename, { type: mime });
   }
 
-  const handleVideoScreenShot = () => {
 
-  }
 
   const handleUploadVideoChange = async ({ target }) => {
     const file = target.files?.[0]
