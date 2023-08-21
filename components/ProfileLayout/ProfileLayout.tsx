@@ -9,7 +9,6 @@ import Image from 'next/image';
 
 /* Styles */
 import styles from './ProfileLayout.module.scss'
-import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider';
 
 const theme = createTheme({
   components: {
