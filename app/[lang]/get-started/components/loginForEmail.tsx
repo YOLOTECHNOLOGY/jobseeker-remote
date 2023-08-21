@@ -156,9 +156,9 @@ const loginForEmail = (props: IProps) => {
         <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 15 }}>
           <Turnstile
-            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '3x00000000000000000000FF'}
+            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
             theme='light'
             onVerify={(token) => {
               setCfToken(token)
