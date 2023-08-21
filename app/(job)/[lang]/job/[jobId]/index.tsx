@@ -128,7 +128,8 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
     full_address: data.full_address,
     published_at: data.published_at,
     recruiter: data.recruiter,
-    languages
+    languages,
+    jobId,
   }
 
   return (
