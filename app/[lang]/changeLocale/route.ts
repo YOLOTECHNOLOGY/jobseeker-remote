@@ -25,7 +25,7 @@ export async function GET(request, pathParams) {
   const params = new URL(request.url).searchParams
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
-  const pathname = params.get(redirectUrl)
+  const pathname = params.get(redirectUrl) ?? ''
   // const country = params.get('country')
   const user = params.get(userKey)
   const lang = pathParams.params?.lang ?? defaultLanguage()

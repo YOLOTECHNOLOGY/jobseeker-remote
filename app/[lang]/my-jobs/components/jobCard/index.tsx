@@ -236,6 +236,7 @@ const JobCard = (props: any) => {
         [styles.jobCard]: true,
         [styles.aboutDisappear]: refreshing
       })}
+      onClick={() => handleRouterToPath(job_url)}
     >
       <>
         <div id={'job_card_container_' + id} className={styles.container}>
@@ -262,7 +263,7 @@ const JobCard = (props: any) => {
             </svg>
           </div>
           <div className={styles.topContainer}>
-            <div className={styles.left} onClick={() => handleRouterToPath(job_url)}>
+            <div className={styles.left} >
               <div
                 key={job_title + id}
                 onMouseEnter={() => setTitleHover(true)}
@@ -320,7 +321,7 @@ const JobCard = (props: any) => {
                       onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
-                        ;(chatNow as any)()
+                          ; (chatNow as any)()
                       }}
                     >
                       <Text textColor='white' bold>
@@ -368,7 +369,12 @@ const JobCard = (props: any) => {
             <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
               {(job_skills ?? '').split(',').filter(Boolean).join(' | ')}
             </div>
-            <div className={styles.benefits} title={'benefits'}>
+            <div className={styles.benefits} title={'benefits'}
+              onClick={(e) => {
+                e.stopPropagation()
+                sendViewCompany()
+              }}
+            >
               {jobBenefits}
             </div>
           </div>
@@ -403,7 +409,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg
