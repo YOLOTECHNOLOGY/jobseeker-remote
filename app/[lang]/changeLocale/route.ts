@@ -1,5 +1,5 @@
 
-import { getCountryId, getLanguageId } from 'helpers/country'
+import { defaultLanguage, getCountryId, getLanguageId } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
@@ -28,12 +28,16 @@ export async function GET(request, pathParams) {
   const pathname = params.get(redirectUrl)
   // const country = params.get('country')
   const user = params.get(userKey)
-  const lang = pathParams.lang
+  const lang = pathParams.params?.lang ?? defaultLanguage()
   if (accessToken) {
     await removeServiceCache(accessToken)
   }
+  // 取得request的host
+  const host = request.headers.get('host')
+  // 取得request的protocol
+  const protocol = request.headers.get('x-forwarded-proto') || 'http'
   // const newUrl = process.env.NEXT_PUBLIC_HOST_PATH
-  const response = NextResponse.redirect(`/${lang}/${pathname}`)
+  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}`)
 
   // const response = new NextResponse(null, {
   //   status: 301,
