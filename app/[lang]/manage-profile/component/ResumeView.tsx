@@ -138,7 +138,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
   const uploadInputRef = useRef(null)
-  const [videoResumeList, setVideoResumeList] = useState([])
+  const [videoResumeList, setVideoResumeList] = useState(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
   const videoUrlRef = useRef('')
@@ -381,12 +381,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         </div>
         <p style={{ color: '#7d7d7d' }}>{transitions.videoResume.descTips}</p>
         <div className={styles.videoResumeContainer}>
-          <VideoResumeList
+          {videoResumeList?.length && <VideoResumeList
             data={videoResumeList}
             handlePlayVideo={handlePlayVideo}
             handleDeleteVideo={handleDeleteVideo}
-          />
-          {videoResumeList.length < 3 && <UploadVideoResumeButton
+          />}
+          {videoResumeList?.length < 3 && <UploadVideoResumeButton
             uploading={uploading}
             uploadInputRef={uploadInputRef}
             handleUploadVideoChange={handleUploadVideoChange}
