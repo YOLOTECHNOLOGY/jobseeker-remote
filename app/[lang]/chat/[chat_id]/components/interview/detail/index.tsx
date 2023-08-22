@@ -115,10 +115,9 @@ const DetailModal = (props: any) => {
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: checkInTimeover ? (data?.requested_result_at ?
-                    (data?.interview_result ? data?.interview_result : dic.requestResult)
-                    : dic.requestResult) : formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm')),
-                actionEnable: !data?.requested_result_at && checkInTimeover,
+                actionName: data?.interview_result ? data?.interview_result :
+                    (isStatusIn(['Completed']) ? dic.requestResult : dic.requestAfter),
+                actionEnable: isStatusIn(['Completed']) && !data?.interview_result,
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)

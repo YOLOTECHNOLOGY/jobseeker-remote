@@ -1061,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面试官索要结果",
     "requestResult": "索要面试结果",
-    "requestAfter": "在 {{time}} 之后可以向面试官索要结果",
+    "requestAfter": "在面试结束之后可以向面试官索要结果",
     "title": "来自企业 {{companyName}} 的面试",
     "buttonText": "完成",
     "notAttend": "您没有参加面试",

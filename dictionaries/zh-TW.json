@@ -1061,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面試官索要結果",
     "requestResult": "索要面試結果",
-    "requestAfter": "在 {{time}} 之後可以向面試官索要結果",
+    "requestAfter": "面試結束後，你可以向面試官索取結果",
     "title": "來自企業 {{companyName}} 的面試",
     "buttonText": "完成",
     "notAttend": "您沒有參加面試",

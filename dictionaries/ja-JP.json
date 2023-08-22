@@ -1061,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "{{time}}後に面接結果をリクエストできます",
+    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
