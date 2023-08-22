@@ -2,15 +2,12 @@
 import { useEffect, useState, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { languageContext } from 'app/components/providers/languageProvider'
-import { useRouter } from 'next/router'
 /* Components */
 import PublicHeader from './PublicHeader'
 import ProtectedHeader from './ProtectedHeader'
 
 import { getCookie } from 'helpers/cookies'
 import React from 'react'
-import { usePathname } from 'next/navigation'
-import LandingHeader from './LandingPageHeader'
 
 const Header = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -21,7 +18,6 @@ const Header = (props: any) => {
   useEffect(() => {
     setIsAuthenticated(getCookie('accessToken') ? true : false)
   }, [userDetail])
-  const pathname = usePathname()
   // if(pathname.endsWith('/talents')){
   //   return <LandingHeader lang={data.header}/>
   // }

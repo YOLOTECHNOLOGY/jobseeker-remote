@@ -3,7 +3,6 @@ import React from 'react'
 import Script from 'next/script'
 import useAdSlot from 'helpers/useAdSlot'
 import useTransitionState from 'app/components/AdSlot/useTransitionState'
-import ads from 'lib/config/adConfig'
 import { getCountryKey } from 'helpers/country'
 import getAdForCountry from 'lib/config/adConfig'
 
