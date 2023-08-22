@@ -70,7 +70,8 @@ const ProfileLayout = ({
     birthdate,
     working_since,
     address,
-    location_id
+    location_id,
+    vip
   } = userDetail
 
   const handleShowModal = () => {
@@ -95,7 +96,7 @@ const ProfileLayout = ({
   return (
     <div className={styles.pageContainer}>
       <div className={styles.pageBanner}>
-        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{objectFit: 'cover'}} fill alt='banner'></Image>
+        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{ objectFit: 'cover' }} fill alt='banner'></Image>
       </div>
       <div className={styles.profileLayout}>
         <div className={styles.profileLayoutUserOverview}>
@@ -111,6 +112,7 @@ const ProfileLayout = ({
             birthdate={birthdate}
             working_since={working_since}
             address={address}
+            vip={vip}
             handleEditClick={handleEditClick}
             lang={dic}
           />

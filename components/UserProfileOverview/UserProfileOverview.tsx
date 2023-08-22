@@ -43,7 +43,11 @@ type UserProfileOverviewProps = {
   address?: string;
   working_since?: string;
   location_id?: number;
-  handleEditClick: () => void
+  vip?: {
+    is_vip: 0 | 1;
+    ended_at: string;
+  };
+  handleEditClick: () => void,
 }
 
 const getAge = (birthDate) => {
@@ -65,6 +69,7 @@ const UserProfileOverview = ({
   lang,
   location_id,
   address,
+  vip,
   working_since,
   handleEditClick
 }: UserProfileOverviewProps) => {
@@ -75,10 +80,10 @@ const UserProfileOverview = ({
     age = getAge(birthdate)
   }
   const { config } = useManageProfileData();
-  const {location_lists } = config
+  const { location_lists } = config
 
 
-  const formattedLocationList = location_lists.map(item=>item.locations).flat();
+  const formattedLocationList = location_lists.map(item => item.locations).flat();
 
   const matchedLocation = formattedLocationList.find((loc) => {
     return loc?.id == location_id
@@ -97,64 +102,73 @@ const UserProfileOverview = ({
         <Image src={require('./edit.svg').default.src} width={24} height={24} alt={'edit_icon'} />
       </div>
       <div className={styles.userOverviewAvatar}>
-        <Avatar sx={{ width: '110px', height: '110px', margin: 0 }} src={avatarUrl || DefaultAvatar} />
+        {
+          !vip.is_vip ?
+            <Avatar sx={{ width: '110px', height: '110px', margin: 0 }} src={avatarUrl || DefaultAvatar} /> :
+            <div className={styles.vipAvatar}>
+              <Avatar sx={{ width: '110px', height: '110px', margin: 0, border: '3px solid #FFC248' }} src={avatarUrl || DefaultAvatar} />
+              <Image src={require('./vip_user_icon.png').default.src} width={52} height={21} alt="" style={{ position: 'absolute', bottom: 0, right: 0 }} />
+            </div>
+
+        }
+
       </div>
       <div className={styles.userOverviewNameLayout}>
         <MouseOverPopover className={styles.userOverviewName} value={name || '-'}></MouseOverPopover>
       </div>
       <div className={styles.userOverviewInfo}>
 
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./location1.svg').default.src}
-              width={24} height={24}
-              style={{ marginRight: '6px' }}
-              alt={'location'}
-            />
-            <MouseOverPopover className={styles.profileText}  value={matchedLocation?.value || '-'}></MouseOverPopover>
-            {/* <Text textStyle='lg'>{location}</Text> */}
-          </div>
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./location.svg').default.src}
-              width={24} height={24}
-              style={{ marginRight: '6px' }}
-              alt={'address'}
-            />
-            <MouseOverPopover className={styles.profileText} value={address || '-'}></MouseOverPopover>
-          </div>
-                 
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
-            <MouseOverPopover className={styles.profileText} value={ age ? getYearString(age) : '-'}></MouseOverPopover>
-          </div>
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./location1.svg').default.src}
+            width={24} height={24}
+            style={{ marginRight: '6px' }}
+            alt={'location'}
+          />
+          <MouseOverPopover className={styles.profileText} value={matchedLocation?.value || '-'}></MouseOverPopover>
+          {/* <Text textStyle='lg'>{location}</Text> */}
+        </div>
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./location.svg').default.src}
+            width={24} height={24}
+            style={{ marginRight: '6px' }}
+            alt={'address'}
+          />
+          <MouseOverPopover className={styles.profileText} value={address || '-'}></MouseOverPopover>
+        </div>
 
-          {/* work since */}
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./exp.svg').default.src}
-              width={24} height={24}
-              style={{ marginRight: '6px' }}
-              alt={'location'}
-            />
-              <MouseOverPopover className={styles.profileText} value={ working_since ? String(working_since)?.split('-').slice(0,2).join('-') : '-'}></MouseOverPopover>
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./birthday.svg').default.src} width={24} height={24} alt={'age'} style={{ marginRight: '6px' }} />
+          <MouseOverPopover className={styles.profileText} value={age ? getYearString(age) : '-'}></MouseOverPopover>
+        </div>
 
-          </div>
+        {/* work since */}
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./exp.svg').default.src}
+            width={24} height={24}
+            style={{ marginRight: '6px' }}
+            alt={'location'}
+          />
+          <MouseOverPopover className={styles.profileText} value={working_since ? String(working_since)?.split('-').slice(0, 2).join('-') : '-'}></MouseOverPopover>
 
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./email.svg').default.src}
-              width={24} height={24}
-              style={{ marginRight: '6px' }}
-              alt={'email'}
-            />
-            <MouseOverPopover className={styles.profileText} value={email || '-'}></MouseOverPopover>
-          </div>
+        </div>
 
-          <div className={styles.userOverviewInfoDetail}>
-            <Image src={require('./tel.svg').default.src}
-              width={24} height={24}
-              style={{ marginRight: '6px' }}
-              alt={'tel'}
-            />
-            <MouseOverPopover className={styles.profileText} value={contactNumber || '-'}></MouseOverPopover>
-          </div>
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./email.svg').default.src}
+            width={24} height={24}
+            style={{ marginRight: '6px' }}
+            alt={'email'}
+          />
+          <MouseOverPopover className={styles.profileText} value={email || '-'}></MouseOverPopover>
+        </div>
+
+        <div className={styles.userOverviewInfoDetail}>
+          <Image src={require('./tel.svg').default.src}
+            width={24} height={24}
+            style={{ marginRight: '6px' }}
+            alt={'tel'}
+          />
+          <MouseOverPopover className={styles.profileText} value={contactNumber || '-'}></MouseOverPopover>
+        </div>
 
         {/* {description && (
           <div className={styles.userOverviewInfoAbout}>
