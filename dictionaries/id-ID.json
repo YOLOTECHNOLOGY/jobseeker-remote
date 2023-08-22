@@ -862,9 +862,10 @@
           "resumeHasBeenDeletedSuccessfully": "Resume has been deleted successfully"
         },
         "videoResume": {
-          "title": "Self - introduction videos",
-          "descTips": "Video format MP4, time control within 3 minutes",
-          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
+          "title": "Lanjutkan Video",
+          "descTips": "Format video MP4, kurang dari 3 menit",
+          "confirmDesc": "Video yang dihapus tidak akan dapat diambil lagi nanti, yakin?",
+          "confirmTitle": "Remove video resume"
         }
       }
     }

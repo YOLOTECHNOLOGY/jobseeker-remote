@@ -116,7 +116,7 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
     manageProfile: {
-      tab: { resume: transitions }
+      tab: { resume: transitions, profile: profile }
     }
   } = lang
   const accessToken = getCookie('accessToken')
@@ -564,9 +564,11 @@ const ResumeView = ({ userDetail, lang }: any) => {
           setShowConfirm(false)
           currentVideoId.current = null
         }}
-        headerTitle="删除简历视频"
-        firstButtonText="取消"
-        secondButtonText="确认"
+        headerTitle={transitions.videoResume.confirmTitle}
+        firstButtonText={profile.deleteModal.btn1}
+        secondButtonText={profile.deleteModal.btn2}
+        // firstButtonText="取消"
+        // secondButtonText="确认"
         isSecondButtonLoading={null}
         firstButtonIsClose
         handleFirstButton={() => {
