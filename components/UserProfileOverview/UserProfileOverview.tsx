@@ -107,7 +107,12 @@ const UserProfileOverview = ({
             <Avatar sx={{ width: '110px', height: '110px', margin: 0 }} src={avatarUrl || DefaultAvatar} /> :
             <div className={styles.vipAvatar}>
               <Avatar sx={{ width: '110px', height: '110px', margin: 0, border: '3px solid #FFC248' }} src={avatarUrl || DefaultAvatar} />
-              <Image src={require('./vip_user_icon.png').default.src} width={52} height={21} alt="" style={{ position: 'absolute', bottom: 0, right: 0 }} />
+              <Image
+                src={require('./vip_user_icon.png').default.src}
+                width={52}
+                height={21}
+                alt=""
+                style={{ position: 'absolute', bottom: 0, right: 0 }} />
             </div>
 
         }
