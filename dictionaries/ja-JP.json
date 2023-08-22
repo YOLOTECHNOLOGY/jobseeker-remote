@@ -860,6 +860,11 @@
           "resumeHasBeenRenameSuccessfully": "履歴書は正常に名前が変更されました",
           "resumeHasBeenSentToYourEmailSuccessfully": "履歴書は正常にメールで送信されました",
           "resumeHasBeenDeletedSuccessfully": "履歴書は正常に削除されました"
+        },
+        "videoResume": {
+          "title": "Self - introduction videos",
+          "descTips": "Video format MP4, time control within 3 minutes",
+          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
         }
       }
     }

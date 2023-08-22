@@ -860,6 +860,11 @@
           "resumeHasBeenRenameSuccessfully": "簡歷重命名成功",
           "resumeHasBeenSentToYourEmailSuccessfully": "簡歷已成功發送到您的郵箱",
           "resumeHasBeenDeletedSuccessfully": "簡歷刪除成功"
+        },
+        "videoResume": {
+          "title": "Self - introduction videos",
+          "descTips": "Video format MP4, time control within 3 minutes",
+          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
         }
       }
     }
