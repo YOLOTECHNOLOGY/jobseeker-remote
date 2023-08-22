@@ -156,27 +156,26 @@ const loginForEmail = (props: IProps) => {
         <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
-        <div style={{ marginTop: 15 }}>
-          <Turnstile
-            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
-            theme='light'
-            onVerify={(token) => {
-              setCfToken(token)
-            }}
-            onError={() => {
-              setCfToken('')
-              turnstile.reset()
-            }}
-            onExpire={() => {
-              setCfToken('')
-              turnstile.reset()
-            }}
-            onTimeout={() => {
-              setCfToken('')
-              turnstile.reset()
-            }}
-          />
-        </div>
+        <Turnstile
+          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+          theme='light'
+          appearance='interaction-only' // invisible managed challenge
+          onVerify={(token) => {
+            setCfToken(token)
+          }}
+          onError={() => {
+            setCfToken('')
+            turnstile.reset()
+          }}
+          onExpire={() => {
+            setCfToken('')
+            turnstile.reset()
+          }}
+          onLoad={() => {
+            setCfToken('')
+            turnstile.reset()
+          }}
+        />
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

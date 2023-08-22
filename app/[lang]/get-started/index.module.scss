@@ -39,7 +39,7 @@
     justify-content: flex-end;
     position: relative;
     // bottom: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     z-index: 10;
 
     .codeImg {
@@ -410,7 +410,7 @@
       letter-spacing: 0.0075em;
       color: #121212;
       line-height: 44px;
-      padding: 10px 0;
+      padding: 20px 0;
       margin: 0;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -477,7 +477,7 @@
     .list2 {
       display: flex;
       justify-content: space-around;
-      padding-top: 0px;
+      padding-top: 24px;
 
       >div {
         width: 130px;
@@ -571,7 +571,7 @@
 
       &.divider_none {
         margin: 0;
-        padding: 15px 0 4px;
+        padding: 20px 0 4px;
       }
     }
 
@@ -707,7 +707,7 @@
         border-radius: 8px;
         outline: none;
         background-color: #fff;
-        margin-top: 15px;
+        margin-top: 20px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -920,7 +920,7 @@
 
   .login_item {
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 16px;
     position: relative;
     font-size: 18px;
     border-radius: 8px;
