@@ -158,6 +158,17 @@ const IMProvider = ({ children, lang }: any) => {
             window.removeEventListener("resize", updateMobile)
         }
     }, [])
+
+    useEffect(() => {
+        IMManager.setOnAvatarClick((role, auid) => {
+            if (role === 'recruiter') {
+                console.log('onReceruiterAvatarClick', auid)
+            } else {
+                router.push(`/${lang}/manage-profile`)
+            }
+        })
+
+    }, [lang])
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''

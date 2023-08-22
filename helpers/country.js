@@ -93,6 +93,21 @@ const countryCounfig = [
     currency: 'ntd',
     id: 211
   },
+  {
+    name: 'Malaysia',
+    key: 'my',
+    url: 'bossjob.my',
+    defaultLocation: {
+      id: 2918,
+      is_popular: false,
+      key: "kuala_lumpur",
+      region_display_name: "Kuala Lumpur",
+      seo_value: "kuala_lumpur",
+      value: "Kuala Lumpur",
+    },
+    currency: 'myr',
+    id: 127
+  },
   // {
   //   name: 'Macau',
   //   key: 'mo',
