@@ -130,7 +130,8 @@ export const languages = [
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
   { value: 'ja-JP', id: 4, label: '日本語' },
-  { value: 'zh-TW', id: 5, label: '中文(繁體)' }
+  { value: 'zh-TW', id: 5, label: '中文(繁體)' },
+  { value: 'ms-MY', id: 5, label: 'MalaysiaName' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
