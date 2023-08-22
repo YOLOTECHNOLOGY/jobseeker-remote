@@ -41,28 +41,28 @@ const loginForEmail = (props: IProps) => {
   const pathname = usePathname()
   const emailRef = useRef(null)
   const isDisableRef = useRef(null)
+  const buttonRef = useRef(null)
 
   useEffect(() => {
     isDisableRef.current = isDisable
+    if (!isDisable) {
+      buttonRef.current.focus();
+    }
   }, [isDisable])
+  
   useEffect(() => {
     if (email) {
       emailRef.current = email
     }
   }, [email])
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleOnKeyDownEnter)
-    return () => window.removeEventListener('keydown', handleOnKeyDownEnter)
-  }, [])
-
   const handleOnKeyDownEnter = (e) => {
-    if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
-      sendOpt()
+    if (e.key === 'Enter') {
+      sendOtp()
     }
   }
 
-  const sendOpt = () => {
+  const sendOtp = () => {
     if (cfToken === "") {
       dispatch(
         displayNotification({
@@ -153,7 +153,13 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        <button 
+          className={styles.btn} 
+          disabled={isDisable} 
+          onClick={sendOtp} 
+          onKeyDown={handleOnKeyDownEnter}
+          ref={buttonRef}
+        >
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
         <Turnstile
@@ -164,14 +170,6 @@ const loginForEmail = (props: IProps) => {
             setCfToken(token)
           }}
           onError={() => {
-            setCfToken('')
-            turnstile.reset()
-          }}
-          onExpire={() => {
-            setCfToken('')
-            turnstile.reset()
-          }}
-          onLoad={() => {
             setCfToken('')
             turnstile.reset()
           }}
