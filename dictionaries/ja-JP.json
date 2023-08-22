@@ -862,9 +862,10 @@
           "resumeHasBeenDeletedSuccessfully": "履歴書は正常に削除されました"
         },
         "videoResume": {
-          "title": "Self - introduction videos",
-          "descTips": "Video format MP4, time control within 3 minutes",
-          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
+          "title": "自己紹介ビデオ",
+          "descTips": "ビデオ形式のMP4、3分以内の時間制御",
+          "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }

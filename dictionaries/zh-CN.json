@@ -215,7 +215,7 @@
     },
     "companiesEmpty": "暂无公司信息",
     "loginNow": "立即登录！",
-    "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
+    "loginNowDescription": "创建免费简历，立即申请热门工作！"
   },
   "companyDetail": {
     "tab": {
@@ -862,9 +862,10 @@
           "resumeHasBeenDeletedSuccessfully": "简历删除成功"
         },
         "videoResume": {
-          "title": "Self - introduction videos",
-          "descTips": "Video format MP4, time control within 3 minutes",
-          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
+          "title": "视频简历",
+          "descTips": "视频格式为MP4，长度小于3 分钟。",
+          "confirmDesc": "删除视频恢复后将无法再恢复。您确定要删除吗？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }

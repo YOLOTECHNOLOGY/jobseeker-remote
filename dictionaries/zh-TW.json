@@ -862,9 +862,10 @@
           "resumeHasBeenDeletedSuccessfully": "簡歷刪除成功"
         },
         "videoResume": {
-          "title": "Self - introduction videos",
-          "descTips": "Video format MP4, time control within 3 minutes",
-          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?"
+          "title": "視頻簡歷",
+          "descTips": "視頻格式MP4，3分鐘以內",
+          "confirmDesc": "刪除的視頻以後將無法找回，您確定嗎？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
