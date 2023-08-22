@@ -276,7 +276,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
       video.setAttribute("poster", dataURL)
       const files = dataURLtoFile(dataURL, now + '.jpeg')
       try {
-        const aresult = await uploadVideoCover(files).catch(err => console.log('xxx'))
+        const aresult = await uploadVideoCover(files).catch(err => console.log(err))
         const result = await generatePresignedUrl(`${now}-${file.name}`)
         const aws = await uploadVideoToAmazonService(result.data.data, file)
         if (aws.status === 200) {
