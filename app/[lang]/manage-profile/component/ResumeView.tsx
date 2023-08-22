@@ -377,9 +377,9 @@ const ResumeView = ({ userDetail, lang }: any) => {
       </div>
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
-          Self - introduction Videos
+          {transitions.videoResume.title}
         </div>
-        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在3分钟内</p>
+        <p style={{ color: '#7d7d7d' }}>{transitions.videoResume.descTips}</p>
         <div className={styles.videoResumeContainer}>
           <VideoResumeList
             data={videoResumeList}
@@ -582,7 +582,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
         }}
         fullScreen
       >
-        删除视频简历后不可找回，您确认删除吗？
+        {transitions.videoResume.confirmDesc}
+
       </Modal>
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
     </div>
