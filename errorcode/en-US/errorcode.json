@@ -233,6 +233,7 @@
   "41250": "Invalid Tron(TRC20) address",
   "41251": "Invalid Ethereum(ERC20) address",
   "41252": "Query exceeds limit",
+  "41253": "Invalid verification",
   "48905": "The email has been registered",
   "50001": "Internal server error",
   "50002": "Failed to upload resume",

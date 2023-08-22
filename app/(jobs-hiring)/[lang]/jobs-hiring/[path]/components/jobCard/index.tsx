@@ -204,7 +204,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    ;(chatNow as any)().catch((err) => {
+    ; (chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -233,16 +233,21 @@ const JobCard = (props: any) => {
   }
 
   return (
-    <div className={styles.jobCard}>
+    <div className={styles.jobCard}
+      onClick={() => {
+        // @ts-ignore
+        router.push(`/${langKey}` + job_url)
+      }}
+    >
       <>
         <div id={'job_card_container_' + id} className={styles.container}>
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-              onClick={() => {
-                // @ts-ignore
-                router.push(`/${langKey}` + job_url)
-              }}
+            // onClick={() => {
+            //   // @ts-ignore
+            //   router.push(`/${langKey}` + job_url)
+            // }}
             >
               <div
                 key={job_title + id}
@@ -358,7 +363,12 @@ const JobCard = (props: any) => {
             <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
               {(job_skills ?? '').split(',').join(' | ')}
             </div>
-            <div className={styles.benefits} title={jobBenefitsValue}>
+            <div className={styles.benefits} title={jobBenefitsValue}
+              onClick={(e) => {
+                e.stopPropagation()
+                sendViewCompany()
+              }}
+            >
               {jobBenefitsValue}
             </div>
           </div>
@@ -395,7 +405,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                  ;(save as any)()
+                    ; (save as any)()
                 }}
               >
                 <svg

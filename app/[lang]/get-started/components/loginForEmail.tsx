@@ -14,6 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
+import Turnstile, { useTurnstile } from "react-turnstile";
 
 interface IProps {
   lang: any
@@ -25,6 +26,7 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const turnstile = useTurnstile();
 
   const {
     lang: { newGetStarted, errorcode },
@@ -34,6 +36,7 @@ const loginForEmail = (props: IProps) => {
   } = props
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
+  const [cfToken, setCfToken] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const pathname = usePathname()
   const emailRef = useRef(null)
@@ -60,8 +63,18 @@ const loginForEmail = (props: IProps) => {
   }
 
   const sendOpt = () => {
+    if (cfToken === "") {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: "Please complete the CAPTCHA verification.",
+          severity: 'error'
+        })
+      )
+      return 
+    }
     setLoading(true)
-    authenticationSendEmaillOtp({ email: emailRef.current })
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken})
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if (isModal) {
@@ -143,6 +156,27 @@ const loginForEmail = (props: IProps) => {
         <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
+        <div style={{ marginTop: 15 }}>
+          <Turnstile
+            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+            theme='light'
+            onVerify={(token) => {
+              setCfToken(token)
+            }}
+            onError={() => {
+              setCfToken('')
+              turnstile.reset()
+            }}
+            onExpire={() => {
+              setCfToken('')
+              turnstile.reset()
+            }}
+            onTimeout={() => {
+              setCfToken('')
+              turnstile.reset()
+            }}
+          />
+        </div>
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

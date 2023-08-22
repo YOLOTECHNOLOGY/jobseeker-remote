@@ -26,16 +26,21 @@ export async function GET(request) {
   const redirect = params.get('redirect')
   const langCode = params.get('lang')
   const lang = getLangKeyByCode(langCode)
-  const response = new NextResponse(null, {
-    status: 301,
-    headers: {
-      "Access-Control-Allow-Headers": "Set-Cookie",
-      Location: `${lang}/${redirect} `,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
-    }
-  })
+  // 取得request的host
+  const host = request.headers.get('host')
+  // 取得request的protocol
+  const protocol = request.headers.get('x-forwarded-proto') || 'http'
+  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${redirect}`)
+  // const response = new NextResponse(null, {
+  //   status: 301,
+  //   headers: {
+  //     "Access-Control-Allow-Headers": "Set-Cookie",
+  //     Location: `${lang}/${redirect} `,
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Access-Control-Allow-Credentials': 'true',
+  //     'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+  //   }
+  // })
   console.log({ huntAccessToken, langCode, lang })
   if (huntAccessToken) {
     const headers = {
