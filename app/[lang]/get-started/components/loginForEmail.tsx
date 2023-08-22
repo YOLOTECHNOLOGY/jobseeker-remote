@@ -165,15 +165,6 @@ const loginForEmail = (props: IProps) => {
             }}
             onError={() => {
               setCfToken('')
-              turnstile.reset()
-            }}
-            onExpire={() => {
-              setCfToken('')
-              turnstile.reset()
-            }}
-            onTimeout={() => {
-              setCfToken('')
-              turnstile.reset()
             }}
           />
         </div>
