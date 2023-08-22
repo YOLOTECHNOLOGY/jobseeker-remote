@@ -57,7 +57,7 @@ import Image from 'next/image'
 import Modal from 'components/Modal'
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
-  if (!data.length) return null
+  if (!data.length) return <div style={{ height: '200px' }} />
   return data.map(item =>
     <div
       key={item.id}
