@@ -137,7 +137,8 @@ export const serverContryCodeMap = {
   'zh-CN': 'zh-CN',
   'id-ID': 'id',
   'ja-JP': 'ja',
-  'zh-TW': 'zh-TW'
+  'zh-TW': 'zh-TW',
+  'ms-MY': 'ms',
 }
 
 export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey

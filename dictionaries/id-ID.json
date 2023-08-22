@@ -1061,7 +1061,7 @@
     "finishedText": "Finished",
     "finishedLabel": "You can request interview result from the recruiter",
     "requestResult": "Requested for results",
-    "requestAfter":"You can request interview result after interview completed",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "Interview Invitation from {{companyName}}",
     "buttonText": "Done",
     "notAttend": "You did not attend the interview.",
@@ -1348,6 +1348,7 @@
     "hk": "Hongkong",
     "tw": "Taiwan",
     "mo": "Macao",
+    "my": "Malaysia",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
     "metaDescription": "Bossjob - Career Platform for Professionals in {{country}}",
     "jobSearch": {
