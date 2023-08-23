@@ -381,12 +381,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         </div>
         <p style={{ color: '#7d7d7d' }}>{transitions.videoResume.descTips}</p>
         <div className={styles.videoResumeContainer}>
-          {videoResumeList?.length && <VideoResumeList
+          {Boolean(videoResumeList?.length) && <VideoResumeList
             data={videoResumeList}
             handlePlayVideo={handlePlayVideo}
             handleDeleteVideo={handleDeleteVideo}
           />}
-          {videoResumeList?.length < 3 && <UploadVideoResumeButton
+          {Boolean(videoResumeList?.length < 3) && <UploadVideoResumeButton
             uploading={uploading}
             uploadInputRef={uploadInputRef}
             handleUploadVideoChange={handleUploadVideoChange}
