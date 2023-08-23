@@ -17,6 +17,7 @@ import JobAlert from './components/jobAlert'
 import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
+import ExcellentResumeBanner from './components/excellentResume'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -51,6 +52,9 @@ const configs = getConfigs([
 const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run
+
+
+
 
 const Main = async (props: any) => {
   const { lang } = props.params
@@ -90,12 +94,14 @@ const Main = async (props: any) => {
 
             {/* right */}
             <div className={styles.rightContent}>
+
               <UploadResumeButton
                 text={search.uploadResume}
                 isShowBtn={!accessToken}
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
               />
+              <ExcellentResumeBanner />
               <SearchHistory
                 location={location}
                 value={props?.searchValues?.query as any}
@@ -114,6 +120,10 @@ const Main = async (props: any) => {
     </>
   )
 }
+
+
+
+
 
 export default configs(serverDataScript()).chain((configs) =>
   query(onLoadScript(configs.config)).chain((searchValues) =>
