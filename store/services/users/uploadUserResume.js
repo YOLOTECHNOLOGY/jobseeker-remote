@@ -78,7 +78,7 @@ const deleteVideoResume = (id) => {
 }
 
 const resumeTemplateList = () => {
-  const axios = configuredAxios('resume-template', 'protected')
+  const axios = configuredAxios('resumeTemplate', 'protected')
   const URL = '/public/list'
   return axios.get(URL)
 }
