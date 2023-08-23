@@ -14,6 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
+import Turnstile, { useTurnstile } from "react-turnstile"
 
 interface IProps {
   lang: any
@@ -25,6 +26,7 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const turnstile = useTurnstile()
 
   const {
     lang: { newGetStarted, errorcode },
@@ -34,9 +36,11 @@ const loginForEmail = (props: IProps) => {
   } = props
   const [email, setEmail] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
+  const [cfToken, setCfToken] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const pathname = usePathname()
   const emailRef = useRef(null)
+  const cfTokenRef = useRef(null)
   const isDisableRef = useRef(null)
 
   useEffect(() => {
@@ -47,6 +51,11 @@ const loginForEmail = (props: IProps) => {
       emailRef.current = email
     }
   }, [email])
+  useEffect(() => {
+    if (cfToken) {
+      cfTokenRef.current = cfToken
+    }
+  }, [cfToken])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -55,13 +64,23 @@ const loginForEmail = (props: IProps) => {
 
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
-      sendOpt()
+      sendOtp()
     }
   }
 
-  const sendOpt = () => {
+  const sendOtp = () => {
+    if (cfTokenRef.current === "") {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: "Please try again later.",
+          severity: 'error'
+        })
+      )
+      return 
+    }
     setLoading(true)
-    authenticationSendEmaillOtp({ email: emailRef.current })
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current})
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if (isModal) {
@@ -140,9 +159,21 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
+        <Turnstile
+          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+          theme='light'
+          appearance='interaction-only' // invisible managed challenge
+          onVerify={(token) => {
+            setCfToken(token)
+          }}
+          onError={() => {
+            // setCfToken('')
+            turnstile.reset()
+          }}
+        />
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

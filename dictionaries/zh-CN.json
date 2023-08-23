@@ -215,7 +215,7 @@
     },
     "companiesEmpty": "暂无公司信息",
     "loginNow": "立即登录！",
-    "loginNowDescription": "Create your job profile for free on Bossjob to explore top jobs applied by your peers!"
+    "loginNowDescription": "创建免费简历，立即申请热门工作！"
   },
   "companyDetail": {
     "tab": {
@@ -860,6 +860,12 @@
           "resumeHasBeenRenameSuccessfully": "简历重命名成功",
           "resumeHasBeenSentToYourEmailSuccessfully": "简历已成功发送到您的邮箱",
           "resumeHasBeenDeletedSuccessfully": "简历删除成功"
+        },
+        "videoResume": {
+          "title": "视频简历",
+          "descTips": "视频格式为MP4，长度小于3 分钟。",
+          "confirmDesc": "删除视频恢复后将无法再恢复。您确定要删除吗？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
@@ -1055,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面试官索要结果",
     "requestResult": "索要面试结果",
-    "requestAfter": "在 {{time}} 之后可以向面试官索要结果",
+    "requestAfter": "在面试结束之后可以向面试官索要结果",
     "title": "来自企业 {{companyName}} 的面试",
     "buttonText": "完成",
     "notAttend": "您没有参加面试",
@@ -1342,6 +1348,7 @@
     "hk": "中国香港",
     "tw": "中国台湾",
     "mo": "中国澳门",
+    "my": "Malaysia",
     "siteName": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "metaDescription": "Bossjob - {{country}}最有效率的求职平台，AI匹配工作，在线和老板开聊，一天内入职新工作！",
     "jobSearch": {

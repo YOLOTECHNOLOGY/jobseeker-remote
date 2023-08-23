@@ -860,6 +860,12 @@
           "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
           "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
           "resumeHasBeenDeletedSuccessfully": "Resume has been deleted successfully"
+        },
+        "videoResume": {
+          "title": "Video Resume",
+          "descTips": "Video format must be MP4 & less than 3 minutes.",
+          "confirmDesc": "You will not be able to retrieve a deleted video resume, are you sure?",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
@@ -1055,7 +1061,7 @@
     "finishedText": "Finished",
     "finishedLabel": "You can request interview result from the recruiter",
     "requestResult": "Requested for results",
-    "requestAfter": "You can request interview result after {{time}}",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "Interview Invitation from {{companyName}}",
     "buttonText": "Done",
     "notAttend": "You did not attend the interview.",
@@ -1342,6 +1348,7 @@
     "hk": "China Hong Kong",
     "tw": "China Taiwan",
     "mo": "China Macau",
+    "my": "Malaysia",
     "siteName": "Bossjob - A Chat-first Career Platform for Professionals in {{country}}",
     "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!",
     "jobSearch": {

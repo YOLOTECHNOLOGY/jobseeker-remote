@@ -20,12 +20,15 @@ import { phoneOtpenerate } from 'store/services/auth/newLogin'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
 import { countryForPhoneCode } from 'helpers/country'
+import Turnstile, { useTurnstile } from "react-turnstile"
 
 const LoginForPhone = (props: any) => {
+  const turnstile = useTurnstile()
   const [countryValue, setCountry] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneError, setPhoneError] = useState<string>('')
+  const [cfToken, setCfToken] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const {
     lang: { newGetStarted, errorcode },
@@ -44,6 +47,7 @@ const LoginForPhone = (props: any) => {
   const phoneNumberRef = useRef(null)
 
   const isDisableRef = useRef(null)
+  const cfTokenRef = useRef(null)
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -54,6 +58,11 @@ const LoginForPhone = (props: any) => {
       phoneNumberRef.current = phoneNumber
     }
   }, [phoneNumber])
+  useEffect(() => {
+    if (cfToken) {
+      cfTokenRef.current = cfToken
+    }
+  }, [cfToken])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -81,9 +90,19 @@ const LoginForPhone = (props: any) => {
   }, [phoneNumber])
 
   const sendOpt = () => {
+    if (cfTokenRef.current === "") {
+      dispatch(
+        displayNotification({
+          open: true,
+          message: "Please try again later.",
+          severity: 'error'
+        })
+      )
+      return 
+    }
     const phoneNum = countryValue + phoneNumberRef.current
     setLoading(true)
-    phoneOtpenerate({ phone_num: phoneNum })
+    phoneOtpenerate({ phone_num: phoneNum, cf_token: cfTokenRef.current })
       .then((res) => {
         const {
           user_id,
@@ -161,6 +180,17 @@ const LoginForPhone = (props: any) => {
             setDisable={setDisable}
           />
         </div>
+        <Turnstile
+          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+          theme='light'
+          appearance='interaction-only' // invisible managed challenge
+          onVerify={(token) => {
+            setCfToken(token)
+          }}
+          onError={() => {
+            turnstile.reset()
+          }}
+        />
         <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>

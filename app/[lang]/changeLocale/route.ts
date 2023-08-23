@@ -1,5 +1,5 @@
 
-import { getCountryId, getLanguageId } from 'helpers/country'
+import { defaultLanguage, getCountryId, getLanguageId } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
@@ -19,34 +19,36 @@ async function removeServiceCache(token) {
   }
 
 }
-const isTest = false; // only true when develop at local
-const localAddress = isTest ? ['http://local.dev.bossjob.ph:3004', 'http://local.dev.bossjob.sg:3004'] : []
 
-export async function GET(request) {
+export async function GET(request, pathParams) {
+  console.log({ pathParams })
   const params = new URL(request.url).searchParams
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
-  const pathname = params.get(redirectUrl)
-  const country = params.get('country')
+  const pathname = params.get(redirectUrl) ?? ''
+  // const country = params.get('country')
   const user = params.get(userKey)
-  const { url } = request
-  const lang = url.split('//')[1].split('/')[1]
+  const lang = pathParams.params?.lang ?? defaultLanguage()
   if (accessToken) {
     await removeServiceCache(accessToken)
   }
-  const newUrl = localAddress.find(url => url.includes(country)) || process.env.NEXT_PUBLIC_HOST_PATH
+  // 取得request的host
+  const host = request.headers.get('host')
+  // 取得request的protocol
+  const protocol = request.headers.get('x-forwarded-proto') || 'http'
+  // const newUrl = process.env.NEXT_PUBLIC_HOST_PATH
+  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}`)
 
-  const response = new NextResponse(null, {
-    status: 301,
-    headers: {
-      "Access-Control-Allow-Headers": "Set-Cookie",
-      Location: `${newUrl}/${lang}/${pathname}`,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
-    }
-  })
-
+  // const response = new NextResponse(null, {
+  //   status: 301,
+  //   headers: {
+  //     "Access-Control-Allow-Headers": "Set-Cookie",
+  //     Location: `/${lang}/${pathname}`,
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Access-Control-Allow-Credentials': 'true',
+  //     'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+  //   }
+  // })
   // set cookies with token in header
   // the maxAge unit is second
   const maxTime = 60 * 60 * 24 // a day

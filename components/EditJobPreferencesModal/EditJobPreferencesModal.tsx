@@ -303,7 +303,7 @@ const EditJobPreferencesModal = ({
                 <MaterialBasicSelect
                   className={styles.jobPreferencesFormInput}
                   label={editModal.minSalary}
-                  options={minSalaryOptions}
+                  options={minSalaryOptions.filter(item => item.value < 200000)}
                   required
                   {...fieldState}
                   {...field}
@@ -331,7 +331,7 @@ const EditJobPreferencesModal = ({
                   className={styles.jobPreferencesFormInput}
                   label={editModal.maxSalary}
                   required
-                  options={minSalaryOptions.filter(item => item.value >= getValues('minSalary'))}
+                  options={minSalaryOptions.filter(item => item.value > getValues('minSalary'))}
                   {...fieldState}
                   {...field}
                   value={value}

@@ -22,6 +22,7 @@ type propsType = {
   published_at: string
   recruiter: any
   languages: Record<string, any>
+  jobId: number
 }
 
 const MainFC = (props: propsType) => {
@@ -36,7 +37,8 @@ const MainFC = (props: propsType) => {
         <Map lat={props.lat} lng={props.lng} full_address={props.full_address} lang={content} />
       </div>
 
-      <Search />
+      <Search jobId={props.jobId} />
+      
       <span className={styles.published_at}>
         {content.jobPostedOn} {props.published_at}
       </span>

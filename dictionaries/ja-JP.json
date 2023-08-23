@@ -860,6 +860,12 @@
           "resumeHasBeenRenameSuccessfully": "履歴書は正常に名前が変更されました",
           "resumeHasBeenSentToYourEmailSuccessfully": "履歴書は正常にメールで送信されました",
           "resumeHasBeenDeletedSuccessfully": "履歴書は正常に削除されました"
+        },
+        "videoResume": {
+          "title": "自己紹介ビデオ",
+          "descTips": "ビデオ形式のMP4、3分以内の時間制御",
+          "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
@@ -1055,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "{{time}}後に面接結果をリクエストできます",
+    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
@@ -1342,6 +1348,7 @@
     "hk": "中国香港",
     "tw": "中国台湾",
     "mo": "中国マカオ",
+    "my": "Malaysia",
     "siteName": "Bossjob - プロフェッショナル向けのチャットファーストキャリアプラットフォーム | {{country}}",
     "metaDescription": "Bossjobは、優れた人材と優良企業をつなぐチャットファーストのキャリアプラットフォームです。現地勤務からリモートワークまで、さまざまな求人を選択できます。次の夢の仕事をBossjobで応募しましょう！",
     "jobSearch": {

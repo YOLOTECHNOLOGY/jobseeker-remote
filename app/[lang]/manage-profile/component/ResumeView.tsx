@@ -57,7 +57,7 @@ import Image from 'next/image'
 import Modal from 'components/Modal'
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
-  if (!data.length) return null
+  if (!data.length) return <div style={{ height: '200px' }} />
   return data.map(item =>
     <div
       key={item.id}
@@ -116,7 +116,7 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
     manageProfile: {
-      tab: { resume: transitions }
+      tab: { resume: transitions, profile: profile }
     }
   } = lang
   const accessToken = getCookie('accessToken')
@@ -138,7 +138,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const [deleteResumeLoading, setDeleteResumeLoading] = useState(false)
   const [isExceedLimit, setIsExceedLimit] = useState(false)
   const uploadInputRef = useRef(null)
-  const [videoResumeList, setVideoResumeList] = useState([])
+  const [videoResumeList, setVideoResumeList] = useState(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const [playVideo, setPlayVideo] = useState(false)
   const videoUrlRef = useRef('')
@@ -251,12 +251,9 @@ const ResumeView = ({ userDetail, lang }: any) => {
   }
 
 
-  const handleUploadVideoChange = async ({ target }) => {
-    const file = target.files[0]
-    if (!file) {
-      return false
-    }
 
+  const handleUploadVideoChange = async ({ target }) => {
+    const file = target.files?.[0]
     const now = Date.now()
 
     const video = document.createElement('video')
@@ -279,7 +276,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
       video.setAttribute("poster", dataURL)
       const files = dataURLtoFile(dataURL, now + '.jpeg')
       try {
-        const aresult = await uploadVideoCover(files).catch(err => console.log('xxx'))
+        const aresult = await uploadVideoCover(files).catch(err => console.log(err))
         const result = await generatePresignedUrl(`${now}-${file.name}`)
         const aws = await uploadVideoToAmazonService(result.data.data, file)
         if (aws.status === 200) {
@@ -303,13 +300,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (result.data.data) {
       setVideoResumeList(result.data.data)
     }
-    // getVideoResumeList().then(res => {
-    //   if (res.data.data) {
-
-    //   }
-    // }).catch(err => {
-    //   console.log(err)
-    // })
   }
   const handleDeleteVideo = (id, e) => {
     e.stopPropagation()
@@ -387,16 +377,16 @@ const ResumeView = ({ userDetail, lang }: any) => {
       </div>
       <div className={styles.sectionContainer}>
         <div className={styles.preview_title}>
-          Self - introduction Videos
+          {transitions.videoResume.title}
         </div>
-        <p style={{ color: '#7d7d7d' }}>视频格式MP4，时间控制在3分钟内</p>
+        <p style={{ color: '#7d7d7d' }}>{transitions.videoResume.descTips}</p>
         <div className={styles.videoResumeContainer}>
-          <VideoResumeList
+          {Boolean(videoResumeList?.length) && <VideoResumeList
             data={videoResumeList}
             handlePlayVideo={handlePlayVideo}
             handleDeleteVideo={handleDeleteVideo}
-          />
-          {videoResumeList.length < 3 && <UploadVideoResumeButton
+          />}
+          {Boolean(videoResumeList?.length < 3) && <UploadVideoResumeButton
             uploading={uploading}
             uploadInputRef={uploadInputRef}
             handleUploadVideoChange={handleUploadVideoChange}
@@ -574,9 +564,11 @@ const ResumeView = ({ userDetail, lang }: any) => {
           setShowConfirm(false)
           currentVideoId.current = null
         }}
-        headerTitle="删除简历视频"
-        firstButtonText="取消"
-        secondButtonText="确认"
+        headerTitle={transitions.videoResume.confirmTitle}
+        firstButtonText={profile.deleteModal.btn1}
+        secondButtonText={profile.deleteModal.btn2}
+        // firstButtonText="取消"
+        // secondButtonText="确认"
         isSecondButtonLoading={null}
         firstButtonIsClose
         handleFirstButton={() => {
@@ -592,7 +584,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
         }}
         fullScreen
       >
-        删除视频简历后不可找回，您确认删除吗？
+        {transitions.videoResume.confirmDesc}
+
       </Modal>
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
     </div>

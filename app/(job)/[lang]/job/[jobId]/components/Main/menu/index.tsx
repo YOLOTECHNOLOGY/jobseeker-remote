@@ -44,7 +44,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
   ]
 
   useEffect( () => {
-    handleFetchAddJobViewService()
+    // handleFetchAddJobViewService()
   }, [])
 
   useEffect(() => {
