@@ -560,17 +560,17 @@ const ResumeView = ({ userDetail, lang }: any) => {
           </div>
         </div> */}
         <div className={styles.resumePreview}>
-          {resumeTemplate?.map(item => (
+          {resumeTemplate?.map((item, index) => (
             <div className={styles.item} key={item.id}>
               <div className={styles.cover}>
                 <Button variant="contained" className={styles.button} >Select Template</Button>
                 <Button
                   variant="contained"
                   className={styles.button}
-                  onClick={() => setLightBox(state => ({
-                    ...state,
-                    isOpen: true
-                  }))
+                  onClick={() => setLightBox({
+                    isOpen: true,
+                    photoIndex: index
+                  })
                   }>
                   Preview
                 </Button>
@@ -582,33 +582,35 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
         </div>
       </div>
-      {lightBox.isOpen && (
-        <Lightbox
-          mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
-          nextSrc={resumeTemplate[(lightBox.photoIndex + 1) % resumeTemplate.length].preview_picture}
-          prevSrc={resumeTemplate[(lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length].preview_picture}
-          onCloseRequest={() =>
-            setLightBox(state => ({
-              ...state,
-              isOpen: false
-            }))
-          }
-          onMovePrevRequest={() =>
-            setLightBox(state => ({
-              ...state,
-              photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
-            }))
+      {
+        lightBox.isOpen && (
+          <Lightbox
+            mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
+            // nextSrc={resumeTemplate[(lightBox.photoIndex + 1) % resumeTemplate.length].preview_picture}
+            // prevSrc={resumeTemplate[(lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length].preview_picture}
+            onCloseRequest={() =>
+              setLightBox(state => ({
+                ...state,
+                isOpen: false
+              }))
+            }
+            onMovePrevRequest={() =>
+              setLightBox(state => ({
+                ...state,
+                photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
+              }))
 
-          }
-          onMoveNextRequest={() =>
-            setLightBox(state => ({
-              ...state,
-              photoIndex: (state.photoIndex + 1) % resumeTemplate.length
-            }))
+            }
+            onMoveNextRequest={() =>
+              setLightBox(state => ({
+                ...state,
+                photoIndex: (state.photoIndex + 1) % resumeTemplate.length
+              }))
 
-          }
-        />
-      )}
+            }
+          />
+        )
+      }
       {/* exceed the limit */}
       <SnackbarTips
         show={isExceedLimit}
@@ -658,7 +660,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
       </Modal>
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
-    </div>
+    </div >
 
   )
 }
