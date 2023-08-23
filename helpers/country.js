@@ -131,7 +131,7 @@ export const languages = [
   { value: 'id-ID', id: 3, label: 'Indonesia' },
   { value: 'ja-JP', id: 4, label: '日本語' },
   { value: 'zh-TW', id: 5, label: '中文(繁體)' },
-  { value: 'ms-MY', id: 5, label: 'Bahasa Malaysia' }
+  // { value: 'ms-MY', id: 5, label: 'Bahasa Malaysia' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
