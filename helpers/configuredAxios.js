@@ -53,6 +53,10 @@ const getUrl = (baseURL) => {
       break
     case 'resumes':
       url = process.env.RESUME_URL
+      break
+    case 'resume-template':
+      url = process.env.RESUME_TEMPLATE_URL
+      break
     default:
       break
   }

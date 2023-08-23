@@ -6,7 +6,6 @@ import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { Download } from '@mui/icons-material';
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -19,7 +18,8 @@ import {
   generatePresignedUrl,
   uploadVideoToAmazonService,
   getVideoResumeList,
-  deleteVideoResume
+  deleteVideoResume,
+  resumeTemplateList
 } from 'store/services/users/uploadUserResume'
 
 /* Components */
@@ -48,13 +48,15 @@ import {
 } from 'images'
 
 /* Styles */
-import classNames from 'classnames'
 import styles from './index.module.scss'
 import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
 import Modal from 'components/Modal'
+import Button from '@mui/material/Button'
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
   if (!data.length) return null
@@ -144,6 +146,11 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const videoUrlRef = useRef('')
   const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
+  const [resumeTemplate, setResumeTemplate] = useState(null)
+  const [lightBox, setLightBox] = useState({
+    isOpen: false,
+    photoIndex: 0
+  })
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -167,19 +174,19 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (!isFirstRender) dispatch(fetchUserOwnDetailRequest({ accessToken }))
   }, [isSuccessfulUpload])
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollPrev()
-    }
-  }, [emblaApi])
+  // const scrollPrev = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollPrev()
+  //   }
+  // }, [emblaApi])
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollNext()
-    }
-  }, [emblaApi])
+  // const scrollNext = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollNext()
+  //   }
+  // }, [emblaApi])
 
-  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
+  // const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return
@@ -212,31 +219,31 @@ const ResumeView = ({ userDetail, lang }: any) => {
       })
   }
 
-  const handleDownloadResume = (type) => {
-    const sourcePath = process.env.DOCUMENT_GENERATOR_URL
+  // const handleDownloadResume = (type) => {
+  //   const sourcePath = process.env.DOCUMENT_GENERATOR_URL
 
-    switch (type) {
-      case 'corporate':
-        // TODO: replace this with user's corporate resume
-        window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      case 'creative':
-        // TODO: replace this with user's creative resume
-        window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      default:
-        break
-    }
-  }
+  //   switch (type) {
+  //     case 'corporate':
+  //       // TODO: replace this with user's corporate resume
+  //       window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     case 'creative':
+  //       // TODO: replace this with user's creative resume
+  //       window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }
 
-  const onTemplateHover = (type, boolean) => {
-    if (width > 799) {
-      setIsTemplateDownloadable({
-        ...initialDownloadState,
-        [type]: boolean
-      })
-    }
-  }
+  // const onTemplateHover = (type, boolean) => {
+  //   if (width > 799) {
+  //     setIsTemplateDownloadable({
+  //       ...initialDownloadState,
+  //       [type]: boolean
+  //     })
+  //   }
+  // }
 
   function dataURLtoFile(dataurl, filename) {
     const arr = dataurl.split(',');
@@ -313,8 +320,21 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const handleCloseVideo = () => {
     setPlayVideo(false)
   }
+  const getResumeTemplateList = async () => {
+    try {
+      const result = await resumeTemplateList()
+      if (result?.data?.data?.resume_templates) {
+        setResumeTemplate(result?.data?.data?.resume_templates)
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
   useEffect(() => {
     videoResumesList()
+    getResumeTemplateList()
   }, [])
 
   const playVideoRef = useCallback(el => {
@@ -333,6 +353,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
+
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -381,12 +402,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         </div>
         <p style={{ color: '#7d7d7d' }}>{transitions.videoResume.descTips}</p>
         <div className={styles.videoResumeContainer}>
-          {videoResumeList?.length && <VideoResumeList
+          {Boolean(videoResumeList?.length) && <VideoResumeList
             data={videoResumeList}
             handlePlayVideo={handlePlayVideo}
             handleDeleteVideo={handleDeleteVideo}
           />}
-          {videoResumeList?.length < 3 && <UploadVideoResumeButton
+          {Boolean(videoResumeList?.length < 3) && <UploadVideoResumeButton
             uploading={uploading}
             uploadInputRef={uploadInputRef}
             handleUploadVideoChange={handleUploadVideoChange}
@@ -402,7 +423,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.preview_subtitle}>
           {transitions.bossjob.tips}
         </div>
-        <div className={styles.resumePreview}>
+        {/* <div className={styles.resumePreview}>
           <div className={styles.embla}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
@@ -537,8 +558,57 @@ const ResumeView = ({ userDetail, lang }: any) => {
               ))}
             </div>
           </div>
+        </div> */}
+        <div className={styles.resumePreview}>
+          {resumeTemplate?.map(item => (
+            <div className={styles.item} key={item.id}>
+              <div className={styles.cover}>
+                <Button variant="contained" className={styles.button} >Select Template</Button>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => setLightBox(state => ({
+                    ...state,
+                    isOpen: true
+                  }))
+                  }>
+                  Preview
+                </Button>
+
+              </div>
+              <img src={item.preview_picture} alt={item.name} />
+            </div>
+          ))}
+
         </div>
       </div>
+      {lightBox.isOpen && (
+        <Lightbox
+          mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
+          nextSrc={resumeTemplate[(lightBox.photoIndex + 1) % resumeTemplate.length].preview_picture}
+          prevSrc={resumeTemplate[(lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length].preview_picture}
+          onCloseRequest={() =>
+            setLightBox(state => ({
+              ...state,
+              isOpen: false
+            }))
+          }
+          onMovePrevRequest={() =>
+            setLightBox(state => ({
+              ...state,
+              photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
+            }))
+
+          }
+          onMoveNextRequest={() =>
+            setLightBox(state => ({
+              ...state,
+              photoIndex: (state.photoIndex + 1) % resumeTemplate.length
+            }))
+
+          }
+        />
+      )}
       {/* exceed the limit */}
       <SnackbarTips
         show={isExceedLimit}

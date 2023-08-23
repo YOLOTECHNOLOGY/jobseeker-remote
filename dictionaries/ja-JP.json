@@ -834,7 +834,7 @@
           "error": "履歴書の削除に失敗しました"
         },
         "bossjob": {
-          "title": "Bossjob履歴書",
+          "title": "Bossjob resume template",
           "tips": "Bossjobでプロフィールを作成すると、履歴書が自動的に作成されます。利用可能なテンプレートから選択し、新しく改善された履歴書を使用してBossjobの求人に応募することができます。",
           "download": "ダウンロード"
         },
@@ -1061,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "{{time}}後に面接結果をリクエストできます",
+    "requestAfter": "You can request interview result after {{time}}",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
