@@ -40,6 +40,7 @@ const loginForEmail = (props: IProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const pathname = usePathname()
   const emailRef = useRef(null)
+  const cfTokenRef = useRef(null)
   const isDisableRef = useRef(null)
 
   useEffect(() => {
@@ -50,6 +51,11 @@ const loginForEmail = (props: IProps) => {
       emailRef.current = email
     }
   }, [email])
+  useEffect(() => {
+    if (cfToken) {
+      cfTokenRef.current = cfToken
+    }
+  }, [cfToken])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -58,12 +64,12 @@ const loginForEmail = (props: IProps) => {
 
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
-      sendOpt()
+      sendOtp()
     }
   }
 
-  const sendOpt = () => {
-    if (cfToken === "") {
+  const sendOtp = () => {
+    if (cfTokenRef.current === "") {
       dispatch(
         displayNotification({
           open: true,
@@ -74,7 +80,7 @@ const loginForEmail = (props: IProps) => {
       return 
     }
     setLoading(true)
-    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken})
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current})
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if (isModal) {
@@ -153,7 +159,7 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
         <Turnstile
@@ -164,15 +170,7 @@ const loginForEmail = (props: IProps) => {
             setCfToken(token)
           }}
           onError={() => {
-            setCfToken('')
-            turnstile.reset()
-          }}
-          onExpire={() => {
-            setCfToken('')
-            turnstile.reset()
-          }}
-          onLoad={() => {
-            setCfToken('')
+            // setCfToken('')
             turnstile.reset()
           }}
         />
