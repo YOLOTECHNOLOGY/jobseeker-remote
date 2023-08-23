@@ -14,7 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-import Turnstile, { useTurnstile } from "react-turnstile";
+import Turnstile, { useTurnstile } from "react-turnstile"
 
 interface IProps {
   lang: any
@@ -26,7 +26,7 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const turnstile = useTurnstile();
+  const turnstile = useTurnstile()
 
   const {
     lang: { newGetStarted, errorcode },
@@ -73,7 +73,7 @@ const loginForEmail = (props: IProps) => {
       dispatch(
         displayNotification({
           open: true,
-          message: "Please complete the CAPTCHA verification.",
+          message: "Please try again later.",
           severity: 'error'
         })
       )
