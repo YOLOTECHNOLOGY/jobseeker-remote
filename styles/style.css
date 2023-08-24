@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'bossjob';
-  src:  url('fonts/bossjob.eot?vnaid0');
-  src:  url('fonts/bossjob.eot?vnaid0#iefix') format('embedded-opentype'),
+  src: url('fonts/bossjob.eot?vnaid0');
+  src: url('fonts/bossjob.eot?vnaid0#iefix') format('embedded-opentype'),
     url('fonts/bossjob.ttf?vnaid0') format('truetype'),
     url('fonts/bossjob.woff?vnaid0') format('woff'),
     url('fonts/bossjob.svg?vnaid0#bossjob') format('svg');
@@ -10,7 +10,8 @@
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'bossjob' !important;
   speak: never;
@@ -26,87 +27,87 @@
 }
 
 .icon-apple:before {
-  content: "\e910";
+  content: '\e910';
 }
 .icon-email:before {
-  content: "\e911";
+  content: '\e911';
 }
 .icon-facebook:before {
-  content: "\e912";
+  content: '\e912';
 }
 .icon-google:before {
-  content: "\e913";
+  content: '\e913';
 }
 .icon-googlecolor .path1:before {
-  content: "\e914";
+  content: '\e914';
   color: rgb(66, 133, 244);
 }
 .icon-googlecolor .path2:before {
-  content: "\e915";
+  content: '\e915';
   margin-left: -1em;
   color: rgb(52, 168, 83);
 }
 .icon-googlecolor .path3:before {
-  content: "\e916";
+  content: '\e916';
   margin-left: -1em;
   color: rgb(251, 188, 5);
 }
 .icon-googlecolor .path4:before {
-  content: "\e917";
+  content: '\e917';
   margin-left: -1em;
   color: rgb(234, 67, 53);
 }
 .icon-phone:before {
-  content: "\e918";
+  content: '\e918';
 }
 .icon-Homebased:before {
-  content: "\e902";
+  content: '\e902';
 }
 .icon-Bachelor:before {
-  content: "\e903";
+  content: '\e903';
 }
 .icon-bpo:before {
-  content: "\e904";
+  content: '\e904';
 }
 .icon-years:before {
-  content: "\e905";
+  content: '\e905';
 }
 .icon-search:before {
-  content: "\e906";
+  content: '\e906';
 }
 .icon-in:before {
-  content: "\e907";
+  content: '\e907';
 }
 .icon-Icon-2:before {
-  content: "\e908";
+  content: '\e908';
 }
 .icon-youtube:before {
-  content: "\e909";
+  content: '\e909';
 }
 .icon-tw:before {
-  content: "\e90a";
+  content: '\e90a';
 }
 .icon-Icon:before {
-  content: "\e90b";
+  content: '\e90b';
 }
 .icon-full-time:before {
-  content: "\e90c";
+  content: '\e90c';
 }
 .icon-Share:before {
-  content: "\e90d";
+  content: '\e90d';
 }
 .icon-Icons111:before {
-  content: "\e90e";
+  content: '\e90e';
 }
 .icon-save:before {
-  content: "\e90f";
+  content: '\e90f';
 }
 .icon-chat:before {
-  content: "\e92f";
+  content: '\e92f';
 }
 .icon-windows:before {
-  content: "\e900";
+  content: '\e900';
 }
 .icon-appqr:before {
-  content: "\e901";
+  content: '\e901';
 }

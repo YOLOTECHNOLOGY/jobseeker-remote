@@ -31,13 +31,13 @@ export default async function PublicLayout(props: any) {
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
-        <link
+        {/* <link
           rel="preload"
           href="/font/product-sans/ProductSans-Regular.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
-        />
+        /> */}
         <link
           rel="preload"
           href="/font/product-sans/ProductSansBold.ttf"
