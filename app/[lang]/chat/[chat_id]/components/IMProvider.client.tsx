@@ -329,6 +329,12 @@ const IMProvider = ({ children, lang }: any) => {
             dispatch(fetchUserOwnDetailRequest({ accessToken }))
         },
         handleError(e) {
+            if (e?.response?.data?.code) {
+                const message = translate('' + e?.response?.data?.code) || e?.response?.data?.message
+                contextRef.current?.showToast?.('error', message)
+                return
+            }
+
             const content = errorParser(e)
             if (typeof content === 'string') {
                 contextRef.current?.showToast?.('error', content)
