@@ -12,6 +12,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { useRouter } from 'next/navigation'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import { cfKey } from 'helpers/cookies'
 const verifyEmail = function (props) {
   const { isModal, lang, loginData, setStep, handleBackClick } = props
   const { newGetStarted } = lang
@@ -64,6 +65,7 @@ const verifyEmail = function (props) {
     }
   }, [email])
 
+
   useEffect(() => {
     setUserId(userId)
   }, [userId])
@@ -85,8 +87,9 @@ const verifyEmail = function (props) {
   }
 
   const sendOpt = () => {
+    const cfToken = sessionStorage.getItem(cfKey)
     dispatch(jobbseekersLoginFailed({}))
-    authenticationSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({ email, cf_token: cfToken })
       .then(() => {
         setNumber(new Date().getTime())
         dispatch(

@@ -9,6 +9,11 @@ export const redirectUrl = 'redirectUrl'
 export const sourceKey = 'source' // track source
 export const configKey = 'geoConfiguration'
 
+
+// session keys
+export const cfKey = 'cfKey';
+
+
 const cookies = new Cookies()
 
 export const setCookie = (cookieName, data, expireTime) => {

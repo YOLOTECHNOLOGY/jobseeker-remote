@@ -21,6 +21,7 @@ import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
 import { countryForPhoneCode } from 'helpers/country'
 import Turnstile, { useTurnstile } from "react-turnstile"
+import { cfKey } from 'helpers/cookies'
 
 const LoginForPhone = (props: any) => {
   const turnstile = useTurnstile()
@@ -90,15 +91,16 @@ const LoginForPhone = (props: any) => {
   }, [phoneNumber])
 
   const sendOpt = () => {
-    if (cfTokenRef.current === "") {
-      dispatch(
-        displayNotification({
-          open: true,
-          message: "Please try again later.",
-          severity: 'error'
-        })
-      )
-      return 
+    if (!cfTokenRef.current) {
+      return
+      // dispatch(
+      //   displayNotification({
+      //     open: true,
+      //     message: "Please try again later.",
+      //     severity: 'error'
+      //   })
+      // )
+      // return 
     }
     const phoneNum = countryValue + phoneNumberRef.current
     setLoading(true)
@@ -181,29 +183,30 @@ const LoginForPhone = (props: any) => {
           />
         </div>
         {
-          !cfToken && <div style={{marginTop:20,display:'flex',justifyContent:'center', alignItems:'center',position:'relative',height:60}}>
-          <CircularProgress color={'primary'} size={30} 
-          style={{position:'absolute'}}
-          />
-          <Turnstile
-            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
-            theme='light'
-            appearance='always'
-            // appearance='interaction-only' // invisible managed challenge
-            onVerify={(token) => {
-              setTimeout(() => {
-                setCfToken(token)
-              }, 1000)
-            }}
-            onError={() => {
-              turnstile?.reset()
-            }}
-            style={{position:'relative',zIndex:2}}
-          />
+          !cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+            <CircularProgress color={'primary'} size={30}
+              style={{ position: 'absolute' }}
+            />
+            <Turnstile
+              sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+              theme='light'
+              appearance='always'
+              // appearance='interaction-only' // invisible managed challenge
+              onVerify={(token) => {
+                setTimeout(() => {
+                  setCfToken(token)
+                  sessionStorage.setItem(cfKey, token)
+                }, 1000)
+              }}
+              onError={() => {
+                turnstile?.reset()
+              }}
+              style={{ position: 'relative', zIndex: 2 }}
+            />
           </div>
 
         }
-       {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>}
 
