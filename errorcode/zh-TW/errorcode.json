@@ -233,6 +233,8 @@
   "41250": "無效的波場（TRC20）地址",
   "41251": "無效的以太坊（ERC20）地址",
   "41252": "查詢超過限制",
+  "41253": "Ensure that there are no more than 10 digits before the decimal point",
+  "41254": "Resume templates cannot exceed 5 copies",
   "48905": "該電子郵件已被註冊",
   "50001": "內部服務器錯誤",
   "50002": "上傳簡歷失敗",
