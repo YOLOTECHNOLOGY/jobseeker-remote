@@ -70,9 +70,22 @@
     width: 255px;
     height: 360px;
     margin: 0 19px 19px 0;
-    .cover {
+    .vipMark {
       position: absolute;
       top: 0;
+      left: 0;
+      z-index: 10;
+      padding: 2px 8px;
+      line-height: 1;
+      border-radius: 3px 0 14px 0;
+      background: linear-gradient(133deg, #fff2a3 0%, #ffc046 100%);
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 700;
+    }
+    .cover {
+      position: absolute;
+      top: 300px;
       left: 0;
       right: 0;
       bottom: 0;
@@ -81,6 +94,7 @@
       justify-content: center;
       border-radius: 4px;
       visibility: hidden;
+      transition: 0.1s linear top;
       .button {
         text-transform: capitalize;
         margin: 15px auto 0;
@@ -100,6 +114,7 @@
       .cover {
         visibility: visible;
         background: rgba(0, 0, 0, 0.4);
+        top: 0;
       }
     }
   }
@@ -553,6 +568,7 @@
     align-items: center;
     justify-content: center;
     position: fixed;
+    z-index: 1000;
     top: 0;
     right: 0;
     left: 0;

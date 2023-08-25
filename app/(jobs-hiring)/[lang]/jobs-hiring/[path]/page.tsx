@@ -18,6 +18,7 @@ import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
 import ExcellentResumeBanner from './components/excellentResume'
+import VipActivity from './components/vipActivity'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -94,13 +95,14 @@ const Main = async (props: any) => {
 
             {/* right */}
             <div className={styles.rightContent}>
-
               <UploadResumeButton
                 text={search.uploadResume}
                 isShowBtn={!accessToken}
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
               />
+              <VipActivity />
+
               <ExcellentResumeBanner />
               <SearchHistory
                 location={location}

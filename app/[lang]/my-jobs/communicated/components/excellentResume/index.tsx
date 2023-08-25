@@ -7,6 +7,7 @@ const ExcellentResumeBanner = () => {
   const container = useRef()
 
   useEffect(() => {
+    alert('')
     Lottie.loadAnimation({
       container: container.current,
       renderer: 'svg',

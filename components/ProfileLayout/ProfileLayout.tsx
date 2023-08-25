@@ -71,7 +71,8 @@ const ProfileLayout = ({
     working_since,
     address,
     location_id,
-    vip
+    vip,
+    referral_code
   } = userDetail
 
   const handleShowModal = () => {
@@ -113,6 +114,7 @@ const ProfileLayout = ({
             working_since={working_since}
             address={address}
             vip={vip}
+            referral_code={referral_code}
             handleEditClick={handleEditClick}
             lang={dic}
           />

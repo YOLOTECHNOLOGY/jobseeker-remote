@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -108,7 +108,7 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
     <div className={styles.videoCoverWrap}>
       <img src={CloseIcon} alt="" width="20" height="20" onClick={handleCloseVideo} />
       <div className={styles.videoCover}>
-        <video ref={playVideoRef} width="900" height="570" controls />
+        <video ref={playVideoRef} width="960" height="580" controls />
       </div>
     </div>
   )
@@ -353,7 +353,16 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
-
+  const getResumeTemplateHostRef = useRef('')
+  if (process.env.NODE_ENV === 'production') {
+    getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
+  }
+  else if (process.env.NODE_ENV === 'development') {
+    getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
+  }
+  else {
+    getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
+  }
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -562,8 +571,15 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.resumePreview}>
           {resumeTemplate?.map((item, index) => (
             <div className={styles.item} key={item.id}>
+              {Boolean(item.is_vip) && <span className={styles.vipMark}>VIP</span>}
               <div className={styles.cover}>
-                <Button variant="contained" className={styles.button} >Select Template</Button>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => window.open(`${getResumeTemplateHostRef.current}resume-edit/${item.id}`)}
+                >
+                  Select Template
+                </Button>
                 <Button
                   variant="contained"
                   className={styles.button}
@@ -594,20 +610,20 @@ const ResumeView = ({ userDetail, lang }: any) => {
                 isOpen: false
               }))
             }
-            onMovePrevRequest={() =>
-              setLightBox(state => ({
-                ...state,
-                photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
-              }))
+          // onMovePrevRequest={() =>
+          //   setLightBox(state => ({
+          //     ...state,
+          //     photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
+          //   }))
 
-            }
-            onMoveNextRequest={() =>
-              setLightBox(state => ({
-                ...state,
-                photoIndex: (state.photoIndex + 1) % resumeTemplate.length
-              }))
+          // }
+          // onMoveNextRequest={() =>
+          //   setLightBox(state => ({
+          //     ...state,
+          //     photoIndex: (state.photoIndex + 1) % resumeTemplate.length
+          //   }))
 
-            }
+          // }
           />
         )
       }

@@ -5,6 +5,7 @@ import { fetchResumes } from 'store/services/jobs/fetchJobsCommunicated'
 import { cookies } from 'next/headers'
 import styles from '../index.module.scss'
 import ExcellentResumeBanner from './excellentResume'
+// import VipActivity from './vipActivity'
 
 async function getResumes(accessToken) {
   const res = await fetchResumes({ accessToken })
@@ -22,6 +23,7 @@ export default async function Page(props) {
       <InterestedMe {...props} />
       {/* @ts-expect-error Async Server Component */}
       <ViewedMe {...props} />
+      {/* <VipActivity /> */}
       <ExcellentResumeBanner />
     </div>
   )

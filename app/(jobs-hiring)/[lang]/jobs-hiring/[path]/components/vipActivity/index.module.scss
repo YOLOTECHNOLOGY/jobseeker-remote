@@ -1,0 +1,36 @@
+@import 'styles/mixins.scss';
+@import 'styles/variable.scss';
+.vipImage {
+  position: relative;
+  // margin-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  .btn {
+    position: absolute;
+    top: 33px;
+    left: 12px;
+    border-radius: 4px;
+    height: 23px;
+    background: linear-gradient(91deg, #fff4cb 0%, #ffe272 100%);
+    text-transform: capitalize;
+    box-shadow: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: #346ae3;
+  }
+  .desc {
+    position: absolute;
+    left: 12px;
+    top: 63px;
+    width: 147px;
+    line-height: 19px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  img {
+    width: 100%;
+    max-width: 100% !important;
+    height: auto;
+  }
+}
