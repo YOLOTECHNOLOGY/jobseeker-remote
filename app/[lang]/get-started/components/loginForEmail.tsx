@@ -14,7 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-import Turnstile, { useTurnstile } from "react-turnstile"
+import Turnstile, { useTurnstile } from 'react-turnstile'
 
 interface IProps {
   lang: any
@@ -69,11 +69,11 @@ const loginForEmail = (props: IProps) => {
   }
 
   const sendOtp = () => {
-    if (cfTokenRef.current === "") {
+    if (cfTokenRef.current === '') {
       dispatch(
         displayNotification({
           open: true,
-          message: "Please try again later.",
+          message: 'Please try again later.',
           severity: 'error'
         })
       )
@@ -159,21 +159,34 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
+        {
+        Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
-        <Turnstile
+        }
+       {!cfToken && <div style={{marginTop:20,display:'flex',justifyContent:'center', alignItems:'center',position:'relative',height:60}}>
+        <CircularProgress color={'primary'} size={30} 
+        style={{position:'absolute'}}
+        />
+         <Turnstile
           sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
           theme='light'
-          appearance='interaction-only' // invisible managed challenge
+          appearance='always'
+          // appearance='interaction-only' // invisible managed challenge
           onVerify={(token) => {
-            setCfToken(token)
+            setTimeout(() => {
+              setCfToken(token)
+            }, 1000)
           }}
-          onError={() => {
+          onError={(error) => {
+            console.log('error token',error)
             // setCfToken('')
-            turnstile.reset()
+            turnstile?.reset()
           }}
+          style={{position:'relative',zIndex:2}}
         />
+        </div>
+        }
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

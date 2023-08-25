@@ -180,20 +180,32 @@ const LoginForPhone = (props: any) => {
             setDisable={setDisable}
           />
         </div>
-        <Turnstile
-          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
-          theme='light'
-          appearance='interaction-only' // invisible managed challenge
-          onVerify={(token) => {
-            setCfToken(token)
-          }}
-          onError={() => {
-            turnstile.reset()
-          }}
-        />
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        {
+          !cfToken && <div style={{marginTop:20,display:'flex',justifyContent:'center', alignItems:'center',position:'relative',height:60}}>
+          <CircularProgress color={'primary'} size={30} 
+          style={{position:'absolute'}}
+          />
+          <Turnstile
+            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+            theme='light'
+            appearance='always'
+            // appearance='interaction-only' // invisible managed challenge
+            onVerify={(token) => {
+              setTimeout(() => {
+                setCfToken(token)
+              }, 1000)
+            }}
+            onError={() => {
+              turnstile?.reset()
+            }}
+            style={{position:'relative',zIndex:2}}
+          />
+          </div>
+
+        }
+       {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>
+        </button>}
 
         <p
           className={styles.msg}
