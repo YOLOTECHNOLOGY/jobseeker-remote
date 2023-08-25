@@ -221,11 +221,7 @@ const IMProvider = ({ children, lang }: any) => {
         updateChatListRef.current = updateChatList
         updateChatList()
     }, [updateChatList])
-    useEffect(() => {
-        if (lang) {
-            // IMManager?.setCurrentLanguage?.(lang)
-        }
-    }, [lang])
+
     useEffect(() => {
         if (userId && accessToken) {
             IMManager.accessUser(
