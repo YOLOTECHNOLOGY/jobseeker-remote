@@ -860,6 +860,12 @@
           "resumeHasBeenRenameSuccessfully": "簡歷重命名成功",
           "resumeHasBeenSentToYourEmailSuccessfully": "簡歷已成功發送到您的郵箱",
           "resumeHasBeenDeletedSuccessfully": "簡歷刪除成功"
+        },
+        "videoResume": {
+          "title": "視頻簡歷",
+          "descTips": "視頻格式MP4，3分鐘以內",
+          "confirmDesc": "刪除的視頻以後將無法找回，您確定嗎？",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
@@ -1055,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面試官索要結果",
     "requestResult": "索要面試結果",
-    "requestAfter": "在 {{time}} 之後可以向面試官索要結果",
+    "requestAfter": "面試結束後，你可以向面試官索取結果",
     "title": "來自企業 {{companyName}} 的面試",
     "buttonText": "完成",
     "notAttend": "您沒有參加面試",
@@ -1342,6 +1348,7 @@
     "hk": "香港",
     "tw": "台灣",
     "mo": "澳門",
+    "my": "Malaysia",
     "siteName": "Bossjob - {{country}}最有效率的求職平台，AI匹配工作，在線和老板開聊，一天內入職新工作！",
     "metaDescription": "Bossjob - {{country}}最有效率的求職平台，AI匹配工作，在線和老板開聊，一天內入職新工作！",
     "jobSearch": {

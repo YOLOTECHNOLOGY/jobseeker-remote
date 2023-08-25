@@ -14,7 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-import Turnstile, { useTurnstile } from "react-turnstile";
+import Turnstile, { useTurnstile } from 'react-turnstile'
 
 interface IProps {
   lang: any
@@ -26,7 +26,7 @@ interface IProps {
 const loginForEmail = (props: IProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const turnstile = useTurnstile();
+  const turnstile = useTurnstile()
 
   const {
     lang: { newGetStarted, errorcode },
@@ -40,6 +40,7 @@ const loginForEmail = (props: IProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const pathname = usePathname()
   const emailRef = useRef(null)
+  const cfTokenRef = useRef(null)
   const isDisableRef = useRef(null)
 
   useEffect(() => {
@@ -50,6 +51,11 @@ const loginForEmail = (props: IProps) => {
       emailRef.current = email
     }
   }, [email])
+  useEffect(() => {
+    if (cfToken) {
+      cfTokenRef.current = cfToken
+    }
+  }, [cfToken])
 
   useEffect(() => {
     window.addEventListener('keydown', handleOnKeyDownEnter)
@@ -58,23 +64,23 @@ const loginForEmail = (props: IProps) => {
 
   const handleOnKeyDownEnter = (e) => {
     if (e.key === 'Enter' && e.keyCode === 13 && !isDisableRef.current) {
-      sendOpt()
+      sendOtp()
     }
   }
 
-  const sendOpt = () => {
-    if (cfToken === "") {
+  const sendOtp = () => {
+    if (cfTokenRef.current === '') {
       dispatch(
         displayNotification({
           open: true,
-          message: "Please complete the CAPTCHA verification.",
+          message: 'Please try again later.',
           severity: 'error'
         })
       )
       return 
     }
     setLoading(true)
-    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken})
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current})
       .then((res) => {
         const { user_id, avatar } = res?.data?.data ?? {}
         if (isModal) {
@@ -153,21 +159,34 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        {
+        Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
-        <div style={{ marginTop: 20 }}>
-          <Turnstile
-            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '3x00000000000000000000FF'}
-            theme='light'
-            onVerify={(token) => {
+        }
+       {!cfToken && <div style={{marginTop:20,display:'flex',justifyContent:'center', alignItems:'center',position:'relative',height:60}}>
+        <CircularProgress color={'primary'} size={30} 
+        style={{position:'absolute'}}
+        />
+         <Turnstile
+          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+          theme='light'
+          appearance='always'
+          // appearance='interaction-only' // invisible managed challenge
+          onVerify={(token) => {
+            setTimeout(() => {
               setCfToken(token)
-            }}
-            onError={() => {
-              setCfToken('')
-            }}
-          />
+            }, 1000)
+          }}
+          onError={(error) => {
+            console.log('error token',error)
+            // setCfToken('')
+            turnstile?.reset()
+          }}
+          style={{position:'relative',zIndex:2}}
+        />
         </div>
+        }
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

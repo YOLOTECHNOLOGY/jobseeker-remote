@@ -96,13 +96,13 @@ const DetailModal = (props: any) => {
             {
                 title: dic.inProgressText,
                 label: dic.inProgressLabel,
-                isFinish: isStatusIn(['Completed']),
+                isFinish: data?.is_reported,
                 // isFinish: data?.data?.is_reported,
-                active: !isStatusIn(['Completed']),
+                active: !isStatusIn(['Pending', 'Not accepted']),
                 show: true,
                 actionName: data?.is_reported ? dic.issueReported : dic.reportIssue,
-                actionEnable: isStatusIn(['In progress'])
-                    && (data?.jobseeker_mark_jobseeker_attended || !!data.checked_in_at)
+                actionEnable: !isStatusIn(['Pending', 'Not accepted'])
+                    && (data?.jobseeker_mark_jobseeker_attended || !!data?.checked_in_at)
                     && !data?.is_reported,
                 action: () => actionsRef.current?.reportIssue?.({
                     applicationId,
@@ -115,10 +115,9 @@ const DetailModal = (props: any) => {
                 isFinish: isStatusIn(['Completed']),
                 active: true,
                 show: true,
-                actionName: checkInTimeover ? (data?.requested_result_at ?
-                    (data?.interview_result ? data?.interview_result : dic.requestResult)
-                    : dic.requestResult) : formatTemplateString(dic.requestAfter, moment(data?.interviewed_at).add(30, 'minutes').format('MM-DD HH:mm')),
-                actionEnable: !data?.requested_result_at && checkInTimeover,
+                actionName: data?.interview_result ? data?.interview_result :
+                    (isStatusIn(['Completed']) ? dic.requestResult : dic.requestAfter),
+                actionEnable: isStatusIn(['Completed']) && !data?.interview_result,
                 action: () => actionsRef.current?.askResult?.()
             }
         ].filter(item => item.show)

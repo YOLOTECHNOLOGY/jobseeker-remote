@@ -1,31 +1,81 @@
 'use client'
+import React, { useEffect } from 'react'
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { isMobile } from 'react-device-detect'
+
+import SearchIcon from '@mui/icons-material/Search'
 
 import { Button } from 'app/components/MUIs'
 import { LocationContext } from 'app/components/providers/locationProvier'
 import MaterialLocationField from 'components/MaterialLocationField'
 import MaterialTextField from 'components/MaterialTextField'
-import SearchIcon from '@mui/icons-material/Search'
+import { languageContext } from 'app/components/providers/languageProvider'
 
 import { buildQuery } from 'app/(main-page)/helper'
+import { accessToken } from 'helpers/cookies'
+import { getCookie } from 'helpers/cookies'
+import { getDeviceUuid } from 'helpers/guest'
+
+import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
 
 import styles from '../../../page.module.scss'
-import { languageContext } from 'app/components/providers/languageProvider'
-import React from 'react'
 
-const Search = () => {
+type pagePropsType = {
+  jobId?: number
+}
+
+const Search = ({ jobId }: pagePropsType) => {
   const {
     jobDetail: { content }
   } = useContext(languageContext) as any
+  
   const router = useRouter()
-  const { location, setLocation } = useContext(LocationContext)
+  const token = getCookie(accessToken)
+  const recoFrom = getCookie('reco_from') ?? null
+  const source = getCookie('source') ?? null
+  const pref_job_title_id = getCookie('pref_job_title_id') ?? null
 
+  const { location, setLocation } = useContext(LocationContext)
   const [searchValue, setSearchValue] = useState<string>('')
+
+  useEffect( () => {
+    if (jobId) {
+      handleFetchAddJobViewService()
+    }
+  }, [jobId])
 
   const handleUpdatePath = () => {
     const path = buildQuery(location?.value, searchValue)
     router.push(path)
+  }
+
+  const handleFetchAddJobViewService = async () => {
+    const query = {
+      jobId,
+      status: 'public',
+      serverAccessToken: null
+    }
+
+    if (token) {
+      query.status = token ? 'protected' : 'public'
+      query.serverAccessToken = token ?? null
+    }
+    const deviceUuid = await getDeviceUuid()
+    const tokenData = {
+      source: source ? source : 'job_search',
+      device: isMobile ? 'mobile_web' : 'web',
+      reco_from: recoFrom ? recoFrom : null,
+      device_udid: deviceUuid,
+      job_title_id:pref_job_title_id
+    }
+    const params = Object.assign(query, tokenData)
+
+    try {
+      fetchAddJobViewService(params)
+    } catch (error) {
+      //
+    }
   }
 
   return (

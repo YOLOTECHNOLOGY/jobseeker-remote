@@ -851,6 +851,12 @@
           "resumeHasBeenRenameSuccessfully": "Resume has been rename successfully",
           "resumeHasBeenSentToYourEmailSuccessfully": "Resume has been sent to your email successfully",
           "resumeHasBeenDeletedSuccessfully": "Resume has been deleted successfully"
+        },
+        "videoResume": {
+          "title": "Self - introduction videos",
+          "descTips": "Video format MP4, time control within 3 minutes",
+          "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?",
+          "confirmTitle": "Remove video resume"
         }
       }
     }
@@ -1042,7 +1048,7 @@
     "finishedText": "Finished",
     "finishedLabel": "You can request interview result from the recruiter",
     "requestResult": "Requested for results",
-    "requestAfter": "You can request interview result after {{time}}",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "Interview Invitation from {{companyName}}",
     "buttonText": "Done",
     "notAttend": "You did not attend the interview.",

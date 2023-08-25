@@ -93,6 +93,21 @@ const countryCounfig = [
     currency: 'ntd',
     id: 211
   },
+  {
+    name: 'Malaysia',
+    key: 'my',
+    url: 'bossjob.my',
+    defaultLocation: {
+      id: 2918,
+      is_popular: false,
+      key: "kuala_lumpur",
+      region_display_name: "Kuala Lumpur",
+      seo_value: "kuala_lumpur",
+      value: "Kuala Lumpur",
+    },
+    currency: 'myr',
+    id: 127
+  },
   // {
   //   name: 'Macau',
   //   key: 'mo',
@@ -115,14 +130,16 @@ export const languages = [
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
   { value: 'ja-JP', id: 4, label: '日本語' },
-  { value: 'zh-TW', id: 5, label: '中文(繁體)' }
+  { value: 'zh-TW', id: 5, label: '中文(繁體)' },
+  // { value: 'ms-MY', id: 5, label: 'Bahasa Malaysia' }
 ]
 export const serverContryCodeMap = {
   'en-US': 'en',
   'zh-CN': 'zh-CN',
   'id-ID': 'id',
   'ja-JP': 'ja',
-  'zh-TW': 'zh-TW'
+  'zh-TW': 'zh-TW',
+  'ms-MY': 'ms',
 }
 
 export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey

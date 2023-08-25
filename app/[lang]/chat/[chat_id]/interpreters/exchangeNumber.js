@@ -111,6 +111,7 @@ export default command => command.cata({
         if (number) {
             window.location.href = 'tel://' + number
         }
+        return Promise.resolve()
     }),
     updateUser: () => M(context => {
         return new Promise(resolve => {
