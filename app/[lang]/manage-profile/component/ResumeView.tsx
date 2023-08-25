@@ -19,7 +19,8 @@ import {
   uploadVideoToAmazonService,
   getVideoResumeList,
   deleteVideoResume,
-  resumeTemplateList
+  resumeTemplateList,
+  publicResumeClick
 } from 'store/services/users/uploadUserResume'
 
 /* Components */
@@ -113,6 +114,7 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
     </div>
   )
 }
+
 
 
 const ResumeView = ({ userDetail, lang }: any) => {
@@ -364,6 +366,37 @@ const ResumeView = ({ userDetail, lang }: any) => {
     getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
   }
 
+  const handleSelectTemplate = (id, structure) => {
+    const userInfo = getCookie('user')
+    console.log('userInfo:', userInfo)
+    publicResumeClick({
+      public_template_id: id,
+      content: {
+        ...structure,
+        base_info: {
+          "avator": userInfo.avatar || '',
+          "first_name": userInfo.first_name || '',
+          "last_name": userInfo.last_name || '',
+          "degree": userInfo.degree || '',
+          "birthdate": userInfo.birthdate || '',
+          "phone": userInfo.phone_num || '',
+          "email": userInfo.email || '',
+          "job_title": userInfo.job_title || '',
+          "job_type": userInfo.job_type || '',
+          "desired_industy": userInfo.desired_industy || '',
+          "availability": userInfo.availability || '',
+          "current_location": userInfo.current_location || '',
+          "desired_location": userInfo.desired_location || ''
+        }
+      }
+
+    }).then(res => {
+      if (res.data.code === 0) {
+        window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+      }
+    })
+  }
+
   return (
     <div className={styles.tab_content_wrapper}>
       <div className={styles.sectionContainer}>
@@ -576,7 +609,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                 <Button
                   variant="contained"
                   className={styles.button}
-                  onClick={() => window.open(`${getResumeTemplateHostRef.current}resume-edit/${item.id}`)}
+                  onClick={() => handleSelectTemplate(item.id, item.structure)}
                 >
                   Select Template
                 </Button>
@@ -602,28 +635,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         lightBox.isOpen && (
           <Lightbox
             mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
-            // nextSrc={resumeTemplate[(lightBox.photoIndex + 1) % resumeTemplate.length].preview_picture}
-            // prevSrc={resumeTemplate[(lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length].preview_picture}
             onCloseRequest={() =>
               setLightBox(state => ({
                 ...state,
                 isOpen: false
               }))
             }
-          // onMovePrevRequest={() =>
-          //   setLightBox(state => ({
-          //     ...state,
-          //     photoIndex: (lightBox.photoIndex + resumeTemplate.length - 1) % resumeTemplate.length
-          //   }))
-
-          // }
-          // onMoveNextRequest={() =>
-          //   setLightBox(state => ({
-          //     ...state,
-          //     photoIndex: (state.photoIndex + 1) % resumeTemplate.length
-          //   }))
-
-          // }
           />
         )
       }

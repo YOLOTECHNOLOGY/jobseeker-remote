@@ -13,6 +13,7 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+
 function PhoneCode(props: any) {
   const {
     lang: { newGetStarted },
@@ -55,6 +56,8 @@ function PhoneCode(props: any) {
 
   let uuid = localStorage.getItem('uuid')
   const router = useRouter()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -63,14 +66,14 @@ function PhoneCode(props: any) {
   useEffect(() => {
     if (!uuid) {
       const fpPromise = FingerprintJS.load()
-      ;(async () => {
-        // Get the visitor identifier when you need it.
-        const fp = await fpPromise
-        const result = await fp.get()
-        // This is the visitor identifier:
-        uuid = result.visitorId
-        localStorage.setItem('uuid', uuid)
-      })()
+        ; (async () => {
+          // Get the visitor identifier when you need it.
+          const fp = await fpPromise
+          const result = await fp.get()
+          // This is the visitor identifier:
+          uuid = result.visitorId
+          localStorage.setItem('uuid', uuid)
+        })()
     }
   }, [])
 
@@ -100,7 +103,7 @@ function PhoneCode(props: any) {
       if (uuid != browserId && browserId && email) {
         verifyPhoneFun(otp)
       } else {
-        handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
+        handleAuthenticationJobseekersLoginPhone(otp, phoneNum, referralCode || undefined, invitedSource || undefined)
       }
     }
   }

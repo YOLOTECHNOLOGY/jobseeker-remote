@@ -83,6 +83,14 @@ const resumeTemplateList = () => {
   return axios.get(URL)
 }
 
+const publicResumeClick = (data) => {
+  const axios = configuredAxios('resumeTemplate', 'protected')
+  const URL = '/jobseeker/public-resume-click'
+  return axios.post(URL, {
+    ...data
+  })
+}
+
 export {
   uploadUserResumeService,
   uploadVideoCover,
@@ -91,5 +99,6 @@ export {
   generatePresignedUrl,
   getVideoResumeList,
   deleteVideoResume,
-  resumeTemplateList
+  resumeTemplateList,
+  publicResumeClick
 }

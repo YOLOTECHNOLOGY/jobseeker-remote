@@ -28,6 +28,8 @@ const GoogleLogin = (props: IGoogle) => {
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const [init, setInit] = useState(false)
   const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   const query = {}
   for (const entry of searchParams.entries()) {
     query[entry[0]] = entry[1]
@@ -86,7 +88,9 @@ const GoogleLogin = (props: IGoogle) => {
       social_user_token: payload.accessToken,
       social_type: 'google',
       social_user_id: payload.userId,
-      source: isMobile ? 'mobile_web' : 'web'
+      source: isMobile ? 'mobile_web' : 'web',
+      referral_code: referralCode || undefined,
+      invited_source: invitedSource || undefined
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl
@@ -114,7 +118,6 @@ const GoogleLogin = (props: IGoogle) => {
           method: 'GET',
           path: 'https://www.googleapis.com/oauth2/v2/userinfo?fields=id,email,family_name,given_name,picture'
         })
-
         // Execute the API request.
         request.execute(function (response) {
           const payload = {

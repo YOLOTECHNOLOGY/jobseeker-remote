@@ -63,6 +63,7 @@ const Main = async (props: any) => {
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
+
   return (
     <>
       <div>
@@ -101,7 +102,7 @@ const Main = async (props: any) => {
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
               />
-              <VipActivity />
+              <VipActivity accessToken={accessToken} />
 
               <ExcellentResumeBanner />
               <SearchHistory
