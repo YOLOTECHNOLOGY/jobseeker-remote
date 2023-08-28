@@ -264,7 +264,8 @@
   min-height: 128px;
   background: #ffffff;
   border-radius: 8px;
-
+  height: 140px;
+  overflow: hidden;
   transition: all 0.3s linear;
   margin-bottom: 16px;
   border: 1px solid var(--neutral-color-border, #e5e6eb);

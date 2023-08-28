@@ -20,6 +20,7 @@ import "swiper/swiper.min.css";
 import { formatTemplateString } from 'helpers/formatter';
 import Lightbox from 'react-image-lightbox';
 import { MouseOverPopover } from 'app/components/popover/MouseOverPopover';
+import Tooltip from '@mui/material/Tooltip'
 
 
 interface Props extends React.PropsWithChildren<CompanyDetailsType> {
@@ -42,7 +43,7 @@ const CompanyInfo = (_props: Props) => {
 		props.company_business_info.name = _props.legal_name;
 		// @ts-ignore
 		props.turnover = config.turnover_lists.filter((_) => { return _.id === _props.turnover_id })[0]?.value;
-		props.company_business_info.company_type = config.company_types.find(_=> _.id === props.company_business_info.type_of_enterprise_id)?.value
+		props.company_business_info.company_type = config.company_types.find(_ => _.id === props.company_business_info.type_of_enterprise_id)?.value
 		// props.company_business_info.industry = _props.industry;
 	}
 	// @ts-ignore
@@ -132,7 +133,7 @@ const CompanyInfo = (_props: Props) => {
 		field: 'full_address'
 	}, {
 		name: overview.CompanyType,
-		field : 'company_type'
+		field: 'company_type'
 	}]
 
 	const listing_info = [
@@ -228,7 +229,7 @@ const CompanyInfo = (_props: Props) => {
 				return <>
 					<Section key={index} title={item.title} split={!noSplit}>
 						<div className={style.album_wrapper}>
-							
+
 							{
 								padArrayToMultiple(props.pictures
 									.sort((a, b) => a.sort_order - b.sort_order))(3)
@@ -244,19 +245,19 @@ const CompanyInfo = (_props: Props) => {
 						</div>
 					</Section>
 					{isOpenLightbox && (
-          <Lightbox
-            mainSrc={props.pictures[photoIndex].url}
-            nextSrc={props.pictures[(photoIndex + 1) % props.pictures.length].url}
-            prevSrc={props.pictures[(photoIndex + props.pictures.length - 1) % props.pictures.length].url}
-            onCloseRequest={() => setLightbox(false)}
-            onMovePrevRequest={() =>
-              setPhotoIndex((photoIndex)=> (photoIndex + props.pictures.length - 1) % props.pictures.length)
-            }
-            onMoveNextRequest={() =>
-              setPhotoIndex((photoIndex)=> (photoIndex + 1) % props.pictures.length)
-            }
-          />
-        )}
+						<Lightbox
+							mainSrc={props.pictures[photoIndex].url}
+							nextSrc={props.pictures[(photoIndex + 1) % props.pictures.length].url}
+							prevSrc={props.pictures[(photoIndex + props.pictures.length - 1) % props.pictures.length].url}
+							onCloseRequest={() => setLightbox(false)}
+							onMovePrevRequest={() =>
+								setPhotoIndex((photoIndex) => (photoIndex + props.pictures.length - 1) % props.pictures.length)
+							}
+							onMoveNextRequest={() =>
+								setPhotoIndex((photoIndex) => (photoIndex + 1) % props.pictures.length)
+							}
+						/>
+					)}
 				</>
 			}
 			if (item.id === 'Overview') {
@@ -402,7 +403,19 @@ function BusinessInfo(
 						const is_url = isURL(value);
 						return <div key={item?.field} className={style.business_item}>
 							<div className={style.overview_item_name}>{item?.name}</div>
-							{item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>}
+
+							{/* {item && !isMobile && <MouseOverPopover value={props[item?.field]}></MouseOverPopover>} */}
+
+							{item && !isMobile &&
+								<Tooltip
+									title={props[item?.field]}
+									placement='top-start'
+									arrow
+								// arrow
+								// classes={null}
+								>
+									<p style={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{props[item?.field]}</p>
+								</Tooltip>}
 							{(() => {
 								if (item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
 								if (item && isMobile) return <div className={style.overview_item_value_mobile}>{props[item?.field]}</div>
@@ -480,11 +493,11 @@ function MobileAlbum() {
 					return <SwiperSlide key={index}>
 						<div className={style.mobile_album}>
 							<Image style={{ objectFit: 'cover' }} fill src={item.url} alt='album'
-									onClick={()=>{
-										setPhotoIndex(index);
-										setLightbox(true);
-										
-									}}
+								onClick={() => {
+									setPhotoIndex(index);
+									setLightbox(true);
+
+								}}
 							></Image>
 						</div>
 					</SwiperSlide>
@@ -492,20 +505,20 @@ function MobileAlbum() {
 			}
 		</Swiper>
 		{
-		isOpenLightbox && (
-			<Lightbox
-				mainSrc={res[photoIndex].url}
-				nextSrc={res[(photoIndex + 1) % res.length].url}
-				prevSrc={res[(photoIndex + res.length - 1) % res.length].url}
-				onCloseRequest={() => setLightbox(false)}
-				onMovePrevRequest={() =>
-					setPhotoIndex((photoIndex)=> (photoIndex + res.length - 1) % res.length)
-				}
-				onMoveNextRequest={() =>
-					setPhotoIndex((photoIndex)=> (photoIndex + 1) % res.length)
-				}
-			/>
-		)
+			isOpenLightbox && (
+				<Lightbox
+					mainSrc={res[photoIndex].url}
+					nextSrc={res[(photoIndex + 1) % res.length].url}
+					prevSrc={res[(photoIndex + res.length - 1) % res.length].url}
+					onCloseRequest={() => setLightbox(false)}
+					onMovePrevRequest={() =>
+						setPhotoIndex((photoIndex) => (photoIndex + res.length - 1) % res.length)
+					}
+					onMoveNextRequest={() =>
+						setPhotoIndex((photoIndex) => (photoIndex + 1) % res.length)
+					}
+				/>
+			)
 		}
 
 	</div>
