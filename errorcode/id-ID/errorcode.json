@@ -233,6 +233,8 @@
   "41250": "Invalid Tron(TRC20) address",
   "41251": "Invalid Ethereum(ERC20) address",
   "41252": "Query exceeds limit",
+  "41253": "Ensure that there are no more than 10 digits before the decimal point",
+  "41254": "Resume templates cannot exceed 5 copies",
   "48905": "The email has been registered",
   "50001": "Kesalahan server dari dalam",
   "50002": "Gagal mengunggah resume",

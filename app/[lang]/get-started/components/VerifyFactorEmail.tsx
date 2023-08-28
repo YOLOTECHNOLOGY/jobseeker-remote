@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation'
 import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
+
 interface IProps {
   lang: any
 }
@@ -29,6 +30,8 @@ const VerifyFactorEmail = (props: IProps) => {
     userInfo,
     error
   } = useGetStarted()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   useEffect(() => {
     if (email) {
       setEmail(email)
@@ -57,7 +60,7 @@ const VerifyFactorEmail = (props: IProps) => {
   const onChange = (code) => {
     dispatch(jobbseekersLoginFailed({}))
     if (code?.length === 6) {
-      handleAuthenticationJobseekersLogin(code)
+      handleAuthenticationJobseekersLogin(code, referralCode || undefined, invitedSource || undefined)
     }
   }
 
@@ -81,7 +84,7 @@ const VerifyFactorEmail = (props: IProps) => {
         <div className={styles.optBox}>
           <h2>{newGetStarted.verifyText}</h2>
           <div className={styles.enterTips}>
-            <p className={styles.extra}>{}</p>
+            <p className={styles.extra}>{ }</p>
             <p>
               {newGetStarted.sendCodeDigit}
               <span>{email}.</span>

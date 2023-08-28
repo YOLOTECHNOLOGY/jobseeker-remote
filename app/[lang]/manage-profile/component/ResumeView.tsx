@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { Download } from '@mui/icons-material';
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -19,7 +18,9 @@ import {
   generatePresignedUrl,
   uploadVideoToAmazonService,
   getVideoResumeList,
-  deleteVideoResume
+  deleteVideoResume,
+  resumeTemplateList,
+  publicResumeClick
 } from 'store/services/users/uploadUserResume'
 
 /* Components */
@@ -48,13 +49,15 @@ import {
 } from 'images'
 
 /* Styles */
-import classNames from 'classnames'
 import styles from './index.module.scss'
 import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
 import Modal from 'components/Modal'
+import Button from '@mui/material/Button'
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
   if (!data.length) return <div style={{ height: '200px' }} />
@@ -106,11 +109,12 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
     <div className={styles.videoCoverWrap}>
       <img src={CloseIcon} alt="" width="20" height="20" onClick={handleCloseVideo} />
       <div className={styles.videoCover}>
-        <video ref={playVideoRef} width="900" height="570" controls />
+        <video ref={playVideoRef} width="960" height="580" controls />
       </div>
     </div>
   )
 }
+
 
 
 const ResumeView = ({ userDetail, lang }: any) => {
@@ -144,6 +148,11 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const videoUrlRef = useRef('')
   const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
+  const [resumeTemplate, setResumeTemplate] = useState(null)
+  const [lightBox, setLightBox] = useState({
+    isOpen: false,
+    photoIndex: 0
+  })
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -167,19 +176,19 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (!isFirstRender) dispatch(fetchUserOwnDetailRequest({ accessToken }))
   }, [isSuccessfulUpload])
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollPrev()
-    }
-  }, [emblaApi])
+  // const scrollPrev = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollPrev()
+  //   }
+  // }, [emblaApi])
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollNext()
-    }
-  }, [emblaApi])
+  // const scrollNext = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollNext()
+  //   }
+  // }, [emblaApi])
 
-  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
+  // const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return
@@ -212,31 +221,31 @@ const ResumeView = ({ userDetail, lang }: any) => {
       })
   }
 
-  const handleDownloadResume = (type) => {
-    const sourcePath = process.env.DOCUMENT_GENERATOR_URL
+  // const handleDownloadResume = (type) => {
+  //   const sourcePath = process.env.DOCUMENT_GENERATOR_URL
 
-    switch (type) {
-      case 'corporate':
-        // TODO: replace this with user's corporate resume
-        window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      case 'creative':
-        // TODO: replace this with user's creative resume
-        window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      default:
-        break
-    }
-  }
+  //   switch (type) {
+  //     case 'corporate':
+  //       // TODO: replace this with user's corporate resume
+  //       window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     case 'creative':
+  //       // TODO: replace this with user's creative resume
+  //       window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }
 
-  const onTemplateHover = (type, boolean) => {
-    if (width > 799) {
-      setIsTemplateDownloadable({
-        ...initialDownloadState,
-        [type]: boolean
-      })
-    }
-  }
+  // const onTemplateHover = (type, boolean) => {
+  //   if (width > 799) {
+  //     setIsTemplateDownloadable({
+  //       ...initialDownloadState,
+  //       [type]: boolean
+  //     })
+  //   }
+  // }
 
   function dataURLtoFile(dataurl, filename) {
     const arr = dataurl.split(',');
@@ -313,8 +322,21 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const handleCloseVideo = () => {
     setPlayVideo(false)
   }
+  const getResumeTemplateList = async () => {
+    try {
+      const result = await resumeTemplateList()
+      if (result?.data?.data?.resume_templates) {
+        setResumeTemplate(result?.data?.data?.resume_templates)
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
   useEffect(() => {
     videoResumesList()
+    getResumeTemplateList()
   }, [])
 
   const playVideoRef = useCallback(el => {
@@ -333,6 +355,47 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
+  const getResumeTemplateHostRef = useRef('')
+  if (process.env.NODE_ENV === 'production') {
+    getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
+  }
+  else if (process.env.NODE_ENV === 'development') {
+    getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
+  }
+  else {
+    getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
+  }
+
+  const handleSelectTemplate = (id, structure) => {
+    const userInfo = getCookie('user')
+    console.log('userInfo:', userInfo)
+    publicResumeClick({
+      public_template_id: id,
+      content: {
+        ...structure,
+        base_info: {
+          "avator": userInfo.avatar || '',
+          "first_name": userInfo.first_name || '',
+          "last_name": userInfo.last_name || '',
+          "degree": userInfo.degree || '',
+          "birthdate": userInfo.birthdate || '',
+          "phone": userInfo.phone_num || '',
+          "email": userInfo.email || '',
+          "job_title": userInfo.job_title || '',
+          "job_type": userInfo.job_type || '',
+          "desired_industy": userInfo.desired_industy || '',
+          "availability": userInfo.availability || '',
+          "current_location": userInfo.current_location || '',
+          "desired_location": userInfo.desired_location || ''
+        }
+      }
+
+    }).then(res => {
+      if (res.data.code === 0) {
+        window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+      }
+    })
+  }
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -402,7 +465,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.preview_subtitle}>
           {transitions.bossjob.tips}
         </div>
-        <div className={styles.resumePreview}>
+        {/* <div className={styles.resumePreview}>
           <div className={styles.embla}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
@@ -537,8 +600,50 @@ const ResumeView = ({ userDetail, lang }: any) => {
               ))}
             </div>
           </div>
+        </div> */}
+        <div className={styles.resumePreview}>
+          {resumeTemplate?.map((item, index) => (
+            <div className={styles.item} key={item.id}>
+              {Boolean(item.is_vip) && <span className={styles.vipMark}>VIP</span>}
+              <div className={styles.cover}>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => handleSelectTemplate(item.id, item.structure)}
+                >
+                  Select Template
+                </Button>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => setLightBox({
+                    isOpen: true,
+                    photoIndex: index
+                  })
+                  }>
+                  Preview
+                </Button>
+
+              </div>
+              <img src={item.preview_picture} alt={item.name} />
+            </div>
+          ))}
+
         </div>
       </div>
+      {
+        lightBox.isOpen && (
+          <Lightbox
+            mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
+            onCloseRequest={() =>
+              setLightBox(state => ({
+                ...state,
+                isOpen: false
+              }))
+            }
+          />
+        )
+      }
       {/* exceed the limit */}
       <SnackbarTips
         show={isExceedLimit}
@@ -588,7 +693,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
       </Modal>
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
-    </div>
+    </div >
 
   )
 }

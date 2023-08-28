@@ -14,6 +14,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { cfKey } from 'helpers/cookies'
+
 function PhoneCode(props: any) {
   const {
     lang: { newGetStarted },
@@ -56,6 +57,8 @@ function PhoneCode(props: any) {
 
   let uuid = localStorage.getItem('uuid')
   const router = useRouter()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -101,7 +104,7 @@ function PhoneCode(props: any) {
       if (uuid != browserId && browserId && email) {
         verifyPhoneFun(otp)
       } else {
-        handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
+        handleAuthenticationJobseekersLoginPhone(otp, phoneNum, referralCode || undefined, invitedSource || undefined)
       }
     }
   }

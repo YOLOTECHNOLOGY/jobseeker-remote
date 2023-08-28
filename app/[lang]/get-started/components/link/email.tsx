@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
+import { useSearchParams } from 'next/navigation'
+
 // import { EmailIcon } from 'images'
 // import Image from 'next/image'
 import styles from '../../index.module.scss'
@@ -18,10 +20,23 @@ const EmailLink = (props: IProps) => {
   } = props
   const langKey = getLang()
   const router = useRouter()
-
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   const loginEmail = () => {
-    isModal ? handleClick() : router.push(`/${langKey}/get-started/email`)
+    if (isModal) {
+      handleClick()
+    }
+    else {
+      if (referralCode && invitedSource) {
+        router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`)
+      }
+      else {
+        router.push(`/${langKey}/get-started/email`)
+      }
+    }
   }
+
   return (
     <li>
       <div className={styles.phoneBox} onClick={() => loginEmail()}>

@@ -13,11 +13,13 @@ import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { useRouter } from 'next/navigation'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { cfKey } from 'helpers/cookies'
+
 const verifyEmail = function (props) {
   const { isModal, lang, loginData, setStep, handleBackClick } = props
   const { newGetStarted } = lang
   const searchParams = useSearchParams()
-
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   // const userId = searchParams.get('userId')
   // const email = searchParams.get('email')
   // const avatar = searchParams.get('avatar')
@@ -82,7 +84,7 @@ const verifyEmail = function (props) {
   const onChange = (code) => {
     setErrorText('')
     if (code?.length === 6) {
-      handleAuthenticationJobseekersLogin(code)
+      handleAuthenticationJobseekersLogin(code, referralCode || undefined, invitedSource || undefined)
     }
   }
 
@@ -168,7 +170,9 @@ const verifyEmail = function (props) {
             <div
               className={styles.backBox}
               onClick={() =>
-                isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/email`)
+                isModal ? handleBackClick?.() : (referralCode && invitedSource) ?
+                  router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`) :
+                  router.push(`/${langKey}/get-started/email`)
               }
             >
               <KeyboardArrowLeftIcon />

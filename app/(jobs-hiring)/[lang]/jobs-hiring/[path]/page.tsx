@@ -17,6 +17,8 @@ import JobAlert from './components/jobAlert'
 import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
+import ExcellentResumeBanner from './components/excellentResume'
+import VipActivity from './components/vipActivity'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -52,12 +54,16 @@ const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run
 
+
+
+
 const Main = async (props: any) => {
   const { lang } = props.params
   const { search } = (await getDictionary(lang)) as any
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
+
   return (
     <>
       <div>
@@ -96,6 +102,9 @@ const Main = async (props: any) => {
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
               />
+              <VipActivity accessToken={accessToken} />
+
+              <ExcellentResumeBanner />
               <SearchHistory
                 location={location}
                 value={props?.searchValues?.query as any}
@@ -114,6 +123,10 @@ const Main = async (props: any) => {
     </>
   )
 }
+
+
+
+
 
 export default configs(serverDataScript()).chain((configs) =>
   query(onLoadScript(configs.config)).chain((searchValues) =>

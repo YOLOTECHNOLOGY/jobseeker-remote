@@ -1,28 +1,9 @@
 {
   "header": {
     "home": "Home",
-    "findJobs": "Find Jobs",
-    "companies": "Companies",
-    "courses": "Courses",
-    "careerGuide": "Career Guide",
-    "hiring": "I'm an Employer",
-    "getStarted": "Get Started",
-    "manageResume": "Manage Resume",
-    "myJobs": "My Jobs",
-    "accountSettings": "Account Settings",
-    "logOut": "Log Out",
-    "Chat": "Chat",
-    "downloadApp": "Download App",
-    "pleaseVerify": "Please verify your email address.",
-    "verifyNow": " Verify now.",
-    "switchCountry": {
-      "title": "Which country and language would you like to browse Bossjob in?",
-      "country": "Country",
-      "lang": "Language",
-      "btn1": "Close",
-      "btn2": "Save"
-    },
-    "change": "Change"
+    "resumeTemplates": "Resume Templates",
+    "myResume": "My Resume",
+    "getStarted": "Get Started"
   },
   "foot": {
     "about": "about",
@@ -60,39 +41,7 @@
     "workTitle": "Work Time",
     "workingDate": "Monday to Saturday 10:00 - 19:00"
   },
-  "getStatred": {
-    "seoMetaTitle": "Get started | Bossjob",
-    "JoinBossjob": "Join Bossjob",
-    "kickStartYourCareer": "kick-start your career!",
-    "enterYourEmailAddress": "Enter your email address",
-    "submit": "Submit",
-    "pleaseEnterAvalidEmailAddress.": "Please enter a valid email address.",
-    "bySigningUp": "By signing up, I have read and agreed to",
-    "termsOfUse": "Terms of Use",
-    "and": "and",
-    "privacyPolicy": "Privacy Policy",
-    "signInWith": "Sign in with",
-    "lookingToHire": "Looking to hire people? Sign up as ",
-    "employer": "Employer",
-    "welcomeBack": "Welcome back!",
-    "signUpAnAccount": "Sign up an account",
-    "pleaseEnter": "Please enter the 6-digit one-time password that we sent to",
-    "enter6DigitOTP": "Enter 6-digit OTP",
-    "getOPT": "get OPT",
-    "heOTPYouHaveEnteredIsWrong": "The OTP you have entered is wrong. Please try again.",
-    "resendOTP": "Resend OTP",
-    "havingTrouble": "Having trouble?",
-    "requestAmagicLink": "Request a Magic Link",
-    "seoMetaDescription": "Join Bossjob to accelerate your professional career today! Access courses and job opportunities in ",
-    "seoMetaDescription2": "Network of 2 million+ professionals.",
-    "magicLink": {
-      "welcomeBack": "Welcome back!",
-      "signUp": "Sign up an account",
-      "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
-      "toHome": "Back to home page"
-    },
-    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
-    "loginUsingQRCode": "Login using QR code",
+  "newGetStarted": {
     "scanQRCodeOnAppToLogin": "Scan this code with  Bossjob app to login instantly",
     "donHaveApp": "Don’t have App",
     "howToScanQRCode": "How to scan QR code",
@@ -1287,12 +1236,16 @@
     "warnText": "Otherwise, you would need to wait for both parties to reply before you can request to send resume."
   },
   "newGetStarted": {
+    "loginWithQRCode": "Login with QR code",
+    "loginUsingSocialMediaOTP": "Login using social media/ OTP",
+    "loginUsingQRCode": "Login using QR code",
     "title": "Welcome to",
     "employer": "Employer",
     "tips": "Looking to hire people? Sign up as ",
     "continueWith": "or continue with",
     "email": "Email",
     "phone": "Phone",
+    "haveSendEmail": "We’ve sent a magic link to {{email}}. Please click on the link to proceed.",
     "links": {
       "apple": "Continue with Apple",
       "google": "Continue with Google",
@@ -1456,6 +1409,9 @@
     "section7_list_date4": "13 Jun 2023",
     "jobs": "jobs",
     "talents": "talents",
-    "Looking for": "Looking for"
+    "Looking for": "Looking for",
+    "title": "Get started | Bossjob",
+    "siteName": "A Chat-first Career Platform for Professionals in {{country}} | Bossjob",
+    "metaDescription": "Bossjob is chat-first career platform that connects quality talents with top companies. Choose from on-site to remote jobs. Apply your next dream job on Bossjob!"
   }
 }
