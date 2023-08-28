@@ -62,13 +62,13 @@ const EditJobPreferencesModal = ({
       id: item.id
     }))
   )
+  console.log('currencyLists:', currencyLists)
   const [initial, setInital] = useState(true)
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const location = useMemo(() => {
     return formattedLocationList.find((l) => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
   // to add work setting
-  alert(getCountryKey())
   const defaultValues = useMemo(() => {
     return {
       jobTitle: {
