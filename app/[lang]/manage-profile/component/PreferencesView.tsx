@@ -189,11 +189,15 @@ const PreferencesView = ({ lang }: any) => {
   const config = useSelector((store: any) => store?.config?.config?.response)
   const accessToken = getCookie('accessToken')
 
+  useEffect(() => {
+    console.log('userDetail:', userDetail)
+  }, [userDetail])
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
     changeJobPreference(userDetail.job_preferences || [], config)
     return userDetail
   }, [userDetail, config])
+
 
   const [unCompleted, setUnCompleted] = useState({
     profile: false,

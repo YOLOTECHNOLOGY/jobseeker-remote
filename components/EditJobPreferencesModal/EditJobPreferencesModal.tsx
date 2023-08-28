@@ -68,6 +68,7 @@ const EditJobPreferencesModal = ({
     return formattedLocationList.find((l) => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
   // to add work setting
+  alert(getCountryKey())
   const defaultValues = useMemo(() => {
     return {
       jobTitle: {
@@ -83,6 +84,8 @@ const EditJobPreferencesModal = ({
       currencyKey: preference?.currency_key ?? countryForCurrency(getCountryKey())
     }
   }, [preference])
+
+  console.log('defaultValues:', preference?.currency_key)
   const dispatch = useDispatch()
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
