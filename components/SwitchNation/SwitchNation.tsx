@@ -141,10 +141,10 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
-    }else{
-      query +=  '/' +pathname.split('/').slice(2).join('/')
+    } else {
+      query += '/' + pathname.split('/').slice(2).join('/')
     }
-    console.log('query',query);
+    console.log('query', query);
     window.location.href = newOrigin + query
   }
 
@@ -162,7 +162,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     >
       <div className={styles.swtihcNation}>
         <div className={styles.swtihcNation_head}>
-          <p>{switchCountry.title}</p>
+          <p>{switchCountry?.title}</p>
           <CloseIcon
             sx={{ color: '#BCBCBC', fontSize: '26px', cursor: 'pointer' }}
             onClick={close}
@@ -212,7 +212,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
         <footer className={styles.swtihcNation_footer}>
           <Button className={styles.swtihcNation_footer_btn} variant='outlined' onClick={close}>
-            {switchCountry.btn1}
+            {switchCountry?.btn1}
           </Button>
           <MaterialButton
             className={styles.swtihcNation_footer_btn}
@@ -221,7 +221,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
             disabled={isEqual(nation, originalSetting)}
             isLoading={loading}
           >
-            {switchCountry.btn2}
+            {switchCountry?.btn2}
           </MaterialButton>
         </footer>
       </div>

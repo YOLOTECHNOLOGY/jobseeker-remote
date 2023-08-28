@@ -233,8 +233,6 @@
   "41250": "無効なTron（TRC20）アドレスです",
   "41251": "無効なEthereum（ERC20）アドレスです",
   "41252": "クエリが制限を超えています",
-  "41253": "Ensure that there are no more than 10 digits before the decimal point",
-  "41254": "Resume templates cannot exceed 5 copies",
   "48905": "このメールアドレスは既に登録されています",
   "50001": "内部サーバーエラー",
   "50002": "履歴書のアップロードに失敗しました",

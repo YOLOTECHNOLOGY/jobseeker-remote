@@ -374,15 +374,15 @@ const ResumeView = ({ userDetail, lang }: any) => {
       content: {
         ...structure,
         base_info: {
-          "avator": userInfo.avatar || '',
+          "avatar": userInfo.avatar || '',
           "first_name": userInfo.first_name || '',
           "last_name": userInfo.last_name || '',
-          "degree": userInfo.degree || '',
+          "degree": userInfo.degree || null,
           "birthdate": userInfo.birthdate || '',
           "phone": userInfo.phone_num || '',
           "email": userInfo.email || '',
           "job_title": userInfo.job_title || '',
-          "job_type": userInfo.job_type || '',
+          "job_type": userInfo.job_type || null,
           "desired_industy": userInfo.desired_industy || '',
           "availability": userInfo.availability || '',
           "current_location": userInfo.current_location || '',

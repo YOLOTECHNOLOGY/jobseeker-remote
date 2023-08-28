@@ -1,9 +1,28 @@
 {
   "header": {
     "home": "ホーム",
-    "resumeTemplates": "Resume Templates",
-    "myResume": "My Resume",
-    "getStarted": "始める"
+    "findJobs": "求人を探す",
+    "companies": "企業",
+    "courses": "コース",
+    "careerGuide": "キャリアガイド",
+    "hiring": "私は雇用主です",
+    "getStarted": "始める",
+    "manageResume": "履歴書を管理する",
+    "myJobs": "私の求人",
+    "accountSettings": "アカウント設定",
+    "logOut": "ログアウト",
+    "Chat": "チャット",
+    "downloadApp": "アプリをダウンロードする",
+    "pleaseVerify": "メールアドレスを確認してください。",
+    "verifyNow": "今すぐ確認する",
+    "switchCountry": {
+      "title": "どの国と言語でBossjobを閲覧しますか？",
+      "country": "国",
+      "lang": "言語",
+      "btn1": "閉じる",
+      "btn2": "保存"
+    },
+    "change": "変更"
   },
   "foot": {
     "about": "について",
@@ -41,7 +60,39 @@
     "workTitle": "勤務時間",
     "workingDate": "月曜日から土曜日 10:00 - 19:00"
   },
-  "newGetStarted": {
+  "getStatred": {
+    "seoMetaTitle": "サインアップまたはログイン（求職者）| Bossjob",
+    "JoinBossjob": "Bossjobに参加する",
+    "kickStartYourCareer": "キャリアをスタートさせましょう！",
+    "enterYourEmailAddress": "メールアドレスを入力してください",
+    "submit": "送信",
+    "pleaseEnterAvalidEmailAddress.": "有効なメールアドレスを入力してください。",
+    "bySigningUp": "サインアップすることで、私は読んで同意しました",
+    "termsOfUse": "利用規約",
+    "and": "および",
+    "privacyPolicy": "プライバシーポリシー",
+    "signInWith": "でサインインする",
+    "lookingToHire": "人を採用したいですか？",
+    "employer": "雇用主",
+    "welcomeBack": "お帰りなさい！",
+    "signUpAnAccount": "アカウントをサインアップする",
+    "pleaseEnter": "送信した6桁のワンタイムパスワードを入力してください",
+    "enter6DigitOTP": "6桁のOTPを入力してください",
+    "getOPT": "OTPを取得する",
+    "heOTPYouHaveEnteredIsWrong": "入力したOTPが間違っています。もう一度お試しください。",
+    "resendOTP": "OTPを再送する",
+    "havingTrouble": "問題が発生していますか？",
+    "requestAmagicLink": "マジックリンクをリクエストする",
+    "seoMetaDescription": "リアルタイムでボスとチャットし、すばやく雇用されます。東南アジアの300万人のプロフェッショナルに参加しましょう！サインアップまたはログインして、",
+    "seoMetaDescription2": "200万人以上のプロフェッショナルのネットワーク。",
+    "magicLink": {
+      "welcomeBack": "お帰りなさい！",
+      "signUp": "アカウントをサインアップする",
+      "haveSendEmail": "{{email}}にマジックリンクを送信しました。リンクをクリックして続行してください。",
+      "toHome": "ホームページに戻る"
+    },
+    "loginUsingSocialMediaOTP": "ソーシャルメディア/OTPを使用してログインする",
+    "loginUsingQRCode": "QRコードを使用してログインする",
     "scanQRCodeOnAppToLogin": "Bossjobアプリでこのコードをスキャンして即座にログインします",
     "donHaveApp": "アプリをお持ちでない場合",
     "howToScanQRCode": "QRコードのスキャン方法",
@@ -404,8 +455,8 @@
     },
     "shareModal": {
       "title": "この求人を共有する",
-      "facebook": "Facebook",
-      "twitter": "Twitter",
+      "facebook": "フェイスブック",
+      "twitter": "ツイッター",
       "linkedin": "LinkedIn",
       "link": "ページリンク",
       "linkCopied": "リンクがコピーされました"
@@ -783,7 +834,7 @@
           "error": "履歴書の削除に失敗しました"
         },
         "bossjob": {
-          "title": "Bossjob履歴書",
+          "title": "Bossjob resume",
           "tips": "Bossjobでプロフィールを作成すると、履歴書が自動的に作成されます。利用可能なテンプレートから選択し、新しく改善された履歴書を使用してBossjobの求人に応募することができます。",
           "download": "ダウンロード"
         },
@@ -814,7 +865,7 @@
           "title": "自己紹介ビデオ",
           "descTips": "ビデオ形式のMP4、3分以内の時間制御",
           "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
-          "confirmTitle": "Remove video resume"
+          "confirmTitle": "動画の履歴書を削除"
         }
       }
     }
@@ -1010,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
@@ -1236,16 +1287,12 @@
     "warnText": "それ以外の場合、履歴書を送信する前に両者の返信を待つ必要があります。"
   },
   "newGetStarted": {
-    "loginWithQRCode": "QRコードでログインする",
-    "loginUsingSocialMediaOTP": "ソーシャルメディア/OTPを使用してログインする",
-    "loginUsingQRCode": "QRコードを使用してログインする",
     "title": "ようこそ",
     "employer": "雇用主",
     "tips": "人を雇いたいですか？",
     "continueWith": "または続ける",
     "email": "メールアドレス",
     "phone": "電話番号",
-    "haveSendEmail": "{{email}}にマジックリンクを送信しました。リンクをクリックして続行してください。",
     "links": {
       "apple": "Appleで続行",
       "google": "Googleで続行",
@@ -1290,7 +1337,7 @@
     "validateErr": "このメールアドレスは既に使用されています。別のメールアドレスに変更してください",
     "checkYourSpam": "コードが届かない場合はスパムメールを確認してください",
     "authenticationSuccessful": "認証に成功しました",
-    "Bossjob": "Bossjob",
+    "Bossjob": "ボスジョブ",
     "back": "戻る"
   },
   "seo": {
@@ -1302,8 +1349,113 @@
     "tw": "中国台湾",
     "mo": "中国マカオ",
     "my": "Malaysia",
-    "title": "Get started | Bossjob",
     "siteName": "Bossjob - プロフェッショナル向けのチャットファーストキャリアプラットフォーム | {{country}}",
-    "metaDescription": "Bossjobは、優れた人材と優良企業をつなぐチャットファーストのキャリアプラットフォームです。現地勤務からリモートワークまで、さまざまな求人を選択できます。次の夢の仕事をBossjobで応募しましょう！"
+    "metaDescription": "Bossjobは、優れた人材と優良企業をつなぐチャットファーストのキャリアプラットフォームです。現地勤務からリモートワークまで、さまざまな求人を選択できます。次の夢の仕事をBossjobで応募しましょう！",
+    "jobSearch": {
+      "defaultTitle": "{{country}}の求人を検索して応募 - {{year}}年{{month}}月 | Bossjob",
+      "defaultDescription": "{{country}}で新しい求人情報を見つけましょう！あなたのスキルに基づいて最高のプロフェッショナルな仕事に応募してください。在宅勤務、高給与など、Bossjobで見つけましょう",
+      "queryTitle": "{{searchQuery}}の求人 - {{year}}年{{month}}月 | Bossjob",
+      "queryLocationTitle": "{{location}} {{country}}で{{searchQuery}}の求人 - {{year}}年{{month}}月 | Bossjob",
+      "queryDescription": "{{country}}で新しい{{searchQuery}}の求人情報を見つけましょう！リモートワークの求人も{{country}}で利用できます。Bossjobで直接ボスとチャットして迅速に就職しましょう！",
+      "queryLocationDescription": "{{location}} {{country}}で新しい{{searchQuery}}の求人情報を見つけましょう！リモートワークの求人も{{country}}で利用できます。Bossjobで直接ボスとチャットして迅速に就職しましょう！",
+      "locationTitle": "{{location}} {{country}}の求人 - {{year}}年{{month}}月 | Bossjob",
+      "locationDescription": "{{location}} {{country}}で新しい求人情報を見つけましょう！リモートワークの求人も{{country}}で利用できます。Bossjobで直接ボスとチャットして迅速に就職しましょう！"
+    },
+    "job": {
+      "title": "{{name}}が{{jobTitle}}を募集中 - {{jobId}} | Bossjob",
+      "description": "{{name}}で{{jobTitle}}に応募しましょう！Bossjobで多くのキャリアチャンスを見つけることができます。{{location}}での求人情報を探しましょう。チャットして採用されましょう！"
+    },
+    "company": {
+      "listTitle": "{{country}}で採用中の企業を見つける | Bossjob",
+      "listDescription": "{{country}}で働くための素晴らしい企業を見つけましょう！IT、Web3、リモートワークの求人情報を検索し、チャットして採用されましょう！",
+      "detailTitle": "{{companyName}}での勤務 | Bossjob",
+      "detailDescription": "{{companyName}}でのキャリアチャンスを見つけ、Bossjobで従業員のレビューや福利厚生、企業文化について詳しく知りましょう！",
+      "jobsTitle": "{{companyName}}のキャリア - {{country}}の求人情報 | Bossjob",
+      "jobsDescription": "Bossjobで{{country}}の{{companyName}}で利用可能なすべての求人情報を表示しましょう - Bossjobで直接人材と話しましょう！",
+      "lifeTitle": "{{companyName}}の文化＆生活 | Bossjob",
+      "lifeDescription": "Bossjobで{{country}}の{{companyName}}の企業文化と生活を発見しましょう。Bossjobで採用マネージャーと直接話しましょう！"
+    },
+    "landing": {
+      "title": "Bossjobの採用アプリをダウンロードして、オンラインで1万人以上のボスと話しましょう。| Bossjob",
+      "description": "Bossjobで{{country}}の求人機会を発見しましょう！{{country}}の企業からの求人を探索し、迅速に採用されましょう！"
+    }
+  },
+  "landing": {
+    "section1_name1": "ジョン",
+    "section1_name2": "サラ",
+    "section1_message1": "こんにちは、サラさん。私はそのポジションに興味があります。役割についての詳細を教えていただけますか？",
+    "section1_message2": "こんにちは、ジョンさん。あなたのプロフィールはその役割にぴったりです。詳細を提供することは喜んでいます。具体的に何を知りたいですか？",
+    "section1_message3": "会社の文化やチームについてもっと教えていただけますか？",
+    "section1_message4": "もちろんです。当社の文化は協力的でチーム志向です。私たちはサポートのある働きやすい環境を作り上げることに誇りを持っています。あなたは、自分の仕事に情熱を持つ才能豊かで多様なプロフェッショナルなチームと一緒に働くことになります。",
+    "section1_message5": "それは素晴らしいですね。応募プロセスの次のステップについてもっと知りたいです。",
+    "section1_message6": "素晴らしいです。次の火曜日の午後2時はいかがですか？電話インタビューの予定を立てましょう。",
+    "section1_message7": "それは完璧です。ありがとうございます、サラさん。",
+    "section1_message8": "ありがとうございます、ジョンさん。来週お話できるのを楽しみにしています。",
+    "section1_title": "AI採用アプリ",
+    "section1_subtitle": "リアルタイムで意思決定者とつながります",
+    "section1_getApp": "リアルタイムで意思決定者とつながります",
+    "section3_subtitle": "仕事を見つけるためのより良く、より速い方法",
+    "section3_list_title1": "AIパワーの求人マッチング",
+    "section3_list_des1": "ビッグデータとAIモデルを使用して、あなたに合った仕事をマッチングします！",
+    "section3_list_title2": "直接ボスと話す",
+    "section3_list_des2": "求職活動中に採用マネージャーやボス、意思決定者と話すことができます。",
+    "section3_list_title3": "モバイルファースト",
+    "section3_list_des3": "Bossjobアプリは、移動中でもシームレスな求職体験を提供します。",
+    "section3_list_title4": "リアルタイムコミュニケーション",
+    "section3_list_des4": "組み込まれたチャット機能により、求職から面接までの瞬時のやり取りが可能です。すべて数分で完了します。",
+    "section4_list_title1": "チャットして採用される",
+    "section4_list_des1": "移動中に採用マネージャーと迅速につながることができます。面接やオファーを素早く確保し、時間を節約し、求職活動を簡素化できます！",
+    "section4_list_title2": "理想のキャリアマッチを見つける",
+    "section4_list_des2": "次世代のAIが個別の求人推薦を提供し、常に最も関連性の高い求人機会を学習し進化させます。",
+    "section4_list_title3": "Chat-GPTで個人ブランドを高める",
+    "section4_list_des3": "最も先進的な技術であるChatGPTを活用して、個別の履歴書やステートメントを作成し、あなたのユニークなスキルを強調し、他と差別化します！",
+    "section4_list_title4": "理想の職場を見つける",
+    "section4_list_des4": "企業の文化や価値観を窺い知ることができるため、自分自身と一致するかどうかを判断し、自分にとって理想的な職場を見つけることができます！",
+    "section5_list_des1": "さまざまなテンプレートから簡単に履歴書を作成できます",
+    "section5_list_des2": "プライバシーを保護し、簡単に企業をブロックできます",
+    "section5_list_des3": "チャットメッセージをカスタマイズし、素晴らしい印象を与えることができます。",
+    "section5_list_des4": "面接の予定を見逃すことはありません。面接スケジュールを直接携帯電話に同期させます",
+    "section5_bottom_des1": "72時間以内に応募者からの返信があります",
+    "section5_bottom_des2": "5回のチャットごとに1つの面接招待状を受け取ります",
+    "section5_bottom_des3": "Bossjobで積極的に採用中の企業",
+    "Philippines": "フィリピン",
+    "Singapore": "シンガポール",
+    "Indonesia": "インドネシア",
+    "Hongkong": "中国香港",
+    "Malaysia": "マレーシア",
+    "Thailand": "タイ",
+    "Vietnam": "ベトナム",
+    "Macao": "中国マカオ",
+    "Taiwan": "中国台湾",
+    "Japan": "日本",
+    "Australia": "オーストラリア",
+    "Nigeria": "ナイジェリア",
+    "South Korea": "韓国",
+    "India": "インド",
+    "Türkiye": "トルコ",
+    "Chile": "チリ",
+    "Bangladesh": "バングラデシュ",
+    "Europe": "ヨーロッパ",
+    "Brazil": "ブラジル",
+    "USA": "アメリカ",
+    "Mexico": "メキシコ",
+    "Canada": "カナダ",
+    "Pakistan": "パキスタン",
+    "section6_title": "最高の求人アプリ",
+    "section6_subtitle": "どこでも仕事を見つける",
+    "section6_coming_soon": "近日公開...",
+    "section7_title": "Bossjobがニュースに",
+    "section7_see_all": "すべて見る",
+    "section7_list_des1": "Bossjobはフィリピンで290万人のユーザーを集め、グローバル化の取り組みを強化するために500万ドルの資金調達を確保",
+    "section7_list_date1": "2023年5月27日",
+    "section7_list_des2": "フィリピンの求人検索プラットフォームBossjobが500万ドルのベンチャーファンドを確保",
+    "section7_list_date2": "2023年5月25日",
+    "section7_list_des3": "Grab Ventures IgniteがシンガポールのスタートアップBossjobをベトナムで支援",
+    "section7_list_date3": "2021年4月23日",
+    "section7_list_des4": "BossjobがAIテクノロジーで採用を革新し、新たな市場を獲得するために製品機能を拡大",
+    "section7_list_date4": "2023年6月13日",
+    "jobs": "求人",
+    "talents": "人材",
+    "Looking for": "探しています"
   }
 }
