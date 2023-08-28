@@ -409,7 +409,7 @@ function BusinessInfo(
 							{item && !isMobile &&
 								<Tooltip
 									title={props[item?.field]}
-									placement='top'
+									placement='top-start'
 									arrow
 								// arrow
 								// classes={null}
