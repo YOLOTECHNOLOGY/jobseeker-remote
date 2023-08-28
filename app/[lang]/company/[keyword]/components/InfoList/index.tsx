@@ -414,7 +414,7 @@ function BusinessInfo(
 								// arrow
 								// classes={null}
 								>
-									<p>{props[item?.field]}</p>
+									<p style={{ width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{props[item?.field]}</p>
 								</Tooltip>}
 							{(() => {
 								if (item && isMobile && is_url) return <Link href={value} className={style.overview_item_value_mobile} target={"_blank"} title={value}>{value}</Link>;
