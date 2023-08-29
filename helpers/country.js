@@ -4,6 +4,21 @@ import { configKey, getCookie } from './cookies'
 // Warning: the English language's value must be en-US,
 const countryCounfig = [
   {
+    name: 'International',
+    key: 'com',
+    url: 'bossjob.com',
+    defaultLocation: {
+      id: 165,
+      is_popular: false,
+      key: "downtown_core",
+      region_display_name: "Central",
+      seo_value: "downtown-core",
+      value: "Downtown Core",
+    },
+    currency: 'usd',
+    id: 241
+  },
+  {
     name: 'Philippines',
     key: 'ph',
     url: 'bossjob.ph',
