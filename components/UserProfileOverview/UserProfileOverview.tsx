@@ -107,15 +107,15 @@ const UserProfileOverview = ({
     console.log('lang:', getLang())
   }, [referral_code])
   const getResumeTemplateHostRef = useRef('')
-  if (process.env.NODE_ENV === 'production') {
-    getResumeTemplateHostRef.current = 'https://bossjob.ph/'
-  }
-  else if (process.env.NODE_ENV === 'development') {
-    getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
-  }
-  else {
-    getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
-  }
+  // if (process.env.ENV === 'production') {
+  //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
+  // }
+  // else if (process.env.ENV === 'development') {
+  //   getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
+  // }
+  // else {
+  //   getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
+  // }
   return (
     <>
       <div className={styles.userOverview}>
@@ -262,7 +262,7 @@ const VipShareModal = ({ referral_code, host, lang, handleCloseModal }) => {
                 new user registration automatically get VIP
               </p>
             </div>
-            <p className={styles.links} ref={copyTextRef}>{`${host}${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</p>
+            <p className={styles.links} ref={copyTextRef}>{`${process.env.NEW_PROJECT_URL}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</p>
             <Button
               variant="contained"
               className={styles.copyButton}

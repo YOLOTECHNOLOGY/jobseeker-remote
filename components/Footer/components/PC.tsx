@@ -19,6 +19,7 @@ const PC = (props: any) => {
   const contextLang = useContext(languageContext)
   const data = lang ?? contextLang
   const langKey = getLang()
+  alert(process.env.COUNTRY_KEY)
 
   return (
     <div className={styles.footerDesktopWrapper}>
@@ -27,7 +28,7 @@ const PC = (props: any) => {
         <div className={styles.footerDesktopLeft}>
           <Company data={data} />
 
-          <DownloadApp  data={data} />
+          <DownloadApp data={data} />
         </div>
 
         <div className={styles.footerDesktopRight}>
