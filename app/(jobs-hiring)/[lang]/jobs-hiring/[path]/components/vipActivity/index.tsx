@@ -22,7 +22,7 @@ const VipActivity = ({ accessToken }) => {
   //   getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
   // }
   useEffect(() => {
-    fetchUserOwnDetailService({ accessToken }).then(res => {
+    accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
       if (res?.data?.data) {
         setReferralCode(res.data.data.referral_code)
       }
