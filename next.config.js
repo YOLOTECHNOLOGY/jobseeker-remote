@@ -87,6 +87,7 @@ module.exports = withBundleAnalyzer({
     BOSSHUNT_URL: process.env.BOSSHUNT_URL,
     BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
     RESUME_TEMPLATE_URL: process.env.RESUME_TEMPLATE_URL,
+    AICV_HOST: process.env.AICV_HOST,
     BLOG_BOSSJOB: 'https://blog.bossjob.ph',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',

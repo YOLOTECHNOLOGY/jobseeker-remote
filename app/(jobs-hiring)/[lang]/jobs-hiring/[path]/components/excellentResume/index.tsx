@@ -20,7 +20,7 @@ const ExcellentResumeBanner = () => {
   }, [])
 
   const handleClick = () => {
-    window.open('https://aicv.bossjob.com/', '_blank')
+    window.open(`${process.env.AICV_HOST}`, '_blank')
   }
 
   return (
