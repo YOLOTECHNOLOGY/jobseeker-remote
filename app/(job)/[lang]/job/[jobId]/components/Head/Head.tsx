@@ -68,7 +68,7 @@ const Head = ({
           <div className={styles.head_main_salary}>{salary}</div>
         </div>
 
-        <div className={styles.head_main_desc}>
+        <div className={styles.head_main_desc} >
           <div>
             <i>
               <svg
@@ -144,19 +144,20 @@ const Head = ({
             </i>
             {jobType}
           </div>
-          <div className={styles.operator}>
-            <JobClient isLogin={Boolean(token)} {...shareParams} showText={true} />
-          </div>
+
         </div>
 
         <div className={styles.head_main_change}>
           <div>
             <Btn jobId={jobId} is_saved={is_saved} chat={chat} jobDetail={jobDetail} />
           </div>
+          <div className={styles.operator}>
+            <JobClient isLogin={Boolean(token)} {...shareParams} showText={true} />
+          </div>
 
-          <div className={styles.head_main_change_resume}>
-            <Stack spacing={2} direction='row'>
-              {/* {isLogin && (
+          {/* <div className={styles.head_main_change_resume}>
+            <Stack spacing={2} direction='row'> */}
+          {/* {isLogin && (
                 <div>
                   <Link color='#000000' href='/manage-profile'>
                     <div className={styles.head_main_change_resume_btnWrapper}>
@@ -171,7 +172,7 @@ const Head = ({
                   </Link>
                 </div>
               )} */}
-              {/* <div>
+          {/* <div>
                 <Link
                   color='#000000'
                   href={isLogin ? '/manage-profile?tab=resume' : '/quick-upload-resume'}
@@ -187,8 +188,8 @@ const Head = ({
                   </div>
                 </Link>
               </div> */}
-            </Stack>
-            {/* <div className={styles.operator}>
+          {/* </Stack> */}
+          {/* <div className={styles.operator}>
               <span className={styles.item}>
                 {is_saved ? (
                   <>
@@ -210,7 +211,7 @@ const Head = ({
                 <JobClient isLogin={Boolean(token)} {...shareParams} />
               </span>
             </div> */}
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </section>

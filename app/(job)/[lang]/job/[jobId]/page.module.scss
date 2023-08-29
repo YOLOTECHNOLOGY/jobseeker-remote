@@ -108,7 +108,7 @@
       line-height: 14px;
       justify-content: space-between;
 
-      >div {
+      > div {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -148,7 +148,7 @@
         fill: rgba(255, 255, 255, 0.5);
       }
 
-      // span { 
+      // span {
       //   display: none;
       // }
 
@@ -166,7 +166,13 @@
       margin-top: 20px;
       display: flex;
       justify-content: space-between;
-
+      .operator {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        .page_item {
+        }
+      }
       &_resume {
         display: flex;
         font-style: normal;
@@ -280,7 +286,7 @@
           display: flex;
           justify-content: space-between;
 
-          >div {
+          > div {
             display: none;
             align-items: center;
 
@@ -406,7 +412,7 @@
         margin: 0;
       }
 
-      h5+p {
+      h5 + p {
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -769,7 +775,7 @@
 
       &_title {
         font-style: normal;
-        font-size: 17px;
+        font-size: 18px;
         color: #353535;
         margin-bottom: 0;
         overflow: hidden;
@@ -785,7 +791,7 @@
 
       &_salary {
         font-style: normal;
-        font-size: 15px;
+        font-size: 18px;
         letter-spacing: 0.02em;
         color: #2378e5;
       }
@@ -814,7 +820,7 @@
 
         &_name {
           font-weight: 400;
-          font-size: 12px;
+          font-size: 14px;
           letter-spacing: 0.0075em;
           color: #353535;
         }
@@ -826,7 +832,7 @@
             background: #f7f8fa;
             border-radius: 6px;
             font-weight: 400;
-            font-size: 12px;
+            font-size: 14px;
             letter-spacing: 0.0075em;
             color: #4e5969;
             margin-right: 3px;
@@ -840,7 +846,7 @@
           justify-content: space-between;
           font-style: normal;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 14px;
           letter-spacing: 0.0075em;
           color: #353535;
 
@@ -1091,7 +1097,7 @@
       &_desc {
         line-height: 18px;
 
-        >div {
+        > div {
           color: #707070;
         }
 
@@ -1178,7 +1184,7 @@
         }
 
         h5 {
-          >div {
+          > div {
             display: flex;
 
             i {
@@ -1553,8 +1559,6 @@
         }
       }
     }
-
-
   }
 }
 
