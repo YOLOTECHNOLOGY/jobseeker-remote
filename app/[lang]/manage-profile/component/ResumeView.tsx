@@ -33,6 +33,7 @@ import MaterialButton from 'components/MaterialButton'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+import VipActivity from './vipActivity'
 moment.locale('en')
 /* Services */
 import { ColorButton } from './Button';
@@ -161,6 +162,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     inViewThreshold: 0.7,
     slidesToScroll: width < 799 ? 1 : 2
   })
+  const [vipModal, setVipModal] = useState(false)
 
   useEffect(() => {
     setResume(userDetail.resumes || [])
@@ -355,16 +357,16 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
-  const getResumeTemplateHostRef = useRef('')
-  if (process.env.NODE_ENV === 'production') {
-    getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
-  }
-  else if (process.env.NODE_ENV === 'development') {
-    getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
-  }
-  else {
-    getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
-  }
+  // const getResumeTemplateHostRef = useRef('')
+  // if (process.env.NODE_ENV === 'production') {
+  //   getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
+  // }
+  // else if (process.env.NODE_ENV === 'development') {
+  //   getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
+  // }
+  // else {
+  //   getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
+  // }
 
   const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
@@ -393,15 +395,15 @@ const ResumeView = ({ userDetail, lang }: any) => {
     }).then(res => {
       if (res.data.code === 0) {
         if (!is_vip) {
-          window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+          window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
         }
 
         else {
           if (res.data.data.is_vip) {
-            window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+            window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
           }
           else {
-
+            setVipModal(true)
           }
         }
 
@@ -705,6 +707,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
       </Modal>
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
+      {vipModal && <VipActivity accessToken={accessToken} handleCloseModal={() => setVipModal(false)} />}
     </div >
 
   )

@@ -8,9 +8,9 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
-const VipActivity = ({ accessToken }) => {
+const VipActivity = ({ accessToken, handleCloseModal }) => {
   const [referralCode, setReferralCode] = useState('')
-  const [vipModal, setVipModal] = useState(false)
+
 
   useEffect(() => {
 
@@ -22,30 +22,12 @@ const VipActivity = ({ accessToken }) => {
   }, [accessToken])
 
   return (
-    <>
-      <div className={styles.vipImage} onClick={() => setVipModal(true)}>
-        <Button
-          variant='contained'
-          className={styles.btn}
-        >
-          Get VIP for free
-        </Button>
-        <span className={styles.desc}>Invite friends to get AI resume coaching</span>
-        <Image
-          src={require('./vip_activity_image.png').default.src}
-          width={514}
-          height={268}
-          alt="vip_activity_image"
-          className={styles.image}
-        />
 
-      </div>
-      {vipModal && <VipShareModal
-        referral_code={referralCode}
-        lang={getLang()}
-        // host={getResumeTemplateHostRef.current}
-        handleCloseModal={() => setVipModal(false)} />}
-    </>
+    <VipShareModal
+      referral_code={referralCode}
+      lang={getLang()}
+      // host={getResumeTemplateHostRef.current}
+      handleCloseModal={handleCloseModal} />
 
   )
 }
