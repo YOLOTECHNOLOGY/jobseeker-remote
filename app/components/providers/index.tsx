@@ -12,7 +12,7 @@ import CountryProvider from './countryProvider'
 import LoadingProvider from './loadingProvider'
 import LanguageProvider from './languageProvider'
 import LoginModalProvider from './loginModalProvider'
-import {ProfileProvider} from './profileProvider'
+import { ProfileProvider } from './profileProvider'
 
 import ContextComposer from './ContextComposer'
 
@@ -24,7 +24,7 @@ const ClientProviders = (props: any) => {
     const { store } = wrapper.useWrappedStore({})
     return <Provider store={store} key={'MaintainerProvider'}>
         <VIf show={process.env.MAINTENANCE === 'true'}>
-            <MaintenancePage />                                     
+            <MaintenancePage />
         </VIf>
 
         <VIf show={process.env.MAINTENANCE !== 'true'}>
@@ -36,7 +36,7 @@ const ClientProviders = (props: any) => {
                     <PersistGate loading={null} persistor={persistor} key={'PersistGate'} />,
                     <LanguageProvider store={LG} key={'LanguageProvider'} />,
                     <ProfileProvider key={'ProfileProvider'} />,
-                    <IMProvider lang={lang} key={'IMProvider'} />,
+                    // <IMProvider lang={lang} key={'IMProvider'} />,
                     <NotificationProvider key={'NotificationProvider'} />,
                     <LoginModalProvider lang={lang} key={'LoginModalProvider'} />,
                     <LoadingProvider lang={lang} key={'LoadingProvider'} />,
