@@ -52,7 +52,7 @@ const VipActivity = ({ accessToken }) => {
       {vipModal && <VipShareModal
         referral_code={referralCode}
         lang={getLang()}
-        //host={getResumeTemplateHostRef.current}
+        // host={getResumeTemplateHostRef.current}
         handleCloseModal={() => setVipModal(false)} />}
     </>
 
