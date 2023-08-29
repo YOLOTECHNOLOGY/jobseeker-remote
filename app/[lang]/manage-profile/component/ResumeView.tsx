@@ -366,7 +366,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
   }
 
-  const handleSelectTemplate = (id, structure) => {
+  const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
     console.log('userInfo:', userInfo)
     publicResumeClick({
@@ -392,7 +392,19 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
     }).then(res => {
       if (res.data.code === 0) {
-        window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+        if (!is_vip) {
+          window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+        }
+
+        else {
+          if (res.data.data.is_vip) {
+            window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+          }
+          else {
+
+          }
+        }
+
       }
     })
   }
@@ -609,7 +621,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                 <Button
                   variant="contained"
                   className={styles.button}
-                  onClick={() => handleSelectTemplate(item.id, item.structure)}
+                  onClick={() => handleSelectTemplate(item.id, item.is_vip, item.structure)}
                 >
                   Select Template
                 </Button>

@@ -224,14 +224,14 @@ const UserProfileOverview = ({
       {vipModal && <VipShareModal
         referral_code={referral_code}
         lang={getLang()}
-        host={getResumeTemplateHostRef.current}
+        // host={getResumeTemplateHostRef.current}
         handleCloseModal={() => setVipModal(false)} />}
 
     </>
 
   )
 }
-const VipShareModal = ({ referral_code, host, lang, handleCloseModal }) => {
+const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
   const copyTextRef = useRef(null)
 
   return (
