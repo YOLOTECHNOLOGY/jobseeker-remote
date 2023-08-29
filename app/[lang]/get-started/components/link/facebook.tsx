@@ -25,6 +25,8 @@ const FacebookLogin = (props: IFacebook) => {
     showTitle = true
   } = props
   const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
   const query = {}
   for (const entry of searchParams.entries()) {
@@ -40,7 +42,9 @@ const FacebookLogin = (props: IFacebook) => {
       social_user_token: payload.accessToken,
       social_type: payload.socialType,
       social_user_id: payload.userId,
-      source: isMobile ? 'mobile_web' : 'web'
+      source: isMobile ? 'mobile_web' : 'web',
+      referral_code: referralCode || undefined,
+      invited_source: invitedSource || undefined
     }
     if (payload.pictureUrl) {
       data.avatar = payload.pictureUrl

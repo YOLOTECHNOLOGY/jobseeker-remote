@@ -834,7 +834,7 @@
           "error": "刪除簡歷失敗"
         },
         "bossjob": {
-          "title": "Bossjob 簡歷模版",
+          "title": "Bossjob resume",
           "tips": "簡歷是幫助您進入求職過程下一步的重要工具。 使用 Bossjob 個人資料中的其他信息給招聘人員留下深刻印象。",
           "download": "下載"
         },
@@ -1061,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面試官索要結果",
     "requestResult": "索要面試結果",
-    "requestAfter": "面試結束後，你可以向面試官索取結果",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "來自企業 {{companyName}} 的面試",
     "buttonText": "完成",
     "notAttend": "您沒有參加面試",

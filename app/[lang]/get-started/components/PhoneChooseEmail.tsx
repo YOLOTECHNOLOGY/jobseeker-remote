@@ -14,6 +14,7 @@ import useGetStarted from '../hooks/useGetStarted'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { getEmailByPhoneNumber, checkBindNumber } from 'store/services/auth/newLogin'
 import { DefaultAvatar } from 'images'
+
 function EmailFactor(props: any) {
   const firstRender = useFirstRender()
   // const [email, setEmail] = useState<string>('')
@@ -28,8 +29,11 @@ function EmailFactor(props: any) {
   const dispatch = useDispatch()
   const langKey = getLang()
   const { newGetStarted } = props.lang
+
   // const userInfo = useSelector((store: any) => store.auth.jobseekersLogin.response)
   const emailRef = useRef(null)
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   useEffect(() => {
     if (phoneNum) {
       getEmailByPhoneNumber({
@@ -63,7 +67,7 @@ function EmailFactor(props: any) {
   const onChange = (code) => {
     setErrorText('')
     if (code?.length === 6) {
-      handleAuthenticationJobseekersLogin(code)
+      handleAuthenticationJobseekersLogin(code, referralCode || undefined, invitedSource || undefined)
     }
   }
 

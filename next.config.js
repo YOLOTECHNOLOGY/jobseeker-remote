@@ -27,7 +27,7 @@ module.exports = withBundleAnalyzer({
 
     return redirectionPaths
   },
-  assetPrefix:'',
+  assetPrefix: '',
   reactStrictMode: false,
   compiler: {
     removeConsole: process.env.ENV === 'production'
@@ -86,6 +86,7 @@ module.exports = withBundleAnalyzer({
     LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
     BOSSHUNT_URL: process.env.BOSSHUNT_URL,
     BOSS_BLOG_URL: process.env.BOSS_BLOG_URL,
+    RESUME_TEMPLATE_URL: process.env.RESUME_TEMPLATE_URL,
     BLOG_BOSSJOB: 'https://blog.bossjob.ph',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
     APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',

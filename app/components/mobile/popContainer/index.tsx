@@ -1,5 +1,5 @@
 'use client'
-import React,{useContext} from 'react'
+import React, { useContext } from 'react'
 import styles from './index.module.scss'
 // import { CloseIcon } from 'images'
 // import Image from 'next/image'
@@ -23,7 +23,7 @@ const PopContainer = (props: any) => {
         <div className={styles.topbar}>
             <label>{name}</label>
             {/* <Image src={CloseIcon} width={15} height={15} alt={''} onClick={onClose} /> */}
-            <CloseSharpIcon onClick={onClose} style={{color:'#BCBCBC'}}/>
+            <CloseSharpIcon onClick={onClose} style={{ color: '#BCBCBC' }} />
         </div>
         <div className={styles.content}>{children}</div>
         {multiple && <div className={styles.buttonContent}>

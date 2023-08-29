@@ -834,7 +834,7 @@
           "error": "删除简历失败"
         },
         "bossjob": {
-          "title": "Bossjob 简历模版",
+          "title": "Bossjob resume",
           "tips": "简历是帮助您进入求职过程下一步的重要工具。 使用 Bossjob 个人资料中的其他信息给招聘人员留下深刻印象。",
           "download": "下载"
         },
@@ -1061,7 +1061,7 @@
     "finishedText": "完成",
     "finishedLabel": "您可以向面试官索要结果",
     "requestResult": "索要面试结果",
-    "requestAfter": "在面试结束之后可以向面试官索要结果",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "来自企业 {{companyName}} 的面试",
     "buttonText": "完成",
     "notAttend": "您没有参加面试",

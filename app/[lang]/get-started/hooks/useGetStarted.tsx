@@ -59,7 +59,7 @@ const useGetStarted = () => {
     loginFailed()
   }, [error])
   // const [loading, startTransition] = useTransition()
-  const handleAuthenticationJobseekersLogin = (code) => {
+  const handleAuthenticationJobseekersLogin = (code, referral_code, invited_source) => {
     setEmailOTPInputDisabled(true)
     const uuid = localStorage.getItem('uuid')
     const data = {
@@ -67,7 +67,9 @@ const useGetStarted = () => {
       otp: code,
       source: isMobile ? 'mobile_web' : 'web',
       userId,
-      browser_serial_number: uuid
+      browser_serial_number: uuid,
+      referral_code,
+      invited_source
     }
     if (!uuid) {
       delete data.browser_serial_number
@@ -79,7 +81,7 @@ const useGetStarted = () => {
     // })
   }
 
-  const handleAuthenticationJobseekersLoginPhone = (code, phone_num) => {
+  const handleAuthenticationJobseekersLoginPhone = (code, phone_num, referral_code, invited_source) => {
     const uuid = localStorage.getItem('uuid')
     setEmailOTPInputDisabled(true)
     const data = {
@@ -89,7 +91,9 @@ const useGetStarted = () => {
       userId,
       browser_serial_number: uuid,
       mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]
-        ?.id
+        ?.id,
+      referral_code,
+      invited_source
     }
     // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)
