@@ -9,7 +9,6 @@ import ReadMore from './ReadMore'
 import React from 'react'
 import { accessToken } from 'helpers/cookies'
 import styles from '../../../page.module.scss'
-import JobClient from './JobClient/JobClient'
 type propsType = {
   description?: string
   requirements?: string
@@ -29,12 +28,9 @@ const Desc = ({
   skills,
   chatResponseRate,
   lastActiveAt,
-  shareParams,
   recruiter,
   languages
 }: propsType) => {
-  const cookieStore = cookies()
-  const token = cookieStore.get(accessToken)
   const { content } = languages
 
   return (
@@ -74,15 +70,7 @@ const Desc = ({
               {/* <JobClient isLogin={Boolean(token)} showText={false} {...shareParams} /> */}
             </div>
           </h5>
-          {/* <div className={styles.desc_title_change}>
-            <JobClient isLogin={Boolean(token)} {...shareParams} />
-          </div> */}
         </div>
-
-        {/* <div
-          className={styles.desc_context}
-          dangerouslySetInnerHTML={{ __html: description }}
-        ></div> */}
         <ReadMore
           key={'description'}
           expandText={content.showMore}
