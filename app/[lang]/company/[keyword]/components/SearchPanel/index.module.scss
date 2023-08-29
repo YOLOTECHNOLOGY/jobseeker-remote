@@ -364,6 +364,10 @@
 
 .jobcard_salary_wrapper {
   position: relative;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .salary {
   font-family: 'Product Sans';
