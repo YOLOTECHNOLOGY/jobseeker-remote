@@ -15,7 +15,7 @@ import { languageContext } from '../../../../components/providers/languageProvid
 import Image from 'next/image'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
-import { getCountryId } from 'helpers/country'
+import { getAppStoreLink, getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
 import { setCookie } from 'helpers/cookies'
@@ -258,7 +258,7 @@ const SearchArea = (props: any) => {
                       <p className={styles.getAppTips}>{home?.search?.youMustInstallApp}</p>
                       <div>
                         <Link
-                          to={process.env.APP_STORE_LINK}
+                          to={getAppStoreLink()}
                           external
                           style={{ marginRight: '20px' }}
                         >

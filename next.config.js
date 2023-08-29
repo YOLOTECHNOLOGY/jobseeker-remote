@@ -90,7 +90,7 @@ module.exports = withBundleAnalyzer({
     AICV_HOST: process.env.AICV_HOST,
     BLOG_BOSSJOB: 'https://blog.bossjob.ph',
     GOOGLE_PLAY_STORE_LINK: 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp',
-    APP_STORE_LINK: 'https://apps.apple.com/sg/app/bossjob/id1592073585',
+    APP_STORE_LINK: 'https://apps.apple.com/COUNTRY_KEY/app/bossjob/id1592073585',
     GALAXY_APP_STORE_LINK: 'https://galaxystore.samsung.com/detail/com.poseidon.bossjobapp',
     HUAWEI_APP_STORE_LINK: 'https://appgallery.huawei.com/#/app/C108906999',
     XIAOMI_APP_STORE_LINK:

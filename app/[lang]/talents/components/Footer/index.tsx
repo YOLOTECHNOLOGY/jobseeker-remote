@@ -11,7 +11,7 @@ import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { languageContext } from 'app/components/providers/languageProvider'
 
 import { appLinkUrl } from 'helpers/constants'
-import { getCountryKey } from 'helpers/country'
+import { getAppStoreLink, getCountryKey } from 'helpers/country'
 import { getCookie } from '../../../../../helpers/cookies'
 import useWindowSize from '../../../../../hooks/useWindowSize'
 
@@ -219,7 +219,7 @@ const Footer = () => {
           <div className={style.mobile_footer_title}>{downloadBossjobApp}</div>
           <div className={style.mobile_footer_download}>
             <div className={style.mobile_footer_download_appStore} >
-              <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+              <Link href={getAppStoreLink()} target={'_blank'}>
                 <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
               </Link>
               <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
@@ -312,7 +312,7 @@ const Footer = () => {
       <div className={style.footer_title}>{downloadBossjobApp}</div>
       <div className={style.footer_download}>
         <div className={style.footer_download_appStore} >
-          <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+          <Link href={getAppStoreLink()} target={'_blank'}>
             <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
           </Link>
           <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>

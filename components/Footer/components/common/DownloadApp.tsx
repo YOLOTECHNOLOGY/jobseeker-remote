@@ -1,7 +1,8 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'components/Link'
 
-import Image from 'next/image'
+import { getAppStoreLink, getCountryKey } from 'helpers/country'
 
 /* Images */
 import { footer_apple_download, footer_googleplay_download, FooterGalaxyAppStore, FooterHuaweiAppStore, FooterXiaomiAppStore } from 'images'
@@ -16,7 +17,7 @@ const DownloadApp = (props: any) => {
     <div className={styles.footerDownloadApp}>
       <p className={styles.footerDownloadAppText}>{downloadBossjobApp}</p>
       <div className={styles.footerDesktopAppList}>
-        <Link to={process.env.APP_STORE_LINK} external>
+        <Link to={getAppStoreLink()} external>
           <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
         </Link>
         <Link to={process.env.GOOGLE_PLAY_STORE_LINK} external>

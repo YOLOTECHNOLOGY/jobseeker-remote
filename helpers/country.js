@@ -10,10 +10,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 165,
       is_popular: false,
-      key: "downtown_core",
-      region_display_name: "Central",
-      seo_value: "downtown-core",
-      value: "Downtown Core",
+      key: 'downtown_core',
+      region_display_name: 'Central',
+      seo_value: 'downtown-core',
+      value: 'Downtown Core'
     },
     currency: 'usd',
     id: 241
@@ -24,11 +24,11 @@ const countryCounfig = [
     url: 'bossjob.ph',
     defaultLocation: {
       id: 63,
-      key: "manila",
-      value: "Manila",
+      key: 'manila',
+      value: 'Manila',
       is_popular: false,
-      region_display_name: "National Capital Region",
-      seo_value: "manila"
+      region_display_name: 'National Capital Region',
+      seo_value: 'manila'
     },
     currency: 'php',
     id: 167
@@ -40,10 +40,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 165,
       is_popular: false,
-      key: "downtown_core",
-      region_display_name: "Central",
-      seo_value: "downtown-core",
-      value: "Downtown Core",
+      key: 'downtown_core',
+      region_display_name: 'Central',
+      seo_value: 'downtown-core',
+      value: 'Downtown Core'
     },
     currency: 'sgd',
     id: 193
@@ -55,10 +55,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 1714,
       is_popular: false,
-      key: "chuo_ku",
-      region_display_name: "Tokyo To",
-      seo_value: "chuo-ku",
-      value: "Chuo Ku"
+      key: 'chuo_ku',
+      region_display_name: 'Tokyo To',
+      seo_value: 'chuo-ku',
+      value: 'Chuo Ku'
     },
     currency: 'jpy',
     id: 105
@@ -70,10 +70,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 450,
       is_popular: false,
-      key: "jakarta_pusat",
-      region_display_name: "Jakarta Pusat",
-      seo_value: "jakarta_pusat",
-      value: "Jakarta Pusat",
+      key: 'jakarta_pusat',
+      region_display_name: 'Jakarta Pusat',
+      seo_value: 'jakarta_pusat',
+      value: 'Jakarta Pusat'
     },
     currency: 'idr',
     id: 96
@@ -85,10 +85,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 2857,
       is_popular: false,
-      key: "cheung_chau_area",
-      region_display_name: "Cheung Chau Area",
-      seo_value: "cheung_chau_area",
-      value: "Cheung Chau Area",
+      key: 'cheung_chau_area',
+      region_display_name: 'Cheung Chau Area',
+      seo_value: 'cheung_chau_area',
+      value: 'Cheung Chau Area'
     },
     currency: 'hkd',
     id: 92
@@ -100,10 +100,10 @@ const countryCounfig = [
     defaultLocation: {
       id: 2487,
       is_popular: false,
-      key: "zhongzheng_district",
-      region_display_name: "Zhongzheng District",
-      seo_value: "zhongzheng_district",
-      value: "Zhongzheng District",
+      key: 'zhongzheng_district',
+      region_display_name: 'Zhongzheng District',
+      seo_value: 'zhongzheng_district',
+      value: 'Zhongzheng District'
     },
     currency: 'twd',
     id: 211
@@ -115,14 +115,14 @@ const countryCounfig = [
     defaultLocation: {
       id: 2918,
       is_popular: false,
-      key: "kuala_lumpur",
-      region_display_name: "Kuala Lumpur",
-      seo_value: "kuala_lumpur",
-      value: "Kuala Lumpur",
+      key: 'kuala_lumpur',
+      region_display_name: 'Kuala Lumpur',
+      seo_value: 'kuala_lumpur',
+      value: 'Kuala Lumpur'
     },
     currency: 'myr',
     id: 127
-  },
+  }
   // {
   //   name: 'Macau',
   //   key: 'mo',
@@ -145,7 +145,7 @@ export const languages = [
   { value: 'zh-CN', id: 2, label: '中文 (简体)' },
   { value: 'id-ID', id: 3, label: 'Indonesia' },
   { value: 'ja-JP', id: 4, label: '日本語' },
-  { value: 'zh-TW', id: 5, label: '中文(繁體)' },
+  { value: 'zh-TW', id: 5, label: '中文(繁體)' }
   // { value: 'ms-MY', id: 5, label: 'Bahasa Malaysia' }
 ]
 export const serverContryCodeMap = {
@@ -154,28 +154,29 @@ export const serverContryCodeMap = {
   'id-ID': 'id',
   'ja-JP': 'ja',
   'zh-TW': 'zh-TW',
-  'ms-MY': 'ms',
+  'ms-MY': 'ms'
 }
 
-export const getLanguageCode = langKey => serverContryCodeMap[langKey] ?? langKey
-export const getLangKeyByCode = langCode => {
-  const langKey = Object.keys(serverContryCodeMap).find(key => serverContryCodeMap[key] === langCode)
+export const getLanguageCode = (langKey) => serverContryCodeMap[langKey] ?? langKey
+export const getLangKeyByCode = (langCode) => {
+  const langKey = Object.keys(serverContryCodeMap).find(
+    (key) => serverContryCodeMap[key] === langCode
+  )
   return langKey ?? langCode
 }
 
-export const nations = countryCounfig.map(item => {
+export const nations = countryCounfig.map((item) => {
   return {
     value: item.key,
     label: item.name,
     id: item.id
   }
 })
-export const getDefaultLocation = key => {
-
-  return countryCounfig.find(item => item.key === key)?.defaultLocation
+export const getDefaultLocation = (key) => {
+  return countryCounfig.find((item) => item.key === key)?.defaultLocation
 }
 
-const defaultNation = nations[0];
+const defaultNation = nations[0]
 
 export const defaultCountryKey = () => defaultNation.value
 export const defaultCountryId = () => defaultNation.id
@@ -186,11 +187,9 @@ export const defaultLanguage = () => languages[0].value
 export const defaultLanguageFullName = () => languages[0].label
 export const defaultLanguageId = () => languages[0].id
 
-
 /**
  * TODO: the geoConfiguration's value is not always sames as URL
  */
-
 
 // /**
 //  * get Country key from Url
@@ -208,12 +207,10 @@ export const defaultLanguageId = () => languages[0].id
 //   return countryKey || defaultCountryKey()
 // }
 
-
-
 export const getCountryKey = () => {
   const path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
-  const country = countryCounfig.find(item => path?.includes?.(item.url))
+  const country = countryCounfig.find((item) => path?.includes?.(item.url))
   if (country) {
     return country.key
   } else {
@@ -224,27 +221,29 @@ export const getCountryKey = () => {
 
 /**
  * get countryId by URL and supported countries
- * @returns 
+ * @returns
  */
 export const getCountryId = () => {
   const countryKey = getCountryKey()
-  return countryCounfig.find(item => item.key === countryKey)?.id ?? defaultCountryId()
+  return countryCounfig.find((item) => item.key === countryKey)?.id ?? defaultCountryId()
 }
 
 /**
  * get language code by URL or geoConfiguration in cookies
- * @returns 
+ * @returns
  */
 export const getLang = () => {
   let path =
     typeof window === 'undefined' ? process.env.NEXT_PUBLIC_HOST_PATH : window.location.href
   path = path?.split?.('//')[1]?.split?.('/')?.[1] // https://dev.bossjob.sg/en-US/...
-  return languages.map(item => item.value).includes(path) ? path : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
+  return languages.map((item) => item.value).includes(path)
+    ? path
+    : getCookie(configKey)?.split('_')?.[1] || defaultLanguage()
 }
 
 /**
  * get language's full name from url or geoConfiguration in cookies
- * @returns 
+ * @returns
  */
 export const getLanguage = () => {
   const langCode = getLang()
@@ -255,7 +254,7 @@ export const getLanguage = () => {
 
 /**
  * get language's id from url or geoConfiguration in cookies
- * @returns 
+ * @returns
  */
 export const getLanguageId = () => {
   const langCode = getLang()
@@ -265,24 +264,30 @@ export const getLanguageId = () => {
 }
 /**
  * get country's full name from url, e.g. ph => Philippines
- * @returns 
+ * @returns
  */
 export const getCountry = () => {
-  const countryKey = getCountryKey();
-  const country = nations.find(v => v.value === countryKey)
+  const countryKey = getCountryKey()
+  const country = nations.find((v) => v.value === countryKey)
 
   return country?.label || defaultCountry()
 }
 
-export const countryForCurrency = key => {
-
-  return countryCounfig.find(item => item.key === key)?.currency ?? defaultCurrency()
+export const countryForCurrency = (key) => {
+  return countryCounfig.find((item) => item.key === key)?.currency ?? defaultCurrency()
 }
-
 
 export const countryForPhoneCode = {
   ph: '+63',
   sg: '+65',
   jp: '+81',
   id: '+62'
+}
+
+export const getAppStoreLink = () => {
+  let key = getCountryKey()
+  if (key == 'com') {
+    key = 'sg'
+  }
+  return process.env.APP_STORE_LINK.replace('COUNTRY_KEY', key)
 }
