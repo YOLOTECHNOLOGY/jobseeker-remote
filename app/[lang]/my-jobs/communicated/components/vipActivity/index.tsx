@@ -11,16 +11,16 @@ import {
 const VipActivity = ({ accessToken }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
-  const getResumeTemplateHostRef = useRef('')
-  if (process.env.NODE_ENV === 'production') {
-    getResumeTemplateHostRef.current = 'https://bossjob.ph/'
-  }
-  else if (process.env.NODE_ENV === 'development') {
-    getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
-  }
-  else {
-    getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
-  }
+  // const getResumeTemplateHostRef = useRef('')
+  // if (process.env.NODE_ENV === 'production') {
+  //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
+  // }
+  // else if (process.env.NODE_ENV === 'development') {
+  //   getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
+  // }
+  // else {
+  //   getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
+  // }
   useEffect(() => {
     fetchUserOwnDetailService({ accessToken }).then(res => {
       if (res?.data?.data) {
@@ -51,13 +51,13 @@ const VipActivity = ({ accessToken }) => {
       {vipModal && <VipShareModal
         referral_code={referralCode}
         lang={getLang()}
-        host={getResumeTemplateHostRef.current}
+        //host={getResumeTemplateHostRef.current}
         handleCloseModal={() => setVipModal(false)} />}
     </>
 
   )
 }
-const VipShareModal = ({ referral_code, host, lang, handleCloseModal }) => {
+const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
   const copyTextRef = useRef(null)
 
   return (
@@ -88,7 +88,11 @@ const VipShareModal = ({ referral_code, host, lang, handleCloseModal }) => {
                 new user registration automatically get VIP
               </p>
             </div>
-            <p className={styles.links} ref={copyTextRef}>{`${host}${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</p>
+            <p className={styles.links} ref={copyTextRef}>
+              <a href={`${process.env.NEW_PROJECT_URL}${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">
+                {`${process.env.NEW_PROJECT_URL}${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}
+              </a>
+            </p>
             <Button
               variant="contained"
               className={styles.copyButton}
