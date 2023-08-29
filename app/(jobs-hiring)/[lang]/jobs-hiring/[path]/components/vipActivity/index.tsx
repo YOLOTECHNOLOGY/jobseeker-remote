@@ -87,7 +87,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
                 new user registration automatically get VIP
               </p>
             </div>
-            <p className={styles.links} ref={copyTextRef}><a target="_blank" href={`${process.env.NEW_PROJECT_URL}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}>{`${process.env.NEW_PROJECT_URL}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
+            <p className={styles.links} ref={copyTextRef}><a target="_blank" href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}>{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
             <Button
               variant="contained"
               className={styles.copyButton}

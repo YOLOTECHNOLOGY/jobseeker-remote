@@ -263,7 +263,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               </p>
             </div>
             <p className={styles.links} ref={copyTextRef}>
-              <a href={`${process.env.NEW_PROJECT_URL}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${process.env.NEW_PROJECT_URL}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
+              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
             <Button
               variant="contained"
               className={styles.copyButton}
