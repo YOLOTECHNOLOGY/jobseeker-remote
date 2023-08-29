@@ -24,6 +24,8 @@ const AppleLogin = (props: IApple) => {
     showTitle = true
   } = props
   const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   const [init, setInit] = useState(false)
   const { defaultLoginCallBack, handleAuthenticationSocialLogin } = useGetStarted()
 
@@ -97,7 +99,9 @@ const AppleLogin = (props: IApple) => {
         social_user_token: payload?.authorization?.id_token,
         social_type: 'apple',
         social_user_id: decodeJwt.sub || '',
-        source: isMobile ? 'mobile_web' : 'web'
+        source: isMobile ? 'mobile_web' : 'web',
+        referral_code: referralCode || undefined,
+        invited_source: invitedSource || undefined
       }
       // submit
       handleAuthenticationSocialLogin(data).then((res) => {

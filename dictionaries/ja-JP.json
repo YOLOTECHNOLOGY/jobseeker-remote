@@ -455,8 +455,8 @@
     },
     "shareModal": {
       "title": "この求人を共有する",
-      "facebook": "Facebook",
-      "twitter": "Twitter",
+      "facebook": "フェイスブック",
+      "twitter": "ツイッター",
       "linkedin": "LinkedIn",
       "link": "ページリンク",
       "linkCopied": "リンクがコピーされました"
@@ -834,7 +834,7 @@
           "error": "履歴書の削除に失敗しました"
         },
         "bossjob": {
-          "title": "Bossjob履歴書",
+          "title": "Bossjob resume",
           "tips": "Bossjobでプロフィールを作成すると、履歴書が自動的に作成されます。利用可能なテンプレートから選択し、新しく改善された履歴書を使用してBossjobの求人に応募することができます。",
           "download": "ダウンロード"
         },
@@ -865,7 +865,7 @@
           "title": "自己紹介ビデオ",
           "descTips": "ビデオ形式のMP4、3分以内の時間制御",
           "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
-          "confirmTitle": "Remove video resume"
+          "confirmTitle": "動画の履歴書を削除"
         }
       }
     }
@@ -1061,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
+    "requestAfter": "You can request interview result after interview completed",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
@@ -1337,7 +1337,7 @@
     "validateErr": "このメールアドレスは既に使用されています。別のメールアドレスに変更してください",
     "checkYourSpam": "コードが届かない場合はスパムメールを確認してください",
     "authenticationSuccessful": "認証に成功しました",
-    "Bossjob": "Bossjob",
+    "Bossjob": "ボスジョブ",
     "back": "戻る"
   },
   "seo": {

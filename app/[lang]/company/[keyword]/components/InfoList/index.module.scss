@@ -1,4 +1,4 @@
-@use "../../base";
+@use '../../base';
 .tab_content_wrapper {
   width: 746px;
   @include base.respond-to(phone) {
@@ -100,7 +100,7 @@
   line-height: 23px;
   white-space: pre-wrap;
   @include base.respond-to(phone) {
-    font-family: "Product Sans";
+    font-family: 'Product Sans';
     font-weight: 400;
     font-size: 0.15rem;
     line-height: 0.23rem;
@@ -118,7 +118,7 @@
   text-overflow: ellipsis;
 }
 .more {
-  font-family: "Product Sans";
+  font-family: 'Product Sans';
   font-weight: 400;
   font-size: 14px;
   line-height: 23px;

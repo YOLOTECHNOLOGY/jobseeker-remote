@@ -77,6 +77,20 @@ const deleteVideoResume = (id) => {
   return axios.delete(URL)
 }
 
+const resumeTemplateList = () => {
+  const axios = configuredAxios('resumeTemplate', 'protected')
+  const URL = '/public/list'
+  return axios.get(URL)
+}
+
+const publicResumeClick = (data) => {
+  const axios = configuredAxios('resumeTemplate', 'protected')
+  const URL = '/jobseeker/public-resume-click'
+  return axios.post(URL, {
+    ...data
+  })
+}
+
 export {
   uploadUserResumeService,
   uploadVideoCover,
@@ -84,5 +98,7 @@ export {
   uploadVideoToAmazonService,
   generatePresignedUrl,
   getVideoResumeList,
-  deleteVideoResume
+  deleteVideoResume,
+  resumeTemplateList,
+  publicResumeClick
 }

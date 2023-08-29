@@ -14,8 +14,10 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-import Turnstile, { useTurnstile } from 'react-turnstile'
+
 import { cfKey } from 'helpers/cookies'
+import Turnstile, { useTurnstile } from "react-turnstile";
+import { useSearchParams } from 'next/navigation'
 
 interface IProps {
   lang: any
@@ -43,6 +45,9 @@ const loginForEmail = (props: IProps) => {
   const emailRef = useRef(null)
   const cfTokenRef = useRef(null)
   const isDisableRef = useRef(null)
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -89,11 +94,25 @@ const loginForEmail = (props: IProps) => {
           setLoginData({ ...res?.data?.data, email: emailRef.current })
         } else {
           if (user_id) {
-            router.push(
-              `${pathname}?step=2&&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`
-            )
+            if (referralCode && invitedSource) {
+              router.push(
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}&referral_code=${referralCode}&invited_source=${invitedSource}`
+              )
+            }
+            else {
+              router.push(
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`
+              )
+            }
+
           } else {
-            router.push(`${pathname}?step=2&&email=${emailRef.current}`)
+            if (referralCode && invitedSource) {
+              router.push(`${pathname}?step=2&email=${emailRef.current}&referral_code=${referralCode}&invited_source=${invitedSource}`)
+            }
+            else {
+              router.push(`${pathname}?step=2&email=${emailRef.current}`)
+            }
+
           }
         }
       })
