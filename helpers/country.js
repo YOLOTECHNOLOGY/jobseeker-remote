@@ -90,7 +90,7 @@ const countryCounfig = [
       seo_value: "zhongzheng_district",
       value: "Zhongzheng District",
     },
-    currency: 'ntd',
+    currency: 'twd',
     id: 211
   },
   {

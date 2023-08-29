@@ -83,6 +83,8 @@ const EditJobPreferencesModal = ({
       currencyKey: preference?.currency_key ?? countryForCurrency(getCountryKey())
     }
   }, [preference])
+
+  console.log('defaultValues:', preference?.currency_key)
   const dispatch = useDispatch()
   const [maxSalaryOptions, setMaxSalaryOptions] = useState([])
   const isUpdating = useSelector((store: any) => store.users.updateUserPreferences.fetching)
