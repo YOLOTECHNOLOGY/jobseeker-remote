@@ -68,7 +68,6 @@ const EditJobPreferencesModal = ({
     return formattedLocationList.find((l) => l.key === preference?.location_key)
   }, [formattedLocationList, preference?.location_key])
   // to add work setting
-  alert(getCountryKey())
   const defaultValues = useMemo(() => {
     return {
       jobTitle: {

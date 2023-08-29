@@ -116,13 +116,15 @@ const JobClient = (props: sharePropsType) => {
 
   const styleICon = {
     fontSize: '20px',
-    paddingRight: '4px'
+    paddingRight: '4px',
+    marginTop: '3px'
   }
 
   return (
     <>
       <span
         className={styles.item}
+        style={{ marginRight: '17px' }}
         onClick={() => {
           if (!accessToken) {
             sessionStorage.setItem('redirectPage', window?.location?.pathname)
@@ -158,7 +160,7 @@ const JobClient = (props: sharePropsType) => {
           <>
             <i
               className='icon-save'
-              style={{ ...styleICon, marginRight: '2px', position: 'relative', top: '1px' }}
+              style={{ ...styleICon, marginRight: '2px', position: 'relative', top: '3px' }}
             />
             {showText && <span style={{ textTransform: 'capitalize' }}>{header.save}</span>}
           </>
