@@ -8,9 +8,12 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
+import DialogLogin from 'app/components/LoginDialog'
+
 const VipActivity = ({ accessToken }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
   // const getResumeTemplateHostRef = useRef('')
   // if (process.env.NODE_ENV === 'production') {
   //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
@@ -29,9 +32,19 @@ const VipActivity = ({ accessToken }) => {
     })
   }, [accessToken])
 
+  const handleVipModalClick = () => {
+    if (accessToken) {
+      setVipModal(true)
+    }
+    else {
+      setLoginModal(true)
+    }
+  }
+
+
   return (
     <>
-      <div className={styles.vipImage} onClick={() => setVipModal(true)}>
+      <div className={styles.vipImage} onClick={handleVipModalClick}>
         <Button
           variant='contained'
           className={styles.btn}
@@ -52,6 +65,7 @@ const VipActivity = ({ accessToken }) => {
         referral_code={referralCode}
         lang={getLang()}
         handleCloseModal={() => setVipModal(false)} />}
+      {loginModal && <DialogLogin open={loginModal} handleClose={() => setLoginModal(false)} />}
     </>
 
   )
