@@ -1109,7 +1109,7 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      border: 1px solid #2378e5;
+      // border: 1px solid #2378e5;
 
       &:hover {
         border-color: #2378e5;
@@ -1492,7 +1492,7 @@
       letter-spacing: 1px;
     }
 
-    > p {
+    >p {
       color: #2378e5;
       font-size: 16px;
       padding-left: 9px;
@@ -1511,13 +1511,14 @@
       border: 1px solid #579bf5;
 
       .icon {
+
         svg,
         path {
           fill: #579bf5;
         }
       }
 
-      > p {
+      >p {
         color: #579bf5;
       }
 
