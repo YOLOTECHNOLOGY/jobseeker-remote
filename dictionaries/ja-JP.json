@@ -834,7 +834,7 @@
           "error": "履歴書の削除に失敗しました"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "Bossjob resume template",
           "tips": "Bossjobでプロフィールを作成すると、履歴書が自動的に作成されます。利用可能なテンプレートから選択し、新しく改善された履歴書を使用してBossjobの求人に応募することができます。",
           "download": "ダウンロード"
         },
@@ -1047,7 +1047,7 @@
   },
   "chatInterview": {
     "confirmText": "面接が確定しました",
-    "confirmLabel": "面接は現在キャンセルできません",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "面接をキャンセルする",
     "canNotCancel": "面接は現在キャンセルできません",
     "checkedText": "チェックイン済み",
@@ -1061,7 +1061,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "You can request interview result after interview completed",
+    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
@@ -1081,6 +1081,7 @@
     "back": "戻る",
     "next": "次へ",
     "close": "閉じる",
+    "send": "Send",
     "resultTitle": "面接結果",
     "resultText": "面接に出席しましたか？",
     "attendancelabel": "面接出席",
@@ -1348,7 +1349,7 @@
     "hk": "中国香港",
     "tw": "中国台湾",
     "mo": "中国マカオ",
-    "my": "Malaysia",
+    "my": "マレーシア",
     "siteName": "Bossjob - プロフェッショナル向けのチャットファーストキャリアプラットフォーム | {{country}}",
     "metaDescription": "Bossjobは、優れた人材と優良企業をつなぐチャットファーストのキャリアプラットフォームです。現地勤務からリモートワークまで、さまざまな求人を選択できます。次の夢の仕事をBossjobで応募しましょう！",
     "jobSearch": {

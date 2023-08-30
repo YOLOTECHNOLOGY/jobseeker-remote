@@ -834,7 +834,7 @@
           "error": "Failed to delete resume"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "Bossjob resume template",
           "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
           "download": "Download"
         },
@@ -1047,7 +1047,7 @@
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
-    "confirmLabel": "Your interview cannot be cancelled now",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "Cancel interview",
     "canNotCancel": "Your interview cannot be cancelled now",
     "checkedText": "Checked-In",
@@ -1081,6 +1081,7 @@
     "back": "Back",
     "next": "Next",
     "close": "Close",
+    "send": "Send",
     "resultTitle": "Interview result",
     "resultText": "Did you attended the interview?",
     "attendancelabel": "Interview attendance",

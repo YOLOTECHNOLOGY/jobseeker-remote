@@ -834,7 +834,7 @@
           "error": "Gagal menghapus resume"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "Bossjob resume template",
           "tips": "Saat Anda membuat profil di Bossjob, kami membuatkan resume untuk Anda. Anda dapat memilih dari templat yang tersedia dan menggunakan resume Anda yang baru diperbaiki untuk melamar lowongan pekerjaan di Bossjob.",
           "download": "Unduh"
         },
@@ -1047,7 +1047,7 @@
   },
   "chatInterview": {
     "confirmText": "Wawancara Dikonfirmasi",
-    "confirmLabel": "Wawancara Anda tidak dapat dibatalkan sekarang",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "Batalkan wawancara",
     "canNotCancel": "Wawancara Anda tidak dapat dibatalkan sekarang",
     "checkedText": "Check in",
@@ -1061,7 +1061,7 @@
     "finishedText": "Selesai",
     "finishedLabel": "Anda dapat meminta hasil wawancara dari perekrut",
     "requestResult": "Diminta untuk mendapatkan hasil",
-    "requestAfter": "You can request interview result after interview completed",
+    "requestAfter": "Anda dapat meminta hasil wawancara setelah wawancara selesai",
     "title": "Undangan Wawancara dari {{companyName}}",
     "buttonText": "Selesai",
     "notAttend": "Anda tidak menghadiri wawancara.",
@@ -1081,6 +1081,7 @@
     "back": "Kembali",
     "next": "Berikutnya",
     "close": "Tutup",
+    "send": "Send",
     "resultTitle": "Hasil wawancara",
     "resultText": "Apakah Anda menghadiri wawancara?",
     "attendancelabel": "Kehadiran wawancara",
