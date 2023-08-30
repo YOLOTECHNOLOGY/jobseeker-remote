@@ -17,7 +17,6 @@ import MaterialButton from 'components/MaterialButton'
 /* Images */
 import { DefaultAvatar } from 'images'
 import { useProfileData } from 'app/components/providers/profileProvider'
-import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 
 interface IProps {
   langKey: string
@@ -44,11 +43,6 @@ const NavRight = (props: IProps) => {
     }
   }, [userInfo])
 
-  useEffect(() => {
-    accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
-      console.log('xxx:', res.data)
-    })
-  }, [accessToken])
 
   const manageProfileCss = {
     height: '40px !important',
@@ -119,16 +113,35 @@ const NavRight = (props: IProps) => {
         </li>
         <li className={styles.headerLink}>
           <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
-            <Image
-              src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
-              className={styles.profilePlaceHolder}
-              width={35}
-              height={35}
-              alt='avatar'
-              onError={(e) => {
-                ; (e.target as HTMLInputElement).src = DefaultAvatar
-              }}
-            />
+            {userInfo?.vip?.is_vip ?
+              <div className={styles.vipAvatar}>
+                <Image
+                  src={require('./vip_user_icon.png').default.src}
+                  width={23}
+                  height={9}
+                  alt=""
+                  style={{ position: 'absolute', bottom: '-1px', right: 0 }} />
+                <Image
+                  src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                  className={styles.profilePlaceHolder}
+                  width={35}
+                  height={35}
+                  alt='avatar'
+                  onError={(e) => {
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                  }}
+                />
+              </div> :
+              <Image
+                src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                className={styles.profilePlaceHolder}
+                width={35}
+                height={35}
+                alt='avatar'
+                onError={(e) => {
+                  ; (e.target as HTMLInputElement).src = DefaultAvatar
+                }}
+              />}
             <div className={styles.profileCaretWrapper}>
               <div className={styles.profileCaret} />
             </div>

@@ -163,13 +163,23 @@ const Resume = (props: any) => {
   const VIf = (props) => {
     return props.show ? props.children : null
   }
-
+  console.log('userdetail:', userDetail.vip)
   return (
     <>
       <div className={styles.resumeContainer}>
         <div className={styles.resume}>
           <div className={styles.user}>
-            <Image src={avatar} width={60} height={60} alt='avatar' />
+            {!userDetail?.vip?.is_vip ? <Image src={avatar} width={60} height={60} alt='avatar' /> :
+              <div className={styles.vipAvatar}>
+                <Image
+                  src={require('./vip_user_icon.png').default.src}
+                  alt=""
+                  width={26}
+                  height={10}
+                  style={{ position: 'absolute', bottom: '-2px', right: 0, borderRadius: 0 }}
+                />
+                <Image src={avatar} width={60} height={60} alt='avatar' />
+              </div>}
             <VIf show={fullName || birthdate || xpLvl || educations?.length > 0}>
               <div className={styles.info}>
                 <p>{fullName}</p>
