@@ -106,7 +106,7 @@ const UserProfileOverview = ({
     // alert(referral_code)
     console.log('lang:', getLang())
   }, [referral_code])
-  const getResumeTemplateHostRef = useRef('')
+  // const getResumeTemplateHostRef = useRef('')
   // if (process.env.ENV === 'production') {
   //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
   // }

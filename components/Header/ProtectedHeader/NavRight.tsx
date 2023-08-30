@@ -4,7 +4,7 @@ import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSelector } from 'react-redux'
 
-import { getCookie } from 'helpers/cookies'
+import { accessToken, getCookie } from 'helpers/cookies'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -17,6 +17,7 @@ import MaterialButton from 'components/MaterialButton'
 /* Images */
 import { DefaultAvatar } from 'images'
 import { useProfileData } from 'app/components/providers/profileProvider'
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 
 interface IProps {
   langKey: string
@@ -27,7 +28,7 @@ interface IProps {
 
 const NavRight = (props: IProps) => {
   const { langKey, lang, totalUnread, handleShowMenu } = props
-  const {profile} = useProfileData();
+  const { profile } = useProfileData();
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
@@ -42,6 +43,12 @@ const NavRight = (props: IProps) => {
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
+
+  useEffect(() => {
+    accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
+      console.log('xxx:', res.data)
+    })
+  }, [accessToken])
 
   const manageProfileCss = {
     height: '40px !important',
@@ -119,7 +126,7 @@ const NavRight = (props: IProps) => {
               height={35}
               alt='avatar'
               onError={(e) => {
-                ;(e.target as HTMLInputElement).src = DefaultAvatar
+                ; (e.target as HTMLInputElement).src = DefaultAvatar
               }}
             />
             <div className={styles.profileCaretWrapper}>
