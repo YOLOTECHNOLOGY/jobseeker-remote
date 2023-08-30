@@ -8,9 +8,12 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
+import DialogLogin from 'app/components/LoginDialog'
+
 const VipActivity = ({ accessToken }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
+  const [loginModal, setLoginModal] = useState(false)
 
   useEffect(() => {
 
@@ -21,9 +24,20 @@ const VipActivity = ({ accessToken }) => {
     })
   }, [accessToken])
 
+
+  const handleVipModalClick = () => {
+    if (accessToken) {
+      setVipModal(true)
+    }
+    else {
+      setLoginModal(true)
+    }
+  }
+
+
   return (
     <>
-      <div className={styles.vipImage} onClick={() => setVipModal(true)}>
+      <div className={styles.vipImage} onClick={handleVipModalClick}>
         <Button
           variant='contained'
           className={styles.btn}
@@ -45,6 +59,7 @@ const VipActivity = ({ accessToken }) => {
         lang={getLang()}
         // host={getResumeTemplateHostRef.current}
         handleCloseModal={() => setVipModal(false)} />}
+      {loginModal && <DialogLogin open={loginModal} handleClose={() => setLoginModal(false)} />}
     </>
 
   )
