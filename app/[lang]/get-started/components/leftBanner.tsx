@@ -3,7 +3,6 @@ import React, { useRef, useEffect } from 'react'
 import Lottie from 'lottie-web'
 import styles from '../index.module.scss'
 import { useSearchParams } from 'next/navigation'
-import Image from 'next/image'
 
 const LeftBanner = () => {
   const container = useRef()
