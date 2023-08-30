@@ -18,6 +18,7 @@ import MaterialButton from 'components/MaterialButton'
 /* Images */
 import { DefaultAvatar } from 'images'
 import { useProfileData } from 'app/components/providers/profileProvider'
+import { getCountry } from 'helpers/country'
 
 interface IProps {
   langKey: string
@@ -63,6 +64,7 @@ const NavRight = (props: IProps) => {
       boxShadow: 'none'
     }
   }
+  console.log('vip', userInfo?.vip?.is_vip, { country: getCountry() })
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
