@@ -85,6 +85,9 @@
     @include text_overflow;
     width: 100%;
   }
+  .userOverviewNameLayoutVip {
+    margin-bottom: 0;
+  }
 
   &Info {
     display: flex;

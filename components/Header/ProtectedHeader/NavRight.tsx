@@ -4,7 +4,7 @@ import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSelector } from 'react-redux'
 
-import { getCookie } from 'helpers/cookies'
+import { accessToken, getCookie } from 'helpers/cookies'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -27,7 +27,7 @@ interface IProps {
 
 const NavRight = (props: IProps) => {
   const { langKey, lang, totalUnread, handleShowMenu } = props
-  const {profile} = useProfileData();
+  const { profile } = useProfileData();
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
@@ -42,6 +42,7 @@ const NavRight = (props: IProps) => {
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
+
 
   const manageProfileCss = {
     height: '40px !important',
@@ -112,16 +113,35 @@ const NavRight = (props: IProps) => {
         </li>
         <li className={styles.headerLink}>
           <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
-            <Image
-              src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
-              className={styles.profilePlaceHolder}
-              width={35}
-              height={35}
-              alt='avatar'
-              onError={(e) => {
-                ;(e.target as HTMLInputElement).src = DefaultAvatar
-              }}
-            />
+            {userInfo?.vip?.is_vip ?
+              <div className={styles.vipAvatar}>
+                <Image
+                  src={require('./vip_user_icon.png').default.src}
+                  width={23}
+                  height={9}
+                  alt=""
+                  style={{ position: 'absolute', bottom: '-1px', right: 0 }} />
+                <Image
+                  src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                  className={styles.profilePlaceHolder}
+                  width={35}
+                  height={35}
+                  alt='avatar'
+                  onError={(e) => {
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                  }}
+                />
+              </div> :
+              <Image
+                src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                className={styles.profilePlaceHolder}
+                width={35}
+                height={35}
+                alt='avatar'
+                onError={(e) => {
+                  ; (e.target as HTMLInputElement).src = DefaultAvatar
+                }}
+              />}
             <div className={styles.profileCaretWrapper}>
               <div className={styles.profileCaret} />
             </div>

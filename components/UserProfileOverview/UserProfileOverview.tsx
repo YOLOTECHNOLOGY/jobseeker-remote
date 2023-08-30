@@ -106,7 +106,7 @@ const UserProfileOverview = ({
     // alert(referral_code)
     console.log('lang:', getLang())
   }, [referral_code])
-  const getResumeTemplateHostRef = useRef('')
+  // const getResumeTemplateHostRef = useRef('')
   // if (process.env.ENV === 'production') {
   //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
   // }
@@ -135,13 +135,25 @@ const UserProfileOverview = ({
                   alt=""
                   style={{ position: 'absolute', bottom: 0, right: 0 }} />
               </div>
-
           }
+        </div>
+        {vip.is_vip ?
+          <div className={styles.userOverviewNameLayout}>
+            <MouseOverPopover className={`${styles.userOverviewName} ${styles.userOverviewNameLayoutVip}`} value={name || '-'}></MouseOverPopover>
+            <p style={{ fontSize: '14px', marginTop: '8px', textAlign: 'center', color: '#515151' }}>
+              <Image
+                src={require('./icon_vip_expires.png').default.src}
+                width={49}
+                height={17}
+                alt=""
+              />
+              <span style={{ marginLeft: '10px' }}>Expire date {vip?.ended_at}</span>
+            </p>
+          </div> :
+          <div className={styles.userOverviewNameLayout}>
+            <MouseOverPopover className={styles.userOverviewName} value={name || '-'}></MouseOverPopover>
+          </div>}
 
-        </div>
-        <div className={styles.userOverviewNameLayout}>
-          <MouseOverPopover className={styles.userOverviewName} value={name || '-'}></MouseOverPopover>
-        </div>
         <div className={styles.userOverviewInfo}>
 
           <div className={styles.userOverviewInfoDetail}>
@@ -263,7 +275,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               </p>
             </div>
             <p className={styles.links} ref={copyTextRef}>
-              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
+              <a href={`${location.origin} /${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a></p>
             <Button
               variant="contained"
               className={styles.copyButton}
@@ -273,9 +285,9 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
             >
               Copy link to invite now
             </Button>
-          </div>
-        </div>
-      </div>
+          </div >
+        </div >
+      </div >
     </div >
   )
 }
