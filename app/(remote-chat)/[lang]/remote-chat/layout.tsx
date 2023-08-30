@@ -33,10 +33,11 @@ export default async function PublicLayout(props: any) {
         />
         <Script
           type="module"
-          async
-          crossOrigin={'anonymous'}
-          src="http://localhost:3008/assets/index.js">
+          // async
+          // crossOrigin={'anonymous'}
+          src="http://localhost:3008/index.js">
         </Script>
+        <link rel="stylesheet" href="http://localhost:3008/index-a.css"></link>
         <link
           rel="preload"
           href="/font/product-sans/ProductSansBold.ttf"

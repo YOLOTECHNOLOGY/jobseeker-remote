@@ -3,7 +3,6 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { CookiesProvider } from 'react-cookie'
 import { PersistGate } from 'redux-persist/integration/react'
-import IMProvider from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 import NotificationProvider from 'components/NotificationProvider'
 import { persistor, wrapper } from '../../models/store'
 import MaintenancePage from 'app/maintenance/page'
@@ -36,7 +35,6 @@ const ClientProviders = (props: any) => {
                     <PersistGate loading={null} persistor={persistor} key={'PersistGate'} />,
                     <LanguageProvider store={LG} key={'LanguageProvider'} />,
                     <ProfileProvider key={'ProfileProvider'} />,
-                    // <IMProvider lang={lang} key={'IMProvider'} />,
                     <NotificationProvider key={'NotificationProvider'} />,
                     <LoginModalProvider lang={lang} key={'LoginModalProvider'} />,
                     <LoadingProvider lang={lang} key={'LoadingProvider'} />,

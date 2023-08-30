@@ -12,7 +12,6 @@ import { getLang } from 'helpers/country'
 import Image from 'next/image'
 /* Helpers */
 import { getCookie } from 'helpers/cookies'
-import { IMContext } from 'app/[lang]/chat/[chat_id]/components/IMProvider.client'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -31,8 +30,7 @@ const ProtectedHeader = ({ lang, position = false }: any) => {
   const [openSwitchNationModal, setOpenSwitchNationModal] = useState<boolean>(false)
   const config = useSelector((store: any) => store.config.config.response)
   const langKey = getLang()
-  const { totalUnread } = useContext(IMContext)
-
+  const totalUnread = 0
   useEffect(() => {
     if (pathname && isShowHeaderMenu) {
       setIsShowHeaderMenu(false)
