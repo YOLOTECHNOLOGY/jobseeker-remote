@@ -21,7 +21,6 @@ async function removeServiceCache(token) {
 }
 
 export async function GET(request, pathParams) {
-  console.log({ pathParams })
   const params = new URL(request.url).searchParams
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
@@ -39,18 +38,6 @@ export async function GET(request, pathParams) {
   // const newUrl = process.env.NEXT_PUBLIC_HOST_PATH
   const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}`)
 
-  // const response = new NextResponse(null, {
-  //   status: 301,
-  //   headers: {
-  //     "Access-Control-Allow-Headers": "Set-Cookie",
-  //     Location: `/${lang}/${pathname}`,
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Access-Control-Allow-Credentials': 'true',
-  //     'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
-  //   }
-  // })
-  // set cookies with token in header
-  // the maxAge unit is second
   const maxTime = 60 * 60 * 24 // a day
   response.cookies.set(accessTokenKey, accessToken, { path: '/', maxAge: accessToken ? maxTime : 0 })
   response.cookies.set(refreshTokenKey, `${refreshToken}`, { path: '/', maxAge: refreshToken ? maxTime : 0 })
@@ -61,14 +48,3 @@ export async function GET(request, pathParams) {
   return response
 }
 
-// export async function OPTIONS() {
-//   return new Response(null, {
-//     status: 204,
-//     headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Access-Control-Allow-Credentials': 'true',
-//       'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS'
-//       // "Access-Control-Allow-Headers": "Set-Cookie"
-//     }
-//   })
-// }
