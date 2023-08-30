@@ -6,7 +6,7 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { getDictionary } from 'get-dictionary'
 const CancelModal = (props: any) => {
     const [show, setShow] = useState(false)
-    const { contextRef, loading, data, applicationId,lang } = props
+    const { contextRef, loading, data, applicationId, lang } = props
     const actionsRef = useRef({} as any)
     const context = {
         showCancel(actions) {
@@ -54,8 +54,8 @@ const CancelModal = (props: any) => {
             name='radio-buttons-group'
             onChange={(e) => setCancelledReason(e.target.value)}
         >
-            <FormControlLabel value={dic.acceptAnother} control={<Radio />} label={dic.acceptAnother||''} />
-            <FormControlLabel value={dic.retime} control={<Radio />} label={dic.retime||''} />
+            <FormControlLabel value={dic.acceptAnother} control={<Radio />} label={dic.acceptAnother || ''} />
+            <FormControlLabel value={dic.retime} control={<Radio />} label={dic.retime || ''} />
         </RadioGroup>
     </Modal>
 }

@@ -1047,7 +1047,7 @@
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
-    "confirmLabel": "Your interview cannot be cancelled now",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "Cancel interview",
     "canNotCancel": "Your interview cannot be cancelled now",
     "checkedText": "Checked-in",
@@ -1081,6 +1081,7 @@
     "back": "Back",
     "next": "Next",
     "close": "Close",
+    "send":"Send",
     "resultTitle": "Interview result",
     "resultText": "Did you attended the interview?",
     "attendancelabel": "Interview attendance",
