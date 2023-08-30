@@ -1081,6 +1081,7 @@
     "back": "Back",
     "next": "Next",
     "close": "Close",
+    "send":"Send",
     "resultTitle": "Interview result",
     "resultText": "Did you attended the interview?",
     "attendancelabel": "Interview attendance",
