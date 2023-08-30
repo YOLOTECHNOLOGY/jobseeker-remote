@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { accessToken, getCookie } from 'helpers/cookies'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -31,17 +32,22 @@ const NavRight = (props: IProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
+  const accessToken = getCookie('accessToken')
 
   const { manageResume, Chat } = lang || {}
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
   const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
-
+  const dispatch = useDispatch()
   useEffect(() => {
     if (userInfo?.id) {
       const hasJobPreferences = userInfo?.job_preferences.length > 0
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
+  useEffect(() => {
+    accessToken && dispatch(fetchUserOwnDetailRequest({ accessToken }))
+
+  }, [accessToken])
 
 
   const manageProfileCss = {

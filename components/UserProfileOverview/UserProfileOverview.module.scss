@@ -178,6 +178,11 @@
     height: auto;
   }
 }
+@media screen and (max-width: 576px) {
+  .vipImage {
+    display: none;
+  }
+}
 .vipShareWrapper {
   display: flex;
   align-items: center;
