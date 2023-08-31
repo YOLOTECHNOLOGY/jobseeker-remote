@@ -34,6 +34,8 @@ import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
 import VipActivity from './vipActivity'
+import Toast from 'app/components/Toast'
+
 moment.locale('en')
 /* Services */
 import { ColorButton } from './Button';
@@ -58,6 +60,8 @@ import Image from 'next/image'
 import Modal from 'components/Modal'
 import Button from '@mui/material/Button'
 import Lightbox from "react-image-lightbox";
+import { pushToResume } from "helpers/push";
+
 import "react-image-lightbox/style.css";
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
@@ -357,16 +361,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
-  // const getResumeTemplateHostRef = useRef('')
-  // if (process.env.NODE_ENV === 'production') {
-  //   getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
-  // }
-  // else if (process.env.NODE_ENV === 'development') {
-  //   getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
-  // }
-  // else {
-  //   getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
-  // }
 
   const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
@@ -395,12 +389,14 @@ const ResumeView = ({ userDetail, lang }: any) => {
     }).then(res => {
       if (res.data.code === 0) {
         if (!is_vip) {
-          window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+          // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+          pushToResume(`resume-edit/${res.data.data.id}`)
         }
 
         else {
           if (res.data.data.is_vip) {
-            window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+            // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+            pushToResume(`resume-edit/${res.data.data.id}`)
           }
           else {
             setVipModal(true)
@@ -408,6 +404,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
         }
 
       }
+    }).catch(err => {
+      Toast.error('Resume cannot exceed 5 copies')
     })
   }
 
