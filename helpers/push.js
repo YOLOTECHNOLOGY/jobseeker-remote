@@ -2,7 +2,7 @@ import {
   accessToken as accessTokenKey,
   refreshToken as refreshTokenKey,
   getCookie,
-  userKey, redirectUrl as redirctWithUrl
+  userKey, redirectUrl as redirectWithUrl
 } from './cookies'
 import { getLang } from './country'
 
@@ -20,7 +20,7 @@ export const pushToResume = path => {
     params.append(accessTokenKey, accessToken)
     params.append(refreshTokenKey, refreshToken)
     params.append(userKey, JSON.stringify(user) ?? '')
-    params.append(redirctWithUrl, path)
-    window.open(`${resumeUrl}/redirct?${params.toString()}`)
+    params.append(redirectWithUrl, path)
+    window.open(`${resumeUrl}/redirect?${params.toString()}`)
   }
 }
