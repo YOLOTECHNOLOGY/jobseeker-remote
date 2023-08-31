@@ -6,7 +6,7 @@ import {
 } from './cookies'
 import { getLang } from './country'
 
-export const pushToResume = path => {
+export const pushToResume = (path = '') => {
   const accessToken = getCookie(accessTokenKey)
   const refreshToken = getCookie(refreshTokenKey)
 
