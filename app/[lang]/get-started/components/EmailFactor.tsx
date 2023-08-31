@@ -12,6 +12,7 @@ import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
 import { CircularProgress } from 'app/components/MUIs'
 import { cfKey } from 'helpers/cookies'
+import Turnstile, { useTurnstile } from "react-turnstile"
 
 function EmailFactor(props: any) {
   const [isDisable, setDisable] = useState<boolean>(true)
@@ -26,6 +27,8 @@ function EmailFactor(props: any) {
   const { newGetStarted } = props.lang
   const emailRef = useRef(null)
   const isDisableRef = useRef(null)
+  const turnstile = useTurnstile()
+  const [cfToken, setCfToken] = useState<string>('')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -101,6 +104,34 @@ function EmailFactor(props: any) {
             validateErr={validateErr}
           />
         </div>
+        {
+          !cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+            <CircularProgress color={'primary'} size={30}
+              style={{ position: 'absolute' }}
+            />
+            <Turnstile
+              sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+              theme='light'
+              appearance='always'
+              // appearance='interaction-only' // invisible managed challenge
+              onVerify={(token) => {
+                setTimeout(() => {
+                  setCfToken(token)
+                  sessionStorage.setItem(cfKey, token)
+                }, 1000)
+              }}
+              onError={() => {
+                turnstile?.reset()
+              }}
+              style={{ position: 'relative', zIndex: 2 }}
+            />
+          </div>
+
+        }
+        {/* {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+          {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
+        </button>} */}
+
         <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
         </button>
