@@ -1,28 +1,35 @@
 'use client'
-import React, { useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Lottie from 'lottie-web'
 import styles from '../index.module.scss'
 import { useSearchParams } from 'next/navigation'
 
 const LeftBanner = () => {
   const container = useRef()
+  const [displayVipImage, setDisplayVipImage] = useState(false)
   const searchParams = useSearchParams()
   const referralCode = searchParams.get('referral_code')
   const invitedSource = searchParams.get('invited_source')
   useEffect(() => {
-    Lottie.loadAnimation({
-      container: container.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: require('images/animation.json')
-    })
+    if (referralCode && invitedSource) {
+      setDisplayVipImage(true)
+    }
+    else {
+      Lottie.loadAnimation({
+        container: container.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: require('images/animation.json')
+      })
+    }
 
     return () => {
-      Lottie.destroy()
+      Lottie?.destroy()
     }
   }, [])
-  if (referralCode && invitedSource) {
+
+  if (displayVipImage) {
     return (
       <div className={`${styles.bannner} ${styles.bannerFlex}`}>
         <div className={styles.bannerText}>
@@ -37,7 +44,7 @@ const LeftBanner = () => {
           </p>
         </div>
         {/* <Image src={require('./getstarted_vip.png').default.src} width={400} height={610} alt="" /> */}
-      </div >
+      </div>
     )
   }
 
