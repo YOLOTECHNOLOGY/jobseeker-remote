@@ -72,7 +72,6 @@ const verifyEmail = function (props) {
 
 
   useEffect(() => {
-    alert('')
     setUserId(userId)
   }, [userId])
 
