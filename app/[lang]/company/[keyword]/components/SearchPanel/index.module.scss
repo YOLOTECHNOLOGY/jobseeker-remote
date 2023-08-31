@@ -298,6 +298,21 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  padding: 1px 0;
+  .urgentLabel {
+    display: inline-flex;
+    padding: 1px 3px;
+    justify-content: center;
+    align-items: center;
+    color: #fffefe;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    border-radius: 4px;
+    background: linear-gradient(128deg, #f64a88, #f56a6a);
+    box-shadow: 0 4px 13px 0 rgba(255, 60, 60, 0.1);
+    margin-right: 8px;
+  }
 }
 .mobile {
   display: none;
@@ -368,6 +383,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-bottom: 0px;
 }
 .salary {
   font-family: 'Product Sans';
@@ -483,7 +499,7 @@
   font-size: 12px;
   line-height: 18px;
   right: 0;
-  top: 0;
+  top: -1px;
   /* identical to box height, or 150% */
 
   text-align: right;

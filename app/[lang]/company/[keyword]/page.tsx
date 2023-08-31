@@ -1,5 +1,5 @@
 'use client';
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import style from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -59,26 +59,26 @@ const Page = () => {
 		setValue(newValue);
 	};
 	const contextLang = useContext(languageContext);
-	const {tab, overview } = contextLang.companyDetail
-	
+	const { tab, overview } = contextLang.companyDetail
+
 	const { detail, jobs, lang, hr, hotJobs, config, jobFunctions } = useCompanyDetail();
 	const tab_title = [tab.CompanyInformation, `${tab.jobs}(${jobs.total_num})`];
-	const {width} = useWindowSize();
+	const { width } = useWindowSize();
 	const isMobile = width < 767;
 
 	const params = getCookie('view-company-buried')
-	
-  useEffect(() => {
-    if (params) {
-      const token = getCookie('accessToken')
-      fetchViewCompany({ ...params, token }).then(() => {
-        removeCookie('view-company-buried')
-      })
-    }
-  }, [])
 
-	if(isMobile){
-		return <MobilePage/>	
+	useEffect(() => {
+		if (params) {
+			const token = getCookie('accessToken')
+			fetchViewCompany({ ...params, token }).then(() => {
+				removeCookie('view-company-buried')
+			})
+		}
+	}, [])
+
+	if (isMobile) {
+		return <MobilePage />
 	}
 	return <div className={style.container}>
 		<div className={style.header}>
@@ -101,7 +101,7 @@ const Page = () => {
 					<div className={style.header_subtitle}>
 						{[detail.financing_stage, detail.company_size, detail.industry]
 							.filter(Boolean)
-							.map((value,index)=>{
+							.map((value, index) => {
 								return <span key={index} className={style.header_subtitle_item}>{value}</span>
 							})
 						}
@@ -122,7 +122,7 @@ const Page = () => {
 		<div className={style.content}>
 			<div className={style.tab_wrapper}>
 				<div className={style.tab_layout}>
-					<Tabs 
+					<Tabs
 						value={value} onChange={handleChange}
 						classes={{
 							indicator: "indicator"
@@ -136,44 +136,44 @@ const Page = () => {
 
 			</div>
 			<TabPanel value={value} index={0}>
-			{!!hotJobs.jobs.length ? 
-				<div className={style.hot_jobs_wrapper}>
+				{!!hotJobs.jobs.length ?
+					<div className={style.hot_jobs_wrapper}>
 						<Section title={overview.HotJobs} hot>
-						<div
-							className={style.header_right}
-							onClick={(e) => {
-								handleChange(e, 1);
-							}}
-						>
-							{formatTemplateString(overview.ViewAllJobs, { total_num: jobs.total_num })}
-							 <div className={style.arrow}></div>
-						</div>
-						<div className={style.jobs_item_layout}>
-							{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item,index) => {
-								if(!item) return <div key={index} className={style.jobs_item} style={{opacity:0}} />;
-								return <div className={style.jobs_item} key={index}>
-									<Link 
-										href={`/${lang}${item.job_url}`}
-										target={'_blank'}
-										title={item.job_title}
-										className={style.jobs_item_title}>
-										{item.job_title}
-									</Link>
-									<div className={style.jobs_content}>
-										<JobsTag {...item} count={2} style={{flex:1, overflow: 'hidden'}}/>
-										<div className={style.jobs_chat_now_container}>
-											<div className={style.salary}>{
-												item.local_salary_range_value
-											}</div>
-											<Link className={style.chat_now} target={'_blank'} href={`/${lang}${item.job_url}`}>
-												{overview.jobs.card.chatNow}
-											</Link>
+							<div
+								className={style.header_right}
+								onClick={(e) => {
+									handleChange(e, 1);
+								}}
+							>
+								{formatTemplateString(overview.ViewAllJobs, { total_num: jobs.total_num })}
+								<div className={style.arrow}></div>
+							</div>
+							<div className={style.jobs_item_layout}>
+								{padArrayToMultiple(hotJobs.jobs.slice(0, 3))(3).map((item, index) => {
+									if (!item) return <div key={index} className={style.jobs_item} style={{ opacity: 0 }} />;
+									return <div className={style.jobs_item} key={index}>
+										<Link
+											href={`/${lang}${item.job_url}`}
+											target={'_blank'}
+											title={item.job_title}
+											className={style.jobs_item_title}>
+											{item.job_title}
+										</Link>
+										<div className={style.jobs_content}>
+											<JobsTag {...item} count={2} style={{ flex: 1, overflow: 'hidden' }} />
+											<div className={style.jobs_chat_now_container}>
+												<div className={style.salary}>{
+													item.local_salary_range_value
+												}</div>
+												<Link className={style.chat_now} target={'_blank'} href={`/${lang}${item.job_url}`}>
+													{overview.jobs.card.chatNow}
+												</Link>
+											</div>
 										</div>
 									</div>
-								</div>
-							})}
-						</div>
-					</Section> 
+								})}
+							</div>
+						</Section>
 					</div>
 					: null}
 				<div className={style.company_info_tab_wrapper}>
