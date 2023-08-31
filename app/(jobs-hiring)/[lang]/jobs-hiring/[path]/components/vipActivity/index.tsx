@@ -9,7 +9,7 @@ import {
   CloseIcon
 } from 'images'
 import DialogLogin from 'app/components/LoginDialog'
-
+import Toast from 'app/components/Toast'
 const VipActivity = ({ accessToken }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
@@ -107,6 +107,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               className={styles.copyButton}
               onClick={() => {
                 navigator.clipboard.writeText(copyTextRef.current.innerText)
+                Toast.success('Link copied success!')
               }}
             >
               Copy link to invite now

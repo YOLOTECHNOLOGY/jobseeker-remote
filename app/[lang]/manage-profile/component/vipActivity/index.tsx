@@ -8,6 +8,7 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
+import Toast from 'app/components/Toast'
 const VipActivity = ({ accessToken, handleCloseModal }) => {
   const [referralCode, setReferralCode] = useState('')
 
@@ -72,6 +73,8 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               className={styles.copyButton}
               onClick={() => {
                 navigator.clipboard.writeText(copyTextRef.current.innerText)
+                Toast.success('Link copied success!')
+
               }}
             >
               Copy link to invite now

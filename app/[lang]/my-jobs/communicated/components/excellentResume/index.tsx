@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react'
 import Lottie from 'lottie-web'
 import styles from './index.module.scss'
-
+import { pushToResume } from 'helpers/push'
 const ExcellentResumeBanner = () => {
   const container = useRef()
 
@@ -20,7 +20,9 @@ const ExcellentResumeBanner = () => {
   }, [])
 
   const handleClick = () => {
-    window.open(`${process.env.AICV_HOST}`, '_blank')
+    // window.open(`${process.env.AICV_HOST}`, '_blank')
+    pushToResume()
+
   }
 
   return (

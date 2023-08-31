@@ -32,6 +32,7 @@ import { useManageProfileData } from 'app/[lang]/manage-profile/DataProvider'
 import { config } from '../../middleware';
 import configs from '../../app/(companies)/[lang]/companies/page';
 import { getLang } from 'helpers/country'
+import Toast from 'app/components/Toast'
 
 type UserProfileOverviewProps = {
   name: string
@@ -281,6 +282,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               className={styles.copyButton}
               onClick={() => {
                 navigator.clipboard.writeText(copyTextRef.current.innerText)
+                Toast.success('Link copied success!')
               }}
             >
               Copy link to invite now
