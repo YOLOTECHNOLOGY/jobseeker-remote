@@ -58,6 +58,7 @@ const verifyEmail = function (props) {
     setErrorText('')
   }, [])
 
+
   useEffect(() => {
     const text = error?.data?.message ?? ''
     setErrorText(text)
@@ -71,6 +72,7 @@ const verifyEmail = function (props) {
 
 
   useEffect(() => {
+    alert('')
     setUserId(userId)
   }, [userId])
 

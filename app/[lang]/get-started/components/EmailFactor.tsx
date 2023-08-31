@@ -11,6 +11,7 @@ import { checkIsEmailUse } from 'store/services/auth/newLogin'
 import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
 import { CircularProgress } from 'app/components/MUIs'
+import { cfKey } from 'helpers/cookies'
 
 function EmailFactor(props: any) {
   const [isDisable, setDisable] = useState<boolean>(true)
@@ -63,7 +64,8 @@ function EmailFactor(props: any) {
   }
 
   const sendOTPFun = () => {
-    authenticationSendEmaillOtp({ email: emailRef.current })
+    const cfToken = sessionStorage.getItem(cfKey)
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken })
       .then((res) => {
         router.push(
           `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`

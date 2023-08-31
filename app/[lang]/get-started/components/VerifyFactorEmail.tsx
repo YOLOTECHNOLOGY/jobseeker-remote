@@ -33,10 +33,12 @@ const VerifyFactorEmail = (props: IProps) => {
   const referralCode = searchParams.get('referral_code')
   const invitedSource = searchParams.get('invited_source')
   useEffect(() => {
+
     if (email) {
       setEmail(email)
     }
   }, [email])
+
 
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
 
@@ -77,6 +79,7 @@ const VerifyFactorEmail = (props: IProps) => {
       )
     })
   }
+
 
   return (
     <>
