@@ -35,11 +35,13 @@ const VipUserPrompt = () => {
       <div className={styles.vipUserPrompt}>
         <p>You are currently logged in, please log out and re-register or log in</p>
         <div className={styles.buttonContent}>
-          <Button className={styles.returnButton} onClick={(e) => {
-            e.preventDefault()
-            router.replace(`/${lang}`)
-            setPromptVisible(false)
-          }}>
+          <Button
+            className={styles.returnButton}
+            onClick={(e) => {
+              e.preventDefault()
+              router.replace(`/${lang}`)
+              setPromptVisible(false)
+            }}>
             Return Home
           </Button>
           <Button
