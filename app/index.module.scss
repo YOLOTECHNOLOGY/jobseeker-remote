@@ -1124,7 +1124,6 @@
       justify-content: center;
       align-items: center;
       border: 1px solid #2378e5;
-      // border: 1px solid #2378e5;
 
       &:hover {
         border-color: #2378e5;
@@ -1135,6 +1134,7 @@
         width: 100%;
         background: transparent !important;
         padding: 0;
+        border: none;
 
         &:hover {
           border-radius: 0px;
@@ -1452,7 +1452,6 @@
 
     .searchWrapper {
       padding: 0;
-
       .search {
         width: 666px;
       }
