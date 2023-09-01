@@ -14,16 +14,7 @@ const VipActivity = ({ accessToken }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
   const [loginModal, setLoginModal] = useState(false)
-  // const getResumeTemplateHostRef = useRef('')
-  // if (process.env.NODE_ENV === 'production') {
-  //   getResumeTemplateHostRef.current = 'https://bossjob.ph/'
-  // }
-  // else if (process.env.NODE_ENV === 'development') {
-  //   getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
-  // }
-  // else {
-  //   getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
-  // }
+
   useEffect(() => {
     accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
       if (res?.data?.data) {

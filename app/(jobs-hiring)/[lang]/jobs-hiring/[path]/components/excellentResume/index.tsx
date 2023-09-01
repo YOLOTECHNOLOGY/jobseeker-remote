@@ -1,32 +1,18 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
-import Lottie from 'lottie-web'
+import React, { useRef } from 'react'
 import styles from './index.module.scss'
 import { pushToResume } from 'helpers/push'
+import Lottie from "lottie-react";
+import excellentResumeData from "./excellentResume.json";
+
 const ExcellentResumeBanner = () => {
-  const container = useRef()
-
-  useEffect(() => {
-    Lottie.loadAnimation({
-      container: container.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: require('./excellentResume.json')
-    })
-    return () => {
-      Lottie.destroy()
-    }
-  }, [])
-
   const handleClick = () => {
     pushToResume()
-    // window.open(`${process.env.AICV_HOST}`, '_blank')
   }
 
   return (
     <div className={styles.container} onClick={handleClick}>
-      <div ref={container}></div>
+      <Lottie animationData={excellentResumeData} loop={true} />
       <span style={{ fontSize: '26px' }}>excellent resume</span>
       <span style={{ fontSize: '18px' }}>open the door to success</span>
       <span className={styles.button}>Create My resume</span>

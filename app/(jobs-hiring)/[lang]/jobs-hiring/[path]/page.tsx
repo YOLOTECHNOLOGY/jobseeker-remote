@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import query from '../interpreters/query'
 import getConfigs from 'app/models/interpreters/config'
 import { onLoadScript } from 'app/models/abstractModels/filterList'
@@ -9,7 +9,7 @@ import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from './components/table'
 import Loading from './components/table/loading'
-import UploadResumeButton from './components/UploadResumeButton'
+// import UploadResumeButton from './components/UploadResumeButton'
 import { cookies } from 'next/headers'
 import searchHistoryIp from '../interpreters/searchHistory'
 import SearchHistories from './components/searchHistories'
@@ -96,12 +96,12 @@ const Main = async (props: any) => {
 
             {/* right */}
             <div className={styles.rightContent}>
-              <UploadResumeButton
+              {/* <UploadResumeButton
                 text={search.uploadResume}
                 isShowBtn={!accessToken}
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
-              />
+              /> */}
               <VipActivity accessToken={accessToken} />
 
               <ExcellentResumeBanner />
