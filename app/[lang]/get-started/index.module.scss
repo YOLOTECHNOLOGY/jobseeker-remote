@@ -1010,5 +1010,50 @@
     // }
   }
 }
+.vipUserPromptWrap {
+  z-index: 50000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  .vipUserPrompt {
+    border-radius: 5px;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 740px;
+    font-size: 16px;
+    background: #fff;
+    p {
+      text-align: center;
+      padding: 50px 0 30px;
+    }
+    .buttonContent {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+
+      .returnButton {
+        width: 48%;
+        height: 60px;
+        border-radius: 8px;
+        border: 1px solid #e4e4e4;
+        color: #121212;
+        text-transform: capitalize;
+      }
+      .exitButton {
+        width: 48%;
+        height: 60px;
+        border-radius: 8px;
+        text-transform: capitalize;
+        box-shadow: none;
+      }
+    }
+  }
+}
 
 @import './indexMobile.module.scss';
