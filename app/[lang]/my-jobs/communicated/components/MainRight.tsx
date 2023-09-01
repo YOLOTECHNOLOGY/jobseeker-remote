@@ -18,7 +18,7 @@ export default async function Page(props) {
   const [resumes] = await Promise.all([resumesData])
   return (
     <div className={styles.aside}>
-      <Resume resumes={resumes} {...props} />
+      {/* <Resume resumes={resumes} {...props} /> */}
       {/* @ts-expect-error Async Server Component */}
       <InterestedMe {...props} />
       {/* @ts-expect-error Async Server Component */}
