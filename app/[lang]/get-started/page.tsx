@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React from 'react'
+import React, { useEffect } from 'react'
 import getConfigs from 'app/models/interpreters/config'
 import { buildComponentScript } from 'app/models/abstractModels/util'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
@@ -9,6 +9,7 @@ import Main from './components/main'
 import { getDictionary } from 'get-dictionary'
 // import classNames from 'classnames'
 import FooterTip from './components/FooterTip'
+import VipUserPrompt from './components/vipUserPrompt'
 
 const configs = getConfigs([['location_lists']])
 
@@ -26,6 +27,7 @@ const Page = async (props: any) => {
         </div>
         <FooterTip lang={dictionary} />
       </div>
+      <VipUserPrompt />
     </>
   )
 }
