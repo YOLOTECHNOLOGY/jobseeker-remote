@@ -22,22 +22,45 @@ export default async function PublicLayout(props: any) {
   let { lang } = props.params
   lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
+  const data = { data: '123' }
+  const chatData = await fetch('http://localhost:3000/chat', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  console.log({ chatData })
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
+        {
+          chatData.scripts?.map(script => <Script
+            key={script.src}
+            type="module"
+            async
+            crossOrigin={'anonymous'}
+            src={`http://localhost:3000${script.src}`}>
+          </Script>)
+        }
+        {
+          chatData.links?.map(link => <link
+            key={link.href}
+            rel={link.rel}
+            href={`http://localhost:3000${link.href}`}>
+          </link>)
+        }
         <meta name='description' content={decodeURI(description)} />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
-        <Script
-          type="module"
-          // async
-          // crossOrigin={'anonymous'}
-          src="http://localhost:3008/index.js">
-        </Script>
-        <link rel="stylesheet" href="http://localhost:3008/index-a.css"></link>
         <link
           rel="preload"
           href="/font/product-sans/ProductSansBold.ttf"
@@ -137,7 +160,10 @@ export default async function PublicLayout(props: any) {
             <Header lang={dictionary} position={position} />
             <HamburgerMenu lang={dictionary} />
             <LinkProvider>{
-              <Suspense><div id='chat'></div></Suspense>
+              <Suspense>
+                <div id='chat'></div>
+                {children}
+              </Suspense>
             }</LinkProvider>
             <AutoShowModalAppRedirect />
           </Providers>
