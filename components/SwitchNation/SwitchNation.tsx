@@ -138,8 +138,12 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       // store this in cookies. then the others link request server can take it to server
       setCookie(configKey, `${country}_${lang}`)
       console.log('newOrigin:', newOrigin)
-
-      window.location.href = newOrigin + query + restPath + location.search + referralCodeParams + invitedSourceParams
+      if (referralCodeParams && invitedSourceParams) {
+        window.location.href = newOrigin + '?' + query + restPath + location.search + referralCodeParams + invitedSourceParams
+      }
+      else {
+        window.location.href = newOrigin + query + restPath + location.search
+      }
 
       return
     }
@@ -157,8 +161,13 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       query += '/' + pathname.split('/').slice(2).join('/')
 
     }
+    if (referralCodeParams && invitedSourceParams) {
+      window.location.href = newOrigin + '?' + query + referralCodeParams + invitedSourceParams
+    }
+    else {
+      window.location.href = newOrigin + query
+    }
 
-    window.location.href = newOrigin + query + referralCodeParams + invitedSourceParams
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {
