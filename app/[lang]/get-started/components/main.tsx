@@ -13,6 +13,7 @@ import { jobbseekersSocialLoginSuccess } from 'store/actions/auth/jobseekersSoci
 import QrCodeComponent from './QrCode'
 import LeftBanner from './leftBanner'
 import CodePopver from './codePopver'
+
 interface IProps {
   dictionary: any
   isModal?: boolean
