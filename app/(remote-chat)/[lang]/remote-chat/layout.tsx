@@ -46,7 +46,8 @@ export default async function PublicLayout(props: any) {
             type="module"
             async
             crossOrigin={'anonymous'}
-            src={`http://localhost:3000${script.src}`}>
+            src={script.src ? `http://localhost:3000${script.src}` : undefined}>
+            {script?.textContante ?? ''}
           </Script>)
         }
         {
@@ -162,6 +163,15 @@ export default async function PublicLayout(props: any) {
             <LinkProvider>{
               <Suspense>
                 <div id='chat'></div>
+                {
+                  chatData.bodyScripts?.map(script => <Script
+                    key={script.src}
+                    type="module"
+                    async
+                    crossOrigin={'anonymous'}
+                    src={`http://localhost:3000${script.src}`}>
+                  </Script>)
+                }
                 {children}
               </Suspense>
             }</LinkProvider>

@@ -16,8 +16,8 @@ import { getDefaultLocation } from '../../../helpers/country'
 interface IProps {
     location: any;
     setLocation: React.Dispatch<React.SetStateAction<any>>;
-  }
-  
+}
+
 
 export const LocationContext = createContext<IProps>({
     location: '',
@@ -34,7 +34,7 @@ const LocationProvider = ({ children }: any) => {
     useEffect(() => {
         dispatch(fetchConfigRequest())
     }, [])
-    const locations = useSelector((store:any) => store.config?.config?.response?.location_lists)
+    const locations = useSelector((store: any) => store.config?.config?.response?.location_lists)
     const router = useRouter()
     const flatLocations = useMemo(() => {
         if (!locations?.length) {
@@ -86,6 +86,10 @@ const LocationProvider = ({ children }: any) => {
         if (flatLocations?.length && !locationUpdated && !getCookie('location')?.[0]) {
             locationIp(locationScript())
                 .run()
+                .catch(e => {
+                    console.log('location error :', e)
+                    setLocation(defaultLocation)
+                })
             setLocationupdated(true)
         }
     }, [flatLocations, locationUpdated])

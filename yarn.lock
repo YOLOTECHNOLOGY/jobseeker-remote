@@ -4779,6 +4779,33 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
+imforbossjob@^0.2.8-fix16:
+  version "0.2.8-fix16"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.8-fix16.tgz#2be058b179d5647a00af746512411e354f5c1768"
+  integrity sha512-q4VRMoOYsv5ha73hGlgf15msn9j/moo7Q4jhEmZ6GWUFe1Rmw8lhTyUIIj3qgiJFaPT8nxw61C9MpQ2L3Wlm5A==
+  dependencies:
+    "@aws-sdk/client-s3" "^3.3.0"
+    "@aws-sdk/lib-storage" "^3.18.0"
+    "@aws-sdk/s3-request-presigner" "^3.3.0"
+    ali-oss "^6.17.1"
+    axios "^0.18.0"
+    buffer "^6.0.3"
+    buzzmsg "^1.7.20"
+    crypto-js "^4.1.1"
+    dexie "^3.0.3"
+    fantasy-combinators "^0.0.1"
+    fantasy-land "^5.0.1"
+    lodash "^4.17.21"
+    mobx "^5.15.4"
+    mobx-react "^6.3.1"
+    moment "^2.29.4"
+    nanoid "^4.0.0"
+    react ">=16.8.6"
+    react-dom ">=16.8.6"
+    react-router-dom "^4.2.2"
+    sha1 "^1.1.1"
+    viewerjs "^1.11.0"
+
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
