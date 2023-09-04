@@ -158,7 +158,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
 
     } else {
-      query += '/?' + pathname.split('/').slice(2).join('/')
+      query += '/' + pathname.split('/').slice(2).join('/') + '?'
 
     }
     if (referralCodeParams && invitedSourceParams) {
