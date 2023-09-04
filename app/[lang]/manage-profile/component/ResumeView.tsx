@@ -406,6 +406,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }).catch(err => {
       Toast.error('Resume cannot exceed 5 copies')
+      // window.open(``)
+      pushToResume('my-resume')
     })
   }
 
