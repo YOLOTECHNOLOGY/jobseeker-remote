@@ -122,8 +122,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
     let query = `/${lang}`
     let newOrigin = origin
-    referralCode && (query += `&referral_code=${referralCode}`)
-    invitedSource && (query += `&invited_source=${invitedSource}`)
+
 
     if (!isLocal) {
       newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country + (port ? `:${port}` : '')
@@ -136,7 +135,8 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       // store this in cookies. then the others link request server can take it to server
       setCookie(configKey, `${country}_${lang}`)
       console.log('newOrigin:', newOrigin)
-
+      referralCode && (query += `&referral_code=${referralCode}`)
+      invitedSource && (query += `&invited_source=${invitedSource}`)
       window.location.href = newOrigin + query + restPath + location.search
 
       return
@@ -150,12 +150,12 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
-      // referralCode && (query += `&referral_code=${referralCode}`)
-      // invitedSource && (query += `&invited_source=${invitedSource}`)
+      referralCode && (query += `&referral_code=${referralCode}`)
+      invitedSource && (query += `&invited_source=${invitedSource}`)
     } else {
       query += '/' + pathname.split('/').slice(2).join('/')
-      // referralCode && (query += `&referral_code=${referralCode}`)
-      // invitedSource && (query += `&invited_source=${invitedSource}`)
+      referralCode && (query += `&referral_code=${referralCode}`)
+      invitedSource && (query += `&invited_source=${invitedSource}`)
     }
 
     window.location.href = newOrigin + query
