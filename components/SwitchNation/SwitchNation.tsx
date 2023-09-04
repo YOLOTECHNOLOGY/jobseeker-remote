@@ -145,11 +145,14 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
+      referralCode && (query += `&referral_code=${referralCode}`)
+      invitedSource && (query += `&invited_source=${invitedSource}`)
     } else {
       query += '/' + pathname.split('/').slice(2).join('/')
+      referralCode && (query += `&referral_code=${referralCode}`)
+      invitedSource && (query += `&invited_source=${invitedSource}`)
     }
-    referralCode && (query += `&referral_code=${referralCode}`)
-    invitedSource && (query += `&invited_source=${invitedSource}`)
+
     window.location.href = newOrigin + query
   }
 
