@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 
@@ -24,6 +24,7 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
   const router = useRouter()
   const currentUser = getCookie('user')
   const currentToken = getCookie('accessToken')
+
   console.log({ lang })
   const handleShowMenu = () => {
     if (!openState) {
