@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-
+import { useSearchParams } from 'next/navigation'
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
 import {
   accessToken as accessTokenKey,
@@ -98,6 +98,10 @@ const isLocalDev = (url: string) => {
 const SwitchNation = ({ close, open, lang }: propsType) => {
   const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
   const [loading, setLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
+
   const originalSetting = useMemo(() => {
     return {
       country: getCountryKey(),
@@ -144,7 +148,8 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     } else {
       query += '/' + pathname.split('/').slice(2).join('/')
     }
-    console.log('query', query);
+    referralCode && (query += `referral_code=${referralCode}`)
+    invitedSource && (query += `invited_source=${invitedSource}`)
     window.location.href = newOrigin + query
   }
 
