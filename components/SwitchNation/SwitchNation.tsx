@@ -148,8 +148,8 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     } else {
       query += '/' + pathname.split('/').slice(2).join('/')
     }
-    referralCode && (query += `referral_code=${referralCode}`)
-    invitedSource && (query += `invited_source=${invitedSource}`)
+    referralCode && (query += `&referral_code=${referralCode}`)
+    invitedSource && (query += `&invited_source=${invitedSource}`)
     window.location.href = newOrigin + query
   }
 
