@@ -139,7 +139,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       setCookie(configKey, `${country}_${lang}`)
       console.log('newOrigin:', newOrigin)
       if (referralCodeParams && invitedSourceParams) {
-        window.location.href = newOrigin + '?' + query + restPath + location.search + referralCodeParams + invitedSourceParams
+        window.location.href = newOrigin + query + restPath + '?' + location.search + referralCodeParams + invitedSourceParams
       }
       else {
         window.location.href = newOrigin + query + restPath + location.search
