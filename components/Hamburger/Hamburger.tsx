@@ -84,8 +84,8 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
               />
               <img
                 src={require('./vip_user_icon.png').default.src}
-                width={22}
-                height={9}
+                width={17}
+                height={7}
                 alt=""
                 style={{ position: 'absolute', bottom: '-2px', right: 0 }}
               />
