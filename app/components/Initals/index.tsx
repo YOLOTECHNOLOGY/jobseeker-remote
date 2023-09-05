@@ -7,6 +7,7 @@ import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
 import { getCookie } from 'helpers/cookies';
+import { redirectUrlKey } from 'helpers/globalKey';
 
 const tiktokfunc = () => {
   const w = window as any
@@ -146,7 +147,7 @@ const Initial = () => {
               '&active_key=' +
               activeKey
               +
-              '&redirectUrl=' + window.location.href
+              `&${redirectUrlKey}=` + window.location.href
               + '&fcmToken=' + sessionStorage.getItem('firebase-messaging-token')
             )
           }

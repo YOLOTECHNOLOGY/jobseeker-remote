@@ -93,6 +93,10 @@ const loginForEmail = (props: IProps) => {
         if (isModal) {
           setLoginData({ ...res?.data?.data, email: emailRef.current })
         } else {
+          let originalSearch = window.location.search;
+          if (originalSearch) {
+            originalSearch = `&${originalSearch.slice(1)}`
+          }
           if (user_id) {
             if (referralCode && invitedSource) {
               router.push(
@@ -101,7 +105,7 @@ const loginForEmail = (props: IProps) => {
             }
             else {
               router.push(
-                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}${originalSearch}`
               )
             }
 
@@ -110,7 +114,7 @@ const loginForEmail = (props: IProps) => {
               router.push(`${pathname}?step=2&email=${emailRef.current}&referral_code=${referralCode}&invited_source=${invitedSource}`)
             }
             else {
-              router.push(`${pathname}?step=2&email=${emailRef.current}`)
+              router.push(`${pathname}?step=2&email=${emailRef.current}${originalSearch}`)
             }
 
           }

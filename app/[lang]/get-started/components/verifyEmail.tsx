@@ -173,7 +173,7 @@ const verifyEmail = function (props) {
               onClick={() =>
                 isModal ? handleBackClick?.() : (referralCode && invitedSource) ?
                   router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`) :
-                  router.push(`/${langKey}/get-started/email`)
+                  router.push(`/${langKey}/get-started/email` + window.location.search)
               }
             >
               <KeyboardArrowLeftIcon />

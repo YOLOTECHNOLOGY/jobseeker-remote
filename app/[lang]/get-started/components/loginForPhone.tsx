@@ -121,9 +121,14 @@ const LoginForPhone = (props: any) => {
         if (isModal) {
           setLoginData({ ...res?.data?.data, phoneNum } ?? {})
         } else {
-          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&referral_code=${referralCode}&invited_source=${invitedSource}`
+          let originalSearch = window.location.search;
+          if (originalSearch) {
+            originalSearch = `&${originalSearch.slice(1)}`
+          }
+
+          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           if (user_id) {
-            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}&referral_code=${referralCode}&invited_source=${invitedSource}`
+            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           }
           router.push(url)
         }
