@@ -96,8 +96,10 @@ const Main = async (props: any) => {
                   config={props.config}
                 />
               </Suspense>
-
-
+              <Suspense fallback={<Loading />}>
+                {/* @ts-expect-error Async Server Component */}
+                < HotJobTable />
+              </Suspense>
             </div>
 
 
