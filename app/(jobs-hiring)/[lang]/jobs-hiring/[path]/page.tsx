@@ -67,10 +67,10 @@ const Main = async (props: any) => {
   const location = props.searchValues?.location?.[0]
 
   fetchHotJobsListService(
-    //getCountryId(),
+    // getCountryId(),
     167,
     accessToken).then(res => {
-      console.log('jamesanthony data:', res.data)
+      console.log('jamesanthony data:', JSON.stringify(res.data.data.jobs))
     })
     .catch(err => {
       console.log('ja:', err)
