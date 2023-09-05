@@ -13,7 +13,7 @@ export const CommonActions = taggedSum('CommonActions', {
   just: ['just'],
   buildComponent: ['props', 'component'],
   getAccesstoken: [],
-  redirectLogin: []
+  redirectLogin: ['path']
 })
 
 export const DataSource = taggedSum('DataSource', {
@@ -26,12 +26,12 @@ export const Result = taggedSum('Result', {
   error: ['error']
 })
 
-export const needLogin = businessScript => DO(CommonActions.getAccesstoken)
+export const needLogin = (businessScript, redirectPath) => DO(CommonActions.getAccesstoken)
   .chain(accessToken => {
     if (accessToken) {
       return businessScript
     } else {
-      return DO(CommonActions.redirectLogin)
+      return DO(CommonActions.redirectLogin(redirectPath))
     }
   })
 

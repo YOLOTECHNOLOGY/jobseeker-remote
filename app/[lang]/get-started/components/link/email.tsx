@@ -32,7 +32,7 @@ const EmailLink = (props: IProps) => {
         router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`)
       }
       else {
-        router.push(`/${langKey}/get-started/email`)
+        router.push(`/${langKey}/get-started/email` + window.location.search)
       }
     }
   }

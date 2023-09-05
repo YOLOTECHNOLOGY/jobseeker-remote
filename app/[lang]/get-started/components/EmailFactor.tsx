@@ -70,8 +70,12 @@ function EmailFactor(props: any) {
     const cfToken = sessionStorage.getItem(cfKey)
     authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken })
       .then((res) => {
+        let originalSearch = window.location.search;
+        if (originalSearch) {
+          originalSearch = `&${originalSearch.slice(1)}`
+        }
         router.push(
-          `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`
+          `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}${originalSearch}`
         )
       })
       .catch((error) => {

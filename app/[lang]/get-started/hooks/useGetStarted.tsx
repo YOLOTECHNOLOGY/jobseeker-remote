@@ -14,6 +14,7 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
 import { routes } from 'helpers/utilities'
 import { isMobile } from 'react-device-detect'
+import { redirectUrlKey } from 'helpers/globalKey'
 
 const useGetStarted = () => {
   // const routes = useRouter()
@@ -32,7 +33,7 @@ const useGetStarted = () => {
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const [error, setError] = useState<any>(null)
   const [userInfo, setUserInfo] = useState<any>(null)
-  const redirect = searchParams.get('redirect')
+  const redirect = searchParams.get(redirectUrlKey)
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const smsCountryList = getSmsCountryList(config)
   const { getStatred } = useContext(languageContext) as any

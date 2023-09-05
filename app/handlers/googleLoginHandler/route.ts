@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { redirectUrlKey } from 'helpers/globalKey'
 import { parse } from 'next-useragent'
 import { NextRequest, NextResponse } from 'next/server'
 import { socialLoginService } from 'store/services/auth/socialLogin'
@@ -7,7 +8,7 @@ export async function GET(request: NextRequest) {
     const searchParams = new URL(request.url).searchParams
     const accessToken = searchParams.get('access_token')
     const activeKey = searchParams.get('active_key')
-    const redirectUrl = searchParams.get('redirectUrl')
+    const redirectUrl = searchParams.get(redirectUrlKey)
     const userAgent = parse(request.headers.get('user-agent'))
     const fcmToken = searchParams.get('fcmToken')
     return axios
