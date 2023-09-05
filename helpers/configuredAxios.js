@@ -57,6 +57,9 @@ const getUrl = (baseURL) => {
     case 'resumeTemplate':
       url = process.env.RESUME_TEMPLATE_URL
       break
+    case 'recommendation':
+      url = process.env.RECOMMENDATION_URL
+      break
     default:
       break
   }

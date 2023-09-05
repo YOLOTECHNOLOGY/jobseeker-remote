@@ -19,6 +19,8 @@ import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
 import ExcellentResumeBanner from './components/excellentResume'
 import VipActivity from './components/vipActivity'
+import { fetchHotJobsListService } from 'store/services/jobs/fetchJobsList'
+import { getCountryId } from 'helpers/country'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -64,6 +66,15 @@ const Main = async (props: any) => {
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
 
+  fetchHotJobsListService(
+    //getCountryId(),
+    167,
+    accessToken).then(res => {
+      console.log('jamesanthony data:', res.data)
+    })
+    .catch(err => {
+      console.log('ja:', err)
+    })
   return (
     <>
       <div>
@@ -92,7 +103,10 @@ const Main = async (props: any) => {
                   config={props.config}
                 />
               </Suspense>
+
+
             </div>
+
 
             {/* right */}
             <div className={styles.rightContent}>
@@ -117,9 +131,9 @@ const Main = async (props: any) => {
 
         {/* Download APP QrCode */}
         <QrCode lang={search} />
-      </div>
+      </div >
       {/* Footer */}
-      <Footer />
+      < Footer />
     </>
   )
 }

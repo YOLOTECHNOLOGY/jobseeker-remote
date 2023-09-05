@@ -1,6 +1,5 @@
 
-
-import React from 'react'
+import React, { useEffect } from 'react'
 import PublicLayout from 'app/components/publicLayout'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { getCountryKey } from 'helpers/country'
@@ -11,7 +10,8 @@ import { toPairs } from 'ramda'
 import getConfigs from 'app/models/interpreters/config'
 import { getDictionary } from 'get-dictionary'
 import { flatMap } from 'lodash-es'
-
+import { fetchHotJobsListService } from 'store/services/jobs/fetchJobsList'
+import { getCountryId } from 'helpers/country'
 const configs = getConfigs([
   ['location_lists'],
   ['main_functions'],
@@ -75,7 +75,7 @@ async function generateSEO(props: any) {
       country: dictionary.seo[getCountryKey()],
       location
     })
-  }else if (!searchQuery && location) {
+  } else if (!searchQuery && location) {
     seoMetaTitle = formatTemplateString(jobSearch.locationTitle, {
       searchQuery,
       country: dictionary.seo[getCountryKey()],
@@ -109,6 +109,7 @@ async function generateSEO(props: any) {
 export default async function RootLayout(props: any) {
   const { children } = props
   const seo = await generateSEO(props)
+
 
   return (
     /* @ts-expect-error Async Server Component */
