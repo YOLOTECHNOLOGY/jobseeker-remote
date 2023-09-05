@@ -99,8 +99,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
   const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
   const [loading, setLoading] = useState(false)
   const searchParams = useSearchParams()
-  const referralCode = searchParams.get('referral_code')
-  const invitedSource = searchParams.get('invited_source')
+
 
   const originalSetting = useMemo(() => {
     return {
@@ -119,7 +118,8 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     const accessToken = getCookie(accessTokenKey)
     const refreshToken = getCookie(refreshTokenKey)
     const user = getCookie(userKey)
-
+    const referralCode = searchParams.get('referral_code')
+    const invitedSource = searchParams.get('invited_source')
 
     let query = `/${lang}`
     let newOrigin = origin
@@ -150,11 +150,12 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
-      // query += referralCode ? `&referral_code=${referralCode}` : ''
-      // query += invitedSource ? `invited_source=${invitedSource}` : ''
-      alert('each')
+      query += referralCode ? `&referral_code=${referralCode}` : ''
+      query += invitedSource ? `invited_source=${invitedSource}` : ''
+
 
     } else {
+
       query += '/' + pathname.split('/').slice(2).join('/')
 
     }
