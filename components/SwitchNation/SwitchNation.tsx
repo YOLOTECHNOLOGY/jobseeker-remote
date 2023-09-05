@@ -124,8 +124,8 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
     let query = `/${lang}`
     let newOrigin = origin
 
-    const referralCodeParams = referralCode && `&referral_code=${referralCode}`
-    const invitedSourceParams = invitedSource && `invited_source=${invitedSource}`
+    // const referralCodeParams = referralCode && `&referral_code=${referralCode}`
+    // const invitedSourceParams = invitedSource && `invited_source=${invitedSource}`
 
     if (!isLocal) {
       newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country + (port ? `:${port}` : '')
@@ -134,17 +134,10 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
       // only language changed
       // the pathname is likely "/en-US/get-started"
       let restPath = pathname.split('/').slice(2).join('/')
-      restPath = restPath ? `/${restPath}?` : ''
+      restPath = restPath ? `/${restPath}` : ''
       // store this in cookies. then the others link request server can take it to server
       setCookie(configKey, `${country}_${lang}`)
-      console.log('newOrigin:', newOrigin)
-      if (referralCodeParams && invitedSourceParams) {
-        window.location.href = newOrigin + query + restPath + '?' + location.search + referralCodeParams + invitedSourceParams
-      }
-      else {
-        window.location.href = newOrigin + query + restPath + location.search
-      }
-
+      window.location.href = newOrigin + query + restPath + location.search
       return
     }
 
@@ -156,17 +149,16 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
+      query += referralCode ? `&referral_code=${referralCode}` : ''
+      query += invitedSource ? `invited_source=${invitedSource}` : ''
 
     } else {
       query += '/' + pathname.split('/').slice(2).join('/')
 
     }
-    if (referralCodeParams && invitedSourceParams) {
-      window.location.href = newOrigin + query + '?' + referralCodeParams + invitedSourceParams
-    }
-    else {
-      window.location.href = newOrigin + query
-    }
+
+    window.location.href = newOrigin + query
+
 
   }
 
