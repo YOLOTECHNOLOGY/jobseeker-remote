@@ -159,7 +159,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
     }
 
-    window.location.href = newOrigin + query + referralCodeParams + invitedSourceParams
+    window.location.href = newOrigin + query + '?' + referralCodeParams + invitedSourceParams
 
 
   }
