@@ -8,6 +8,8 @@ import { serverDataScript } from 'app/models/abstractModels/FetchServierComponen
 import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from './components/table'
+import HotJobTable from './components/hotJobTable'
+
 import Loading from './components/table/loading'
 // import UploadResumeButton from './components/UploadResumeButton'
 import { cookies } from 'next/headers'
@@ -19,8 +21,7 @@ import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
 import ExcellentResumeBanner from './components/excellentResume'
 import VipActivity from './components/vipActivity'
-import { fetchHotJobsListService } from 'store/services/jobs/fetchJobsList'
-import { getCountryId } from 'helpers/country'
+
 
 const configs = getConfigs([
   ['location_lists'],
@@ -66,15 +67,7 @@ const Main = async (props: any) => {
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
 
-  fetchHotJobsListService(
-    // getCountryId(),
-    167,
-    accessToken).then(res => {
-      console.log('jamesanthony data:', JSON.stringify(res.data.data.jobs))
-    })
-    .catch(err => {
-      console.log('ja:', err)
-    })
+
   return (
     <>
       <div>
