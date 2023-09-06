@@ -72,13 +72,13 @@ const ManageProfilePage = () => {
     }
   })
 
-  useLayoutEffect(()=>{
-    if(tab !== tabValue){
+  useLayoutEffect(() => {
+    if (tab !== tabValue) {
       setTabValue(tab || 'profile');
     }
-  },[tabValue,tab]);
+  }, [tabValue, tab]);
 
-  
+
   useEffect(() => {
     if (userDetail?.job_preferences) {
       setUnCompleted((prev) => ({
@@ -112,9 +112,9 @@ const ManageProfilePage = () => {
 
       {tabValue === 'profile' && <ProfileView lang={lang} />}
       {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
-      {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
+      <div style={{ display: tabValue === 'resume' ? '' : 'none' }}><ResumeView userDetail={userDetail} lang={lang} /></div>
 
-    </ProfileLayout>
+    </ProfileLayout >
 
   </>
 
