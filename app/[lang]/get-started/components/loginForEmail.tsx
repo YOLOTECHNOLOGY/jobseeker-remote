@@ -89,7 +89,7 @@ const loginForEmail = (props: IProps) => {
     setLoading(true)
     authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current })
       .then((res) => {
-        const { user_id, avatar } = res?.data?.data ?? {}
+        const { user_id, avatar, vip } = res?.data?.data ?? {}
         if (isModal) {
           setLoginData({ ...res?.data?.data, email: emailRef.current })
         } else {
@@ -100,21 +100,21 @@ const loginForEmail = (props: IProps) => {
           if (user_id) {
             if (referralCode && invitedSource) {
               router.push(
-                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}&referral_code=${referralCode}&invited_source=${invitedSource}`
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}&referral_code=${referralCode}&invited_source=${invitedSource}&is_vip=${vip?.is_vip}`
               )
             }
             else {
               router.push(
-                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}${originalSearch}`
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}${originalSearch}&is_vip=${vip?.is_vip}`
               )
             }
 
           } else {
             if (referralCode && invitedSource) {
-              router.push(`${pathname}?step=2&email=${emailRef.current}&referral_code=${referralCode}&invited_source=${invitedSource}`)
+              router.push(`${pathname}?step=2&email=${emailRef.current}&referral_code=${referralCode}&invited_source=${invitedSource}&is_vip=${vip?.is_vip}`)
             }
             else {
-              router.push(`${pathname}?step=2&email=${emailRef.current}${originalSearch}`)
+              router.push(`${pathname}?step=2&email=${emailRef.current}${originalSearch}&is_vip=${vip?.is_vip}`)
             }
 
           }

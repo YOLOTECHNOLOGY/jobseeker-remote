@@ -148,7 +148,8 @@ const JobCard = (props: any) => {
     xp_lvl_id,
     degree_id,
     company_financing_stage_id,
-    company_industry_id
+    company_industry_id,
+    cardType
   } = props
 
   const chatDatas = useContext(ChatDataContext)
@@ -330,6 +331,7 @@ const JobCard = (props: any) => {
                   {transState(recruiter_last_active_at, search?.jobCard)?.state == 1 && (
                     <div className={styles.online}>{search.jobCard.online}</div>
                   )}
+                  {Boolean(cardType === 'hotjobs' && recruiter_is_online) && <div className={styles.online}>{search.jobCard.online}</div>}
                 </div>
               </div>
             </div>

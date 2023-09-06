@@ -71,7 +71,7 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
           {currentToken && !openState ? !userInfo?.vip?.is_vip ? (
             <img
               src={currentUser?.avatar || DefaultAvatar}
-              // className={styles.profileAvatar}
+              className={styles.profileAvatar}
               alt='avatar'
             />
 
