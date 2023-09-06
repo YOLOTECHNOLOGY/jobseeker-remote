@@ -260,7 +260,6 @@ const EducationExperience = (props: any) => {
                       {...fieldState}
                       {...field}
                       onChange={(_, location) => {
-                        alert('')
                         // setIsShowCountry(location?.key === 'overseas')
                         setLocationData(location)
                         onChange(location)
