@@ -154,7 +154,7 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
     } else {
 
-      query += '/' + pathname.split('/').slice(2).join('/') + '?' + referralCodeParams + invitedSourceParams
+      query += '/' + pathname.split('/').slice(2).join('/')
 
     }
 
