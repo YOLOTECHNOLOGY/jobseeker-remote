@@ -365,7 +365,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
   const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
-    if (userDetail?.vip?.is_vip) {
+
+    if (!userDetail?.vip?.is_vip && is_vip) {
       setVipModal(true)
       return false;
     }
