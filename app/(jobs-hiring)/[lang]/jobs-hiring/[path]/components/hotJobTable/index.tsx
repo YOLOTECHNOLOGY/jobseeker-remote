@@ -22,7 +22,9 @@ const fetchQueryOnlineStatus = async (userIds, accessToken) => {
     })
     return result
 }
-const HotJobTable = async () => {
+const HotJobTable = async ({ lang }) => {
+    console.log('lebron:', lang)
+
     const accessToken = cookies().get('accessToken')?.value
     const result = await hotJobListData(
         getCountryId(),
@@ -62,37 +64,33 @@ const HotJobTable = async () => {
         company_financing_stage_id: item.company.financing_stage_id,
         company_industry_id: item.company.industry_id
     }))
-    if (getCountryId() !== 167) {
-        return null
-    }
-    return (
-        <>
-            <h3 className={styles.hotjobTitle}><span>Popular jobs</span></h3>
-            {
-                jobs && jobs.length ?
-                    <ChatDataProvider recruiterIds={jobs.map(job => job?.recruiter?.id).join(',')}>
-                        <div className={styles.tableContainer}>
-                            {jobs?.map((job) => {
-                                return (
-                                    <div className={styles.jobContainer} key={job?.id}>
-                                        <JobCard {...job} cardType="hotjobs" />
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className={styles.mobileContainer}>
-                            {jobs?.map((job) => {
-                                return (
-                                    <div className={styles.jobContainer} key={job?.id}>
-                                        <MobileCard {...job} />
-                                    </div>
-                                )
-                            })}
 
-                        </div>
-                    </ChatDataProvider> : <Empty />
-            }
-        </>
+    return (
+        jobs && jobs.length ?
+            <>
+                <h3 className={styles.hotjobTitle}><span>{lang.popularJobs}</span></h3>
+                <ChatDataProvider recruiterIds={jobs.map(job => job?.recruiter?.id).join(',')}>
+                    <div className={styles.tableContainer}>
+                        {jobs?.map((job) => {
+                            return (
+                                <div className={styles.jobContainer} key={job?.id}>
+                                    <JobCard {...job} cardType="hotjobs" />
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className={styles.mobileContainer}>
+                        {jobs?.map((job) => {
+                            return (
+                                <div className={styles.jobContainer} key={job?.id}>
+                                    <MobileCard {...job} />
+                                </div>
+                            )
+                        })}
+
+                    </div>
+                </ChatDataProvider>
+            </> : null
 
     )
 

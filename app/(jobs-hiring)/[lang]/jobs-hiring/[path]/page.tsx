@@ -62,7 +62,7 @@ const SearchHistory = searchHistoryIp(
 
 const Main = async (props: any) => {
   const { lang } = props.params
-  const { search } = (await getDictionary(lang)) as any
+  const { search, home } = (await getDictionary(lang)) as any
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
@@ -98,7 +98,7 @@ const Main = async (props: any) => {
               </Suspense>
               <Suspense fallback={<Loading />}>
                 {/* @ts-expect-error Async Server Component */}
-                < HotJobTable />
+                <HotJobTable lang={home} />
               </Suspense>
             </div>
 
