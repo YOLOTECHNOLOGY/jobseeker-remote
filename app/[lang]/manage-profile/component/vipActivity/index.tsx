@@ -8,24 +8,28 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
+import { useSelector } from 'react-redux'
+
 import Toast from 'app/components/Toast'
 const VipActivity = ({ accessToken, handleCloseModal }) => {
-  const [referralCode, setReferralCode] = useState('')
+  // const [referralCode, setReferralCode] = useState('')
+  const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
-      if (res?.data?.data) {
-        setReferralCode(res.data.data.referral_code)
-      }
-    })
-  }, [accessToken])
+  //   accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
+  //     if (res?.data?.data) {
+  //       setReferralCode(res.data.data.referral_code)
+  //     }
+  //   })
+
+  // }, [accessToken])
 
   return (
 
     <VipShareModal
-      referral_code={referralCode}
+      referral_code={userDetail.referral_code}
       lang={getLang()}
       // host={getResumeTemplateHostRef.current}
       handleCloseModal={handleCloseModal} />
