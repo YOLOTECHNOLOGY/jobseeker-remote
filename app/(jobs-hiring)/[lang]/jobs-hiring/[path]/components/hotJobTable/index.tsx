@@ -7,7 +7,7 @@ import ChatDataProvider from '../ChatProvider'
 import { fetchHotJobsListService, queryOnlineStatus } from 'store/services/jobs/fetchJobsList'
 import { getCountryId } from 'helpers/country'
 import { cookies } from 'next/headers'
-import { accessToken } from 'helpers/cookies'
+import MobileCard from '../jobCard/index.mobile'
 
 const hotJobListData = async (id, accessToken) => {
     const result = await fetchHotJobsListService(id, accessToken).catch(err => {
@@ -75,6 +75,16 @@ const HotJobTable = async () => {
                                     </div>
                                 )
                             })}
+                        </div>
+                        <div className={styles.mobileContainer}>
+                            {jobs?.map((job) => {
+                                return (
+                                    <div className={styles.jobContainer} key={job?.id}>
+                                        <MobileCard {...job} />
+                                    </div>
+                                )
+                            })}
+
                         </div>
                     </ChatDataProvider> : <Empty />
             }
