@@ -27,7 +27,8 @@ const HotJobTable = async () => {
     const result = await hotJobListData(
         getCountryId(),
         // 167,
-        accessToken)
+        accessToken
+    )
 
     const statusResult = await fetchQueryOnlineStatus(result?.data?.data?.jobs?.map(item => item.recruiter.id), accessToken)
 
@@ -61,6 +62,9 @@ const HotJobTable = async () => {
         company_financing_stage_id: item.company.financing_stage_id,
         company_industry_id: item.company.industry_id
     }))
+    if (getCountryId() !== 167) {
+        return null
+    }
     return (
         <>
             <h3 className={styles.hotjobTitle}><span>Popular jobs</span></h3>
