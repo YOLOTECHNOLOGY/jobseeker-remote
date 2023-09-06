@@ -49,7 +49,7 @@ const FeaturedCompany = (props: IProps) => {
       payload: {
         source: 'company_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: featuredCompany?.reco_from || '',
+        country_id: featuredCompany?.reco_from || '',
         device_udid
       }
     }
