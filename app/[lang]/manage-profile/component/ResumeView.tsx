@@ -6,6 +6,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import Loading from "app/components/loading";
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -364,7 +365,10 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
   const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
-    console.log('userInfo:', userInfo)
+    if (userDetail?.vip?.is_vip) {
+      setVipModal(true)
+      return false;
+    }
     publicResumeClick({
       public_template_id: id,
       content: {
@@ -399,7 +403,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
             pushToResume(`resume-edit/${res.data.data.id}`)
           }
           else {
-            setVipModal(true)
+
           }
         }
 

@@ -163,7 +163,6 @@ const Resume = (props: any) => {
   const VIf = (props) => {
     return props.show ? props.children : null
   }
-  console.log('userdetail:', userDetail.vip)
   return (
     <>
       <div className={styles.resumeContainer}>
