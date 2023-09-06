@@ -13,50 +13,48 @@ import { formatTemplateString } from 'helpers/formatter'
 import LinkProvider from 'app/components/providers/linkProvider'
 import { getServerLang } from 'helpers/country.server'
 import Script from 'next/script'
+import bossjobClient from 'helpers/bossjobRemoteClient'
+import { fetchConfigService } from 'store/services/config/fetchConfig'
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
+import { cookies } from 'next/headers'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo = {}, position }: any = props
   const { title = '', imageUrl = '', description = '', canonical = '' } = seo
-  let { lang } = props.params
+  let { lang, chat_id } = props.params
   lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
-  const data = { data: '123' }
-  const chatData = await fetch('http://localhost:3000/chat', {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => response.json())
+  const config = await fetchConfigService(lang)
+  const accessToken = cookies().get('accessToken')?.value
 
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  console.log({ chatData })
+  const userDetailRes = await fetchUserOwnDetailService({ accessToken })
+    .catch(e => {
+      console.log({ e })
+      return {}
+    })
+  const data = {
+    config,
+    lang,
+    chatDictionary: dictionary?.chat ?? {},
+    chat_id,
+    userDetail: userDetailRes?.data?.data
+  }
+  const chatModule = await bossjobClient.connectModule({
+    id: 'chat',
+    baseUrl: 'http://localhost:3000',
+    initialProps: data,
+    initalSharedData: {
+      CHAT_ID: +chat_id ? chat_id : null,
+    }
+  })
+
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
-        {
-          chatData.scripts?.map(script => <Script
-            key={script.src}
-            type="module"
-            async
-            crossOrigin={'anonymous'}
-            src={script.src ? `http://localhost:3000${script.src}` : undefined}>
-            {script?.textContante ?? ''}
-          </Script>)
-        }
-        {
-          chatData.links?.map(link => <link
-            key={link.href}
-            rel={link.rel}
-            href={`http://localhost:3000${link.href}`}>
-          </link>)
-        }
+        {chatModule.inHead}
         <meta name='description' content={decodeURI(description)} />
         <meta
           name='viewport'
@@ -146,6 +144,7 @@ export default async function PublicLayout(props: any) {
       `}</Script>
       </head>
       <body >
+        {chatModule.inBody}
         <div id='next-app'>
           <Providers LG={dictionary} lang={lang}>
             {/* Google Tag Manager (noscript) */}
@@ -160,21 +159,10 @@ export default async function PublicLayout(props: any) {
             ></noscript>
             <Header lang={dictionary} position={position} />
             <HamburgerMenu lang={dictionary} />
-            <LinkProvider>{
-              <Suspense>
-                <div id='chat'></div>
-                {
-                  chatData.bodyScripts?.map(script => <Script
-                    key={script.src}
-                    type="module"
-                    async
-                    crossOrigin={'anonymous'}
-                    src={`http://localhost:3000${script.src}`}>
-                  </Script>)
-                }
-                {children}
-              </Suspense>
-            }</LinkProvider>
+            <LinkProvider>
+              {chatModule.component}
+              <Suspense>{children}</Suspense>
+            </LinkProvider>
             <AutoShowModalAppRedirect />
           </Providers>
           <Initial />
