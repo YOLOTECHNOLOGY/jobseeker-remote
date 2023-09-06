@@ -11,22 +11,22 @@ import MobileCard from '../jobCard/index.mobile'
 
 const hotJobListData = async (id, accessToken) => {
     const result = await fetchHotJobsListService(id, accessToken).catch(err => {
-        throw new Error(err)
+        return Promise.resolve(err)
     })
     return result
 }
 
 const fetchQueryOnlineStatus = async (userIds, accessToken) => {
     const result = await queryOnlineStatus(userIds, accessToken).catch(err => {
-        throw new Error(err)
+        return Promise.resolve(err)
     })
     return result
 }
 const HotJobTable = async () => {
     const accessToken = cookies().get('accessToken')?.value
     const result = await hotJobListData(
-        // getCountryId(),
-        167,
+        getCountryId(),
+        // 167,
         accessToken)
 
     const statusResult = await fetchQueryOnlineStatus(result?.data?.data?.jobs?.map(item => item.recruiter.id), accessToken)
