@@ -255,11 +255,12 @@ const EducationExperience = (props: any) => {
                       disableClearable={true}
                       fieldRef={{
                         variant: 'standard',
-                        placeholder: currentLocation
+                        placeholder: desiredLocation
                       }}
                       {...fieldState}
                       {...field}
                       onChange={(_, location) => {
+                        alert('')
                         // setIsShowCountry(location?.key === 'overseas')
                         setLocationData(location)
                         onChange(location)
