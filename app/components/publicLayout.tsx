@@ -6,9 +6,10 @@ import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/(main-page)/components/AutoShowModalAppRedirect'
 import { getCountryKey } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
-import React from 'react'
+import React, { Suspense } from 'react'
 import 'app/globals.scss'
 import 'app/index.module.scss'
+import bossjobClient from 'helpers/bossjobRemoteClient'
 import { formatTemplateString } from 'helpers/formatter'
 import LinkProvider from './providers/linkProvider'
 import { getServerLang } from 'helpers/country.server'
@@ -22,6 +23,16 @@ export default async function PublicLayout(props: any) {
   let { lang } = props.params
   lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
+  const data = {
+    lang,
+    chatDictionary: dictionary?.chat ?? {},
+  }
+  const chatServiceModule = await bossjobClient.connectModule({
+    id: 'chat-service',
+    baseUrl: 'http://localhost:3000',
+    initialProps: data,
+
+  })
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
@@ -31,13 +42,7 @@ export default async function PublicLayout(props: any) {
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
-        {/* <link
-          rel="preload"
-          href="/font/product-sans/ProductSans-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        /> */}
+        {chatServiceModule.inHead}
         <link
           rel="preload"
           href="/font/product-sans/ProductSansBold.ttf"
@@ -122,6 +127,9 @@ export default async function PublicLayout(props: any) {
       `}</Script>
       </head>
       <body id='next-app'>
+        {chatServiceModule.component}
+        {chatServiceModule.inBody}
+
         <Providers LG={dictionary} lang={lang}>
           {/* Google Tag Manager (noscript) */}
           <noscript
@@ -135,7 +143,7 @@ export default async function PublicLayout(props: any) {
           ></noscript>
           <Header lang={dictionary} position={position} />
           <HamburgerMenu lang={dictionary} />
-          <LinkProvider>{children}</LinkProvider>
+          <LinkProvider> {children}</LinkProvider>
           <AutoShowModalAppRedirect />
         </Providers>
         <Initial />

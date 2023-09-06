@@ -161,7 +161,7 @@ export default async function PublicLayout(props: any) {
             <HamburgerMenu lang={dictionary} />
             <LinkProvider>
               {chatModule.component}
-              <Suspense>{children}</Suspense>
+              {children}
             </LinkProvider>
             <AutoShowModalAppRedirect />
           </Providers>

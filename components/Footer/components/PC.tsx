@@ -19,7 +19,6 @@ const PC = (props: any) => {
   const contextLang = useContext(languageContext)
   const data = lang ?? contextLang
   const langKey = getLang()
-  alert(process.env.COUNTRY_KEY)
 
   return (
     <div className={styles.footerDesktopWrapper}>
