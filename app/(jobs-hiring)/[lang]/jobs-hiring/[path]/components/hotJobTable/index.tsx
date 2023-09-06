@@ -25,8 +25,9 @@ const fetchQueryOnlineStatus = async (userIds, accessToken) => {
 const HotJobTable = async () => {
     const accessToken = cookies().get('accessToken')?.value
     const result = await hotJobListData(
-        //getCountryId()
-        167, accessToken)
+        // getCountryId(),
+        167,
+        accessToken)
 
     const statusResult = await fetchQueryOnlineStatus(result?.data?.data?.jobs?.map(item => item.recruiter.id), accessToken)
 
@@ -60,22 +61,26 @@ const HotJobTable = async () => {
         company_financing_stage_id: item.company.financing_stage_id,
         company_industry_id: item.company.industry_id
     }))
-    if (jobs && jobs.length) {
-        return (
-            <ChatDataProvider recruiterIds={jobs.map(job => job?.recruiter?.id).join(',')}>
-                <div className={styles.tableContainer}>
-                    {jobs?.map((job) => {
-                        return (
-                            <div className={styles.jobContainer} key={job?.id}>
-                                <JobCard {...job} cardType="hotjobs" />
-                            </div>
-                        )
-                    })}
-                </div>
-            </ChatDataProvider>
-        )
-    }
-    return <Empty />
+    return (
+        <>
+            <h3 className={styles.hotjobTitle}><span>Popular jobs</span></h3>
+            {
+                jobs && jobs.length ?
+                    <ChatDataProvider recruiterIds={jobs.map(job => job?.recruiter?.id).join(',')}>
+                        <div className={styles.tableContainer}>
+                            {jobs?.map((job) => {
+                                return (
+                                    <div className={styles.jobContainer} key={job?.id}>
+                                        <JobCard {...job} cardType="hotjobs" />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </ChatDataProvider> : <Empty />
+            }
+        </>
+
+    )
 
 }
 
