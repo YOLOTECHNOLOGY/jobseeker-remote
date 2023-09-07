@@ -23,7 +23,7 @@ interface IProps {
 
 const Main = (props: IProps) => {
   const { dictionary, isModal = false, handleEmailClick, handlePhoneClick } = props
-  debugger
+  // debugger
   const { newGetStarted } = dictionary
   const dispatch = useDispatch()
   const [qrCode, setQrCode] = useState<boolean>(false)

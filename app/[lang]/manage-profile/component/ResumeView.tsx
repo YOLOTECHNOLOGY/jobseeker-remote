@@ -397,7 +397,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
           // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
           pushToResume(`resume-edit/${res.data.data.id}`)
         }
-
         else {
           if (res.data.data.is_vip) {
             // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
@@ -411,7 +410,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }).catch(err => {
       // Toast.error('Resume cannot exceed 5 copies')
-      alert('haha')
       pushToResume('my-resume')
     })
   }
