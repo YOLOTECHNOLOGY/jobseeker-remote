@@ -205,7 +205,9 @@ function PhoneCode(props: any) {
           <div
             className={styles.backBox}
             onClick={() =>
-              isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/phone`)
+              isModal ? handleBackClick?.() : (referralCode && invitedSource) ?
+                router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`) :
+                router.push(`/${langKey}/get-started/email` + window.location.search)
             }
           >
             <KeyboardArrowLeftIcon />
