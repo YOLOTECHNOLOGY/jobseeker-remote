@@ -866,6 +866,12 @@
           "descTips": "视频格式为MP4，长度小于3 分钟。",
           "confirmDesc": "删除视频恢复后将无法再恢复。您确定要删除吗？",
           "confirmTitle": "Remove video resume"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }

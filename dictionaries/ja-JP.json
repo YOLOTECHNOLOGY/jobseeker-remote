@@ -866,6 +866,12 @@
           "descTips": "ビデオ形式のMP4、3分以内の時間制御",
           "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
           "confirmTitle": "動画の履歴書を削除"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }

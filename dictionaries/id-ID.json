@@ -866,6 +866,12 @@
           "descTips": "Format video MP4, kurang dari 3 menit",
           "confirmDesc": "Video yang dihapus tidak akan dapat diambil lagi nanti, yakin?",
           "confirmTitle": "Hapus resume video"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }

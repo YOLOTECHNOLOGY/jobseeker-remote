@@ -866,6 +866,12 @@
           "descTips": "視頻格式MP4，3分鐘以內",
           "confirmDesc": "刪除的視頻以後將無法找回，您確定嗎？",
           "confirmTitle": "Remove video resume"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }

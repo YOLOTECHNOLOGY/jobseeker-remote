@@ -866,6 +866,12 @@
           "descTips": "Video format MP4, time control within 3 minutes",
           "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?",
           "confirmTitle": "Remove video resume"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }

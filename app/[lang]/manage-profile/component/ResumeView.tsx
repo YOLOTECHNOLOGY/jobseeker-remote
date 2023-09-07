@@ -155,6 +155,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
   const [resumeTemplate, setResumeTemplate] = useState(null)
+  const [showTemplateConfirm, setShowTemplateConfirm] = useState(false)
+
   const [lightBox, setLightBox] = useState({
     isOpen: false,
     photoIndex: 0
@@ -409,8 +411,10 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
       }
     }).catch(err => {
+      console.log(err)
       // Toast.error('Resume cannot exceed 5 copies')
-      pushToResume('my-resume')
+      setShowTemplateConfirm(true)
+
     })
   }
 
@@ -689,8 +693,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
         headerTitle={transitions.videoResume.confirmTitle}
         firstButtonText={profile.deleteModal.btn1}
         secondButtonText={profile.deleteModal.btn2}
-        // firstButtonText="取消"
-        // secondButtonText="确认"
         isSecondButtonLoading={null}
         firstButtonIsClose
         handleFirstButton={() => {
@@ -709,6 +711,29 @@ const ResumeView = ({ userDetail, lang }: any) => {
         {transitions.videoResume.confirmDesc}
 
       </Modal>
+
+      <Modal
+        showModal={showTemplateConfirm}
+        handleModal={() => {
+          setShowTemplateConfirm(false)
+        }}
+        headerTitle={transitions.resumeTemplateConfirm.title}
+        firstButtonText={transitions.resumeTemplateConfirm.btn1}
+        secondButtonText={transitions.resumeTemplateConfirm.btn2}
+        isSecondButtonLoading={null}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          setShowTemplateConfirm(false)
+        }}
+        handleSecondButton={() => {
+          pushToResume('my-resume')
+          setShowTemplateConfirm(false)
+        }}
+        fullScreen
+      >
+        {transitions.resumeTemplateConfirm.confirmDesc}
+      </Modal>
+
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
       {vipModal && <VipActivity accessToken={accessToken} handleCloseModal={() => setVipModal(false)} />}
     </div >
