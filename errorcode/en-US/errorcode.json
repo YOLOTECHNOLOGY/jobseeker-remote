@@ -240,6 +240,7 @@
   "41257": "The number of times has been used up",
   "41258": "You cannot obtain data for this user",
   "41259": "The time cannot be greater than the current time",
+  "41260": "Invalid verification",
   "48905": "The email has been registered",
   "50001": "Internal server error",
   "50002": "Failed to upload resume",
