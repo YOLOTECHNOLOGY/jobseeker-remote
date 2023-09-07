@@ -49,12 +49,22 @@ export default async function PublicLayout(props: any) {
       CHAT_ID: +chat_id ? chat_id : null,
     }
   })
-
+  const thirdModule = await bossjobClient.connectModule({
+    id: 'third',
+    baseUrl: 'http://localhost:3000',
+    ssr: true
+    // initialProps: data,
+    // initalSharedData: {
+    //   CHAT_ID: +chat_id ? chat_id : null,
+    // }
+  })
+  console.log({ thirdModule })
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
         {chatModule.inHead}
+        {thirdModule.inHead}
         <meta name='description' content={decodeURI(description)} />
         <meta
           name='viewport'
@@ -144,6 +154,7 @@ export default async function PublicLayout(props: any) {
       `}</Script>
       </head>
       <body >
+        {thirdModule.inBody}
         {chatModule.inBody}
         <div id='next-app'>
           <Providers LG={dictionary} lang={lang}>
@@ -160,6 +171,7 @@ export default async function PublicLayout(props: any) {
             <Header lang={dictionary} position={position} />
             <HamburgerMenu lang={dictionary} />
             <LinkProvider>
+              {thirdModule.component}
               {chatModule.component}
               {children}
             </LinkProvider>

@@ -4,13 +4,14 @@ import Script from 'next/script'
 
 const client = getClient({
     parseScript: (script, baseUrl) => {
+        console.log(script)
         return <Script
-            key={script.src + script.contentText}
+            key={script.src + script.textContent}
             type="module"
             async
             crossOrigin={'anonymous'}
             src={script.src ? `${baseUrl}${script.src}` : undefined}>
-            {script?.contentText ?? ''}
+            {script?.textContent?.replaceAll('\n', ';') ?? ''}
         </Script>
     },
     parseLink: (link, baseUrl) => <link
