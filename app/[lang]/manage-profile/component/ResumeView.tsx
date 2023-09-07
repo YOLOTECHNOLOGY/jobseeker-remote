@@ -632,7 +632,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                   className={styles.button}
                   onClick={() => handleSelectTemplate(item.id, item.is_vip, item.structure)}
                 >
-                  Select Template
+                  {transitions.bossjob.selectTemplate}
                 </Button>
                 <Button
                   variant="contained"
@@ -642,7 +642,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     photoIndex: index
                   })
                   }>
-                  Preview
+                  {transitions.bossjob.preview}
                 </Button>
 
               </div>

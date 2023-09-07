@@ -836,7 +836,9 @@
         "bossjob": {
           "title": "Bossjob resume template",
           "tips": "Saat Anda membuat profil di Bossjob, kami membuatkan resume untuk Anda. Anda dapat memilih dari templat yang tersedia dan menggunakan resume Anda yang baru diperbaiki untuk melamar lowongan pekerjaan di Bossjob.",
-          "download": "Unduh"
+          "download": "Unduh",
+          "selectTemplate": "Select Template",
+          "preview": "Preview"
         },
         "changeResume": {
           "rename": "Ganti nama",

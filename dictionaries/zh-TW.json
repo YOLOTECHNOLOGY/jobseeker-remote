@@ -836,7 +836,9 @@
         "bossjob": {
           "title": "Bossjob resume template",
           "tips": "簡歷是幫助您進入求職過程下一步的重要工具。 使用 Bossjob 個人資料中的其他信息給招聘人員留下深刻印象。",
-          "download": "下載"
+          "download": "下載",
+          "selectTemplate": "Select Template",
+          "preview": "Preview"
         },
         "changeResume": {
           "rename": "重命名",
