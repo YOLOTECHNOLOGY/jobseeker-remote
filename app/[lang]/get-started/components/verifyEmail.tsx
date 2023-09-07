@@ -171,9 +171,7 @@ const verifyEmail = function (props) {
             <div
               className={styles.backBox}
               onClick={() =>
-                isModal ? handleBackClick?.() : (referralCode && invitedSource) ?
-                  router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`) :
-                  router.push(`/${langKey}/get-started/email` + window.location.search)
+                isModal ? handleBackClick?.() : history.back()
               }
             >
               <KeyboardArrowLeftIcon />
