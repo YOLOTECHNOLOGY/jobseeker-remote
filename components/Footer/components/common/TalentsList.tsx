@@ -3,14 +3,25 @@ import Link from 'components/Link'
 import styles from '../../Footer.module.scss'
 import { getCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
+import { pushToResume } from 'helpers/push'
+import { useRouter } from 'next/navigation'
 
 const TalentsList = (props: any) => {
   const { data } = props
   const isLogin = getCookie('accessToken') ? true : false
 
   const langKey = getLang()
+  const router = useRouter()
 
   const { allJobs, createFree, careerGuide, courses } = data?.foot || {}
+
+  const resumeUrl = process.env.RESUME_TEMP_URL
+
+  const handlePush = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+    ev.preventDefault()
+    const url = isLogin ? '/manage-profile?tab=resume' : ''
+    isLogin ? router.push(url) : pushToResume(url)
+  }
 
   return (
     <ul className={styles.footerDesktopLinkList}>
@@ -35,7 +46,8 @@ const TalentsList = (props: any) => {
       <li>
         <Link
           className={styles.footerLink}
-          to={isLogin ? `/${langKey}/manage-profile?tab=resume` : `/${langKey}/resumetemplate`}
+          onClick={ev => handlePush(ev)}
+          to={isLogin ? `/${langKey}/manage-profile?tab=resume` : `${resumeUrl}`}
           title='Create Free Resume'
         >
           <span>{createFree}</span>
