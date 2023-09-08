@@ -39,7 +39,7 @@ export default async function PublicLayout(props: any) {
     lang,
     chatDictionary: dictionary?.chat ?? {},
     chat_id,
-    userDetail: userDetailRes?.data?.data
+    userDetail: userDetailRes?.data?.data ?? {}
   }
   const chatModule = await bossjobClient.connectModule({
     id: 'chat',
@@ -49,22 +49,23 @@ export default async function PublicLayout(props: any) {
       CHAT_ID: +chat_id ? chat_id : null,
     }
   })
-  const thirdModule = await bossjobClient.connectModule({
-    id: 'third',
+
+  const workerModule = await bossjobClient.connectModule({
+    id: 'chat-worker',
     baseUrl: 'http://localhost:3000',
-    ssr: true
+    ssr: false
     // initialProps: data,
     // initalSharedData: {
     //   CHAT_ID: +chat_id ? chat_id : null,
     // }
   })
-  console.log({ thirdModule })
+  console.log({ workerModule })
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
         {chatModule.inHead}
-        {thirdModule.inHead}
+        {workerModule.inHead}
         <meta name='description' content={decodeURI(description)} />
         <meta
           name='viewport'
@@ -154,7 +155,7 @@ export default async function PublicLayout(props: any) {
       `}</Script>
       </head>
       <body >
-        {thirdModule.inBody}
+        {workerModule.inBody}
         {chatModule.inBody}
         <div id='next-app'>
           <Providers LG={dictionary} lang={lang}>
@@ -171,7 +172,7 @@ export default async function PublicLayout(props: any) {
             <Header lang={dictionary} position={position} />
             <HamburgerMenu lang={dictionary} />
             <LinkProvider>
-              {thirdModule.component}
+              {workerModule.component}
               {chatModule.component}
               {children}
             </LinkProvider>

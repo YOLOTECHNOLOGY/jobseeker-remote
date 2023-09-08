@@ -2,7 +2,7 @@
 import { useFirstRender } from 'helpers/useFirstRender'
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation';
-import { initFireBase } from 'helpers/fireBaseManager'
+// import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
@@ -26,14 +26,14 @@ const tiktokfunc = () => {
   }
 }
 const runInClient = (searchParams) => {
-  if (!(window as any)?.imSharedWorker && window.SharedWorker) {
-    (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
-  }
+  // if (!(window as any)?.imSharedWorker && window.SharedWorker) {
+  //   (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+  // }
   const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
   if (!!devTools && devTools['inject']) {
     devTools['inject'] = Function.prototype
   }
-  initFireBase()
+  // initFireBase()
   tiktokfunc()
   invokeGAAdsEvent(searchParams)
 }

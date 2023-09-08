@@ -3,21 +3,21 @@ import { getClient } from 'bossjob-remote/dist/client'
 import Script from 'next/script'
 
 const client = getClient({
-    parseScript: (script, baseUrl) => {
+    parseScript: (script) => {
         console.log(script)
         return <Script
             key={script.src + script.textContent}
             type="module"
             async
             crossOrigin={'anonymous'}
-            src={script.src ? `${baseUrl}${script.src}` : undefined}>
+            src={script.src}>
             {script?.textContent?.replaceAll('\n', ';') ?? ''}
         </Script>
     },
-    parseLink: (link, baseUrl) => <link
+    parseLink: (link) => <link
         key={link.href}
         rel={link.rel}
-        href={`${baseUrl}${link.href}`}>
+        href={link.href}>
     </link>
 })
 
