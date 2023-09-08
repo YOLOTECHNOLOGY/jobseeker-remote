@@ -44,7 +44,7 @@ export async function GET(request, pathParams) {
   // 取得request的protocol
   const protocol = request.headers.get('x-forwarded-proto') || 'http'
   // const newUrl = process.env.NEXT_PUBLIC_HOST_PATH
-  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}?${otherSearchParams}`)
+  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}`)
   // + (otherSearchParams ? `?${otherSearchParams}` : ''))
 
   const maxTime = 60 * 60 * 24 // a day
