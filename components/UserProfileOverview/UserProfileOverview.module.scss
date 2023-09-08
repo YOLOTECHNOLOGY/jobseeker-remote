@@ -234,7 +234,7 @@
         // padding-right: 47px;
         box-sizing: border-box;
         background-image: url('./vip_left_bg.jpg');
-        background-size: cover;
+        background-size: 100% 100%;
 
         .links {
           display: flex;
@@ -307,7 +307,7 @@
         width: 50%;
         border-radius: 0 5px 5px 0;
         background-image: url('./vip_right_bg.jpg');
-        background-size: cover;
+        background-size: 100% 100%;
         .desc {
           font-size: 18px;
           font-weight: 700;

@@ -38,39 +38,17 @@ const VipActivity = ({ accessToken, handleCloseModal }) => {
 }
 const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
   const copyTextRef = useRef(null)
-
   return (
     <div className={styles.vipShareWrapper}>
       <div className={styles.vipShareModal}>
-        <img className={styles.close} src={CloseIcon} alt="" width="17" height="17" onClick={(handleCloseModal)} />
-        <h1>INVITE FRIENDS TO GET <span style={{ color: '#004AFF' }}>AI RESUME COACHING</span></h1>
-        <h3>Invite A friends to register with Bossjob and get VIP immediately</h3>
+        <img className={styles.close} src={require('./icon_close.svg').default.src} alt="" width="15" height="15" onClick={handleCloseModal} />
         <div className={styles.main}>
           <div className={styles.left}>
-            <p>High-quality VIP resume template and AI  assistant <br /> to help you get high-paying Offer</p>
-            <img src={require('./share_modal_image.png').default.src} alt="" />
-          </div>
-          <div className={styles.right}>
-            <p className={styles.description}>Instant access to VIP privileges for invitees and invitees</p>
-            <div className={styles.featureContent}>
-              <p>
-                <Image src={require('./vip_share_icon1.svg').default.src} width={26} height={26} alt="add"></Image>
-                Share registration
-                login link
-              </p>
-              <span style={{
-                fontSize: '20px',
-                fontWeight: 'bold'
-              }}>&gt;</span>
-              <p>
-                < Image src={require('./vip_share_icon2.svg').default.src} width={26} height={26} alt="add"></Image>
-                new user registration automatically get VIP
-              </p>
-            </div>
+            <p className={styles.buttonText}>Invite Friends To Get</p>
+            <p className={styles.blueText}>AI RESUME COACHING</p>
+            <p className={styles.descText}>High-quality VIP resume template and AI  assistant to help you get high-paying Offer.</p>
             <p className={styles.links} ref={copyTextRef}>
-              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">
-                {`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}
-              </a>
+              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a>
             </p>
             <Button
               variant="contained"
@@ -78,16 +56,15 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
               onClick={() => {
                 navigator.clipboard.writeText(copyTextRef.current.innerText)
                 Toast.success('Link copied success!')
-
               }}
             >
-              Copy link to invite now
+              <img src={require('./icon_copy_arrow.svg').default.src} alt="" style={{ marginRight: '20px' }} />Copy link to invite now
             </Button>
           </div>
+          <div className={styles.right}></div>
         </div>
       </div>
-
-    </div >
+    </div>
   )
 }
 export default VipActivity
