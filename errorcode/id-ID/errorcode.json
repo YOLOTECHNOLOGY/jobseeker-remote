@@ -240,7 +240,6 @@
   "41257": "The number of times has been used up",
   "41258": "You cannot obtain data for this user",
   "41259": "The time cannot be greater than the current time",
-  "41260": "Kode verifikasi tidak benar",
   "48905": "Email telah didaftarkan",
   "50001": "Kesalahan server dari dalam",
   "50002": "Gagal mengunggah resume",
@@ -255,5 +254,6 @@
   "50011": "Bakatnya telah terbuka",
   "50012": "Parameter melanjutkan nama yang terakhir diperbarui adalah nilai yang tidak valid",
   "50013": "Tidak ada hasil yang ditemukan saat ini Silakan coba lagi",
-  "50014": "Pencarian gaji gagal"
+  "50014": "Pencarian gaji gagal",
+  "41260": "Kode verifikasi tidak benar"
 }
