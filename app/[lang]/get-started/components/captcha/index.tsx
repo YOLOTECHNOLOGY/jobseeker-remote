@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect, useMemo, CSSProperties } from 'react'
 import styles from '../../index.module.scss'
 import errorText from '../errorText'
+import { CircularProgress } from '@mui/material'
+import { cfKey } from 'helpers/cookies'
+import Turnstile, { useTurnstile } from 'react-turnstile'
+
 // 默认位数
 const DEFAULT_LENGTH = 6
 
@@ -52,6 +56,9 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
   // 组件内部维护的输入框输入值
   const [inputValue, setInputValue] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [cfToken, setCfToken] = useState<string>(sessionStorage.getItem(cfKey))
+  const turnstile = useTurnstile()
+
   // 验证码数组
   const codeArray = useMemo(() => {
     setCurrentIndex(inputValue?.length)
@@ -83,6 +90,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
     timer = setInterval(() => {
       const newTime = timerRef.current - 1
       if (newTime <= 0) {
+        setCfToken('')
         clearInterval(timer)
         timerRef.current = origninTimer
       } else {
@@ -148,7 +156,7 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
           />
         </div>
       </div>
-      <p className={styles.countdown}>
+      {Boolean(cfToken) && <p className={styles.countdown}>
         {countdown <= 0 ? (
           <span className={styles.resendCode} onClick={() => sendOpt()}>
             {newGetStarted.resendCode}
@@ -156,8 +164,33 @@ const Captcha: React.FC<ICaptchaProps> = (props) => {
         ) : (
           countdown + 's'
         )}
-      </p>
+      </p>}
+      {!cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+        <CircularProgress color={'primary'} size={30}
+          style={{ position: 'absolute' }}
+        />
+        <Turnstile
+          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+          theme='light'
+          appearance='always'
+          // appearance='interaction-only' // invisible managed challenge
+          onVerify={(token) => {
+            setTimeout(() => {
+              setCfToken(token)
+              sessionStorage.setItem(cfKey, token)
+            }, 1000)
+          }}
+          onError={(error) => {
+            console.log('error token', error)
+            // setCfToken('')
+            turnstile?.reset()
+          }}
+          style={{ position: 'relative', zIndex: 2 }}
+        />
+      </div>
+      }
     </>
   )
 }
+
 export default Captcha
