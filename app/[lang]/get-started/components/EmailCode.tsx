@@ -9,6 +9,7 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { getLang } from 'helpers/country'
+import { cfKey } from 'helpers/cookies'
 const EmailCode = (props: any) => {
   const { newGetStarted } = props.lang
   const langKey = getLang()
@@ -39,7 +40,8 @@ const EmailCode = (props: any) => {
 
   const sendOpt = () => {
     setErrorText('')
-    authenticationSendEmaillOtp({ email }).then(() => {
+    const cfToken = sessionStorage.getItem(cfKey)
+    authenticationSendEmaillOtp({ email, cf_token: cfToken }).then(() => {
       setNumber(new Date().getTime())
       dispatch(
         displayNotification({
