@@ -132,13 +132,14 @@ function EmailFactor(props: any) {
           </div>
 
         }
-        {/* {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>} */}
+        </button>}
 
-        <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
+        {/* <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>
+        </button> */}
+
         <SetUpLater lang={props.lang} />
       </div>
     </div>
