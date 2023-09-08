@@ -26,12 +26,12 @@ export async function GET(request, pathParams) {
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
   const pathname = params.get(redirectUrlKey) ?? '';
-  // // vip search parameters
-  // const otherSearchParams = ['referral_code', 'invited_source'].map((key) => {
-  //   const value = params.get(key);
+  // vip search parameters
+  const otherSearchParams = ['referral_code', 'invited_source'].map((key) => {
+    const value = params.get(key);
 
-  //   return value ? `${key}=${value}` : undefined
-  // }).filter(v => !!v).join('&');
+    return value ? `${key}=${value}` : undefined
+  }).filter(v => !!v).join('&');
 
   // const country = params.get('country')
   const user = params.get(userKey)
