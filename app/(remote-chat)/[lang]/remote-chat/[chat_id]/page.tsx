@@ -1,5 +1,5 @@
 'use client'
-import { useSharedData } from 'bossjob-remote/dist/clientStorage'
+import { useSharedData } from 'bossjob-remote/dist/hooks'
 import { useEffect } from 'react'
 const Page = () => {
     // const { lang } = props.params

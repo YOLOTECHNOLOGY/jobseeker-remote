@@ -29,9 +29,13 @@ function* logoutReq() {
   yield put(fetchUserOwnDetailClear())
 
   try {
-    import('imforbossjob')
-      .then(im => im?.IMManager?.logout?.())
-      .then(() => localStorage?.clear?.())
+    // import('imforbossjob')
+    //   .then((im) => im?.IMManager?.logout?.())
+    //   .then(() => localStorage?.clear?.())
+    if (typeof window !== 'undefined') {
+      import('bossjob-remote/dist/clientStorage')
+        .then(clientStorage => clientStorage?.postNotification?.('IM_LOGOUT'))
+    }
 
   } catch (e) {
     console.log(e)
