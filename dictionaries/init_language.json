@@ -1466,5 +1466,12 @@
     "jobs": "jobs",
     "talents": "talents",
     "Looking for": "Looking for"
+  },
+  "advertisingLink": {
+    "GetVipForFree": "Get Vip For Free",
+    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
+    "excellentResume": "Excellent Resume",
+    "openTheDoorToSuccess": "Open The Door To Success",
+    "createMyResume": "Create My resume"
   }
 }

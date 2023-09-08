@@ -23,4 +23,5 @@ export const pushToResume = (path = '') => {
     params.append(redirectWithUrl, path)
     window.open(`${resumeUrl}/redirect?${params.toString()}`)
   }
+  return path
 }

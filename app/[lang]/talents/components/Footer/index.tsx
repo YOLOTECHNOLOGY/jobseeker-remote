@@ -14,6 +14,7 @@ import { appLinkUrl } from 'helpers/constants'
 import { getAppStoreLink, getCountryKey } from 'helpers/country'
 import { getCookie } from '../../../../../helpers/cookies'
 import useWindowSize from '../../../../../hooks/useWindowSize'
+import { pushToResume } from 'helpers/push'
 
 import {
   footer_apple_download,
@@ -156,7 +157,8 @@ const Footer = () => {
           child: createJobAlert
         },
         {
-          key: isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`,
+          key: `/resumetemplate`,
+          // key: isLogin ? pushToResume('my-resume') : pushToResume(),
           child: createFree
         },
         {
@@ -343,7 +345,12 @@ const Footer = () => {
             <div className={style.site_map_col} key={index}>
               <div className={style.site_map_title}>{item.title}</div>
               {item.links.map((_item, index) => {
-                return (
+
+                return _item.key === '/resumetemplate' ?
+                  <a className={style.site_map_link} href="#" onClick={(e) => {
+                    e.preventDefault();
+                    isLogin ? pushToResume('my-resume') : pushToResume()
+                  }}>{_item.child}</a> :
                   <Link
                     className={style.site_map_link}
                     target={'_blank'}
@@ -353,7 +360,7 @@ const Footer = () => {
                     {' '}
                     {_item.child}
                   </Link>
-                )
+
               })}
             </div>
           )

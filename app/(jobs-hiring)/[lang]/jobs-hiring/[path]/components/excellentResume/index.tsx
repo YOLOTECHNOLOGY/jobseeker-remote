@@ -5,7 +5,7 @@ import { pushToResume } from 'helpers/push'
 import Lottie from "lottie-react";
 import excellentResumeData from "./excellentResume.json";
 
-const ExcellentResumeBanner = () => {
+const ExcellentResumeBanner = ({ advertisingLink }) => {
   const handleClick = () => {
     pushToResume()
   }
@@ -13,9 +13,9 @@ const ExcellentResumeBanner = () => {
   return (
     <div className={styles.container} onClick={handleClick}>
       <Lottie animationData={excellentResumeData} loop={true} />
-      <span style={{ fontSize: '26px' }}>excellent resume</span>
-      <span style={{ fontSize: '18px' }}>open the door to success</span>
-      <span className={styles.button}>Create My resume</span>
+      <span style={{ fontSize: '26px' }}>{advertisingLink.excellentResume}</span>
+      <span style={{ fontSize: '18px' }}>{advertisingLink.openTheDoorToSuccess}</span>
+      <span className={styles.button}>{advertisingLink.createMyResume}</span>
     </div>
   )
 }

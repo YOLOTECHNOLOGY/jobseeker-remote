@@ -834,11 +834,11 @@
           "error": "Gagal menghapus resume"
         },
         "bossjob": {
-          "title": "Bossjob resume template",
+          "title": "Templat resume Bossjob",
           "tips": "Saat Anda membuat profil di Bossjob, kami membuatkan resume untuk Anda. Anda dapat memilih dari templat yang tersedia dan menggunakan resume Anda yang baru diperbaiki untuk melamar lowongan pekerjaan di Bossjob.",
           "download": "Unduh",
-          "selectTemplate": "Select Template",
-          "preview": "Preview"
+          "selectTemplate": "Pilih Templat",
+          "preview": "Pratinjau"
         },
         "changeResume": {
           "rename": "Ganti nama",
@@ -870,10 +870,10 @@
           "confirmTitle": "Hapus resume video"
         },
         "resumeTemplateConfirm": {
-          "title": "Tips",
-          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
-          "btn1": "Cancel",
-          "btn2": "Manage drafts"
+          "title": "Kiat",
+          "confirmDesc": "Jika Anda memiliki lebih dari lima draf resume, harap hapus satu draf lalu terapkan templat resume baru.",
+          "btn1": "Membatalkan",
+          "btn2": "Kelola konsep"
         }
       }
     }
@@ -1055,7 +1055,7 @@
   },
   "chatInterview": {
     "confirmText": "Wawancara Dikonfirmasi",
-    "confirmLabel": "Your interview has been confirmed",
+    "confirmLabel": "Wawancara Anda telah dikonfirmasi",
     "cancelAction": "Batalkan wawancara",
     "canNotCancel": "Wawancara Anda tidak dapat dibatalkan sekarang",
     "checkedText": "Check in",
@@ -1089,7 +1089,7 @@
     "back": "Kembali",
     "next": "Berikutnya",
     "close": "Tutup",
-    "send": "Send",
+    "send": "Kirim",
     "resultTitle": "Hasil wawancara",
     "resultText": "Apakah Anda menghadiri wawancara?",
     "attendancelabel": "Kehadiran wawancara",
@@ -1466,5 +1466,12 @@
     "jobs": "pekerjaan",
     "talents": "talent",
     "Looking for": "Mencari"
+  },
+  "advertisingLink": {
+    "GetVipForFree": "Dapatkan Vip Gratis",
+    "InviteFriendsToGetAIResumeCoaching": "Undang teman untuk mendapatkan pelatihan resume AI",
+    "excellentResume": "Excellent Resume",
+    "openTheDoorToSuccess": "Open The Door To Success",
+    "createMyResume": "Create My resume"
   }
 }

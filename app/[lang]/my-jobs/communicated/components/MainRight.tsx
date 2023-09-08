@@ -24,9 +24,9 @@ export default async function Page(props) {
       {/* @ts-expect-error Async Server Component */}
       <ViewedMe {...props} />
       {/* <VipActivity /> */}
-      <VipActivity accessToken={accessToken} />
+      <VipActivity accessToken={accessToken} advertisingLink={props.dictionary.advertisingLink} />
 
-      <ExcellentResumeBanner />
+      <ExcellentResumeBanner advertisingLink={props.dictionary.advertisingLink} />
     </div>
   )
 }

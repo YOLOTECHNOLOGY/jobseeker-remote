@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react'
 import Lottie from 'lottie-web'
 import styles from './index.module.scss'
 import { pushToResume } from 'helpers/push'
-const ExcellentResumeBanner = () => {
+const ExcellentResumeBanner = ({ advertisingLink }) => {
   const container = useRef()
 
   useEffect(() => {
@@ -28,9 +28,9 @@ const ExcellentResumeBanner = () => {
   return (
     <div className={styles.container} onClick={handleClick}>
       <div ref={container}></div>
-      <span style={{ fontSize: '26px' }}>excellent resume</span>
-      <span style={{ fontSize: '18px' }}>open the door to success</span>
-      <span className={styles.button}>Create My resume</span>
+      <span style={{ fontSize: '26px' }}>{advertisingLink.excellentResume}</span>
+      <span style={{ fontSize: '18px' }}>{advertisingLink.openTheDoorToSuccess}</span>
+      <span className={styles.button}>{advertisingLink.createMyResume}</span>
     </div>
   )
 }

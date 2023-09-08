@@ -16,7 +16,9 @@ const ManageProfilePage = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const tab = searchParams.get('tab');
   const {
-    manageProfile: { tab: tabDic }
+    manageProfile: { tab: tabDic },
+    advertisingLink
+
   } = lang
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const [unCompleted, setUnCompleted] = useState({
@@ -107,6 +109,7 @@ const ManageProfilePage = () => {
       modalName='profile'
       handleModal={handleModal}
       unCompleted={unCompleted}
+      advertisingLink={advertisingLink}
     >
 
 

@@ -52,7 +52,8 @@ type UserProfileOverviewProps = {
     is_vip: 0 | 1;
     ended_at: string;
   };
-  handleEditClick: () => void
+  handleEditClick: () => void,
+  advertisingLink: any
 }
 
 const getAge = (birthDate) => {
@@ -77,6 +78,7 @@ const UserProfileOverview = ({
   vip,
   working_since,
   referral_code,
+  advertisingLink,
   handleEditClick
 }: UserProfileOverviewProps) => {
   const { width } = useWindowDimensions()
@@ -224,9 +226,10 @@ const UserProfileOverview = ({
           variant='contained'
           className={styles.btn}
         >
-          Get VIP for free
+          {/* Get VIP for free */}
+          {advertisingLink.GetVipForFree}
         </Button>
-        <span className={styles.desc}>Invite friends to get AI resume coaching</span>
+        <span className={styles.desc}>{advertisingLink.InviteFriendsToGetAIResumeCoaching}</span>
         <Image
           src={require('./vip_activity_image.png').default.src}
           width={514}

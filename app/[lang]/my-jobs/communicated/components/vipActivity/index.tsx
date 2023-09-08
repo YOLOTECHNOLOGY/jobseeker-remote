@@ -11,7 +11,7 @@ import {
 import DialogLogin from 'app/components/LoginDialog'
 import Toast from 'app/components/Toast'
 
-const VipActivity = ({ accessToken }) => {
+const VipActivity = ({ accessToken, advertisingLink }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
   const [loginModal, setLoginModal] = useState(false)
@@ -35,6 +35,7 @@ const VipActivity = ({ accessToken }) => {
     }
   }
 
+  console.log('advertisingLink:', advertisingLink)
 
   return (
     <>
@@ -43,9 +44,9 @@ const VipActivity = ({ accessToken }) => {
           variant='contained'
           className={styles.btn}
         >
-          Get VIP for free
+          {advertisingLink.GetVipForFree}
         </Button>
-        <span className={styles.desc}>Invite friends to get AI resume coaching</span>
+        <span className={styles.desc}>{advertisingLink.InviteFriendsToGetAIResumeCoaching}</span>
         <Image
           src={require('./vip_activity_image.png').default.src}
           width={514}
