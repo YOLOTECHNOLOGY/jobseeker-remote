@@ -51,7 +51,7 @@
     "healthcareJobs": "Healthcare jobs",
     "downloadBossjobApp": " Download Bossjob APP",
     "followUs": "Follow us",
-    "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
+    "technology": " Singapore: Yolo Technology Pte. Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation",
     "companyDesc": "Bossjob is a chat-first, AI-powered hiring platform, modelled after the one thing that we need in our daily lives: instant gratification. Bossjob aims to provide speedy communications between talents and bosses to eliminate the lengthy job application process through direct chat.",
     "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
@@ -871,7 +871,7 @@
         },
         "resumeTemplateConfirm": {
           "title": "Tips",
-          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "confirmDesc": "If you have more than 5 drafts resumes, you need to delete one in order to add a new one.",
           "btn1": "Cancel",
           "btn2": "Manage drafts"
         }

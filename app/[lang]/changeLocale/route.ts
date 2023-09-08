@@ -26,12 +26,12 @@ export async function GET(request, pathParams) {
   const accessToken = params.get(accessTokenKey)
   const refreshToken = params.get(refreshTokenKey)
   const pathname = params.get(redirectUrlKey) ?? '';
-  // // vip search parameters
-  // const otherSearchParams = ['referral_code', 'invited_source'].map((key) => {
-  //   const value = params.get(key);
+  // vip search parameters
+  const otherSearchParams = ['referral_code', 'invited_source'].map((key) => {
+    const value = params.get(key);
 
-  //   return value ? `${key}=${value}` : undefined
-  // }).filter(v => !!v).join('&');
+    return value ? `${key}=${value}` : undefined
+  }).filter(v => !!v).join('&');
 
   // const country = params.get('country')
   const user = params.get(userKey)
@@ -44,7 +44,7 @@ export async function GET(request, pathParams) {
   // 取得request的protocol
   const protocol = request.headers.get('x-forwarded-proto') || 'http'
   // const newUrl = process.env.NEXT_PUBLIC_HOST_PATH
-  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}`)
+  const response = NextResponse.redirect(`${protocol}://${host}/${lang}/${pathname}${otherSearchParams}`)
   // + (otherSearchParams ? `?${otherSearchParams}` : ''))
 
   const maxTime = 60 * 60 * 24 // a day
