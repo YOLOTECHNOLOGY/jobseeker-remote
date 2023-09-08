@@ -3157,10 +3157,10 @@ body-parser@1.20.1:
     type-is "~1.6.18"
     unpipe "1.0.0"
 
-bossjob-remote@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/bossjob-remote/-/bossjob-remote-0.0.2.tgz#3cc7a6760d241c9bee6aead98dfc685222a34c0d"
-  integrity sha512-YTMU0FSL5YBZaCWTJiEMLyl/TlsqdShbxIx095PwpSqg7C5oO7CrIlAtqEXjpf4PPX8032BZqLDifitLtc948Q==
+bossjob-remote@^0.0.2-fix1:
+  version "0.0.2-fix1"
+  resolved "https://registry.yarnpkg.com/bossjob-remote/-/bossjob-remote-0.0.2-fix1.tgz#f5cdc5e7af09aa068925d821273ffd5e07018ccd"
+  integrity sha512-5Kozn6+jBr8oxBYhqwlhS+frbknoLPiIn4sjCrrBV5Jd3HJUo2V3+0l41bnoXsTqWqlVXIORGFGrtNGiIiqqFg==
   dependencies:
     "@vitejs/plugin-react-swc" "^3.3.2"
     commander "^11.0.0"
