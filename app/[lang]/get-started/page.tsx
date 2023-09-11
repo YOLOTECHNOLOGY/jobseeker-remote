@@ -16,7 +16,7 @@ const configs = getConfigs([['location_lists']])
 const Page = async (props: any) => {
   const { lang } = props.params
   const dictionary: any = await getDictionary(lang)
-  // const { newGetStarted } = dictionary
+  const { newGetStarted } = dictionary
 
   return (
     <>
@@ -27,7 +27,7 @@ const Page = async (props: any) => {
         </div>
         <FooterTip lang={dictionary} />
       </div>
-      <VipUserPrompt />
+      <VipUserPrompt newGetStarted={newGetStarted} />
     </>
   )
 }

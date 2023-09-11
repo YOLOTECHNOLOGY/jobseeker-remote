@@ -1347,7 +1347,18 @@
     "checkYourSpam": "如果您没有收到验证码，请检查您的垃圾邮件。",
     "authenticationSuccessful": "验证成功",
     "Bossjob": "Bossjob",
-    "back": "Back"
+    "back": "Back",
+    "vipText": {
+      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
+      "InviteNewUsersToRegister": "Invite New Users To Register",
+      "BossjobAI": "Bossjob AI",
+      "ResumeAssistant": "Resume Assistant",
+      "HighSalaryOffer": "High Salary Offer",
+      "HelpYouGet": "Help You Get",
+      "promptDesc": "You are currently logged in, please log out and re-register or log in",
+      "returnHome": "Return Home",
+      "signOut": "Sign Out"
+    }
   },
   "seo": {
     "ph": "菲律宾",

@@ -11,7 +11,7 @@ import { logoutRequest } from 'store/actions/auth/logout'
 
 import styles from '../index.module.scss'
 
-const VipUserPrompt = () => {
+const VipUserPrompt = ({ newGetStarted }) => {
   const accessToken = getCookie('accessToken')
   const searchParams = useSearchParams()
   const referralCode = searchParams.get('referral_code')
@@ -33,7 +33,7 @@ const VipUserPrompt = () => {
   return (
     <div className={styles.vipUserPromptWrap}>
       <div className={styles.vipUserPrompt}>
-        <p>You are currently logged in, please log out and re-register or log in</p>
+        <p>{newGetStarted.vipText.promptDesc}</p>
         <div className={styles.buttonContent}>
           <Button
             className={styles.returnButton}
@@ -42,7 +42,7 @@ const VipUserPrompt = () => {
               router.replace(`/${lang}`)
               setPromptVisible(false)
             }}>
-            Return Home
+            {newGetStarted.vipText.returnHome}
           </Button>
           <Button
             variant="contained"
@@ -52,7 +52,7 @@ const VipUserPrompt = () => {
               setPromptVisible(false)
               router.replace(originUrl)
             }}>
-            Sign Out
+            {newGetStarted.vipText.signOut}
           </Button>
         </div>
       </div>

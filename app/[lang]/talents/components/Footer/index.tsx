@@ -254,7 +254,13 @@ const Footer = () => {
                 >
                   <ul className={styles.mobile_list}>
                     {item.links.map((link, index) => {
-                      return (
+                      return link.key === '/resumetemplate' ?
+                        <a className={style.mobile_footer_link}
+                          style={{ color: '#fff', fontSize: '12px' }}
+                          href="#" onClick={(e) => {
+                            e.preventDefault();
+                            isLogin ? pushToResume('my-resume') : pushToResume()
+                          }}>{link.child}</a> :
                         <li key={index}>
                           <Link
                             className={style.mobile_footer_link}
@@ -264,7 +270,7 @@ const Footer = () => {
                             <Text textStyle='sm'>{link.child}</Text>
                           </Link>
                         </li>
-                      )
+
                     })}
                   </ul>
                 </Accordian>

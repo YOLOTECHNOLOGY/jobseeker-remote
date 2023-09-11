@@ -47,10 +47,11 @@ const EmailLogin = (props: IProps) => {
       setStep(1)
     }
   }, [search, isModal, stepModal])
+  console.log('lang:', lang)
 
   const main = (
     <div className={styles.container}>
-      <LeftBanner />
+      <LeftBanner newGetStarted={lang.newGetStarted} />
       <div className={styles.rightContainer}>
         <CodePopver setQrCode={setQrCode} qrCode={qrCode} dictionary={lang} isModal={isModal} />
         {qrCode ? (
