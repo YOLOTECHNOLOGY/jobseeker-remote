@@ -15,13 +15,13 @@ const TalentsList = (props: any) => {
 
   const { allJobs, createFree, careerGuide, courses } = data?.foot || {}
 
-  const resumeUrl = process.env.RESUME_TEMP_URL
+  // const resumeUrl = process.env.RESUME_TEMP_URL
 
-  const handlePush = (ev: React.MouseEvent<HTMLAnchorElement>) => {
-    ev.preventDefault()
-    const url = isLogin ? '/manage-profile?tab=resume' : ''
-    isLogin ? router.push(url) : pushToResume(url)
-  }
+  // const handlePush = (ev: React.MouseEvent<HTMLAnchorElement>) => {
+  //   ev.preventDefault()
+  //   const url = isLogin ? '/manage-profile?tab=resume' : ''
+  //   isLogin ? router.push(url) : pushToResume(url)
+  // }
 
   return (
     <ul className={styles.footerDesktopLinkList}>
@@ -44,14 +44,17 @@ const TalentsList = (props: any) => {
         </Link>
       </li> */}
       <li>
-        <Link
+        <a
           className={styles.footerLink}
-          onClick={ev => handlePush(ev)}
-          to={isLogin ? `/${langKey}/manage-profile?tab=resume` : `${resumeUrl}`}
+          // onClick={ev => handlePush(ev)}
+          onClick={(e) => {
+            e.preventDefault()
+            isLogin ? pushToResume('my-resume') : pushToResume()
+          }}
           title='Create Free Resume'
         >
           <span>{createFree}</span>
-        </Link>
+        </a>
       </li>
       <li>
         <Link
@@ -73,7 +76,7 @@ const TalentsList = (props: any) => {
           <span>{courses}</span>
         </Link>
       </li>
-    </ul>
+    </ul >
   )
 }
 
