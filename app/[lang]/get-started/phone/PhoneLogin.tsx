@@ -56,7 +56,7 @@ const PhoneLogin = (props: IProps) => {
 
   const main = (
     <div className={styles.container}>
-      <LeftBanner />
+      <LeftBanner newGetStarted={lang.newGetStarted} />
       <div className={styles.rightContainer}>
         <CodePopver setQrCode={setQrCode} qrCode={qrCode} dictionary={lang} isModal={isModal} />
         {qrCode ? (

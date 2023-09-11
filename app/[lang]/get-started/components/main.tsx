@@ -35,7 +35,7 @@ const Main = (props: IProps) => {
 
   return (
     <>
-      <LeftBanner />
+      <LeftBanner newGetStarted={newGetStarted} />
       <div className={styles.rightContainer}>
         <CodePopver
           setQrCode={setQrCode}

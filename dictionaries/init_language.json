@@ -1347,7 +1347,18 @@
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
     "authenticationSuccessful": "Authentication Successful",
     "Bossjob": "Bossjob",
-    "back": "Back"
+    "back": "Back",
+    "vipText": {
+      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
+      "InviteNewUsersToRegister": "Invite New Users To Register",
+      "BossjobAI": "Bossjob AI",
+      "ResumeAssistant": "Resume Assistant",
+      "HighSalaryOffer": "High Salary Offer",
+      "HelpYouGet": "Help You Get",
+      "promptDesc": "You are currently logged in, please log out and re-register or log in",
+      "returnHome": "Return Home",
+      "signOut": "Sign Out"
+    }
   },
   "seo": {
     "ph": "Philippines",
