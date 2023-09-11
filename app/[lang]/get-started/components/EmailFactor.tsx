@@ -55,6 +55,10 @@ function EmailFactor(props: any) {
   }, [email])
 
   const checkIsEmailUseFun = () => {
+    const cfToken = sessionStorage.getItem(cfKey)
+    if (!cfToken) {
+      return
+    }
     setLoading(true)
     checkIsEmailUse({ email: emailRef.current }).then((res) => {
       if (res?.data?.data) {
@@ -68,6 +72,9 @@ function EmailFactor(props: any) {
 
   const sendOTPFun = () => {
     const cfToken = sessionStorage.getItem(cfKey)
+    if (!cfToken) {
+      return
+    }
     authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken })
       .then((res) => {
         let originalSearch = window.location.search;
