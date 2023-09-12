@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Link from 'next/link'
 import { transDate } from 'helpers/utilities'
 import Image from 'next/image'
+import { getCookie, userKey } from 'helpers/cookies'
 // import useModalInterview from 'app/hooks/modalInterview'
 
 const jobseekerDisplayStatusObject = {
@@ -29,6 +30,8 @@ const JobCardInterview = (props: any) => {
     full_address: fullAddress,
     jobseeker_display_status: jobseekerDisplayStatus
   } = data
+  const userInfo = getCookie(userKey)
+
   const {
     pending,
     accepted,
@@ -98,29 +101,32 @@ const JobCardInterview = (props: any) => {
               <span className={styles.closedTip}>{lang?.JobClosed}</span>
             ) : (
               <>
-                <MaterialButton
-                  className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
-                  capitalize={true}
-                  variant='outlined'
-                  style={{
-                    height: 33,
-                    textTransform: 'capitalize'
-                  }}
-                  isLoading={loading as boolean}
-                  onClick={chatNow as any}
-                >
-                  <Text textColor='white' bold>
-                    {(() => {
-                      if (externalApplyUrl) {
-                        return lang?.applyNow
-                      } else if (isExists) {
-                        return lang?.continueChat
-                      } else {
-                        return lang?.chatNow
-                      }
-                    })()}
-                  </Text>
-                </MaterialButton>
+                { userInfo?.id != data?.recruiter?.id && (
+                    <MaterialButton
+                      className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
+                      capitalize={true}
+                      variant='outlined'
+                      style={{
+                        height: 33,
+                        textTransform: 'capitalize'
+                      }}
+                      isLoading={loading as boolean}
+                      onClick={chatNow as any}
+                    >
+                      <Text textColor='white' bold>
+                      {(() => {
+                          if (externalApplyUrl) {
+                            return lang?.applyNow
+                          } else if (isExists) {
+                            return lang?.continueChat
+                          } else {
+                            return lang?.chatNow
+                          }
+                        })()}
+                      </Text>
+                    </MaterialButton>
+                  )
+                }
               </>
             )}
           </div>

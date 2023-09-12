@@ -9,7 +9,7 @@ import MaterialButton from 'components/MaterialButton'
 import Text from 'components/Text'
 import { postSaveJobService } from 'store/services/jobs/postSaveJob'
 import { deleteSaveJobService } from 'store/services/jobs/deleteSaveJob'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, setCookie, userKey } from 'helpers/cookies'
 import { fetchJobDetailService } from 'store/services/jobs/fetchJobDetail'
 import { CircularProgress } from 'app/components/MUIs'
 import { useParams, useRouter } from 'next/navigation'
@@ -196,7 +196,8 @@ const JobCard = (props: any) => {
   const accessToken = getCookie('accessToken')
   const [isSaved, isSaving, save] = useSaveJob(id, is_saved, accessToken, jobTitleId)
   const [jobDetail, detailLoading, startLoading] = useJobDetail(id)
-
+  const userInfo = getCookie(userKey)
+  
   useEffect(() => {
     if (showPopup && !jobDetail && !detailLoading) {
       startLoading()
@@ -309,33 +310,37 @@ const JobCard = (props: any) => {
                     >
                       {`${[recruiter_full_name, recruiter_job_title].filter((a) => a).join(' · ')}`}
                     </div>
-                    <MaterialButton
-                      className={classNames({
-                        [styles.button]: true,
-                        [styles.isHover]: isChatHover
-                      })}
-                      capitalize={true}
-                      variant='outlined'
-                      style={{ height: 25, textTransform: 'capitalize' }}
-                      isLoading={loading as boolean}
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        e.preventDefault()
-                          ; (chatNow as any)()
-                      }}
-                    >
-                      <Text textColor='white' bold>
-                        {(() => {
-                          if (external_apply_url) {
-                            return search.jobCard.apply
-                          } else if (chat?.is_exists) {
-                            return search.jobCard.continue
-                          } else {
-                            return search.jobCard.chat
-                          }
-                        })()}
-                      </Text>
-                    </MaterialButton>
+                    {
+                      userInfo?.id != jobDetail?.recruiter?.id && (
+                        <MaterialButton
+                          className={classNames({
+                            [styles.button]: true,
+                            [styles.isHover]: isChatHover
+                          })}
+                          capitalize={true}
+                          variant='outlined'
+                          style={{ height: 25, textTransform: 'capitalize' }}
+                          isLoading={loading as boolean}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            e.preventDefault()
+                              ; (chatNow as any)()
+                          }}
+                        >
+                          <Text textColor='white' bold>
+                            {(() => {
+                              if (external_apply_url) {
+                                return search.jobCard.apply
+                              } else if (chat?.is_exists) {
+                                return search.jobCard.continue
+                              } else {
+                                return search.jobCard.chat
+                              }
+                            })()}
+                          </Text>
+                        </MaterialButton>
+                      )
+                    }
                   </div>
                   {!!recruiter_is_online && (
                     <div className={styles.online}>{search.jobCard.online}</div>
