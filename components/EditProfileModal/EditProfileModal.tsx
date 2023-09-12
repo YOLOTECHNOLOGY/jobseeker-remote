@@ -187,7 +187,7 @@ const EditProfileModal = ({
     birthdate: birthdate,
     working_since: working_since,
     yearsOfExperience:
-      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList?.[0].id
+      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList?.[0]?.id
   }
   const {
     register,
