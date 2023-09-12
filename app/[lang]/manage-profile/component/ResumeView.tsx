@@ -7,6 +7,7 @@ import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import Loading from "app/components/loading";
+import { getLang } from 'helpers/country'
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -396,13 +397,14 @@ const ResumeView = ({ userDetail, lang }: any) => {
     }).then(res => {
       if (res.data.code === 0) {
         if (!is_vip) {
+
           // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
-          pushToResume(`resume-edit/${res.data.data.id}`)
+          pushToResume(`${getLang}/resume-edit/${res.data.data.id}`)
         }
         else {
           if (res.data.data.is_vip) {
             // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
-            pushToResume(`resume-edit/${res.data.data.id}`)
+            pushToResume(`${getLang}/resume-edit/${res.data.data.id}`)
           }
           else {
 
@@ -726,7 +728,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
           setShowTemplateConfirm(false)
         }}
         handleSecondButton={() => {
-          pushToResume('my-resume')
+          pushToResume(`my-resume`)
           setShowTemplateConfirm(false)
         }}
         fullScreen

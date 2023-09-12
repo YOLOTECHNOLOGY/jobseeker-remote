@@ -21,7 +21,10 @@ export const pushToResume = (path = '') => {
     params.append(refreshTokenKey, refreshToken)
     params.append(userKey, JSON.stringify(user) ?? '')
     params.append(redirectWithUrl, path)
+    params.append('lang', lang)
     window.open(`${resumeUrl}/redirect?${params.toString()}`)
+    console.log(`${resumeUrl}/redirect?${params.toString()}`)
+
   }
   return path
 }
