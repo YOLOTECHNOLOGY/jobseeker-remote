@@ -1,5 +1,5 @@
 'use client'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useSearchParams } from 'next/navigation'
 
 import styles from '../index.module.scss'
