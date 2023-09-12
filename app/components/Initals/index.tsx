@@ -1,7 +1,7 @@
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 // import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
@@ -59,6 +59,22 @@ const Initial = () => {
     gtag.pageview(location.pathname)
     fbq.pageview()
   }, [])
+
+  // receive remote module notifications
+  const router = useRouter()
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let revoke
+      import('bossjob-remote/dist/clientStorage')
+        .then(({ receiveNotification }) => {
+          revoke = receiveNotification('ROUTE_PUSH', data => {
+            router.push(data.note)
+          })
+        })
+      return () => revoke?.()
+    }
+  }, [])
+
   return <>
     <Script
       strategy='afterInteractive'
