@@ -123,7 +123,7 @@ const verifyEmail = function (props) {
           {userId ? (
             <>
               <h2>{newGetStarted.welcomeBack} 🎉</h2>
-              <UserAvatar avatar={avatar} />
+              <UserAvatar avatar={avatar} isModal={isModal} loginData={loginData} />
               <p className={styles.enterTips}>
                 {newGetStarted.sendCodeDigit}
                 {/* <span className={styles.phone_text}>{email}</span> */}
