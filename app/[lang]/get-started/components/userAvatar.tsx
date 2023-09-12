@@ -4,13 +4,11 @@ import { useSearchParams } from 'next/navigation'
 
 import styles from '../index.module.scss'
 import { useEffect, useState } from 'react'
-import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 export default function UserAvatar({ avatar, isModal, loginData }) {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail?.response ?? {})
   const searchParams = useSearchParams()
   const [isVip, setIsVip] = useState(false)
-  const dispatch = useDispatch()
   useEffect(() => {
     if (isModal) {
       setIsVip(Boolean(loginData?.vip?.is_vip))
