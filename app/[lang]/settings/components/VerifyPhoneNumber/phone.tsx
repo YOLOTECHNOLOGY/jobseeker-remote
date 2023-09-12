@@ -137,6 +137,7 @@ const VerifyPhoneNumber = (props: IProps) => {
   const handleClose = () => {
     clearCloseModal()
     setOtp('')
+    setDisabled(true)
   }
 
   const onChange = (opt) => {
