@@ -160,15 +160,22 @@ const refreshTokenServer = () => {
 }
 
 globalThis.globalPromise = null
-if (typeof window !== undefined) {
+if (typeof window !== 'undefined') {
   import('bossjob-remote/dist/clientStorage')
     .then(({ publishSharedData, receiveNotification }) => {
       publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
-      receiveNotification('REQUEST_401', data => shouldRefresh(data.note))
+      receiveNotification('REQUEST_401', data => {
+        console.log({ REQUEST_401: data })
+        shouldRefresh(data.note)
+      })
     })
 }
 
 const shouldRefresh = async error => {
+
+  if (typeof window === 'undefined') {
+    return Promise.reject(error)
+  }
   const { publishSharedData } = await import('bossjob-remote/dist/clientStorage')
   if (!globalPromise) {
     globalThis.globalPromise = refreshTokenServer().catch(() => {
@@ -179,8 +186,8 @@ const shouldRefresh = async error => {
         publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
       }, 1000 * 60 * 2);
     })
-    publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
   }
+  publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
   return globalPromise.then(() => {
     // 重新请求
     axios.request({
