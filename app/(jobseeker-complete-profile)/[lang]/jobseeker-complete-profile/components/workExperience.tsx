@@ -326,6 +326,7 @@ const WorkExperience = (props: any) => {
                 onDateChange={(value) => {
                   setWorkingSince(value)
                 }}
+                showToolbar={false}
               />
             </div>
             <p className={styles.title}>
@@ -378,6 +379,7 @@ const WorkExperience = (props: any) => {
                     onDateChange={(value) => {
                       setWorkPeriodFrom(value)
                     }}
+                    showToolbar={false}
                   />
                 </div>
                 {!isCurrentJob && (
@@ -390,6 +392,7 @@ const WorkExperience = (props: any) => {
                       onDateChange={(value) => {
                         setWorkPeriodTo(value)
                       }}
+                      showToolbar={false}
                     />
                   </div>
                 )}

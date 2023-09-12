@@ -200,7 +200,7 @@ const AlertJobs = (props: IProps) => {
                 />
               ))
             ) : (
-              <Empty lang={lang} />
+              <Empty lang={lang} style={{marginTop: '62px'}} />
             )}
           </>
         )}

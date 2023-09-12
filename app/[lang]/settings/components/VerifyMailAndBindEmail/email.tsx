@@ -124,6 +124,7 @@ const VerifyMailAndBindEmail = (props: IProps) => {
     setOpen(false)
     setOtp('')
     clear()
+    setDisabled(true)
   }
 
   const handleSave = () => {

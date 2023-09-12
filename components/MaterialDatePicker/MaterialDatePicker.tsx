@@ -16,6 +16,7 @@ interface MaterialDatePickerProps {
   fullWidth?: boolean
   refs?: any
   hiddenLabel?: boolean
+  showToolbar?: boolean
 }
 
 const MaterialDatePicker = ({
@@ -26,7 +27,8 @@ const MaterialDatePicker = ({
   views,
   fullWidth,
   refs,
-  hiddenLabel
+  hiddenLabel,
+  showToolbar
 }: MaterialDatePickerProps) => {
   const [focus, setFocus] = useState(false)
   const theme = createTheme({
@@ -96,6 +98,7 @@ const MaterialDatePicker = ({
               className={hiddenLabel ? styles.hiddenLabel : ''}
             />
           )}
+          showToolbar={showToolbar}
         />
       </LocalizationProvider>
     </ThemeProvider>
