@@ -22,7 +22,7 @@ export default registInterpreter(command =>
                     if (token && data?.jobs?.length) {
                         return check((data.jobs ?? []).map(job => job.recruiter_id).join(','), token)
                             .then(response => {
-                                const chats = response.data.data
+                                const chats = response?.data?.data ?? []
                                 return {
                                     ...data,
                                     jobs: data.jobs.map((job, index) => ({ ...job, chat: chats[index] }))

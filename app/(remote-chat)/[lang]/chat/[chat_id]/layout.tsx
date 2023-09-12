@@ -34,7 +34,7 @@ export default async function PublicLayout(props: any) {
     .catch(e => {
       console.log({ e })
       return {}
-    })
+    }) as any
   const data = {
     config,
     lang,
