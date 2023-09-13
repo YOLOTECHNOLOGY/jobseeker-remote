@@ -315,6 +315,7 @@ const SearchPanel = (props: Props) => {
                                 firstRef.current && firstRef.current?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
                             }
                             searchFunc(null, location, v);
+                            window.scroll({top:0, left:0, behavior: "smooth",})
                         }}
                         shape="rounded"
                         color={'primary'}
