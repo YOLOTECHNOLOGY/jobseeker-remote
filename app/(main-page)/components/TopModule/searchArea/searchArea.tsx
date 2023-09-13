@@ -18,14 +18,24 @@ import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { getAppStoreLink, getCountryId } from 'helpers/country'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { encode } from 'app/(jobs-hiring)/[lang]/jobs-hiring/interpreters/encoder'
-import { setCookie } from 'helpers/cookies'
+import { accessToken, getCookie, setCookie } from 'helpers/cookies'
 import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 'images'
 import Link from 'components/Link'
 import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
 import { appLinkUrl } from 'helpers/constants'
+import { fetchSearchSuggestionService } from 'store/services/jobs/fetchSearchSuggestion'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
+
+const transObject = (params) => {
+  const result = {}
+  params.forEach((e, index) => {
+      result[`query_histories[${index}]`] = e
+  });
+  return result
+}
+
 const SearchArea = (props: any) => {
   const { config, langKey } = props
   const dispatch = useDispatch()
@@ -89,18 +99,22 @@ const SearchArea = (props: any) => {
         } else if (valueLength === 1) {
           setSuggestionList([])
         } else if ((val?.length ?? 0) > 1) {
-          fetch(
-            `${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(
-              searchHistories
-            )}`,
-            {
-              headers: {
-                'Country-Id': String(getCountryId())
-              }
-            }
-          )
-            .then((resp) => resp.json())
-            .then((data) => setSuggestionList(data.data.items))
+          // fetch(
+          //   `${process.env.JOB_BOSSJOB_URL}/search-suggestion?size=5&query=${val}&${transQs(
+          //     searchHistories
+          //   )}`,
+          //   {
+          //     headers: {
+          //       'Country-Id': String(getCountryId())
+          //     }
+          //   }
+          // )
+          //   .then((resp) => resp.json())
+          //   .then((data) => setSuggestionList(data.data.items))
+          const qs = transObject(searchHistories)
+          const token = getCookie(accessToken)
+          fetchSearchSuggestionService({ size: 5, query: val, ...qs }, token)
+            .then((data) => setSuggestionList(data.data.data.items))
         }
       })
     },
