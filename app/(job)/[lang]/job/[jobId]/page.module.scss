@@ -660,6 +660,10 @@
         color: #353535;
         margin-left: 10px;
         padding-top: 2px;
+        width: 20ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       &_financingStage {
@@ -1236,6 +1240,10 @@
               font-weight: 400;
               font-size: 16px;
               color: #353535;
+              width: 20ch;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }
@@ -1304,6 +1312,10 @@
               color: #353535;
               position: relative;
               top: -6px;
+              width: 20ch;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
 
             &_tag {
