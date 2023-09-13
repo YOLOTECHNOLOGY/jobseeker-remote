@@ -399,12 +399,12 @@ const ResumeView = ({ userDetail, lang }: any) => {
         if (!is_vip) {
 
           // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
-          pushToResume(`${getLang}/resume-edit/${res.data.data.id}`)
+          pushToResume(`resume-edit/${res.data.data.id}`)
         }
         else {
           if (res.data.data.is_vip) {
             // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
-            pushToResume(`${getLang}/resume-edit/${res.data.data.id}`)
+            pushToResume(`resume-edit/${res.data.data.id}`)
           }
           else {
 
