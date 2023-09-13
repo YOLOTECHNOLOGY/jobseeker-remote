@@ -1356,8 +1356,12 @@
       "HighSalaryOffer": "High Salary Offer",
       "HelpYouGet": "Help You Get",
       "promptDesc": "You are currently logged in, please log out and re-register or log in",
-      "returnHome": "Return Home",
-      "signOut": "Sign Out"
+      "returnHome": "Back to Home",
+      "signOut": "Sign Out",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
     }
   },
   "seo": {
@@ -1413,7 +1417,7 @@
     "section1_message8": "Thank you, John. I look forward to speaking with you next week.",
     "section1_title": "AI Hiring APP",
     "section1_subtitle": "connect you with decision makers in real-time",
-    "section1_getApp": "connect you with decision makers in real-time",
+    "section1_getApp": "Download APP",
     "section3_subtitle": "a better & faster way to find jobs",
     "section3_list_title1": "AI-powered job matching",
     "section3_list_des1": "Match jobs for you using Big data & AI models!",
@@ -1479,10 +1483,10 @@
     "Looking for": "Looking for"
   },
   "advertisingLink": {
-    "GetVipForFree": "Get Vip For Free",
-    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
-    "excellentResume": "Excellent Resume",
-    "openTheDoorToSuccess": "Open The Door To Success",
-    "createMyResume": "Create My resume"
+    "GetVipForFree": "Exclusive VIP",
+    "InviteFriendsToGetAIResumeCoaching": "Priority Access to AI Career Coaching Feature",
+    "excellentResume": "A Winning Resume",
+    "openTheDoorToSuccess": "With a Winning Resume",
+    "createMyResume": "Elevate Your Career"
   }
 }
