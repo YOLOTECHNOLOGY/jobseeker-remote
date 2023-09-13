@@ -40,9 +40,19 @@ export const getCountryAndLang = (cookies: RequestCookies) => {
   return config.value.split('_')
 }
 
+const setCfCountryKey = (response: NextResponse, cfIpCountryKey: string) => {
+  return response.cookies.set('cfCountryKey', cfIpCountryKey, { 
+    path: '/', 
+    httpOnly: true, 
+    secure: true, 
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+  })
+}
+
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl
   const fullUrl = pathname + search
+  const cfCountryKey = request?.headers?.get('cf-ipcountry')?.toLocaleLowerCase() || 'com'
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
@@ -67,15 +77,14 @@ export function middleware(request: NextRequest) {
       'globals',
       'style',
       'font',
-      // 'huawei-jobs',
-      // 'job-sitemap',
-      // 'jobs.xml',
-      // 'sitemap',
-      // 'agencies.xml',
       'handlers'
       // Your other files in `public`
     ].filter(item => pathname.includes(item)).length > 0
-  ) { return }
+  ) {
+    const response = NextResponse.next()
+    setCfCountryKey(response, cfCountryKey)
+    return response
+  }
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
@@ -90,16 +99,13 @@ export function middleware(request: NextRequest) {
     // The new URL is now /en-US/products
     const res = NextResponse.redirect(new URL(`/${lang}${fullUrl}`, request.url))
     res.cookies.set(configKey, `${locale.join('_')}`, { path: '/' })
+    setCfCountryKey(res, cfCountryKey)
     return res
   }
 
-  // const res = NextResponse.next();
-  // // Setting cookies in response.
-  // // This will be sent back to the browser.
-  // res.cookies.set("my-cookie", "my-cookie-value", {
-  //   path: "/",
-  //   httpOnly: true,
-  // });
+  const res = NextResponse.next();
+  setCfCountryKey(res, cfCountryKey)
+  return res
 }
 
 export const config = {
