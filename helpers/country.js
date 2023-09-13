@@ -157,6 +157,7 @@ export const serverContryCodeMap = {
   'ms-MY': 'ms'
 }
 
+export const internationalCountry = countryCounfig.find(item => item.key === 'com')
 export const getLanguageCode = (langKey) => serverContryCodeMap[langKey] ?? langKey
 export const getLangKeyByCode = (langCode) => {
   const langKey = Object.keys(serverContryCodeMap).find(
@@ -290,4 +291,15 @@ export const getAppStoreLink = () => {
     key = 'sg'
   }
   return process.env.APP_STORE_LINK.replace('COUNTRY_KEY', key)
+}
+
+/**
+ * cloudflare ip country, return country object
+ * @param {string} countryKey - e.g. [com, ph]
+ * @returns {object} country
+ */
+export const cfCountrySupported = countryKey => {
+  const country = countryCounfig.find(v => v.key === countryKey)
+  const isSupportCountry = !!country
+  return isSupportCountry ? country : internationalCountry
 }

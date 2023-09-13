@@ -9,6 +9,7 @@ interface Iprops {
   expandText?: string
   shrinkText?: string
   [prop: string]: any
+  isScroll?: {[key:string]: any}
 }
 
 const ReadMore = (props: Iprops) => {
@@ -18,6 +19,7 @@ const ReadMore = (props: Iprops) => {
     lineHeight = 24,
     expandText = 'Read More',
     shrinkText = 'Read Less',
+    isScroll,
     ...rest
   } = props
   const wrapEl = useRef(null)
@@ -33,6 +35,10 @@ const ReadMore = (props: Iprops) => {
 
   const handleShowMore = () => {
     setReadMore((state) => !state)
+    
+    if (isScroll && !showReadMore) {
+      window.scroll({top:0, left:0, behavior: "smooth", ...isScroll})
+    }
   }
 
   return (
