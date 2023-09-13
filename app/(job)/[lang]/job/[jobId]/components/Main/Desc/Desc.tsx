@@ -49,10 +49,11 @@ const Desc = ({
     };
 
     const handleWatchScrollY = () => {
+      const headClientHight = document.querySelector("#head")?.clientHeight ?? 0
       let near = (document.querySelector("#Requirement") as any )?.offsetTop;
 
       if (!isMobile) {
-        near -= 200
+        near -= headClientHight
       }
 
       if (near) {
