@@ -157,7 +157,7 @@ export const serverContryCodeMap = {
   'ms-MY': 'ms'
 }
 
-export const internationalCountry = countryConfig.find(item => item.key === 'com')
+export const internationalCountry = countryCounfig.find(item => item.key === 'com')
 export const getLanguageCode = (langKey) => serverContryCodeMap[langKey] ?? langKey
 export const getLangKeyByCode = (langCode) => {
   const langKey = Object.keys(serverContryCodeMap).find(
@@ -299,7 +299,7 @@ export const getAppStoreLink = () => {
  * @returns {object} country
  */
 export const cfCountrySupported = countryKey => {
-  const country = countryConfig.find(v => v.key === countryKey)
+  const country = countryCounfig.find(v => v.key === countryKey)
   const isSupportCountry = !!country
   return isSupportCountry ? country : internationalCountry
 }
