@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
 import React, { useEffect } from 'react'
@@ -8,7 +9,7 @@ import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
 import { getCookie } from 'helpers/cookies';
 import { redirectUrlKey } from 'helpers/globalKey';
-
+import { displayNotification } from 'store/actions/notificationBar/notificationBar';
 const tiktokfunc = () => {
   const w = window as any
   const t = 'ttq'
@@ -61,20 +62,7 @@ const Initial = () => {
     fbq.pageview()
   }, [])
 
-  // receive remote module notifications
-  const router = useRouter()
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      let revoke
-      import('bossjob-remote/dist/clientStorage')
-        .then(({ receiveNotification }) => {
-          revoke = receiveNotification('ROUTE_PUSH', data => {
-            router.push(data.note)
-          })
-        })
-      return () => revoke?.()
-    }
-  }, [])
+
 
   return <>
     <Script

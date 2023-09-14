@@ -18,6 +18,7 @@ import bossjobClient from 'helpers/bossjobRemoteClient'
 import { fetchConfigService } from 'store/services/config/fetchConfig'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 import { cookies } from 'next/headers'
+import InProviders from 'app/components/Initals/inProviders'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
 export default async function PublicLayout(props: any) {
@@ -160,6 +161,7 @@ export default async function PublicLayout(props: any) {
         {chatModule.inBody}
         <div id='next-app'>
           <Providers LG={dictionary} lang={lang}>
+            <InProviders />
             {/* Google Tag Manager (noscript) */}
             <noscript
               dangerouslySetInnerHTML={{

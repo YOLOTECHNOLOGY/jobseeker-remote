@@ -6,7 +6,8 @@ import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/(main-page)/components/AutoShowModalAppRedirect'
 import { getCountryKey } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
-import React, { Suspense } from 'react'
+import React from 'react'
+import InProviders from './Initals/inProviders'
 import 'app/globals.scss'
 import 'app/index.module.scss'
 import bossjobClient from 'helpers/bossjobRemoteClient'
@@ -132,6 +133,7 @@ export default async function PublicLayout(props: any) {
 
         <Providers LG={dictionary} lang={lang}>
           {/* Google Tag Manager (noscript) */}
+          <InProviders />
           <noscript
             dangerouslySetInnerHTML={{
               __html: `
