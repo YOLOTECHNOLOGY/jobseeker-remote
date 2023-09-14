@@ -8,6 +8,8 @@ import Text from 'components/Text'
 import Link from 'next/link'
 import { getValueById } from 'helpers/config/getValueById'
 import Image from 'next/image'
+import { getCookie } from 'helpers/cookies'
+import { userKey } from 'helpers/cookies'
 
 const JobCardNormal = (props: any) => {
   const { handelSave, data, loadingChat, tabValue, index, lang, config, langKey } = props
@@ -20,6 +22,7 @@ const JobCardNormal = (props: any) => {
     name,
     logo_url: logoUrl
   } = data.company || {}
+  const userInfo = getCookie(userKey)
 
   const {
     job_title: jobTitle,
@@ -60,29 +63,31 @@ const JobCardNormal = (props: any) => {
               <span className={styles.closedTip}>{lang?.JobClosed}</span>
             ) : (
               <>
-                <MaterialButton
-                  className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
-                  capitalize={true}
-                  variant='outlined'
-                  style={{
-                    height: 33,
-                    textTransform: 'capitalize'
-                  }}
-                  isLoading={loading as boolean}
-                  onClick={chatNow as any}
-                >
-                  <Text textColor='white' bold>
-                    {(() => {
-                      if (externalApplyUrl) {
-                        return lang?.applyNow
-                      } else if (isExists) {
-                        return lang?.continueChat
-                      } else {
-                        return lang?.chatNow
-                      }
-                    })()}
-                  </Text>
-                </MaterialButton>
+                { userInfo?.id != data?.recruiter?.id &&
+                  (<MaterialButton
+                    className={`${styles.chatBox} ${!isExists ? styles.chatIng : null}`}
+                    capitalize={true}
+                    variant='outlined'
+                    style={{
+                      height: 33,
+                      textTransform: 'capitalize'
+                    }}
+                    isLoading={loading as boolean}
+                    onClick={chatNow as any}
+                  >
+                    <Text textColor='white' bold>
+                      {(() => {
+                        if (externalApplyUrl) {
+                          return lang?.applyNow
+                        } else if (isExists) {
+                          return lang?.continueChat
+                        } else {
+                          return lang?.chatNow
+                        }
+                      })()}
+                    </Text>
+                  </MaterialButton>)
+                }
 
                 {tabValue === 'saved' ? (
                   <MaterialButton

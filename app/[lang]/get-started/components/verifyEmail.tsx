@@ -13,6 +13,7 @@ import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { useRouter } from 'next/navigation'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { cfKey } from 'helpers/cookies'
+import UserAvatar from './userAvatar'
 
 const verifyEmail = function (props) {
   const { isModal, lang, loginData, setStep, handleBackClick } = props
@@ -20,6 +21,7 @@ const verifyEmail = function (props) {
   const searchParams = useSearchParams()
   const referralCode = searchParams.get('referral_code')
   const invitedSource = searchParams.get('invited_source')
+
   // const userId = searchParams.get('userId')
   // const email = searchParams.get('email')
   // const avatar = searchParams.get('avatar')
@@ -55,6 +57,7 @@ const verifyEmail = function (props) {
     dispatch(jobbseekersLoginFailed({}))
     setErrorText('')
   }, [])
+
 
   useEffect(() => {
     const text = error?.data?.message ?? ''
@@ -112,6 +115,7 @@ const verifyEmail = function (props) {
         )
       })
   }
+
   return (
     <>
       <div className={styles.phoneNumber}>
@@ -119,10 +123,7 @@ const verifyEmail = function (props) {
           {userId ? (
             <>
               <h2>{newGetStarted.welcomeBack} 🎉</h2>
-
-              <div className={styles.avatar}>
-                <img className={styles.avatar_img} src={avatar} alt='avatar' />
-              </div>
+              <UserAvatar avatar={avatar} isModal={isModal} loginData={loginData} />
               <p className={styles.enterTips}>
                 {newGetStarted.sendCodeDigit}
                 {/* <span className={styles.phone_text}>{email}</span> */}
@@ -170,9 +171,7 @@ const verifyEmail = function (props) {
             <div
               className={styles.backBox}
               onClick={() =>
-                isModal ? handleBackClick?.() : (referralCode && invitedSource) ?
-                  router.push(`/${langKey}/get-started/email?referral_code=${referralCode}&invited_source=${invitedSource}`) :
-                  router.push(`/${langKey}/get-started/email`)
+                isModal ? handleBackClick?.() : history.back()
               }
             >
               <KeyboardArrowLeftIcon />

@@ -40,7 +40,7 @@ const Head = ({
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
   return (
-    <section className={classNames([styles.head, styles.headSticky])}>
+    <section className={classNames([styles.head, styles.headSticky])} id="head" >
       <div className={styles.head_main}>
         <div className={styles.head_main_title}>
           <div className={styles.head_main_titleWrapper}>

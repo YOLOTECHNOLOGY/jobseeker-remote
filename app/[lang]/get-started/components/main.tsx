@@ -13,6 +13,7 @@ import { jobbseekersSocialLoginSuccess } from 'store/actions/auth/jobseekersSoci
 import QrCodeComponent from './QrCode'
 import LeftBanner from './leftBanner'
 import CodePopver from './codePopver'
+
 interface IProps {
   dictionary: any
   isModal?: boolean
@@ -22,6 +23,7 @@ interface IProps {
 
 const Main = (props: IProps) => {
   const { dictionary, isModal = false, handleEmailClick, handlePhoneClick } = props
+  // debugger
   const { newGetStarted } = dictionary
   const dispatch = useDispatch()
   const [qrCode, setQrCode] = useState<boolean>(false)
@@ -33,7 +35,7 @@ const Main = (props: IProps) => {
 
   return (
     <>
-      <LeftBanner />
+      <LeftBanner newGetStarted={newGetStarted} />
       <div className={styles.rightContainer}>
         <CodePopver
           setQrCode={setQrCode}

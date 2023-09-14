@@ -169,7 +169,7 @@ const EditProfileModal = ({
   )
   const { xp_lvls: xpLevelList, location_lists: locationList } = config
   const [yearsOfExperience, setYearsOfExperience] = useState(
-    xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+    xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList?.[0]?.id
   )
   const formattedLocationList = flat(formatLocationConfig(locationList))
   const matchedLocation = formattedLocationList.find((loc) => {
@@ -187,7 +187,7 @@ const EditProfileModal = ({
     birthdate: birthdate,
     working_since: working_since,
     yearsOfExperience:
-      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList[0].id
+      xpLevelList.find((item) => item.id === userDetail.xp_lvl_id)?.id || xpLevelList?.[0]?.id
   }
   const {
     register,
@@ -213,7 +213,7 @@ const EditProfileModal = ({
         // setLocation(matchedLocation)
         setValue('location', matchedLocation?.value)
       }
-      if(userDetail && userDetail.working_since) {
+      if (userDetail && userDetail.working_since) {
         setWorkingSince(userDetail.working_since)
       }
     }
@@ -273,6 +273,7 @@ const EditProfileModal = ({
       setBirthdate(value)
     }
   }
+  // 41254
   return (
     <div>
       <Modal
@@ -475,7 +476,7 @@ const EditProfileModal = ({
                   />
                 )
               }}
-              // {...rest}
+            // {...rest}
             />
             <div className={styles.profileFormGroup + ' ' + styles.mapWrapper}>
               <GoogleMap

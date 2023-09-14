@@ -11,7 +11,7 @@ import { languageContext } from "app/components/providers/languageProvider";
 const JobCard = (props: JobData) => {
     const { lang } = useCompanyDetail();
     const contextLang = useContext(languageContext);
-	const { overview } = contextLang.companyDetail;
+    const { overview } = contextLang.companyDetail;
     const link = '/' + lang + props.job_url;
     return <div className={style.card_container}>
         <Link className={style.card_title} href={link} target="_blank" title={props.job_title}>
@@ -20,7 +20,6 @@ const JobCard = (props: JobData) => {
         <div className={style.card_content}>
             <div className={style.card_info_list}>
                 <div className={style.card_salary}>
-                    {props.local_salary_range_value}
                 </div>
                 <JobsTag {...props} count={3} />
                 {/* <div className={style.card_info_extra}></div> */}

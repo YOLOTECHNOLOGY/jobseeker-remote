@@ -16,6 +16,7 @@ import styles from './ModalAppRedirect.module.scss'
 /* Images */
 import { BossjobFittedLogoApp, Chrome, Safari, OtherBrowser } from 'images'
 import { getCookie } from 'helpers/cookies'
+import { getAppStoreLink } from 'helpers/country'
 
 interface ModalAppRedirectProps {
   isShowModal?: boolean
@@ -126,7 +127,7 @@ const ModalAppRedirect = ({
       const schema = `https://cyyj.adj.st/bossjob.ph?adj_t=4pha213&adj_deep_link=bossjob%3A%2F%2Fbossjob.ph`
 
       const appStoreLink = userAgent?.isIos
-        ? process.env.APP_STORE_LINK
+        ? getAppStoreLink()
         : process.env.GOOGLE_PLAY_STORE_LINK
 
       window.location.replace(schema)

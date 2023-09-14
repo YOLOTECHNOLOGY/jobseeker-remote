@@ -114,7 +114,7 @@ const Verify = () => {
   }
 
   const handleAppRedirectModal = () => {
-    debugger
+    // debugger
     headerAuthLogin()
     setIsShowAppRedirectModal(false)
     setCookieWithExpiry('isAppRedirectModalClosed', true, 1800) // cookie expires to renable auto show modal after 30 minutes

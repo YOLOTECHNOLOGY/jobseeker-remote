@@ -1,5 +1,5 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import { isMobile } from 'react-device-detect'
 import { isEqual } from 'lodash-es'
 import Modal from '@mui/material/Modal'
@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-
+import { useSearchParams } from 'next/navigation'
 import { getCountryKey, getLang, languages, nations } from 'helpers/country'
 import {
   accessToken as accessTokenKey,
@@ -98,6 +98,11 @@ const isLocalDev = (url: string) => {
 const SwitchNation = ({ close, open, lang }: propsType) => {
   const [nation, setNation] = useState(() => ({ lang: getLang(), country: getCountryKey() }))
   const [loading, setLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const referralCode = useRef(searchParams.get('referral_code'))
+  const invitedSource = useRef(searchParams.get('invited_source'))
+
+
   const originalSetting = useMemo(() => {
     return {
       country: getCountryKey(),
@@ -118,6 +123,9 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
 
     let query = `/${lang}`
     let newOrigin = origin
+
+    const referralCodeParams = referralCode.current ? `&referral_code=${referralCode.current}` : ''
+    const invitedSourceParams = invitedSource.current ? `&invited_source=${invitedSource.current}` : ''
 
     if (!isLocal) {
       newOrigin = origin.slice(0, origin.lastIndexOf('.') + 1) + country + (port ? `:${port}` : '')
@@ -141,11 +149,22 @@ const SwitchNation = ({ close, open, lang }: propsType) => {
         `&${refreshTokenKey}=${refreshToken}` +
         `&${userKey}=${JSON.stringify(user)}` +
         `&${redirectUrl}=${pathname.split('/').slice(2).join('/')}`
+      query += referralCodeParams
+      query += invitedSourceParams
+
     } else {
+
       query += '/' + pathname.split('/').slice(2).join('/')
+      // + '?' + referralCodeParams + invitedSourceParams
+
+
     }
-    console.log('query', query);
+
     window.location.href = newOrigin + query
+    // + '?' + referralCodeParams + invitedSourceParams
+
+
+
   }
 
   const handleSelectNation = (event: any, newValue: typeof nations[0]) => {

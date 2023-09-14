@@ -33,7 +33,7 @@ const PhoneLink = (props: IProps) => {
         router.push(`/${langKey}/get-started/phone?referral_code=${referralCode}&invited_source=${invitedSource}`)
       }
       else {
-        router.push(`/${langKey}/get-started/phone`)
+        router.push(`/${langKey}/get-started/phone` + window.location.search)
       }
     }
   }

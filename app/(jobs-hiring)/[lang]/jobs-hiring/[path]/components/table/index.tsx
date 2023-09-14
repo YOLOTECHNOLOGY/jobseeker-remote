@@ -12,6 +12,8 @@ import ChatDataProvider from '../ChatProvider'
 
 const Table = (props: any) => {
     const { jobs = [], page, totalPages } = props
+
+
     return (
         <Loader>
             <ChatDataProvider recruiterIds={jobs.map(job => job.recruiter_id).join(',')}>
@@ -29,6 +31,7 @@ const Table = (props: any) => {
                 ) : (
                     <Empty {...props} />
                 )}
+
                 <div>{jobs?.length ? <MobileTable {...props} /> : null}</div>
             </ChatDataProvider>
         </Loader>

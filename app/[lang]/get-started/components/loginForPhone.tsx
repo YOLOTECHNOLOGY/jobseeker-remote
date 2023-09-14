@@ -22,6 +22,7 @@ import { CircularProgress } from 'app/components/MUIs'
 import { countryForPhoneCode } from 'helpers/country'
 import Turnstile, { useTurnstile } from "react-turnstile"
 import { cfKey } from 'helpers/cookies'
+import { useSearchParams } from 'next/navigation'
 
 const LoginForPhone = (props: any) => {
   const turnstile = useTurnstile()
@@ -46,9 +47,12 @@ const LoginForPhone = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const phoneNumberRef = useRef(null)
+  const searchParams = useSearchParams()
 
   const isDisableRef = useRef(null)
   const cfTokenRef = useRef(null)
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -117,9 +121,14 @@ const LoginForPhone = (props: any) => {
         if (isModal) {
           setLoginData({ ...res?.data?.data, phoneNum } ?? {})
         } else {
-          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}`
+          let originalSearch = window.location.search;
+          if (originalSearch) {
+            originalSearch = `&${originalSearch.slice(1)}`
+          }
+
+          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           if (user_id) {
-            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
+            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           }
           router.push(url)
         }

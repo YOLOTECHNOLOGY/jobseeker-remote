@@ -38,7 +38,7 @@ const CompanyCard = (props: ICompanyCard) => {
       payload: {
         source: 'company_search',
         device: isMobile ? 'mobile_web' : 'web',
-        reco_from: company?.reco_from || '',
+        country_id: company?.reco_from || '',
         device_udid
       }
     }

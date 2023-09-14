@@ -75,7 +75,7 @@ async function CompanyLayout(props: {
       fetchJobsListReq({ companyIds: id, size: 10, page: 1 }, token?.value),
       fetchCompanyDetailReq(id),
       fetchCompanyHR(id, token?.value),
-      fetchHotJobsListService({ company_id: id }),
+      fetchHotJobsListService({ company_id: id }, token?.value),
       fetchJobsFunction(id)
     ])
     if (detail?.data?.document) {

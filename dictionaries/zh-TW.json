@@ -51,7 +51,7 @@
     "healthcareJobs": "醫療保健工作",
     "downloadBossjobApp": " 下載 Bossjob 應用程式",
     "followUs": "關注我們",
-    "technology": " 新加坡：Yolo Technology Pte Ltd. 保留所有權利",
+    "technology": " 新加坡：Yolo Technology Pte. Ltd. 保留所有權利",
     "corporation": "菲律賓：Etos Adtech Corporation",
     "companyDesc": "Bossjob是專注於AI和直聊的在線找工作平台。品牌創始以來，為求職者和Boss們提供精準岗位和人才匹配，在線直聊功能減少溝通成本提高招聘效率！",
     "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
@@ -834,9 +834,11 @@
           "error": "刪除簡歷失敗"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "Bossjob resume template",
           "tips": "簡歷是幫助您進入求職過程下一步的重要工具。 使用 Bossjob 個人資料中的其他信息給招聘人員留下深刻印象。",
-          "download": "下載"
+          "download": "下載",
+          "selectTemplate": "Select Template",
+          "preview": "Preview"
         },
         "changeResume": {
           "rename": "重命名",
@@ -866,6 +868,12 @@
           "descTips": "視頻格式MP4，3分鐘以內",
           "confirmDesc": "刪除的視頻以後將無法找回，您確定嗎？",
           "confirmTitle": "Remove video resume"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }
@@ -1047,7 +1055,7 @@
   },
   "chatInterview": {
     "confirmText": "面試已經確認",
-    "confirmLabel": "您的面試現在不能取消",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "取消面試",
     "canNotCancel": "面試無法取消",
     "checkedText": "已簽到",
@@ -1081,6 +1089,7 @@
     "back": "返回",
     "next": "下一步",
     "close": "關閉",
+    "send": "Send",
     "resultTitle": "面試結果",
     "resultText": "您是否參加了這場面試?",
     "attendancelabel": "面試參加情況",
@@ -1338,7 +1347,22 @@
     "checkYourSpam": "如果您沒有收到驗證碼，請檢查您的垃圾郵件。",
     "authenticationSuccessful": "驗證成功",
     "Bossjob": "Bossjob",
-    "back": "返回"
+    "back": "返回",
+    "vipText": {
+      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
+      "InviteNewUsersToRegister": "Invite New Users To Register",
+      "BossjobAI": "Bossjob AI",
+      "ResumeAssistant": "Resume Assistant",
+      "HighSalaryOffer": "High Salary Offer",
+      "HelpYouGet": "Help You Get",
+      "promptDesc": "You are currently logged in, please log out and re-register or log in",
+      "returnHome": "Return Home",
+      "signOut": "Sign Out",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
+    }
   },
   "seo": {
     "ph": "菲律賓",
@@ -1457,5 +1481,12 @@
     "jobs": "工作",
     "talents": "人才",
     "Looking for": "找"
+  },
+  "advertisingLink": {
+    "GetVipForFree": "Get Vip For Free",
+    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
+    "excellentResume": "Excellent Resume",
+    "openTheDoorToSuccess": "Open The Door To Success",
+    "createMyResume": "Create My resume"
   }
 }

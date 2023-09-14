@@ -45,7 +45,9 @@ type ProfileLayoutProps = {
   handleModal: Function
   children: React.ReactNode
   dic: any
-  unCompleted: any
+  unCompleted: any,
+  advertisingLink: any,
+  newGetStarted: any
 }
 
 const ProfileLayout = ({
@@ -56,7 +58,9 @@ const ProfileLayout = ({
   modalName,
   handleModal,
   children,
-  unCompleted
+  advertisingLink,
+  unCompleted,
+  newGetStarted
 }: ProfileLayoutProps) => {
   const {
     avatar,
@@ -117,6 +121,8 @@ const ProfileLayout = ({
             referral_code={referral_code}
             handleEditClick={handleEditClick}
             lang={dic}
+            advertisingLink={advertisingLink}
+            newGetStarted={newGetStarted}
           />
         </div>
         <div className={styles.profileLayoutSettings}>

@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useContext, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { isMobile } from 'react-device-detect'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -29,17 +29,17 @@ const Search = ({ jobId }: pagePropsType) => {
   const {
     jobDetail: { content }
   } = useContext(languageContext) as any
-  
+
   const router = useRouter()
   const token = getCookie(accessToken)
   const recoFrom = getCookie('reco_from') ?? null
   const source = getCookie('source') ?? null
   const pref_job_title_id = getCookie('pref_job_title_id') ?? null
-
+  const searchParams = useSearchParams()
   const { location, setLocation } = useContext(LocationContext)
   const [searchValue, setSearchValue] = useState<string>('')
 
-  useEffect( () => {
+  useEffect(() => {
     if (jobId) {
       handleFetchAddJobViewService()
     }
@@ -63,11 +63,11 @@ const Search = ({ jobId }: pagePropsType) => {
     }
     const deviceUuid = await getDeviceUuid()
     const tokenData = {
-      source: source ? source : 'job_search',
+      source: (searchParams.get('source') || source) || 'job_search',
       device: isMobile ? 'mobile_web' : 'web',
       reco_from: recoFrom ? recoFrom : null,
       device_udid: deviceUuid,
-      job_title_id:pref_job_title_id
+      job_title_id: pref_job_title_id
     }
     const params = Object.assign(query, tokenData)
 

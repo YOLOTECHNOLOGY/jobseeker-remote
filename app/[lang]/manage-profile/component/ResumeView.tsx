@@ -6,6 +6,8 @@ import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import Loading from "app/components/loading";
+import { getLang } from 'helpers/country'
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -33,6 +35,9 @@ import MaterialButton from 'components/MaterialButton'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+import VipActivity from './vipActivity'
+import Toast from 'app/components/Toast'
+
 moment.locale('en')
 /* Services */
 import { ColorButton } from './Button';
@@ -57,6 +62,8 @@ import Image from 'next/image'
 import Modal from 'components/Modal'
 import Button from '@mui/material/Button'
 import Lightbox from "react-image-lightbox";
+import { pushToResume } from "helpers/push";
+
 import "react-image-lightbox/style.css";
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
@@ -121,7 +128,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const {
     manageProfile: {
       tab: { resume: transitions, profile: profile }
-    }
+    },
+    newGetStarted
   } = lang
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
@@ -149,6 +157,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
   const [resumeTemplate, setResumeTemplate] = useState(null)
+  const [showTemplateConfirm, setShowTemplateConfirm] = useState(false)
+
   const [lightBox, setLightBox] = useState({
     isOpen: false,
     photoIndex: 0
@@ -161,6 +171,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     inViewThreshold: 0.7,
     slidesToScroll: width < 799 ? 1 : 2
   })
+  const [vipModal, setVipModal] = useState(false)
 
   useEffect(() => {
     setResume(userDetail.resumes || [])
@@ -355,20 +366,14 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
-  const getResumeTemplateHostRef = useRef('')
-  if (process.env.NODE_ENV === 'production') {
-    getResumeTemplateHostRef.current = 'https://aicv.bossjob.com/'
-  }
-  else if (process.env.NODE_ENV === 'development') {
-    getResumeTemplateHostRef.current = 'https://demo-aicv.bossjob.com/'
-  }
-  else {
-    getResumeTemplateHostRef.current = 'https://staging-aicv.bossjob.com/'
-  }
 
-  const handleSelectTemplate = (id, structure) => {
+  const handleSelectTemplate = (id, is_vip, structure) => {
     const userInfo = getCookie('user')
-    console.log('userInfo:', userInfo)
+
+    if (!userDetail?.vip?.is_vip && is_vip) {
+      setVipModal(true)
+      return false;
+    }
     publicResumeClick({
       public_template_id: id,
       content: {
@@ -392,8 +397,27 @@ const ResumeView = ({ userDetail, lang }: any) => {
 
     }).then(res => {
       if (res.data.code === 0) {
-        window.open(`${getResumeTemplateHostRef.current}resume-edit/${res.data.data.id}`, '_blank')
+        if (!is_vip) {
+
+          // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+          pushToResume(`resume-edit/${res.data.data.id}`)
+        }
+        else {
+          if (res.data.data.is_vip) {
+            // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+            pushToResume(`resume-edit/${res.data.data.id}`)
+          }
+          else {
+
+          }
+        }
+
       }
+    }).catch(err => {
+      console.log(err)
+      // Toast.error('Resume cannot exceed 5 copies')
+      setShowTemplateConfirm(true)
+
     })
   }
 
@@ -609,9 +633,9 @@ const ResumeView = ({ userDetail, lang }: any) => {
                 <Button
                   variant="contained"
                   className={styles.button}
-                  onClick={() => handleSelectTemplate(item.id, item.structure)}
+                  onClick={() => handleSelectTemplate(item.id, item.is_vip, item.structure)}
                 >
-                  Select Template
+                  {transitions.bossjob.selectTemplate}
                 </Button>
                 <Button
                   variant="contained"
@@ -621,7 +645,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
                     photoIndex: index
                   })
                   }>
-                  Preview
+                  {transitions.bossjob.preview}
                 </Button>
 
               </div>
@@ -672,8 +696,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
         headerTitle={transitions.videoResume.confirmTitle}
         firstButtonText={profile.deleteModal.btn1}
         secondButtonText={profile.deleteModal.btn2}
-        // firstButtonText="取消"
-        // secondButtonText="确认"
         isSecondButtonLoading={null}
         firstButtonIsClose
         handleFirstButton={() => {
@@ -692,7 +714,31 @@ const ResumeView = ({ userDetail, lang }: any) => {
         {transitions.videoResume.confirmDesc}
 
       </Modal>
+
+      <Modal
+        showModal={showTemplateConfirm}
+        handleModal={() => {
+          setShowTemplateConfirm(false)
+        }}
+        headerTitle={transitions.resumeTemplateConfirm.title}
+        firstButtonText={transitions.resumeTemplateConfirm.btn1}
+        secondButtonText={transitions.resumeTemplateConfirm.btn2}
+        isSecondButtonLoading={null}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          setShowTemplateConfirm(false)
+        }}
+        handleSecondButton={() => {
+          pushToResume(`my-resume`)
+          setShowTemplateConfirm(false)
+        }}
+        fullScreen
+      >
+        {transitions.resumeTemplateConfirm.confirmDesc}
+      </Modal>
+
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
+      {vipModal && <VipActivity accessToken={accessToken} newGetStarted={newGetStarted} handleCloseModal={() => setVipModal(false)} />}
     </div >
 
   )

@@ -41,7 +41,7 @@ function* logoutReq() {
     console.log(e)
   }
   const pathname = window?.location?.pathname
-  if (pathname === '/') {
+  if (pathname === '/' || pathname.indexOf('get-started') >= 0) {
     location?.reload?.()
   } else {
     window?.location?.replace('/')

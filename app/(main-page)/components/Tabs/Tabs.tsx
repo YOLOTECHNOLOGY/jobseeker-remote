@@ -28,6 +28,9 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import { getValueById } from 'helpers/config/getValueById'
 import { throttle } from 'lodash-es'
 import { backTopBtn } from 'images/svg'
+import { useSelector } from 'react-redux'
+
+
 const theme = createTheme({
   components: {
     MuiTabs: {
@@ -89,7 +92,7 @@ interface StyledTabProps {
   sx: SxProps<Theme>
 }
 
-const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({}) => ({
+const StyledTab = styled((props: StyledTabProps) => <Tab {...props} />)(({ }) => ({
   '&.Mui-selected': {
     color: '#1D2129',
     fontWeight: '700'
@@ -103,6 +106,8 @@ const Tabs = ({ config, location_id, langKey }: any) => {
   const { home } = useContext(languageContext) as any
   const { tab, jobTab } = home
   const [showBtn, setShowBtn] = useState<boolean>(false)
+  const userDetail = useSelector((store: any) => store?.users.fetchUserOwnDetail.response)
+
   useEffect(() => {
     window.addEventListener('scroll', useFn)
 
@@ -321,7 +326,11 @@ const Tabs = ({ config, location_id, langKey }: any) => {
                 <div className={styles.preference}>
                   {jobseekerPrefIdRef.current ? (
                     <div>
-                      {user?.avatar ? <img src={user?.avatar} /> : null}
+                      {user?.avatar ? (!userDetail?.vip?.is_vip ? <img src={user?.avatar} /> :
+                        <div className={styles.vipAvatar}>
+                          <img src={require('./vip_user_icon.png').default.src} width="15" height="6" alt="" style={{ position: 'absolute', bottom: '-2px', right: '-17px', border: 0, borderRadius: 0, height: 'auto' }} />
+                          <img src={user?.avatar} />
+                        </div>) : null}
                       {home.jobPreference}:{' '}
                       <Link
                         prefetch={true}

@@ -315,6 +315,7 @@ const SearchPanel = (props: Props) => {
                                 firstRef.current && firstRef.current?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
                             }
                             searchFunc(null, location, v);
+                            window.scroll({top:0, left:0, behavior: "smooth",})
                         }}
                         shape="rounded"
                         color={'primary'}
@@ -353,7 +354,7 @@ const JobsSearchCard = (props: JobData) => {
                 target='_blank'
                 title={props.job_title}
                 className={style.title}>
-                <span>{props.job_title}</span>
+                {props.is_urgent && <span className={style.urgentLabel}>Urgent</span>}<span>{props.job_title}</span>
             </Link>
             {<div className={style.jobcard_salary_wrapper}>
                 <div className={style.salary}>

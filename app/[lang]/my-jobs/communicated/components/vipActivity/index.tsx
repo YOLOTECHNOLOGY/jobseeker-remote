@@ -8,37 +8,45 @@ import Image from 'next/image'
 import {
   CloseIcon
 } from 'images'
-const VipActivity = ({ accessToken }) => {
+import DialogLogin from 'app/components/LoginDialog'
+import Toast from 'app/components/Toast'
+
+const VipActivity = ({ newGetStarted, accessToken, advertisingLink }) => {
   const [referralCode, setReferralCode] = useState('')
   const [vipModal, setVipModal] = useState(false)
-  const getResumeTemplateHostRef = useRef('')
-  if (process.env.NODE_ENV === 'production') {
-    getResumeTemplateHostRef.current = 'https://bossjob.ph/'
-  }
-  else if (process.env.NODE_ENV === 'development') {
-    getResumeTemplateHostRef.current = 'https://demo.bossjob.ph/'
-  }
-  else {
-    getResumeTemplateHostRef.current = 'https://staging.bossjob.ph/'
-  }
+  const [loginModal, setLoginModal] = useState(false)
+
   useEffect(() => {
-    fetchUserOwnDetailService({ accessToken }).then(res => {
+
+    accessToken && fetchUserOwnDetailService({ accessToken }).then(res => {
       if (res?.data?.data) {
         setReferralCode(res.data.data.referral_code)
       }
     })
   }, [accessToken])
 
+
+  const handleVipModalClick = () => {
+    if (accessToken) {
+      setVipModal(true)
+    }
+    else {
+      setLoginModal(true)
+    }
+  }
+
+  console.log('advertisingLink:', advertisingLink)
+
   return (
     <>
-      <div className={styles.vipImage} onClick={() => setVipModal(true)}>
+      <div className={styles.vipImage} onClick={handleVipModalClick}>
         <Button
           variant='contained'
           className={styles.btn}
         >
-          Get VIP for free
+          {advertisingLink.GetVipForFree}
         </Button>
-        <span className={styles.desc}>Invite friends to get AI resume coaching</span>
+        <span className={styles.desc}>{advertisingLink.InviteFriendsToGetAIResumeCoaching}</span>
         <Image
           src={require('./vip_activity_image.png').default.src}
           width={514}
@@ -50,59 +58,44 @@ const VipActivity = ({ accessToken }) => {
       </div>
       {vipModal && <VipShareModal
         referral_code={referralCode}
+        newGetStarted={newGetStarted}
         lang={getLang()}
-        host={getResumeTemplateHostRef.current}
+        // host={getResumeTemplateHostRef.current}
         handleCloseModal={() => setVipModal(false)} />}
+      {loginModal && <DialogLogin open={loginModal} handleClose={() => setLoginModal(false)} />}
     </>
 
   )
 }
-const VipShareModal = ({ referral_code, host, lang, handleCloseModal }) => {
+const VipShareModal = ({ referral_code, lang, newGetStarted, handleCloseModal }) => {
   const copyTextRef = useRef(null)
-
   return (
     <div className={styles.vipShareWrapper}>
       <div className={styles.vipShareModal}>
-        <img className={styles.close} src={CloseIcon} alt="" width="17" height="17" onClick={(handleCloseModal)} />
-        <h1>INVITE FRIENDS TO GET <span style={{ color: '#004AFF' }}>AI RESUME COACHING</span></h1>
-        <h3>Invite A friends to register with Bossjob and get VIP immediately</h3>
+        <img className={styles.close} src={require('./icon_close.svg').default.src} alt="" width="15" height="15" onClick={handleCloseModal} />
         <div className={styles.main}>
           <div className={styles.left}>
-            <p>High-quality VIP resume template and AI  assistant <br /> to help you get high-paying Offer</p>
-            <img src={require('./share_modal_image.png').default.src} alt="" />
-          </div>
-          <div className={styles.right}>
-            <p className={styles.description}>Instant access to VIP privileges for invitees and invitees</p>
-            <div className={styles.featureContent}>
-              <p>
-                <Image src={require('./vip_share_icon1.svg').default.src} width={26} height={26} alt="add"></Image>
-                Share registration
-                login link
-              </p>
-              <span style={{
-                fontSize: '20px',
-                fontWeight: 'bold'
-              }}>&gt;</span>
-              <p>
-                < Image src={require('./vip_share_icon2.svg').default.src} width={26} height={26} alt="add"></Image>
-                new user registration automatically get VIP
-              </p>
-            </div>
-            <p className={styles.links} ref={copyTextRef}>{`${host}${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</p>
+            <p className={styles.buttonText}>{newGetStarted.vipText.inviteFriendsToGet}</p>
+            <p className={styles.blueText}>{newGetStarted.vipText.AIResumeCoaching}</p>
+            <p className={styles.descText}>{newGetStarted.vipText.HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer}</p>
+            <p className={styles.links} ref={copyTextRef}>
+              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a>
+            </p>
             <Button
               variant="contained"
               className={styles.copyButton}
               onClick={() => {
                 navigator.clipboard.writeText(copyTextRef.current.innerText)
+                Toast.success('Link copied success!')
               }}
             >
-              Copy link to invite now
+              <img src={require('./icon_copy_arrow.svg').default.src} alt="" style={{ marginRight: '20px' }} />{newGetStarted.vipText.copyLinkToInviteNow}
             </Button>
           </div>
+          <div className={styles.right}></div>
         </div>
       </div>
-
-    </div >
+    </div>
   )
 }
 export default VipActivity

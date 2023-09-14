@@ -405,7 +405,7 @@
     },
     "seo": {
       "title": "Bossjob - {{country}}のプロフェッショナル向けキャリアプラットフォーム",
-      "copyright": "著作権 © {{currentYear}} シンガポール：Yolo Technology Pte Ltd. All Rights Reserved. フィリピン：Etos Adtech Corporation"
+      "copyright": "著作権 © {{currentYear}} シンガポール：Yolo Technology Pte. Ltd. All Rights Reserved. フィリピン：Etos Adtech Corporation"
     },
     "jobs": "仕事",
     "seeMore": "もっと見る"
@@ -834,9 +834,11 @@
           "error": "履歴書の削除に失敗しました"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "ボスジョブの履歴書テンプレート",
           "tips": "Bossjobでプロフィールを作成すると、履歴書が自動的に作成されます。利用可能なテンプレートから選択し、新しく改善された履歴書を使用してBossjobの求人に応募することができます。",
-          "download": "ダウンロード"
+          "download": "ダウンロード",
+          "selectTemplate": "テンプレートを選択",
+          "preview": "プレビュー"
         },
         "changeResume": {
           "rename": "名前を変更",
@@ -866,6 +868,12 @@
           "descTips": "ビデオ形式のMP4、3分以内の時間制御",
           "confirmDesc": "ビデオ再開を削除した後、取得できません。削除してもよろしいですか？",
           "confirmTitle": "動画の履歴書を削除"
+        },
+        "resumeTemplateConfirm": {
+          "title": "ヒント",
+          "confirmDesc": "履歴書の下書きが5つ以上ある場合は下書きを1つ削除し、新しいテンプレートを適用してください。",
+          "btn1": "キャンセル",
+          "btn2": "下書きの管理"
         }
       }
     }
@@ -1047,7 +1055,7 @@
   },
   "chatInterview": {
     "confirmText": "面接が確定しました",
-    "confirmLabel": "面接は現在キャンセルできません",
+    "confirmLabel": "面接が確認されました",
     "cancelAction": "面接をキャンセルする",
     "canNotCancel": "面接は現在キャンセルできません",
     "checkedText": "チェックイン済み",
@@ -1061,7 +1069,7 @@
     "finishedText": "終了",
     "finishedLabel": "採用担当者から面接結果をリクエストできます",
     "requestResult": "結果をリクエストしました",
-    "requestAfter": "You can request interview result after interview completed",
+    "requestAfter": "面接が終わったら、面接官に結果を請求することができます",
     "title": "{{companyName}}からの面接招待",
     "buttonText": "完了",
     "notAttend": "面接に出席していません。",
@@ -1081,6 +1089,7 @@
     "back": "戻る",
     "next": "次へ",
     "close": "閉じる",
+    "send": "送信",
     "resultTitle": "面接結果",
     "resultText": "面接に出席しましたか？",
     "attendancelabel": "面接出席",
@@ -1338,7 +1347,22 @@
     "checkYourSpam": "コードが届かない場合はスパムメールを確認してください",
     "authenticationSuccessful": "認証に成功しました",
     "Bossjob": "ボスジョブ",
-    "back": "戻る"
+    "back": "戻る",
+    "vipText": {
+      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
+      "InviteNewUsersToRegister": "Invite New Users To Register",
+      "BossjobAI": "Bossjob AI",
+      "ResumeAssistant": "Resume Assistant",
+      "HighSalaryOffer": "High Salary Offer",
+      "HelpYouGet": "Help You Get",
+      "promptDesc": "You are currently logged in, please log out and re-register or log in",
+      "returnHome": "Return Home",
+      "signOut": "Sign Out",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
+    }
   },
   "seo": {
     "ph": "フィリピン",
@@ -1348,7 +1372,7 @@
     "hk": "中国香港",
     "tw": "中国台湾",
     "mo": "中国マカオ",
-    "my": "Malaysia",
+    "my": "マレーシア",
     "siteName": "Bossjob - プロフェッショナル向けのチャットファーストキャリアプラットフォーム | {{country}}",
     "metaDescription": "Bossjobは、優れた人材と優良企業をつなぐチャットファーストのキャリアプラットフォームです。現地勤務からリモートワークまで、さまざまな求人を選択できます。次の夢の仕事をBossjobで応募しましょう！",
     "jobSearch": {
@@ -1457,5 +1481,12 @@
     "jobs": "求人",
     "talents": "人材",
     "Looking for": "探しています"
+  },
+  "advertisingLink": {
+    "GetVipForFree": "Get Vip For Free",
+    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
+    "excellentResume": "Excellent Resume",
+    "openTheDoorToSuccess": "Open The Door To Success",
+    "createMyResume": "Create My resume"
   }
 }

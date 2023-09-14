@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { getCookie } from 'helpers/cookies'
+import { accessToken, getCookie } from 'helpers/cookies'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 /* Style */
 import styles from '../Header.module.scss'
@@ -17,6 +18,7 @@ import MaterialButton from 'components/MaterialButton'
 /* Images */
 import { DefaultAvatar } from 'images'
 import { useProfileData } from 'app/components/providers/profileProvider'
+import { getCountry } from 'helpers/country'
 
 interface IProps {
   langKey: string
@@ -27,21 +29,27 @@ interface IProps {
 
 const NavRight = (props: IProps) => {
   const { langKey, lang, totalUnread, handleShowMenu } = props
-  const {profile} = useProfileData();
+  const { profile } = useProfileData();
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
+  const accessToken = getCookie('accessToken')
 
   const { manageResume, Chat } = lang || {}
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
   const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
-
+  const dispatch = useDispatch()
   useEffect(() => {
     if (userInfo?.id) {
       const hasJobPreferences = userInfo?.job_preferences.length > 0
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
+  useEffect(() => {
+    accessToken && dispatch(fetchUserOwnDetailRequest({ accessToken }))
+
+  }, [accessToken])
+
 
   const manageProfileCss = {
     height: '40px !important',
@@ -56,6 +64,7 @@ const NavRight = (props: IProps) => {
       boxShadow: 'none'
     }
   }
+  console.log('vip', userInfo?.vip?.is_vip, { country: getCountry() })
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
@@ -112,16 +121,35 @@ const NavRight = (props: IProps) => {
         </li>
         <li className={styles.headerLink}>
           <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
-            <Image
-              src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
-              className={styles.profilePlaceHolder}
-              width={35}
-              height={35}
-              alt='avatar'
-              onError={(e) => {
-                ;(e.target as HTMLInputElement).src = DefaultAvatar
-              }}
-            />
+            {userInfo?.vip?.is_vip ?
+              <div className={styles.vipAvatar}>
+                <Image
+                  src={require('./vip_user_icon.png').default.src}
+                  width={23}
+                  height={9}
+                  alt=""
+                  style={{ position: 'absolute', bottom: '-1px', right: 0 }} />
+                <Image
+                  src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                  className={styles.profilePlaceHolder}
+                  width={35}
+                  height={35}
+                  alt='avatar'
+                  onError={(e) => {
+                    ; (e.target as HTMLInputElement).src = DefaultAvatar
+                  }}
+                />
+              </div> :
+              <Image
+                src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                className={styles.profilePlaceHolder}
+                width={35}
+                height={35}
+                alt='avatar'
+                onError={(e) => {
+                  ; (e.target as HTMLInputElement).src = DefaultAvatar
+                }}
+              />}
             <div className={styles.profileCaretWrapper}>
               <div className={styles.profileCaret} />
             </div>

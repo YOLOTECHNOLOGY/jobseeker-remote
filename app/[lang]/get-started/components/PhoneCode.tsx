@@ -205,7 +205,7 @@ function PhoneCode(props: any) {
           <div
             className={styles.backBox}
             onClick={() =>
-              isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/phone`)
+              isModal ? handleBackClick?.() : history.back()
             }
           >
             <KeyboardArrowLeftIcon />
