@@ -1051,7 +1051,12 @@
     "buttonTextEnable": "Auto-send my resume",
     "buttonTextDisable": "Disable Auto-send my resume",
     "offerTitle": "CONGRATULATIONS!",
-    "offerSent": "Sent by"
+    "offerSent": "Sent by",
+    "recruiterModal":{
+      "7dayResponse":"Your 7-Day response rate is {{responseRate}}%, beating {{defeatedRate}}% of your peers.",
+      "medal":"Medal",
+      "company":"Company"
+    }
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
@@ -1357,7 +1362,11 @@
       "HelpYouGet": "Help You Get",
       "promptDesc": "You are currently logged in, please log out and re-register or log in",
       "returnHome": "Return Home",
-      "signOut": "Sign Out"
+      "signOut": "Sign Out",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
     }
   },
   "seo": {

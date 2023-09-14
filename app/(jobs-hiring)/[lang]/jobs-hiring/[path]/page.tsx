@@ -62,7 +62,7 @@ const SearchHistory = searchHistoryIp(
 
 const Main = async (props: any) => {
   const { lang } = props.params
-  const { search, home, advertisingLink } = (await getDictionary(lang)) as any
+  const { search, home, advertisingLink, newGetStarted } = (await getDictionary(lang)) as any
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
@@ -111,7 +111,7 @@ const Main = async (props: any) => {
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
               /> */}
-              <VipActivity accessToken={accessToken} advertisingLink={advertisingLink} />
+              <VipActivity accessToken={accessToken} newGetStarted={newGetStarted} advertisingLink={advertisingLink} />
 
               <ExcellentResumeBanner advertisingLink={advertisingLink} />
               <SearchHistory

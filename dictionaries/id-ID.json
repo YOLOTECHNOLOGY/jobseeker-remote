@@ -1349,15 +1349,19 @@
     "Bossjob": "Bossjob",
     "back": "Kembali",
     "vipText": {
-      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
-      "InviteNewUsersToRegister": "Invite New Users To Register",
-      "BossjobAI": "Bossjob AI",
-      "ResumeAssistant": "Resume Assistant",
-      "HighSalaryOffer": "High Salary Offer",
-      "HelpYouGet": "Help You Get",
-      "promptDesc": "You are currently logged in, please log out and re-register or log in",
-      "returnHome": "Return Home",
-      "signOut": "Sign Out"
+      "GetVipPrivilegesImmediately": "Dapatkan Hak Istimewa VIP Segera",
+      "InviteNewUsersToRegister": "Undang Pengguna Baru Untuk Mendaftar",
+      "BossjobAI": "Pekerjaan bos AI",
+      "ResumeAssistant": "Asisten Resume",
+      "HighSalaryOffer": "Tawaran Gaji Tinggi",
+      "HelpYouGet": "Membantu Anda Mendapatkan",
+      "promptDesc": "Anda sedang login, silakan logout dan daftar ulang atau login",
+      "returnHome": "Kembali ke Beranda",
+      "signOut": "Keluar",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
     }
   },
   "seo": {

@@ -128,7 +128,8 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const {
     manageProfile: {
       tab: { resume: transitions, profile: profile }
-    }
+    },
+    newGetStarted
   } = lang
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
@@ -737,7 +738,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
       </Modal>
 
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
-      {vipModal && <VipActivity accessToken={accessToken} handleCloseModal={() => setVipModal(false)} />}
+      {vipModal && <VipActivity accessToken={accessToken} newGetStarted={newGetStarted} handleCloseModal={() => setVipModal(false)} />}
     </div >
 
   )

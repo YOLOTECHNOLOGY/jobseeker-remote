@@ -46,7 +46,8 @@ type ProfileLayoutProps = {
   children: React.ReactNode
   dic: any
   unCompleted: any,
-  advertisingLink: any
+  advertisingLink: any,
+  newGetStarted: any
 }
 
 const ProfileLayout = ({
@@ -58,7 +59,8 @@ const ProfileLayout = ({
   handleModal,
   children,
   advertisingLink,
-  unCompleted
+  unCompleted,
+  newGetStarted
 }: ProfileLayoutProps) => {
   const {
     avatar,
@@ -120,6 +122,7 @@ const ProfileLayout = ({
             handleEditClick={handleEditClick}
             lang={dic}
             advertisingLink={advertisingLink}
+            newGetStarted={newGetStarted}
           />
         </div>
         <div className={styles.profileLayoutSettings}>

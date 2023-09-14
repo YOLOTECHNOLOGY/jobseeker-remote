@@ -11,7 +11,7 @@ import {
 import { useSelector } from 'react-redux'
 
 import Toast from 'app/components/Toast'
-const VipActivity = ({ accessToken, handleCloseModal }) => {
+const VipActivity = ({ newGetStarted, accessToken, handleCloseModal }) => {
   // const [referralCode, setReferralCode] = useState('')
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
 
@@ -31,12 +31,13 @@ const VipActivity = ({ accessToken, handleCloseModal }) => {
     <VipShareModal
       referral_code={userDetail.referral_code}
       lang={getLang()}
+      newGetStarted={newGetStarted}
       // host={getResumeTemplateHostRef.current}
       handleCloseModal={handleCloseModal} />
 
   )
 }
-const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
+const VipShareModal = ({ referral_code, lang, newGetStarted, handleCloseModal }) => {
   const copyTextRef = useRef(null)
   return (
     <div className={styles.vipShareWrapper}>
@@ -44,9 +45,9 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
         <img className={styles.close} src={require('./icon_close.svg').default.src} alt="" width="15" height="15" onClick={handleCloseModal} />
         <div className={styles.main}>
           <div className={styles.left}>
-            <p className={styles.buttonText}>Invite Friends To Get</p>
-            <p className={styles.blueText}>AI RESUME COACHING</p>
-            <p className={styles.descText}>High-quality VIP resume template and AI  assistant to help you get high-paying Offer.</p>
+            <p className={styles.buttonText}>{newGetStarted.vipText.inviteFriendsToGet}</p>
+            <p className={styles.blueText}>{newGetStarted.vipText.AIResumeCoaching}</p>
+            <p className={styles.descText}>{newGetStarted.vipText.HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer}</p>
             <p className={styles.links} ref={copyTextRef}>
               <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a>
             </p>
@@ -58,7 +59,7 @@ const VipShareModal = ({ referral_code, lang, handleCloseModal }) => {
                 Toast.success('Link copied success!')
               }}
             >
-              <img src={require('./icon_copy_arrow.svg').default.src} alt="" style={{ marginRight: '20px' }} />Copy link to invite now
+              <img src={require('./icon_copy_arrow.svg').default.src} alt="" style={{ marginRight: '20px' }} />{newGetStarted.vipText.copyLinkToInviteNow}
             </Button>
           </div>
           <div className={styles.right}></div>
