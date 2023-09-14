@@ -141,9 +141,9 @@ const Modal = ({
           ])}
         >
           <div className={classNames([styles.modalHeader, headerClass])}>
-            <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
+            {Boolean(headerTitle) && <Text textStyle='xl' bold className={styles.modalHeaderTitle}>
               {headerTitle}
-            </Text>
+            </Text>}
             <div className={styles.modalCloseButton}>
               <Text onClick={handleCloseModal}>
                 <img src={CloseIcon} title='close modal' alt='close modal' width='14' height='14' />
@@ -151,8 +151,8 @@ const Modal = ({
             </div>
           </div>
           <div className={classNames([styles.modalBody, bodyClass])}>{children}</div>
-          {customFooter && 
-          <div className={classNames([styles.modalFooter, footerClass])}>{customFooter}</div>}
+          {customFooter &&
+            <div className={classNames([styles.modalFooter, footerClass])}>{customFooter}</div>}
           {/* {(hasFirstButton || hasSecondButton) && (
             <div className={styles.modalFooter}>
               {hasFirstButton && (
@@ -177,41 +177,41 @@ const Modal = ({
                   {secondButtonText}
                 </Button>
               )} */}
-              {(hasFirstButton || hasSecondButton) && (
-              <div className={styles.modalFooter}>
-                {hasFirstButton && (
-                  <MaterialButton
-                    variant='outlined'
-                    capitalize
-                    onClick={() => {
-                      handleFirstButton()
-                      if (firstButtonIsClose) handleModal()
-                    }}
-                    isLoading={isFirstButtonLoading}
-                    sx={{ height: '44px' }}
-                  >
-                    <Text textColor='primaryBlue' bold>
-                      {firstButtonText}
-                    </Text>
-                  </MaterialButton>
-                )}
-                {hasSecondButton && (
-                  <MaterialButton
-                    variant='contained'
-                    capitalize
-                    onClick={() => {
-                      handleSecondButton()
-                      if (secondButtonIsClose) handleModal()
-                    }}
-                    isLoading={isSecondButtonLoading}
-                    sx={{ height: '44px', marginLeft: hasFirstButton ? '18px' : '' }}
-                    disabled={isSecondButtonDisabled}
-                  >
-                    <Text textColor='white' bold>
-                      {secondButtonText}
-                    </Text>
-                  </MaterialButton>
-                )}
+          {(hasFirstButton || hasSecondButton) && (
+            <div className={styles.modalFooter}>
+              {hasFirstButton && (
+                <MaterialButton
+                  variant='outlined'
+                  capitalize
+                  onClick={() => {
+                    handleFirstButton()
+                    if (firstButtonIsClose) handleModal()
+                  }}
+                  isLoading={isFirstButtonLoading}
+                  sx={{ height: '44px' }}
+                >
+                  <Text textColor='primaryBlue' bold>
+                    {firstButtonText}
+                  </Text>
+                </MaterialButton>
+              )}
+              {hasSecondButton && (
+                <MaterialButton
+                  variant='contained'
+                  capitalize
+                  onClick={() => {
+                    handleSecondButton()
+                    if (secondButtonIsClose) handleModal()
+                  }}
+                  isLoading={isSecondButtonLoading}
+                  sx={{ height: '44px', marginLeft: hasFirstButton ? '18px' : '' }}
+                  disabled={isSecondButtonDisabled}
+                >
+                  <Text textColor='white' bold>
+                    {secondButtonText}
+                  </Text>
+                </MaterialButton>
+              )}
             </div>
           )}
         </div>
