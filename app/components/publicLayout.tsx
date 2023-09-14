@@ -138,7 +138,7 @@ export default async function PublicLayout(props: any) {
           <LinkProvider>{children}</LinkProvider>
           <AutoShowModalAppRedirect />
         </Providers>
-        <Initial />
+        <Initial langKey={lang} />
       </body>
     </html>
   )
