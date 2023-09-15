@@ -1051,7 +1051,11 @@
     "buttonTextEnable": "自动发送简历",
     "buttonTextDisable": "取消自动发送简历",
     "offerTitle": "恭喜您被录用！",
-    "offerSent": "来自于"
+    "offerSent": "来自于",
+    "recruiterModal": {
+      "medal": "徽章",
+      "company": "公司"
+    }
   },
   "chatInterview": {
     "confirmText": "面试已经确认",

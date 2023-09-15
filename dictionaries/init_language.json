@@ -1053,7 +1053,6 @@
     "offerTitle": "CONGRATULATIONS!",
     "offerSent": "Sent by",
     "recruiterModal":{
-      "7dayResponse":"Your 7-Day response rate is {{responseRate}}%, beating {{defeatedRate}}% of your peers.",
       "medal":"Medal",
       "company":"Company"
     }

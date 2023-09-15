@@ -3,6 +3,7 @@
 }
 .wrapper {
   max-height: 90vh;
+  overflow: hidden;
 }
 .banner {
   width: 100%;
@@ -36,6 +37,7 @@
   flex-direction: row;
 }
 .recruiterBaseInfo {
+  padding: 0 0 20px 0;
   .userAvatar {
     width: 60px;
     height: 60px;
@@ -64,12 +66,12 @@
     line-height: 22px;
     color: #515151;
   }
-  .sevenDay {
-    margin-bottom: 20px;
-    color: #121212;
-    font-size: 20px;
-    font-weight: 400;
-  }
+  // .sevenDay {
+  //   margin-bottom: 20px;
+  //   color: #121212;
+  //   font-size: 20px;
+  //   font-weight: 400;
+  // }
 }
 
 .medal {

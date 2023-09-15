@@ -65,13 +65,6 @@ export const RecruiterModal = (props: { uid: string | number, display: boolean, 
               <div className={styles.jobTitle}>{job_title}</div>
             </div>
           </div>
-          <div className={styles.sevenDay}>
-            {formatTemplateString(recruiterModal?.['7dayResponse'], {
-              responseRate: response_rate,
-              defeatedRate: response_rate_time_defeat_percentile
-            })}
-            {/* Your 7-Day response rate is 0%, beating 0.00% of your peers. */}
-          </div>
         </div>
 
         {Boolean(display_badges?.length) && <div className={classNames(styles.medal, styles.recruiterModalSection)}>

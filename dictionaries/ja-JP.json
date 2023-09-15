@@ -14,7 +14,7 @@
     "Chat": "チャット",
     "downloadApp": "アプリをダウンロードする",
     "pleaseVerify": "メールアドレスを確認してください。",
-    "verifyNow": "今すぐ確認する",
+    "verifyNow": " 今すぐ認証",
     "switchCountry": {
       "title": "どの国と言語でBossjobを閲覧しますか？",
       "country": "国",
@@ -36,9 +36,9 @@
     "createFree": "無料の履歴書を作成する",
     "careerGuide": "キャリアガイド",
     "courses": "コース",
-    "recruiter": "雇用主",
+    "recruiter": "採用担当者",
     "getStarted": "始める",
-    "popularJobs": "人気の求人",
+    "popularJobs": " 人気の求人",
     "JobsIn1": "マニラの求人",
     "JobsIn2": "マカティの求人",
     "JobsIn3": "セブの求人",
@@ -49,11 +49,11 @@
     "BpoJobs": "BPOの求人",
     "salesJobs": "営業の求人",
     "healthcareJobs": "医療の求人",
-    "downloadBossjobApp": "Bossjobアプリをダウンロードする",
+    "downloadBossjobApp": " Bossjobアプリをダウンロードする",
     "followUs": "フォローする",
-    "technology": "シンガポール：Yolo Technology Pte Ltd. All Rights Reserved",
+    "technology": " シンガポール：Yolo Technology Pte Ltd. All Rights Reserved",
     "corporation": "フィリピン：Etos Adtech Corporation",
-    "companyDesc": "Bossjobは、チャットを中心としたAIパワードの採用プラットフォームであり、私たちの日常生活で必要なものである即時の満足感をモデルにしています。Bossjobは、人材と雇用主の間の迅速なコミュニケーションを提供し、直接チャットを通じた長い求人申請プロセスを排除することを目指しています。",
+    "companyDesc": "私たちは、2016年にYolo Technologyの旅を始め、技術の進化と革新の先駆者として、世界に変化をもたらすことを目指しています。",
     "IndonesiaPT": "インドネシア：PT Bossjob SEA Indonesia",
     "JapanYolo": "日本：Yolo Technology 株式会社",
     "JapanAddress": "東京都港区浜松町2-4-1 世界貿易センタービルディング南館17階",
@@ -61,34 +61,34 @@
     "workingDate": "月曜日から土曜日 10:00 - 19:00"
   },
   "getStatred": {
-    "seoMetaTitle": "サインアップまたはログイン（求職者）| Bossjob",
+    "seoMetaTitle": "始めよう | Bossjob",
     "JoinBossjob": "Bossjobに参加する",
     "kickStartYourCareer": "キャリアをスタートさせましょう！",
     "enterYourEmailAddress": "メールアドレスを入力してください",
-    "submit": "送信",
+    "submit": "提出",
     "pleaseEnterAvalidEmailAddress.": "有効なメールアドレスを入力してください。",
-    "bySigningUp": "サインアップすることで、私は読んで同意しました",
+    "bySigningUp": "サインアップすることで、以下の内容に同意したことになります",
     "termsOfUse": "利用規約",
     "and": "および",
     "privacyPolicy": "プライバシーポリシー",
     "signInWith": "でサインインする",
-    "lookingToHire": "人を採用したいですか？",
+    "lookingToHire": "人材をお探しですか？会員登録 ",
     "employer": "雇用主",
     "welcomeBack": "お帰りなさい！",
-    "signUpAnAccount": "アカウントをサインアップする",
-    "pleaseEnter": "送信した6桁のワンタイムパスワードを入力してください",
-    "enter6DigitOTP": "6桁のOTPを入力してください",
-    "getOPT": "OTPを取得する",
+    "signUpAnAccount": "アカウントにサインアップ",
+    "pleaseEnter": "送信した6桁のパスワードを入力してください",
+    "enter6DigitOTP": "6桁の認証コードを入力してください",
+    "getOPT": "認証コードを取得",
     "heOTPYouHaveEnteredIsWrong": "入力したOTPが間違っています。もう一度お試しください。",
     "resendOTP": "OTPを再送する",
-    "havingTrouble": "問題が発生していますか？",
+    "havingTrouble": "困ったことはありますか？",
     "requestAmagicLink": "マジックリンクをリクエストする",
-    "seoMetaDescription": "リアルタイムでボスとチャットし、すばやく雇用されます。東南アジアの300万人のプロフェッショナルに参加しましょう！サインアップまたはログインして、",
+    "seoMetaDescription": "Bossjobに参加して、あなたのプロフェッショナルとしてのキャリアを加速させましょう！以下のコースと求人情報にアクセス ",
     "seoMetaDescription2": "200万人以上のプロフェッショナルのネットワーク。",
     "magicLink": {
       "welcomeBack": "お帰りなさい！",
-      "signUp": "アカウントをサインアップする",
-      "haveSendEmail": "{{email}}にマジックリンクを送信しました。リンクをクリックして続行してください。",
+      "signUp": "アカウントにサインアップ",
+      "haveSendEmail": "{{email}} にマジックリンクを送信しました。クリックして続行してください。",
       "toHome": "ホームページに戻る"
     },
     "loginUsingSocialMediaOTP": "ソーシャルメディア/OTPを使用してログインする",
@@ -100,9 +100,9 @@
     "ImRecruiter": "雇用主です",
     "menuLoginToVersion": "メニュー > Webにログイン",
     "scannedSuccessfully": "正常にスキャンされました",
-    "pleaseConfirmLoginOnAPP": "アプリでリクエストを確認してください",
+    "pleaseConfirmLoginOnAPP": "アプリでログインを確認してください",
     "pleaseRefreshQrCode": "QRコードを更新してください",
-    "clickToRefresh": "更新する",
+    "clickToRefresh": "クリックして更新",
     "accountMismatch": "アカウントのタイプが一致しません。求人応募を使用してログインしてください",
     "loginWithQRCode": "QRコードでログインする"
   },
@@ -123,7 +123,7 @@
     "qualification": "資格",
     "workExprerience": "職務経験",
     "experience": "経験",
-    "Industry": "業界",
+    "Industry": "業種",
     "salary": "給与",
     "JobType": "職種",
     "companySizes": "企業規模",
@@ -135,14 +135,14 @@
     "applyNow": "今すぐ応募",
     "continueChat": "チャットを続ける",
     "chatNow": "チャットする",
-    "availability": "利用可能性",
+    "availability": "利用について",
     "editOnlineResume": "オンライン履歴書を編集",
-    "uploadedResumes": "アップロード済みの履歴書",
+    "uploadedResumes": " アップロード済みの履歴書",
     "noResumeUploadNow": "履歴書が見つかりません、今すぐアップロードしてください",
     "uploadResume": "履歴書をアップロード",
-    "availabilityUpdateSuccessfully": "利用可能性が正常に更新されました",
+    "availabilityUpdateSuccessfully": "正常に更新されました",
     "seeMore": "もっと見る",
-    "seeJobReco": "求人を見る",
+    "seeJobReco": "おすすめの求人を見る",
     "search": "検索",
     "desiredJobTitle": "希望する職種",
     "edit": "編集",
@@ -153,7 +153,7 @@
     "back": "戻る",
     "addJobPreference": "仕事の希望条件を追加",
     "JobClosed": "求人終了",
-    "undoSave": "保存を元に戻す",
+    "undoSave": "保存を取り消す",
     "employees": "従業員",
     "InterviewTime": "面接日時",
     "address": "住所",
@@ -174,18 +174,18 @@
       "others": "その他",
       "reasons": "なぜこの仕事が適していないか教えてください。",
       "cancel": "キャンセル",
-      "submit": "送信",
+      "submit": "提出",
       "reason1": "希望する仕事条件に合わない",
       "reason2": "勤務地が遠すぎる",
       "reason3": "給与が期待に満たない",
       "reason4": "学歴の不一致",
-      "reason5": "業界の不一致",
+      "reason5": "業種の不一致",
       "reason6": "この企業に興味がない"
     },
     "deleteSuccess": "削除成功"
   },
   "companies": {
-    "title": "{{country}}で優れた企業を見つける",
+    "title": "{{country}} で優れた企業を見つける",
     "search": {
       "companyName": "企業を検索",
       "btn": "検索"
@@ -194,7 +194,7 @@
       "title": "注目の雇用主",
       "size": "企業規模",
       "industry": "業界",
-      "allJobs": "{{totalActiveJobs}}件の求人を表示",
+      "allJobs": "{{totalActiveJobs}} 件の求人を表示",
       "employees": "従業員数",
       "location": "所在地",
       "industryType": "業界タイプ",
@@ -203,19 +203,19 @@
     },
     "popularCompany": {
       "title": "人気のある企業",
-      "allJobs": "{{totalActiveJobs}}件の求人を表示"
+      "allJobs": "{{totalActiveJobs}} 件の求人を表示"
     },
-    "seoTitle": "{{country}}で採用中の企業を見つける | Bossjob",
+    "seoTitle": "{{country}} で募集中の企業を見つける | Bossjob",
     "seoDescription": "{{country}}で働くための優れた企業を見つけましょう！求人情報を検索し、チャットして採用されましょう！IT、Web3、リモートの求人が利用可能です。",
     "searchPage": {
       "title": "企業を検索",
-      "subTitle": "{{searchKey}}の企業",
+      "subTitle": "{{searchKey}} の企業",
       "noResult": "結果が見つかりませんでした。",
-      "seoText": "{{country}}で優れた企業を見つけましょう"
+      "seoText": "{{country}} で優れた企業を見つけましょう"
     },
     "companiesEmpty": "企業が見つかりません",
     "loginNow": "今すぐログイン",
-    "loginNowDescription": "Bossjobで無料の求人プロフィールを作成し、同僚が応募しているトップの求人を探索しましょう！"
+    "loginNowDescription": "Bossjobで無料の求人プロフィールを作成し、たくさんのが応募しているトップの求人を探しましょう！"
   },
   "companyDetail": {
     "tab": {
@@ -247,9 +247,9 @@
       "Telephone": "電話番号",
       "CompanyName": "会社名",
       "UnifiedSocialCreditCode": "統一社会信用コード",
-      "LegalRepresentative": "法定代表者",
+      "LegalRepresentative": "法定代理人",
       "RegisteredCapital": "登録資本金",
-      "PaidUpCapital": "実質出資額",
+      "PaidUpCapital": "払込資本金",
       "DateOfEstablishment": "設立日",
       "OrganizationCode": "組織コード",
       "BusinessRegistrationNumber": "事業登録番号",
@@ -1051,7 +1051,11 @@
     "buttonTextEnable": "自動で履歴書を送信",
     "buttonTextDisable": "自動で履歴書を送信しない",
     "offerTitle": "おめでとうございます！",
-    "offerSent": "送信済み"
+    "offerSent": "送信済み",
+    "recruiterModal": {
+      "medal": "Medal",
+      "company": "Company"
+    }
   },
   "chatInterview": {
     "confirmText": "面接が確定しました",
@@ -1349,19 +1353,19 @@
     "Bossjob": "ボスジョブ",
     "back": "戻る",
     "vipText": {
-      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
-      "InviteNewUsersToRegister": "Invite New Users To Register",
-      "BossjobAI": "Bossjob AI",
-      "ResumeAssistant": "Resume Assistant",
-      "HighSalaryOffer": "High Salary Offer",
-      "HelpYouGet": "Help You Get",
-      "promptDesc": "You are currently logged in, please log out and re-register or log in",
-      "returnHome": "Return Home",
-      "signOut": "Sign Out",
-      "inviteFriendsToGet": "Invite Friends To Get",
-      "AIResumeCoaching": "AI RESUME COACHING",
-      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
-      "copyLinkToInviteNow": "Copy link to invite now"
+      "GetVipPrivilegesImmediately": "VIP特権をすぐに入手",
+      "InviteNewUsersToRegister": "新規ユーザーを招待",
+      "BossjobAI": "ボスジョブAI",
+      "ResumeAssistant": "履歴書作成アシスタント",
+      "HighSalaryOffer": "高給与のオファー",
+      "HelpYouGet": "あなたのお手伝い",
+      "promptDesc": "現在ログインしています。ログアウトして再登録またはログインし直してください",
+      "returnHome": "ホームに戻る",
+      "signOut": "サインアウト",
+      "inviteFriendsToGet": "友達を招待してゲット",
+      "AIResumeCoaching": "履歴書のAIコーチ",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "高品質のVIP履歴書テンプレートとAIアシスタントが高待遇のオファー獲得をサポート.",
+      "copyLinkToInviteNow": "リンクをコピーして招待"
     }
   },
   "seo": {
@@ -1483,10 +1487,10 @@
     "Looking for": "探しています"
   },
   "advertisingLink": {
-    "GetVipForFree": "Get Vip For Free",
-    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
-    "excellentResume": "Excellent Resume",
-    "openTheDoorToSuccess": "Open The Door To Success",
-    "createMyResume": "Create My resume"
+    "GetVipForFree": "Vipを無料で入手",
+    "InviteFriendsToGetAIResumeCoaching": "友達を招待してAIの履歴書コーチングを受けましょう",
+    "excellentResume": "魅力的な履歴書",
+    "openTheDoorToSuccess": "成功への扉が開く",
+    "createMyResume": "履歴書を作成"
   }
 }
