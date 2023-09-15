@@ -13,10 +13,10 @@ const ExcellentResumeBanner = ({ advertisingLink }) => {
   return (
     <div className={styles.container} onClick={handleClick}>
       <Lottie animationData={excellentResumeData} loop={true} />
-      <span style={{ fontSize: '26px' }}>{advertisingLink.excellentResume}</span>
+      <span style={{ fontSize: '26px', marginBottom: '10px', textAlign: 'center', lineHeight: 1 }}>{advertisingLink.excellentResume}</span>
       <span style={{ fontSize: '18px' }}>{advertisingLink.openTheDoorToSuccess}</span>
       <span className={styles.button}>{advertisingLink.createMyResume}</span>
-    </div>
+    </div >
   )
 }
 export default ExcellentResumeBanner
