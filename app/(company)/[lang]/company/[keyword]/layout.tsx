@@ -19,6 +19,7 @@ import getConfigs from 'app/models/interpreters/config'
 import { redirect } from 'next/navigation'
 import { ConfigType } from 'types/config';
 import PublicLayout from 'app/components/publicLayout'
+import { formatTemplateString } from 'helpers/formatter'
 
 const configs = getConfigs([
   ['location_lists'],
@@ -36,99 +37,23 @@ const configs = getConfigs([
 /**
  * Generate metadata for the page
  * @doc https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
+ * 
+ * Note： the below form is just for SEO's company details page, the name parameter must be replaced with 'company name'
+{
+  title:  Working at {{name}} | Bossjob
+  description:  Discover new career opportunities at {{name}}. Learn more about {{name}}'s employee benefits, company culture and job openings on Bossjob. Apply for jobs now!
+ }
  */
-async function generateSEO(props: { params: { lang: any } }): Promise<Metadata> {
+async function generateSEO(props: { params: { lang: any } }, companyName = ''): Promise<Metadata> {
   // read route params
   const dictionary = await getDictionary(props.params.lang)
-  const country = dictionary.seo[getCountryKey()]
-  const description = dictionary.seo?.landing?.description
-  const regex = /\{\{([^}]+)\}\}/g
-  const final_description = description.replace(regex, (_, match) => {
-    return match.toLowerCase() === 'country' ? country : match
-  })
+  const { detailDescription = '', detailTitle = '' } = dictionary.seo?.company || {}
+
   return {
-    title: dictionary.seo?.landing?.title,
-    description: final_description
+    title: formatTemplateString(detailTitle, { companyName }),
+    description: formatTemplateString(detailDescription, { companyName })
   }
 }
-
-// async function CompanyLayout(props: {
-//   children: React.ReactNode;
-//   params: {
-//     keyword: string;
-//     lang: string;
-//   },
-//   configs: {
-//     config: Partial<ConfigType>
-//   }
-// }) {
-//   // URL -> /shop/shoes/nike-air-max-97
-//   // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-//   const cookieStore = cookies()
-//   const token = cookieStore.get('accessToken')
-//   const id = getIDFromKeyword(props.params.keyword);
-//   // const seo = generateSEO(props)
-//   // if(isMobile && process.env.ENV === 'production'){
-//   // 	return redirect(`/${props.params.lang}/company_backup/${props.params.keyword}`)
-//   // }
-//   try {
-//     const [jobs, detail, hr, hotJobs, jobFunctions] = await Promise.all([
-//       fetchJobsListReq({ companyIds: id, size: 10, page: 1 }, token?.value),
-//       fetchCompanyDetailReq(id),
-//       fetchCompanyHR(id, token?.value),
-//       fetchHotJobsListService({ company_id: id }, token?.value),
-//       fetchJobsFunction(id)
-//     ])
-//     if (detail?.data?.document) {
-//       detail.data.document = null
-//     }
-
-//     if (!detail || !detail?.data) {
-//       redirect(`/${props.params.lang}/404`)
-//     }
-//     const groupData = jobFunctions.data.data.reduce((result, obj) => {
-//       const key = Object.values(obj)[0]
-//       const value = Object.keys(obj)[0]
-//       if (result[key as string]) {
-//         result[key as string].push(value)
-//       } else {
-//         result[key as string] = [value]
-//       }
-//       return result
-//     }, {})
-//     const function_ids = Object.values(groupData).flat()
-//     const jobClasses = props.configs.config.job_functions.filter((item) =>
-//       function_ids.includes(String(item.id))
-//     )
-
-//     return (
-//       <CompanyDetailsProvider
-//         hr={hr.data}
-//         detail={detail.data}
-//         jobs={jobs.data}
-//         hotJobs={hotJobs.data.data}
-//         lang={props.params.lang}
-//         config={props.configs.config}
-//         jobFunctions={jobClasses}
-//       >
-//         <section
-//           style={{
-//             width: '100%',
-//             overflowX: 'hidden',
-//             minHeight: '100vh',
-//             backgroundColor: '#ffffff'
-//           }}
-//         >
-//           <main data-string={{}}>{props.children}</main>
-//         </section>
-//         <Footer />
-//       </CompanyDetailsProvider>
-//     )
-//   } catch (e) {
-//     redirect(`/${props.params.lang}/404`)
-//     //  return <div data-error={JSON.stringify(e)}>{/* {e} */}11111</div>
-//   }
-// }
 
 async function Layout(props: {
   children: React.ReactNode;
@@ -141,7 +66,6 @@ async function Layout(props: {
   }
 }) {
   const { children, ...rest } = props
-  const seo = await generateSEO(props)
   const cookieStore = cookies()
   const token = cookieStore.get('accessToken')
   const id = getIDFromKeyword(props.params.keyword);
@@ -154,6 +78,8 @@ async function Layout(props: {
       fetchHotJobsListService({ company_id: id }, token?.value),
       fetchJobsFunction(id)
     ])
+    const seo = await generateSEO(props, detail.data.legal_name)
+
     if (detail?.data?.document) {
       detail.data.document = null
     }
