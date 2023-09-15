@@ -6,7 +6,7 @@ import { CompanyDetailsType, JobData, JobsResponseType } from "../../service";
 import Map from 'app/(job)/[lang]/job/[jobId]/components/Main/Map/Map';
 // import { languageContext } from 'app/[lang]/components/providers/languageProvider';
 import JobCard from '../JobsCard/index'
-import { languageContext } from "../../../../../components/providers/languageProvider";
+import { languageContext } from "../../../../../../components/providers/languageProvider";
 import { useCompanyDetail } from '../../DataProvider';
 import Image from 'next/image';
 import classNames from 'classnames';

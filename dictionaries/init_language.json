@@ -1051,7 +1051,11 @@
     "buttonTextEnable": "Auto-send my resume",
     "buttonTextDisable": "Disable Auto-send my resume",
     "offerTitle": "CONGRATULATIONS!",
-    "offerSent": "Sent by"
+    "offerSent": "Sent by",
+    "recruiterModal":{
+      "medal":"Medal",
+      "company":"Company"
+    }
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",

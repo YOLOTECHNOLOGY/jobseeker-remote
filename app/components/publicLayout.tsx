@@ -15,7 +15,7 @@ import { getServerLang } from 'helpers/country.server'
 import Script from 'next/script'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
-export default async function PublicLayout(props: any) {
+export default async function PublicLayout(props: any): Promise<React.JSX.Element> {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
   const { children, seo, position }: any = props
   const { title, imageUrl, description, canonical } = seo
@@ -138,7 +138,7 @@ export default async function PublicLayout(props: any) {
           <LinkProvider>{children}</LinkProvider>
           <AutoShowModalAppRedirect />
         </Providers>
-        <Initial />
+        <Initial langKey={lang} />
       </body>
     </html>
   )

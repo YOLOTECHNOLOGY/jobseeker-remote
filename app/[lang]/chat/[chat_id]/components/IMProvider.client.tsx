@@ -31,6 +31,7 @@ import { getDictionary } from 'get-dictionary'
 import { formatTemplateString } from 'helpers/formatter'
 import AutoSendResumeModal from './autoSendResume'
 import { DefaultAvatar } from 'images'
+import { RecruiterModal } from './RecruiterModal'
 const { offerJobseeker: { getDataAndShowOfferMessageScript } } = scripts
 export const IMContext = createContext<any>({})
 const Provider = IMContext.Provider
@@ -158,17 +159,23 @@ const IMProvider = ({ children, lang }: any) => {
             window.removeEventListener("resize", updateMobile)
         }
     }, [])
-
+    const [recruiterModal, setRecruiterModal] = useState({
+        show: false,
+        uid: 0
+    })
     useEffect(() => {
         IMManager.setOnAvatarClick((role, auid) => {
-            if (role === 'recruiter') {
-                console.log('onReceruiterAvatarClick', auid)
-            } else {
-                router.push(`/${lang}/manage-profile`)
-            }
+            const recruiterId = (auid?.auid || '').replace('_r', '');
+            recruiterId && setRecruiterModal({ show: true, uid: recruiterId })
+            // if (role === 'recruiter') {
+            //     console.log('onReceruiterAvatarClick', auid)
+            // } else {
+            //     router.push(`/${lang}/manage-profile`)
+            // }
         })
 
     }, [lang])
+
     const accessToken = getCookie('accessToken')
     const applicationId = useMemo(() => {
         return imState?.id ? `${imState.id}` : ''
@@ -459,6 +466,7 @@ const IMProvider = ({ children, lang }: any) => {
     } as any)
     const interpreter = hooks.useInterpreter(interpreters, contextRef)
     const imStatus = hooks.useInitChat(interpreter, imState, chatId, filterMode, chatList, updateChatList, lang)
+
     useEffect(() => {
         const receive = e => {
             const data = e.detail?.data ?? {}
@@ -469,6 +477,7 @@ const IMProvider = ({ children, lang }: any) => {
         window.addEventListener('receiveImNotification', receive)
         return () => window.removeEventListener('receiveImNotification', receive)
     }, [])
+
     return <Provider
         key='im-provider'
         value={{
@@ -584,6 +593,11 @@ const IMProvider = ({ children, lang }: any) => {
                 applicationId={applicationId}
                 contextRef={contextRef}
             />
+            <RecruiterModal
+                lang={chatDictionary}
+                uid={recruiterModal.uid}
+                display={recruiterModal.show}
+                onClose={(show: boolean) => { setRecruiterModal({ show, uid: 0 }) }} />
         </> : null}
 
         {children}

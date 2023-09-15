@@ -1,14 +1,15 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
-import style from '../../[lang]/company/[keyword]/components/InfoList/index.module.scss';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import classNames from 'classnames';
-import { isURL } from '../../[lang]/company/[keyword]/components/InfoList';
+
+import { isURL } from 'app/(company)/[lang]/company/[keyword]/components/InfoList';
+import style from 'app/(company)/[lang]/company/[keyword]/components/InfoList/index.module.scss';
 
 
 export function isContentOverflowing(element) {
-	console.log(' element?.scrollWidth ',element, element?.scrollWidth , element?.clientWidth)
+	console.log(' element?.scrollWidth ', element, element?.scrollWidth, element?.clientWidth)
 	return element?.scrollWidth > element?.clientWidth;
 }
 export function MouseOverPopover(props: {
@@ -21,7 +22,7 @@ export function MouseOverPopover(props: {
 	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 	const is_url = isURL(props.value);
 	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if (!showPop)return;
+		if (!showPop) return;
 		setAnchorEl(event.currentTarget);
 	};
 

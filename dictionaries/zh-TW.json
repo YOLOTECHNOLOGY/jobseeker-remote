@@ -1051,7 +1051,11 @@
     "buttonTextEnable": "自動發送簡歷",
     "buttonTextDisable": "取消自動發送簡歷",
     "offerTitle": "恭喜您被錄用！",
-    "offerSent": "來自於"
+    "offerSent": "來自於",
+    "recruiterModal": {
+      "medal": "Medal",
+      "company": "Company"
+    }
   },
   "chatInterview": {
     "confirmText": "面試已經確認",

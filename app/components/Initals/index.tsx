@@ -48,7 +48,9 @@ const invokeGAAdsEvent = (searchParams) => {
 }
 const accessToken = getCookie('accessToken')
 
-const Initial = () => {
+const Initial = (props: any) => {
+  const { langKey } = props
+
   const firstRender = useFirstRender()
   const searchParams = useSearchParams()
   useEffect(() => {
@@ -141,13 +143,19 @@ const Initial = () => {
             if (window.location.pathname.includes('/employer')) {
               activeKey = 2
             }
+
+            const { protocol, host, pathname } = window.location
+            const isLoginPath = pathname.includes('get-started')
+            const homePath = `${protocol}//${host}/${langKey}`
+            const href = isLoginPath ? homePath : window.location.href
+
             window.location.replace(
               '/handlers/googleLoginHandler?access_token=' +
               accessTokenGoogle +
               '&active_key=' +
               activeKey
               +
-              `&${redirectUrlKey}=` + window.location.href
+              `&${redirectUrlKey}=` + href
               + '&fcmToken=' + sessionStorage.getItem('firebase-messaging-token')
             )
           }

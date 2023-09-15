@@ -58,7 +58,8 @@ export async function GET(request: NextRequest) {
                     res.cookies.set(name, value, { path: '/', maxAge: 3600000 })
                 }
                 setCookie('accessToken', response.data.data?.token)
-                setCookie('user', userCookie)
+                setCookie('refreshToken', response.data?.data?.refresh_token)
+                setCookie('user', JSON.stringify(userCookie))
                 res.headers.set('Location', redirectUrl ?? '/')
                 return res
             }

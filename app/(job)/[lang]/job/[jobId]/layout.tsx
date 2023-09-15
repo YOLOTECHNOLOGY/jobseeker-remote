@@ -60,17 +60,17 @@ async function generateSEO({ params, searchParams }) {
     //   }, ${fullAddress.split(',').pop()} on Bossjob now!`
     const seoParams = !shareInfo
       ? {
-          title: seoMetaTitle,
-          description: seoMetaDescription,
-          imageUrl: jobDetail?.company?.logo,
-          canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
-        }
+        title: seoMetaTitle,
+        description: seoMetaDescription,
+        imageUrl: jobDetail?.company?.logo,
+        canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
+      }
       : {
-          title: seoMetaTitle,
-          description: seoMetaDescription,
-          imageUrl: cardUrl,
-          canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
-        }
+        title: seoMetaTitle,
+        description: seoMetaDescription,
+        imageUrl: cardUrl,
+        canonical: (process.env.NEXT_PUBLIC_HOST_PATH ?? '') + jobUrl
+      }
     return seoParams
   }
   return {}
