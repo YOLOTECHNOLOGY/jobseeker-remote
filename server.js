@@ -6,7 +6,7 @@ const dev = process.argv[3] === 'dev'
 const result = require('dotenv').config({ path: `.env.${env}` });
 
 console.log({ result })
-const app = next({ isNextDevCommand: dev, env: result.parsed });
+const app = next({ isNextDevCommand: dev, buildId: env, dev: env === 'development' || env === 'devsite', env: result.parsed });
 
 const handle = app.getRequestHandler();
 
