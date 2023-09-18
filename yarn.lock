@@ -5378,6 +5378,11 @@ domexception@^4.0.0:
   dependencies:
     webidl-conversions "^7.0.0"
 
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
+
 duplexer@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.2.tgz#3abe43aef3835f8ae077d136ddce0f276b0400e6"
@@ -6964,7 +6969,7 @@ image-conversion@^2.1.1:
 
 imforbossjob@^0.2.9-fix4:
   version "0.2.9-fix4"
-  resolved "https://registry.npmjs.org/imforbossjob/-/imforbossjob-0.2.9-fix4.tgz#6f560ea3410404f616a9b897788fc8077b853d89"
+  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.9-fix4.tgz#6f560ea3410404f616a9b897788fc8077b853d89"
   integrity sha512-HmXGHcBx7sAL5H9yc6LBQJGVyFsFAsDgXnTE77CiJwb6axjo3iQ5Z4btd3YkZfP0rFww5cgYRmQMshjVc9/TQg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"

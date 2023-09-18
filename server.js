@@ -1,12 +1,19 @@
 const express = require('express');
 const next = require('next');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const env = process.argv[2]
+const dev = process.argv[3] === 'dev'
+const result = require('dotenv').config({ path: `.env.${env}` });
+
+console.log({ result })
+const app = next({ isNextDevCommand: dev, env: result.parsed });
+
 const handle = app.getRequestHandler();
+
 app.prepare().then(async () => {
     const server = express();
     const { default: { client } } = await import('./bossjob.config.mjs');
+    console.log({ client })
     client.forEach(
         config => {
             server.use(`/${config.id}`, createProxyMiddleware({
