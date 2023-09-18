@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "Working at {{companyName}} | Bossjob",
-      "seoDescription": "Discover new career opportunities at {{companyName}}. Learn more about {{companyName}}'s employee benefits, company culture and job openings on Bossjob. Apply for jobs now!"
+      "seoDescription": "Discover new career opportunities at {{companyName}}. Learn more about {{companyName}}'s employee benefits, company culture and job openings on Bossjob. Apply for jobs now!",
+      "global": "Global"
     },
     "life": {
       "culture": "Company Culture",
@@ -1052,9 +1053,9 @@
     "buttonTextDisable": "Disable Auto-send my resume",
     "offerTitle": "CONGRATULATIONS!",
     "offerSent": "Sent by",
-    "recruiterModal":{
-      "medal":"Medal",
-      "company":"Company"
+    "recruiterModal": {
+      "medal": "Medal",
+      "company": "Company"
     }
   },
   "chatInterview": {

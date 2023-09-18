@@ -327,11 +327,38 @@ const SearchPanel = (props: Props) => {
     </div>
 }
 
-export const getLocation = (region_id: number, location_id: number) => {
+enum RemoteWorldwideType {
+    OnSite = 1,
+    Hybrid = 2,
+    Remote = 3
+}
+
+
+const translateCountries = (countries, config) => {
+    const country_list = config?.country_lists || [];
+    const result =  countries.map(item => {
+        return country_list.find(country => country.id === item.id)?.value
+    })
+    return result
+}
+
+export const getLocation = (props, lang) => {
+    const {job_region_id, job_location_id, work_arrangement_id,remote_countries=[], is_remote_worldwide } = props
+
     const { config } = useCompanyDetail();
+
+    // remote work and not worldwide
+    if(work_arrangement_id === RemoteWorldwideType.Remote && !is_remote_worldwide) {
+        return translateCountries(remote_countries, config).join(',')
+    }
+    // remote work and worldwide
+    if(work_arrangement_id === RemoteWorldwideType.Remote && is_remote_worldwide) { 
+        return lang.global
+    }
+    // on site and hybrid
     const location_list = config?.location_lists || [];
-    const region = location_list.find(item => item.id === region_id)?.locations || [];
-    const location = region.find((item) => item.id === location_id)?.value || '';
+    const region = location_list.find(item => item.id === job_region_id)?.locations || [];
+    const location = region.find((item) => item.id === job_location_id)?.value || '';
     return `${location}`;
 }
 
@@ -398,8 +425,8 @@ const JobsSearchCard = (props: JobData) => {
 
                 </Link>
             </div>
-            <div className={style.location}>
-                {getLocation(props.job_region_id, props.job_location_id)}
+            <div className={style.location} title={getLocation(props, overview)}>
+                {getLocation(props, overview)}
             </div>
         </div>
     </div>
@@ -429,7 +456,7 @@ export const JobsTag = (props: TagProps) => {
     return <div className={style.tags} style={props.style ? props.style : null}>
         {_tagsData.map((item, index) => {
             const value = props[item.field]
-            if (!value) return null;
+            if (!value || !item.name) return null;
             return <div className={style.tag_item + ' ' + ' tag_flag'} key={index}>
                 {item.name}
             </div>
