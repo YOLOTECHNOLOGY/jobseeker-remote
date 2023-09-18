@@ -429,7 +429,7 @@ export const JobsTag = (props: TagProps) => {
     return <div className={style.tags} style={props.style ? props.style : null}>
         {_tagsData.map((item, index) => {
             const value = props[item.field]
-            if (!value) return null;
+            if (!value || !item.name) return null;
             return <div className={style.tag_item + ' ' + ' tag_flag'} key={index}>
                 {item.name}
             </div>
