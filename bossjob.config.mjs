@@ -2,15 +2,15 @@ const config = {
     client: [
         {
             id: 'chat',
-            url: 'http://localhost:3000'
+            url: process.env.REMOTE_CHAT_URL
         },
         {
             id: 'chat-service',
-            url: 'http://localhost:3000'
+            url: process.env.REMOTE_CHAT_URL
         },
         {
             id: 'chat-worker',
-            url: 'http://localhost:3000'
+            url: process.env.REMOTE_CHAT_URL
         }
     ]
 }

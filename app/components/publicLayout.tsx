@@ -30,7 +30,7 @@ export default async function PublicLayout(props: any) {
   }
   const chatServiceModule = await bossjobClient.connectModule({
     id: 'chat-service',
-    baseUrl: 'http://localhost:3000',
+    baseUrl: process.env.REMOTE_CHAT_URL,
     initialProps: data,
 
   })

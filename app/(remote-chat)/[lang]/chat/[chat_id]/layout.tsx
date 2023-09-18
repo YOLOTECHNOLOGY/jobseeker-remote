@@ -45,7 +45,7 @@ export default async function PublicLayout(props: any) {
   }
   const chatModule = await bossjobClient.connectModule({
     id: 'chat',
-    baseUrl: 'http://localhost:3000',
+    baseUrl: process.env.REMOTE_CHAT_URL,
     initialProps: data,
     initalSharedData: {
       CHAT_ID: +chat_id ? chat_id : null,
@@ -54,7 +54,7 @@ export default async function PublicLayout(props: any) {
 
   const workerModule = await bossjobClient.connectModule({
     id: 'chat-worker',
-    baseUrl: 'http://localhost:3000',
+    baseUrl: process.env.REMOTE_CHAT_URL,
     ssr: false
     // initialProps: data,
     // initalSharedData: {
