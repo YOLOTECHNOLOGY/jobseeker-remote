@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "{{companyName}}で働く | Bossjob",
-      "seoDescription": "{{companyName}}でのキャリアチャンスを発見し、従業員のレビューや福利厚生、企業文化について詳しく学ぶことができます。"
+      "seoDescription": "{{companyName}}でのキャリアチャンスを発見し、従業員のレビューや福利厚生、企業文化について詳しく学ぶことができます。",
+      "global": "Global"
     },
     "life": {
       "culture": "企業文化",
@@ -1053,8 +1054,8 @@
     "offerTitle": "おめでとうございます！",
     "offerSent": "送信済み",
     "recruiterModal": {
-      "medal": "Medal",
-      "company": "Company"
+      "medal": "メダル",
+      "company": "会社"
     }
   },
   "chatInterview": {

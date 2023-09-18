@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "Working at {{companyName}} | Bossjob",
-      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
+      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
+      "global": "Global"
     },
     "life": {
       "culture": "Company Culture",

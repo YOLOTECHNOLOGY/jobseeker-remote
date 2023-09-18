@@ -278,6 +278,12 @@
 }
 
 .location {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  margin-left: 10px;
+
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #86909c);
     font-size: 0.12rem;
@@ -486,6 +492,8 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  height: 24px;
+  white-space: nowrap;
 
   @include base.respond-to(phone) {
     margin-top: 0.16rem;
