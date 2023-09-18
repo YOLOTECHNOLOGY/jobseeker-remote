@@ -45,7 +45,7 @@ const ModalCompleteFile = (props) => {
     return <Modal
         showModal={showModal}
         handleModal={e => {
-            e?.stopPropagation()
+            // e?.stopPropagation()
             setShowModal(false)
         }}
         firstButtonIsClose={false}
