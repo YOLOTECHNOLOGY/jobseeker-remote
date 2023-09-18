@@ -42,6 +42,27 @@
           padding-top: 40px;
         }
 
+        .list {
+          li {
+            .phoneBox {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              i {
+                font-size: 24px;
+                position: relative;
+                left: -6px;
+                width: 24px;
+                height: 24px;
+                top: 0;
+                // left: 17px;
+                // top: 18px;
+              }
+            }
+          }
+        }
+
         .list2 {
           .login_item {
             flex: 1;
