@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "Bekerja di {{companyName}} | Pekerjaan bos",
-      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!"
+      "seoDescription": "Discover career opportunities at {{companyName}}, learn more about {{companyName}} by reading employee reviews, benefits and culture on Bossjob!",
+      "global": "Global"
     },
     "life": {
       "culture": "Budaya perusahaan",
@@ -1051,7 +1052,11 @@
     "buttonTextEnable": "Kirim resume saya secara otomatis",
     "buttonTextDisable": "Nonaktifkan Kirim resume saya secara otomatis",
     "offerTitle": "SELAMAT!",
-    "offerSent": "Dikirim oleh"
+    "offerSent": "Dikirim oleh",
+    "recruiterModal": {
+      "medal": "Medal",
+      "company": "Company"
+    }
   },
   "chatInterview": {
     "confirmText": "Wawancara Dikonfirmasi",

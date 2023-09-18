@@ -506,6 +506,10 @@ $contentWidth: 894px;
       background: #fff;
       margin-bottom: 10px;
 
+      &:last-child {
+        width: 100%;
+      }
+
       :global {
         .MuiOutlinedInput-root {
           background-color: #ffffff !important;
@@ -1611,6 +1615,7 @@ $contentWidth: 894px;
   line-height: 18px;
   letter-spacing: 0.09px;
 }
+
 .hotjobTitle {
   text-align: center;
   font-size: 24px;
@@ -1618,6 +1623,7 @@ $contentWidth: 894px;
   height: 20px;
   margin-bottom: 50px;
   border-bottom: 1px solid #e4e4e4;
+
   span {
     display: inline-block;
     padding: 0 20px;

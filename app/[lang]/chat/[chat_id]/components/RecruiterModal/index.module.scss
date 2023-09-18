@@ -1,0 +1,120 @@
+.recruiterModal {
+  padding: 0;
+}
+.wrapper {
+  max-height: 90vh;
+  overflow: hidden;
+}
+.banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 200px;
+  min-height: 200px;
+  pointer-events: none;
+}
+
+.detail {
+  padding: 30px;
+}
+.recruiterModalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+  }
+  .title {
+    color: #121212;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+  }
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.recruiterBaseInfo {
+  padding: 0 0 20px 0;
+  .userAvatar {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .infoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+    flex: 1;
+    overflow: hidden;
+  }
+  .userName {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 32px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .jobTitle {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #515151;
+  }
+  // .sevenDay {
+  //   margin-bottom: 20px;
+  //   color: #121212;
+  //   font-size: 20px;
+  //   font-weight: 400;
+  // }
+}
+
+.medal {
+  .badgeWrapper {
+    display: flex;
+    gap: 15px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .badgeItem {
+    padding: 12px;
+    border-radius: 8px;
+    background: #edf0f3;
+  }
+}
+.company {
+  .companyContent {
+    gap: 20px;
+  }
+  .companyLogo {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+  }
+  .companyName {
+    color: #121212;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1.44px;
+  }
+  .label {
+    padding: 0 8px;
+    color: #7d7d7d;
+    &:not(:last-child) {
+      border-right: 1px solid #7d7d7d;
+    }
+  }
+}
+
+.loadingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}

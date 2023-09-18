@@ -421,10 +421,14 @@ $contentWidth: 894px;
       color: #7D7D7D;
       height: 60px;
       cursor: pointer;
+      padding: 0 10px;
 
       &:first-child {
-        width: 140px;
-        flex: auto;
+        display: inline-flex;
+        white-space: nowrap;
+        align-items: center;
+        justify-content: center;
+
         border-radius: 8px 0 0 8px;
       }
 

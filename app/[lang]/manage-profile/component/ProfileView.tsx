@@ -29,11 +29,7 @@ import { formatSalary, getYearMonthDiffBetweenDates } from 'helpers/formatter'
 moment.locale('en')
 
 /* Assets */
-import {
-  AddIcon,
-  PencilIcon,
-  TrashIcon2,
-} from 'images'
+import { AddIcon, PencilIcon, TrashIcon2 } from 'images'
 
 /* Styles */
 import styles from './ManageProfile.module.scss'
@@ -41,12 +37,8 @@ import { Chip } from '@mui/material'
 import EditSkillModal from 'components/EditSkillModal'
 import { getJobCategoryList } from 'helpers/jobPayloadFormatter'
 
-import {
-  changeCompanyIndustry,
-  changeUserInfoValue
-} from 'helpers/config/changeUserInfoValue'
+import { changeCompanyIndustry, changeUserInfoValue } from 'helpers/config/changeUserInfoValue'
 import { getValueById } from 'helpers/config/getValueById'
-
 
 const ProfileView = ({ lang }: any) => {
   const {
@@ -61,7 +53,7 @@ const ProfileView = ({ lang }: any) => {
   const userDetail = useSelector((store: any) => store.users.fetchUserOwnDetail.response)
   const isUpdating = useSelector((store: any) => store.users.fetchUserOwnDetail.fetching)
   const config = useSelector((store: any) => store?.config?.config?.response)
-  console.log('userDetail', userDetail);
+  console.log('userDetail', userDetail)
   const {
     // first_name: firstName,
     // last_name: lastName,
@@ -75,11 +67,9 @@ const ProfileView = ({ lang }: any) => {
     license_certifications: licensesCertifications,
     websites,
     description
-
   } = userDetail
 
   const deleteModalRef = useRef({} as any)
-
 
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
@@ -175,7 +165,6 @@ const ProfileView = ({ lang }: any) => {
     }
   })
 
-
   useEffect(() => {
     let count = 0
     if (workExperiences?.length === 0) {
@@ -253,7 +242,6 @@ const ProfileView = ({ lang }: any) => {
     return getValueById(config, eduction.degree_id, 'degree_id')
   }
 
-
   const handleDeleteDataConfirm = () => {
     const { type, id } = deleteModalRef.current
 
@@ -265,7 +253,7 @@ const ProfileView = ({ lang }: any) => {
             workExperienceId: id
           })
         )
-        break;
+        break
       case 'education':
         dispatch(
           manageUserEducationsRequest({
@@ -273,7 +261,7 @@ const ProfileView = ({ lang }: any) => {
             educationId: id
           })
         )
-        break;
+        break
       case 'license':
         dispatch(
           manageUserLicensesAndCertificationsRequest({
@@ -281,7 +269,7 @@ const ProfileView = ({ lang }: any) => {
             licenseId: id
           })
         )
-        break;
+        break
       case 'links':
         dispatch(
           manageUserLinksRequest({
@@ -289,7 +277,7 @@ const ProfileView = ({ lang }: any) => {
             linkId: id
           })
         )
-        break;
+        break
       default:
         break
     }
@@ -310,15 +298,20 @@ const ProfileView = ({ lang }: any) => {
           <div className={styles.educationSection}>
             <div className={styles.titleWrapper} style={{ alignItems: 'flex-start' }}>
               <Text textStyle='lg' bold style={{ fontSize: '20px' }}>
-                {description ?
+                {description ? (
                   <ReadMore
                     expandText={profile.readMore}
                     shirkText={profile.readLess}
                     size={isMobile ? 210 : 300}
                     text={description}
                     className={styles.readMoreDescriptionWrapper}
-                  /> :
-                  <ReadMore className={styles.readMoreDescriptionWrapper} text={profile.introductionEmpty} />}
+                  />
+                ) : (
+                  <ReadMore
+                    className={styles.readMoreDescriptionWrapper}
+                    text={profile.introductionEmpty}
+                  />
+                )}
               </Text>
               <div className={styles.iconWrapperDouble}>
                 <div
@@ -328,17 +321,13 @@ const ProfileView = ({ lang }: any) => {
                 >
                   <img src={PencilIcon} width='22' height='22' />
                 </div>
-
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
     )
   }
-
 
   const renderWorkExperienceSection = (sectionName) => {
     return (
@@ -416,16 +405,16 @@ const ProfileView = ({ lang }: any) => {
                   )}`}</Text>
                 </div>
                 <Text textStyle='base' textColor='darkgrey'>
-                  {workingPeriodFrom.format('MMMM yyyy')} to{' '}
+                  {workingPeriodFrom.format('MMM yyyy')} to{' '}
                   {workExp?.is_currently_work_here
                     ? profile.exp.present
-                    : workingPeriodTo.format('MMMM yyyy')}{' '}
+                    : workingPeriodTo.format('MMM yyyy')}{' '}
                   {dateDiff
                     ? `(${dateDiff
-                      .replace('years', profile.exp.year)
-                      .replace('year', profile.exp.year)
-                      .replace('months', profile.exp.months)
-                      .replace('month', profile.exp.month)})`
+                        .replace('years', profile.exp.year)
+                        .replace('year', profile.exp.year)
+                        .replace('months', profile.exp.months)
+                        .replace('month', profile.exp.month)})`
                     : ''}
                 </Text>
                 <div className={styles.companySecondaryInfoWrapper}>
@@ -543,22 +532,25 @@ const ProfileView = ({ lang }: any) => {
           <Text textStyle='xl' textColor='primaryBlue' bold style={{ fontSize: '24px' }}>
             {profile.skill.title}
           </Text>
-          <div className={styles.iconWrapper} onClick={() => handleModal('skills', true, null, null)}>
+          <div
+            className={styles.iconWrapper}
+            onClick={() => handleModal('skills', true, null, null)}
+          >
             <img src={AddIcon} width='26' height='26' />
           </div>
         </div>
         <div className={styles.sectionContent}>
           <div className={styles.skill}>
-            {
-              skills.slice(0, 10).map((skill, i) => <Chip
+            {skills.slice(0, 10).map((skill, i) => (
+              <Chip
                 key={i}
                 className={styles.skillChip}
                 label={skill}
-              // variant='filled'
-              // color='info'
-              // size='small'
-              />)
-            }
+                // variant='filled'
+                // color='info'
+                // size='small'
+              />
+            ))}
 
             {/* <SeeMore
               count={null}
@@ -694,7 +686,14 @@ const ProfileView = ({ lang }: any) => {
                     </div>
                     <div
                       className={styles.iconWrapper}
-                      onClick={() => handleDeleteData('deleteConfirm', sectionName, licenseCertification, licenseCertification.id)}
+                      onClick={() =>
+                        handleDeleteData(
+                          'deleteConfirm',
+                          sectionName,
+                          licenseCertification,
+                          licenseCertification.id
+                        )
+                      }
                     >
                       <img src={TrashIcon2} width='14' height='22' />
                     </div>
@@ -859,7 +858,7 @@ const ProfileView = ({ lang }: any) => {
         showModal={modalState.deleteConfirm.showModal}
         handleModal={() => {
           deleteModalRef.current = {}
-          setModalState(state => ({
+          setModalState((state) => ({
             ...state,
             deleteConfirm: {
               showModal: false,
@@ -874,7 +873,7 @@ const ProfileView = ({ lang }: any) => {
         firstButtonIsClose
         handleFirstButton={() => {
           deleteModalRef.current = {}
-          setModalState(state => ({
+          setModalState((state) => ({
             ...state,
             deleteConfirm: {
               showModal: false,
@@ -887,9 +886,8 @@ const ProfileView = ({ lang }: any) => {
       >
         {profile.deleteModal.tips}
       </Modal>
-
-    </Fragment >
+    </Fragment>
   )
 }
 
-export default ProfileView;
+export default ProfileView

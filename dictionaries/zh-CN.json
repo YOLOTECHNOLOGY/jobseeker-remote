@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "在{{companyName}}工作 | Bossjob",
-      "seoDescription": "发现{{companyName}}的职业机会, 阅读员工评论、福利、文化以了解{{companyName}}的更多信息!"
+      "seoDescription": "发现{{companyName}}的职业机会, 阅读员工评论、福利、文化以了解{{companyName}}的更多信息!",
+      "global": "全球"
     },
     "life": {
       "culture": "公司文化",
@@ -1051,7 +1052,11 @@
     "buttonTextEnable": "自动发送简历",
     "buttonTextDisable": "取消自动发送简历",
     "offerTitle": "恭喜您被录用！",
-    "offerSent": "来自于"
+    "offerSent": "来自于",
+    "recruiterModal": {
+      "medal": "徽章",
+      "company": "公司"
+    }
   },
   "chatInterview": {
     "confirmText": "面试已经确认",

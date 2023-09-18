@@ -217,3 +217,10 @@ export const FooterHuaweiAppStore = `${S3BucketJobseeker}/FooterHuaweiAppstore.p
 export const FooterXiaomiAppStore = `${S3BucketJobseeker}/FooterXiaomiApp store.png`
 export const delVideoResume = `${S3BucketJobseeker}/icon_delvideo.png`
 export const playVideoResume = `${S3BucketJobseeker}/icon_playvideo.png`
+
+// recruiter banners
+export const recruiterBanner1 = `${S3BucketJobseeker}/bg-hero-01.jpg`
+export const recruiterBanner2 = `${S3BucketJobseeker}/bg-hero-02.jpg`
+export const recruiterBanner3 = `${S3BucketJobseeker}/bg-hero-03.jpg`
+export const recruiterBanner4 = `${S3BucketJobseeker}/bg-hero-04.jpg`
+export const recruiterBanner5 = `${S3BucketJobseeker}/bg-hero-05.jpg`

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { Suspense, useState } from 'react'
+import React, { Suspense } from 'react'
 import query from '../interpreters/query'
 import getConfigs from 'app/models/interpreters/config'
 import { onLoadScript } from 'app/models/abstractModels/filterList'
