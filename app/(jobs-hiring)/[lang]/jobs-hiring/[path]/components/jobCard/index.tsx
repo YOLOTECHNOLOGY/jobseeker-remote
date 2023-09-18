@@ -234,6 +234,7 @@ const JobCard = (props: any) => {
   }
 
   return (
+    <>
     <div
       className={styles.jobCard}
       onClick={() => {
@@ -443,7 +444,7 @@ const JobCard = (props: any) => {
                 width={60}
                 height={60}
               />
-              {location?.origin + '/' + langKey + job_url}
+
               {/* <QRCodeSVG
                 value={location?.origin + '/' + langKey + job_url}
                 size={60}
@@ -471,9 +472,10 @@ const JobCard = (props: any) => {
           </div>
         </div>
 
-        {modalChange}
       </>
     </div>
+    {modalChange}
+    </>
   )
 }
 
