@@ -13,6 +13,8 @@ import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOt
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import { cfKey } from 'helpers/cookies'
+
 function PhoneCode(props: any) {
   const {
     lang: { newGetStarted },
@@ -55,6 +57,8 @@ function PhoneCode(props: any) {
 
   let uuid = localStorage.getItem('uuid')
   const router = useRouter()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -63,14 +67,14 @@ function PhoneCode(props: any) {
   useEffect(() => {
     if (!uuid) {
       const fpPromise = FingerprintJS.load()
-      ;(async () => {
-        // Get the visitor identifier when you need it.
-        const fp = await fpPromise
-        const result = await fp.get()
-        // This is the visitor identifier:
-        uuid = result.visitorId
-        localStorage.setItem('uuid', uuid)
-      })()
+        ; (async () => {
+          // Get the visitor identifier when you need it.
+          const fp = await fpPromise
+          const result = await fp.get()
+          // This is the visitor identifier:
+          uuid = result.visitorId
+          localStorage.setItem('uuid', uuid)
+        })()
     }
   }, [])
 
@@ -100,7 +104,7 @@ function PhoneCode(props: any) {
       if (uuid != browserId && browserId && email) {
         verifyPhoneFun(otp)
       } else {
-        handleAuthenticationJobseekersLoginPhone(otp, phoneNum)
+        handleAuthenticationJobseekersLoginPhone(otp, phoneNum, referralCode || undefined, invitedSource || undefined)
       }
     }
   }
@@ -125,8 +129,9 @@ function PhoneCode(props: any) {
   }
 
   const sendOptPhone = () => {
+    const cfToken = sessionStorage.getItem(cfKey)
     dispatch(jobbseekersLoginFailed({}))
-    phoneOtpenerate({ phone_num: phoneNum }).then((res) => {
+    phoneOtpenerate({ phone_num: phoneNum, cf_token: cfToken }).then((res) => {
       dispatch(
         displayNotification({
           open: true,
@@ -200,7 +205,7 @@ function PhoneCode(props: any) {
           <div
             className={styles.backBox}
             onClick={() =>
-              isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/phone`)
+              isModal ? handleBackClick?.() : history.back()
             }
           >
             <KeyboardArrowLeftIcon />

@@ -11,9 +11,10 @@ import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 import { languageContext } from 'app/components/providers/languageProvider'
 
 import { appLinkUrl } from 'helpers/constants'
-import { getCountryKey } from 'helpers/country'
+import { getAppStoreLink, getCountryKey } from 'helpers/country'
 import { getCookie } from '../../../../../helpers/cookies'
 import useWindowSize from '../../../../../hooks/useWindowSize'
+import { pushToResume } from 'helpers/push'
 
 import {
   footer_apple_download,
@@ -156,7 +157,8 @@ const Footer = () => {
           child: createJobAlert
         },
         {
-          key: isLogin ? `/manage-profile?tab=resume` : `/resumetemplate`,
+          key: `/resumetemplate`,
+          // key: isLogin ? pushToResume('my-resume') : pushToResume(),
           child: createFree
         },
         {
@@ -219,7 +221,7 @@ const Footer = () => {
           <div className={style.mobile_footer_title}>{downloadBossjobApp}</div>
           <div className={style.mobile_footer_download}>
             <div className={style.mobile_footer_download_appStore} >
-              <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+              <Link href={getAppStoreLink()} target={'_blank'}>
                 <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
               </Link>
               <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
@@ -252,7 +254,13 @@ const Footer = () => {
                 >
                   <ul className={styles.mobile_list}>
                     {item.links.map((link, index) => {
-                      return (
+                      return link.key === '/resumetemplate' ?
+                        <a className={style.mobile_footer_link}
+                          style={{ color: '#fff', fontSize: '12px' }}
+                          href="#" onClick={(e) => {
+                            e.preventDefault();
+                            isLogin ? pushToResume('my-resume') : pushToResume()
+                          }}>{link.child}</a> :
                         <li key={index}>
                           <Link
                             className={style.mobile_footer_link}
@@ -262,7 +270,7 @@ const Footer = () => {
                             <Text textStyle='sm'>{link.child}</Text>
                           </Link>
                         </li>
-                      )
+
                     })}
                   </ul>
                 </Accordian>
@@ -312,7 +320,7 @@ const Footer = () => {
       <div className={style.footer_title}>{downloadBossjobApp}</div>
       <div className={style.footer_download}>
         <div className={style.footer_download_appStore} >
-          <Link href={process.env.APP_STORE_LINK} target={'_blank'}>
+          <Link href={getAppStoreLink()} target={'_blank'}>
             <Image src={footer_apple_download} alt='AppStore' width={140} height={42} />
           </Link>
           <Link href={process.env.GOOGLE_PLAY_STORE_LINK} target={'_blank'}>
@@ -343,7 +351,12 @@ const Footer = () => {
             <div className={style.site_map_col} key={index}>
               <div className={style.site_map_title}>{item.title}</div>
               {item.links.map((_item, index) => {
-                return (
+
+                return _item.key === '/resumetemplate' ?
+                  <a className={style.site_map_link} href="#" onClick={(e) => {
+                    e.preventDefault();
+                    isLogin ? pushToResume('my-resume') : pushToResume()
+                  }}>{_item.child}</a> :
                   <Link
                     className={style.site_map_link}
                     target={'_blank'}
@@ -353,7 +366,7 @@ const Footer = () => {
                     {' '}
                     {_item.child}
                   </Link>
-                )
+
               })}
             </div>
           )

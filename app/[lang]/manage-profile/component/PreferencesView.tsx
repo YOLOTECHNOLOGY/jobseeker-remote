@@ -189,11 +189,15 @@ const PreferencesView = ({ lang }: any) => {
   const config = useSelector((store: any) => store?.config?.config?.response)
   const accessToken = getCookie('accessToken')
 
+  useEffect(() => {
+    console.log('userDetail:', userDetail)
+  }, [userDetail])
   useMemo(() => {
     changeUserInfoValue(userDetail, config)
     changeJobPreference(userDetail.job_preferences || [], config)
     return userDetail
   }, [userDetail, config])
+
 
   const [unCompleted, setUnCompleted] = useState({
     profile: false,
@@ -346,22 +350,24 @@ const PreferencesView = ({ lang }: any) => {
         </div>
       </div>
       <div className={styles.sectionContainer} style={{ paddingBottom: 0 }}>
-        <div className={styles.sectionContainerInner}>
+        <div className={styles.sectionContainerInner} style={{ paddingBottom: 0 }}>
           <div className={styles.sectionHeader}>
             <Text bold textColor='primaryBlue' textStyle='xl' style={{ marginBottom: '15px', fontSize: '24px' }}>
               {preference.available}
             </Text>
           </div>
-          <div style={{ position: 'relative', width: '100%' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', width: '100%', height: '65px' }}>
+            <Text tagName='p' textStyle='lg' style={{ marginBottom: 0, marginTop: 0 }}>
+              {availability}
+            </Text>
             <div
               className={styles.iconWrapperP}
               onClick={() => handleModal('jobPreferencesAvailibility', true, null, null)}
+              style={{ position: 'static', marginRight: 0 }}
             >
               <img src={PencilIcon} width='22' height='22' />
             </div>
-            <Text tagName='p' textStyle='lg' style={{ marginBottom: 0 }}>
-              {availability}
-            </Text>
+
           </div>
         </div>
 

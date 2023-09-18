@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import query from '../interpreters/query'
 import getConfigs from 'app/models/interpreters/config'
 import { onLoadScript } from 'app/models/abstractModels/filterList'
@@ -8,8 +8,10 @@ import { serverDataScript } from 'app/models/abstractModels/FetchServierComponen
 import SearchForm from './components/searchForms'
 import styles from './index.module.scss'
 import Table from './components/table'
+import HotJobTable from './components/hotJobTable'
+
 import Loading from './components/table/loading'
-import UploadResumeButton from './components/UploadResumeButton'
+// import UploadResumeButton from './components/UploadResumeButton'
 import { cookies } from 'next/headers'
 import searchHistoryIp from '../interpreters/searchHistory'
 import SearchHistories from './components/searchHistories'
@@ -17,6 +19,9 @@ import JobAlert from './components/jobAlert'
 import Footer from 'components/Footer'
 import { getDictionary } from 'get-dictionary'
 import QrCode from './components/QrCode'
+import ExcellentResumeBanner from './components/excellentResume'
+import VipActivity from './components/vipActivity'
+
 
 const configs = getConfigs([
   ['location_lists'],
@@ -52,12 +57,17 @@ const SearchHistory = searchHistoryIp(
   serverDataScript().chain((list) => buildComponentScript({ list }, SearchHistories))
 ).run
 
+
+
+
 const Main = async (props: any) => {
   const { lang } = props.params
-  const { search } = (await getDictionary(lang)) as any
+  const { search, home, advertisingLink, newGetStarted } = (await getDictionary(lang)) as any
 
   const accessToken = cookies().get('accessToken')?.value
   const location = props.searchValues?.location?.[0]
+
+
   return (
     <>
       <div>
@@ -86,16 +96,24 @@ const Main = async (props: any) => {
                   config={props.config}
                 />
               </Suspense>
+              <Suspense fallback={<Loading />}>
+                {/* @ts-expect-error Async Server Component */}
+                <HotJobTable lang={home} />
+              </Suspense>
             </div>
+
 
             {/* right */}
             <div className={styles.rightContent}>
-              <UploadResumeButton
+              {/* <UploadResumeButton
                 text={search.uploadResume}
                 isShowBtn={!accessToken}
                 isShowArrowIcon={false}
                 className={styles.arrowIconPostion}
-              />
+              /> */}
+              <VipActivity accessToken={accessToken} newGetStarted={newGetStarted} advertisingLink={advertisingLink} />
+
+              <ExcellentResumeBanner advertisingLink={advertisingLink} />
               <SearchHistory
                 location={location}
                 value={props?.searchValues?.query as any}
@@ -108,12 +126,16 @@ const Main = async (props: any) => {
 
         {/* Download APP QrCode */}
         <QrCode lang={search} />
-      </div>
+      </div >
       {/* Footer */}
-      <Footer />
+      < Footer />
     </>
   )
 }
+
+
+
+
 
 export default configs(serverDataScript()).chain((configs) =>
   query(onLoadScript(configs.config)).chain((searchValues) =>

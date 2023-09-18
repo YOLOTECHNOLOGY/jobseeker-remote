@@ -27,7 +27,7 @@ const PC = (props: any) => {
         <div className={styles.footerDesktopLeft}>
           <Company data={data} />
 
-          <DownloadApp  data={data} />
+          <DownloadApp data={data} />
         </div>
 
         <div className={styles.footerDesktopRight}>

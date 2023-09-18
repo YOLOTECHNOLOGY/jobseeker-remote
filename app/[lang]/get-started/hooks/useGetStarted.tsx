@@ -14,6 +14,7 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import { formatTemplateString } from 'helpers/formatter'
 import { routes } from 'helpers/utilities'
 import { isMobile } from 'react-device-detect'
+import { redirectUrlKey } from 'helpers/globalKey'
 
 const useGetStarted = () => {
   // const routes = useRouter()
@@ -32,7 +33,7 @@ const useGetStarted = () => {
   // const error = useSelector((store: any) => store.auth.jobseekersLogin.error)
   const [error, setError] = useState<any>(null)
   const [userInfo, setUserInfo] = useState<any>(null)
-  const redirect = searchParams.get('redirect')
+  const redirect = searchParams.get(redirectUrlKey)
   const config = useSelector((store: any) => store.config.config.response ?? [])
   const smsCountryList = getSmsCountryList(config)
   const { getStatred } = useContext(languageContext) as any
@@ -59,7 +60,7 @@ const useGetStarted = () => {
     loginFailed()
   }, [error])
   // const [loading, startTransition] = useTransition()
-  const handleAuthenticationJobseekersLogin = (code) => {
+  const handleAuthenticationJobseekersLogin = (code, referral_code, invited_source) => {
     setEmailOTPInputDisabled(true)
     const uuid = localStorage.getItem('uuid')
     const data = {
@@ -67,7 +68,9 @@ const useGetStarted = () => {
       otp: code,
       source: isMobile ? 'mobile_web' : 'web',
       userId,
-      browser_serial_number: uuid
+      browser_serial_number: uuid,
+      referral_code,
+      invited_source
     }
     if (!uuid) {
       delete data.browser_serial_number
@@ -79,7 +82,7 @@ const useGetStarted = () => {
     // })
   }
 
-  const handleAuthenticationJobseekersLoginPhone = (code, phone_num) => {
+  const handleAuthenticationJobseekersLoginPhone = (code, phone_num, referral_code, invited_source) => {
     const uuid = localStorage.getItem('uuid')
     setEmailOTPInputDisabled(true)
     const data = {
@@ -89,7 +92,9 @@ const useGetStarted = () => {
       userId,
       browser_serial_number: uuid,
       mobile_country_id: smsCountryList.filter((country) => phone_num.includes(country.value))?.[0]
-        ?.id
+        ?.id,
+      referral_code,
+      invited_source
     }
     // dispatch(jobbseekersLoginRequest(data))
     loginRequest(data)

@@ -550,6 +550,18 @@
         overflow: hidden;
         border: 1px solid #e4e4e4;
       }
+      .vipAvatar {
+        position: relative;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid #ffc248;
+        width: 64px;
+        height: 64px;
+        img {
+          border-radius: none;
+          border: none;
+        }
+      }
 
       .info {
         flex: 1;

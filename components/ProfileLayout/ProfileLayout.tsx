@@ -45,7 +45,9 @@ type ProfileLayoutProps = {
   handleModal: Function
   children: React.ReactNode
   dic: any
-  unCompleted: any
+  unCompleted: any,
+  advertisingLink: any,
+  newGetStarted: any
 }
 
 const ProfileLayout = ({
@@ -56,7 +58,9 @@ const ProfileLayout = ({
   modalName,
   handleModal,
   children,
-  unCompleted
+  advertisingLink,
+  unCompleted,
+  newGetStarted
 }: ProfileLayoutProps) => {
   const {
     avatar,
@@ -70,7 +74,9 @@ const ProfileLayout = ({
     birthdate,
     working_since,
     address,
-    location_id
+    location_id,
+    vip,
+    referral_code
   } = userDetail
 
   const handleShowModal = () => {
@@ -95,7 +101,7 @@ const ProfileLayout = ({
   return (
     <div className={styles.pageContainer}>
       <div className={styles.pageBanner}>
-        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{objectFit: 'cover'}} fill alt='banner'></Image>
+        <Image src={`${process.env.S3_BUCKET_URL}/profile/banner2.png`} style={{ objectFit: 'cover' }} fill alt='banner'></Image>
       </div>
       <div className={styles.profileLayout}>
         <div className={styles.profileLayoutUserOverview}>
@@ -111,8 +117,12 @@ const ProfileLayout = ({
             birthdate={birthdate}
             working_since={working_since}
             address={address}
+            vip={vip}
+            referral_code={referral_code}
             handleEditClick={handleEditClick}
             lang={dic}
+            advertisingLink={advertisingLink}
+            newGetStarted={newGetStarted}
           />
         </div>
         <div className={styles.profileLayoutSettings}>

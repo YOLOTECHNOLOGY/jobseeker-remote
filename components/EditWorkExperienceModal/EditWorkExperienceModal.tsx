@@ -384,6 +384,7 @@ const EditWorkExperienceModal = ({
                       onDateChange={(value) => {
                         setWorkPeriodFrom(value)
                       }}
+                      showToolbar={false}
                     />
                   </div>
                 </div>
@@ -412,6 +413,7 @@ const EditWorkExperienceModal = ({
                         onDateChange={(value) => {
                           setWorkPeriodTo(value)
                         }}
+                        showToolbar={false}
                       />
                     </div>
                   </div>

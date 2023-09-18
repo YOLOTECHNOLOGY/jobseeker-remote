@@ -2,6 +2,8 @@ import React from 'react'
 import { getLang } from 'helpers/country'
 // import { PhoneIcon } from 'images'
 import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+
 // import Image from 'next/image'
 import styles from '../../index.module.scss'
 interface IProps {
@@ -18,8 +20,22 @@ const PhoneLink = (props: IProps) => {
     isModal
   } = props
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
   const loginPhone = () => {
-    isModal ? handleClick() : router.push(`/${langKey}/get-started/phone`)
+
+    if (isModal) {
+      handleClick()
+    }
+    else {
+      if (referralCode && invitedSource) {
+        router.push(`/${langKey}/get-started/phone?referral_code=${referralCode}&invited_source=${invitedSource}`)
+      }
+      else {
+        router.push(`/${langKey}/get-started/phone` + window.location.search)
+      }
+    }
   }
   return (
     <li>

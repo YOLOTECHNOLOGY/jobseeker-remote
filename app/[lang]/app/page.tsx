@@ -29,11 +29,11 @@ const AppRedirect = () => {
     }, [userAgent])
     return (
         <div className={styles.wrapper}>
-          <div className={styles.loadingWrapper}>
-            <Loading />
-          </div>
+            <div className={styles.loadingWrapper}>
+                <Loading />
+            </div>
         </div>
-      )
+    )
 }
 
 export default AppRedirect

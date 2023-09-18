@@ -51,7 +51,7 @@
     "healthcareJobs": "Healthcare jobs",
     "downloadBossjobApp": " Download Bossjob App",
     "followUs": "Follow us",
-    "technology": " Singapore: Yolo Technology Pte Ltd. All Rights Reserved",
+    "technology": " Singapore: Yolo Technology Pte. Ltd. All Rights Reserved",
     "corporation": "Philippines: Etos Adtech Corporation",
     "companyDesc": "We embarked on the journey of Yolo Technology in 2016 as a forerunner of technological evolution and innovation to bring a change in the world.",
     "IndonesiaPT": "Indonesia: PT Bossjob SEA Indonesia",
@@ -834,9 +834,11 @@
           "error": "Failed to delete resume"
         },
         "bossjob": {
-          "title": "Bossjob resume",
+          "title": "Bossjob resume template",
           "tips": "As you build your profile at Bossjob, we create your resume for you. You can choose from the available templates and use your newly improve resume to apply for job opening at Bossjob.",
-          "download": "Download"
+          "download": "Download",
+          "selectTemplate": "Select Template",
+          "preview": "Preview"
         },
         "changeResume": {
           "rename": "Rename",
@@ -866,6 +868,12 @@
           "descTips": "Video format MP4, time control within 3 minutes",
           "confirmDesc": "After deleting the video resume, it cannot be retrieved. Are you sure to delete?",
           "confirmTitle": "Remove video resume"
+        },
+        "resumeTemplateConfirm": {
+          "title": "Tips",
+          "confirmDesc": "If you have more than five resume drafts, please delete one draft and then apply a new resume template.",
+          "btn1": "Cancel",
+          "btn2": "Manage drafts"
         }
       }
     }
@@ -1043,11 +1051,15 @@
     "buttonTextEnable": "Auto-send my resume",
     "buttonTextDisable": "Disable Auto-send my resume",
     "offerTitle": "CONGRATULATIONS!",
-    "offerSent": "Sent by"
+    "offerSent": "Sent by",
+    "recruiterModal": {
+      "medal": "Medal",
+      "company": "Company"
+    }
   },
   "chatInterview": {
     "confirmText": "Interview Confirmed",
-    "confirmLabel": "Your interview cannot be cancelled now",
+    "confirmLabel": "Your interview has been confirmed",
     "cancelAction": "Cancel interview",
     "canNotCancel": "Your interview cannot be cancelled now",
     "checkedText": "Checked-In",
@@ -1081,6 +1093,7 @@
     "back": "Back",
     "next": "Next",
     "close": "Close",
+    "send": "Send",
     "resultTitle": "Interview result",
     "resultText": "Did you attended the interview?",
     "attendancelabel": "Interview attendance",
@@ -1338,7 +1351,22 @@
     "checkYourSpam": "Check your spam mail if you didn’t receive code.",
     "authenticationSuccessful": "Authentication Successful",
     "Bossjob": "Bossjob",
-    "back": "Back"
+    "back": "Back",
+    "vipText": {
+      "GetVipPrivilegesImmediately": "Get VIP Privileges Immediately",
+      "InviteNewUsersToRegister": "Invite New Users To Register",
+      "BossjobAI": "Bossjob AI",
+      "ResumeAssistant": "Resume Assistant",
+      "HighSalaryOffer": "High Salary Offer",
+      "HelpYouGet": "Help You Get",
+      "promptDesc": "You are currently logged in, please log out and re-register or log in",
+      "returnHome": "Return Home",
+      "signOut": "Sign Out",
+      "inviteFriendsToGet": "Invite Friends To Get",
+      "AIResumeCoaching": "AI RESUME COACHING",
+      "HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer": "High-Quality VIP Resume Template And AI Assistant To Help You Get High-Paying Offer.",
+      "copyLinkToInviteNow": "Copy link to invite now"
+    }
   },
   "seo": {
     "ph": "Philippines",
@@ -1457,5 +1485,12 @@
     "jobs": "jobs",
     "talents": "talents",
     "Looking for": "Looking for"
+  },
+  "advertisingLink": {
+    "GetVipForFree": "Get Vip For Free",
+    "InviteFriendsToGetAIResumeCoaching": "Invite friends to get AI resume coaching",
+    "excellentResume": "Excellent Resume",
+    "openTheDoorToSuccess": "Open The Door To Success",
+    "createMyResume": "Create My resume"
   }
 }

@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 /* Vendors */
 import { useDispatch, useSelector } from 'react-redux'
 import useEmblaCarousel from 'embla-carousel-react'
 import moment from 'moment'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { Download } from '@mui/icons-material';
+import Loading from "app/components/loading";
+import { getLang } from 'helpers/country'
 
 /* Redux actions */
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
@@ -19,7 +20,9 @@ import {
   generatePresignedUrl,
   uploadVideoToAmazonService,
   getVideoResumeList,
-  deleteVideoResume
+  deleteVideoResume,
+  resumeTemplateList,
+  publicResumeClick
 } from 'store/services/users/uploadUserResume'
 
 /* Components */
@@ -32,6 +35,9 @@ import MaterialButton from 'components/MaterialButton'
 import useWindowDimensions from 'helpers/useWindowDimensions'
 import { getCookie } from 'helpers/cookies'
 import { useFirstRender } from 'helpers/useFirstRender'
+import VipActivity from './vipActivity'
+import Toast from 'app/components/Toast'
+
 moment.locale('en')
 /* Services */
 import { ColorButton } from './Button';
@@ -48,13 +54,17 @@ import {
 } from 'images'
 
 /* Styles */
-import classNames from 'classnames'
 import styles from './index.module.scss'
 import { Upload } from 'components/UploadResume/Upload'
 import { SnackbarTips } from 'components/UploadResume/SnackbarTips'
 import { maxFileSize } from 'helpers/handleInput'
 import Image from 'next/image'
 import Modal from 'components/Modal'
+import Button from '@mui/material/Button'
+import Lightbox from "react-image-lightbox";
+import { pushToResume } from "helpers/push";
+
+import "react-image-lightbox/style.css";
 
 const VideoResumeList = ({ data, handleDeleteVideo, handlePlayVideo }) => {
   if (!data.length) return <div style={{ height: '200px' }} />
@@ -106,18 +116,20 @@ const CoverVideoResumePlay = ({ handleCloseVideo, playVideoRef }) => {
     <div className={styles.videoCoverWrap}>
       <img src={CloseIcon} alt="" width="20" height="20" onClick={handleCloseVideo} />
       <div className={styles.videoCover}>
-        <video ref={playVideoRef} width="900" height="570" controls />
+        <video ref={playVideoRef} width="960" height="580" controls />
       </div>
     </div>
   )
 }
 
 
+
 const ResumeView = ({ userDetail, lang }: any) => {
   const {
     manageProfile: {
       tab: { resume: transitions, profile: profile }
-    }
+    },
+    newGetStarted
   } = lang
   const accessToken = getCookie('accessToken')
   const isFirstRender = useFirstRender()
@@ -144,6 +156,13 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const videoUrlRef = useRef('')
   const currentVideoId = useRef(null)
   const [uploading, setUploading] = useState(false)
+  const [resumeTemplate, setResumeTemplate] = useState(null)
+  const [showTemplateConfirm, setShowTemplateConfirm] = useState(false)
+
+  const [lightBox, setLightBox] = useState({
+    isOpen: false,
+    photoIndex: 0
+  })
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -152,6 +171,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
     inViewThreshold: 0.7,
     slidesToScroll: width < 799 ? 1 : 2
   })
+  const [vipModal, setVipModal] = useState(false)
 
   useEffect(() => {
     setResume(userDetail.resumes || [])
@@ -167,19 +187,19 @@ const ResumeView = ({ userDetail, lang }: any) => {
     if (!isFirstRender) dispatch(fetchUserOwnDetailRequest({ accessToken }))
   }, [isSuccessfulUpload])
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollPrev()
-    }
-  }, [emblaApi])
+  // const scrollPrev = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollPrev()
+  //   }
+  // }, [emblaApi])
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollNext()
-    }
-  }, [emblaApi])
+  // const scrollNext = useCallback(() => {
+  //   if (emblaApi) {
+  //     emblaApi.scrollNext()
+  //   }
+  // }, [emblaApi])
 
-  const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
+  // const scrollTo = useCallback((index) => emblaApi && emblaApi.scrollTo(index), [emblaApi])
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return
@@ -212,31 +232,31 @@ const ResumeView = ({ userDetail, lang }: any) => {
       })
   }
 
-  const handleDownloadResume = (type) => {
-    const sourcePath = process.env.DOCUMENT_GENERATOR_URL
+  // const handleDownloadResume = (type) => {
+  //   const sourcePath = process.env.DOCUMENT_GENERATOR_URL
 
-    switch (type) {
-      case 'corporate':
-        // TODO: replace this with user's corporate resume
-        window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      case 'creative':
-        // TODO: replace this with user's creative resume
-        window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
-        break
-      default:
-        break
-    }
-  }
+  //   switch (type) {
+  //     case 'corporate':
+  //       // TODO: replace this with user's corporate resume
+  //       window.open(`${sourcePath}/resume/pro/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     case 'creative':
+  //       // TODO: replace this with user's creative resume
+  //       window.open(`${sourcePath}/resume/creative/bossjob.pdf?token=${accessToken}`, '_blank')
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }
 
-  const onTemplateHover = (type, boolean) => {
-    if (width > 799) {
-      setIsTemplateDownloadable({
-        ...initialDownloadState,
-        [type]: boolean
-      })
-    }
-  }
+  // const onTemplateHover = (type, boolean) => {
+  //   if (width > 799) {
+  //     setIsTemplateDownloadable({
+  //       ...initialDownloadState,
+  //       [type]: boolean
+  //     })
+  //   }
+  // }
 
   function dataURLtoFile(dataurl, filename) {
     const arr = dataurl.split(',');
@@ -313,8 +333,21 @@ const ResumeView = ({ userDetail, lang }: any) => {
   const handleCloseVideo = () => {
     setPlayVideo(false)
   }
+  const getResumeTemplateList = async () => {
+    try {
+      const result = await resumeTemplateList()
+      if (result?.data?.data?.resume_templates) {
+        setResumeTemplate(result?.data?.data?.resume_templates)
+      }
+
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
   useEffect(() => {
     videoResumesList()
+    getResumeTemplateList()
   }, [])
 
   const playVideoRef = useCallback(el => {
@@ -333,6 +366,60 @@ const ResumeView = ({ userDetail, lang }: any) => {
       }
     }
   }, [playVideo])
+
+  const handleSelectTemplate = (id, is_vip, structure) => {
+    const userInfo = getCookie('user')
+
+    if (!userDetail?.vip?.is_vip && is_vip) {
+      setVipModal(true)
+      return false;
+    }
+    publicResumeClick({
+      public_template_id: id,
+      content: {
+        ...structure,
+        base_info: {
+          "avatar": userInfo.avatar || '',
+          "first_name": userInfo.first_name || '',
+          "last_name": userInfo.last_name || '',
+          "degree": userInfo.degree || null,
+          "birthdate": userInfo.birthdate || '',
+          "phone": userInfo.phone_num || '',
+          "email": userInfo.email || '',
+          "job_title": userInfo.job_title || '',
+          "job_type": userInfo.job_type || null,
+          "desired_industy": userInfo.desired_industy || '',
+          "availability": userInfo.availability || '',
+          "current_location": userInfo.current_location || '',
+          "desired_location": userInfo.desired_location || ''
+        }
+      }
+
+    }).then(res => {
+      if (res.data.code === 0) {
+        if (!is_vip) {
+
+          // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+          pushToResume(`resume-edit/${res.data.data.id}`)
+        }
+        else {
+          if (res.data.data.is_vip) {
+            // window.open(`${process.env.AICV_HOST}/resume-edit/${res.data.data.id}`, '_blank')
+            pushToResume(`resume-edit/${res.data.data.id}`)
+          }
+          else {
+
+          }
+        }
+
+      }
+    }).catch(err => {
+      console.log(err)
+      // Toast.error('Resume cannot exceed 5 copies')
+      setShowTemplateConfirm(true)
+
+    })
+  }
 
   return (
     <div className={styles.tab_content_wrapper}>
@@ -402,7 +489,7 @@ const ResumeView = ({ userDetail, lang }: any) => {
         <div className={styles.preview_subtitle}>
           {transitions.bossjob.tips}
         </div>
-        <div className={styles.resumePreview}>
+        {/* <div className={styles.resumePreview}>
           <div className={styles.embla}>
             <div className={styles.emblaViewport} ref={emblaRef}>
               <div className={styles.emblaContainer}>
@@ -537,8 +624,50 @@ const ResumeView = ({ userDetail, lang }: any) => {
               ))}
             </div>
           </div>
+        </div> */}
+        <div className={styles.resumePreview}>
+          {resumeTemplate?.map((item, index) => (
+            <div className={styles.item} key={item.id}>
+              {Boolean(item.is_vip) && <span className={styles.vipMark}>VIP</span>}
+              <div className={styles.cover}>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => handleSelectTemplate(item.id, item.is_vip, item.structure)}
+                >
+                  {transitions.bossjob.selectTemplate}
+                </Button>
+                <Button
+                  variant="contained"
+                  className={styles.button}
+                  onClick={() => setLightBox({
+                    isOpen: true,
+                    photoIndex: index
+                  })
+                  }>
+                  {transitions.bossjob.preview}
+                </Button>
+
+              </div>
+              <img src={item.preview_picture} alt={item.name} />
+            </div>
+          ))}
+
         </div>
       </div>
+      {
+        lightBox.isOpen && (
+          <Lightbox
+            mainSrc={resumeTemplate[lightBox.photoIndex].preview_picture}
+            onCloseRequest={() =>
+              setLightBox(state => ({
+                ...state,
+                isOpen: false
+              }))
+            }
+          />
+        )
+      }
       {/* exceed the limit */}
       <SnackbarTips
         show={isExceedLimit}
@@ -567,8 +696,6 @@ const ResumeView = ({ userDetail, lang }: any) => {
         headerTitle={transitions.videoResume.confirmTitle}
         firstButtonText={profile.deleteModal.btn1}
         secondButtonText={profile.deleteModal.btn2}
-        // firstButtonText="取消"
-        // secondButtonText="确认"
         isSecondButtonLoading={null}
         firstButtonIsClose
         handleFirstButton={() => {
@@ -587,8 +714,32 @@ const ResumeView = ({ userDetail, lang }: any) => {
         {transitions.videoResume.confirmDesc}
 
       </Modal>
+
+      <Modal
+        showModal={showTemplateConfirm}
+        handleModal={() => {
+          setShowTemplateConfirm(false)
+        }}
+        headerTitle={transitions.resumeTemplateConfirm.title}
+        firstButtonText={transitions.resumeTemplateConfirm.btn1}
+        secondButtonText={transitions.resumeTemplateConfirm.btn2}
+        isSecondButtonLoading={null}
+        firstButtonIsClose
+        handleFirstButton={() => {
+          setShowTemplateConfirm(false)
+        }}
+        handleSecondButton={() => {
+          pushToResume(`my-resume`)
+          setShowTemplateConfirm(false)
+        }}
+        fullScreen
+      >
+        {transitions.resumeTemplateConfirm.confirmDesc}
+      </Modal>
+
       {playVideo && <CoverVideoResumePlay handleCloseVideo={handleCloseVideo} playVideoRef={playVideoRef} />}
-    </div>
+      {vipModal && <VipActivity accessToken={accessToken} newGetStarted={newGetStarted} handleCloseModal={() => setVipModal(false)} />}
+    </div >
 
   )
 }

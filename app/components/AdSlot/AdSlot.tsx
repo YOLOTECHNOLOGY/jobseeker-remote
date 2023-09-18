@@ -14,8 +14,6 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
   const isTransitioning = useTransitionState()
   const countryKey = getCountryKey()
   const ad = getAdForCountry(countryKey, adSlot)
-  // if (process.env.ENV === 'production') {
-  // if (process.env.ENV === 'development') {
   useAdSlot({
     mapping: ad.mapping ? ad.mapping : {},
     id: ad.id,
@@ -24,7 +22,6 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
     isTransitioning
   })
 
-  // }
 
   return (
     <div>
@@ -41,4 +38,3 @@ const AdSlot = ({ adSlot }: adSlotProps) => {
 }
 
 export default AdSlot
-// export default memo(AdSlot)

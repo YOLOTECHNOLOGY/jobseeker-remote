@@ -30,7 +30,7 @@
   }
 
   .moreBtn {
-    color: #1D2129;
+    color: #1d2129;
     height: 44px;
     width: 112px;
     font-size: 14px;
@@ -40,13 +40,12 @@
     margin: 0 auto 10px;
     display: inline-block;
     cursor: pointer;
-    border: 1px solid #C9CDD4;
+    border: 1px solid #c9cdd4;
     border-radius: 4px;
 
-
     &:hover {
-      color: #2378E5;
-      border-color: #2378E5;
+      color: #2378e5;
+      border-color: #2378e5;
     }
   }
 }
@@ -61,7 +60,7 @@
     transition: box-shadow 0.3s ease-in;
     overflow: hidden;
     border-radius: 8px;
-    border: 1px solid #E5E6EB;
+    border: 1px solid #e5e6eb;
     background: #fff;
   }
 
@@ -84,7 +83,7 @@
       font-style: normal;
       font-weight: 500;
       font-size: 20px;
-      color: #1D2129;
+      color: #1d2129;
       width: 0;
       font-weight: 700;
       flex: 1;
@@ -170,11 +169,11 @@
       font-size: 16px;
       letter-spacing: 0.0075em;
       margin-right: 8px;
-      color: #7D7D7D;
+      color: #7d7d7d;
       margin-right: 10px;
 
       span {
-        color: #E4E4E4;
+        color: #e4e4e4;
         padding-left: 10px;
       }
     }
@@ -218,16 +217,16 @@
       font-weight: 400;
       font-size: 14px;
       letter-spacing: 0.0075em;
-      color: #4E5969;
+      color: #4e5969;
     }
 
     &_industry {
-      color: #7D7D7D;
+      color: #7d7d7d;
       float: right;
       font-size: 14px;
 
       span {
-        color: #E4E4E4;
+        color: #e4e4e4;
         padding: 0 10px;
       }
     }
@@ -254,21 +253,21 @@
     width: 60px;
     height: 50px;
     border-radius: 8px 8px 0px 0px;
-    background: #3A90FF;
+    background: #3a90ff;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
     z-index: 1;
     cursor: pointer;
-    transition: .2s;
+    transition: 0.2s;
     transform: scale(1);
 
     &:hover {
       background: #121212;
 
       svg {
-        transition: .2s;
+        transition: 0.2s;
         transform: scale(1.1);
       }
     }
@@ -292,24 +291,23 @@
       position: relative;
 
       &::after {
-        content: " ";
+        content: ' ';
         position: absolute;
         width: 100%;
         transform: scaleX(0);
         height: 3px;
         bottom: 0px;
         left: 0;
-        background-color: #1D2129;
+        background-color: #1d2129;
         transform-origin: bottom right;
-        transition: transform .25s ease-out
+        transition: transform 0.25s ease-out;
       }
 
       &:hover {
         &::after {
           transform: scaleX(1);
-          transform-origin: bottom left
+          transform-origin: bottom left;
         }
-
       }
     }
   }
@@ -329,6 +327,22 @@
       height: 30px;
       border-radius: 50%;
       margin-right: 10px;
+    }
+
+    .vipAvatar {
+      position: relative;
+      border-radius: 50%;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      box-sizing: border-box;
+      border: 2px solid #ffc248;
+      margin-right: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .link {
@@ -451,7 +465,7 @@
           font-size: 14px;
           line-height: 15px;
           letter-spacing: 0.0075em;
-          color: #7D7D7D;
+          color: #7d7d7d;
           text-overflow: ellipsis;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -473,7 +487,7 @@
   }
 
   .moreBtnActive {
-    color: #2378E5;
+    color: #2378e5;
     height: 44px;
     width: 112px;
     font-size: 14px;
@@ -485,7 +499,7 @@
     display: block;
     cursor: pointer;
     text-align: center;
-    border: 1px solid #2378E5;
+    border: 1px solid #2378e5;
   }
 
   .jobs {
@@ -551,7 +565,7 @@
           -webkit-box-orient: vertical;
           /* autoprefixer: on */
           font-size: 20px;
-          color: #1D2129;
+          color: #1d2129;
           margin-right: 10px;
         }
 
@@ -1111,10 +1125,11 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      border: 1px solid #fff;
+      margin-left: 18px;
+      border: 1px solid #2378e5;
 
       &:hover {
-        border-color: #2378E5;
+        border-color: #2378e5;
       }
 
       @include sm {
@@ -1122,6 +1137,8 @@
         width: 100%;
         background: transparent !important;
         padding: 0;
+        border: none;
+        margin-left: 0;
 
         &:hover {
           border-radius: 0px;
@@ -1331,14 +1348,13 @@
 
     &:active,
     &:hover {
-      color: #2378E5;
+      color: #2378e5;
     }
 
     @include sm {
       flex-wrap: wrap;
       height: fit-content;
       width: 100%;
-
     }
 
     .tag {
@@ -1464,7 +1480,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 9;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, 0.3);
   }
 
   .download {
@@ -1493,11 +1509,10 @@
       font-size: 32px;
       line-height: 18px;
       letter-spacing: 1px;
-
     }
 
     >p {
-      color: #2378E5;
+      color: #2378e5;
       font-size: 16px;
       padding-left: 9px;
       margin-bottom: 0;
@@ -1512,22 +1527,22 @@
     }
 
     &:hover {
-      border: 1px solid #579BF5;
+      border: 1px solid #579bf5;
 
       .icon {
 
         svg,
         path {
-          fill: #579BF5;
+          fill: #579bf5;
         }
       }
 
       >p {
-        color: #579BF5;
+        color: #579bf5;
       }
 
       .popver {
-        transition: .4s;
+        transition: 0.4s;
         top: 0;
       }
     }
@@ -1540,15 +1555,15 @@
     // box-shadow: 0px 0px 14px #bcbcbc;
     width: 100%;
     left: 0;
-    background-color: rgba(0, 0, 0, .25);
+    background-color: rgba(0, 0, 0, 0.25);
     // transform: translateY(-214px);
-    transition: .4s;
+    transition: 0.4s;
     z-index: 20;
     padding-top: 110px;
     top: -406px;
 
     .popverContainer {
-      background: #2378E5;
+      background: #2378e5;
       height: 296px;
     }
 
@@ -1564,7 +1579,7 @@
         margin-right: 60px;
 
         h5 {
-          color: var(--main-color-white-white-ffffff, #FFF);
+          color: var(--main-color-white-white-ffffff, #fff);
           font-size: 60px;
           font-style: normal;
           font-weight: 700;
@@ -1575,7 +1590,7 @@
         }
 
         .getAppTips {
-          color: #FFF;
+          color: #fff;
           font-size: 16px;
           font-style: normal;
           font-weight: 400;
@@ -1602,7 +1617,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
         }
 
         .homeBg {
@@ -1624,10 +1638,7 @@
     //   border-style: solid;
     //   border-color: transparent transparent #fff transparent;
     // }
-
   }
-
-
 }
 
 .searchshade {
@@ -1637,7 +1648,7 @@
   height: 100%;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .errorMain {
@@ -1773,7 +1784,7 @@
     margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid#E5E6EB;
-    background: #FCFCFC;
+    background: #fcfcfc;
 
     &:nth-of-type(even) {
       margin-right: 0;
@@ -1815,7 +1826,7 @@
         padding-top: 2px;
 
         span {
-          color: #E5E6EB;
+          color: #e5e6eb;
           padding: 0 10px;
         }
       }
@@ -1830,7 +1841,7 @@
       padding-bottom: 20px;
       cursor: pointer;
       display: block;
-      border-bottom: 1px solid #F6F6F6;
+      border-bottom: 1px solid #f6f6f6;
       padding: 20px 0;
 
       .jobType {
@@ -1901,12 +1912,12 @@
       .tag {
         font-weight: 400;
         font-size: 16px;
-        color: #7D7D7D;
+        color: #7d7d7d;
         display: inline-block;
 
         i {
           font-style: normal;
-          color: #E4E4E4;
+          color: #e4e4e4;
           padding: 10px;
         }
       }
@@ -1944,7 +1955,7 @@
 
   .moreBtn {
     width: 112px;
-    color: #1D2129;
+    color: #1d2129;
     height: 44px;
     font-size: 14px;
     border-radius: 4px;
@@ -1954,11 +1965,11 @@
     margin: 26px auto 0px;
     display: block;
     cursor: pointer;
-    border: 1px solid #C9CDD4;
+    border: 1px solid #c9cdd4;
 
     &:hover {
-      color: #2378E5;
-      border-color: #2378E5;
+      color: #2378e5;
+      border-color: #2378e5;
     }
   }
 }
@@ -2003,8 +2014,8 @@
           border-top-width: 0;
           border-left-width: 0;
           border-radius: 4px;
-          border: 1px solid #E4E4E4;
-          background: #FFF;
+          border: 1px solid #e4e4e4;
+          background: #fff;
           padding: 0 12px;
 
           :global {
@@ -2018,7 +2029,7 @@
           flex: 1;
           margin-top: 14px;
           border-radius: 4px;
-          border: 1px solid #2378E5;
+          border: 1px solid #2378e5;
         }
       }
     }

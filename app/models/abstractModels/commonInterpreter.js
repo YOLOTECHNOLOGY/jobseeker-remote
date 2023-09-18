@@ -1,3 +1,5 @@
+/* eslint-disable import/no-anonymous-default-export */
+import { redirectUrlKey } from 'helpers/globalKey';
 import { ReaderTPromise as M } from './monads'
 import { redirect } from 'next/navigation';
 export default command =>
@@ -12,7 +14,7 @@ export default command =>
       return cookies().get('accessToken')?.value
     }),
 
-    redirectLogin: () => M.do(() => {
-      redirect('/get-started')
+    redirectLogin: (path) => M.do(() => {
+      redirect('/get-started' + (path ? `?${redirectUrlKey}=${path}` : ''))
     })
   })

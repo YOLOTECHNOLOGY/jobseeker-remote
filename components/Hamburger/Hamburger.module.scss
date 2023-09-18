@@ -38,7 +38,7 @@
   margin-bottom: 3px;
   position: relative;
 
-  background: #4E5969;
+  background: #4e5969;
   border-radius: 3px;
 
   z-index: 1;
@@ -80,6 +80,15 @@
     border-radius: 50%;
   }
 }
+.vipAvatar {
+  position: relative;
+  border: 2px solid #ffc248;
+  border-radius: 50%;
+  box-sizing: border-box;
+  img {
+    border-radius: 50%;
+  }
+}
 
 .hamburgerWrapper {
   display: flex;
@@ -89,14 +98,16 @@
   &_getStarted {
     height: 35px;
     width: 116px;
-    border: 1px solid #579BF5;
+    border: 1px solid #579bf5;
     border-radius: 4px;
     text-align: center;
     line-height: 35px;
     font-size: 14px;
-    color: #2378E5;
-    &:hover,&:active,&:focus{
-      background:  #2378E5;
+    color: #2378e5;
+    &:hover,
+    &:active,
+    &:focus {
+      background: #2378e5;
       color: #fff;
     }
   }

@@ -16,7 +16,10 @@ const ManageProfilePage = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const tab = searchParams.get('tab');
   const {
-    manageProfile: { tab: tabDic }
+    manageProfile: { tab: tabDic },
+    advertisingLink,
+    newGetStarted
+
   } = lang
   const [tabValue, setTabValue] = useState<string | string[]>(tab || 'profile')
   const [unCompleted, setUnCompleted] = useState({
@@ -72,13 +75,13 @@ const ManageProfilePage = () => {
     }
   })
 
-  useLayoutEffect(()=>{
-    if(tab !== tabValue){
+  useLayoutEffect(() => {
+    if (tab !== tabValue) {
       setTabValue(tab || 'profile');
     }
-  },[tabValue,tab]);
+  }, [tabValue, tab]);
 
-  
+
   useEffect(() => {
     if (userDetail?.job_preferences) {
       setUnCompleted((prev) => ({
@@ -107,14 +110,16 @@ const ManageProfilePage = () => {
       modalName='profile'
       handleModal={handleModal}
       unCompleted={unCompleted}
+      advertisingLink={advertisingLink}
+      newGetStarted={newGetStarted}
     >
 
 
       {tabValue === 'profile' && <ProfileView lang={lang} />}
       {tabValue === 'job-preferences' && <PreferencesView lang={lang} />}
-      {tabValue === 'resume' && <ResumeView userDetail={userDetail} lang={lang} />}
+      <div style={{ display: tabValue === 'resume' ? '' : 'none' }}><ResumeView userDetail={userDetail} lang={lang} /></div>
 
-    </ProfileLayout>
+    </ProfileLayout >
 
   </>
 

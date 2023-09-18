@@ -14,7 +14,10 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { usePathname } from 'next/navigation'
 import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
-import Turnstile, { useTurnstile } from "react-turnstile"
+
+import { cfKey } from 'helpers/cookies'
+import Turnstile, { useTurnstile } from "react-turnstile";
+import { useSearchParams } from 'next/navigation'
 
 interface IProps {
   lang: any
@@ -42,6 +45,9 @@ const loginForEmail = (props: IProps) => {
   const emailRef = useRef(null)
   const cfTokenRef = useRef(null)
   const isDisableRef = useRef(null)
+  const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -69,29 +75,48 @@ const loginForEmail = (props: IProps) => {
   }
 
   const sendOtp = () => {
-    if (cfTokenRef.current === "") {
-      dispatch(
-        displayNotification({
-          open: true,
-          message: "Please try again later.",
-          severity: 'error'
-        })
-      )
-      return 
+    if (!cfTokenRef.current) {
+      return
+      // dispatch(
+      //   displayNotification({
+      //     open: true,
+      //     message: 'Please try again later.',
+      //     severity: 'error'
+      //   })
+      // )
+      // return
     }
     setLoading(true)
-    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current})
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfTokenRef.current })
       .then((res) => {
-        const { user_id, avatar } = res?.data?.data ?? {}
+        const { user_id, avatar, vip } = res?.data?.data ?? {}
         if (isModal) {
           setLoginData({ ...res?.data?.data, email: emailRef.current })
         } else {
+          let originalSearch = window.location.search;
+          if (originalSearch) {
+            originalSearch = `&${originalSearch.slice(1)}`
+          }
           if (user_id) {
-            router.push(
-              `${pathname}?step=2&&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}`
-            )
+            if (referralCode && invitedSource) {
+              router.push(
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}&referral_code=${referralCode}&invited_source=${invitedSource}&is_vip=${vip?.is_vip}`
+              )
+            }
+            else {
+              router.push(
+                `${pathname}?step=2&email=${emailRef.current}&userId=${user_id}&avatar=${avatar}${originalSearch}&is_vip=${vip?.is_vip}`
+              )
+            }
+
           } else {
-            router.push(`${pathname}?step=2&&email=${emailRef.current}`)
+            if (referralCode && invitedSource) {
+              router.push(`${pathname}?step=2&email=${emailRef.current}&referral_code=${referralCode}&invited_source=${invitedSource}&is_vip=${vip?.is_vip}`)
+            }
+            else {
+              router.push(`${pathname}?step=2&email=${emailRef.current}${originalSearch}&is_vip=${vip?.is_vip}`)
+            }
+
           }
         }
       })
@@ -159,21 +184,35 @@ const loginForEmail = (props: IProps) => {
             email={email}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
-          {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>
-        <Turnstile
-          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
-          theme='light'
-          appearance='interaction-only' // invisible managed challenge
-          onVerify={(token) => {
-            setCfToken(token)
-          }}
-          onError={() => {
-            // setCfToken('')
-            turnstile.reset()
-          }}
-        />
+        {
+          Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOtp}>
+            {loading ? <CircularProgress color={'primary'} size={16} style={{ transform: "scale(1)" }} /> : newGetStarted.sendCode}
+          </button>
+        }
+        {!cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+          <CircularProgress color={'primary'} size={30}
+            style={{ position: 'absolute' }}
+          />
+          <Turnstile
+            sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+            theme='light'
+            appearance='always'
+            // appearance='interaction-only' // invisible managed challenge
+            onVerify={(token) => {
+              setTimeout(() => {
+                setCfToken(token)
+                sessionStorage.setItem(cfKey, token)
+              }, 1000)
+            }}
+            onError={(error) => {
+              console.log('error token', error)
+              // setCfToken('')
+              turnstile?.reset()
+            }}
+            style={{ position: 'relative', zIndex: 2 }}
+          />
+        </div>
+        }
         {/* </form> */}
 
         <p className={styles.msg} dangerouslySetInnerHTML={{ __html: agreementWord }}></p>

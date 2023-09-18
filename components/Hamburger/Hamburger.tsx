@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getCookie } from 'helpers/cookies'
 import { useRouter } from 'next/navigation'
 
@@ -9,10 +9,12 @@ import { toggleMenu } from 'store/actions/navigationBar/toggleMenu'
 
 /* Images */
 import { DefaultAvatar } from 'images'
-
+import Image from 'next/image'
 /* Styles */
 import styles from './Hamburger.module.scss'
 import classNames from 'classnames'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface HamburgerProps {
   openState: boolean
@@ -24,7 +26,9 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
   const router = useRouter()
   const currentUser = getCookie('user')
   const currentToken = getCookie('accessToken')
-  console.log({ lang })
+  const dispatch = useDispatch()
+  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
+
   const handleShowMenu = () => {
     if (!openState) {
       // opening menu, disable scrolling of body
@@ -47,6 +51,9 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
   const handleToGetStarted = () => {
     router.push('/get-started')
   }
+  useEffect(() => {
+    currentToken && dispatch(fetchUserOwnDetailRequest({ currentToken }))
+  }, [currentToken])
 
   return (
     <div className={styles.hamburgerWrapper}>
@@ -61,12 +68,29 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
         onClick={disabled ? null : handleShowMenu}
       >
         <div id={styles.hamburgerMenu} className={openState ? styles.active : null}>
-          {currentToken && !openState ? (
+          {currentToken && !openState ? !userInfo?.vip?.is_vip ? (
             <img
               src={currentUser?.avatar || DefaultAvatar}
               className={styles.profileAvatar}
               alt='avatar'
             />
+
+          ) : (
+            <div className={styles.vipAvatar}>
+              <img
+                src={currentUser?.avatar || DefaultAvatar}
+                className={styles.profileAvatar}
+                alt='avatar'
+              />
+              <img
+                src={require('./vip_user_icon.png').default.src}
+                width={17}
+                height={7}
+                alt=""
+                style={{ position: 'absolute', bottom: '-2px', right: 0 }}
+              />
+
+            </div>
           ) : (
             <>
               <span />
@@ -76,7 +100,7 @@ const Hamburger = ({ toggleMenu, openState, disabled, lang }: HamburgerProps) =>
           )}
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

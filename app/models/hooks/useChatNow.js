@@ -18,8 +18,14 @@ const ModalSwitch = (props) => {
         showModal={showModal}
         handleModal={() => setShowModal(false)}
         firstButtonIsClose={false}
-        handleFirstButton={() => setShowModal(false)}
-        handleSecondButton={requestSwitch}
+        handleFirstButton={e => {
+            e?.stopPropagation()
+            setShowModal(false)
+        }}
+        handleSecondButton={e => {
+            e?.stopPropagation()
+            requestSwitch(e)
+        }}
         isFirstButtonLoading={loading}
         isSecondButtonLoading={loading}
         firstButtonText={switchModal.btn1}
@@ -38,10 +44,17 @@ const ModalCompleteFile = (props) => {
     const { completeProfileModal } = translation || {}
     return <Modal
         showModal={showModal}
-        handleModal={() => setShowModal(false)}
+        handleModal={e => {
+            e?.stopPropagation()
+            setShowModal(false)
+        }}
         firstButtonIsClose={false}
-        handleFirstButton={() => setShowModal(false)}
-        handleSecondButton={() => {
+        handleFirstButton={e => {
+            e?.stopPropagation()
+            setShowModal(false)
+        }}
+        handleSecondButton={e => {
+            e?.stopPropagation()
             setLoading(true)
             handler?.()
         }}

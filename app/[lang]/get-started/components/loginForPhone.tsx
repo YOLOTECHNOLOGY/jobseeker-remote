@@ -21,6 +21,8 @@ import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
 import { countryForPhoneCode } from 'helpers/country'
 import Turnstile, { useTurnstile } from "react-turnstile"
+import { cfKey } from 'helpers/cookies'
+import { useSearchParams } from 'next/navigation'
 
 const LoginForPhone = (props: any) => {
   const turnstile = useTurnstile()
@@ -45,9 +47,12 @@ const LoginForPhone = (props: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const phoneNumberRef = useRef(null)
+  const searchParams = useSearchParams()
 
   const isDisableRef = useRef(null)
   const cfTokenRef = useRef(null)
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -90,15 +95,16 @@ const LoginForPhone = (props: any) => {
   }, [phoneNumber])
 
   const sendOpt = () => {
-    if (cfTokenRef.current === "") {
-      dispatch(
-        displayNotification({
-          open: true,
-          message: "Please try again later.",
-          severity: 'error'
-        })
-      )
-      return 
+    if (!cfTokenRef.current) {
+      return
+      // dispatch(
+      //   displayNotification({
+      //     open: true,
+      //     message: "Please try again later.",
+      //     severity: 'error'
+      //   })
+      // )
+      // return 
     }
     const phoneNum = countryValue + phoneNumberRef.current
     setLoading(true)
@@ -115,9 +121,14 @@ const LoginForPhone = (props: any) => {
         if (isModal) {
           setLoginData({ ...res?.data?.data, phoneNum } ?? {})
         } else {
-          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}`
+          let originalSearch = window.location.search;
+          if (originalSearch) {
+            originalSearch = `&${originalSearch.slice(1)}`
+          }
+
+          let url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           if (user_id) {
-            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}`
+            url = `/${langKey}/get-started/phone?step=2&phone=${phoneNum}&email=${email}&userId=${user_id}&avatar=${avatar}&name=${first_name}&browserId=${browser_serial_number}&isMultiplePhonesNum=${is_multiple_phones_num}&referral_code=${referralCode}&invited_source=${invitedSource}${originalSearch}`
           }
           router.push(url)
         }
@@ -180,20 +191,33 @@ const LoginForPhone = (props: any) => {
             setDisable={setDisable}
           />
         </div>
-        <Turnstile
-          sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
-          theme='light'
-          appearance='interaction-only' // invisible managed challenge
-          onVerify={(token) => {
-            setCfToken(token)
-          }}
-          onError={() => {
-            turnstile.reset()
-          }}
-        />
-        <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
+        {
+          !cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+            <CircularProgress color={'primary'} size={30}
+              style={{ position: 'absolute' }}
+            />
+            <Turnstile
+              sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+              theme='light'
+              appearance='always'
+              // appearance='interaction-only' // invisible managed challenge
+              onVerify={(token) => {
+                setTimeout(() => {
+                  setCfToken(token)
+                  sessionStorage.setItem(cfKey, token)
+                }, 1000)
+              }}
+              onError={() => {
+                turnstile?.reset()
+              }}
+              style={{ position: 'relative', zIndex: 2 }}
+            />
+          </div>
+
+        }
+        {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={sendOpt}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>
+        </button>}
 
         <p
           className={styles.msg}

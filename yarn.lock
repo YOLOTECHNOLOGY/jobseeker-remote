@@ -3280,6 +3280,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-lottie@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.npmjs.org/@types/react-lottie/-/react-lottie-1.2.6.tgz#4f351dfdf5f93a46a3a9714fbb319f1e0f030eaf"
+  integrity sha512-fvGJHD7SeUdVESHo7f7erRnXkTWaa/6Mo5TB+R0/ieSftKoFspA4sMlF2qMH6BljXI7ehFJbBtrD5bzDxPCkGg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.4":
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.6.tgz#18187bcda5281f8e10dfc48f0943e2fdf4f75e2e"
@@ -4125,10 +4132,10 @@ busboy@1.6.0:
   dependencies:
     streamsearch "^1.1.0"
 
-buzzmsg@^1.7.20:
-  version "1.7.20"
-  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.7.20.tgz#3bd9a802a01ab99e8296d0dd914eafb2447caf78"
-  integrity sha512-/33iLMeqfWEwODD+07APEV+5iETro5xutFNgTUdBeFoQUA0i7HHaxIiXpWlcwUmgbUInocwyaKBVZy2hEYGiIg==
+buzzmsg@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/buzzmsg/-/buzzmsg-1.8.1.tgz#80bf914422d06de910ef4c1c8576411cc1976ade"
+  integrity sha512-KawcIeX9afSs3Q+TSIvQHONC3UC2lGcb9SUFiNnq4X0w1HgFNc5VYfhocKl8U8LUJxAf45sB4nRJILOiJEEMjA==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -6125,10 +6132,10 @@ image-conversion@^2.1.1:
   resolved "https://registry.yarnpkg.com/image-conversion/-/image-conversion-2.1.1.tgz#8213fc19033f7dfdee20bb19792e8dcebd052417"
   integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
 
-imforbossjob@^0.2.7-fix:
-  version "0.2.7-fix"
-  resolved "https://registry.yarnpkg.com/imforbossjob/-/imforbossjob-0.2.7-fix.tgz#bc11e6b7b62259e870cec96d4fa92fca917fd0d1"
-  integrity sha512-gnI4OFi6eN0PHk66hzvviBm5If63xtlZfOVQJ9kJB9Xnk+4NJPpBu86xLX8Vg2Bu3M77TMFkhX3LZMrCDDaUzQ==
+imforbossjob@^0.2.9-fix4:
+  version "0.2.9-fix4"
+  resolved "https://registry.npmjs.org/imforbossjob/-/imforbossjob-0.2.9-fix4.tgz#6f560ea3410404f616a9b897788fc8077b853d89"
+  integrity sha512-HmXGHcBx7sAL5H9yc6LBQJGVyFsFAsDgXnTE77CiJwb6axjo3iQ5Z4btd3YkZfP0rFww5cgYRmQMshjVc9/TQg==
   dependencies:
     "@aws-sdk/client-s3" "^3.3.0"
     "@aws-sdk/lib-storage" "^3.18.0"
@@ -6136,7 +6143,7 @@ imforbossjob@^0.2.7-fix:
     ali-oss "^6.17.1"
     axios "^0.18.0"
     buffer "^6.0.3"
-    buzzmsg "^1.7.20"
+    buzzmsg "^1.8.1"
     crypto-js "^4.1.1"
     dexie "^3.0.3"
     fantasy-combinators "^0.0.1"
@@ -6146,8 +6153,8 @@ imforbossjob@^0.2.7-fix:
     mobx-react "^6.3.1"
     moment "^2.29.4"
     nanoid "^4.0.0"
-    react ">=16.8.6"
-    react-dom ">=16.8.6"
+    react "^18.2.0"
+    react-dom "^18.2.0"
     react-router-dom "^4.2.2"
     sha1 "^1.1.1"
     viewerjs "^1.11.0"
@@ -6841,7 +6848,19 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lottie-web@^5.10.2, lottie-web@^5.12.0:
+lottie-react@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/lottie-react/-/lottie-react-2.4.0.tgz#f7249eee2b1deee70457a2d142194fdf2456e4bd"
+  integrity sha512-pDJGj+AQlnlyHvOHFK7vLdsDcvbuqvwPZdMlJ360wrzGFurXeKPr8SiRCjLf3LrNYKANQtSsh5dz9UYQHuqx4w==
+  dependencies:
+    lottie-web "^5.10.2"
+
+lottie-web@5.9.6:
+  version "5.9.6"
+  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.9.6.tgz#62ae68563355d3e04aa75d53dec3dd4bea0e57c9"
+  integrity sha512-JFs7KsHwflugH5qIXBpB4905yC1Sub2MZWtl/elvO/QC6qj1ApqbUZJyjzJseJUtVpgiDaXQLjBlIJGS7UUUXA==
+
+lottie-web@^5.10.2:
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.12.0.tgz#345bab6ae2e77ff9475483e8b4847f353559d2cc"
   integrity sha512-tt2oiv0EmXC8J/RF877dVCo93vZBBnww+SO6dldREgHD8EsP97jQ42JRryIRfY+6aVESQsHYNEAYgH25cBFy7A==
@@ -8179,7 +8198,7 @@ react-device-detect@^2.2.3:
   dependencies:
     ua-parser-js "^1.0.33"
 
-react-dom@>=16.8.6, react-dom@^18.2.0:
+react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -8358,7 +8377,7 @@ react-typical@^0.1.3:
   dependencies:
     "@camwiegert/typical" "^0.1.1"
 
-react@>=16.8.6, react@^18.2.0:
+react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

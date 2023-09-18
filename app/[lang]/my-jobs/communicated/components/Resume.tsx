@@ -23,6 +23,7 @@ import { getValueById } from 'helpers/config/getValueById'
 import Image from 'next/image'
 import classNames from 'classnames'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
+import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
@@ -148,6 +149,7 @@ const Resume = (props: any) => {
       if (res.data?.data) {
         setMessgae(availabilityUpdateSuccessfully)
         setOpen(true)
+        getUserInfo()
       }
     })
   }
@@ -164,12 +166,26 @@ const Resume = (props: any) => {
     return props.show ? props.children : null
   }
 
+  const getUserInfo = () => {
+    dispatch(fetchUserOwnDetailRequest({ accessToken }))
+  }
+
   return (
     <>
       <div className={styles.resumeContainer}>
         <div className={styles.resume}>
           <div className={styles.user}>
-            <Image src={avatar} width={60} height={60} alt='avatar' />
+            {!userDetail?.vip?.is_vip ? <Image src={avatar} width={60} height={60} alt='avatar' /> :
+              <div className={styles.vipAvatar}>
+                <Image
+                  src={require('./vip_user_icon.png').default.src}
+                  alt=""
+                  width={26}
+                  height={10}
+                  style={{ position: 'absolute', bottom: '-2px', right: 0, borderRadius: 0 }}
+                />
+                <Image src={avatar} width={60} height={60} alt='avatar' />
+              </div>}
             <VIf show={fullName || birthdate || xpLvl || educations?.length > 0}>
               <div className={styles.info}>
                 <p>{fullName}</p>

@@ -49,17 +49,7 @@ const Menu = ({ shareParams, lang, isbenefits, jobId, jobDetail }: any) => {
 
   useEffect(() => {
     window.document.addEventListener('scroll', throttle(handleScroll, 200))
-    // if (!token) {
-    //   const recoFrom = getCookie('reco_from') ?? null
-    //   fetchAddJobViewService({
-    //     jobId,
-    //     status: 'public',
-    //     source: 'job_search',
-    //     device: isMobile ? 'mobile_web' : 'web',
-    //     reco_from: recoFrom,
-    //     device_udid: localStorage.getItem('deviceUdid')
-    //   })
-    // }
+  
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

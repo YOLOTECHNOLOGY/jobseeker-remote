@@ -96,13 +96,13 @@ const DetailModal = (props: any) => {
             {
                 title: dic.inProgressText,
                 label: dic.inProgressLabel,
-                isFinish: isStatusIn(['Completed']),
+                isFinish: data?.is_reported,
                 // isFinish: data?.data?.is_reported,
-                active: !isStatusIn(['Completed']),
+                active: !isStatusIn(['Pending', 'Not accepted']),
                 show: true,
                 actionName: data?.is_reported ? dic.issueReported : dic.reportIssue,
-                actionEnable: isStatusIn(['In progress'])
-                    && (data?.jobseeker_mark_jobseeker_attended || !!data.checked_in_at)
+                actionEnable: !isStatusIn(['Pending', 'Not accepted'])
+                    && (data?.jobseeker_mark_jobseeker_attended || !!data?.checked_in_at)
                     && !data?.is_reported,
                 action: () => actionsRef.current?.reportIssue?.({
                     applicationId,

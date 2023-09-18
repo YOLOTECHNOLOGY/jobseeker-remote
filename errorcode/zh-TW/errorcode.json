@@ -233,6 +233,13 @@
   "41250": "無效的波場（TRC20）地址",
   "41251": "無效的以太坊（ERC20）地址",
   "41252": "查詢超過限制",
+  "41253": "Ensure that there are no more than 10 digits before the decimal point",
+  "41254": "Resume cannot exceed 5 copies",
+  "41255": "This resume is not yours",
+  "41256": "No more than 30",
+  "41257": "The number of times has been used up",
+  "41258": "You cannot obtain data for this user",
+  "41259": "The time cannot be greater than the current time",
   "48905": "該電子郵件已被註冊",
   "50001": "內部服務器錯誤",
   "50002": "上傳簡歷失敗",
@@ -247,5 +254,6 @@
   "50011": "人才已经解锁",
   "50012": "參數簡歷最後更新的名稱無效",
   "50013": "目前没有找到结果，请再试一次",
-  "50014": "搜索薪资失败"
+  "50014": "搜索薪资失败",
+  "41260": "無效的验证"
 }

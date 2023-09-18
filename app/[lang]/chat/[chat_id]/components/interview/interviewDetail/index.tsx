@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
@@ -14,7 +15,7 @@ const InterviewDetail = (props: any) => {
   const detailData = useMemo(() => {
     // const location = getValueById(config, data?.job_location, 'location_id')
     const jobLocation = getValueById(config, data?.location_id, 'location_id')
-    const jobCountry = getValueById(config, data?.job.job_country_id, 'country_id')
+    const jobCountry = getValueById(config, data?.job?.job_country_id, 'country_id')
 
     const jobTitle = `${data?.job_title} - ${data?.location_id ? jobLocation : ''}, ${jobCountry}`
     const base = [
@@ -102,11 +103,12 @@ const InterviewDetail = (props: any) => {
                         >
                           {content}
                         </a>
-                        <span className={styles.copyIcon}>
+
+                        <span className={styles.copyIcon}
+                          onClick={handleCopyVideoViewLink}>
                           <img
                             src={CopyIconHaveTextCopy}
                             alt='copy icon'
-                            onClick={handleCopyVideoViewLink}
                             width={50}
                           />
                         </span>

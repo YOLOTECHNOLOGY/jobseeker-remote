@@ -1,48 +1,10 @@
 import React, { memo } from 'react'
-import { isMobile } from 'react-device-detect'
-import { cookies, headers } from 'next/headers'
-import { serveIsMobile } from 'helpers/utilities'
-
 import Head from './components/Head/Head'
 import MainFC from './components/Main'
 import AsideFC from './components/Aside'
-
-import { addJobViewService as fetchAddJobViewService } from 'store/services/jobs/addJobView'
-
 import styles from './page.module.scss'
 import { getValueById } from 'helpers/config/getValueById'
-import Menu from './components/Main/menu'
 const Index = ({ data, jobId, languages, config, lang }: any) => {
-  // const cookieStore = cookies()
-  // const headeStore = headers()
-
-  // const accessToken = cookieStore.getAll('accessToken')
-  // const source = cookieStore.get('source')?.value
-  // const recoFrom = cookieStore.get('reco_from')?.value
-
-  // const querys = {
-  //   jobId,
-  //   status: 'public',
-  //   serverAccessToken: null
-  // }
-
-  // if (accessToken[0]) {
-  //   querys.status = accessToken[0].value ? 'protected' : 'public'
-  //   querys.serverAccessToken = accessToken[0].value ?? null
-  // }
-
-  // const userAgent = headeStore.get('user-agent')
-
-  // const tokenData = {
-  //   source: source ? source : 'job_search',
-  //   device: serveIsMobile(userAgent) ? 'mobile_web' : 'web',
-  //   reco_from: recoFrom ? recoFrom : null,
-  //   device_udid: localStorage.getItem('deviceUdid')
-  // }
-
-  // const params = Object.assign(querys, tokenData)
-
-  // fetchAddJobViewService(params)
 
   if (process.env.ENV === 'production' && typeof window !== 'undefined') {
     const w = window as any
@@ -135,14 +97,7 @@ const Index = ({ data, jobId, languages, config, lang }: any) => {
   return (
     <div>
       <Head {...headProps} />
-      {/* <Menu
-        {...mainProps}
-        lang={languages}
-        jobDetail={data}
-        jobId={jobId}
-        isbenefits={!!mainProps?.benefitsProps?.length}
-      /> */}
-
+      
       <div style={{ background: '#f5f7fb' }}>
         <div className={styles.container}>
           <MainFC {...mainProps} />

@@ -11,6 +11,8 @@ import { checkIsEmailUse } from 'store/services/auth/newLogin'
 import SetUpLater from './setUpLater'
 import { useSearchParams } from 'next/navigation'
 import { CircularProgress } from 'app/components/MUIs'
+import { cfKey } from 'helpers/cookies'
+import Turnstile, { useTurnstile } from "react-turnstile"
 
 function EmailFactor(props: any) {
   const [isDisable, setDisable] = useState<boolean>(true)
@@ -25,6 +27,8 @@ function EmailFactor(props: any) {
   const { newGetStarted } = props.lang
   const emailRef = useRef(null)
   const isDisableRef = useRef(null)
+  const turnstile = useTurnstile()
+  const [cfToken, setCfToken] = useState<string>('')
 
   useEffect(() => {
     isDisableRef.current = isDisable
@@ -51,6 +55,10 @@ function EmailFactor(props: any) {
   }, [email])
 
   const checkIsEmailUseFun = () => {
+    const cfToken = sessionStorage.getItem(cfKey)
+    if (!cfToken) {
+      return
+    }
     setLoading(true)
     checkIsEmailUse({ email: emailRef.current }).then((res) => {
       if (res?.data?.data) {
@@ -63,10 +71,18 @@ function EmailFactor(props: any) {
   }
 
   const sendOTPFun = () => {
-    authenticationSendEmaillOtp({ email: emailRef.current })
+    const cfToken = sessionStorage.getItem(cfKey)
+    if (!cfToken) {
+      return
+    }
+    authenticationSendEmaillOtp({ email: emailRef.current, cf_token: cfToken })
       .then((res) => {
+        let originalSearch = window.location.search;
+        if (originalSearch) {
+          originalSearch = `&${originalSearch.slice(1)}`
+        }
         router.push(
-          `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}`
+          `/${langKey}/get-started/phone?step=4&phone=${phoneNum}&email=${emailRef.current}${originalSearch}`
         )
       })
       .catch((error) => {
@@ -99,9 +115,38 @@ function EmailFactor(props: any) {
             validateErr={validateErr}
           />
         </div>
-        <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
+        {
+          !cfToken && <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: 60 }}>
+            <CircularProgress color={'primary'} size={30}
+              style={{ position: 'absolute' }}
+            />
+            <Turnstile
+              sitekey={process.env.ENV === 'production' ? '0x4AAAAAAAJCMK-FSFuXe0TG' : '0x4AAAAAAAJDRnSb5DfsUd2S'}
+              theme='light'
+              appearance='always'
+              // appearance='interaction-only' // invisible managed challenge
+              onVerify={(token) => {
+                setTimeout(() => {
+                  setCfToken(token)
+                  sessionStorage.setItem(cfKey, token)
+                }, 1000)
+              }}
+              onError={() => {
+                turnstile?.reset()
+              }}
+              style={{ position: 'relative', zIndex: 2 }}
+            />
+          </div>
+
+        }
+        {Boolean(cfToken) && <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
           {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
-        </button>
+        </button>}
+
+        {/* <button className={styles.btn} disabled={isDisable} onClick={() => checkIsEmailUseFun()}>
+          {loading ? <CircularProgress color={'primary'} size={16} /> : newGetStarted.sendCode}
+        </button> */}
+
         <SetUpLater lang={props.lang} />
       </div>
     </div>

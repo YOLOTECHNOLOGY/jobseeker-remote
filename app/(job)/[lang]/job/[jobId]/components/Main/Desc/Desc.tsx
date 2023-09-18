@@ -1,15 +1,16 @@
-import classNames from 'classnames/bind'
-import { cookies } from 'next/headers'
+"use client"
+import React, { useEffect, useState } from 'react'
 
-import { transState } from 'helpers/utilities'
-import { DefaultAvatar } from 'images'
-import { Avatar } from 'app/components/MUIs'
+import classNames from 'classnames/bind'
+import { isMobile } from 'react-device-detect'
 
 import ReadMore from './ReadMore'
-import React from 'react'
-import { accessToken } from 'helpers/cookies'
+import { DefaultAvatar } from 'images'
+import { Avatar } from 'app/components/MUIs'
+import { transState } from 'helpers/utilities'
+
 import styles from '../../../page.module.scss'
-import JobClient from './JobClient/JobClient'
+
 type propsType = {
   description?: string
   requirements?: string
@@ -29,13 +30,44 @@ const Desc = ({
   skills,
   chatResponseRate,
   lastActiveAt,
-  shareParams,
   recruiter,
   languages
 }: propsType) => {
-  const cookieStore = cookies()
-  const token = cookieStore.get(accessToken)
   const { content } = languages
+  const [requirementTopNear, setRequirementTopNear] = useState<number>(0)
+
+  useEffect(() => {
+
+    const debounce = (func, delay) => {
+      let timer;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          func(...args);
+        }, delay);
+      };
+    };
+
+    const handleWatchScrollY = () => {
+      const headClientHight = document.querySelector("#head")?.clientHeight ?? 0
+      let near = (document.querySelector("#Requirement") as any )?.offsetTop;
+
+      if (!isMobile) {
+        near -= headClientHight
+      }
+
+      if (near) {
+        setRequirementTopNear(near)
+      }
+    }
+
+    const debouncedHandleWatchScrollY = debounce(handleWatchScrollY, 300);
+
+    window.addEventListener("scroll", debouncedHandleWatchScrollY);
+
+    return () => window.removeEventListener("scroll", debouncedHandleWatchScrollY);
+  }, [isMobile])
+
 
   return (
     <section className={styles.desc} id='JobDescription'>
@@ -65,7 +97,7 @@ const Desc = ({
         </div>
       </div>
 
-      <div className={styles.desc_jobDescWrapper}>
+      <div className={styles.desc_jobDescWrapper} id="jd" >
         <div className={styles.desc_title}>
           <h5>
             {content.JD}
@@ -74,15 +106,7 @@ const Desc = ({
               {/* <JobClient isLogin={Boolean(token)} showText={false} {...shareParams} /> */}
             </div>
           </h5>
-          {/* <div className={styles.desc_title_change}>
-            <JobClient isLogin={Boolean(token)} {...shareParams} />
-          </div> */}
         </div>
-
-        {/* <div
-          className={styles.desc_context}
-          dangerouslySetInnerHTML={{ __html: description }}
-        ></div> */}
         <ReadMore
           key={'description'}
           expandText={content.showMore}
@@ -91,6 +115,9 @@ const Desc = ({
           text={description}
           line={15}
           lineHeight={24}
+          isScroll={{
+            top: 0
+          }}
         />
       </div>
 
@@ -156,6 +183,9 @@ const Desc = ({
           text={requirements}
           line={15}
           lineHeight={24}
+          isScroll={{
+            top: requirementTopNear
+          }}
         />
       </div>
       {/* <div className={styles.desc_footer}>

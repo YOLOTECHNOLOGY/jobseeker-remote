@@ -12,10 +12,15 @@ import { displayNotification } from 'store/actions/notificationBar/notificationB
 import { jobbseekersLoginFailed } from 'store/actions/auth/jobseekersLogin'
 import { useRouter } from 'next/navigation'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import { cfKey } from 'helpers/cookies'
+import UserAvatar from './userAvatar'
+
 const verifyEmail = function (props) {
   const { isModal, lang, loginData, setStep, handleBackClick } = props
   const { newGetStarted } = lang
   const searchParams = useSearchParams()
+  const referralCode = searchParams.get('referral_code')
+  const invitedSource = searchParams.get('invited_source')
 
   // const userId = searchParams.get('userId')
   // const email = searchParams.get('email')
@@ -53,6 +58,7 @@ const verifyEmail = function (props) {
     setErrorText('')
   }, [])
 
+
   useEffect(() => {
     const text = error?.data?.message ?? ''
     setErrorText(text)
@@ -63,6 +69,7 @@ const verifyEmail = function (props) {
       setEmail(email)
     }
   }, [email])
+
 
   useEffect(() => {
     setUserId(userId)
@@ -80,13 +87,14 @@ const verifyEmail = function (props) {
   const onChange = (code) => {
     setErrorText('')
     if (code?.length === 6) {
-      handleAuthenticationJobseekersLogin(code)
+      handleAuthenticationJobseekersLogin(code, referralCode || undefined, invitedSource || undefined)
     }
   }
 
   const sendOpt = () => {
+    const cfToken = sessionStorage.getItem(cfKey)
     dispatch(jobbseekersLoginFailed({}))
-    authenticationSendEmaillOtp({ email })
+    authenticationSendEmaillOtp({ email, cf_token: cfToken })
       .then(() => {
         setNumber(new Date().getTime())
         dispatch(
@@ -107,6 +115,7 @@ const verifyEmail = function (props) {
         )
       })
   }
+
   return (
     <>
       <div className={styles.phoneNumber}>
@@ -114,10 +123,7 @@ const verifyEmail = function (props) {
           {userId ? (
             <>
               <h2>{newGetStarted.welcomeBack} 🎉</h2>
-
-              <div className={styles.avatar}>
-                <img className={styles.avatar_img} src={avatar} alt='avatar' />
-              </div>
+              <UserAvatar avatar={avatar} isModal={isModal} loginData={loginData} />
               <p className={styles.enterTips}>
                 {newGetStarted.sendCodeDigit}
                 {/* <span className={styles.phone_text}>{email}</span> */}
@@ -165,7 +171,7 @@ const verifyEmail = function (props) {
             <div
               className={styles.backBox}
               onClick={() =>
-                isModal ? handleBackClick?.() : router.push(`/${langKey}/get-started/email`)
+                isModal ? handleBackClick?.() : history.back()
               }
             >
               <KeyboardArrowLeftIcon />
