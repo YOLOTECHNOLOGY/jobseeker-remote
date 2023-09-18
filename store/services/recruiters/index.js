@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import configuredAxios from 'helpers/configuredAxios'
 
 import fetchRecruiterSubscriptionFeature from './fetchRecruiterSubscriptionFeature'
