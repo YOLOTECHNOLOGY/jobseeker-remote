@@ -22,14 +22,12 @@
     height: 768px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(
-      166.11deg,
-      #ffffff 18.61%,
-      #9dedff 59.16%,
-      #1052fb 100.91%,
-      #1052fb 133%,
-      rgba(16, 82, 251, 0.89) 186.95%
-    );
+    background: linear-gradient(166.11deg,
+        #ffffff 18.61%,
+        #9dedff 59.16%,
+        #1052fb 100.91%,
+        #1052fb 133%,
+        rgba(16, 82, 251, 0.89) 186.95%);
     opacity: 0.6;
     filter: blur(154.5px);
     transform: translateZ(0);
@@ -430,21 +428,25 @@
       width: 400px;
       overflow: hidden;
       border-radius: 16px 0 0 16px;
-      .vipBanner {
-      }
+
+      .vipBanner {}
     }
+
     .bannerFlex {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       background-image: url("./components/getstarted_vip.png");
       background-size: 100% 100%;
+
       .bannerText {
         padding: 40px 30px 10px;
+
         p {
           font-size: 24px;
           font-weight: 700;
         }
+
         span {
           display: block;
           font-size: 18px;
@@ -502,7 +504,7 @@
       justify-content: space-around;
       padding-top: 24px;
 
-      > div {
+      >div {
         width: 130px;
 
         i,
@@ -870,11 +872,12 @@
         user-select: none;
       }
     }
+
     .vipAvatar {
       position: relative;
       display: inline-block;
 
-      > img {
+      >img {
         box-sizing: border-box;
         border: 3px solid #ffc248;
       }
@@ -1010,6 +1013,7 @@
     // }
   }
 }
+
 .vipUserPromptWrap {
   z-index: 50000;
   position: fixed;
@@ -1021,6 +1025,7 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
+
   .vipUserPrompt {
     border-radius: 5px;
     padding: 30px;
@@ -1028,10 +1033,12 @@
     width: 740px;
     font-size: 16px;
     background: #fff;
+
     p {
       text-align: center;
       padding: 50px 0 30px;
     }
+
     .buttonContent {
       display: flex;
       justify-content: space-between;
@@ -1045,6 +1052,7 @@
         color: #121212;
         text-transform: capitalize;
       }
+
       .exitButton {
         width: 48%;
         height: 60px;

@@ -25,7 +25,7 @@ import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import ScrollText from 'app/components/scrollText'
 import { ChatDataContext } from '../ChatProvider'
 import { getDeviceUuid } from 'helpers/guest'
-
+import QrCodeDraw from 'app/[lang]/get-started/components/QrCodeDraw'
 const useShowPop = (titleHover, popHover) => {
   const [showPopup, setShowPopup] = useState(false)
   const titleHoverRef = useRef(titleHover)
@@ -205,7 +205,7 @@ const JobCard = (props: any) => {
   }, [])
 
   const handleChatNow = () => {
-    ; (chatNow as any)().catch((err) => {
+    ;(chatNow as any)().catch((err) => {
       const message = err?.response?.data?.message
       dispatch(
         displayNotification({
@@ -234,7 +234,8 @@ const JobCard = (props: any) => {
   }
 
   return (
-    <div className={styles.jobCard}
+    <div
+      className={styles.jobCard}
       onClick={() => {
         // @ts-ignore
         router.push(`/${langKey}` + job_url)
@@ -245,10 +246,10 @@ const JobCard = (props: any) => {
           <div className={styles.topContainer}>
             <div
               className={styles.left}
-            // onClick={() => {
-            //   // @ts-ignore
-            //   router.push(`/${langKey}` + job_url)
-            // }}
+              // onClick={() => {
+              //   // @ts-ignore
+              //   router.push(`/${langKey}` + job_url)
+              // }}
             >
               <div
                 key={job_title + id}
@@ -331,7 +332,9 @@ const JobCard = (props: any) => {
                   {transState(recruiter_last_active_at, search?.jobCard)?.state == 1 && (
                     <div className={styles.online}>{search.jobCard.online}</div>
                   )}
-                  {Boolean(cardType === 'hotjobs' && recruiter_is_online) && <div className={styles.online}>{search.jobCard.online}</div>}
+                  {Boolean(cardType === 'hotjobs' && recruiter_is_online) && (
+                    <div className={styles.online}>{search.jobCard.online}</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -365,7 +368,9 @@ const JobCard = (props: any) => {
             <div className={styles.skills} title={(job_skills ?? '').split(',').join(' | ')}>
               {(job_skills ?? '').split(',').join(' | ')}
             </div>
-            <div className={styles.benefits} title={jobBenefitsValue}
+            <div
+              className={styles.benefits}
+              title={jobBenefitsValue}
               onClick={(e) => {
                 e.stopPropagation()
                 sendViewCompany()
@@ -407,7 +412,7 @@ const JobCard = (props: any) => {
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
-                    ; (save as any)()
+                  ;(save as any)()
                 }}
               >
                 <svg
@@ -431,12 +436,21 @@ const JobCard = (props: any) => {
               </MaterialButton>
             </div>
             <div className={styles.popTopRight}>
-              <QRCodeSVG
+              <QrCodeDraw
+                className={styles.qrcode}
+                text={location?.origin + '/' + langKey + job_url}
+                ecl='H'
+                width={60}
+                height={60}
+              />
+              {location?.origin + '/' + langKey + job_url}
+              {/* <QRCodeSVG
                 value={location?.origin + '/' + langKey + job_url}
                 size={60}
                 // imageSettings={{ src: SmallAppLogo, height: 10, width: 10, excavate: true }}
                 className={styles.qrcode}
-              />
+              /> */}
+
               {search.jobCard.talkToBoss}
             </div>
           </div>
