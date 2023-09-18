@@ -35,6 +35,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 export let persistor
+export let store
 export const configureStore = (context) => {
   const routerMiddleware = createRouterMiddleware()
   const sagaMiddleware = createSagaMiddleware()
@@ -47,7 +48,7 @@ export const configureStore = (context) => {
     }
   }
 
-  const store = createStore(
+  store = createStore(
     persistedReducer,
     initialState,
     bindMiddleware([sagaMiddleware, routerMiddleware])

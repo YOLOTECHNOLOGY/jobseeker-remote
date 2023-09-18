@@ -3,8 +3,7 @@ import { getCookie, removeUserCookie, setCookie } from 'helpers/cookies'
 import { accessToken, refreshToken } from './cookies';
 import { getCountryId } from './country';
 import { NextResponse } from 'next/server';
-import logError, { logServerInfo } from 'app/errors/logError';
-// generate url by a baseUrl
+import logError from 'app/errors/logError';
 
 const getUrl = (baseURL) => {
   let url = '';
@@ -67,21 +66,11 @@ const getUrl = (baseURL) => {
 }
 
 const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken) => {
-  // let remoteAddress = ''
-  // let isMobile = ''
-  if (typeof window !== 'undefined') {
-    // const { store } = configureStore(window.__PRELOADED_STATE__, false)
-    // remoteAddress = store.getState().Public.utils.setRemoteIp.ip
-    // isMobile = store.getState().Public.utils.setUserDevice.userAgent.isMobile
-  }
 
   const url = getUrl(baseURL)
   let headers = {
-    // remoteAddress: remoteAddress,
-    // source: isMobile ? 'mobile-web' : 'web',
     'Country-Id': '' + getCountryId()
   }
-
 
   /*  TO REFACTOR */
   // Usecase: for roboheadhunting, need to pass specifically 'Bossjob-Token'
@@ -139,14 +128,14 @@ const configuredAxios = (baseURL, type = 'public', passToken, serverAccessToken)
   return configuredAxios
 }
 
-
 const redirectToHomeOnClient = () => {
   if (typeof window !== 'undefined') {
     removeUserCookie();
     window.location.href = '/get-started'
-    import('imforbossjob')
-      .then((im) => im?.IMManager?.logout?.())
-      .then(() => localStorage?.clear?.())
+    if (typeof window !== 'undefined') {
+      import('bossjob-remote/dist/clientStorage')
+        .then(clientStorage => clientStorage?.postNotification?.('IM_LOGOUT'))
+    }
   } else {
     // seems this code is not working
     const response = NextResponse.redirect('/get-started', 301)
@@ -174,57 +163,67 @@ const refreshTokenServer = () => {
 }
 
 globalThis.globalPromise = null
-const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
-  const createAxios = () => configuredAxios(baseURL, type, passToken, serverAccessToken, server)
-  const axios = createAxios();
-  const keys = Object.keys(axios);
-  const wrapper = {};
+if (typeof window !== 'undefined') {
+  import('bossjob-remote/dist/clientStorage')
+    .then(({ publishSharedData, receiveNotification }) => {
+      publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
+      receiveNotification('REQUEST_401', data => {
+        console.log({ REQUEST_401: data })
+        shouldRefresh(data.note)
+      })
+    })
+}
 
-  keys.forEach(key => {
-    wrapper[key] = (...params) => {
-      //  only the protected url need to refresh in browser 
-      if (type === 'protected') {
-        axios.interceptors.response.use(
-          (response) => response,
-          (error) => {
-            logError(error?.response?.data ?? error?.response ?? error)
-            if (error?.response?.status === 401 && typeof window !== 'undefined') {
-              if (configured) {
-                redirectToHomeOnClient();
-                return Promise.reject(error)
-              }
-              if (!globalPromise) {
-                globalThis.globalPromise = refreshTokenServer().catch((error) => {
-                  redirectToHomeOnClient()
-                }).finally(() => {
-                  setTimeout(() => {
-                    globalPromise = undefined;
-                  }, 1000 * 60 * 2);
-                })
-              }
-              return globalPromise.then(() => {
-                const chainObj = chain(true)(baseURL, type, passToken ? getCookie(accessToken) : '', serverAccessToken ? getCookie(accessToken) : '', server)
-                return chainObj[key](...params)
-              })
-            } else if (error?.response?.status === 401) {
-              // const error = new Error('401', { cause: 401 })
-              // error.digest = '440011'
-              // eslint-disable-next-line prefer-promise-reject-errors
-              return Promise.reject(401) // will redirect to error page, that code in the _app.tsx
-            } else {
-              return Promise.reject(error)
-            }
-          }
-        )
+const shouldRefresh = async error => {
+
+  if (typeof window === 'undefined') {
+    return Promise.reject(error)
+  }
+  const { publishSharedData } = await import('bossjob-remote/dist/clientStorage')
+  if (!globalPromise) {
+    globalThis.globalPromise = refreshTokenServer().catch(() => {
+      redirectToHomeOnClient()
+    }).finally(() => {
+      setTimeout(() => {
+        globalPromise = undefined;
+        publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
+      }, 1000 * 60 * 2);
+    })
+  }
+  publishSharedData('REFRESH_TOKEN_TASK', globalThis.globalPromise)
+  return globalPromise.then(() => {
+    // 重新请求
+    axios.request({
+      ...error.config,
+      headers: {
+        ...error.config.headers,
+        Authorization: `Bearer ${getCookie('accessToken')}`
       }
-      const startTime = new Date().getTime()
-      return axios[key](...params).then(res => {
-        logServerInfo({ startTime, ...params, finishTime: new Date().getTime() })
-        return res
-      });
-    }
-  });
-  return wrapper
+    })
+  })
+}
+
+const chain = configured => (baseURL, type = 'public', passToken, serverAccessToken, server = typeof window === 'undefined') => {
+  let axios = null
+  axios = configuredAxios(baseURL, type, passToken, serverAccessToken, server)
+  // 添加响应拦截器
+  axios.interceptors.response.use((response) => response,
+    (error) => {
+      logError(error?.response?.data ?? error?.response ?? error)
+      if (error?.response?.status === 401 && typeof window !== 'undefined') {
+        if (configured) {
+          redirectToHomeOnClient();
+          return Promise.reject(error)
+        }
+        return shouldRefresh(error)
+      } else if (error?.response?.status === 401) {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject(401) // will redirect to error page, that code in the _app.tsx
+      } else {
+        return Promise.reject(error)
+      }
+    });
+  return axios
 }
 
 export default chain()

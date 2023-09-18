@@ -1,49 +1,78 @@
 // 'use client'
 // import Providers from './components/providers'
+
 import Header from 'components/Header'
 import dynamic from 'next/dynamic'
 import HamburgerMenu from 'components/HamburgerMenu'
 import AutoShowModalAppRedirect from 'app/(main-page)/components/AutoShowModalAppRedirect'
 import { getCountryKey } from 'helpers/country'
 import { getDictionary } from 'get-dictionary'
-import React from 'react'
-import InProviders from './Initals/inProviders'
+import React, { Suspense } from 'react'
 import 'app/globals.scss'
 import 'app/index.module.scss'
-import bossjobClient from 'helpers/bossjobRemoteClient'
 import { formatTemplateString } from 'helpers/formatter'
-import LinkProvider from './providers/linkProvider'
+import LinkProvider from 'app/components/providers/linkProvider'
 import { getServerLang } from 'helpers/country.server'
 import Script from 'next/script'
+import bossjobClient from 'helpers/bossjobRemoteClient'
+import { fetchConfigService } from 'store/services/config/fetchConfig'
+import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
+import { cookies } from 'next/headers'
+import InProviders from 'app/components/Initals/inProviders'
 const Providers = dynamic(() => import('app/components/providers'), { ssr: true })
 const Initial = dynamic(() => import('app/components/Initals'), { ssr: true })
-export default async function PublicLayout(props: any): Promise<React.JSX.Element> {
+export default async function PublicLayout(props: any) {
   const gtmID = process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-  const { children, seo, position }: any = props
-  const { title, imageUrl, description, canonical } = seo
-  let { lang } = props.params
+  const { children, seo = {}, position }: any = props
+  const { title = '', imageUrl = '', description = '', canonical = '' } = seo
+  let { lang, chat_id } = props.params
   lang = lang || getServerLang()
   const dictionary = await getDictionary(lang)
+  const config = await fetchConfigService(lang)
+  const accessToken = cookies().get('accessToken')?.value
+
+  const userDetailRes = await fetchUserOwnDetailService({ accessToken })
+    .catch(e => {
+      console.log({ e })
+      return {}
+    }) as any
   const data = {
+    config,
     lang,
     chatDictionary: dictionary?.chat ?? {},
+    chat_id,
+    userDetail: userDetailRes?.data?.data ?? {}
   }
-  const chatServiceModule = await bossjobClient.connectModule({
-    id: 'chat-service',
+  const chatModule = await bossjobClient.connectModule({
+    id: 'chat',
     baseUrl: process.env.REMOTE_CHAT_URL,
     initialProps: data,
-
+    initalSharedData: {
+      CHAT_ID: +chat_id ? chat_id : null,
+    }
   })
+
+  const workerModule = await bossjobClient.connectModule({
+    id: 'chat-worker',
+    baseUrl: process.env.REMOTE_CHAT_URL,
+    ssr: false
+    // initialProps: data,
+    // initalSharedData: {
+    //   CHAT_ID: +chat_id ? chat_id : null,
+    // }
+  })
+  console.log({ workerModule })
   return (
     <html lang={lang} translate='no'>
       <head key={title + description + canonical}>
         <title>{title}</title>
+        {chatModule.inHead}
+        {workerModule.inHead}
         <meta name='description' content={decodeURI(description)} />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
-        {chatServiceModule.inHead}
         <link
           rel="preload"
           href="/font/product-sans/ProductSansBold.ttf"
@@ -127,28 +156,35 @@ export default async function PublicLayout(props: any): Promise<React.JSX.Elemen
         window.googletag = window.googletag || {cmd: []}
       `}</Script>
       </head>
-      <body id='next-app'>
-        {chatServiceModule.component}
-        {chatServiceModule.inBody}
-
-        <Providers LG={dictionary} lang={lang}>
-          {/* Google Tag Manager (noscript) */}
-          <InProviders />
-          <noscript
-            dangerouslySetInnerHTML={{
-              __html: `
+      <body >
+        {workerModule.inBody}
+        {chatModule.inBody}
+        <div id='next-app'>
+          <Providers LG={dictionary} lang={lang}>
+            <InProviders />
+            {/* Google Tag Manager (noscript) */}
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: `
           <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.ENV === 'production' ? 'GTM-KSGSQDR' : 'GTM-PR4Z29C'
-                }"
+                  }"
           height="0" width="0" style="display:non e;visibility:hidden"></iframe>
         `
-            }}
-          ></noscript>
-          <Header lang={dictionary} position={position} />
-          <HamburgerMenu lang={dictionary} />
-          <LinkProvider> {children}</LinkProvider>
-          <AutoShowModalAppRedirect />
-        </Providers>
-        <Initial langKey={lang} />
+              }}
+            ></noscript>
+            <Header lang={dictionary} position={position} />
+            <HamburgerMenu lang={dictionary} />
+            <LinkProvider>
+              {workerModule.component}
+              {chatModule.component}
+              {children}
+            </LinkProvider>
+            <AutoShowModalAppRedirect />
+          </Providers>
+          <Initial />
+        </div>
+
+
       </body>
     </html>
   )
