@@ -43,8 +43,8 @@ export const getCountryAndLang = (cookies: RequestCookies) => {
 const setCfCountryKey = (response: NextResponse, cfIpCountryKey: string) => {
   return response.cookies.set('cfCountryKey', cfIpCountryKey, { 
     path: '/', 
-    httpOnly: true, 
-    secure: true, 
+    // httpOnly: true, 
+    // secure: true, 
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
   })
 }

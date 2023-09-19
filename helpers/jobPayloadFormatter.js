@@ -235,7 +235,8 @@ const getSmsCountryList = (config) => {
         label: country['code'] + ' (' + country['value'] + ')',
         id: country.id,
         flag: `${S3BucketJobseeker}/flags/${country.key?.toUpperCase()}.png`,
-        country: country.value
+        country: country.value,
+        countryKey: country.key
       }
 
       smsCountryList.push(smsCountry)

@@ -21,17 +21,20 @@ import { formatTemplateString } from 'helpers/formatter'
 import { CircularProgress } from 'app/components/MUIs'
 import { countryForPhoneCode } from 'helpers/country'
 import Turnstile, { useTurnstile } from "react-turnstile"
-import { cfKey } from 'helpers/cookies'
+import { cfKey, getCookie } from 'helpers/cookies'
 import { useSearchParams } from 'next/navigation'
 
 const LoginForPhone = (props: any) => {
   const turnstile = useTurnstile()
+  const cfCountryKey = getCookie("cfCountryKey")
+
   const [countryValue, setCountry] = useState<string>('')
   const [isDisable, setDisable] = useState<boolean>(true)
   const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [phoneError, setPhoneError] = useState<string>('')
   const [cfToken, setCfToken] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+
   const {
     lang: { newGetStarted, errorcode },
     isModal = false,
@@ -53,6 +56,17 @@ const LoginForPhone = (props: any) => {
   const cfTokenRef = useRef(null)
   const referralCode = searchParams.get('referral_code')
   const invitedSource = searchParams.get('invited_source')
+
+  useEffect(() => {
+    if (countryValue == '' && cfCountryKey && cfCountryKey != 'com') {
+      countryList.forEach((item:any) => {
+        if (item.countryKey == cfCountryKey) {
+          setCountry(item.value)
+        }
+      })
+      return
+    }
+  }, [countryList, cfCountryKey, countryValue])
 
   useEffect(() => {
     isDisableRef.current = isDisable
