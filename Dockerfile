@@ -24,4 +24,4 @@ RUN MAINTENANCE=$MAINTENANCE yarn build:$ENV
 EXPOSE 3000
 
 # Start the app.
-CMD yarn start:$ENV
+CMD ["sh", "-c", "yarn start:${ENV}"]
