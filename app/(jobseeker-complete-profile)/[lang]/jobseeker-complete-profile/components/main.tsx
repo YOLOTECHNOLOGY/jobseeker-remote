@@ -7,7 +7,7 @@ import WorkExperience from './workExperience'
 import EducationExperience from './educationExperience'
 import DesiredJob from './desiredJob'
 import { useSelector } from 'react-redux'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 import { useDispatch } from 'react-redux'
 import Header from './header'
@@ -47,20 +47,7 @@ const Main = (props: any) => {
       getUserInfo
     })
     if (userDetail?.id) {
-      const userCookie = {
-        active_key: userDetail.active_key,
-        id: userDetail.id,
-        first_name: userDetail.first_name,
-        last_name: userDetail.last_name,
-        email: userDetail.email,
-        phone_num: userDetail.phone_num,
-        is_mobile_verified: userDetail.is_mobile_verified,
-        avatar: userDetail.avatar,
-        additional_info: userDetail.additional_info,
-        is_email_verify: userDetail.is_email_verify,
-        notice_period_id: userDetail.notice_period_id,
-        is_profile_completed: userDetail.is_profile_completed
-      }
+      const userCookie = handleUserCookiesConfig(userDetail)
       setCookie('user', userCookie)
     }
   }, [JSON.stringify(userDetail)])

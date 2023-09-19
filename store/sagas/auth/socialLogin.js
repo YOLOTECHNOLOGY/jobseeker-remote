@@ -1,15 +1,12 @@
 import { call, put, takeLatest, fork } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 
-import { setCookie } from 'helpers/cookies'
+import { handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 
 import { SOCIAL_LOGIN_REQUEST } from 'store/types/auth/socialLogin'
 
-import {
-  socialLoginSuccess,
-  socialLoginFailed,
-} from 'store/actions/auth/socialLogin'
+import { socialLoginSuccess, socialLoginFailed } from 'store/actions/auth/socialLogin'
 import { socialLoginService } from 'store/services/auth/socialLogin'
 
 function* socialLoginReq(actions) {
@@ -22,7 +19,7 @@ function* socialLoginReq(actions) {
     firstName,
     lastName,
     pictureUrl,
-    activeKey,
+    activeKey
   } = actions.payload
 
   const payload = {
@@ -53,23 +50,10 @@ function* login(payload, redirect, fromRegister = false) {
 
       const loginData = response.data.data
 
-      const userCookie = {
-        active_key: loginData.active_key,
-        id: loginData.id,
-        first_name: loginData.first_name,
-        last_name: loginData.last_name,
-        email: loginData.email,
-        phone_num: loginData.phone_num,
-        is_mobile_verified: loginData.is_mobile_verified,
-        avatar: loginData.avatar,
-        additional_info: loginData.additional_info,
-        is_email_verify: loginData.is_email_verify,
-        notice_period_id: loginData.notice_period_id,
-        is_profile_completed: loginData.is_profile_completed,
-      }
+      const userCookie = handleUserCookiesConfig(loginData)
 
       // const redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/jobseeker`
-      
+
       // if (getItem(applyPendingJobId)) {
       //   // url = `/dashboard/job/${getItem(applyPendingJobId)}/apply`
       //   redirectUrl = `${process.env.OLD_PROJECT_URL}/dashboard/job/${getItem(applyPendingJobId)}/apply`
@@ -80,7 +64,7 @@ function* login(payload, redirect, fromRegister = false) {
       // }
 
       removeUtmCampaign()
-      
+
       if (window !== 'undefined' && window.gtag && fromRegister) {
         yield window.gtag('event', 'conversion', {
           send_to: 'AW-844310282/-rRMCKjts6sBEIrOzJID'
@@ -88,11 +72,7 @@ function* login(payload, redirect, fromRegister = false) {
       }
 
       yield call(setCookie, 'user', userCookie)
-      yield call(
-        setCookie,
-        'accessToken',
-        loginData.authentication.access_token
-      )
+      yield call(setCookie, 'accessToken', loginData.authentication.access_token)
 
       const url =
         loginData.active_key === 1 &&

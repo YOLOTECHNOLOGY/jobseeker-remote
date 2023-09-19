@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { handleUserCookiesConfig } from 'helpers/cookies'
 import { redirectUrlKey } from 'helpers/globalKey'
 import { parse } from 'next-useragent'
 import { NextRequest, NextResponse } from 'next/server'
@@ -32,20 +33,7 @@ export async function GET(request: NextRequest) {
         })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                const userCookie = {
-                    active_key: response.data.data.active_key,
-                    id: response.data.data.id,
-                    first_name: response.data.data.first_name,
-                    last_name: response.data.data.last_name,
-                    email: response.data.data.email,
-                    phone_num: response.data.data.phone_num,
-                    is_mobile_verified: response.data.data.is_mobile_verified,
-                    avatar: response.data.data.avatar,
-                    additional_info: response.data.data.additional_info,
-                    is_email_verify: response.data.data.is_email_verify,
-                    notice_period_id: response.data.data.notice_period_id,
-                    is_profile_completed: response.data.data.is_profile_completed
-                }
+                const userCookie = handleUserCookiesConfig(response.data.data)
                 const res = new NextResponse(null, {
                     status: 301,
                     headers: {

@@ -5,7 +5,7 @@ import { authenticationSendEmailMagicLink } from 'store/services/auth/authentica
 import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 // import { getCountryId, getLanguageId } from 'helpers/country'
 import { useSearchParams, usePathname } from 'next/navigation'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { getLang } from 'helpers/country'
 import { authenticationJobseekersLogin } from 'store/services/auth/jobseekersLogin'
 import { authenticationJobseekersLogin as jobSeekersSocialLogin } from 'store/services/auth/jobseekersSocialLogin'
@@ -103,31 +103,17 @@ const useGetStarted = () => {
     // })
   }
   const setCookiesWithLoginData = (loginData, changeToken = true) => {
-    const { refresh_token, token, token_expired_at } = loginData
-    const userCookie = {
-      active_key: loginData.active_key,
-      id: loginData.id,
-      first_name: loginData.first_name,
-      last_name: loginData.last_name,
-      email: loginData.email,
-      phone_num: loginData.phone_num,
-      is_mobile_verified: loginData.is_mobile_verified,
-      avatar: loginData.avatar,
-      additional_info: loginData.additional_info,
-      is_email_verify: loginData.is_email_verify,
-      notice_period_id: loginData.notice_period_id,
-      is_bosshunt_talent: loginData.is_bosshunt_talent,
-      is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
-      bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-      is_profile_completed: loginData.is_profile_completed,
-      longitude: loginData?.longitude,
-      latitude: loginData?.latitude
+    try {
+      const { refresh_token, token, token_expired_at } = loginData
+      const userCookie = handleUserCookiesConfig(loginData)
+      if (changeToken) {
+        setCookie('refreshToken', refresh_token)
+        setCookie('accessToken', token, token_expired_at)
+      }
+      setCookie('user', userCookie)
+    } catch (error) {
+      console.log('error', error)
     }
-    if (changeToken) {
-      setCookie('refreshToken', refresh_token)
-      setCookie('accessToken', token, token_expired_at)
-    }
-    setCookie('user', userCookie)
   }
   const sendEventWithLoginData = (loginData) => {
     // Send register event (First time login user)

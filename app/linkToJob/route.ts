@@ -3,7 +3,7 @@ import { getCountryId, getLangKeyByCode, getLanguageId } from 'helpers/country'
 
 import { fetchUserSetting } from 'store/services/swtichCountry/userSetting'
 import { NextResponse } from 'next/server'
-import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey } from 'helpers/cookies'
+import { refreshToken as refreshTokenKey, accessToken as accessTokenKey, userKey, handleUserCookiesConfig } from 'helpers/cookies'
 import axios from 'axios'
 import { fetchUserOwnDetailService } from 'store/services/users/fetchUserOwnDetail'
 async function removeServiceCache(token) {
@@ -62,23 +62,7 @@ export async function GET(request) {
     }
     const meResponse = await fetchUserOwnDetailService({ accessToken })
     const loginData = meResponse?.data?.data
-    const userCookie = {
-      active_key: loginData.active_key,
-      id: loginData.id,
-      first_name: loginData.first_name,
-      last_name: loginData.last_name,
-      email: loginData.email,
-      phone_num: loginData.phone_num,
-      is_mobile_verified: loginData.is_mobile_verified,
-      avatar: loginData.avatar,
-      additional_info: loginData.additional_info,
-      is_email_verify: loginData.is_email_verify,
-      notice_period_id: loginData.notice_period_id,
-      is_bosshunt_talent: loginData.is_bosshunt_talent,
-      is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
-      bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-      is_profile_completed: loginData.is_profile_completed
-    }
+    const userCookie = handleUserCookiesConfig(loginData)
     const user = JSON.stringify(userCookie)
     const maxTime = 60 * 60 * 24 // a day
     response.cookies.set(accessTokenKey, accessToken, { path: '/', maxAge: accessToken ? maxTime : 0 })
