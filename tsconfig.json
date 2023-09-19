@@ -35,7 +35,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "bossjob.config.mjs"
   ],
   "exclude": ["node_modules", "node_modules/buzzmsg/dist/index.js"]
 }

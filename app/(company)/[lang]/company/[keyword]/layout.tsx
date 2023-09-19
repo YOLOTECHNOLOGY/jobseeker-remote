@@ -31,7 +31,8 @@ const configs = getConfigs([
   ['company_culture_lists'],
   ['xp_lvls'],
   ['degrees'],
-  ['job_types']
+  ['job_types'],
+  ['country_lists']
 ])
 // eslint-disable-next-line valid-jsdoc
 /**

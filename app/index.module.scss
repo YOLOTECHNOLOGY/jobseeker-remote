@@ -1485,15 +1485,15 @@
 
   .download {
     margin-left: 20px;
-    width: 150px;
+    width: fit-content;
     font-size: 14px;
     color: #136fd3;
     cursor: pointer;
     position: relative;
     word-break: keep-all;
     border-radius: 8px;
-    border: 1px solid #2378e5;
-    min-width: 170px;
+    border: 1px solid #2378E5;
+    min-width: 198px;
     height: 60px;
     background-color: #fff;
     display: flex;

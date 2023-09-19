@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 'use client'
 import { useFirstRender } from 'helpers/useFirstRender'
 import React, { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation';
-import { initFireBase } from 'helpers/fireBaseManager'
+import { useRouter, useSearchParams } from 'next/navigation';
+// import { initFireBase } from 'helpers/fireBaseManager'
 import Script from 'next/script'
 import * as fbq from 'lib/fpixel'
 import * as gtag from 'lib/gtag'
 import { getCookie } from 'helpers/cookies';
 import { redirectUrlKey } from 'helpers/globalKey';
-
+import { displayNotification } from 'store/actions/notificationBar/notificationBar';
 const tiktokfunc = () => {
   const w = window as any
   const t = 'ttq'
@@ -27,14 +28,14 @@ const tiktokfunc = () => {
   }
 }
 const runInClient = (searchParams) => {
-  if (!(window as any)?.imSharedWorker && window.SharedWorker) {
-    (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
-  }
+  // if (!(window as any)?.imSharedWorker && window.SharedWorker) {
+  //   (window as any).imSharedWorker = new SharedWorker('/imbackground.js', 'imbackground')
+  // }
   const devTools = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__
   if (!!devTools && devTools['inject']) {
     devTools['inject'] = Function.prototype
   }
-  initFireBase()
+  // initFireBase()
   tiktokfunc()
   invokeGAAdsEvent(searchParams)
 }
@@ -62,6 +63,9 @@ const Initial = (props: any) => {
     gtag.pageview(location.pathname)
     fbq.pageview()
   }, [])
+
+
+
   return <>
     <Script
       strategy='afterInteractive'

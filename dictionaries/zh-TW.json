@@ -302,7 +302,8 @@
         }
       },
       "seoTitle": "在{{companyName}}工作 | Bossjob",
-      "seoDescription": "發現{{companyName}}的職業機會，閱讀員工評論、福利、文化以了解{{companyName}}的更多信息!"
+      "seoDescription": "發現{{companyName}}的職業機會，閱讀員工評論、福利、文化以了解{{companyName}}的更多信息!",
+      "global": "全球"
     },
     "life": {
       "culture": "公司文化",

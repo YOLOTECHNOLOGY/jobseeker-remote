@@ -22,6 +22,6 @@ RUN MAINTENANCE=$MAINTENANCE yarn build:$ENV
 
 # Expose the port of the app thats running in the container.
 EXPOSE 3000
-
+ENV ENV=$ENV
 # Start the app.
-CMD yarn start
+CMD sh -c "yarn start:$ENV"

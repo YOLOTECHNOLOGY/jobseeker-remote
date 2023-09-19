@@ -506,6 +506,10 @@ $contentWidth: 894px;
       background: #fff;
       margin-bottom: 10px;
 
+      &:last-child {
+        width: 100%;
+      }
+
       :global {
         .MuiOutlinedInput-root {
           background-color: #ffffff !important;

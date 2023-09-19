@@ -49,7 +49,7 @@ const CompanyList = (props: any) => {
             payload: {
               source: 'company_reco',
               device: isMobile ? 'mobile_web' : 'web',
-              country_id: company?.reco_from || '',
+              country_id: company?.country_id || '',
               device_udid
             }
           }

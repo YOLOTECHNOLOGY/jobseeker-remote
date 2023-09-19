@@ -1,5 +1,6 @@
 @use './base';
 @import 'styles/mixins';
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -10,12 +11,14 @@
   width: 1366 - 115 - 115px;
   margin: 0 auto;
 }
+
 .hot_jobs_wrapper {
   background-color: #fcfcfc;
   padding-left: 115px;
   padding-right: 115px;
   padding-top: 48px;
   padding-bottom: 10px;
+
   :global {
     section {
       width: 1136px;
@@ -23,6 +26,7 @@
     }
   }
 }
+
 .header_cover_container {
   @include base.respond-to(phone) {
     height: 2.7rem;
@@ -30,15 +34,18 @@
     position: relative;
   }
 }
+
 .company_info_wrapper {
   display: flex;
   justify-content: space-between;
 }
+
 .company_culture {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
+
 .header_cover {
   width: 1366px;
   min-height: 200px;
@@ -46,6 +53,7 @@
   z-index: 1;
   background: linear-gradient(180deg, #287aea 0%, #5cb8ff 100%);
 }
+
 .jobs_item {
   font-family: 'Product Sans';
   font-style: normal;
@@ -61,22 +69,27 @@
   border: 1px solid var(--neutral-color-border, #e5e6eb);
   background: var(--neutral-color-text, #fff);
   transition: all 0.3s linear;
+
   &:hover {
     border: 1px solid var(--brand-color, #2378e5);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
     color: #ffffff;
+
     .chat_now {
       opacity: 1;
       color: #ffffff;
     }
+
     .salary {
       opacity: 0;
     }
   }
 }
+
 .content {
   padding-top: 32px;
 }
+
 .jobs_item_layout {
   display: flex;
   justify-content: space-between;
@@ -87,24 +100,29 @@
   border-bottom: 1px solid #e5e6eb;
   display: flex;
 }
+
 .tab_layout {
   width: 1366 - 115 - 115px;
   margin: 0 auto;
+
   @include base.respond-to(phone) {
     padding-left: 0.04rem;
   }
+
   :global {
     .MuiTab-textColorPrimary {
       text-transform: capitalize;
       color: var(--neutral-color-text, #1d2129) !important;
       font-size: 20px;
       line-height: 25px;
+
       @include base.respond-to(phone) {
         font-size: 0.18rem;
         font-weight: 400;
         line-height: 0.25rem;
       }
     }
+
     .Mui-selected {
       font-weight: 700;
       // @include base.respond-to(phone) {
@@ -112,6 +130,7 @@
       //   // color: var(--main-color-blue-blue-012378-e-5, #2378e5) !important;
       // }
     }
+
     .MuiTabs-indicator {
       // background-color: var(--neutral-color-text, #1d2129) !important;
       // height: 3px !important;
@@ -119,7 +138,8 @@
       justify-content: center;
       align-items: center;
       background-color: transparent;
-      & > span {
+
+      &>span {
         background-color: var(--neutral-color-text, #1d2129) !important;
         height: 3px !important;
         max-width: 50px;
@@ -127,8 +147,9 @@
         width: 50px;
         border-radius: 3px;
       }
+
       @include base.respond-to(phone) {
-        & > span {
+        &>span {
           background-color: var(--neutral-color-text, #1d2129) !important;
           height: 3px !important;
           max-width: 50px;
@@ -138,8 +159,10 @@
         }
       }
     }
+
     .MuiTab-root {
       padding-bottom: 20px;
+
       @include base.respond-to(phone) {
         padding-bottom: 0.12rem;
       }
@@ -156,6 +179,7 @@
   // overflow: hidden;
   padding-bottom: 36px;
   padding-top: 36px;
+
   @include base.respond-to(phone) {
     width: 100%;
     overflow: visible;
@@ -179,8 +203,10 @@
     align-items: center;
   }
 }
+
 .header_logo {
   margin-right: 20px;
+
   @include base.respond-to(phone) {
     position: relative;
     // position: absolute;
@@ -192,12 +218,14 @@
     margin-right: 0.2rem;
   }
 }
+
 .header_logo_img {
   width: 68px;
   height: 68px;
   border-radius: 13px;
   object-fit: cover;
   border: 1px solid #ffffff;
+
   @include base.respond-to(phone) {
     width: 0.68rem;
     height: 0.68rem;
@@ -205,8 +233,8 @@
     border: 1px solid var(--neutral-color-border, #e5e6eb);
   }
 }
-.header_content {
-}
+
+.header_content {}
 
 .header_title_num_wrapper {
   display: flex;
@@ -215,6 +243,7 @@
   margin-right: 20px;
   margin-right: 40px;
 }
+
 .header_title_right {
   position: absolute;
   right: 100px;
@@ -225,6 +254,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .header_title_num {
   color: #fff;
   /* Bold/super title/medium */
@@ -236,6 +266,7 @@
   letter-spacing: 0.24px;
   margin-right: 5px;
 }
+
 .header_title_string {
   color: #fff;
 
@@ -279,6 +310,7 @@
   color: var(--neutral-color-text, #fff);
   font-family: Product Sans;
   display: flex;
+
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #86909c);
     font-size: 0.13rem;
@@ -294,6 +326,7 @@
 .header_subtitle_item {
   @include base.split();
 }
+
 .header_benefit_wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -321,6 +354,7 @@
   margin-right: 4px;
   margin-bottom: 5px;
   background: rgba(139, 139, 139, 0.8);
+
   @include base.respond-to(phone) {
     color: var(--neutral-color-text, #4e5969);
     font-size: 0.13rem;
@@ -338,10 +372,12 @@
     margin-bottom: 16px;
   }
 }
+
 .split {
   width: 100%;
   border-bottom: 1px solid var(--neutral-color-border, #e5e6eb);
 }
+
 .header_mask {
   position: absolute;
   left: 0;
@@ -351,8 +387,10 @@
   z-index: 2;
   background: linear-gradient(180deg, rgba(7, 7, 7, 0.15) 0%, rgba(0, 0, 0, 0.8) 100%);
 }
+
 .header_title_verified {
   margin-left: 20px;
+
   @include base.respond-to(phone) {
     margin-left: 0.1rem;
   }
@@ -363,10 +401,12 @@
   height: 85px;
   line-height: 85px;
 }
+
 .jobs_chat_now_container {
   position: relative;
   text-align: right;
 }
+
 .salary {
   font-family: 'Product Sans';
   font-style: normal;
@@ -377,9 +417,11 @@
   letter-spacing: 0.0075em;
   color: #2378e5;
 }
+
 .jobs_content {
   display: flex;
   align-items: center;
+
   :global {
     .tag_flag {
       border-radius: 6px;
@@ -421,7 +463,10 @@
   opacity: 0;
   transition: all 0.3s linear;
   margin-left: 0.08rem;
+  padding: 0 0.3rem;
+  white-space: nowrap;
 }
+
 .header_right {
   position: absolute;
   top: 0px;
@@ -430,6 +475,7 @@
   align-items: center;
   cursor: pointer;
 }
+
 .arrow {
   border-left: 5px solid #000;
   border-top: 5px solid transparent;
@@ -439,6 +485,7 @@
   width: 0;
   height: 0;
 }
+
 .more_job {
   font-weight: 400;
   font-size: 14px;
