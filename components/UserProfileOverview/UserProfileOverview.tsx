@@ -263,7 +263,7 @@ const VipShareModal = ({ referral_code, lang, newGetStarted, handleCloseModal })
             <p className={styles.blueText}>{newGetStarted.vipText.AIResumeCoaching}</p>
             <p className={styles.descText}>{newGetStarted.vipText.HighQualityVIPResumeTemplateAndAIAssistantToHelpYouGetHighPayingOffer}</p>
             <p className={styles.links} ref={copyTextRef}>
-              <a href={`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`} target="_blank">{`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}</a>
+              {`${location.origin}/${lang}/get-started?referral_code=${referral_code}&invited_source=resume_template`}
             </p>
             <Button
               variant="contained"
