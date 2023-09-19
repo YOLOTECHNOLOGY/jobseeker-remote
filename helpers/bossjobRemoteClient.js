@@ -8,7 +8,7 @@ const client = getClient({
         return <Script
             key={script.src + script.textContent}
             type="module"
-            async
+            // async
             // crossOrigin={'anonymous'}
             src={script.src}>
             {script?.textContent?.replaceAll('\n', ';') ?? ''}
