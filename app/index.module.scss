@@ -328,6 +328,7 @@
       border-radius: 50%;
       margin-right: 10px;
     }
+
     .vipAvatar {
       position: relative;
       border-radius: 50%;
@@ -337,6 +338,7 @@
       box-sizing: border-box;
       border: 2px solid #ffc248;
       margin-right: 10px;
+
       img {
         width: 100%;
         height: 100%;
@@ -1260,7 +1262,7 @@
     height: 60px;
     font-size: 18px;
     background: #2378e5;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 7px 7px 0;
     font-weight: 700;
 
     // flex: none;
@@ -1271,7 +1273,7 @@
     }
 
     @include sm {
-      border-radius: 0;
+      border-radius: 0 2px 2px 0;
       width: 104px;
     }
 
@@ -1454,6 +1456,7 @@
 
     .searchWrapper {
       padding: 0;
+
       .search {
         width: 666px;
       }
@@ -1508,7 +1511,7 @@
       letter-spacing: 1px;
     }
 
-    > p {
+    >p {
       color: #2378e5;
       font-size: 16px;
       padding-left: 9px;
@@ -1527,13 +1530,14 @@
       border: 1px solid #579bf5;
 
       .icon {
+
         svg,
         path {
           fill: #579bf5;
         }
       }
 
-      > p {
+      >p {
         color: #579bf5;
       }
 
