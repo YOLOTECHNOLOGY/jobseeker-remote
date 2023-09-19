@@ -1262,7 +1262,7 @@
     height: 60px;
     font-size: 18px;
     background: #2378e5;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 7px 7px 0;
     font-weight: 700;
 
     // flex: none;
@@ -1273,7 +1273,7 @@
     }
 
     @include sm {
-      border-radius: 0;
+      border-radius: 0 2px 2px 0;
       width: 104px;
     }
 

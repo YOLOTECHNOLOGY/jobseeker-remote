@@ -7,6 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { FormHelperText } from '@mui/material'
 import styles from 'styles/maintenance.module.scss'
 import classNames from 'classnames'
+import Image from 'next/image'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -136,7 +137,13 @@ const MaterialBasicSelect = ({
           {options &&
             options.map((option) => (
               <MenuItem key={option.value} value={useID ? option.id : option.value}>
-                {option.label}
+                <>
+                  <Image width={30} height={22.5} src={option.flag} alt={`${option.country} flag`} style={{
+                    marginRight: '10px',
+                    borderRadius: '2px',
+                    border: '1.563px solid #E4E4E4'
+                  }} />{option.label}
+                </>
               </MenuItem>
             ))}
         </Select>

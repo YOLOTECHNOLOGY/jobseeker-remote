@@ -2,7 +2,7 @@ import { take, fork, call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
 import * as fbq from 'lib/fpixel'
 
-import { setCookie } from 'helpers/cookies'
+import { handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { setItem } from 'helpers/localStorage'
 import { isFromCreateResume } from 'helpers/constants'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
@@ -67,20 +67,7 @@ function* registerJobSeekerReq(actions) {
       }
 
       const registeredData = response.data.data
-      const userCookie = {
-        active_key: registeredData.active_key,
-        id: registeredData.id,
-        first_name: registeredData.first_name,
-        last_name: registeredData.last_name,
-        email: registeredData.email,
-        phone_num: registeredData.phone_num,
-        is_mobile_verified: registeredData.is_mobile_verified,
-        avatar: registeredData.avatar,
-        additional_info: registeredData.additional_info,
-        is_email_verify: registeredData.is_email_verify,
-        notice_period_id: registeredData.notice_period_id,
-        is_profile_completed: registeredData.is_profile_completed
-      }
+      const userCookie = handleUserCookiesConfig(registeredData)
       setItem(isFromCreateResume, source === 'free_resume' ? '1' : '0')
 
       yield call(setCookie, 'user', userCookie)

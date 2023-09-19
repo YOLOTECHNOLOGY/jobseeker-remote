@@ -9,10 +9,8 @@ export const redirectUrl = 'redirectUrl'
 export const sourceKey = 'source' // track source
 export const configKey = 'geoConfiguration'
 
-
 // session keys
-export const cfKey = 'cfKey';
-
+export const cfKey = 'cfKey'
 
 const cookies = new Cookies()
 
@@ -49,4 +47,23 @@ export const removeUserCookie = () => {
   removeCookie(accessToken)
   removeCookie(refreshToken)
   removeCookie(userKey)
+}
+
+export const handleUserCookiesConfig = (user) => {
+  return {
+    active_key: user?.active_key,
+    id: user?.id,
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    email: user?.email,
+    phone_num: user?.phone_num,
+    is_mobile_verified: user?.is_mobile_verified,
+    avatar: user?.avatar,
+    additional_info: user?.additional_info,
+    is_email_verify: user?.is_email_verify,
+    notice_period_id: user?.notice_period_id,
+    is_profile_completed: user?.is_profile_completed,
+    longitude: user?.longitude,
+    latitude: user?.latitude
+  }
 }

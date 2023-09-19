@@ -234,6 +234,7 @@ const JobCard = (props: any) => {
   }
 
   return (
+    <>
     <div
       className={styles.jobCard}
       onClick={() => {
@@ -471,9 +472,10 @@ const JobCard = (props: any) => {
           </div>
         </div>
 
-        {modalChange}
       </>
     </div>
+    {modalChange}
+    </>
   )
 }
 

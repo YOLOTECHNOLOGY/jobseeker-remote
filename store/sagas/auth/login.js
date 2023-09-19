@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { push } from 'connected-next-router'
-import { setCookie } from 'helpers/cookies'
+import { handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 
 import { LOGIN_REQUEST } from 'store/types/auth/login'
 
@@ -10,7 +10,7 @@ import { loginSuccess, loginFailed } from 'store/actions/auth/login'
 
 import { loginService } from 'store/services/auth/login'
 import { checkErrorCode } from 'helpers/errorHandlers'
-import { displayNotification }  from 'store/actions/notificationBar/notificationBar'
+import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 function* loginReq(actions) {
   try {
@@ -18,7 +18,7 @@ function* loginReq(actions) {
 
     const loginPayload = {
       login,
-      password,
+      password
     }
 
     const response = yield call(loginService, loginPayload)
@@ -27,25 +27,7 @@ function* loginReq(actions) {
       yield put(loginSuccess(response.data))
 
       const loginData = response.data.data
-
-      const userCookie = {
-        active_key: loginData.active_key,
-        id: loginData.id,
-        first_name: loginData.first_name,
-        last_name: loginData.last_name,
-        email: loginData.email,
-        phone_num: loginData.phone_num,
-        is_mobile_verified: loginData.is_mobile_verified,
-        avatar: loginData.avatar,
-        additional_info: loginData.additional_info,
-        is_email_verify: loginData.is_email_verify,
-        notice_period_id: loginData.notice_period_id,
-        is_bosshunt_talent: loginData.is_bosshunt_talent,
-        is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
-        bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-        is_profile_completed: loginData.is_profile_completed,
-      }
-
+      const userCookie = handleUserCookiesConfig(loginData)
       yield call(setCookie, 'user', userCookie)
       yield call(setCookie, 'accessToken', loginData.authentication.access_token)
 
@@ -57,7 +39,10 @@ function* loginReq(actions) {
           : `/jobs-hiring/job-search`
 
       if (redirect) {
-        if (redirect.includes(process.env.OLD_PROJECT_URL) && !redirect.includes('/jobseeker-login-redirect')) {
+        if (
+          redirect.includes(process.env.OLD_PROJECT_URL) &&
+          !redirect.includes('/jobseeker-login-redirect')
+        ) {
           const newUrl = new URL(redirect)
 
           url = authPathToOldProject(
@@ -74,11 +59,14 @@ function* loginReq(actions) {
   } catch (err) {
     const isServerError = checkErrorCode(err)
     if (isServerError) {
-      yield put(displayNotification({
-        open: true,
-        severity: 'error',
-        message: 'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
-      }))
+      yield put(
+        displayNotification({
+          open: true,
+          severity: 'error',
+          message:
+            'We are sorry. Something went wrong. There was an unexpected server error. Try refreshing the page or contact support@bossjob.com for assistance.'
+        })
+      )
     } else {
       const statusCode = err.response.status
       let errorMessage = ''

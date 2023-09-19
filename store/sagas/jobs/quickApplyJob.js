@@ -7,7 +7,7 @@ import * as fbq from 'lib/fpixel'
 import { QUICK_APPLY_JOB_REQUEST } from 'store/types/jobs/quickApplyJob'
 import { quickApplyJobSuccess, quickApplyJobFailed } from 'store/actions/jobs/quickApplyJob'
 
-import { setCookie } from 'helpers/cookies'
+import { handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { getUtmCampaignData, removeUtmCampaign } from 'helpers/utmCampaign'
 
 import { registerJobseekerService } from 'store/services/auth/registerJobseeker'
@@ -77,19 +77,7 @@ function* quickApplyJobReq(action) {
 
       const registeredData = response.data.data
 
-      const userCookie = {
-        active_key: registeredData.active_key,
-        id: registeredData.id,
-        first_name: registeredData.first_name,
-        last_name: registeredData.last_name,
-        email: registeredData.email,
-        phone_num: registeredData.phone_num,
-        is_mobile_verified: registeredData.is_mobile_verified,
-        avatar: registeredData.avatar,
-        is_email_verify: registeredData.is_email_verify,
-        notice_period_id: registeredData.notice_period_id,
-        is_profile_completed: registeredData.is_profile_completed
-      }
+      const userCookie = handleUserCookiesConfig(registeredData)
 
       yield call(setCookie, 'user', userCookie)
 
@@ -109,9 +97,9 @@ function* quickApplyJobReq(action) {
         // If external apply exists redirect jobseeker to external apply url (No application will be created)
         if (externalApplyUrl) {
           yield call(addExternalJobClickService, jobId)
-          
+
           if (source === 'mobile_web') {
-            yield window.location.href = externalApplyUrl
+            yield (window.location.href = externalApplyUrl)
           } else {
             yield window.open(externalApplyUrl)
             yield window.location.reload()

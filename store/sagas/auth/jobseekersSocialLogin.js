@@ -1,5 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import { accessToken, refreshToken, setCookie, userKey } from 'helpers/cookies'
+import {
+  accessToken,
+  handleUserCookiesConfig,
+  refreshToken,
+  setCookie,
+  userKey
+} from 'helpers/cookies'
 
 import { JOBBSEEKERS_SOCIALLOGIN_REQUEST } from 'store/types/auth/jobseekersSocialLogin'
 
@@ -22,39 +28,24 @@ function* SocialLoginReq(actions) {
       yield put(jobbseekersSocialLoginSuccess(response.data))
       const loginData = response.data.data
       const { refresh_token, token, token_expired_at } = loginData
-      const userCookie = {
-        active_key: loginData.active_key,
-        id: loginData.id,
-        first_name: loginData.first_name,
-        last_name: loginData.last_name,
-        email: loginData.email,
-        phone_num: loginData.phone_num,
-        is_mobile_verified: loginData.is_mobile_verified,
-        avatar: loginData.avatar,
-        additional_info: loginData.additional_info,
-        is_email_verify: loginData.is_email_verify,
-        notice_period_id: loginData.notice_period_id,
-        is_bosshunt_talent: loginData.is_bosshunt_talent,
-        is_bosshunt_talent_active: loginData.is_bosshunt_talent_active,
-        bosshunt_talent_opt_out_at: loginData.bosshunt_talent_opt_out_at,
-        is_profile_completed: loginData.is_profile_completed
-      }
+      const userCookie = handleUserCookiesConfig(loginData)
       yield call(setCookie, refreshToken, refresh_token)
       yield call(setCookie, userKey, userCookie)
       yield call(setCookie, accessToken, token, token_expired_at)
 
       // Send register event (First time login user)
       if (
-        process.env.ENV === 'production' && 
-        loginData.is_new_account && typeof window !== 'undefined' 
+        process.env.ENV === 'production' &&
+        loginData.is_new_account &&
+        typeof window !== 'undefined'
       ) {
         // Facebook Pixel
         if (window.fbq) {
-          yield fbq.event('sign_up', { 
+          yield fbq.event('sign_up', {
             user_id: loginData?.id
           })
         }
-        
+
         // Google analytic Event
         if (window.gtag) {
           yield window.gtag('event', 'sign_up', {
@@ -68,7 +59,7 @@ function* SocialLoginReq(actions) {
           yield window.ttq.track('CompleteRegistration', {
             user_id: loginData?.id,
             email: loginData?.email
-          });
+          })
         }
       }
     }

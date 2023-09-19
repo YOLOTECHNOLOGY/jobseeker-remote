@@ -12,7 +12,7 @@ const ChatDataProvider = (props: any) => {
         if (token && recruiterIds?.length) {
             check(recruiterIds, token.value)
                 .then(response => {
-                    const chats = response.data.data
+                    const chats = response?.data?.data ?? []
                     setData(chats)
                 })
         }

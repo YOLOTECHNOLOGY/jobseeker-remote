@@ -3,15 +3,12 @@ import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
+import { createTheme } from '@mui/material/styles'
 import { Stack } from 'app/components/MUIs'
 
 import MaterialButton from 'components/MaterialButton'
 
-import { authenticationSendEmaillOtp } from 'store/services/auth/generateEmailOtp'
 
-import { displayNotification } from 'store/actions/notificationBar/notificationBar'
 
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 
