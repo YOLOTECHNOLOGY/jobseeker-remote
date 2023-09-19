@@ -8,10 +8,7 @@ import styles from '../../../index.module.scss'
 import HomeBanner from './HomeBanner'
 
 const TopModule = ({ lang, langKey, config }) => {
-
-  const {
-    home
-  } = lang || {}
+  const { home } = lang || {}
 
   return (
     <>

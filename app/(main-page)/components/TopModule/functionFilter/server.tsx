@@ -29,7 +29,7 @@ const getSimpleTitle = (item) => {
     'Purchasing/Trading': 'Purchasing',
     'Professional Services': 'Services',
     'Agriculture/Environment': 'Agri/Env',
-    'Hotel/Tourism': 'Tourism'
+    'Hotel/Tourism': 'H/T'
   }
   return { ...item, simpleTitle: map[title] || title }
 }
@@ -52,7 +52,9 @@ const fillTo3 = (popularList) => (filledList) => (sourceList) => {
 const fetchJobs = memoizeWithTime(fetchJobsPreferences, (payload, token) => token, 36000)
 
 const ServerFunctionFilter = async (props: { config: any; langKey: any }) => {
-  const config = props?.config
+  const config = props?.config || []
+  const lang = props?.langKey
+  console.log(lang, 123456)
   const list =
     config?.main_job_function_lists
       ?.map?.((item) => {
@@ -84,11 +86,22 @@ const ServerFunctionFilter = async (props: { config: any; langKey: any }) => {
   }
   const functionTitles = getFunctionTitles(list)
   const subTitlesList = functionTitles.map(fillTo3(popularList)([]))
+
+  const initWordSpace = {
+    'ja-JP': {
+      subLen: '18',
+      titleLen: '18'
+    }
+  }
+
   const shakeSub = (subTitles, mainWidth) => {
     if (subTitles.length <= 1) {
       return subTitles
     } else {
-      const subWidth = subTitles.map((sub) => sub.length * 7).reduce((a, b) => a + b + 10, 0)
+      const subWidth = subTitles
+        .map((sub) => sub.length * (initWordSpace?.[props?.langKey]?.subLen || 7))
+        .reduce((a, b) => a + b + 10, 0)
+
       if (mainWidth + subWidth >= 572) {
         return shakeSub(dropLast(1, subTitles), mainWidth)
       } else {
@@ -97,12 +110,12 @@ const ServerFunctionFilter = async (props: { config: any; langKey: any }) => {
     }
   }
   const contentWidths = list.map((mainTitle) => {
-    const mainWidth = mainTitle.title.length * 9 + 10
+    const mainWidth = mainTitle.title.length * (initWordSpace?.[props?.langKey]?.titleLen || 9) + 10
     return 482 - mainWidth
   })
   const filtered = subTitlesList.map((subTitles, index) => {
     const mainTitle = list[index].title
-    const mainWidth = mainTitle.length * 9 + 10
+    const mainWidth = mainTitle.length * (initWordSpace?.[props?.langKey]?.titleLen || 9) + 10
     return shakeSub(subTitles, mainWidth)
   })
   return { list, subTitlesList: filtered, contentWidths }
@@ -110,7 +123,7 @@ const ServerFunctionFilter = async (props: { config: any; langKey: any }) => {
 
 export default (props: any) =>
   interpreter(serverDataScript())
-    .chain((props) => M.do(() => ServerFunctionFilter(props)))
+    .chain((config) => M.do((props) => ServerFunctionFilter({ ...config, ...props })))
     .chain((props) => interpreter(buildComponentScript(props, LiftClient(FunctionFilter))))
     .run(props)
 // export default ServerFunctionFilter as any
