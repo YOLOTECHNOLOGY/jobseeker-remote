@@ -5,10 +5,12 @@ import useUserAgent from 'helpers/useUserAgent'
 import { useRouter } from 'next/navigation'
 
 import Loading from 'app/components/loading'
+import { adjustLink } from 'helpers/constants'
+
 import styles from './index.module.scss'
 
-const androidUrl = 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp '
-const iOSUrl = 'https://apps.apple.com/sg/app/bossjob/id1592073585'
+const androidUrl = adjustLink || 'https://play.google.com/store/apps/details?id=com.poseidon.bossjobapp '
+const iOSUrl = adjustLink || 'https://apps.apple.com/sg/app/bossjob/id1592073585'
 
 const AppRedirect = () => {
     const { ua: userAgent } = useUserAgent()
