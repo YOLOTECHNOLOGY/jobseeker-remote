@@ -1,7 +1,11 @@
 import { thousandsToNumber, unslugify } from 'helpers/formatter'
+import { S3BucketJobseeker } from 'images'
 
 /* Helpers */
-import { checkFilterMatch as checkFilterMatchV2, userFilterSelectionDataParser as userFilterSelectionDataParserV2 } from './queryEncoder'
+import {
+  checkFilterMatch as checkFilterMatchV2,
+  userFilterSelectionDataParser as userFilterSelectionDataParserV2
+} from './queryEncoder'
 /* Vendors */
 import moment from 'moment'
 import { getCountryKey } from './country'
@@ -104,8 +108,7 @@ const SEOJobSearchMetaBuilder = (query, location, category, path) => {
     description = `New ${category} Jobs in ${location}, ${getCountry()} available on Bossjob. Advance your professional career on Bossjob today - Connecting pre-screened experienced professionals to employers`
   } else {
     title = `Job Hiring, Job Search & Job Openings in ${getCountry()} | Bossjob.${getCountryKey()}`
-    description =
-      `Latest job hiring in ${getCountry()}. Search job openings & career opportunities with more than 3000 employers on Bossjob!`
+    description = `Latest job hiring in ${getCountry()}. Search job openings & career opportunities with more than 3000 employers on Bossjob!`
   }
 
   const data = {
@@ -122,7 +125,13 @@ const checkFilterMatch = (routerQuery, config, isMobile = false) => {
   return matchedFilterV2
 }
 
-const userFilterSelectionDataParser = (field, optionValue, routerQuery, config, isClear = false) => {
+const userFilterSelectionDataParser = (
+  field,
+  optionValue,
+  routerQuery,
+  config,
+  isClear = false
+) => {
   const dataV2 = userFilterSelectionDataParserV2(field, optionValue, routerQuery, config, isClear)
   return dataV2
 }
@@ -224,7 +233,9 @@ const getSmsCountryList = (config) => {
       const smsCountry = {
         value: country['code'],
         label: country['code'] + ' (' + country['value'] + ')',
-        id:country.id
+        id: country.id,
+        flag: `${S3BucketJobseeker}/flags/${country.key?.toUpperCase()}.png`,
+        country: country.value
       }
 
       smsCountryList.push(smsCountry)
@@ -329,14 +340,16 @@ const getDegreeList = (config) => {
 
   const degreeList = config?.degrees
   if (degreeList && degreeList.length === 0) return degreeList
-  return degreeList?.map((degree) => {
-    return {
-      id: degree.id,
-      label: degree.value,
-      value: degree.key,
-      key: degree.key
-    }
-  })?.filter(e => e.label !== 'Edu not required')
+  return degreeList
+    ?.map((degree) => {
+      return {
+        id: degree.id,
+        label: degree.value,
+        value: degree.key,
+        key: degree.key
+      }
+    })
+    ?.filter((e) => e.label !== 'Edu not required')
 }
 
 const getApplyJobLink = (job, user) => {

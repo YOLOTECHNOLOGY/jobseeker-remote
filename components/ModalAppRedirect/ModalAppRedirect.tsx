@@ -17,13 +17,14 @@ import styles from './ModalAppRedirect.module.scss'
 import { BossjobFittedLogoApp, Chrome, Safari, OtherBrowser } from 'images'
 import { getCookie } from 'helpers/cookies'
 import { getAppStoreLink } from 'helpers/country'
+import { adjustLink } from 'helpers/constants'
 
 interface ModalAppRedirectProps {
   isShowModal?: boolean
   handleModal?: Function
   handleOpenAppCallBack?: Function
   // currentRouter can only be used in AutoShowModalAppRedirect component. we simulate the router and make it work
-  currentRouter?: { asPath: string; [key: string]: any } | NextRouter
+  currentRouter?: { asPath: string;[key: string]: any } | NextRouter
 }
 
 // const useCurrentRouter = (router?: any) => {
@@ -124,7 +125,7 @@ const ModalAppRedirect = ({
 
       //  adjust link
 
-      const schema = `https://cyyj.adj.st/bossjob.ph?adj_t=4pha213&adj_deep_link=bossjob%3A%2F%2Fbossjob.ph`
+      const schema = adjustLink
 
       const appStoreLink = userAgent?.isIos
         ? getAppStoreLink()
