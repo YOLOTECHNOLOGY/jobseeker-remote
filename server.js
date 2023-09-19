@@ -4,7 +4,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const env = process.argv[2]
 const dev = process.argv[3] === 'dev'
 const result = require('dotenv').config({ path: `.env.${env}` });
-
+const port = dev ? 3004 : 3000
 console.log({ result })
 const app = next({ isNextDevCommand: dev, buildId: env, dev: env === 'development' || env === 'devsite', env: result.parsed });
 
@@ -26,7 +26,7 @@ app.prepare().then(async () => {
         return handle(req, res);
     });
 
-    server.listen(3004, (err) => {
+    server.listen(port, (err) => {
         if (err) throw err;
         console.log('> Ready on http://localhost:3004')
     });
