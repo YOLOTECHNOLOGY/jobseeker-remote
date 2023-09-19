@@ -24,13 +24,16 @@ const fetchQueryOnlineStatus = async (userIds, accessToken) => {
 }
 const HotJobTable = async ({ lang }) => {
     console.log('lebron:', lang)
-
+    let result = null
     const accessToken = cookies().get('accessToken')?.value
-    const result = await hotJobListData(
-        getCountryId(),
-        // 167,
-        accessToken
-    )
+    if (accessToken) {
+        result = await hotJobListData(
+            // getCountryId(),
+            167,
+            accessToken
+        )
+    }
+
 
     const statusResult = await fetchQueryOnlineStatus(result?.data?.data?.jobs?.map(item => item.recruiter.id), accessToken)
 
