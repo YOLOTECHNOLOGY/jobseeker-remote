@@ -5,8 +5,15 @@ const env = process.argv[2]
 const dev = process.argv[3] === 'dev'
 const result = require('dotenv').config({ path: `.env.${env}` });
 const port = dev ? 3004 : 3000
-console.log({ result })
-const app = next({ isNextDevCommand: dev, buildId: env, dev: env === 'development' || env === 'devsite', env: result.parsed });
+console.log({ dev, env, 'process.env.NODE_ENV': process.env.NODE_ENV })
+const app = next({
+    isNextDevCommand: dev,
+    dev: dev,
+    conf: {
+        env: result.parsed
+    },
+    customServer: true,
+});
 
 const handle = app.getRequestHandler();
 

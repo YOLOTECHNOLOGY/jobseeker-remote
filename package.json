@@ -8,7 +8,7 @@
     "build:staging": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.staging --use-shell MAINTENANCE=$MAINTENANCE next build",
     "build:production": "NODE_OPTIONS=--max_old_space_size=12000 env-cmd -f .env.production --use-shell MAINTENANCE=$MAINTENANCE next build",
     "analyze": "ANALYZE=true yarn build:production",
-    "start:development": "node server.js devsite",
+    "start:development": "env-cmd -f .env.devsite node server.js devsite",
     "start:staging": "node server.js staging",
     "start:production": "node server.js production",
     "lint": "next lint",

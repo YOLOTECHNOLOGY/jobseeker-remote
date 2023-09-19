@@ -4,24 +4,6 @@ import { select } from 'redux-saga/effects'
 import { itemExist, getItem, removeItem } from 'helpers/localStorage'
 import { utmCampaignKey } from 'helpers/constants'
 
-const getDeviceData = state => {
-  const {
-    isDesktop,
-    isMobile,
-    isTablet,
-    operatingSystem
-  } = state.utility.setUserDevice.userAgent
-  return {
-    device_type: isMobile
-      ? 'mobile'
-      : isTablet
-        ? 'tablet'
-        : isDesktop
-          ? 'desktop'
-          : 'unknown',
-    device_os: operatingSystem
-  }
-}
 
 function* getUtmCampaignData() {
   const utmCampaign = itemExist(utmCampaignKey)
