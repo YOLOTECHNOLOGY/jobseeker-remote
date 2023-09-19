@@ -60,7 +60,7 @@
     "antd": "^5.8.5",
     "axios": "^0.24.0",
     "babel-loader": "^9.1.3",
-    "bossjob-remote": "^0.0.3-fix2",
+    "bossjob-remote": "^0.0.3-fix3",
     "braintree-web": "^3.88.1",
     "classnames": "^2.3.1",
     "coffee-script": "^1.12.7",

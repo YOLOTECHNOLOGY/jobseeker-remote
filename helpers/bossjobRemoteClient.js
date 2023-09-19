@@ -3,6 +3,7 @@ import { getClient } from 'bossjob-remote/dist/client'
 import Script from 'next/script'
 
 const client = getClient({
+    env: process.env.ENV,
     parseScript: (script) => {
         console.log(script)
         return <Script
@@ -20,5 +21,5 @@ const client = getClient({
         href={link.href}>
     </link>
 })
-
+console.log('process.env.ENV', process.env.ENV)
 export default client
