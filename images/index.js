@@ -1,4 +1,4 @@
-const S3BucketJobseeker = process.env.S3_BUCKET_URL
+export const S3BucketJobseeker = process.env.S3_BUCKET_URL
 
 // Logo
 export const BossjobLogo = `${S3BucketJobseeker}/Bossjob.svg`
