@@ -102,6 +102,7 @@ export interface ManageProfileData {
   email_notification_setting:     EmailNotificationSetting;
   active_key:                     number;
   jobseeker_lack_field_num:       null;
+  vip:                            any;
 }
 
 export interface Education {

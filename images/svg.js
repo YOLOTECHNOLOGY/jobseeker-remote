@@ -15,7 +15,7 @@ export const backTopBtn = (<svg
         d='M1.89844 10.6333L10.6376 1.86387C11.0338 1.46633 11.6795 1.4726 12.0678 1.87774L20.8125 11'
         stroke='white'
         stroke-width='2'
-        stroke-linecap='round'
+        strokeLinecap='round'
     />
 </svg>)
 

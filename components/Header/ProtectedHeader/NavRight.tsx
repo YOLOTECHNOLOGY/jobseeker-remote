@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames/bind'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { accessToken, getCookie } from 'helpers/cookies'
+import { accessToken, getCookie, handleUserCookiesConfig, setCookie, userKey } from 'helpers/cookies'
 import { fetchUserOwnDetailRequest } from 'store/actions/users/fetchUserOwnDetail'
 
 /* Style */
@@ -29,27 +29,36 @@ interface IProps {
 
 const NavRight = (props: IProps) => {
   const { langKey, lang, totalUnread, handleShowMenu } = props
-  const { profile } = useProfileData();
+  const { profile, fetchProfile } = useProfileData();
   const router = useRouter()
   const pathname = usePathname()
   const currentUser = getCookie('user')
   const accessToken = getCookie('accessToken')
+  const [userInfo, setUserInfo] = useState({...currentUser})
 
   const { manageResume, Chat } = lang || {}
   const [showUnCompletedDot, setShowUnCompletedDot] = useState(false)
-  const userInfo = useSelector((store: any) => store.users.fetchUserOwnDetail.response || {})
-  const dispatch = useDispatch()
+
+  const isVip = useMemo(() => userInfo?.vip?.is_vip, [userInfo]) 
+
   useEffect(() => {
-    if (userInfo?.id) {
-      const hasJobPreferences = userInfo?.job_preferences.length > 0
+    accessToken && fetchProfile()
+  }, [accessToken])
+
+  useEffect(() => {
+    if(profile?.id) {
+      setUserInfo(profile)
+      const userCookies = handleUserCookiesConfig(profile)
+      setCookie(userKey, userCookies)
+    }
+  }, [profile])
+
+  useEffect(() => {
+    if (userInfo?.job_preferences) {
+      const hasJobPreferences = userInfo.job_preferences?.length > 0
       setShowUnCompletedDot(!userInfo?.is_profile_completed || !hasJobPreferences)
     }
   }, [userInfo])
-  useEffect(() => {
-    accessToken && dispatch(fetchUserOwnDetailRequest({ accessToken }))
-
-  }, [accessToken])
-
 
   const manageProfileCss = {
     height: '40px !important',
@@ -64,7 +73,7 @@ const NavRight = (props: IProps) => {
       boxShadow: 'none'
     }
   }
-  console.log('vip', userInfo?.vip?.is_vip, { country: getCountry() })
+
   return (
     <ul className={styles.headerLinksList}>
       <React.Fragment>
@@ -92,7 +101,7 @@ const NavRight = (props: IProps) => {
             <a
               title='Manage Resume'
               onClick={() => {
-                currentUser?.is_profile_completed
+                userInfo?.is_profile_completed
                   ? router.push('/' + langKey + '/manage-profile')
                   : router.push('/' + langKey + '/jobseeker-complete-profile')
                 // currentUser?.is_profile_completed ? handleRedirectAuthentication(e, '/dashboard/profile/jobseeker') : router.push('/jobseeker-complete-profile/1')
@@ -121,7 +130,7 @@ const NavRight = (props: IProps) => {
         </li>
         <li className={styles.headerLink}>
           <div className={styles.profileProtectedWrapper} onClick={() => handleShowMenu()}>
-            {userInfo?.vip?.is_vip ?
+            {isVip ?
               <div className={styles.vipAvatar}>
                 <Image
                   src={require('./vip_user_icon.png').default.src}
@@ -130,7 +139,7 @@ const NavRight = (props: IProps) => {
                   alt=""
                   style={{ position: 'absolute', bottom: '-1px', right: 0 }} />
                 <Image
-                  src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                  src={userInfo?.avatar || DefaultAvatar}
                   className={styles.profilePlaceHolder}
                   width={35}
                   height={35}
@@ -141,7 +150,7 @@ const NavRight = (props: IProps) => {
                 />
               </div> :
               <Image
-                src={profile?.avatar || currentUser?.avatar || DefaultAvatar}
+                src={userInfo?.avatar || DefaultAvatar}
                 className={styles.profilePlaceHolder}
                 width={35}
                 height={35}

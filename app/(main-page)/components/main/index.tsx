@@ -67,14 +67,13 @@ const Main = async (props: any) => {
       <div className={styles.main}>
         <TopModule langKey={langKey} lang={props.lang} config={config} />
         <Tabs config={config} langKey={langKey} location_id={locationId} />
-         {/* @ts-expect-error Async Server Component */}
+        {/* @ts-expect-error Async Server Component */}
         <Companies langKey={langKey} lang={props.lang} config={config} location_id={locationId} />
-         {/* @ts-expect-error Async Server Component */}
+        {/* @ts-expect-error Async Server Component */}
         <MobileHome lang={props.lang} config={config} langKey={langKey} location_id={locationId} />
         <Tracker />
       </div>
       <Footer {...props} />
-      <AutoShowModalAppRedirect />
     </>
   )
 }
