@@ -9,7 +9,7 @@ const client = getClient({
             key={script.src + script.textContent}
             type="module"
             async
-            crossOrigin={'anonymous'}
+            // crossOrigin={'anonymous'}
             src={script.src}>
             {script?.textContent?.replaceAll('\n', ';') ?? ''}
         </Script>
