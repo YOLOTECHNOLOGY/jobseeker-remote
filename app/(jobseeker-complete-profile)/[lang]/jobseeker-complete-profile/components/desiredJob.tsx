@@ -19,7 +19,7 @@ import { flatMap } from 'lodash-es'
 import { getLang } from 'helpers/country'
 import { LinkContext } from 'app/components/providers/linkProvider'
 import { generateUserResumeService } from 'store/services/users/generateUserResume'
-import { getCookie, setCookie } from 'helpers/cookies'
+import { getCookie, handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { countryForCurrency } from 'helpers/country'
 const EducationExperience = (props: any) => {
   const { lang, userDetail, config } = props
@@ -160,20 +160,7 @@ const EducationExperience = (props: any) => {
     // getUserInfo?.()
     fetchUserOwnDetailService({ accessToken }).then((res) => {
       const userDetail = res?.data?.data
-      const userCookie = {
-        active_key: userDetail.active_key,
-        id: userDetail.id,
-        first_name: userDetail.first_name,
-        last_name: userDetail.last_name,
-        email: userDetail.email,
-        phone_num: userDetail.phone_num,
-        is_mobile_verified: userDetail.is_mobile_verified,
-        avatar: userDetail.avatar,
-        additional_info: userDetail.additional_info,
-        is_email_verify: userDetail.is_email_verify,
-        notice_period_id: userDetail.notice_period_id,
-        is_profile_completed: userDetail.is_profile_completed
-      }
+      const userCookie = handleUserCookiesConfig(userDetail)
       setCookie('user', userCookie)
       const isChatRedirect = localStorage.getItem('isChatRedirect')
       const redirectPage = sessionStorage.getItem('redirectPage')

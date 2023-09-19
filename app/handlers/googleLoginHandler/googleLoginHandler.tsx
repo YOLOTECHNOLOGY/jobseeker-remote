@@ -8,7 +8,7 @@ import { setUserDevice } from 'store/actions/utility/setUserDevice'
 // Components
 import Text from 'components/Text'
 // Helpers
-import { setCookie } from 'helpers/cookies'
+import { handleUserCookiesConfig, setCookie } from 'helpers/cookies'
 import { useDispatch } from 'react-redux'
 import { message } from 'antd'
 import { parse } from 'next-useragent'
@@ -64,21 +64,7 @@ const googleLoginHandler = ({
               await socialLoginService(payload).then(async (response) => {
                 dispatch(socialLoginSuccess({}))
                 if (response.status >= 200 && response.status < 300) {
-                  const userCookie = {
-                    active_key: response.data.data.active_key,
-                    id: response.data.data.id,
-                    first_name: response.data.data.first_name,
-                    last_name: response.data.data.last_name,
-                    email: response.data.data.email,
-                    phone_num: response.data.data.phone_num,
-                    is_mobile_verified: response.data.data.is_mobile_verified,
-                    avatar: response.data.data.avatar,
-                    additional_info: response.data.data.additional_info,
-                    is_email_verify: response.data.data.is_email_verify,
-                    notice_period_id: response.data.data.notice_period_id,
-                    is_profile_completed: response.data.data.is_profile_completed
-                  }
-
+                  const userCookie = handleUserCookiesConfig(response.data.data)
                   setCookie('accessToken', response.data.data?.token)
                   setCookie('user', userCookie)
                   if (typeof window !== 'undefined') {
