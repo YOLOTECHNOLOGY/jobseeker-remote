@@ -10,12 +10,30 @@ const LeftBanner = ({ newGetStarted }) => {
   const searchParams = useSearchParams()
   const referralCode = searchParams.get('referral_code')
   const invitedSource = searchParams.get('invited_source')
+  // useEffect(() => {
+  //   if (referralCode && invitedSource) {
+  //     setDisplayVipImage(true)
+  //   } else {
+  //     Lottie.loadAnimation({
+  //       container: container.current,
+  //       renderer: 'svg',
+  //       loop: true,
+  //       autoplay: true,
+  //       name: 'animation.json',
+  //       animationData: require('images/animation.json')
+  //     })
+  //   }
+
+  //   return () => {
+  //     Lottie?.destroy()
+  //   }
+  // }, [])
+
   useEffect(() => {
-    if (referralCode && invitedSource) {
-      setDisplayVipImage(true)
-    }
-    else {
-      Lottie.loadAnimation({
+    let animation
+
+    const loadAnimation = () => {
+      animation = Lottie.loadAnimation({
         container: container.current,
         renderer: 'svg',
         loop: true,
@@ -24,8 +42,28 @@ const LeftBanner = ({ newGetStarted }) => {
       })
     }
 
-    return () => {
-      Lottie?.destroy()
+    if (referralCode && invitedSource) {
+      setDisplayVipImage(true)
+    } else {
+      loadAnimation()
+
+      if (container.current) {
+        // 创建一个新的 ResizeObserver 实例
+        const resizeObserver = new ResizeObserver(() => {
+          // 当容器尺寸发生变化时，重新加载动画
+          animation?.destroy()
+          loadAnimation()
+        })
+
+        // 开始观察容器的尺寸变化
+        resizeObserver.observe(container.current)
+
+        // 在组件卸载时，停止观察容器的尺寸变化并销毁动画
+        return () => {
+          resizeObserver.disconnect()
+          animation?.destroy()
+        }
+      }
     }
   }, [])
 
@@ -33,13 +71,16 @@ const LeftBanner = ({ newGetStarted }) => {
     return (
       <div className={`${styles.bannner} ${styles.bannerFlex}`}>
         <div className={styles.bannerText}>
-          <p>{newGetStarted?.vipText.GetVipPrivilegesImmediately}
+          <p>
+            {newGetStarted?.vipText.GetVipPrivilegesImmediately}
             <span>{newGetStarted?.vipText.InviteNewUsersToRegister}</span>
           </p>
-          <p>{newGetStarted?.vipText.BossjobAI}
+          <p>
+            {newGetStarted?.vipText.BossjobAI}
             <span>{newGetStarted?.vipText.ResumeAssistant}</span>
           </p>
-          <p>{newGetStarted?.vipText.HighSalaryOffer}
+          <p>
+            {newGetStarted?.vipText.HighSalaryOffer}
             <span>{newGetStarted?.vipText.HelpYouGet}</span>
           </p>
         </div>
