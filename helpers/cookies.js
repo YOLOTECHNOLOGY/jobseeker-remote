@@ -1,3 +1,4 @@
+// @ts-check
 import moment from 'moment'
 import Cookies from 'universal-cookie'
 import { toLower } from 'lodash-es'

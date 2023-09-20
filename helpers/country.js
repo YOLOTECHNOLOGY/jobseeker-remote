@@ -1,3 +1,4 @@
+// @ts-check
 /* eslint-disable valid-jsdoc */
 import { configKey, getCookie } from './cookies'
 
@@ -157,7 +158,7 @@ export const serverContryCodeMap = {
   'ms-MY': 'ms'
 }
 
-export const internationalCountry = countryCounfig.find(item => item.key === 'com')
+export const internationalCountry = countryCounfig.find((item) => item.key === 'com')
 export const getLanguageCode = (langKey) => serverContryCodeMap[langKey] ?? langKey
 export const getLangKeyByCode = (langCode) => {
   const langKey = Object.keys(serverContryCodeMap).find(
@@ -298,8 +299,8 @@ export const getAppStoreLink = () => {
  * @param {string} countryKey - e.g. [com, ph]
  * @returns {object} country
  */
-export const cfCountrySupported = countryKey => {
-  const country = countryCounfig.find(v => v.key === countryKey)
+export const cfCountrySupported = (countryKey) => {
+  const country = countryCounfig.find((v) => v.key === countryKey)
   const isSupportCountry = !!country
   return isSupportCountry ? country : internationalCountry
 }
