@@ -1,5 +1,5 @@
 {
-  "name": "next-fe-boilerplate",
+  "name": "jobseeker-remote",
   "private": true,
   "scripts": {
     "devIM": "NEXT_PUBLIC_HOST_PATH='http://localhost:3004'  && NODE_OPTIONS='--inspect' node server.js development dev",
