@@ -2049,3 +2049,18 @@
     display: none;
   }
 }
+
+.popularJobsBoxRemote {
+  background-color: #fff;
+  padding-top: 30px;
+}
+
+.companiesRemote {
+  background: #F7F8FA;
+
+  .companies {
+    .companyContainer {
+      display: block;
+    }
+  }
+}

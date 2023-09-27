@@ -121,8 +121,8 @@ export const htmlTrim = (x) => {
 export const flat = (arrayToBeFlattened) => Array.prototype.concat.apply([], arrayToBeFlattened)
 
 export const truncateWords = (words, maxLen) => {
-  if (words.length <= maxLen) return words
-  return words.substr(0, maxLen) + '...'
+  if (words?.length <= maxLen) return words
+  return words?.substr(0, maxLen) + '...'
 }
 
 export const numberWithCommas = (number) => {
@@ -173,7 +173,7 @@ export const buildQueryParams = (arrayObj) => {
 export const getCurrentMonthYear = (lang) => {
   moment.locale(lang)
   const today = new Date()
-  const month =    moment(today).format('MM')
+  const month = moment(today).format('MM')
   const year = today.getFullYear()
   return {
     month,
@@ -238,7 +238,7 @@ export const formatTemplateString = (string, ...rest) => {
   });
 
   if (matchedStrings.length !== len) {
-   // throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
+    // throw new Error('Those replace arguments are not matched the placeholders, please check the source string: "' + string + '"')
   }
   matchedStrings.forEach((regStr, index) => {
     if (isObject) {
@@ -246,9 +246,9 @@ export const formatTemplateString = (string, ...rest) => {
     }
     const value = rest[index]
     if (isNil(value)) {
-     // throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
+      // throw new Error(`formatTemplateString Error: the ${index} property is null or undefined`)
     }
-    string = string.replace(new RegExp(regStr), (rest[index]|| ''))
+    string = string.replace(new RegExp(regStr), (rest[index] || ''))
   });
 
   return string

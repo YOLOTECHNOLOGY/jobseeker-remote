@@ -53,7 +53,7 @@ $searchContentWidth: 750px;
   @extend .GlobalContainer;
   padding-top: 20px;
 
-  > p {
+  >p {
     margin-top: 32px;
   }
 
@@ -943,7 +943,7 @@ $searchContentWidth: 750px;
 }
 
 .tips_content_go {
-  width: 151px;
+  // width: 151px;
   display: flex;
   height: 44px;
   padding: 12px 30px;

@@ -93,6 +93,22 @@ const NavLeft = (props: IProps) => {
             </Text>
           </Link>
         </li>
+        <li className={styles.headerLink}>
+          {!pathname.includes('/remote-jobs') ? (
+            <Link title='remote Jobs' to={'/' + langKey + '/remote-jobs'}>
+              <Text textStyle='base' className={styles.headerLinkText}>
+                Remote Jobs
+              </Text>
+            </Link>
+          ) : (
+            <Text
+              textStyle='base'
+              className={classNames([styles.headerLinkText, styles.headerLinkTextCurrentPage])}
+            >
+              Remote Jobs
+            </Text>
+          )}
+        </li>
       </React.Fragment>
     </ul>
   )

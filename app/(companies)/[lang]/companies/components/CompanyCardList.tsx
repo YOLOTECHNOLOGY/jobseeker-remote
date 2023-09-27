@@ -1,3 +1,4 @@
+'use client'
 // Components
 import CompanyCard from './CompanyCard'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
@@ -19,6 +20,7 @@ interface ICompanyCardList {
   langKey: string
   config: any
   page: number
+  showLogin?: boolean
 }
 const canRender = (index: number, count: number) => {
   if (count <= 3 && index === 2) return true
@@ -27,54 +29,87 @@ const canRender = (index: number, count: number) => {
   return false
 }
 const CompanyCardList = (props: ICompanyCardList) => {
-  const { companiesList, isLoading, transitions = {}, lang, langKey, config } = props
+  const {
+    companiesList,
+    isLoading,
+    transitions = {},
+    lang,
+    langKey,
+    config,
+    showLogin = true
+  } = props
+  console.log(props, 999)
   const isLogin = getCookie('accessToken') ? true : false
-  const loginToggle = useLoginModal();
-  const { companies } = useLanguage();
-  const Tips = <div className={styles.tips_wrapper}>
-    <div className={styles.tips_content}>
-      <Image alt={'img'} width={106} height={102}
-        src={`${process.env.S3_BUCKET_URL}/companies/registerLock.svg`}
-      ></Image>
-      <div className={styles.tips_content_text}>
-        {companies.loginNowDescription}
+  const loginToggle = useLoginModal()
+  const { companies } = useLanguage()
+  const Tips = (
+    <div className={styles.tips_wrapper}>
+      <div className={styles.tips_content}>
+        <Image
+          alt={'img'}
+          width={106}
+          height={102}
+          src={`${process.env.S3_BUCKET_URL}/companies/registerLock.svg`}
+        ></Image>
+        <div className={styles.tips_content_text}>{companies.loginNowDescription}</div>
+        <div
+          className={styles.tips_content_go}
+          onClick={() => {
+            loginToggle.setShowLogin(true)
+          }}
+        >
+          {companies.loginNow}
+        </div>
       </div>
-      <div className={styles.tips_content_go} onClick={() => {
-        loginToggle.setShowLogin(true)
-      }}>
-        {companies.loginNow}
+      <div className={styles.tips_full}>
+        <Image
+          alt={'fill'}
+          fill
+          style={{ objectFit: 'contain' }}
+          src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}
+        ></Image>
       </div>
     </div>
-    <div className={styles.tips_full}>
-      <Image alt={'fill'} fill
-        style={{ objectFit: 'contain' }}
-        src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}
-      ></Image>
-    </div>
-  </div>
+  )
 
-  const _list = companiesList && companiesList.length ? padArrayToMultiple(companiesList)(3) : [];
+  const _list = companiesList && companiesList.length ? padArrayToMultiple(companiesList)(3) : []
   return (
     <div className={styles.companyList}>
       {!isLoading &&
         companiesList?.length > 0 &&
         _list.map((item, index) => {
-          if (!item) return <>
-            <div className={styles.companyItem} style={{ opacity: 0 }} key={Math.random()}></div>
-            {canRender(index, _list.length) && !isLogin && Number(props.page) === 1 && Tips}
-          </>
-          return <>
-            <div className={styles.companyItem} key={item.id}>
-              <CompanyCard
-                transitions={transitions}
-                config={config}
-                company={item}
-                langKey={langKey}
-              />
-            </div>
-            {canRender(index, _list.length) && !isLogin && Number(props.page) === 1 && Tips}
-          </>
-
+          if (!item)
+            return (
+              <>
+                <div
+                  className={styles.companyItem}
+                  style={{ opacity: 0 }}
+                  key={Math.random()}
+                ></div>
+                {canRender(index, _list.length) &&
+                  showLogin &&
+                  !isLogin &&
+                  Number(props.page) === 1 &&
+                  Tips}
+              </>
+            )
+          return (
+            <>
+              <div className={styles.companyItem} key={item.id}>
+                <CompanyCard
+                  transitions={transitions}
+                  config={config}
+                  company={item}
+                  langKey={langKey}
+                />
+              </div>
+              {canRender(index, _list.length) &&
+                !isLogin &&
+                showLogin &&
+                Number(props.page) === 1 &&
+                Tips}
+            </>
+          )
         })}
 
       {!isLoading && !companiesList?.length && (
