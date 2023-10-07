@@ -1,21 +1,21 @@
 import React from 'react'
 import styles from 'app/index.module.scss'
 // import CompanyCardList from './companyList'
-import { fetchCompanyTopService } from '../../../../../store/services/companies2/fetchCompanyTop'
+import { fetchFeaturedRemoteCompanies } from 'store/services/companies2/fetchCompanyRemote'
 import Link from 'next/link'
 import { recordTime } from 'helpers/analizeTools'
 import CompanyCardList from 'app/(companies)/[lang]/companies/components/CompanyCardList'
 
-async function getCompanyData(location) {
-  const res = await fetchCompanyTopService(location)
+async function getCompanyData() {
+  const res = await fetchFeaturedRemoteCompanies()
   return res.data
 }
 
 export default async function Companies({ location_id, lang, config, langKey }: any) {
   const stop = recordTime('main-page featured-companies')
-  const data: any = await getCompanyData(location_id)
+  const data: any = await getCompanyData()
   stop()
-  const { home } = lang
+  const { home, companies } = lang
   return (
     <div className={styles.companiesRemote}>
       <div className={styles.companies}>
@@ -27,7 +27,7 @@ export default async function Companies({ location_id, lang, config, langKey }: 
             lang={lang}
             config={config}
             isLoading={false}
-            transitions={''}
+            transitions={companies.popularCompany}
             page={1}
             showLogin={false}
           />

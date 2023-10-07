@@ -27,7 +27,9 @@ const CompanyCard = (props: ICompanyCard) => {
 
   const viewJobString = () => {
     return formatTemplateString(transitions.allJobs, {
-      totalActiveJobs: `<span>${company.num_of_active_jobs}</span>`
+      totalActiveJobs: `<span>${
+        company.num_of_active_jobs || company.total_num_of_active_remote_jobs
+      }</span>`
     })
   }
 

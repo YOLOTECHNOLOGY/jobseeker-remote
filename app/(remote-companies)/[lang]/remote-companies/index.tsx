@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import CompanyCardList from './components/CompanyCardList'
+import CompanyCardList from 'app/(companies)/[lang]/companies/components/CompanyCardList'
 import MaterialRoundedPagination from 'components/MaterialRoundedPagination'
 import { fetchCompanyFilterRequest } from 'store/actions/companies/fetchCompanyFilter'
-import styles from './Companies.module.scss'
+import styles from 'app/(companies)/[lang]/companies/Companies.module.scss'
 import { changeCompanyValueWithConfigure } from 'helpers/config/changeCompanyValue'
-import SortFilter from './components/SortFilter'
-import SearchCompany from './components/SearchCompany'
-import FeaturedCompanied from './components/FeaturedCompanied'
+import SortFilter from 'app/(companies)/[lang]/companies/components/SortFilter'
+import SearchCompany from 'app/(companies)/[lang]/companies/components/SearchCompany'
+import FeaturedCompanied from 'app/(companies)/[lang]/companies/components/FeaturedCompanied'
 import { useFirstRender } from 'helpers/useFirstRender'
 import CompanyCardLoader from 'components/Loader/CompanyCard'
 import Image from 'next/image'
@@ -146,7 +146,7 @@ const Companies = (props: IProps) => {
             src={`${process.env.S3_BUCKET_URL}/companies/companies-search-bg.svg`}
           />
 
-          <div className={styles.searchCompany}>
+          <div className={styles.searchCompany} style={{ paddingBottom: '20px' }}>
             <SearchCompany
               transitions={companies.search}
               clearSearchRef={clearSearchRef}
@@ -167,19 +167,6 @@ const Companies = (props: IProps) => {
             backgroundColor: searchQuery.page === 1 || isMobile ? '#ffffff' : '#F7F8FA'
           }}
         />
-
-        {/* featured company */}
-        {!isFeaturedCompaniesFetching && reset ? (
-          <>
-            <FeaturedCompanied
-              featuredCompany={featuredCompany}
-              langKey={langKey}
-              config={config}
-              featureBanners={featureBanners}
-              lang={props.lang}
-            />
-          </>
-        ) : null}
 
         {/* companies list */}
         <div className={styles.companiesWrapper}>

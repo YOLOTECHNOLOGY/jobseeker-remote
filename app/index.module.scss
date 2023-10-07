@@ -32,7 +32,7 @@
   .moreBtn {
     color: #1d2129;
     height: 44px;
-    width: 112px;
+    width: 146px;
     font-size: 14px;
     line-height: 44px;
     text-align: center;
@@ -489,7 +489,7 @@
   .moreBtnActive {
     color: #2378e5;
     height: 44px;
-    width: 112px;
+    width: 146px;
     font-size: 14px;
     border-radius: 4px;
     line-height: 44px;
@@ -1954,7 +1954,7 @@
   }
 
   .moreBtn {
-    width: 112px;
+    width: 146px;
     color: #1d2129;
     height: 44px;
     font-size: 14px;
@@ -2062,5 +2062,79 @@
     .companyContainer {
       display: block;
     }
+  }
+}
+
+.guide {
+  @extend .GlobalNextAppContainer;
+  padding-bottom: 40px;
+
+  h2 {
+    color: #353535;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    /* 125% */
+    letter-spacing: 0.24px;
+    padding: 30px 0 28px;
+    text-align: center;
+  }
+
+  .item {
+    padding: 20px 0;
+    border-bottom: 1px solid #E4E4E4;
+
+    a {
+      display: flex;
+    }
+
+    img {
+      border-radius: 4px;
+    }
+
+    .content {
+      padding: 0 0 0 15px;
+
+
+      h5 {
+        color: #121212;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px;
+        letter-spacing: 0.18px;
+      }
+
+      p {
+        color: #515151;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        padding-top: 14px;
+      }
+    }
+  }
+
+  .viewMore {
+    width: 146px;
+    color: #1d2129;
+    height: 44px;
+    font-size: 14px;
+    border-radius: 4px;
+    line-height: 44px;
+    text-align: center;
+    background: #ffffff;
+    margin: 26px auto 0px;
+    display: block;
+    cursor: pointer;
+    border: 1px solid #c9cdd4;
+
+    &:hover {
+      color: #2378e5;
+      border-color: #2378e5;
+    }
+
   }
 }

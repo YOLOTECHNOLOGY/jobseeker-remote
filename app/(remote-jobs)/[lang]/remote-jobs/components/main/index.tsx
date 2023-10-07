@@ -10,7 +10,7 @@ import getConfigs from 'app/models/interpreters/config'
 import styles from 'app/index.module.scss'
 import { serverDataScript } from 'app/models/abstractModels/FetchServierComponents'
 import { cookies } from 'next/headers'
-
+import JobGuide from '../JobGuide'
 const configs = getConfigs([
   ['location_lists'],
   ['main_functions'],
@@ -69,8 +69,11 @@ const Main = async (props: any) => {
         <Tabs config={config} langKey={langKey} location_id={locationId} />
         {/* @ts-expect-error Async Server Component */}
         <Companies langKey={langKey} lang={props.lang} config={config} location_id={locationId} />
+
         {/* @ts-expect-error Async Server Component */}
         <MobileHome lang={props.lang} config={config} langKey={langKey} location_id={locationId} />
+        {/* @ts-expect-error Async Server Component */}
+        <JobGuide langKey={langKey} />
         <Tracker />
       </div>
       <Footer {...props} />

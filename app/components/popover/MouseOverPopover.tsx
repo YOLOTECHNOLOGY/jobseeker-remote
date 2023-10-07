@@ -1,78 +1,78 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
-import classNames from 'classnames';
+import React, { useState, useLayoutEffect, useRef } from 'react'
+import Popover from '@mui/material/Popover'
+import Typography from '@mui/material/Typography'
+import Link from 'next/link'
+import classNames from 'classnames'
 
-import { isURL } from 'app/(company)/[lang]/company/[keyword]/components/InfoList';
-import style from 'app/(company)/[lang]/company/[keyword]/components/InfoList/index.module.scss';
-
+import { isURL } from 'app/(company)/[lang]/company/[keyword]/components/InfoList'
+import style from 'app/(company)/[lang]/company/[keyword]/components/InfoList/index.module.scss'
 
 export function isContentOverflowing(element) {
-	console.log(' element?.scrollWidth ', element, element?.scrollWidth, element?.clientWidth)
-	return element?.scrollWidth > element?.clientWidth;
+  return element?.scrollWidth > element?.clientWidth
 }
-export function MouseOverPopover(props: {
-	value: string;
-	className?: string;
-}) {
-	const ref = useRef(null);
-	const [showPop, setShow] = useState(false);
+export function MouseOverPopover(props: { value: string; className?: string }) {
+  const ref = useRef(null)
+  const [showPop, setShow] = useState(false)
 
-	const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-	const is_url = isURL(props.value);
-	const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-		if (!showPop) return;
-		setAnchorEl(event.currentTarget);
-	};
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
+  const is_url = isURL(props.value)
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    if (!showPop) return
+    setAnchorEl(event.currentTarget)
+  }
 
-	const handlePopoverClose = () => {
-		setAnchorEl(null);
-	};
+  const handlePopoverClose = () => {
+    setAnchorEl(null)
+  }
 
-	const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl)
 
-
-	useLayoutEffect(() => {
-		if (isContentOverflowing(ref.current)) {
-			setShow(true);
-		}
-	});
-	return (
-		<>
-			<div
-				className={classNames(style.overview_item_value, {
-					[props.className]: !!props.className
-				})}
-				aria-owns={open ? 'mouse-over-popover' : undefined}
-				aria-haspopup="true"
-				onMouseEnter={handlePopoverOpen}
-				onMouseLeave={handlePopoverClose}
-			>
-				{is_url ?
-					<Link ref={ref} href={props.value} target={"_blank"} title={props.value}>{props.value}</Link> :
-					<span ref={ref}>{props.value}</span>}
-			</div>
-			<Popover
-				id="mouse-over-popover"
-				sx={{
-					pointerEvents: 'none',
-				}}
-				open={open}
-				anchorEl={anchorEl}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'left',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'left',
-				}}
-				onClose={handlePopoverClose}
-				disableRestoreFocus
-			>
-				<Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>{props.value}</Typography>
-			</Popover>
-		</>
-	);
+  useLayoutEffect(() => {
+    if (isContentOverflowing(ref.current)) {
+      setShow(true)
+    }
+  })
+  return (
+    <>
+      <div
+        className={classNames(style.overview_item_value, {
+          [props.className]: !!props.className
+        })}
+        aria-owns={open ? 'mouse-over-popover' : undefined}
+        aria-haspopup='true'
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
+      >
+        {is_url ? (
+          <Link ref={ref} href={props.value} target={'_blank'} title={props.value}>
+            {props.value}
+          </Link>
+        ) : (
+          <span ref={ref}>{props.value}</span>
+        )}
+      </div>
+      <Popover
+        id='mouse-over-popover'
+        sx={{
+          pointerEvents: 'none'
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left'
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Typography sx={{ p: 1 }} maxWidth={300} style={{ wordBreak: 'break-all', fontSize: 14 }}>
+          {props.value}
+        </Typography>
+      </Popover>
+    </>
+  )
 }
