@@ -26,7 +26,7 @@ const PopularJob = ({ langKey }: any) => {
   return (
     <div className={styles.popularJobs}>
       <div className={styles.popularBox}>
-        <label>Find Remote Job. Talk to Boss</label>
+        <label>Trending Remote Jobs</label>
         <div className={styles.tagContainer}>
           {tags.map((tag, index) => (
             <Link
