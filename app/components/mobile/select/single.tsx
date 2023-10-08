@@ -20,6 +20,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
     greyBg?: boolean
     fieldRef?: any
     error?: any
+    menuClassName?: any
 }
 
 interface OptionType {
@@ -36,7 +37,8 @@ const SingleSelect = ({
     value,
     fieldRef,
     error,
-    style
+    style,
+    menuClassName = ''
 }: MaterialSelectCheckMarksProps) => {
     const [open, setOpen] = useState(false)
     return (<FormControl fullWidth className={className} size='small'>
