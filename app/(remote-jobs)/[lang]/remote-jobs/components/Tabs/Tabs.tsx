@@ -14,7 +14,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import JobDetail from '../JobDetail/JobDetail'
-import { fetchPopularJobs } from 'store/services/jobs/popularJobs'
+import { fetchPopularJobs } from 'store/services/jobs/fetchRemoteJobs'
 import styles from 'app/index.module.scss'
 import { SxProps, Theme } from '@mui/system'
 import { getCookie } from 'helpers/cookies'
@@ -255,7 +255,7 @@ const Tabs = ({ config, location_id, langKey }: any) => {
     const params = {
       size: 6,
       page: 1,
-      job_location_ids: location_id,
+      remote_country_ids: location_id,
       main_functions: value
     }
 

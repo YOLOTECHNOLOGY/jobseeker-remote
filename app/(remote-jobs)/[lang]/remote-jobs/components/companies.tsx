@@ -6,14 +6,19 @@ import Link from 'next/link'
 import { recordTime } from 'helpers/analizeTools'
 import CompanyCardList from 'app/(companies)/[lang]/companies/components/CompanyCardList'
 
-async function getCompanyData() {
-  const res = await fetchFeaturedRemoteCompanies()
+async function getCompanyData(params) {
+  const res = await fetchFeaturedRemoteCompanies(params)
   return res.data
 }
 
 export default async function Companies({ location_id, lang, config, langKey }: any) {
   const stop = recordTime('main-page featured-companies')
-  const data: any = await getCompanyData()
+  const data: any = await getCompanyData({
+    page: 1,
+    size: 15,
+    is_featured: 1,
+    job_location_ids: location_id
+  })
   stop()
   const { home, companies } = lang
   return (

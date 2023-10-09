@@ -23,7 +23,7 @@ import { HistoryIcons, footer_apple_download, footer_googleplay_download } from 
 import Link from 'components/Link'
 import { homeHeaderPhoneBg, downloadApp } from 'images/svg'
 import { appLinkUrl } from 'helpers/constants'
-import { fetchSearchSuggestionService } from 'store/services/jobs/fetchSearchSuggestion'
+import { fetchSearchRemoteSuggestionService } from 'store/services/jobs/fetchRemoteJobs'
 const transQs = (params: any) => {
   return params.map((e, index) => `query_histories[${index}]=${e}`).join('&')
 }
@@ -113,7 +113,7 @@ const SearchArea = (props: any) => {
           //   .then((data) => setSuggestionList(data.data.items))
           const qs = transObject(searchHistories)
           const token = getCookie(accessToken)
-          fetchSearchSuggestionService({ size: 5, query: val, ...qs }, token).then((data) =>
+          fetchSearchRemoteSuggestionService({ size: 5, query: val, ...qs }, token).then((data) =>
             setSuggestionList(data.data.data.items)
           )
         }

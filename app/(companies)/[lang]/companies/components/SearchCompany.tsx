@@ -8,19 +8,21 @@ import JobSearchBar from 'app/components/commons/location/search'
 // Styles
 import styles from '../Companies.module.scss'
 import { fetchCompanySuggestionsService } from 'store/services/companies2/fetchCompanySuggestions'
-
+import { fetchSearchSuggestionRemoteService } from 'store/services/companies2/fetchCompanyRemote'
 interface ISearchCompanyField {
   defaultQuery?: string
   onKeywordSearch: Function
   clearSearchRef?: any
   transitions: Record<string, any>
+  isRemote?: boolean
 }
 
 const SearchCompanyField = ({
   defaultQuery = '',
   onKeywordSearch,
   transitions,
-  clearSearchRef
+  clearSearchRef,
+  isRemote = false
 }: ISearchCompanyField) => {
   const [suggestionList, setSuggestionList] = useState([])
   const [searchValue, setSearchValue] = useState('')
@@ -34,9 +36,17 @@ const SearchCompanyField = ({
   }, [searchValue])
 
   const handleSuggestionSearch = (val) => {
-    fetchCompanySuggestionsService({ size: 5, query: val }).then((data) =>
-      setSuggestionList(data.data.data.items)
-    )
+    if (isRemote) {
+      fetchSearchSuggestionRemoteService({
+        size: 5,
+        page: 1,
+        query: val
+      }).then((data) => setSuggestionList(data.data.data.items))
+    } else {
+      fetchCompanySuggestionsService({ size: 5, query: val }).then((data) =>
+        setSuggestionList(data.data.data.items)
+      )
+    }
   }
 
   return (

@@ -1,9 +1,17 @@
 import configuredAxios from 'helpers/configuredAxios'
-
+import queryString from 'query-string'
 const fetchFeaturedRemoteCompanies = (payload = {}) => {
   const axios = configuredAxios('company', 'protected')
-  const { page = 1, size = 15 } = payload
-  return axios.get(`/featured-remote-companies?page=${page}&size=${size}`)
+  return axios.get(`/featured-remote-companies?${queryString.stringify(payload)}`)
 }
 
-export { fetchFeaturedRemoteCompanies }
+const fetchSearchRemoteService = (payload, token = '') => {
+  const axios = configuredAxios('company', token ? 'protected' : 'public')
+  return axios.get(`/search-remote?${queryString.stringify(payload)}`)
+}
+const fetchSearchSuggestionRemoteService = (payload, token = '') => {
+  const axios = configuredAxios('company', token ? 'protected' : 'public')
+  return axios.get(`/search-remote-suggestion?${queryString.stringify(payload)}`)
+}
+
+export { fetchFeaturedRemoteCompanies, fetchSearchRemoteService, fetchSearchSuggestionRemoteService }
