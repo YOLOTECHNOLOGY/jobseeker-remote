@@ -34,6 +34,7 @@ import { languageContext } from 'app/components/providers/languageProvider'
 import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import { MoreFilterIcon } from 'images'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
@@ -125,7 +126,7 @@ const SearchArea = (props: any) => {
       return
     }
     const url = new URLSearchParams(toPairs(result.params)).toString()
-    push('/jobs-hiring/' + result.searchQuery + '?' + url)
+    push('/remote-jobs-hiring/' + result.searchQuery + '?' + url)
   }, [result, push])
   const reloadRef = useRef(reload)
   useEffect(() => {
@@ -157,6 +158,7 @@ const SearchArea = (props: any) => {
         >
           <div className={styles.searchAreaContent}>
             {/* search */}
+            {/* TODO */}
             <div className={styles.searchArea}>
               <div className={styles.searchAreaLeft}>
                 <LocationMultiSelector
@@ -256,72 +258,78 @@ const SearchArea = (props: any) => {
             </div>
             {/* filter */}
             <div className={styles.filters}>
-              <div className={styles.filtersLeft}>
-                <Single
-                  options={sortOptions}
-                  value={sort}
-                  onSelect={setSort}
-                  className={styles.filterItems}
-                  label='Sort by'
-                />
-                <JobFunction
-                  // label='Job Function'
-                  id='jobFunction'
-                  label={search.function}
-                  value={jobFunctionValue}
-                  className={[styles.filterItems, styles.jobFunction]}
-                  onChange={jobFunctionChange}
-                />
-                <Multiple
-                  label={search.salary}
-                  value={salaries}
-                  options={salaryOptions}
-                  className={classNames([styles.filterItems, styles.jobSalary])}
-                  onSelect={setSelaries}
-                />
-                <Multiple
-                  label={search.type}
-                  value={jobTypes}
-                  options={jobTypeList}
-                  className={styles.filterItems}
-                  onSelect={setJobtypes}
-                  defaultValue={jobTypes}
-                />
-                <Button
-                  className={classNames([
-                    styles.moreButton,
-                    moreCount ? styles.moreButtonCount : ''
-                  ])}
-                  variant='outlined'
-                  onClick={() => {
-                    setShowMore(true)
-                  }}
-                  endIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
-                >
-                  {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
-                </Button>
-              </div>
-              <div className={styles.filtersRight}>
-                <Button
-                  className={styles.clearButton}
-                  variant='text'
-                  onClick={() => {
-                    setLocation([])
-                    setSearchValue('')
-                    setSort('1')
-                    jobFunctionChange({
-                      jobFunctions: [],
-                      mainFunctions: [],
-                      functionTitles: []
-                    })
-                    setJobtypes([])
-                    setSelaries([])
-                    setMoreData({} as any)
-                    setPage('1')
-                  }}
-                >
-                  {search.reset}{' '}
-                </Button>
+              <div className={styles.filters_content} >
+                <div className={styles.filtersLeft}>
+                  <Single
+                    options={sortOptions}
+                    value={sort}
+                    onSelect={setSort}
+                    className={classNames([styles.filterItems, styles.relevance])}
+                    label='Sort by'
+                    IconComponent={() => <ExpandMoreIcon />}
+                  />
+                  <JobFunction
+                    // label='Job Function'
+                    id='jobFunction'
+                    label={search.function}
+                    value={jobFunctionValue}
+                    className={[styles.filterItems, styles.jobFunction]}
+                    onChange={jobFunctionChange}
+                    IconComponent={() => <ExpandMoreIcon />}
+                  />
+                  <Multiple
+                    label={search.salary}
+                    value={salaries}
+                    options={salaryOptions}
+                    className={classNames([styles.filterItems, styles.jobSalary])}
+                    onSelect={setSelaries}
+                    IconComponent={() => <ExpandMoreIcon />}
+                  />
+                  <Multiple
+                    label={search.type}
+                    value={jobTypes}
+                    options={jobTypeList}
+                    className={styles.filterItems}
+                    onSelect={setJobtypes}
+                    defaultValue={jobTypes}
+                    IconComponent={() => <ExpandMoreIcon />}
+                  />
+                  <Button
+                    className={classNames([
+                      styles.moreButton,
+                      moreCount ? styles.moreButtonCount : ''
+                    ])}
+                    variant='outlined'
+                    onClick={() => {
+                      setShowMore(true)
+                    }}
+                    startIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
+                  >
+                    {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
+                  </Button>
+                </div>
+                <div className={styles.filtersRight}>
+                  <Button
+                    className={styles.clearButton}
+                    variant='text'
+                    onClick={() => {
+                      setLocation([])
+                      setSearchValue('')
+                      setSort('1')
+                      jobFunctionChange({
+                        jobFunctions: [],
+                        mainFunctions: [],
+                        functionTitles: []
+                      })
+                      setJobtypes([])
+                      setSelaries([])
+                      setMoreData({} as any)
+                      setPage('1')
+                    }}
+                  >
+                    {search.reset}{' '}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

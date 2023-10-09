@@ -97,7 +97,7 @@ const Main = async (props: any) => {
                 />
               </Suspense>
               <Suspense fallback={<Loading />}>
-                {/* @ts-expect-error Async Server Component */}
+                {/* @ts-ignore */}
                 <HotJobTable lang={home} />
               </Suspense>
             </div>

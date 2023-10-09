@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl'
 import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import OutlinedInput from '@mui/material/OutlinedInput'
+
 interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode
     style?: React.CSSProperties
@@ -16,6 +17,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
     greyBg?: boolean
     fieldRef?: any
     error?: any
+    IconComponent?: any
 }
 
 interface OptionType {
@@ -32,7 +34,8 @@ const SingleSelect = ({
     value,
     fieldRef,
     error,
-    style
+    style,
+    ...rest
 }: MaterialSelectCheckMarksProps) => {
     const handleChange = (event: SelectChangeEvent) => {
         const {
@@ -47,6 +50,7 @@ const SingleSelect = ({
         <InputLabel id={`${id}-select-label`}>{label}</InputLabel>
         <Select
             {...fieldRef}
+            {...rest}
             variant='filled'
             error={error}
             labelId={`${id}-select-label`}

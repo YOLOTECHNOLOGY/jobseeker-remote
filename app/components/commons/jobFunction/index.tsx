@@ -16,7 +16,7 @@ import PlayArrowSharpIcon from '@mui/icons-material/PlayArrowSharp'
 const toSeo = (value) => value?.replaceAll('/', '-')?.replaceAll(' ', '-')?.toLowerCase()
 
 const JobFunctionMultiSelector = (props: any) => {
-  const { label, className, value, isTouched, onChange, lang, ...rest } = props
+  const { label, className, value, isTouched, onChange, lang, IconComponent, ...rest } = props
   const [showModal, setShowModal] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
@@ -361,7 +361,8 @@ const JobFunctionMultiSelector = (props: any) => {
         }}
         InputProps={{
           endAdornment: (
-            <PlayArrowSharpIcon
+            IconComponent ? <IconComponent /> 
+            : <PlayArrowSharpIcon
               style={{
                 fontSize: '14px',
                 transform: `rotate(${rotate})`,
