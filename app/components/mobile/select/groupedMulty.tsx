@@ -23,6 +23,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   greyBg?: boolean
   fieldRef?: any
   error?: any
+  menuClassName?: any
 }
 
 interface OptionType {
@@ -40,7 +41,8 @@ const GroupedMultipleSelect = ({
   value,
   labels,
   fieldRef,
-  error
+  error,
+  menuClassName = ''
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(
     mergeLeft(value)(map(() => [])(options))

@@ -18,6 +18,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   greyBg?: boolean
   fieldRef?: any
   error?: any
+  menuClassName?: any
 }
 
 interface OptionType {
@@ -35,6 +36,7 @@ const MultipleSelect = ({
   value,
   fieldRef,
   error,
+  menuClassName = ''
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
   useEffect(() => {
