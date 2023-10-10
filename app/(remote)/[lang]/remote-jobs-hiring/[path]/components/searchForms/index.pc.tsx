@@ -35,6 +35,7 @@ import LocationMultiSelector from 'app/components/commons/locationMulty'
 import { LoginModalContext } from 'app/components/providers/loginModalProvider'
 import { MoreFilterIcon } from 'images'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { SvgResetIcon } from '../../svg'
 
 const SearchArea = (props: any) => {
   const { config, searchValues } = props
@@ -147,6 +148,7 @@ const SearchArea = (props: any) => {
     paddingLeft: '10px',
     fontSize: '15px'
   }
+
   return (
     <div className={styles.searchWrap}>
       <ThemeProvider theme={theme}>
@@ -156,6 +158,7 @@ const SearchArea = (props: any) => {
             [styles.isFixed]: isFixed
           })}
         >
+          <div className={styles.searchForm_headerBg} ></div>
           <div className={styles.searchAreaContent}>
             {/* search */}
             {/* TODO */}
@@ -188,7 +191,7 @@ const SearchArea = (props: any) => {
                 <div className={styles.searchAreaBox}>
                   <JobSearchBar
                     id='search'
-                    label={search.title}
+                    label={<div className={styles.searchAreaBox_label} ><SearchIcon className={styles.searchAreaBox_label_icon} /> <span>{search.title}</span></div>}
                     variant='outlined'
                     size='small'
                     className={styles.search}
@@ -266,7 +269,7 @@ const SearchArea = (props: any) => {
                     onSelect={setSort}
                     className={classNames([styles.filterItems, styles.relevance])}
                     label='Sort by'
-                    IconComponent={() => <ExpandMoreIcon />}
+                    IconComponent={() => <ExpandMoreIcon className={styles.filtersLeft_inputIcon} />}
                   />
                   <JobFunction
                     // label='Job Function'
@@ -275,7 +278,7 @@ const SearchArea = (props: any) => {
                     value={jobFunctionValue}
                     className={[styles.filterItems, styles.jobFunction]}
                     onChange={jobFunctionChange}
-                    IconComponent={() => <ExpandMoreIcon />}
+                    IconComponent={() => <ExpandMoreIcon className={styles.filtersLeft_inputIcon} />}
                   />
                   <Multiple
                     label={search.salary}
@@ -283,7 +286,7 @@ const SearchArea = (props: any) => {
                     options={salaryOptions}
                     className={classNames([styles.filterItems, styles.jobSalary])}
                     onSelect={setSelaries}
-                    IconComponent={() => <ExpandMoreIcon />}
+                    IconComponent={() => <ExpandMoreIcon className={styles.filtersLeft_inputIcon} />}
                   />
                   <Multiple
                     label={search.type}
@@ -292,7 +295,8 @@ const SearchArea = (props: any) => {
                     className={styles.filterItems}
                     onSelect={setJobtypes}
                     defaultValue={jobTypes}
-                    IconComponent={() => <ExpandMoreIcon />}
+                    IconComponent={() => <ExpandMoreIcon className={styles.filtersLeft_inputIcon} />}
+                    notPosition={true}
                   />
                   <Button
                     className={classNames([
@@ -303,7 +307,7 @@ const SearchArea = (props: any) => {
                     onClick={() => {
                       setShowMore(true)
                     }}
-                    startIcon={<Image src={MoreFilterIcon} width={16} height={16} alt='filter' />}
+                    startIcon={<Image src={MoreFilterIcon} width={24} height={24} alt='filter' />}
                   >
                     {search.more} {moreCount ? `(${moreCount})` : ''}{' '}
                   </Button>
@@ -326,6 +330,7 @@ const SearchArea = (props: any) => {
                       setMoreData({} as any)
                       setPage('1')
                     }}
+                    startIcon={<SvgResetIcon />}
                   >
                     {search.reset}{' '}
                   </Button>

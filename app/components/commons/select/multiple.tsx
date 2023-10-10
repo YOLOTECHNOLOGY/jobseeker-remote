@@ -19,6 +19,7 @@ interface MaterialSelectCheckMarksProps extends React.ButtonHTMLAttributes<HTMLB
   fieldRef?: any
   error?: any
   IconComponent?: any
+  notPosition?: boolean
 }
 
 interface OptionType {
@@ -47,6 +48,7 @@ const MultipleSelect = ({
   value,
   fieldRef,
   error,
+  notPosition,
   ...rest
 }: MaterialSelectCheckMarksProps) => {
   const [selectedOptions, setSelectedOptions] = useState<any>(value || [])
@@ -88,7 +90,7 @@ const MultipleSelect = ({
           if (selected?.[0] === 'emptyValue') {
             return (
               <div
-                style={{
+                style={notPosition ? null : {
                   color: 'rgba(0, 0, 0, 0.6)',
                   position: 'relative',
                   left: 13,
@@ -101,7 +103,7 @@ const MultipleSelect = ({
           } else {
             return (
               <div
-                style={{
+                style={notPosition ? null : {
                   position: 'relative',
                   left: 13,
                   top: 2

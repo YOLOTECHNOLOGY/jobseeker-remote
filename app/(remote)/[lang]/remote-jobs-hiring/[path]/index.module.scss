@@ -64,6 +64,18 @@ $contentWidth: 894px;
   background: #f0f4f7;
   padding: 30px 0;
   box-sizing: border-box;
+  position: relative;
+
+  &_headerBg {
+    position: absolute;
+    width: 100%;
+    height: 118px;
+    background: url('./static/remote_find_jobs_header_bg.png');
+    background-size: cover;
+    top: 0;
+    left: 0;
+    background-position: center;
+  }
 
   &.isFixed {
     --box-shadow: 0px 0px 20px #bcbcbc;
@@ -107,6 +119,8 @@ $contentWidth: 894px;
       padding: 14px;
       border-radius: 8px 8px 0px 0px;
       background: #fff;
+      width: 849px;
+      position: relative;
     }
 
     &Right {
@@ -114,15 +128,6 @@ $contentWidth: 894px;
     }
 
     .location {
-      width: 160px;
-      height: 60px;
-      border-radius: 8px;
-      border: 1px solid #e5e6eb;
-      background: #fff;
-      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
-      position: relative;
-      padding-right: 6px;
-
       :global {
         .MuiInputLabel-root {
           display: none;
@@ -145,7 +150,7 @@ $contentWidth: 894px;
       display: flex;
       margin-left: 12px;
       border-radius: 8px 0 0 8px;
-      box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
+      // box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.05);
 
       :global {
         .MuiOutlinedInput-root {
@@ -177,6 +182,17 @@ $contentWidth: 894px;
         .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
           border-width: 2px;
           border-color: #1976d2;
+        }
+      }
+
+      &_label {
+        display: flex;
+        align-items: center;
+
+        &_icon {
+          width: 25px;
+          height: 20px;
+          color: #121212;
         }
       }
     }
@@ -322,28 +338,37 @@ $contentWidth: 894px;
 
     &_content {
       display: flex;
-      padding: 16px;
+      // padding: 16px;
       background: #fff;
       border-radius: 0px 0px 8px 8px;
       border: 1px solid #e4e4e4;
       background: #fafafa;
+      width: 850px;
     }
 
     &Left {
       display: flex;
       // width: $contentWidth;
       border-right: 1px solid #e4e4e4;
+
+      &_inputIcon {
+        position: absolute;
+        right: 7px;
+        top: calc(50% - 0.5em);
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.54);
+      }
     }
 
     &Right {
       display: flex;
       margin-left: 22px;
+      padding-right: 22px;
     }
 
     .filterItems {
-      height: 32px;
-      width: 146px;
-      background-color: #fafafa;
+      // width: 146px;
+      padding: 0 15px;
 
       :global {
         .MuiOutlinedInput-root {
@@ -354,6 +379,7 @@ $contentWidth: 894px;
           font-weight: 400;
           line-height: 18px; /* 128.571% */
           letter-spacing: 0.28px;
+          height: 64px;
         }
 
         .MuiOutlinedInput-input {
@@ -362,8 +388,24 @@ $contentWidth: 894px;
       }
     }
 
+    .relevance {
+      background: var(--black-08-f-2-f-3-f-5, #f2f3f5);
+      border-bottom-left-radius: 8px;
+
+      :global {
+        .MuiOutlinedInput-root {
+          background-color: var(--black-08-f-2-f-3-f-5, #f2f3f5) !important;
+
+          .MuiSelect-select {
+            background-color: var(--black-08-f-2-f-3-f-5, #f2f3f5) !important;
+          }
+        }
+      }
+    }
+
     .jobFunction {
       min-width: 152px;
+      z-index: 1;
     }
 
     .jobSalary {
@@ -401,6 +443,10 @@ $contentWidth: 894px;
       color: #707070;
       font-size: 14px;
       margin-left: 2px;
+
+      &:hover {
+        background-color: unset;
+      }
     }
   }
 }

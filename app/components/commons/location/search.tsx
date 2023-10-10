@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Autocomplete from '@mui/material/Autocomplete'
 import { TextField } from '@mui/material'
@@ -10,7 +10,7 @@ type JobSearchBar = {
   defaultValue?: string
   value?: string
   className?: string
-  label?: string
+  label?: any
   size?: 'small' | 'medium'
   variant?: 'outlined' | 'filled' | 'standard'
   isLoading?: boolean
