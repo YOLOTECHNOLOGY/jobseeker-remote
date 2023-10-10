@@ -72,7 +72,8 @@ const Main = async (props: any) => {
     <>
       <div>
         {/* Search From */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 90 }}>
+        {/* style={{ position: 'sticky', top: 0, zIndex: 90 }} */}
+        <div>
           <SearchForm config={props.config} lang={lang} searchValues={props.searchValues ?? null} />
         </div>
 

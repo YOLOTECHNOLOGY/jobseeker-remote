@@ -155,7 +155,7 @@ const SearchArea = (props: any) => {
         <div
           className={classNames({
             [styles.searchForm]: true,
-            [styles.isFixed]: isFixed
+            // [styles.isFixed]: isFixed
           })}
         >
           <div className={styles.searchForm_headerBg} ></div>
