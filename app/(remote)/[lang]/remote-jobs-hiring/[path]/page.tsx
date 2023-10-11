@@ -97,10 +97,10 @@ const Main = async (props: any) => {
                   config={props.config}
                 />
               </Suspense>
-              <Suspense fallback={<Loading />}>
-                {/* @ts-ignore */}
+
+              {/* <Suspense fallback={<Loading />}>
                 <HotJobTable lang={home} />
-              </Suspense>
+              </Suspense> */}
             </div>
 
 

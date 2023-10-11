@@ -13,4 +13,9 @@ const fetchSearchSuggestionService = (payload, token='') => {
   return axios.get(`/search-suggestion?${queryString.stringify(payload)}`)
 }
 
-export { fetchSearchSuggestionService }
+const fetchSearchRemoteSuggestionService = (payload, token='') => {
+  const axios = configuredAxios('job', token ? 'protected' : 'public')
+  return axios.get(`/search-remote-suggestion?${queryString.stringify(payload)}`)
+}
+
+export { fetchSearchSuggestionService, fetchSearchRemoteSuggestionService }

@@ -8,7 +8,7 @@ export default registInterpreter((command) =>
       M((context) => {
         const url = `${
           process.env.JOB_BOSSJOB_URL
-        }/related-search?size=10&query=${encodeURIComponent(context.value)}`
+        }/related-search-remote?size=10&query=${encodeURIComponent(context.value)}`
 
         return fetch(url, {
           headers: {

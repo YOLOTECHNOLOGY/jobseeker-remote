@@ -8,6 +8,15 @@ const fetchJobsListService = (payload, accessToken = null) => {
 
   return axios.get(`search?${queryString.stringify(payload)}`)
 }
+
+const fetchRemoteJobsListService = (payload, accessToken = null) => {
+  const endpointType = accessToken ? 'protected' : 'public'
+
+  const axios = configuredAxios('job', endpointType, false, accessToken)
+
+  return axios.get(`search-remote-jobs?${queryString.stringify(payload)}`)
+}
+
 const fetchHotJobsListService = (countryId, accessToken = null) => {
   const endpointType = accessToken ? 'protected' : 'public'
 
@@ -26,4 +35,9 @@ const queryOnlineStatus = (user_ids, accessToken, role = 'recruiter') => {
   })
 }
 
-export { fetchJobsListService, fetchHotJobsListService, queryOnlineStatus }
+export {
+  fetchJobsListService,
+  fetchHotJobsListService,
+  queryOnlineStatus,
+  fetchRemoteJobsListService
+}
